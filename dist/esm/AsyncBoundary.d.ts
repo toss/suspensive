@@ -1,9 +1,12 @@
-import { ComponentProps, Suspense } from 'react';
-import { ErrorBoundary } from '.';
+import { ComponentProps, ComponentType } from 'react';
+import { Suspense, ErrorBoundary } from '.';
 interface ResetRef {
     reset?(): void;
 }
-declare const BaseAsyncBoundary: import("react").ForwardRefExoticComponent<Omit<import("react").SuspenseProps, "fallback"> & Omit<{
+type SSROrCSRAsyncBoundaryProps = Omit<ComponentProps<typeof AsyncBoundary>, 'ssrSafe'>;
+export declare const AsyncBoundary: import("react").ForwardRefExoticComponent<Omit<import("react").SuspenseProps & {
+    ssrSafe?: boolean | undefined;
+}, "fallback"> & Omit<{
     resetKeys?: unknown[] | undefined;
     onReset?(): void;
     onError?(error: Error, info: import("react").ErrorInfo): void;
@@ -12,14 +15,13 @@ declare const BaseAsyncBoundary: import("react").ForwardRefExoticComponent<Omit<
         error: Error;
         reset: (...args: unknown[]) => void;
     }) => import("react").ReactNode);
-}, "fallback"> & {
+}, "fallback"> & Pick<import("react").SuspenseProps & {
     ssrSafe?: boolean | undefined;
+}, "ssrSafe"> & {
     pendingFallback: ComponentProps<typeof Suspense>['fallback'];
     rejectedFallback: ComponentProps<typeof ErrorBoundary>['fallback'];
-} & import("react").RefAttributes<ResetRef>>;
-type AsyncBoundaryType = typeof BaseAsyncBoundary & {
-    SSRSafe: typeof BaseAsyncBoundary;
-    CSROnly: typeof BaseAsyncBoundary;
+} & import("react").RefAttributes<ResetRef>> & {
+    SSRSafe: ComponentType<SSROrCSRAsyncBoundaryProps>;
+    CSROnly: ComponentType<SSROrCSRAsyncBoundaryProps>;
 };
-declare const AsyncBoundary: AsyncBoundaryType;
-export { AsyncBoundary };
+export {};

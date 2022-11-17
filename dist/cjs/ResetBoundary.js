@@ -4,11 +4,11 @@ exports.withResetBoundary = exports.useResetBoundary = exports.ResetBoundaryCons
 const jsx_runtime_1 = require("react/jsx-runtime");
 const react_1 = require("react");
 const hooks_1 = require("./hooks");
-const initialState = {
-    resetKey: 0,
+const defaultValue = {
+    resetKey: -1,
     reset: () => { },
 };
-const ResetBoundary = (0, react_1.createContext)(initialState);
+const ResetBoundary = (0, react_1.createContext)(defaultValue);
 if (process.env.NODE_ENV !== 'production') {
     ResetBoundary.displayName = 'ResetBoundary';
 }
@@ -18,7 +18,13 @@ const ResetBoundaryProvider = ({ children }) => {
 };
 exports.ResetBoundaryProvider = ResetBoundaryProvider;
 exports.ResetBoundaryConsumer = ResetBoundary.Consumer;
-const useResetBoundary = () => (0, react_1.useContext)(ResetBoundary);
+const useResetBoundary = () => {
+    const context = (0, react_1.useContext)(ResetBoundary);
+    if (!context) {
+        throw new Error('useResetBoundary error: Component using useResetBoundary require ResetBoundaryProvider as Parent');
+    }
+    return context;
+};
 exports.useResetBoundary = useResetBoundary;
 const withResetBoundary = (Component) => {
     const Wrapped = (props) => {

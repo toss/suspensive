@@ -1,12 +1,12 @@
-import { ComponentProps, ComponentType, forwardRef, Ref, Suspense, useImperativeHandle, useRef } from 'react'
-import { SSRSafeSuspense, ErrorBoundary } from '.'
+import { ComponentProps, ComponentType, forwardRef, Ref, useImperativeHandle, useRef } from 'react'
+import { Suspense, ErrorBoundary } from '.'
 
 type SuspenseProps = ComponentProps<typeof Suspense>
 type ErrorBoundaryProps = ComponentProps<typeof ErrorBoundary>
 
 type Props = Omit<SuspenseProps, 'fallback'> &
-  Omit<ErrorBoundaryProps, 'fallback'> & {
-    ssrSafe?: boolean
+  Omit<ErrorBoundaryProps, 'fallback'> &
+  Pick<SuspenseProps, 'ssrSafe'> & {
     pendingFallback: ComponentProps<typeof Suspense>['fallback']
     rejectedFallback: ComponentProps<typeof ErrorBoundary>['fallback']
   }
@@ -25,7 +25,7 @@ const BaseAsyncBoundary = forwardRef(function AsyncBoundary(
     reset: () => ref.current?.resetErrorBoundary(),
   }))
 
-  const SelectedSuspense = ssrSafe ? SSRSafeSuspense : Suspense
+  const SelectedSuspense = ssrSafe ? Suspense.SSRSafe : Suspense.CSROnly
 
   return (
     <ErrorBoundary ref={ref} fallback={rejectedFallback} {...errorBoundaryProps}>
@@ -34,21 +34,23 @@ const BaseAsyncBoundary = forwardRef(function AsyncBoundary(
   )
 })
 
-type SSROrCSRProps = Omit<ComponentProps<typeof AsyncBoundary>, 'ssrSafe'>
+type SSROrCSRAsyncBoundaryProps = Omit<ComponentProps<typeof AsyncBoundary>, 'ssrSafe'>
 
-type AsyncBoundaryType = typeof BaseAsyncBoundary & {
-  SSRSafe: ComponentType<SSROrCSRProps>
-  CSROnly: ComponentType<SSROrCSRProps>
+export const AsyncBoundary = BaseAsyncBoundary as typeof BaseAsyncBoundary & {
+  SSRSafe: ComponentType<SSROrCSRAsyncBoundaryProps>
+  CSROnly: ComponentType<SSROrCSRAsyncBoundaryProps>
 }
 
-const AsyncBoundary = BaseAsyncBoundary as AsyncBoundaryType
-
-AsyncBoundary.SSRSafe = forwardRef<ResetRef, SSROrCSRProps>(function SSRSafeAsyncBoundary(props, resetRef) {
+AsyncBoundary.SSRSafe = forwardRef<ResetRef, SSROrCSRAsyncBoundaryProps>(function SSRSafeAsyncBoundary(
+  props,
+  resetRef
+) {
   return <AsyncBoundary ssrSafe ref={resetRef} {...props} />
 })
 
-AsyncBoundary.CSROnly = forwardRef<ResetRef, SSROrCSRProps>(function CSROnlyAsyncBoundary(props, resetRef) {
+AsyncBoundary.CSROnly = forwardRef<ResetRef, SSROrCSRAsyncBoundaryProps>(function CSROnlyAsyncBoundary(
+  props,
+  resetRef
+) {
   return <AsyncBoundary ref={resetRef} {...props} />
 })
-
-export { AsyncBoundary }

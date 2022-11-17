@@ -21,15 +21,14 @@ const BaseAsyncBoundary = (0, react_1.forwardRef)(function AsyncBoundary(_a, res
     (0, react_1.useImperativeHandle)(resetRef, () => ({
         reset: () => { var _a; return (_a = ref.current) === null || _a === void 0 ? void 0 : _a.resetErrorBoundary(); },
     }));
-    const SelectedSuspense = ssrSafe ? _1.SSRSafeSuspense : react_1.Suspense;
+    const SelectedSuspense = ssrSafe ? _1.Suspense.SSRSafe : _1.Suspense.CSROnly;
     return ((0, jsx_runtime_1.jsx)(_1.ErrorBoundary, Object.assign({ ref: ref, fallback: rejectedFallback }, errorBoundaryProps, { children: (0, jsx_runtime_1.jsx)(SelectedSuspense, Object.assign({ fallback: pendingFallback }, { children: children })) })));
 });
-const AsyncBoundary = BaseAsyncBoundary;
-exports.AsyncBoundary = AsyncBoundary;
-AsyncBoundary.SSRSafe = (0, react_1.forwardRef)(function SSRSafeAsyncBoundary(props, resetRef) {
-    return (0, jsx_runtime_1.jsx)(AsyncBoundary, Object.assign({ ssrSafe: true, ref: resetRef }, props));
+exports.AsyncBoundary = BaseAsyncBoundary;
+exports.AsyncBoundary.SSRSafe = (0, react_1.forwardRef)(function SSRSafeAsyncBoundary(props, resetRef) {
+    return (0, jsx_runtime_1.jsx)(exports.AsyncBoundary, Object.assign({ ssrSafe: true, ref: resetRef }, props));
 });
-AsyncBoundary.CSROnly = (0, react_1.forwardRef)(function CSROnlyAsyncBoundary(props, resetRef) {
-    return (0, jsx_runtime_1.jsx)(AsyncBoundary, Object.assign({ ref: resetRef }, props));
+exports.AsyncBoundary.CSROnly = (0, react_1.forwardRef)(function CSROnlyAsyncBoundary(props, resetRef) {
+    return (0, jsx_runtime_1.jsx)(exports.AsyncBoundary, Object.assign({ ref: resetRef }, props));
 });
 //# sourceMappingURL=AsyncBoundary.js.map

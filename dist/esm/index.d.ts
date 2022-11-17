@@ -1,4 +1,4 @@
 export { AsyncBoundary } from './AsyncBoundary';
-export { SSRSafeSuspense } from './SSRSafeSuspense';
+export { Suspense } from './Suspense';
 export { ErrorBoundary } from './ErrorBoundary';
 export { ResetBoundaryConsumer, ResetBoundaryProvider, useResetBoundary, withResetBoundary } from './ResetBoundary';
