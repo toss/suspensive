@@ -1,4 +1,11 @@
-import { ComponentProps, ComponentType, createContext, FC, ReactNode, useContext } from 'react'
+import {
+  ComponentProps,
+  ComponentType,
+  createContext,
+  FC,
+  ReactNode,
+  useContext,
+} from 'react'
 import { useResetKey } from './hooks'
 
 const defaultValue = {
@@ -17,7 +24,9 @@ export const ResetBoundaryProvider: FC<{
   const { resetKey, reset } = useResetKey()
 
   return (
-    <ResetBoundaryContext.Provider value={{ resetBoundaryKey: resetKey, resetBoundary: reset }}>
+    <ResetBoundaryContext.Provider
+      value={{ resetBoundaryKey: resetKey, resetBoundary: reset }}
+    >
       {children}
     </ResetBoundaryContext.Provider>
   )
@@ -29,13 +38,17 @@ export const useResetBoundary = () => {
   const context = useContext(ResetBoundaryContext)
 
   if (!context) {
-    throw new Error('useResetBoundary error: Component using useResetBoundary require ResetBoundaryProvider as Parent')
+    throw new Error(
+      'useResetBoundary error: Component using useResetBoundary require ResetBoundaryProvider as Parent'
+    )
   }
 
   return context
 }
 
-export const withResetBoundaryProvider = <P extends Record<string, unknown>>(Component: ComponentType<P>) => {
+export const withResetBoundaryProvider = <P extends Record<string, unknown>>(
+  Component: ComponentType<P>
+) => {
   const WrappedByResetBoundaryProvider = (props: P) => (
     <ResetBoundaryProvider>
       <Component {...props} />
@@ -45,21 +58,29 @@ export const withResetBoundaryProvider = <P extends Record<string, unknown>>(Com
   return WrappedByResetBoundaryProvider
 }
 
-export const ResetBoundary: FC<{ children: ComponentProps<typeof ResetBoundaryConsumer>['children'] }> = ({
-  children,
-}) => (
+export const ResetBoundary: FC<{
+  children: ComponentProps<typeof ResetBoundaryConsumer>['children']
+}> = ({ children }) => (
   <ResetBoundaryProvider>
     <ResetBoundaryConsumer>{children}</ResetBoundaryConsumer>
   </ResetBoundaryProvider>
 )
 
-export const withResetBoundary = <P extends Record<string, unknown> = Record<string, never>>(
-  Component: ComponentType<P & Parameters<ComponentProps<typeof ResetBoundary>['children']>[0]>
+export const withResetBoundary = <
+  P extends Record<string, unknown> = Record<string, never>
+>(
+  Component: ComponentType<
+    P & Parameters<ComponentProps<typeof ResetBoundary>['children']>[0]
+  >
 ) => {
   const WrappedComponent: FC<P & ComponentProps<typeof ResetBoundary>> = props => (
     <ResetBoundary>
       {({ resetBoundary, resetBoundaryKey }) => (
-        <Component resetBoundary={resetBoundary} resetBoundaryKey={resetBoundaryKey} {...props} />
+        <Component
+          resetBoundary={resetBoundary}
+          resetBoundaryKey={resetBoundaryKey}
+          {...props}
+        />
       )}
     </ResetBoundary>
   )

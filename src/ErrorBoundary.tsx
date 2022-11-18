@@ -6,7 +6,9 @@ type Props = PropsWithRef<{
   onReset?(): void
   onError?(error: Error, info: ErrorInfo): void
   children?: ReactNode | undefined
-  fallback: ReactNode | ((props: { error: Error; reset: (...args: unknown[]) => void }) => ReactNode)
+  fallback:
+    | ReactNode
+    | ((props: { error: Error; reset: (...args: unknown[]) => void }) => ReactNode)
 }>
 
 interface State {
@@ -40,7 +42,11 @@ export class ErrorBoundary extends Component<Props, State> {
     const { error } = this.state
     const { resetKeys } = this.props
 
-    if (error !== null && prevState.error !== null && isDifferentArray(prevProps.resetKeys, resetKeys)) {
+    if (
+      error !== null &&
+      prevState.error !== null &&
+      isDifferentArray(prevProps.resetKeys, resetKeys)
+    ) {
       this.resetErrorBoundary()
     }
   }

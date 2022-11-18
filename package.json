@@ -13,6 +13,8 @@
     "build:esm": "tsc",
     "build:cjs": "tsc --module CommonJS --outDir dist/cjs",
     "test": "echo \"Error: no test specified\" && exit 1",
+    "lint:check": "eslint . --quiet",
+    "lint:fix": "eslint --fix --ext .ts,.tsx,.js,.jsx .",
     "type:check": "tsc --noEmit"
   },
   "repository": {

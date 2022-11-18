@@ -1,4 +1,11 @@
-import { ComponentProps, ComponentType, forwardRef, Ref, useImperativeHandle, useRef } from 'react'
+import {
+  ComponentProps,
+  ComponentType,
+  forwardRef,
+  Ref,
+  useImperativeHandle,
+  useRef,
+} from 'react'
 import { Suspense, ErrorBoundary } from '.'
 
 type SuspenseProps = ComponentProps<typeof Suspense>
@@ -41,16 +48,14 @@ export const AsyncBoundary = BaseAsyncBoundary as typeof BaseAsyncBoundary & {
   CSROnly: ComponentType<SSROrCSRAsyncBoundaryProps>
 }
 
-AsyncBoundary.SSRSafe = forwardRef<ResetRef, SSROrCSRAsyncBoundaryProps>(function SSRSafeAsyncBoundary(
-  props,
-  resetRef
-) {
-  return <AsyncBoundary ssrSafe ref={resetRef} {...props} />
-})
+AsyncBoundary.SSRSafe = forwardRef<ResetRef, SSROrCSRAsyncBoundaryProps>(
+  function SSRSafeAsyncBoundary(props, resetRef) {
+    return <AsyncBoundary ssrSafe ref={resetRef} {...props} />
+  }
+)
 
-AsyncBoundary.CSROnly = forwardRef<ResetRef, SSROrCSRAsyncBoundaryProps>(function CSROnlyAsyncBoundary(
-  props,
-  resetRef
-) {
-  return <AsyncBoundary ref={resetRef} {...props} />
-})
+AsyncBoundary.CSROnly = forwardRef<ResetRef, SSROrCSRAsyncBoundaryProps>(
+  function CSROnlyAsyncBoundary(props, resetRef) {
+    return <AsyncBoundary ref={resetRef} {...props} />
+  }
+)
