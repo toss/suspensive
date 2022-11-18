@@ -10,7 +10,7 @@ var __rest = (this && this.__rest) || function (s, e) {
     return t;
 };
 import { jsx as _jsx } from "react/jsx-runtime";
-import { forwardRef, useImperativeHandle, useRef } from 'react';
+import { forwardRef, useImperativeHandle, useRef, } from 'react';
 import { Suspense, ErrorBoundary } from '.';
 const BaseAsyncBoundary = forwardRef(function AsyncBoundary(_a, resetRef) {
     var { ssrSafe, pendingFallback, rejectedFallback, children } = _a, errorBoundaryProps = __rest(_a, ["ssrSafe", "pendingFallback", "rejectedFallback", "children"]);

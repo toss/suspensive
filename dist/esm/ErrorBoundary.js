@@ -26,7 +26,9 @@ export class ErrorBoundary extends Component {
     componentDidUpdate(prevProps, prevState) {
         const { error } = this.state;
         const { resetKeys } = this.props;
-        if (error !== null && prevState.error !== null && isDifferentArray(prevProps.resetKeys, resetKeys)) {
+        if (error !== null &&
+            prevState.error !== null &&
+            isDifferentArray(prevProps.resetKeys, resetKeys)) {
             this.resetErrorBoundary();
         }
     }

@@ -1,13 +1,22 @@
-import { ComponentType, FC, ReactNode } from 'react';
+import { ComponentProps, ComponentType, FC, ReactNode } from 'react';
 export declare const ResetBoundaryProvider: FC<{
     children: ReactNode;
 }>;
 export declare const ResetBoundaryConsumer: import("react").Consumer<{
-    resetKey: number;
-    reset: () => void;
+    resetBoundaryKey: number;
+    resetBoundary: () => void;
 }>;
 export declare const useResetBoundary: () => {
-    resetKey: number;
-    reset: () => void;
+    resetBoundaryKey: number;
+    resetBoundary: () => void;
 };
-export declare const withResetBoundary: <P extends Record<string, unknown>>(Component: ComponentType<P>) => (props: P) => JSX.Element;
+export declare const withResetBoundaryProvider: <P extends Record<string, unknown>>(Component: ComponentType<P>) => (props: P) => JSX.Element;
+export declare const ResetBoundary: FC<{
+    children: ComponentProps<typeof ResetBoundaryConsumer>['children'];
+}>;
+export declare const withResetBoundary: <P extends Record<string, unknown> = Record<string, never>>(Component: ComponentType<P & {
+    resetBoundaryKey: number;
+    resetBoundary: () => void;
+}>) => FC<P & {
+    children: ComponentProps<typeof ResetBoundaryConsumer>['children'];
+}>;
