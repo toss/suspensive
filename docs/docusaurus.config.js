@@ -65,13 +65,12 @@ const config = {
         items: [
           {
             type: 'doc',
-            docId: 'intro',
+            docId: 'intro/motivation',
             position: 'left',
-            label: 'Tutorial',
+            label: 'Docs',
           },
-          { to: '/blog', label: 'Blog', position: 'left' },
           {
-            href: 'https://github.com/facebook/docusaurus',
+            href: 'https://github.com/suspensive/boundary',
             label: 'GitHub',
             position: 'right',
           },
@@ -84,25 +83,16 @@ const config = {
             title: 'Docs',
             items: [
               {
-                label: 'Tutorial',
-                to: '/docs/intro',
-              },
-            ],
-          },
-          {
-            title: 'Community',
-            items: [
-              {
-                label: 'Stack Overflow',
-                href: 'https://stackoverflow.com/questions/tagged/docusaurus',
+                label: 'Getting Started',
+                to: '/docs/intro/motivation',
               },
               {
-                label: 'Discord',
-                href: 'https://discordapp.com/invite/docusaurus',
+                label: 'Installation',
+                to: '/docs/intro/installation',
               },
               {
-                label: 'Twitter',
-                href: 'https://twitter.com/docusaurus',
+                label: 'API Reference',
+                to: '/docs/reference/suspense',
               },
             ],
           },
@@ -110,17 +100,26 @@ const config = {
             title: 'More',
             items: [
               {
-                label: 'Blog',
-                to: '/blog',
+                label: 'GitHub',
+                href: 'https://github.com/suspensive/boundary',
+              },
+            ],
+          },
+          {
+            title: 'Libraries from Suspensive Team',
+            items: [
+              {
+                label: 'Boundary',
+                href: 'https://github.com/suspensive/boundary',
               },
               {
-                label: 'GitHub',
-                href: 'https://github.com/facebook/docusaurus',
+                label: 'Query',
+                href: 'https://github.com/suspensive/query',
               },
             ],
           },
         ],
-        copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
+        copyright: `Copyright © ${new Date().getFullYear()} Jonghyeon Ko and the Suspensive authors.`,
       },
       prism: {
         theme: lightCodeTheme,
