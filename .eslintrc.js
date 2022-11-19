@@ -4,6 +4,14 @@ module.exports = {
   parserOptions: {
     ecmaFeatures: { jsx: true },
   },
+  
+  env: {
+    es6: true,
+    node: true,
+    browser: true,
+    jest: true,
+    'shared-node-browser': true,
+  },
 
   extends: [
     'eslint:recommended',
@@ -15,6 +23,7 @@ module.exports = {
   plugins: ['@typescript-eslint', 'import', 'react', 'react-hooks'],
   rules: {
     '@typescript-eslint/no-empty-function': 'off',
+    '@typescript-eslint/no-var-requires': 'warn',
     'react/react-in-jsx-scope': 'off',
   },
 }

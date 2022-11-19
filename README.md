@@ -1,1 +1,1 @@
-# @suspensive/boundary
+# suspensive

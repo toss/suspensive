@@ -1,10 +1,4 @@
 {
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "editor.bracketPairColorization.enabled": true,
-  "editor.formatOnSave": true,
-  "editor.formatOnPaste": true,
-  "editor.wordWrap": "on",
-  "git.ignoreLimitWarning": true,
   "search.exclude": {
     "**/.yarn": true,
     "**/.pnp.*": true
