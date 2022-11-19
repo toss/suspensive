@@ -1,0 +1,36 @@
+{
+  "name": "@suspensive/react-query",
+  "version": "development",
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.js",
+  "files": [
+    "./dist"
+  ],
+  "scripts": {
+    "build": "rm -rf dist/ && prettier --write src/ && npm run build:esm && npm run build:cjs",
+    "build:esm": "tsc",
+    "build:cjs": "tsc --module CommonJS --outDir ./dist/cjs",
+    "publish": "npm publish --access public",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint:check": "eslint . --quiet",
+    "lint:fix": "eslint --fix --ext .ts,.tsx,.js,.jsx .",
+    "type:check": "tsc --noEmit"
+  },
+  "peerDependencies": {
+    "@tanstack/react-query": "*",
+    "react": "^16.8 || ^17 || ^18",
+    "react-dom": "*"
+  },
+  "dependencies": {
+    "@suspensive/react-boundary": "workspace:^"
+  },
+  "devDependencies": {
+    "@tanstack/react-query": "^4.16.1",
+    "@types/node": "^18.11.9",
+    "@types/react": "^18.0.25",
+    "@types/react-dom": "^18.0.9",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "typescript": "^4.9.3"
+  }
+}
