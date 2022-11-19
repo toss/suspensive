@@ -1794,7 +1794,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@docusaurus/module-type-aliases@npm:2.2.0":
+"@docusaurus/module-type-aliases@npm:2.2.0, @docusaurus/module-type-aliases@npm:^2.2.0":
   version: 2.2.0
   resolution: "@docusaurus/module-type-aliases@npm:2.2.0"
   dependencies:
@@ -2599,7 +2599,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tsconfig/docusaurus@npm:^1.0.5":
+"@tsconfig/docusaurus@npm:^1.0.6":
   version: 1.0.6
   resolution: "@tsconfig/docusaurus@npm:1.0.6"
   checksum: fb0d7965c01fe64fc6369a72695b903d654bd5fb145f373d707c2bae3c2d828703517d812cef1c041ae44b108f44e52778b9d9837a54fdf782e68e6619a90a4d
@@ -4752,15 +4752,15 @@ __metadata:
   resolution: "docs@workspace:."
   dependencies:
     "@docusaurus/core": 2.2.0
-    "@docusaurus/module-type-aliases": 2.2.0
+    "@docusaurus/module-type-aliases": ^2.2.0
     "@docusaurus/preset-classic": 2.2.0
     "@mdx-js/react": ^1.6.22
-    "@tsconfig/docusaurus": ^1.0.5
+    "@tsconfig/docusaurus": ^1.0.6
     clsx: ^1.2.1
     prism-react-renderer: ^1.3.5
     react: ^17.0.2
     react-dom: ^17.0.2
-    typescript: ^4.7.4
+    typescript: ^4.9.3
   languageName: unknown
   linkType: soft
 
@@ -10004,7 +10004,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:^4.7.4":
+"typescript@npm:^4.9.3":
   version: 4.9.3
   resolution: "typescript@npm:4.9.3"
   bin:
@@ -10014,7 +10014,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@^4.7.4#~builtin<compat/typescript>":
+"typescript@patch:typescript@^4.9.3#~builtin<compat/typescript>":
   version: 4.9.3
   resolution: "typescript@patch:typescript@npm%3A4.9.3#~builtin<compat/typescript>::version=4.9.3&hash=d73830"
   bin:
