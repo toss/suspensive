@@ -16,5 +16,5 @@ npm install @suspensive/react-boundary
 Or if you're using <a href="https://classic.yarnpkg.com/en/docs/install/" target="_blank">yarn</a>:
 
 ```shell
-yarn install @suspensive/react-boundary
+yarn add @suspensive/react-boundary
 ```
