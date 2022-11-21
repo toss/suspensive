@@ -15,7 +15,7 @@ const BaseResetSuspenseQueryBoundary = forwardRef<ResetRef, Props>(
   function BaseResetSuspenseQueryBoundary(props, resetRef) {
     return (
       <QueryErrorResetBoundary>
-        {({ reset }) => <AsyncBoundary ref={resetRef} {...props} onReset={reset} />}
+        {({ reset }) => <AsyncBoundary {...props} onReset={reset} ref={resetRef} />}
       </QueryErrorResetBoundary>
     )
   }
@@ -26,7 +26,7 @@ const CSROnlyResetSuspenseQueryBoundary = forwardRef<ResetRef, Props>(
     return (
       <QueryErrorResetBoundary>
         {({ reset }) => (
-          <AsyncBoundary.CSROnly ref={resetRef} {...props} onReset={reset} />
+          <AsyncBoundary.CSROnly {...props} onReset={reset} ref={resetRef} />
         )}
       </QueryErrorResetBoundary>
     )

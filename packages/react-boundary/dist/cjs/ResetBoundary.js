@@ -5,7 +5,7 @@ const jsx_runtime_1 = require("react/jsx-runtime");
 const react_1 = require("react");
 const hooks_1 = require("./hooks");
 const defaultValue = {
-    resetBoundaryKey: -1,
+    resetBoundaryKey: {},
     resetBoundary: () => { },
 };
 const ResetBoundaryContext = (0, react_1.createContext)(defaultValue);

@@ -2,7 +2,7 @@ import { jsx as _jsx } from "react/jsx-runtime";
 import { createContext, useContext, } from 'react';
 import { useResetKey } from './hooks';
 const defaultValue = {
-    resetBoundaryKey: -1,
+    resetBoundaryKey: {},
     resetBoundary: () => { },
 };
 const ResetBoundaryContext = createContext(defaultValue);

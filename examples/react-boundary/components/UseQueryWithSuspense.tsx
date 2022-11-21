@@ -5,7 +5,7 @@ type Props = {
   axiosLikeFn: () => Promise<{ data: unknown }>
 }
 
-export const UseQueryWithSuspense = ({ queryKey, axiosLikeFn }: Props) => {
+const UseQueryWithSuspense = ({ queryKey, axiosLikeFn }: Props) => {
   const query = useQuery(
     queryKey,
     async () => {
@@ -22,3 +22,5 @@ export const UseQueryWithSuspense = ({ queryKey, axiosLikeFn }: Props) => {
 
   return null
 }
+
+export default UseQueryWithSuspense

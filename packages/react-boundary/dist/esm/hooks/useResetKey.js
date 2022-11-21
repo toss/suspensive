@@ -1,7 +1,8 @@
 import { useCallback, useState } from 'react';
-export default function useResetKey() {
-    const [resetKey, setResetKey] = useState(0);
-    const reset = useCallback(() => setResetKey(prev => prev + 1), []);
+const useResetKey = () => {
+    const [resetKey, setResetKey] = useState({});
+    const reset = useCallback(() => setResetKey(prev => (Object.assign({}, prev))), []);
     return { resetKey, reset };
-}
+};
+export default useResetKey;
 //# sourceMappingURL=useResetKey.js.map
