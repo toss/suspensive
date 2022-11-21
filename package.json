@@ -20,6 +20,7 @@
   "workspaces": {
     "packages": [
       "docs/*",
+      "examples/*",
       "packages/*"
     ]
   },

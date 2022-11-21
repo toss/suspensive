@@ -1,1 +1,1 @@
-{"version":3,"file":"Suspense.js","sourceRoot":"","sources":["../../src/Suspense.tsx"],"names":[],"mappings":";;;AAAA,6CAA8C;AAC9C,iCAAgD;AAEnC,QAAA,QAAQ,GAAG,gBAEvB,CAAA;AAED,gBAAQ,CAAC,OAAO,GAAG,4BAAe,CAAA"}
+{"version":3,"file":"Suspense.js","sourceRoot":"","sources":["../../src/Suspense.tsx"],"names":[],"mappings":";;;;AAAA,6CAA8C;AAC9C,iCAA+D;AAE/D,MAAM,eAAe,GAAG,CAAC,KAAoB,EAAE,EAAE,CAAC,uBAAC,gBAAY,oBAAK,KAAK,EAAI,CAAA;AAEhE,QAAA,QAAQ,GAAG,eAEvB,CAAA;AACD,gBAAQ,CAAC,OAAO,GAAG,4BAAe,CAAA"}

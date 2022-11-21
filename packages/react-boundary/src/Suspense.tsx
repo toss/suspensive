@@ -1,8 +1,9 @@
 import { CSROnlySuspense } from './components'
-import { Suspense as BaseSuspense } from 'react'
+import { Suspense as BaseSuspense, SuspenseProps } from 'react'
 
-export const Suspense = BaseSuspense as typeof BaseSuspense & {
+const DefaultSuspense = (props: SuspenseProps) => <BaseSuspense {...props} />
+
+export const Suspense = DefaultSuspense as typeof DefaultSuspense & {
   CSROnly: typeof CSROnlySuspense
 }
-
 Suspense.CSROnly = CSROnlySuspense

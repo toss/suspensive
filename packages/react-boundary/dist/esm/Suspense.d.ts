@@ -1,4 +1,5 @@
 import { CSROnlySuspense } from './components';
-export declare const Suspense: import("react").ExoticComponent<import("react").SuspenseProps> & {
+import { SuspenseProps } from 'react';
+export declare const Suspense: ((props: SuspenseProps) => JSX.Element) & {
     CSROnly: typeof CSROnlySuspense;
 };
