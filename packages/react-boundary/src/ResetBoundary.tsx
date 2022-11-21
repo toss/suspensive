@@ -9,7 +9,7 @@ import {
 import { useResetKey } from './hooks'
 
 const defaultValue = {
-  resetBoundaryKey: -1,
+  resetBoundaryKey: {},
   resetBoundary: () => {},
 }
 

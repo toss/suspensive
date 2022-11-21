@@ -1,4 +1,5 @@
-export default function useResetKey(): {
-    resetKey: number;
+declare const useResetKey: () => {
+    resetKey: {};
     reset: () => void;
 };
+export default useResetKey;
