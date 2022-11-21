@@ -1,15 +1,23 @@
-import { Component, ErrorInfo, isValidElement, PropsWithRef, ReactNode } from 'react'
+import {
+  Component,
+  ErrorInfo,
+  isValidElement,
+  PropsWithChildren,
+  PropsWithRef,
+  ReactNode,
+} from 'react'
 import { isDifferentArray } from './utils'
 
-type Props = PropsWithRef<{
-  resetKeys?: unknown[]
-  onReset?(): void
-  onError?(error: Error, info: ErrorInfo): void
-  children?: ReactNode | undefined
-  fallback:
-    | ReactNode
-    | ((props: { error: Error; reset: (...args: unknown[]) => void }) => ReactNode)
-}>
+type Props = PropsWithRef<
+  PropsWithChildren<{
+    resetKeys?: unknown[]
+    onReset?(): void
+    onError?(error: Error, info: ErrorInfo): void
+    fallback:
+      | ReactNode
+      | ((props: { error: Error; reset: (...args: unknown[]) => void }) => ReactNode)
+  }>
+>
 
 interface State {
   error: Error | null

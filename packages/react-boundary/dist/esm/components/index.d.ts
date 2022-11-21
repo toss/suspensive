@@ -1,1 +1,1 @@
-export { SSRSafeSuspense } from './SSRSafeSuspense';
+export { CSROnlySuspense } from './CSROnlySuspense';

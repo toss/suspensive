@@ -1,2 +1,2 @@
-export { SSRSafeSuspense } from './SSRSafeSuspense';
+export { CSROnlySuspense } from './CSROnlySuspense';
 //# sourceMappingURL=index.js.map

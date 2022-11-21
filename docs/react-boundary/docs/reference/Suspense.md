@@ -1,71 +1,53 @@
 ---
 sidebar_position: 1
-title: Suspense (SSRSafe)
+title: Suspense
 ---
 
-This component is just wrapping [React's Suspense](https://reactjs.org/docs/react-api.html#reactsuspense). that make developers can use Suspense easily in SSR(Server-side rendering) environment like [Next.js](https://nextjs.org)
+This component is just wrapping [React's Suspense](https://reactjs.org/docs/react-api.html#reactsuspense). to use Suspense easily in Server-side rendering environment like [Next.js](https://nextjs.org)
+
 
 ## Props
+Same with React.SuspenseProps
 
 ```ts
-type Props = React.SuspenseProps & {
-    ssrSafe?: boolean | undefined; // defaultValue: false
-}
+interface SuspenseProps {
+        children?: ReactNode | undefined;
+
+        /** A fallback react tree to show when a Suspense child (like React.lazy) suspends */
+        fallback?: ReactNode;
+    }
 ```
 
-## Example
+## Examples
 
-### in Client-side rendering
+### Suspense
 
-Suspense of @suspensive/react-boundary will be just Suspense of original React
+Suspense of @suspensive/react-boundary will be just Suspense of original React.
 
 ```tsx
-// Default ssrSafe is off
-const CSR = () => {
+// Suspense of @suspensive/react-boundary is just React.Suspense
+const SuspenseDefault = () => {
     return <Suspense fallback={<Loading/>}>
         <Children/>
     </Suspense>
 }
 ```
 
-```tsx
-// Turn off ssrSafe
-const CSR = () => {
-    return <Suspense ssrSafe={false} fallback={<Loading/>}>
-        <Children/>
-    </Suspense>
-}
-```
+### Suspense.CSROnly
+
+But if you turn on CSROnly, Suspense.CSROnly will return fallback first. After mount, return children of Suspense.CSROnly only in client.
+In server, Suspense.CSROnly return fallback only.
+If you want to use React.Suspense working in both SSR/CSR, You can change Suspense.CSROnly to Suspense gradually.
 
 ```tsx
-// Suspense.CSROnly is React.Suspense
-const CSR = () => {
+// Turn on CSROnly to avoid AvoidSSR
+// This will try to expose children in only client-side rendering
+const SuspenseAvoidSSR = () => {
     return <Suspense.CSROnly fallback={<Loading/>}>
         <Children/>
     </Suspense>
 }
 ```
 
-### in Server-side rendering
-
-but if you turn on ssrSafe, Suspense of @suspensive/react-boundary will return children after mount only in client. but in server, return only fallback.
-
-this ssrSafe mode can make Suspense work in SSR framework like Next.js
-
-```tsx
-// Turn on ssrSafe
-const SSR = () => {
-    return <Suspense ssrSafe fallback={<Loading/>}>
-        <Children/>
-    </Suspense>
-}
-```
-
-```tsx
-// Suspense.SSRSafe will try to expose children in only client-side rendering
-const SSR = () => {
-    return <Suspense.SSRSafe fallback={<Loading/>}>
-        <Children/>
-    </Suspense>
-}
-```
+#### Migration support SSR gradually (Susepense.CSROnly -> default Suspense)
+If you want to use default Suspense working in both SSR/CSR, You can change Suspense.CSROnly to default Suspense gradually.

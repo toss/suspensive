@@ -19,9 +19,9 @@ const FeatureList: FeatureItem[] = [
       "It is simply extension of react's concepts. friendly name like Suspense, Error/Async/ResetBoundary",
   },
   {
-    title: 'Support Sever-side rendering',
+    title: 'Suspense in SSR easily',
     description:
-      "React Boundary provide SSRSafe apis that supports Server-side rendering that wrap react's Suspense",
+      'React Boundary provide CSROnly mode that make developer can adopt Suspense gradually in Server-side rendering environment',
   },
 ]
 

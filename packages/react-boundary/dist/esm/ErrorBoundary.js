@@ -1,4 +1,4 @@
-import { Component, isValidElement } from 'react';
+import { Component, isValidElement, } from 'react';
 import { isDifferentArray } from './utils';
 const initialState = {
     error: null,

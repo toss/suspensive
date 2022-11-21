@@ -25,6 +25,8 @@
   },
   "scripts": {
     "dev:docs:react-boundary": "yarn workspace @docs/react-boundary run start",
+    "build:react-boundary": "yarn workspace @suspensive/react-boundary run build",
+    "publish:react-boundary": "yarn workspace @suspensive/react-boundary run publish",
     "lint:check": "eslint . --quiet",
     "lint:fix": "eslint --fix --ext .ts,.tsx,.js,.jsx .",
     "type:check": "tsc --noEmit"

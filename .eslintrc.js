@@ -24,6 +24,7 @@ module.exports = {
   rules: {
     '@typescript-eslint/no-empty-function': 'off',
     '@typescript-eslint/no-var-requires': 'warn',
+    '@typescript-eslint/no-unused-vars': 'error',
     'react/react-in-jsx-scope': 'off',
   },
 }

@@ -1,1 +1,1 @@
-export { default as ResetSuspenseQueryBoundary } from './ResetSuspenseQueryBoundary'
+export { ResetSuspenseQueryBoundary } from './ResetSuspenseQueryBoundary'

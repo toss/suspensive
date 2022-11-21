@@ -1,6 +1,6 @@
 {
   "name": "@suspensive/react-boundary",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "main": "./dist/cjs/index.js",
   "module": "./dist/esm/index.js",
   "files": [

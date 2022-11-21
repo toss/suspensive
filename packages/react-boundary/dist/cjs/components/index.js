@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SSRSafeSuspense = void 0;
-var SSRSafeSuspense_1 = require("./SSRSafeSuspense");
-Object.defineProperty(exports, "SSRSafeSuspense", { enumerable: true, get: function () { return SSRSafeSuspense_1.SSRSafeSuspense; } });
+exports.CSROnlySuspense = void 0;
+var CSROnlySuspense_1 = require("./CSROnlySuspense");
+Object.defineProperty(exports, "CSROnlySuspense", { enumerable: true, get: function () { return CSROnlySuspense_1.CSROnlySuspense; } });
 //# sourceMappingURL=index.js.map

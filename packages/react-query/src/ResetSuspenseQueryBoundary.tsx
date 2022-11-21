@@ -1,50 +1,41 @@
 import { QueryErrorResetBoundary } from '@tanstack/react-query'
-import { ComponentProps, forwardRef, Ref } from 'react'
-import { AsyncBoundary } from '@suspensive/boundary'
+import { ComponentProps, forwardRef } from 'react'
+import { AsyncBoundary } from '@suspensive/react-boundary'
 
 type Props = Pick<
   ComponentProps<typeof AsyncBoundary>,
-  'children' | 'pendingFallback' | 'rejectedFallback' | 'resetKeys' | 'ssrSafe'
+  'children' | 'pendingFallback' | 'rejectedFallback' | 'resetKeys'
 >
 
 interface ResetRef {
   reset?(): void
 }
 
-const BaseResetSuspenseQueryBoundary = forwardRef(function BaseResetSuspenseQueryBoundary(
-  props: Props,
-  resetRef: Ref<ResetRef>
-) {
-  return (
-    <QueryErrorResetBoundary>
-      {({ reset }) => <AsyncBoundary ref={resetRef} {...props} onReset={reset} />}
-    </QueryErrorResetBoundary>
-  )
-})
-
-type ResetSuspenseQueryBoundaryType = typeof BaseResetSuspenseQueryBoundary & {
-  SSRSafe: typeof BaseResetSuspenseQueryBoundary
-  CSRSafe: typeof BaseResetSuspenseQueryBoundary
-}
-
-const ResetSuspenseQueryBoundary =
-  BaseResetSuspenseQueryBoundary as ResetSuspenseQueryBoundaryType
-
-type SSROrCSRProps = Omit<
-  ComponentProps<typeof BaseResetSuspenseQueryBoundary>,
-  'ssrSafe'
->
-
-ResetSuspenseQueryBoundary.SSRSafe = forwardRef<ResetRef, SSROrCSRProps>(
-  function SSRSafeResetSuspenseQueryBoundary(props, resetRef) {
-    return <BaseResetSuspenseQueryBoundary ssrSafe ref={resetRef} {...props} />
+const BaseResetSuspenseQueryBoundary = forwardRef<ResetRef, Props>(
+  function BaseResetSuspenseQueryBoundary(props, resetRef) {
+    return (
+      <QueryErrorResetBoundary>
+        {({ reset }) => <AsyncBoundary ref={resetRef} {...props} onReset={reset} />}
+      </QueryErrorResetBoundary>
+    )
   }
 )
 
-ResetSuspenseQueryBoundary.CSRSafe = forwardRef<ResetRef, SSROrCSRProps>(
-  function SSRSafeResetSuspenseQueryBoundary(props, resetRef) {
-    return <BaseResetSuspenseQueryBoundary ref={resetRef} {...props} />
+const CSROnlyResetSuspenseQueryBoundary = forwardRef<ResetRef, Props>(
+  function CSROnlyResetSuspenseQueryBoundary(props, resetRef) {
+    return (
+      <QueryErrorResetBoundary>
+        {({ reset }) => (
+          <AsyncBoundary.CSROnly ref={resetRef} {...props} onReset={reset} />
+        )}
+      </QueryErrorResetBoundary>
+    )
   }
 )
 
-export default ResetSuspenseQueryBoundary
+export const ResetSuspenseQueryBoundary =
+  BaseResetSuspenseQueryBoundary as typeof BaseResetSuspenseQueryBoundary & {
+    CSROnly: typeof CSROnlyResetSuspenseQueryBoundary
+  }
+
+ResetSuspenseQueryBoundary.CSROnly = CSROnlyResetSuspenseQueryBoundary
