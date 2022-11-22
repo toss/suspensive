@@ -1,4 +1,4 @@
 .vscode
 .yarn
-.eslintrc.js
 dist
+.eslintrc.js

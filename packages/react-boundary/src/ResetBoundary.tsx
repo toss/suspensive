@@ -1,9 +1,9 @@
 import {
   ComponentProps,
   ComponentType,
-  createContext,
   FC,
   ReactNode,
+  createContext,
   useContext,
 } from 'react'
 import { useResetKey } from './hooks'
@@ -73,7 +73,7 @@ export const withResetBoundary = <
     P & Parameters<ComponentProps<typeof ResetBoundary>['children']>[0]
   >
 ) => {
-  const WrappedComponent: FC<P & ComponentProps<typeof ResetBoundary>> = props => (
+  const WrappedComponent: FC<P & ComponentProps<typeof ResetBoundary>> = (props) => (
     <ResetBoundary>
       {({ resetBoundary, resetBoundaryKey }) => (
         <Component

@@ -25,10 +25,13 @@
     ]
   },
   "scripts": {
+    "dev:example:react-boundary": "yarn workspace @example/react-boundary run start",
     "dev:docs:react-boundary": "yarn workspace @docs/react-boundary run start",
     "build:react-boundary": "yarn workspace @suspensive/react-boundary run build",
+    "build:react-query": "yarn workspace @suspensive/react-query run build",
     "publish:react-boundary": "yarn workspace @suspensive/react-boundary run publish",
-    "lint:check": "eslint . --quiet",
+    "publish:react-query": "yarn workspace @suspensive/react-query run publish",
+    "lint": "eslint .",
     "lint:fix": "eslint --fix --ext .ts,.tsx,.js,.jsx .",
     "type:check": "tsc --noEmit"
   },
@@ -38,13 +41,14 @@
     "@typescript-eslint/eslint-plugin": "^5.43.0",
     "@typescript-eslint/parser": "^5.43.0",
     "eslint": "^8.28.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-airbnb-typescript": "^17.0.0",
+    "eslint-config-next": "^13.0.4",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-prettier": "^4.2.1",
-    "eslint-plugin-react": "^7.31.11",
-    "eslint-plugin-react-hooks": "^4.6.0",
     "prettier": "^2.7.1",
-    "typescript": "^4.9.3"
+    "typescript": "4.8.4"
   },
   "packageManager": "yarn@3.3.0"
 }

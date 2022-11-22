@@ -1,10 +1,10 @@
 import {
   Component,
   ErrorInfo,
-  isValidElement,
   PropsWithChildren,
   PropsWithRef,
   ReactNode,
+  isValidElement,
 } from 'react'
 import { isDifferentArray } from './utils'
 
@@ -33,6 +33,7 @@ export class ErrorBoundary extends Component<Props, State> {
   }
 
   state = initialState
+
   resetErrorBoundary = () => {
     this.props.onReset?.()
     this.reset()
@@ -66,14 +67,14 @@ export class ErrorBoundary extends Component<Props, State> {
     if (error !== null) {
       if (isValidElement(fallback)) {
         return fallback
-      } else if (typeof fallback === 'function') {
+      }
+      if (typeof fallback === 'function') {
         return fallback({
           error,
           reset: this.resetErrorBoundary,
         })
-      } else {
-        throw new Error('react-error-boundary requires either a fallback')
       }
+      throw new Error('react-error-boundary requires either a fallback')
     }
 
     return children
