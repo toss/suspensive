@@ -1,7 +1,7 @@
 import { jsx as _jsx } from "react/jsx-runtime";
-import { QueryErrorResetBoundary } from '@tanstack/react-query';
 import { forwardRef } from 'react';
 import { AsyncBoundary } from '@suspensive/react-boundary';
+import { QueryErrorResetBoundary } from '@tanstack/react-query';
 const BaseResetSuspenseQueryBoundary = forwardRef(function BaseResetSuspenseQueryBoundary(props, resetRef) {
     return (_jsx(QueryErrorResetBoundary, { children: ({ reset }) => _jsx(AsyncBoundary, Object.assign({ ref: resetRef }, props, { onReset: reset })) }));
 });

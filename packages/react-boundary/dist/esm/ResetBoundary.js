@@ -27,7 +27,7 @@ export const withResetBoundaryProvider = (Component) => {
 };
 export const ResetBoundary = ({ children }) => (_jsx(ResetBoundaryProvider, { children: _jsx(ResetBoundaryConsumer, { children: children }) }));
 export const withResetBoundary = (Component) => {
-    const WrappedComponent = props => (_jsx(ResetBoundary, { children: ({ resetBoundary, resetBoundaryKey }) => (_jsx(Component, Object.assign({ resetBoundary: resetBoundary, resetBoundaryKey: resetBoundaryKey }, props))) }));
+    const WrappedComponent = (props) => (_jsx(ResetBoundary, { children: ({ resetBoundary, resetBoundaryKey }) => (_jsx(Component, Object.assign({ resetBoundary: resetBoundary, resetBoundaryKey: resetBoundaryKey }, props))) }));
     return WrappedComponent;
 };
 //# sourceMappingURL=ResetBoundary.js.map

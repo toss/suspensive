@@ -11,7 +11,7 @@ var __rest = (this && this.__rest) || function (s, e) {
 };
 import { jsx as _jsx } from "react/jsx-runtime";
 import { forwardRef, useImperativeHandle, useRef } from 'react';
-import { Suspense, ErrorBoundary } from '.';
+import { ErrorBoundary, Suspense } from '.';
 const BaseAsyncBoundary = forwardRef(function BaseAsyncBoundary(_a, resetRef) {
     var { pendingFallback, rejectedFallback, children } = _a, errorBoundaryProps = __rest(_a, ["pendingFallback", "rejectedFallback", "children"]);
     const ref = useRef(null);
