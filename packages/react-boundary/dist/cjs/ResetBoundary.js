@@ -34,7 +34,7 @@ exports.withResetBoundaryProvider = withResetBoundaryProvider;
 const ResetBoundary = ({ children }) => ((0, jsx_runtime_1.jsx)(exports.ResetBoundaryProvider, { children: (0, jsx_runtime_1.jsx)(exports.ResetBoundaryConsumer, { children: children }) }));
 exports.ResetBoundary = ResetBoundary;
 const withResetBoundary = (Component) => {
-    const WrappedComponent = props => ((0, jsx_runtime_1.jsx)(exports.ResetBoundary, { children: ({ resetBoundary, resetBoundaryKey }) => ((0, jsx_runtime_1.jsx)(Component, Object.assign({ resetBoundary: resetBoundary, resetBoundaryKey: resetBoundaryKey }, props))) }));
+    const WrappedComponent = (props) => ((0, jsx_runtime_1.jsx)(exports.ResetBoundary, { children: ({ resetBoundary, resetBoundaryKey }) => ((0, jsx_runtime_1.jsx)(Component, Object.assign({ resetBoundary: resetBoundary, resetBoundaryKey: resetBoundaryKey }, props))) }));
     return WrappedComponent;
 };
 exports.withResetBoundary = withResetBoundary;

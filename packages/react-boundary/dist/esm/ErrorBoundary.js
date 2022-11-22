@@ -39,15 +39,13 @@ export class ErrorBoundary extends Component {
             if (isValidElement(fallback)) {
                 return fallback;
             }
-            else if (typeof fallback === 'function') {
+            if (typeof fallback === 'function') {
                 return fallback({
                     error,
                     reset: this.resetErrorBoundary,
                 });
             }
-            else {
-                throw new Error('react-error-boundary requires either a fallback');
-            }
+            throw new Error('react-error-boundary requires either a fallback');
         }
         return children;
     }

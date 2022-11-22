@@ -1,6 +1,6 @@
 {
   "name": "@suspensive/react-boundary",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "main": "./dist/cjs/index.js",
   "module": "./dist/esm/index.js",
   "files": [
@@ -10,7 +10,7 @@
     "build": "rm -rf dist/ && prettier --write src/ && npm run build:esm && npm run build:cjs",
     "build:esm": "tsc",
     "build:cjs": "tsc --module CommonJS --outDir ./dist/cjs",
-    "publish": "npm publish --access public",
+    "publish:public": "npm publish --access public",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint:check": "eslint . --quiet",
     "lint:fix": "eslint --fix --ext .ts,.tsx,.js,.jsx .",

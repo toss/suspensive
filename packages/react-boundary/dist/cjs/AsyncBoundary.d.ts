@@ -1,5 +1,5 @@
 import { ComponentProps } from 'react';
-import { Suspense, ErrorBoundary } from '.';
+import { ErrorBoundary, Suspense } from '.';
 type SuspenseProps = ComponentProps<typeof Suspense>;
 type ErrorBoundaryProps = ComponentProps<typeof ErrorBoundary>;
 interface Props extends Omit<SuspenseProps, 'fallback'>, Omit<ErrorBoundaryProps, 'fallback'> {
