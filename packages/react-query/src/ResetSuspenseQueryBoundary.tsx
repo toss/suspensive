@@ -1,6 +1,6 @@
-import { QueryErrorResetBoundary } from '@tanstack/react-query'
 import { ComponentProps, forwardRef } from 'react'
 import { AsyncBoundary } from '@suspensive/react-boundary'
+import { QueryErrorResetBoundary } from '@tanstack/react-query'
 
 type Props = Pick<
   ComponentProps<typeof AsyncBoundary>,
