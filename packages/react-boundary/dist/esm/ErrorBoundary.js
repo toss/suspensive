@@ -1,4 +1,4 @@
-import { Component, isValidElement, } from 'react';
+import { Component, isValidElement } from 'react';
 import { isDifferentArray } from './utils';
 const initialState = {
     error: null,
@@ -26,9 +26,7 @@ export class ErrorBoundary extends Component {
     componentDidUpdate(prevProps, prevState) {
         const { error } = this.state;
         const { resetKeys } = this.props;
-        if (error !== null &&
-            prevState.error !== null &&
-            isDifferentArray(prevProps.resetKeys, resetKeys)) {
+        if (error !== null && prevState.error !== null && isDifferentArray(prevProps.resetKeys, resetKeys)) {
             this.resetErrorBoundary();
         }
     }

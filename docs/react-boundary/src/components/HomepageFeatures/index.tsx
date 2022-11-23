@@ -15,8 +15,7 @@ const FeatureList: FeatureItem[] = [
   },
   {
     title: 'Only peer dependency, React',
-    description:
-      "It is simply extension of react's concepts. friendly name like Suspense, Error/Async/ResetBoundary",
+    description: "It is simply extension of react's concepts. friendly name like Suspense, Error/Async/ResetBoundary",
   },
   {
     title: 'Suspense in SSR easily',

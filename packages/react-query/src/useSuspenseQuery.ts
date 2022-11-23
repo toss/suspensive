@@ -1,21 +1,14 @@
-import {
-  QueryFunction,
-  QueryKey,
-  UseQueryOptions,
-  UseQueryResult,
-  useQuery,
-} from '@tanstack/react-query'
+import { QueryFunction, QueryKey, UseQueryOptions, UseQueryResult, useQuery } from '@tanstack/react-query'
 
 type BaseExtended<TData = unknown> =
   | { data: TData; status: 'success'; isLoading: false; isSuccess: true }
   | { data: undefined; status: 'loading'; isLoading: true; isSuccess: false }
 
-export type BaseUseSuspenseQueryResult<TExtended extends BaseExtended = BaseExtended> =
-  Omit<
-    UseQueryResult,
-    'data' | 'status' | 'error' | 'isLoading' | 'isError' | 'isFetching'
-  > &
-    TExtended
+export type BaseUseSuspenseQueryResult<TExtended extends BaseExtended = BaseExtended> = Omit<
+  UseQueryResult,
+  'data' | 'status' | 'error' | 'isLoading' | 'isError' | 'isFetching'
+> &
+  TExtended
 
 export type UseSuspenseQueryResultOnSuccess<TData> = BaseUseSuspenseQueryResult<{
   data: TData
@@ -45,10 +38,7 @@ export function useSuspenseQuery<
 >(
   queryKey: TQueryKey,
   queryFn: QueryFunction<TQueryFnData, TQueryKey>,
-  options?: Omit<
-    UseSuspenseQueryOptions<TQueryFnData, TError, TData, TQueryKey>,
-    'enabled'
-  >
+  options?: Omit<UseSuspenseQueryOptions<TQueryFnData, TError, TData, TQueryKey>, 'enabled'>
 ): UseSuspenseQueryResultOnSuccess<TData>
 export function useSuspenseQuery<
   TQueryFnData = unknown,
@@ -58,10 +48,7 @@ export function useSuspenseQuery<
 >(
   queryKey: TQueryKey,
   queryFn: QueryFunction<TQueryFnData, TQueryKey>,
-  options: Omit<
-    UseSuspenseQueryOptions<TQueryFnData, TError, TData, TQueryKey>,
-    'enabled'
-  > & {
+  options: Omit<UseSuspenseQueryOptions<TQueryFnData, TError, TData, TQueryKey>, 'enabled'> & {
     enabled?: true
   }
 ): UseSuspenseQueryResultOnSuccess<TData>
@@ -73,10 +60,7 @@ export function useSuspenseQuery<
 >(
   queryKey: TQueryKey,
   queryFn: QueryFunction<TQueryFnData, TQueryKey>,
-  options: Omit<
-    UseSuspenseQueryOptions<TQueryFnData, TError, TData, TQueryKey>,
-    'enabled'
-  > & {
+  options: Omit<UseSuspenseQueryOptions<TQueryFnData, TError, TData, TQueryKey>, 'enabled'> & {
     enabled: false
   }
 ): UseSuspenseQueryResultOnLoading

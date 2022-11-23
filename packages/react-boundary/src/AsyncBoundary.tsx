@@ -4,9 +4,7 @@ import { ErrorBoundary, Suspense } from '.'
 type SuspenseProps = ComponentProps<typeof Suspense>
 type ErrorBoundaryProps = ComponentProps<typeof ErrorBoundary>
 
-interface Props
-  extends Omit<SuspenseProps, 'fallback'>,
-    Omit<ErrorBoundaryProps, 'fallback'> {
+interface Props extends Omit<SuspenseProps, 'fallback'>, Omit<ErrorBoundaryProps, 'fallback'> {
   pendingFallback: SuspenseProps['fallback']
   rejectedFallback: ErrorBoundaryProps['fallback']
 }

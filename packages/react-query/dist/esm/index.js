@@ -1,3 +1,4 @@
 export { useSuspenseQuery } from './useSuspenseQuery';
-export { ResetSuspenseQueryBoundary } from './ResetSuspenseQueryBoundary';
+export { QueryAsyncBoundary } from './QueryAsyncBoundary';
+export { QueryErrorBoundary } from './QueryErrorBoundary';
 //# sourceMappingURL=index.js.map
