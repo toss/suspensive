@@ -25,12 +25,14 @@
     ]
   },
   "scripts": {
-    "dev:example:react-boundary": "yarn workspace @example/react-boundary run start",
-    "dev:docs:react-boundary": "yarn workspace @docs/react-boundary run start",
-    "build:react-boundary": "yarn workspace @suspensive/react-boundary run build",
-    "build:react-query": "yarn workspace @suspensive/react-query run build",
-    "publish:react-boundary": "yarn workspace @suspensive/react-boundary run publish",
-    "publish:react-query": "yarn workspace @suspensive/react-query run publish",
+    "react-boundary:build": "yarn workspace @suspensive/react-boundary run build",
+    "react-boundary:publish": "yarn workspace @suspensive/react-boundary run publish:public",
+    "react-query:build": "yarn workspace @suspensive/react-query run build",
+    "react-query:publish": "yarn workspace @suspensive/react-query run publish:public",
+    "example:visualization:build": "yarn workspace @example/visualization run build",
+    "example:visualization:start": "yarn workspace @example/visualization run start",
+    "example:visualization:dev": "yarn workspace @example/visualization run dev",
+    "docs:react-boundary:dev": "yarn workspace @docs/react-boundary run start",
     "lint": "eslint .",
     "lint:fix": "eslint --fix --ext .ts,.tsx,.js,.jsx .",
     "type:check": "tsc --noEmit"

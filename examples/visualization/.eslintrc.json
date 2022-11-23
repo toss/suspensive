@@ -1,0 +1,6 @@
+{
+  "extends": ["plugin:@next/next/recommended"],
+  "rules": {
+    "prefer-const": "off"
+  }
+}
