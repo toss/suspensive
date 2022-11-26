@@ -5,10 +5,10 @@
   "author": "Jonghyeon Ko<manudeli.ko@gmail.com>",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/suspensive/suspensive.git"
+    "url": "git+https://github.com/suspensive/react.git"
   },
   "bugs": {
-    "url": "https://github.com/suspensive/suspensive/issues"
+    "url": "https://github.com/suspensive/react/issues"
   },
   "keywords": [
     "react",

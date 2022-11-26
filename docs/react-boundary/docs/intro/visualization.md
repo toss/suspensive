@@ -16,6 +16,6 @@ I made [Concepts Visualization](https://visualization.suspensive.org/react-bound
 
 [**🔗 Click here to see Visualization**](https://visualization.suspensive.org/react-boundary)
 
-[**🔗 Click here to see Repository containing source with React Boundary**](https://github.com/suspensive/react-boundary-example/blob/main/pages/index.tsx)
+[**🔗 Click here to see Repository containing source with React Boundary**](https://github.com/suspensive/visualization.suspensive.org/blob/main/pages/react-boundary.tsx)
 
 ![Visualization Core Concepts](./../../static/gif/visualization-core-concepts.gif)
