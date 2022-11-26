@@ -5,11 +5,15 @@ const ResetKeyContext = createContext({ resetKey: {}, reset: () => { } });
 if (process.env.NODE_ENV !== 'production') {
     ResetKeyContext.displayName = 'ResetKeyContext';
 }
-export const ResetKeyProvider = (props) => {
+const ResetKeyProvider = (props) => {
     const [resetKey, reset] = useKey();
     return _jsx(ResetKeyContext.Provider, Object.assign({}, props, { value: { reset, resetKey } }));
 };
-export const ResetKeyConsumer = ResetKeyContext.Consumer;
+const ResetKeyConsumer = ResetKeyContext.Consumer;
+const BaseResetKey = (props) => (_jsx(ResetKeyProvider, { children: _jsx(ResetKeyConsumer, Object.assign({}, props)) }));
+export const ResetKey = BaseResetKey;
+ResetKey.Provider = ResetKeyProvider;
+ResetKey.Consumer = ResetKeyConsumer;
 export const useResetKey = () => useContext(ResetKeyContext);
 const withResetKeyProviderConsumer = (Component) => (props) => (_jsx(ResetKeyProvider, { children: _jsx(ResetKeyConsumer, { children: ({ reset, resetKey }) => _jsx(Component, Object.assign({ reset: reset, resetKey: resetKey }, props)) }) }));
 const withResetKeyProvider = (Component) => (props) => (_jsx(ResetKeyProvider, { children: _jsx(Component, Object.assign({}, props)) }));

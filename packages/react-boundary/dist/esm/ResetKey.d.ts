@@ -1,11 +1,15 @@
 import { ComponentProps, ComponentType, ReactNode } from 'react';
-export declare const ResetKeyProvider: (props: {
+declare const ResetKeyProvider: (props: {
     children: ReactNode;
 }) => JSX.Element;
-export declare const ResetKeyConsumer: import("react").Consumer<{
+declare const ResetKeyConsumer: import("react").Consumer<{
     resetKey: {};
     reset: () => void;
 }>;
+export declare const ResetKey: ((props: ComponentProps<typeof ResetKeyConsumer>) => JSX.Element) & {
+    Provider: typeof ResetKeyProvider;
+    Consumer: typeof ResetKeyConsumer;
+};
 export declare const useResetKey: () => {
     resetKey: {};
     reset: () => void;
