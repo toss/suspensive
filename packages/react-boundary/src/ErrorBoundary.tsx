@@ -1,4 +1,17 @@
-import { Component, ErrorInfo, PropsWithChildren, PropsWithRef, ReactNode, isValidElement } from 'react'
+import {
+  Component,
+  ComponentProps,
+  ErrorInfo,
+  PropsWithChildren,
+  PropsWithRef,
+  ReactNode,
+  forwardRef,
+  isValidElement,
+  useImperativeHandle,
+  useRef,
+} from 'react'
+import { useResetKey } from './ResetKey'
+import { ResetRef } from './types'
 import { isDifferentArray } from './utils'
 
 type Props = PropsWithRef<
@@ -18,7 +31,7 @@ const initialState: State = {
   error: null,
 }
 
-export class ErrorBoundary extends Component<Props, State> {
+export class BaseErrorBoundary extends Component<Props, State> {
   static getDerivedStateFromError(error: Error) {
     return { error }
   }
@@ -67,3 +80,19 @@ export class ErrorBoundary extends Component<Props, State> {
     return children
   }
 }
+
+export const ResetKeyErrorBoundary = forwardRef<ResetRef, ComponentProps<typeof BaseErrorBoundary>>(
+  ({ resetKeys, ...rest }, resetRef) => {
+    const { resetKey } = useResetKey()
+    const ref = useRef<BaseErrorBoundary | null>(null)
+    useImperativeHandle(resetRef, () => ({ reset: () => ref.current?.resetErrorBoundary() }))
+
+    return <BaseErrorBoundary {...rest} resetKeys={[resetKey, ...(resetKeys || [])]} />
+  }
+)
+
+export const ErrorBoundary = BaseErrorBoundary as typeof BaseErrorBoundary & {
+  ResetKey: typeof ResetKeyErrorBoundary
+}
+
+ErrorBoundary.ResetKey = ResetKeyErrorBoundary
