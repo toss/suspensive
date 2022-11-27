@@ -11,11 +11,12 @@ const FeatureList: FeatureItem[] = [
   {
     title: 'All Declarative Boundaries ready',
     description:
-      'AsyncBoundary, ErrorBoundary, ResetErrorBoundary, Suspense is provided. You can use them easily without any efforts',
+      'Suspense, ErrorBoundary, AsyncBoundary with ResetKey or CSROnly mode is provided. You can use them easily without any efforts',
   },
   {
-    title: 'Only peer dependency, React',
-    description: "It is simply extension of react's concepts. friendly name like Suspense, Error/Async/ResetBoundary",
+    title: 'Zero peer dependency, Only React',
+    description:
+      "It is simply extensions of react's concepts. Named friendly with originals like just Suspense, ErrorBoundary, AsyncBoundary",
   },
   {
     title: 'Suspense in SSR easily',

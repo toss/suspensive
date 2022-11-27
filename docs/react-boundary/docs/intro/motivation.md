@@ -33,7 +33,7 @@ It's why [AsyncBoundary](https://react-boundary.suspensive.org/docs/reference/As
 To reset ErrorBoundary in error boundary, you can use reset in fallback of ErrorBoundary.
 but If you want to reset ErrorBoundary outside of its fallback, you can provide new resetKeys to props of ErrorBoundary.
 
-It's why [ResetErrorBoundary](https://react-boundary.suspensive.org/docs/reference/ResetBoundary) is added in this library.
+It's why [ResetKey](https://react-boundary.suspensive.org/docs/reference/ResetKey) is added in this library.
 
 ## Sometimes, HOC is easier than making depths
 

@@ -5,14 +5,14 @@ title: Concepts Visualization
 
 
 
-I made [Concepts Visualization](https://visualization.suspensive.org/react-boundary) that whoever can understand core concepts of React Boundary(Suspense, ErrorBoundary, AsyncBoundary, ResetBoundary) visually. You can interact this site now.
+I made [Concepts Visualization](https://visualization.suspensive.org/react-boundary) that whoever can understand core concepts of React Boundary(Suspense, ErrorBoundary, AsyncBoundary, ResetKey) visually. You can interact this site now.
 
-## First, See what boundaries do
+## First, See how boundaries do
 
-1. [Suspense](https://react-boundary.suspensive.org/docs/reference/Suspense) on Loading / Success with continuous fetching
-2. [ErrorBoundary](https://react-boundary.suspensive.org/docs/reference/ErrorBoundary) on Loading / Error and how to reset
-3. [AsyncBoundary](https://react-boundary.suspensive.org/docs/reference/AsyncBoundary) on Loading / Success / Error and how to reset on Error
-4. [ResetBoundary](https://react-boundary.suspensive.org/docs/reference/ResetBoundary) outside of ErrorBoundary's fallback
+1. How [Suspense](https://react-boundary.suspensive.org/docs/reference/Suspense) treat loading and success at once in multiple fetching.
+2. How [ErrorBoundary](https://react-boundary.suspensive.org/docs/reference/ErrorBoundary) treat error at once and how to reset. and what resetKeys do.
+3. How [AsyncBoundary](https://react-boundary.suspensive.org/docs/reference/AsyncBoundary) treat loading, success and error at once.
+4. How [ResetKey](https://react-boundary.suspensive.org/docs/reference/ResetKey) reset ErrorBoundary outside of ErrorBoundary's fallback easily
 
 [**🔗 Click here to see Visualization**](https://visualization.suspensive.org/react-boundary)
 
