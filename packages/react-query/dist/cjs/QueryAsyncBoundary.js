@@ -24,14 +24,33 @@ const BaseQueryAsyncBoundary = (0, react_1.forwardRef)(function BaseQueryAsyncBo
             onReset === null || onReset === void 0 ? void 0 : onReset();
         }, ref: resetRef })));
 });
-const CSROnlyQueryAsyncBoundary = (0, react_1.forwardRef)(function CSROnlyQueryAsyncBoundary(_a, resetRef) {
-    var { onReset, children } = _a, props = __rest(_a, ["onReset", "children"]);
+const ResetKeyQueryAsyncBoundary = (0, react_1.forwardRef)(function ResetKeyQueryAsyncBoundary(_a, resetRef) {
+    var { onReset } = _a, props = __rest(_a, ["onReset"]);
+    const { reset } = (0, react_query_1.useQueryErrorResetBoundary)();
+    return ((0, jsx_runtime_1.jsx)(react_boundary_1.AsyncBoundary.ResetKey, Object.assign({}, props, { onReset: () => {
+            reset();
+            onReset === null || onReset === void 0 ? void 0 : onReset();
+        }, ref: resetRef })));
+});
+const BaseCSROnlyQueryAsyncBoundary = (0, react_1.forwardRef)(function BaseCSROnlyQueryAsyncBoundary(_a, resetRef) {
+    var { onReset } = _a, props = __rest(_a, ["onReset"]);
     const { reset } = (0, react_query_1.useQueryErrorResetBoundary)();
     return ((0, jsx_runtime_1.jsx)(react_boundary_1.AsyncBoundary.CSROnly, Object.assign({}, props, { onReset: () => {
             reset();
             onReset === null || onReset === void 0 ? void 0 : onReset();
-        }, ref: resetRef }, { children: children })));
+        }, ref: resetRef })));
 });
+const ResetKeyCSROnlyQueryAsyncBoundary = (0, react_1.forwardRef)(function ResetKeyCSROnlyQueryAsyncBoundary(_a, resetRef) {
+    var { onReset } = _a, props = __rest(_a, ["onReset"]);
+    const { reset } = (0, react_query_1.useQueryErrorResetBoundary)();
+    return ((0, jsx_runtime_1.jsx)(react_boundary_1.AsyncBoundary.CSROnly.ResetKey, Object.assign({}, props, { onReset: () => {
+            reset();
+            onReset === null || onReset === void 0 ? void 0 : onReset();
+        }, ref: resetRef })));
+});
+const CSROnlyQueryAsyncBoundary = BaseCSROnlyQueryAsyncBoundary;
+CSROnlyQueryAsyncBoundary.ResetKey = ResetKeyCSROnlyQueryAsyncBoundary;
 exports.QueryAsyncBoundary = BaseQueryAsyncBoundary;
 exports.QueryAsyncBoundary.CSROnly = CSROnlyQueryAsyncBoundary;
+exports.QueryAsyncBoundary.ResetKey = ResetKeyQueryAsyncBoundary;
 //# sourceMappingURL=QueryAsyncBoundary.js.map

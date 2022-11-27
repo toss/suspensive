@@ -1,2 +1,2 @@
-export { ComponentWithUseSuspenseQuery } from './ComponentWithUseSuspenseQuery'
+export { UseSuspenseQuery } from './UseSuspenseQuery'
 export { RejectedFallback } from './RejectedFallback'

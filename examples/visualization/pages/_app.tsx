@@ -10,19 +10,21 @@ const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       retry: 0,
-      retryDelay: 1000,
     },
   },
 })
 
-function MyApp({ Component, pageProps }: AppProps) {
+export default function MyApp({ Component, pageProps }: AppProps) {
   return (
     <QueryClientProvider client={queryClient}>
       <TopNav>
-        <Image src={'/logo_notcropped.png'} width={40} height={40} alt="logo" />
-        <Link href={'/'}>{"Suspensive's Concepts Visualization"}</Link>
+        <Link href={'/'}>
+          <Home>
+            <Image src={'/logo_notcropped.png'} width={40} height={40} alt="logo" />
+            {"Suspensive's Concepts Visualization"}
+          </Home>
+        </Link>
       </TopNav>
-
       <Layout>
         <Component {...pageProps} />
       </Layout>
@@ -30,8 +32,6 @@ function MyApp({ Component, pageProps }: AppProps) {
     </QueryClientProvider>
   )
 }
-
-export default MyApp
 
 const Layout = styled.div`
   display: flex;
@@ -47,4 +47,9 @@ const TopNav = styled.nav`
   padding: 8px 16px;
   font-weight: 500;
   background-color: #ffffff20;
+`
+
+const Home = styled.span`
+  display: flex;
+  align-items: center;
 `
