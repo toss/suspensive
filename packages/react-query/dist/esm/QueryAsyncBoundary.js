@@ -13,7 +13,7 @@ import { jsx as _jsx } from "react/jsx-runtime";
 import { forwardRef } from 'react';
 import { AsyncBoundary } from '@suspensive/react-boundary';
 import { useQueryErrorResetBoundary } from '@tanstack/react-query';
-const BaseQueryAsyncBoundary = forwardRef(function BaseQueryAsyncBoundary(_a, resetRef) {
+const BaseQueryAsyncBoundary = forwardRef((_a, resetRef) => {
     var { onReset } = _a, props = __rest(_a, ["onReset"]);
     const { reset } = useQueryErrorResetBoundary();
     return (_jsx(AsyncBoundary, Object.assign({}, props, { onReset: () => {
@@ -21,7 +21,7 @@ const BaseQueryAsyncBoundary = forwardRef(function BaseQueryAsyncBoundary(_a, re
             onReset === null || onReset === void 0 ? void 0 : onReset();
         }, ref: resetRef })));
 });
-const ResetKeyQueryAsyncBoundary = forwardRef(function ResetKeyQueryAsyncBoundary(_a, resetRef) {
+const ResetKeyQueryAsyncBoundary = forwardRef((_a, resetRef) => {
     var { onReset } = _a, props = __rest(_a, ["onReset"]);
     const { reset } = useQueryErrorResetBoundary();
     return (_jsx(AsyncBoundary.ResetKey, Object.assign({}, props, { onReset: () => {
@@ -29,7 +29,7 @@ const ResetKeyQueryAsyncBoundary = forwardRef(function ResetKeyQueryAsyncBoundar
             onReset === null || onReset === void 0 ? void 0 : onReset();
         }, ref: resetRef })));
 });
-const BaseCSROnlyQueryAsyncBoundary = forwardRef(function BaseCSROnlyQueryAsyncBoundary(_a, resetRef) {
+const BaseCSROnlyQueryAsyncBoundary = forwardRef((_a, resetRef) => {
     var { onReset } = _a, props = __rest(_a, ["onReset"]);
     const { reset } = useQueryErrorResetBoundary();
     return (_jsx(AsyncBoundary.CSROnly, Object.assign({}, props, { onReset: () => {
@@ -37,7 +37,7 @@ const BaseCSROnlyQueryAsyncBoundary = forwardRef(function BaseCSROnlyQueryAsyncB
             onReset === null || onReset === void 0 ? void 0 : onReset();
         }, ref: resetRef })));
 });
-const ResetKeyCSROnlyQueryAsyncBoundary = forwardRef(function ResetKeyCSROnlyQueryAsyncBoundary(_a, resetRef) {
+const ResetKeyCSROnlyQueryAsyncBoundary = forwardRef((_a, resetRef) => {
     var { onReset } = _a, props = __rest(_a, ["onReset"]);
     const { reset } = useQueryErrorResetBoundary();
     return (_jsx(AsyncBoundary.CSROnly.ResetKey, Object.assign({}, props, { onReset: () => {
