@@ -3,28 +3,15 @@ sidebar_position: 2
 title: ErrorBoundary
 ---
 
-
-
-## Props
-
-```ts
-type Props = PropsWithRef<
-  PropsWithChildren<{
-    resetKeys?: unknown[]
-    onReset?(): void
-    onError?(error: Error, info: ErrorInfo): void
-    fallback:
-      | ReactNode
-      | ((props: { error: Error; reset: (...args: unknown[]) => void }) => ReactNode)
-  }>
->
-```
-
-## Example
+This component provide a simple and reusable wrapper that you can use to wrap around your components. Any rendering errors in your components hierarchy can then be gracefully handled.
 
 ![Example banner](./../../static/gif/errorboundary-example.gif)
 
-```ts
+### Default mode
+
+If there is thrown error in children, ErrorBoundary will catch it and then fallback will be rendered.
+
+```tsx
 const Example = () => {
   return (
     <ErrorBoundary fallback={({ error, reset }) => <button onClick={reset}>{JSON.stringify(error)}</button>}>
@@ -51,5 +38,43 @@ const ErrorAfter4s = () => {
 
   return <>No error</>;
 };
+```
 
+### ResetKey mode
+
+Use ResetKey mode to inject resetKey for resetting multiple ErrorBoundary at once.
+after providing [ResetKey](https://react-boundary.suspensive.org/docs/reference/ResetKey) and turn on ErrorBoundary's ResetKey mode will make you easily bind resetKey at once.
+
+```tsx
+const Example = withResetKey({ reset }) => {
+  return (
+    <>
+      <button onClick={reset}>Reset at once</button>
+      <ErrorBoundary.ResetKey>
+        <ErrorAfter4s />
+      </ErrorBoundary.ResetKey>
+      <ErrorBoundary.ResetKey>
+        <ErrorAfter4s />
+      </ErrorBoundary.ResetKey>
+      <ErrorBoundary.ResetKey>
+        <ErrorAfter4s />
+      </ErrorBoundary.ResetKey>
+    </>
+  );
+};
+```
+
+## Props
+
+```tsx
+type Props = PropsWithRef<
+  PropsWithChildren<{
+    resetKeys?: unknown[]
+    onReset?(): void
+    onError?(error: Error, info: ErrorInfo): void
+    fallback:
+      | ReactNode
+      | ((props: { error: Error; reset: (...args: unknown[]) => void }) => ReactNode)
+  }>
+>
 ```
