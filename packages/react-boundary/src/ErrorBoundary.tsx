@@ -11,8 +11,11 @@ import {
   useRef,
 } from 'react'
 import { useResetKey } from './ResetKey'
-import { ResetRef } from './types'
 import { isDifferentArray } from './utils'
+
+export type ResetRef = {
+  reset?(): void
+}
 
 type Props = PropsWithRef<
   PropsWithChildren<{
@@ -23,7 +26,7 @@ type Props = PropsWithRef<
   }>
 >
 
-interface State {
+type State = {
   error: Error | null
 }
 

@@ -1,5 +1,7 @@
 import { Component, ErrorInfo, PropsWithChildren, PropsWithRef, ReactNode } from 'react';
-import { ResetRef } from './types';
+export type ResetRef = {
+    reset?(): void;
+};
 type Props = PropsWithRef<PropsWithChildren<{
     resetKeys?: unknown[];
     onReset?(): void;
@@ -9,9 +11,9 @@ type Props = PropsWithRef<PropsWithChildren<{
         reset: (...args: unknown[]) => void;
     }) => ReactNode);
 }>>;
-interface State {
+type State = {
     error: Error | null;
-}
+};
 export declare class BaseErrorBoundary extends Component<Props, State> {
     static getDerivedStateFromError(error: Error): {
         error: Error;
