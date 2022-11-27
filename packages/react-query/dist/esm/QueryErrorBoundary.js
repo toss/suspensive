@@ -13,7 +13,7 @@ import { jsx as _jsx } from "react/jsx-runtime";
 import { forwardRef, useImperativeHandle, useRef } from 'react';
 import { ErrorBoundary } from '@suspensive/react-boundary';
 import { QueryErrorResetBoundary } from '@tanstack/react-query';
-export const QueryErrorBoundary = forwardRef((_a, resetRef) => {
+const BaseQueryErrorBoundary = forwardRef((_a, resetRef) => {
     var { onReset } = _a, props = __rest(_a, ["onReset"]);
     const ref = useRef(null);
     useImperativeHandle(resetRef, () => ({
@@ -24,4 +24,17 @@ export const QueryErrorBoundary = forwardRef((_a, resetRef) => {
                 reset();
             }, ref: ref }))) }));
 });
+const ResetKeyQueryErrorBoundary = forwardRef((_a, resetRef) => {
+    var { onReset } = _a, props = __rest(_a, ["onReset"]);
+    const ref = useRef(null);
+    useImperativeHandle(resetRef, () => ({
+        reset: () => { var _a; return (_a = ref.current) === null || _a === void 0 ? void 0 : _a.resetErrorBoundary(); },
+    }));
+    return (_jsx(QueryErrorResetBoundary, { children: ({ reset }) => (_jsx(ErrorBoundary.ResetKey, Object.assign({}, props, { onReset: () => {
+                onReset === null || onReset === void 0 ? void 0 : onReset();
+                reset();
+            }, ref: ref }))) }));
+});
+export const QueryErrorBoundary = BaseQueryErrorBoundary;
+QueryErrorBoundary.ResetKey = ResetKeyQueryErrorBoundary;
 //# sourceMappingURL=QueryErrorBoundary.js.map

@@ -6,7 +6,7 @@ type Props = {
   queryFn: () => Promise<{ data: string }>
 }
 
-export const ComponentWithUseSuspenseQuery = ({ queryKey, queryFn }: Props) => {
+export const UseSuspenseQuery = ({ queryKey, queryFn }: Props) => {
   const { data } = useSuspenseQuery(queryKey, queryFn)
 
   return (
