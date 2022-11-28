@@ -18,39 +18,18 @@ const react_boundary_1 = require("@suspensive/react-boundary");
 const react_query_1 = require("@tanstack/react-query");
 const BaseQueryAsyncBoundary = (0, react_1.forwardRef)((_a, resetRef) => {
     var { onReset } = _a, props = __rest(_a, ["onReset"]);
-    const { reset } = (0, react_query_1.useQueryErrorResetBoundary)();
-    return ((0, jsx_runtime_1.jsx)(react_boundary_1.AsyncBoundary, Object.assign({}, props, { onReset: () => {
-            reset();
-            onReset === null || onReset === void 0 ? void 0 : onReset();
-        }, ref: resetRef })));
+    return ((0, jsx_runtime_1.jsx)(react_query_1.QueryErrorResetBoundary, { children: ({ reset }) => ((0, jsx_runtime_1.jsx)(react_boundary_1.AsyncBoundary, Object.assign({}, props, { onReset: () => {
+                onReset === null || onReset === void 0 ? void 0 : onReset();
+                reset();
+            }, ref: resetRef }))) }));
 });
-const ResetKeyQueryAsyncBoundary = (0, react_1.forwardRef)((_a, resetRef) => {
+const CSROnlyQueryAsyncBoundary = (0, react_1.forwardRef)((_a, resetRef) => {
     var { onReset } = _a, props = __rest(_a, ["onReset"]);
-    const { reset } = (0, react_query_1.useQueryErrorResetBoundary)();
-    return ((0, jsx_runtime_1.jsx)(react_boundary_1.AsyncBoundary.ResetKey, Object.assign({}, props, { onReset: () => {
-            reset();
-            onReset === null || onReset === void 0 ? void 0 : onReset();
-        }, ref: resetRef })));
+    return ((0, jsx_runtime_1.jsx)(react_query_1.QueryErrorResetBoundary, { children: ({ reset }) => ((0, jsx_runtime_1.jsx)(react_boundary_1.AsyncBoundary.CSROnly, Object.assign({}, props, { onReset: () => {
+                onReset === null || onReset === void 0 ? void 0 : onReset();
+                reset();
+            }, ref: resetRef }))) }));
 });
-const BaseCSROnlyQueryAsyncBoundary = (0, react_1.forwardRef)((_a, resetRef) => {
-    var { onReset } = _a, props = __rest(_a, ["onReset"]);
-    const { reset } = (0, react_query_1.useQueryErrorResetBoundary)();
-    return ((0, jsx_runtime_1.jsx)(react_boundary_1.AsyncBoundary.CSROnly, Object.assign({}, props, { onReset: () => {
-            reset();
-            onReset === null || onReset === void 0 ? void 0 : onReset();
-        }, ref: resetRef })));
-});
-const ResetKeyCSROnlyQueryAsyncBoundary = (0, react_1.forwardRef)((_a, resetRef) => {
-    var { onReset } = _a, props = __rest(_a, ["onReset"]);
-    const { reset } = (0, react_query_1.useQueryErrorResetBoundary)();
-    return ((0, jsx_runtime_1.jsx)(react_boundary_1.AsyncBoundary.CSROnly.ResetKey, Object.assign({}, props, { onReset: () => {
-            reset();
-            onReset === null || onReset === void 0 ? void 0 : onReset();
-        }, ref: resetRef })));
-});
-const CSROnlyQueryAsyncBoundary = BaseCSROnlyQueryAsyncBoundary;
-CSROnlyQueryAsyncBoundary.ResetKey = ResetKeyCSROnlyQueryAsyncBoundary;
 exports.QueryAsyncBoundary = BaseQueryAsyncBoundary;
 exports.QueryAsyncBoundary.CSROnly = CSROnlyQueryAsyncBoundary;
-exports.QueryAsyncBoundary.ResetKey = ResetKeyQueryAsyncBoundary;
 //# sourceMappingURL=QueryAsyncBoundary.js.map

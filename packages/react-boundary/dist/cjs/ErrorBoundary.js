@@ -1,20 +1,9 @@
 "use strict";
-var __rest = (this && this.__rest) || function (s, e) {
-    var t = {};
-    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
-        t[p] = s[p];
-    if (s != null && typeof Object.getOwnPropertySymbols === "function")
-        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
-            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
-                t[p[i]] = s[p[i]];
-        }
-    return t;
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ErrorBoundary = exports.ResetKeyErrorBoundary = exports.BaseErrorBoundary = void 0;
+exports.ErrorBoundary = void 0;
 const jsx_runtime_1 = require("react/jsx-runtime");
 const react_1 = require("react");
-const ResetKey_1 = require("./ResetKey");
+const ErrorBoundaryGroup_1 = require("./ErrorBoundaryGroup");
 const utils_1 = require("./utils");
 const initialState = {
     error: null,
@@ -64,14 +53,11 @@ class BaseErrorBoundary extends react_1.Component {
         return children;
     }
 }
-exports.BaseErrorBoundary = BaseErrorBoundary;
-exports.ResetKeyErrorBoundary = (0, react_1.forwardRef)((_a, resetRef) => {
-    var { resetKeys } = _a, rest = __rest(_a, ["resetKeys"]);
-    const { resetKey } = (0, ResetKey_1.useResetKey)();
+exports.ErrorBoundary = (0, react_1.forwardRef)((props, resetRef) => {
+    const { groupResetKey } = (0, ErrorBoundaryGroup_1.useErrorBoundaryGroup)();
+    const resetKeys = groupResetKey ? [groupResetKey, ...(props.resetKeys || [])] : props.resetKeys;
     const ref = (0, react_1.useRef)(null);
     (0, react_1.useImperativeHandle)(resetRef, () => ({ reset: () => { var _a; return (_a = ref.current) === null || _a === void 0 ? void 0 : _a.resetErrorBoundary(); } }));
-    return (0, jsx_runtime_1.jsx)(BaseErrorBoundary, Object.assign({}, rest, { resetKeys: [resetKey, ...(resetKeys || [])] }));
+    return (0, jsx_runtime_1.jsx)(BaseErrorBoundary, Object.assign({}, props, { resetKeys: resetKeys }));
 });
-exports.ErrorBoundary = BaseErrorBoundary;
-exports.ErrorBoundary.ResetKey = exports.ResetKeyErrorBoundary;
 //# sourceMappingURL=ErrorBoundary.js.map

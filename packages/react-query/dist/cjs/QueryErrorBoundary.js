@@ -16,28 +16,11 @@ const jsx_runtime_1 = require("react/jsx-runtime");
 const react_1 = require("react");
 const react_boundary_1 = require("@suspensive/react-boundary");
 const react_query_1 = require("@tanstack/react-query");
-const BaseQueryErrorBoundary = (0, react_1.forwardRef)((_a, resetRef) => {
+exports.QueryErrorBoundary = (0, react_1.forwardRef)((_a, resetRef) => {
     var { onReset } = _a, props = __rest(_a, ["onReset"]);
-    const ref = (0, react_1.useRef)(null);
-    (0, react_1.useImperativeHandle)(resetRef, () => ({
-        reset: () => { var _a; return (_a = ref.current) === null || _a === void 0 ? void 0 : _a.resetErrorBoundary(); },
-    }));
     return ((0, jsx_runtime_1.jsx)(react_query_1.QueryErrorResetBoundary, { children: ({ reset }) => ((0, jsx_runtime_1.jsx)(react_boundary_1.ErrorBoundary, Object.assign({}, props, { onReset: () => {
                 onReset === null || onReset === void 0 ? void 0 : onReset();
                 reset();
-            }, ref: ref }))) }));
+            }, ref: resetRef }))) }));
 });
-const ResetKeyQueryErrorBoundary = (0, react_1.forwardRef)((_a, resetRef) => {
-    var { onReset } = _a, props = __rest(_a, ["onReset"]);
-    const ref = (0, react_1.useRef)(null);
-    (0, react_1.useImperativeHandle)(resetRef, () => ({
-        reset: () => { var _a; return (_a = ref.current) === null || _a === void 0 ? void 0 : _a.resetErrorBoundary(); },
-    }));
-    return ((0, jsx_runtime_1.jsx)(react_query_1.QueryErrorResetBoundary, { children: ({ reset }) => ((0, jsx_runtime_1.jsx)(react_boundary_1.ErrorBoundary.ResetKey, Object.assign({}, props, { onReset: () => {
-                onReset === null || onReset === void 0 ? void 0 : onReset();
-                reset();
-            }, ref: ref }))) }));
-});
-exports.QueryErrorBoundary = BaseQueryErrorBoundary;
-exports.QueryErrorBoundary.ResetKey = ResetKeyQueryErrorBoundary;
 //# sourceMappingURL=QueryErrorBoundary.js.map

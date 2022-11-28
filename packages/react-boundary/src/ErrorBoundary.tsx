@@ -10,7 +10,7 @@ import {
   useImperativeHandle,
   useRef,
 } from 'react'
-import { useResetKey } from './ResetKey'
+import { useErrorBoundaryGroup } from './ErrorBoundaryGroup'
 import { isDifferentArray } from './utils'
 
 export type ResetRef = {
@@ -34,7 +34,7 @@ const initialState: State = {
   error: null,
 }
 
-export class BaseErrorBoundary extends Component<Props, State> {
+class BaseErrorBoundary extends Component<Props, State> {
   static getDerivedStateFromError(error: Error) {
     return { error }
   }
@@ -84,18 +84,12 @@ export class BaseErrorBoundary extends Component<Props, State> {
   }
 }
 
-export const ResetKeyErrorBoundary = forwardRef<ResetRef, ComponentProps<typeof BaseErrorBoundary>>(
-  ({ resetKeys, ...rest }, resetRef) => {
-    const { resetKey } = useResetKey()
-    const ref = useRef<BaseErrorBoundary | null>(null)
-    useImperativeHandle(resetRef, () => ({ reset: () => ref.current?.resetErrorBoundary() }))
+export const ErrorBoundary = forwardRef<ResetRef, ComponentProps<typeof BaseErrorBoundary>>((props, resetRef) => {
+  const { groupResetKey } = useErrorBoundaryGroup()
+  const resetKeys = groupResetKey ? [groupResetKey, ...(props.resetKeys || [])] : props.resetKeys
 
-    return <BaseErrorBoundary {...rest} resetKeys={[resetKey, ...(resetKeys || [])]} />
-  }
-)
+  const ref = useRef<BaseErrorBoundary | null>(null)
+  useImperativeHandle(resetRef, () => ({ reset: () => ref.current?.resetErrorBoundary() }))
 
-export const ErrorBoundary = BaseErrorBoundary as typeof BaseErrorBoundary & {
-  ResetKey: typeof ResetKeyErrorBoundary
-}
-
-ErrorBoundary.ResetKey = ResetKeyErrorBoundary
+  return <BaseErrorBoundary {...props} resetKeys={resetKeys} />
+})
