@@ -1,6 +1,6 @@
 {
   "name": "@suspensive/react-query",
-  "version": "0.2.0",
+  "version": "0.4.0",
   "main": "./dist/cjs/index.js",
   "module": "./dist/esm/index.js",
   "files": [
@@ -28,7 +28,7 @@
     "typescript": "^4.9.3"
   },
   "dependencies": {
-    "@suspensive/react-boundary": "^0.2.0",
+    "@suspensive/react-boundary": "^0.4.0",
     "@tanstack/react-query": "^4.16.1"
   }
 }

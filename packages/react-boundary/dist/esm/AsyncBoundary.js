@@ -10,42 +10,17 @@ var __rest = (this && this.__rest) || function (s, e) {
     return t;
 };
 import { jsx as _jsx } from "react/jsx-runtime";
-import { forwardRef, useImperativeHandle, useRef } from 'react';
-import { useResetKey } from './ResetKey';
-import { ErrorBoundary, Suspense } from '.';
+import { forwardRef } from 'react';
+import { ErrorBoundary } from './ErrorBoundary';
+import { Suspense } from './Suspense';
 const BaseAsyncBoundary = forwardRef((_a, resetRef) => {
     var { pendingFallback, rejectedFallback, children } = _a, errorBoundaryProps = __rest(_a, ["pendingFallback", "rejectedFallback", "children"]);
-    const ref = useRef(null);
-    useImperativeHandle(resetRef, () => ({
-        reset: () => { var _a; return (_a = ref.current) === null || _a === void 0 ? void 0 : _a.resetErrorBoundary(); },
-    }));
-    return (_jsx(ErrorBoundary, Object.assign({}, errorBoundaryProps, { ref: ref, fallback: rejectedFallback }, { children: _jsx(Suspense, Object.assign({ fallback: pendingFallback }, { children: children })) })));
+    return (_jsx(ErrorBoundary, Object.assign({}, errorBoundaryProps, { ref: resetRef, fallback: rejectedFallback }, { children: _jsx(Suspense, Object.assign({ fallback: pendingFallback }, { children: children })) })));
 });
-const BaseCSROnlyAsyncBoundary = forwardRef((_a, resetRef) => {
+const CSROnlyAsyncBoundary = forwardRef((_a, resetRef) => {
     var { pendingFallback, rejectedFallback, children } = _a, errorBoundaryProps = __rest(_a, ["pendingFallback", "rejectedFallback", "children"]);
-    const ref = useRef(null);
-    useImperativeHandle(resetRef, () => ({
-        reset: () => { var _a; return (_a = ref.current) === null || _a === void 0 ? void 0 : _a.resetErrorBoundary(); },
-    }));
-    return (_jsx(ErrorBoundary, Object.assign({}, errorBoundaryProps, { ref: ref, fallback: rejectedFallback }, { children: _jsx(Suspense.CSROnly, Object.assign({ fallback: pendingFallback }, { children: children })) })));
+    return (_jsx(ErrorBoundary, Object.assign({}, errorBoundaryProps, { ref: resetRef, fallback: rejectedFallback }, { children: _jsx(Suspense.CSROnly, Object.assign({ fallback: pendingFallback }, { children: children })) })));
 });
-const ResetKeyCSROnlyAsyncBoundary = forwardRef((_a, resetRef) => {
-    var { pendingFallback, rejectedFallback, children, resetKeys } = _a, errorBoundaryProps = __rest(_a, ["pendingFallback", "rejectedFallback", "children", "resetKeys"]);
-    const { resetKey } = useResetKey();
-    const ref = useRef(null);
-    useImperativeHandle(resetRef, () => ({ reset: () => { var _a; return (_a = ref.current) === null || _a === void 0 ? void 0 : _a.resetErrorBoundary(); } }));
-    return (_jsx(ErrorBoundary, Object.assign({}, errorBoundaryProps, { resetKeys: [resetKey, ...(resetKeys || [])], ref: ref, fallback: rejectedFallback }, { children: _jsx(Suspense.CSROnly, Object.assign({ fallback: pendingFallback }, { children: children })) })));
-});
-const ResetKeyAsyncBoundary = forwardRef((_a, resetRef) => {
-    var { pendingFallback, rejectedFallback, children, resetKeys } = _a, errorBoundaryProps = __rest(_a, ["pendingFallback", "rejectedFallback", "children", "resetKeys"]);
-    const { resetKey } = useResetKey();
-    const ref = useRef(null);
-    useImperativeHandle(resetRef, () => ({ reset: () => { var _a; return (_a = ref.current) === null || _a === void 0 ? void 0 : _a.resetErrorBoundary(); } }));
-    return (_jsx(ErrorBoundary, Object.assign({}, errorBoundaryProps, { resetKeys: [resetKey, ...(resetKeys || [])], ref: ref, fallback: rejectedFallback }, { children: _jsx(Suspense.CSROnly, Object.assign({ fallback: pendingFallback }, { children: children })) })));
-});
-const CSROnlyAsyncBoundary = BaseCSROnlyAsyncBoundary;
-CSROnlyAsyncBoundary.ResetKey = ResetKeyCSROnlyAsyncBoundary;
 export const AsyncBoundary = BaseAsyncBoundary;
 AsyncBoundary.CSROnly = CSROnlyAsyncBoundary;
-AsyncBoundary.ResetKey = ResetKeyAsyncBoundary;
 //# sourceMappingURL=AsyncBoundary.js.map
