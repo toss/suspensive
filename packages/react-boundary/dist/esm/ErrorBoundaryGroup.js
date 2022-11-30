@@ -18,7 +18,7 @@ export const ErrorBoundaryGroup = ({ blockOutside = false, children, }) => {
         if (isMounted && !blockOutside) {
             reset();
         }
-    }, [groupResetKey]);
+    }, [groupResetKey, isMounted, reset]);
     return (_jsx(ErrorBoundaryGroupContext.Provider, Object.assign({ value: { resetGroup: reset, groupResetKey: resetKey } }, { children: children })));
 };
 ErrorBoundaryGroup.Reset = ErrorBoundaryGroupReset;
