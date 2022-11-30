@@ -28,7 +28,7 @@ export const ErrorBoundaryGroup = ({
     if (isMounted && !blockOutside) {
       reset()
     }
-  }, [groupResetKey])
+  }, [groupResetKey, isMounted, reset])
 
   return (
     <ErrorBoundaryGroupContext.Provider value={{ resetGroup: reset, groupResetKey: resetKey }}>
