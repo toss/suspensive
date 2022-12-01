@@ -1630,9 +1630,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@docs/react-boundary@workspace:docs/react-boundary":
+"@docs/react@workspace:docs/react":
   version: 0.0.0-use.local
-  resolution: "@docs/react-boundary@workspace:docs/react-boundary"
+  resolution: "@docs/react@workspace:docs/react"
   dependencies:
     "@docusaurus/core": 2.2.0
     "@docusaurus/module-type-aliases": 2.2.0
@@ -2358,7 +2358,7 @@ __metadata:
     "@emotion/react": ^11.10.5
     "@emotion/styled": ^11.10.5
     "@next/eslint-plugin-next": ^13.0.4
-    "@suspensive/react-boundary": "workspace:^"
+    "@suspensive/react": "workspace:^"
     "@suspensive/react-query": "workspace:^"
     "@tanstack/react-query": ^4.16.1
     "@tanstack/react-query-devtools": ^4.16.1
@@ -2797,9 +2797,36 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@suspensive/react-boundary@^0.4.0, @suspensive/react-boundary@workspace:^, @suspensive/react-boundary@workspace:packages/react-boundary":
+"@suspensive/react-query@workspace:^, @suspensive/react-query@workspace:packages/react-query":
   version: 0.0.0-use.local
-  resolution: "@suspensive/react-boundary@workspace:packages/react-boundary"
+  resolution: "@suspensive/react-query@workspace:packages/react-query"
+  dependencies:
+    "@suspensive/react": ^0.4.0
+    "@tanstack/react-query": ^4.16.1
+    "@types/node": ^18.11.9
+    "@types/react": ^18.0.25
+    "@types/react-dom": ^18.0.9
+    react: ^18.2.0
+    react-dom: ^18.2.0
+    typescript: ^4.9.3
+  peerDependencies:
+    react: ^16.8 || ^17 || ^18
+  languageName: unknown
+  linkType: soft
+
+"@suspensive/react@npm:^0.4.0":
+  version: 0.4.0
+  resolution: "@suspensive/react@npm:0.4.0"
+  peerDependencies:
+    react: ^16.8 || ^17 || ^18
+    react-dom: "*"
+  checksum: c4814b5a0cd44ba75be93e3b34c890851eb4b0a763df888f33defacf2a8d6634a0ba36071cda58a6c1b30ff4759057bd3e0e8697bf5c27b070b1c36aa3dfb299
+  languageName: node
+  linkType: hard
+
+"@suspensive/react@workspace:^, @suspensive/react@workspace:packages/react":
+  version: 0.0.0-use.local
+  resolution: "@suspensive/react@workspace:packages/react"
   dependencies:
     "@types/node": ^18.11.9
     "@types/react": ^18.0.25
@@ -2810,23 +2837,6 @@ __metadata:
   peerDependencies:
     react: ^16.8 || ^17 || ^18
     react-dom: "*"
-  languageName: unknown
-  linkType: soft
-
-"@suspensive/react-query@workspace:^, @suspensive/react-query@workspace:packages/react-query":
-  version: 0.0.0-use.local
-  resolution: "@suspensive/react-query@workspace:packages/react-query"
-  dependencies:
-    "@suspensive/react-boundary": ^0.4.0
-    "@tanstack/react-query": ^4.16.1
-    "@types/node": ^18.11.9
-    "@types/react": ^18.0.25
-    "@types/react-dom": ^18.0.9
-    react: ^18.2.0
-    react-dom: ^18.2.0
-    typescript: ^4.9.3
-  peerDependencies:
-    react: ^16.8 || ^17 || ^18
   languageName: unknown
   linkType: soft
 

@@ -1,4 +1,4 @@
-import { ResetRef } from '@suspensive/react-boundary';
+import { ResetRef } from '@suspensive/react';
 declare const CSROnlyQueryAsyncBoundary: import("react").ForwardRefExoticComponent<Pick<Pick<Omit<import("react").SuspenseProps, "fallback"> & Omit<{
     resetKeys?: unknown[] | undefined;
     onReset?(): void;

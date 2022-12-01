@@ -11,7 +11,7 @@ var __rest = (this && this.__rest) || function (s, e) {
 };
 import { jsx as _jsx } from "react/jsx-runtime";
 import { forwardRef } from 'react';
-import { AsyncBoundary } from '@suspensive/react-boundary';
+import { AsyncBoundary } from '@suspensive/react';
 import { QueryErrorResetBoundary } from '@tanstack/react-query';
 const BaseQueryAsyncBoundary = forwardRef((_a, resetRef) => {
     var { onReset } = _a, props = __rest(_a, ["onReset"]);

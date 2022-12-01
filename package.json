@@ -14,7 +14,6 @@
     "react",
     "suspense",
     "suspensive",
-    "react-boundary",
     "react-query"
   ],
   "workspaces": {
@@ -25,14 +24,14 @@
     ]
   },
   "scripts": {
-    "react-boundary:build": "yarn workspace @suspensive/react-boundary run build",
-    "react-boundary:publish": "yarn workspace @suspensive/react-boundary run publish:public",
-    "react-query:build": "yarn workspace @suspensive/react-query run build",
-    "react-query:publish": "yarn workspace @suspensive/react-query run publish:public",
-    "example:visualization:build": "yarn workspace @example/visualization run build",
-    "example:visualization:start": "yarn workspace @example/visualization run start",
-    "example:visualization:dev": "yarn workspace @example/visualization run dev",
-    "docs:react-boundary:dev": "yarn workspace @docs/react-boundary run start",
+    "build:react": "yarn workspace @suspensive/react run build",
+    "build:react-query": "yarn workspace @suspensive/react-query run build",
+    "publish:react": "yarn workspace @suspensive/react run publish:public",
+    "publish:react-query": "yarn workspace @suspensive/react-query run publish:public",
+    "build:examples:visualization": "yarn workspace @example/visualization run build",
+    "start:examples:visualization": "yarn workspace @example/visualization run start",
+    "dev:examples:visualization": "yarn workspace @example/visualization run dev",
+    "dev:docs:react": "yarn workspace @docs/react run start",
     "lint": "eslint .",
     "lint:fix": "eslint --fix --ext .ts,.tsx,.js,.jsx .",
     "type:check": "tsc --noEmit"
