@@ -1,6 +1,6 @@
 # Suspensive libraries [![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/suspensive/react/blob/main/LICENSE) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/suspensive/react/pulls)
 
-- [**React Boundary**](https://github.com/suspensive/react/tree/main/docs/react-boundary): All declarative boundaries on both CSR, SSR.
+- [**React Boundary**](https://github.com/suspensive/react/tree/main/docs/react): All declarative boundaries on both CSR, SSR.
 
 - [**React Query**](https://github.com/suspensive/react/tree/main/docs/react-query): Declarative apis to use [react-query with suspense](https://tanstack.com/query/v4/docs/guides/suspense) easily.
 

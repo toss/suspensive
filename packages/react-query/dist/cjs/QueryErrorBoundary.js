@@ -14,11 +14,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.QueryErrorBoundary = void 0;
 const jsx_runtime_1 = require("react/jsx-runtime");
 const react_1 = require("react");
-const react_boundary_1 = require("@suspensive/react-boundary");
+const react_2 = require("@suspensive/react");
 const react_query_1 = require("@tanstack/react-query");
 exports.QueryErrorBoundary = (0, react_1.forwardRef)((_a, resetRef) => {
     var { onReset } = _a, props = __rest(_a, ["onReset"]);
-    return ((0, jsx_runtime_1.jsx)(react_query_1.QueryErrorResetBoundary, { children: ({ reset }) => ((0, jsx_runtime_1.jsx)(react_boundary_1.ErrorBoundary, Object.assign({}, props, { onReset: () => {
+    return ((0, jsx_runtime_1.jsx)(react_query_1.QueryErrorResetBoundary, { children: ({ reset }) => ((0, jsx_runtime_1.jsx)(react_2.ErrorBoundary, Object.assign({}, props, { onReset: () => {
                 onReset === null || onReset === void 0 ? void 0 : onReset();
                 reset();
             }, ref: resetRef }))) }));

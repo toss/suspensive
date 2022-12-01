@@ -1,5 +1,5 @@
 import { ComponentProps, forwardRef } from 'react'
-import { ErrorBoundary, ResetRef } from '@suspensive/react-boundary'
+import { ErrorBoundary, ResetRef } from '@suspensive/react'
 import { QueryErrorResetBoundary } from '@tanstack/react-query'
 
 export const QueryErrorBoundary = forwardRef<ResetRef, ComponentProps<typeof ErrorBoundary>>(
