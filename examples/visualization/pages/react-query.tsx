@@ -1,4 +1,4 @@
-import { ErrorBoundary, ErrorBoundaryGroup, Suspense, withErrorBoundaryGroup } from '@suspensive/react-boundary'
+import { ErrorBoundary, ErrorBoundaryGroup, Suspense, withErrorBoundaryGroup } from '@suspensive/react'
 import { QueryAsyncBoundary, QueryErrorBoundary } from '@suspensive/react-query'
 import { QueryErrorResetBoundary } from '@tanstack/react-query'
 import { api } from '../api'
