@@ -1,0 +1,31 @@
+{
+  "name": "@suspensive/react",
+  "version": "0.5.0",
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.js",
+  "files": [
+    "./dist"
+  ],
+  "scripts": {
+    "build": "rm -rf dist/ && prettier --write src/ && npm run build:esm && npm run build:cjs",
+    "build:esm": "tsc -p tsconfig.build.json",
+    "build:cjs": "tsc -p tsconfig.build.json --module CommonJS --outDir ./dist/cjs",
+    "publish:public": "npm publish --access public",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint:check": "eslint . --quiet",
+    "lint:fix": "eslint --fix --ext .ts,.tsx,.js,.jsx .",
+    "type:check": "tsc --noEmit"
+  },
+  "peerDependencies": {
+    "react": "^16.8 || ^17 || ^18",
+    "react-dom": "*"
+  },
+  "devDependencies": {
+    "@types/node": "^18.11.9",
+    "@types/react": "^18.0.25",
+    "@types/react-dom": "^18.0.9",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "typescript": "^4.9.3"
+  }
+}
