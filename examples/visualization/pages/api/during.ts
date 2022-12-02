@@ -13,7 +13,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 }
 
 const callAfter = async (ms: number, callback: () => void) => {
-  let start = Date.now()
+  const start = Date.now()
   let now = start
   while (now - start < ms) {
     now = Date.now()
