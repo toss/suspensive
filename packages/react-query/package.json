@@ -1,6 +1,6 @@
 {
   "name": "@suspensive/react-query",
-  "version": "0.5.17",
+  "version": "0.5.18",
   "sideEffects": false,
   "exports": {
     ".": {
@@ -24,8 +24,8 @@
     "type:check": "tsc --noEmit"
   },
   "peerDependencies": {
-    "@suspensive/react": "workspace:^",
-    "@tanstack/react-query": "^4",
+    "@suspensive/react": "workspace:^0.5.17",
+    "@tanstack/react-query": "*",
     "react": "^16.8 || ^17 || ^18"
   },
   "devDependencies": {
