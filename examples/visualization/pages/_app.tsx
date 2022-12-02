@@ -16,7 +16,7 @@ const queryClient = new QueryClient({
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <QueryClientProvider client={queryClient} contextSharing>
+    <QueryClientProvider client={queryClient}>
       <TopNav>
         <Link href={'/'}>
           <Home>
