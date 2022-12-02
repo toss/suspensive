@@ -18,6 +18,7 @@
   ],
   "workspaces": {
     "packages": [
+      "configs/*",
       "docs/*",
       "examples/*",
       "packages/*"
@@ -37,6 +38,10 @@
     "type:check": "tsc --noEmit"
   },
   "devDependencies": {
+    "@babel/core": "^7.20.5",
+    "@babel/preset-env": "^7.20.2",
+    "@babel/preset-react": "^7.18.6",
+    "@babel/preset-typescript": "^7.18.6",
     "@types/jest": "^29.2.3",
     "@types/node": "^18.11.9",
     "@typescript-eslint/eslint-plugin": "^5.43.0",

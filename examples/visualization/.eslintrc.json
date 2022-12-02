@@ -1,6 +1,3 @@
 {
-  "extends": ["plugin:@next/next/recommended"],
-  "rules": {
-    "prefer-const": "off"
-  }
+  "extends": "next/core-web-vitals"
 }

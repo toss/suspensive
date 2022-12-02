@@ -1,5 +1,5 @@
 {
-  "name": "@example/visualization",
+  "name": "visualization",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -13,20 +13,18 @@
     "@emotion/styled": "^11.10.5",
     "@suspensive/react": "workspace:^",
     "@suspensive/react-query": "workspace:^",
-    "@tanstack/react-query": "^4.16.1",
-    "@tanstack/react-query-devtools": "^4.16.1",
-    "@types/node": "18.11.9",
+    "@tanstack/react-query": "^4.19.0",
+    "@tanstack/react-query-devtools": "^4.19.0",
+    "@types/node": "18.11.10",
     "@types/react": "18.0.25",
     "@types/react-dom": "18.0.9",
     "axios": "^1.2.0",
     "eslint": "8.28.0",
-    "eslint-config-next": "13.0.4",
-    "next": "13.0.4",
+    "eslint-config-next": "13.0.6",
+    "next": "13.0.6",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "typescript": "4.9.3"
   },
-  "devDependencies": {
-    "@next/eslint-plugin-next": "^13.0.4"
-  }
+  "packageManager": "yarn@3.3.0"
 }

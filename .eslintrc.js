@@ -10,7 +10,6 @@ module.exports = {
       './docs/*/tsconfig.json',
       './packages/*/tsconfig.json',
     ],
-    
   },
 
   env: {
@@ -36,9 +35,11 @@ module.exports = {
     '@typescript-eslint/no-empty-function': 'off',
     '@typescript-eslint/no-var-requires': 'warn',
     '@typescript-eslint/no-unused-vars': 'error',
+    '@typescript-eslint/consistent-type-exports': 'error',
     '@typescript-eslint/no-use-before-define': 'off',
     'import/prefer-default-export': 'off',
     'import/no-cycle': 'off',
+    'import/newline-after-import': 'off',
     'import/order': [
       'error',
       {
