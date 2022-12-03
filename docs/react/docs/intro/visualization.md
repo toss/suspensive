@@ -5,7 +5,7 @@ title: Concepts Visualization
 
 
 
-I made [Concepts Visualization](https://visualization.suspensive.org/react) that whoever can understand core concepts of React Boundary(Suspense, ErrorBoundary, AsyncBoundary, ResetKey) visually. You can interact this site now.
+I made [Concepts Visualization](https://visualization.suspensive.org/react) that whoever can understand core concepts of Suspensive(Suspense, ErrorBoundary, AsyncBoundary, ResetKey) visually. You can interact this site now.
 
 ## First, See how boundaries do
 
@@ -16,6 +16,6 @@ I made [Concepts Visualization](https://visualization.suspensive.org/react) that
 
 [**🔗 Click here to see Visualization**](https://visualization.suspensive.org/react)
 
-[**🔗 Click here to see Repository containing source with React Boundary**](https://github.com/suspensive/visualization.suspensive.org/blob/main/pages/react.tsx)
+[**🔗 Click here to see Repository containing source with Suspensive**](https://github.com/suspensive/visualization.suspensive.org/blob/main/pages/react.tsx)
 
 ![Visualization Core Concepts](./../../static/gif/visualization-core-concepts.gif)

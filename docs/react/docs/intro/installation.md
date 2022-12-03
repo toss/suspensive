@@ -5,7 +5,7 @@ title: Installation
 
 ### NPM
 
-The React Boundary package lives in npm. To install the latest stable version, run the following command
+The Suspensive package lives in npm. To install the latest stable version, run the following command
 
 ```shell
 npm install @suspensive/react

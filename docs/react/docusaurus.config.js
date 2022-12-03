@@ -6,8 +6,8 @@ const lightCodeTheme = require('prism-react-renderer/themes/github')
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: 'React Boundary',
-  tagline: 'All declarative boundaries on both CSR, SSR',
+  title: 'Suspensive',
+  tagline: 'Declarative components to use suspense for React',
   url: 'https://react.suspensive.org',
   baseUrl: '/',
   onBrokenLinks: 'throw',
@@ -52,9 +52,9 @@ const config = {
         defaultMode: 'dark',
       },
       navbar: {
-        title: 'React Boundary',
+        title: 'Suspensive',
         logo: {
-          alt: 'React Boundary Logo',
+          alt: 'Suspensive Logo',
           src: 'img/logo.svg',
         },
         items: [

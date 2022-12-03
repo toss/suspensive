@@ -21,7 +21,7 @@ const FeatureList: FeatureItem[] = [
   {
     title: 'Suspense in SSR easily',
     description:
-      'React Boundary provide CSROnly mode that make developer can adopt Suspense gradually in Server-side rendering environment',
+      'Suspensive provide CSROnly mode that make developer can adopt Suspense gradually in Server-side rendering environment',
   },
 ]
 
