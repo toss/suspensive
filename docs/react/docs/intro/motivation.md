@@ -38,6 +38,6 @@ It's why [ResetKey](https://react.suspensive.org/docs/reference/ResetKey) is add
 ## Sometimes, HOC is easier than making depths
 
 Wrapping component with hoc is simple than making depth with component.
-I want to provide less effort to use react if you want to wrap any component by React Boundary.
+I want to provide less effort to use react if you want to wrap any component by Suspensive.
 
 It's why [HOC of Boundaries](https://react.suspensive.org/docs/reference/hoc/withSuspense) is added in this library.

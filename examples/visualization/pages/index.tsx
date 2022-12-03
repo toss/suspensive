@@ -7,10 +7,10 @@ const Home = () => (
     <Area title="Check Concepts">
       <Flex>
         <Link href={'/react'} style={{ flex: 1 }}>
-          <Box.Default>🔗 React Boundary</Box.Default>
+          <Box.Default>🔗 @suspensive/react</Box.Default>
         </Link>
         <Link href={'/react-query'} style={{ flex: 1 }}>
-          <Box.Default>🔗 React Query</Box.Default>
+          <Box.Default>🔗 @suspensive/react-query</Box.Default>
         </Link>
       </Flex>
     </Area>
