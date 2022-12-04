@@ -7,9 +7,11 @@ This component provide a simple and reusable wrapper that you can use to wrap ar
 
 ![Example banner](./../../static/gif/errorboundary-example.gif)
 
-### Default mode
+## ErrorBoundary
 
-If there is thrown error in children, ErrorBoundary will catch it and then fallback will be rendered.
+### fallback
+
+If there is any thrown error in children, ErrorBoundary will catch it and then fallback will be rendered.
 
 ```tsx
 const Example = () => {
@@ -20,11 +22,8 @@ const Example = () => {
   );
 };
 
-type BaseAsyncState<IsError extends boolean, Error> = { isError: IsError; error: Error };
-type AsyncState = BaseAsyncState<true, any> | BaseAsyncState<false, null>;
-
 const ErrorAfter4s = () => {
-  const [asyncState, setAsyncState] = useState<AsyncState>({ isError: false, error: null });
+  const [asyncState, setAsyncState] = useState<{ isError: true; error: Error } | { isError: false; error: null }>({ isError: false, error: null });
 
   useEffect(() => {
     setTimeout(() => {
@@ -40,41 +39,96 @@ const ErrorAfter4s = () => {
 };
 ```
 
-### ResetKey mode
+### resetKeys: unknown[]
 
-Use ResetKey mode to inject resetKey for resetting multiple ErrorBoundary at once.
-after providing [ResetKey](https://react.suspensive.org/docs/reference/ResetKey) and turn on ErrorBoundary's ResetKey mode will make you easily bind resetKey at once.
+If you want to reset ErrorBoundary by component where is outside of ErrorBoundary's fallback. Inject any resetKey in resetKeys. resetKeys work only when at least one element of array is changed. you don't need to worry about provide new array as resetKeys like how useEffect's dependency array work.
 
 ```tsx
-const Example = withResetKey({ reset }) => {
+const Example = () => {
+  const [resetKey, setResetKey] = useState(0)
+
+  const resetOutside = () => setResetKey(prev => prev + 1)
+
   return (
     <>
-      <button onClick={reset}>Reset at once</button>
-      <ErrorBoundary.ResetKey>
+      <button onClick={resetOutside} />
+      <ErrorBoundary resetKeys={[resetKey]}>
         <ErrorAfter4s />
-      </ErrorBoundary.ResetKey>
-      <ErrorBoundary.ResetKey>
-        <ErrorAfter4s />
-      </ErrorBoundary.ResetKey>
-      <ErrorBoundary.ResetKey>
-        <ErrorAfter4s />
-      </ErrorBoundary.ResetKey>
+      </ErrorBoundary>
     </>
   );
 };
 ```
 
-## Props
+## ErrorBoundaryGroup
+
+### ErrorBoundaryGroup.Reset
+
+Multiple ErrorBoundary as children of ErrorBoundaryGroup can be reset at once by ErrorBoundaryGroup.Reset.
 
 ```tsx
-type Props = PropsWithRef<
-  PropsWithChildren<{
-    resetKeys?: unknown[]
-    onReset?(): void
-    onError?(error: Error, info: ErrorInfo): void
-    fallback:
-      | ReactNode
-      | ((props: { error: Error; reset: (...args: unknown[]) => void }) => ReactNode)
-  }>
->
+const Example = () => (
+  <ErrorBoundaryGroup>
+    <ErrorBoundaryGroup.Reset trigger={({ resetGroup }) => <button onClick={resetGroup}>Reset Children</button>} />
+    <ErrorBoundary />
+    <AsyncBoundary /> {/* ErrorBoundary wrapped by AsyncBoundary also will be reset by ErrorBoundaryGroup.Reset */}
+  </ErrorBoundaryGroup>
+)
+```
+
+### withErrorBoundaryGroup, useErrorBoundaryGroup
+
+If you want to use HOC(Higher Order Component) with hook, Use withErrorBoundaryGroup, useErrorBoundaryGroup.
+
+```tsx
+const Example = withErrorBoundaryGroup(() => {
+  const { resetGroup } = useErrorBoundaryGroup()
+
+  return (
+    <>
+      <button onClick={resetGroup}>Reset All</button>
+      <ErrorBoundary />
+      <AsyncBoundary />
+    </>
+  )
+})
+```
+
+### Nested ErrorBoundaryGroup
+
+ErrorBoundary as children of nested ErrorBoundaryGroup will be reset by parent ErrorBoundary.Reset.
+But nested ErrorBoundary.Reset will reset only ErrorBoundary inside of nested ErrorBoundaryGroup self.
+
+```tsx
+const Example = () => (
+  <ErrorBoundaryGroup>
+    <ErrorBoundaryGroup.Reset /> {/* reset all of children */}
+    <ErrorBoundary />
+    <AsyncBoundary />
+    <ErrorBoundaryGroup>
+      <ErrorBoundaryGroup.Reset /> {/* reset all of children */}
+      <ErrorBoundary />
+      <AsyncBoundary />
+    </ErrorBoundaryGroup>
+  </ErrorBoundaryGroup>
+)
+```
+
+### blockOutside: boolean
+
+If you want to block resetting nested ErrorBoundaryGroup by parent ErrorBoundaryGroup, Use blockOutside.
+
+```tsx
+const Example = () => (
+  <ErrorBoundaryGroup>
+    <ErrorBoundaryGroup.Reset />
+    <ErrorBoundary />
+    <AsyncBoundary />
+    <ErrorBoundaryGroup blockOutside> {/* block resetting by parent */}
+      <ErrorBoundaryGroup.Reset />
+      <ErrorBoundary />
+      <AsyncBoundary />
+    </ErrorBoundaryGroup>
+  </ErrorBoundaryGroup>
+)
 ```

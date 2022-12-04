@@ -7,7 +7,7 @@ import { Area, Button, Spinner } from '../components/uis'
 
 const ReactQueryPage = withErrorBoundaryGroup(() => {
   return (
-    <Area title="ResetKey">
+    <Area title="ErrorBoundaryGroup">
       <ErrorBoundaryGroup.Reset
         trigger={({ resetGroup }) => (
           <Button style={{ alignSelf: 'end' }} onClick={resetGroup}>

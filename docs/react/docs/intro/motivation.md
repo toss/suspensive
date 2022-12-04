@@ -28,16 +28,9 @@ so, I want to make a component wrapping Suspense, ErrorBoundary. also CSROnly mo
 
 It's why [AsyncBoundary](https://react.suspensive.org/docs/reference/AsyncBoundary) containing CSROnly mode is added in this library.
 
-## Resetting ErrorBoundary outside of fallback
+## Resetting ErrorBoundaries outside of fallback
 
-To reset ErrorBoundary in error boundary, you can use reset in fallback of ErrorBoundary.
-but If you want to reset ErrorBoundary outside of its fallback, you can provide new resetKeys to props of ErrorBoundary.
+To reset ErrorBoundary, you can use reset, fallback prop of ErrorBoundary.
+but If you want to reset multiple ErrorBoundaries outside of its fallback, you have to provide new element of resetKeys to props of each ErrorBoundaries. but If you use ErrorBoundaryGroup, You don't need to do this tiresome. ErrorBoundaryGroup will reset multiple ErrorBoundary easily.
 
-It's why [ResetKey](https://react.suspensive.org/docs/reference/ResetKey) is added in this library.
-
-## Sometimes, HOC is easier than making depths
-
-Wrapping component with hoc is simple than making depth with component.
-I want to provide less effort to use react if you want to wrap any component by Suspensive.
-
-It's why [HOC of Boundaries](https://react.suspensive.org/docs/reference/hoc/withSuspense) is added in this library.
+It's why [ErrorBoundaryGroup](https://react.suspensive.org/docs/reference/ErrorBoundary#errorboundarygroup) is added in this library.

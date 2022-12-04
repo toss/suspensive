@@ -11,7 +11,7 @@ const FeatureList: FeatureItem[] = [
   {
     title: 'All Declarative Boundaries ready',
     description:
-      'Suspense, ErrorBoundary, AsyncBoundary with ResetKey or CSROnly mode is provided. You can use them easily without any efforts',
+      'Suspense, ErrorBoundary, AsyncBoundary, ErrorBoundaryGroup is provided. You can use them easily without any efforts',
   },
   {
     title: 'Zero peer dependency, Only React',
