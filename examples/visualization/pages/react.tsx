@@ -69,11 +69,9 @@ const BoundaryPage = () => {
                 </Button>
               )}
             />
-            <Area title="Suspense (Continuous 3 fetching)">
+            <Area title="Suspense">
               <Suspense.CSROnly fallback={<Spinner />}>
                 <UseSuspenseQuery queryKey={['boundary', 1]} queryFn={api.alwaysSuccess500} />
-                <UseSuspenseQuery queryKey={['boundary', 2]} queryFn={api.alwaysSuccess1000} />
-                <UseSuspenseQuery queryKey={['boundary', 3]} queryFn={api.alwaysSuccess1500} />
               </Suspense.CSROnly>
             </Area>
 
@@ -96,7 +94,6 @@ const BoundaryPage = () => {
                 pendingFallback={<Spinner />}
                 rejectedFallback={RejectedFallback}
               >
-                <UseSuspenseQuery queryKey={['boundary', 6]} queryFn={api.alwaysSuccess500} />
                 <UseSuspenseQuery queryKey={['boundary', 7]} queryFn={api.halfSuccess} />
               </AsyncBoundary.CSROnly>
             </Area>
