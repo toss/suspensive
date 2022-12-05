@@ -105,14 +105,14 @@ const config = {
             ],
           },
           {
-            title: 'Suspensive libraries',
+            title: 'Libraries',
             items: [
               {
-                label: 'Boundary',
+                label: '@suspensive/react',
                 href: 'https://github.com/suspensive/react/tree/main/packages/react',
               },
               {
-                label: 'Query',
+                label: '@suspensive/react-query',
                 href: 'https://github.com/suspensive/react/tree/main/packages/react-query',
               },
             ],
