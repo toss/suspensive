@@ -1,6 +1,6 @@
 {
   "name": "@suspensive/react",
-  "version": "0.5.18",
+  "version": "0.7.0",
   "sideEffects": false,
   "exports": {
     ".": {
