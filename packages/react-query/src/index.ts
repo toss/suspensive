@@ -1,3 +1,4 @@
-export { useSuspenseQuery } from './useSuspenseQuery'
+export * from './useSuspenseQuery'
+export * from './useSuspenseInfiniteQuery'
 export { QueryAsyncBoundary } from './QueryAsyncBoundary'
 export { QueryErrorBoundary } from './QueryErrorBoundary'

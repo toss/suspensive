@@ -28,7 +28,7 @@ export type UseSuspenseQueryOptions<
   TError = unknown,
   TData = TQueryFnData,
   TQueryKey extends QueryKey = QueryKey
-> = Omit<UseQueryOptions<TQueryFnData, TError, TData, TQueryKey>, 'suspense'>
+> = Omit<UseQueryOptions<TQueryFnData, TError, TData, TQueryKey>, 'suspense' | 'queryKey' | 'queryFn'>
 
 export function useSuspenseQuery<
   TQueryFnData = unknown,

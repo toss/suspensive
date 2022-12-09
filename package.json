@@ -27,8 +27,8 @@
   "scripts": {
     "build:react": "yarn workspace @suspensive/react run build",
     "build:react-query": "yarn workspace @suspensive/react-query run build",
-    "publish:react": "yarn workspace @suspensive/react run publish:public",
-    "publish:react-query": "yarn workspace @suspensive/react-query run publish:public",
+    "publish:react": "yarn workspace @suspensive/react run publish",
+    "publish:react-query": "yarn workspace @suspensive/react-query run publish",
     "build:examples:visualization": "yarn workspace @examples/visualization run build",
     "start:examples:visualization": "yarn workspace @examples/visualization run start",
     "dev:examples:visualization": "yarn workspace @examples/visualization run dev",

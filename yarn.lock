@@ -2995,7 +2995,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@suspensive/react-query@^0.5.18, @suspensive/react-query@workspace:packages/react-query":
+"@suspensive/react-query@npm:^0.5.18":
+  version: 0.5.18
+  resolution: "@suspensive/react-query@npm:0.5.18"
+  peerDependencies:
+    "@suspensive/react": ^0.5.17
+    "@tanstack/react-query": "*"
+    react: ^16.8 || ^17 || ^18
+  checksum: 372a261eeec03dfe3b4e681d625f77a991f7959fa47bffe373183a1cd07d6c6ae33fb74531618fd96be30ca18694d2d9e5166e0e2e78648fdf48fb530ad0afc5
+  languageName: node
+  linkType: hard
+
+"@suspensive/react-query@workspace:packages/react-query":
   version: 0.0.0-use.local
   resolution: "@suspensive/react-query@workspace:packages/react-query"
   dependencies:
@@ -3020,7 +3031,17 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@suspensive/react@^0.5.18, @suspensive/react@workspace:^, @suspensive/react@workspace:packages/react":
+"@suspensive/react@npm:^0.5.18":
+  version: 0.5.18
+  resolution: "@suspensive/react@npm:0.5.18"
+  peerDependencies:
+    react: ^16.8 || ^17 || ^18
+    react-dom: "*"
+  checksum: 73d0ec32267d6fd0253f40dd2d82116628e1295bddaa8f9753330dc89c7436985da32dd12a11094b26eac447a4e27f84255733301b8f7009fe21f1f6aabb89c8
+  languageName: node
+  linkType: hard
+
+"@suspensive/react@workspace:^, @suspensive/react@workspace:packages/react":
   version: 0.0.0-use.local
   resolution: "@suspensive/react@workspace:packages/react"
   dependencies:
