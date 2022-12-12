@@ -15,16 +15,15 @@ const Example = () => {
     suspense: true,
   })
 
-  query.data // Tdata | undefined
+  query.data // TData | undefined
 
   if (query.isSuccess) {
-    query.data // Tdata
+    query.data // TData
   }
 }
 ```
 
-but useQuery's return type will be same even though suspense mode on.
-query.data will be fulfilled because of Suspense as parent of this component.
+but useQuery's return type:query.data will be always fulfilled because of Suspense as parent of this component.
 
 This is why @suspensive/react-query provide **useSuspenseQuery**
 
@@ -32,7 +31,7 @@ This is why @suspensive/react-query provide **useSuspenseQuery**
 
 Return type of this hook have no isLoading, isError property. because Suspense and ErrorBoundary will guarantee this hook's data.
 
-In addition, this hook's option have default suspense: true. and you can provide new option to this hook like useQuery of @tanstack/react-query.
+In addition, this hook's options have default suspense: true. and you can provide new options to this hook like useQuery of @tanstack/react-query.
 
 ```tsx
 
@@ -42,7 +41,7 @@ const Example = () => {
   const query = useSuspenseQuery(queryKey, queryFn, options) // suspense:true is default.
 
   // No need to do type narrowing by isSuccess
-  query.data // Tdata 
+  query.data // TData 
 }
 ```
 
