@@ -22,7 +22,7 @@ type Props = PropsWithRef<
     resetKeys?: unknown[]
     onReset?(): void
     onError?(error: Error, info: ErrorInfo): void
-    fallback: ReactNode | ((props: { error: Error; reset: (...args: unknown[]) => void }) => ReactNode)
+    fallback: ReactNode | ((props: { error: Error; reset: () => void }) => ReactNode)
   }>
 >
 
