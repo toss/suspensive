@@ -1,5 +1,4 @@
 export { AsyncBoundary } from './AsyncBoundary'
 export { Suspense } from './Suspense'
-export type { ResetRef } from './ErrorBoundary'
 export { ErrorBoundary } from './ErrorBoundary'
 export { ErrorBoundaryGroup, useErrorBoundaryGroup, withErrorBoundaryGroup } from './ErrorBoundaryGroup'
