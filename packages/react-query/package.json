@@ -1,6 +1,6 @@
 {
   "name": "@suspensive/react-query",
-  "version": "0.8.0",
+  "version": "0.8.2",
   "sideEffects": false,
   "exports": {
     ".": {
@@ -16,24 +16,21 @@
   ],
   "scripts": {
     "build": "rm -rf dist esm && tsc -p tsconfig.build.json --declaration --emitDeclarationOnly --declarationDir dist && rollup -c rollup.config.js",
+    "lint:check": "eslint . --quiet",
+    "lint:fix": "eslint --fix --ext .ts,.tsx,.js,.jsx .",
     "prepack": "yarn build",
     "publish": "yarn npm publish",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "lint:check": "eslint . --quiet",
-    "lint:fix": "eslint --fix --ext .ts,.tsx,.js,.jsx .",
     "type:check": "tsc --noEmit"
   },
-  "peerDependencies": {
-    "@suspensive/react": "workspace:^0.5.17",
-    "@tanstack/react-query": "*",
-    "react": "^16.8 || ^17 || ^18"
+  "dependencies": {
+    "@suspensive/react": "workspace:^0.8.2"
   },
   "devDependencies": {
     "@babel/core": "^7.20.5",
     "@babel/preset-env": "^7.20.2",
     "@babel/preset-react": "^7.18.6",
     "@babel/preset-typescript": "^7.18.6",
-    "@suspensive/react": "workspace:^",
     "@suspensive/rollup": "workspace:^",
     "@tanstack/react-query": "^4.16.1",
     "@types/node": "^18.11.9",
@@ -43,6 +40,10 @@
     "react-dom": "^18.2.0",
     "rollup": "^3.5.1",
     "typescript": "^4.9.3"
+  },
+  "peerDependencies": {
+    "@tanstack/react-query": "*",
+    "react": "^16.8 || ^17 || ^18"
   },
   "publishConfig": {
     "access": "public",

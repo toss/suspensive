@@ -9,8 +9,8 @@ const ReactQueryPage = withErrorBoundaryGroup(() => {
   return (
     <Area title="ErrorBoundaryGroup">
       <ErrorBoundaryGroup.Reset
-        trigger={({ resetGroup }) => (
-          <Button style={{ alignSelf: 'end' }} onClick={resetGroup}>
+        trigger={({ reset }) => (
+          <Button style={{ alignSelf: 'end' }} onClick={reset}>
             ↻
           </Button>
         )}

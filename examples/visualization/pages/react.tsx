@@ -11,8 +11,8 @@ const BoundaryPage = () => {
     <Area title="ErrorBoundaryGroup">
       <ErrorBoundaryGroup>
         <ErrorBoundaryGroup.Reset
-          trigger={({ resetGroup }) => (
-            <Button style={{ alignSelf: 'end' }} onClick={resetGroup}>
+          trigger={({ reset }) => (
+            <Button style={{ alignSelf: 'end' }} onClick={reset}>
               ↻
             </Button>
           )}
@@ -20,8 +20,8 @@ const BoundaryPage = () => {
         <Area title="ErrorBoundaryGroup">
           <ErrorBoundaryGroup>
             <ErrorBoundaryGroup.Reset
-              trigger={({ resetGroup }) => (
-                <Button style={{ alignSelf: 'end' }} onClick={resetGroup}>
+              trigger={({ reset }) => (
+                <Button style={{ alignSelf: 'end' }} onClick={reset}>
                   ↻
                 </Button>
               )}
@@ -63,8 +63,8 @@ const BoundaryPage = () => {
         <Area title="ErrorBoundaryGroup blockOutside">
           <ErrorBoundaryGroup blockOutside>
             <ErrorBoundaryGroup.Reset
-              trigger={({ resetGroup }) => (
-                <Button style={{ alignSelf: 'end' }} onClick={resetGroup}>
+              trigger={({ reset }) => (
+                <Button style={{ alignSelf: 'end' }} onClick={reset}>
                   ↻
                 </Button>
               )}

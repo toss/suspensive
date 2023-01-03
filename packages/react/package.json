@@ -1,6 +1,6 @@
 {
   "name": "@suspensive/react",
-  "version": "0.8.0",
+  "version": "0.8.2",
   "sideEffects": false,
   "exports": {
     ".": {
@@ -16,16 +16,12 @@
   ],
   "scripts": {
     "build": "rm -rf dist esm && tsc -p tsconfig.build.json --declaration --emitDeclarationOnly --declarationDir dist && rollup -c rollup.config.js",
+    "lint:check": "eslint . --quiet",
+    "lint:fix": "eslint --fix --ext .ts,.tsx,.js,.jsx .",
     "prepack": "yarn build",
     "publish": "yarn npm publish",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "lint:check": "eslint . --quiet",
-    "lint:fix": "eslint --fix --ext .ts,.tsx,.js,.jsx .",
     "type:check": "tsc --noEmit"
-  },
-  "peerDependencies": {
-    "react": "^16.8 || ^17 || ^18",
-    "react-dom": "*"
   },
   "devDependencies": {
     "@babel/core": "^7.20.5",
@@ -40,6 +36,10 @@
     "react-dom": "^18.2.0",
     "rollup": "^3.5.1",
     "typescript": "^4.9.3"
+  },
+  "peerDependencies": {
+    "react": "^16.8 || ^17 || ^18",
+    "react-dom": "*"
   },
   "publishConfig": {
     "access": "public",
