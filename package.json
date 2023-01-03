@@ -1,21 +1,21 @@
 {
   "name": "suspensive",
   "private": true,
-  "license": "MIT",
-  "author": "Jonghyeon Ko<manudeli.ko@gmail.com>",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/suspensive/react.git"
-  },
-  "bugs": {
-    "url": "https://github.com/suspensive/react/issues"
-  },
   "keywords": [
     "react",
     "suspense",
     "suspensive",
     "react-query"
   ],
+  "bugs": {
+    "url": "https://github.com/suspensive/react/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/suspensive/react.git"
+  },
+  "license": "MIT",
+  "author": "Jonghyeon Ko<manudeli.ko@gmail.com>",
   "workspaces": {
     "packages": [
       "configs/*",
@@ -25,16 +25,16 @@
     ]
   },
   "scripts": {
+    "build:examples:visualization": "yarn workspace @examples/visualization run build",
     "build:react": "yarn workspace @suspensive/react run build",
     "build:react-query": "yarn workspace @suspensive/react-query run build",
-    "publish:react": "yarn workspace @suspensive/react run publish",
-    "publish:react-query": "yarn workspace @suspensive/react-query run publish",
-    "build:examples:visualization": "yarn workspace @examples/visualization run build",
-    "start:examples:visualization": "yarn workspace @examples/visualization run start",
-    "dev:examples:visualization": "yarn workspace @examples/visualization run dev",
     "dev:docs:react": "yarn workspace @docs/react run start",
+    "dev:examples:visualization": "yarn workspace @examples/visualization run dev",
     "lint": "eslint .",
     "lint:fix": "eslint --fix --ext .ts,.tsx,.js,.jsx .",
+    "publish:react": "yarn workspace @suspensive/react run publish",
+    "publish:react-query": "yarn workspace @suspensive/react-query run publish",
+    "start:examples:visualization": "yarn workspace @examples/visualization run start",
     "type:check": "tsc --noEmit"
   },
   "devDependencies": {
