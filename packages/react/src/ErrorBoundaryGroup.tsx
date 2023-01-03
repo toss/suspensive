@@ -1,16 +1,9 @@
 import { ComponentType, ReactNode, createContext, useContext, useEffect } from 'react'
 import { useIsMounted, useKey } from './hooks'
 
-const ErrorBoundaryGroupContext = createContext({ groupResetKey: {}, resetGroup: () => {} })
+export const ErrorBoundaryGroupContext = createContext({ resetKey: 0, reset: () => {} })
 if (process.env.NODE_ENV !== 'production') {
   ErrorBoundaryGroupContext.displayName = 'ErrorBoundaryGroupContext'
-}
-
-const ErrorBoundaryGroupReset = ({ trigger }: { trigger: ComponentType<{ resetGroup: () => void }> }) => {
-  const { resetGroup } = useErrorBoundaryGroup()
-  const Trigger = trigger
-
-  return <Trigger resetGroup={resetGroup} />
 }
 
 export const ErrorBoundaryGroup = ({
@@ -23,22 +16,29 @@ export const ErrorBoundaryGroup = ({
   const [resetKey, reset] = useKey()
 
   const isMounted = useIsMounted()
-  const { groupResetKey } = useErrorBoundaryGroup()
+  const group = useContext(ErrorBoundaryGroupContext)
   useEffect(() => {
     if (isMounted && !blockOutside) {
       reset()
     }
-  }, [groupResetKey, isMounted, reset])
+  }, [group.resetKey, isMounted, reset])
 
-  return (
-    <ErrorBoundaryGroupContext.Provider value={{ resetGroup: reset, groupResetKey: resetKey }}>
-      {children}
-    </ErrorBoundaryGroupContext.Provider>
-  )
+  return <ErrorBoundaryGroupContext.Provider value={{ reset, resetKey }}>{children}</ErrorBoundaryGroupContext.Provider>
 }
+
+const ErrorBoundaryGroupReset = ({ trigger: Trigger }: { trigger: ComponentType<{ reset: () => void }> }) => {
+  const { reset } = useErrorBoundaryGroup()
+
+  return <Trigger reset={reset} />
+}
+
 ErrorBoundaryGroup.Reset = ErrorBoundaryGroupReset
 
-export const useErrorBoundaryGroup = () => useContext(ErrorBoundaryGroupContext)
+export const useErrorBoundaryGroup = () => {
+  const { reset } = useContext(ErrorBoundaryGroupContext)
+
+  return { reset }
+}
 
 export const withErrorBoundaryGroup =
   <P extends Record<string, unknown> = Record<string, never>>(Component: ComponentType<P>) =>
