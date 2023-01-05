@@ -81,12 +81,12 @@ class BaseErrorBoundary extends Component<Props, State> {
   }
 }
 
-export const ErrorBoundary = forwardRef<{ reset?(): void }, ComponentPropsWithoutRef<typeof BaseErrorBoundary>>(
+export const ErrorBoundary = forwardRef<{ reset(): void }, ComponentPropsWithoutRef<typeof BaseErrorBoundary>>(
   (props, resetRef) => {
     const group = useContext(ErrorBoundaryGroupContext)
     const resetKeys = group.resetKey ? [group.resetKey, ...(props.resetKeys || [])] : props.resetKeys
 
-    const ref = useRef<BaseErrorBoundary | null>(null)
+    const ref = useRef<BaseErrorBoundary>(null)
     useImperativeHandle(resetRef, () => ({
       reset: () => ref.current?.resetErrorBoundary(),
     }))
