@@ -1,4 +1,4 @@
-import { ComponentType, ReactNode, createContext, useContext, useEffect } from 'react'
+import { ComponentPropsWithoutRef, ComponentType, ReactNode, createContext, useContext, useEffect } from 'react'
 import { useIsMounted, useKey } from './hooks'
 
 export const ErrorBoundaryGroupContext = createContext({ resetKey: 0, reset: () => {} })
@@ -41,10 +41,13 @@ export const useErrorBoundaryGroup = () => {
 }
 
 export const withErrorBoundaryGroup =
-  <P extends Record<string, unknown> = Record<string, never>>(Component: ComponentType<P>) =>
+  <P extends Record<string, unknown> = Record<string, never>>(
+    Component: ComponentType<P>,
+    errorBoundaryGroupProps?: ComponentPropsWithoutRef<typeof ErrorBoundaryGroup>
+  ) =>
   (props: P) =>
     (
-      <ErrorBoundaryGroup>
+      <ErrorBoundaryGroup {...errorBoundaryGroupProps}>
         <Component {...props} />
       </ErrorBoundaryGroup>
     )
