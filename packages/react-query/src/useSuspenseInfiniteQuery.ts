@@ -7,28 +7,21 @@ import {
   useInfiniteQuery,
 } from '@tanstack/react-query'
 
-type BaseExtended<TData = unknown> =
-  | { data: InfiniteData<TData>; status: 'success'; isLoading: false; isSuccess: true }
-  | { data: undefined; status: 'loading'; isLoading: true; isSuccess: false }
-
-export type BaseUseSuspenseInfiniteQueryResult<TExtended extends BaseExtended = BaseExtended> = Omit<
+export type BaseUseSuspenseInfiniteQueryResult<TData> = Omit<
   UseInfiniteQueryResult,
   'data' | 'status' | 'error' | 'isLoading' | 'isLoadingError' | 'isError' | 'isRefetchError' | 'isFetching'
-> &
-  TExtended
+> & { data: InfiniteData<TData>; isLoading: boolean; isSuccess: boolean; status: 'success' | 'loading' }
 
-export type UseSuspenseInfiniteQueryResultOnSuccess<TData> = BaseUseSuspenseInfiniteQueryResult<{
-  data: InfiniteData<TData>
+export type UseSuspenseInfiniteQueryResultOnSuccess<TData> = BaseUseSuspenseInfiniteQueryResult<TData> & {
   isLoading: false
   isSuccess: true
   status: 'success'
-}>
-export type UseSuspenseInfiniteQueryResultOnLoading = BaseUseSuspenseInfiniteQueryResult<{
-  data: undefined
+}
+export type UseSuspenseInfiniteQueryResultOnLoading = BaseUseSuspenseInfiniteQueryResult<undefined> & {
   isLoading: true
   isSuccess: false
   status: 'loading'
-}>
+}
 
 export type UseSuspenseInfiniteQueryOptions<
   TQueryFnData = unknown,
@@ -97,5 +90,5 @@ export function useSuspenseInfiniteQuery<
   return useInfiniteQuery(queryKey, queryFn, {
     ...options,
     suspense: true,
-  }) as BaseUseSuspenseInfiniteQueryResult<BaseExtended<TData>>
+  }) as BaseUseSuspenseInfiniteQueryResult<TData>
 }
