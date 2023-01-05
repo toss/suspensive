@@ -1,5 +1,4 @@
 import {
-  InfiniteData,
   QueryFunction,
   QueryKey,
   UseInfiniteQueryOptions,
@@ -8,9 +7,9 @@ import {
 } from '@tanstack/react-query'
 
 export type BaseUseSuspenseInfiniteQueryResult<TData> = Omit<
-  UseInfiniteQueryResult,
-  'data' | 'status' | 'error' | 'isLoading' | 'isLoadingError' | 'isError' | 'isRefetchError' | 'isFetching'
-> & { data: InfiniteData<TData>; isLoading: boolean; isSuccess: boolean; status: 'success' | 'loading' }
+  UseInfiniteQueryResult<TData>,
+  'status' | 'error' | 'isLoadingError' | 'isError' | 'isRefetchError' | 'isFetching'
+> & { status: 'success' | 'loading' }
 
 export type UseSuspenseInfiniteQueryResultOnSuccess<TData> = BaseUseSuspenseInfiniteQueryResult<TData> & {
   isLoading: false
