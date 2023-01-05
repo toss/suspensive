@@ -1,27 +1,21 @@
 import { QueryFunction, QueryKey, UseQueryOptions, UseQueryResult, useQuery } from '@tanstack/react-query'
 
-type BaseExtended<TData = unknown> =
-  | { data: TData; status: 'success'; isLoading: false; isSuccess: true }
-  | { data: undefined; status: 'loading'; isLoading: true; isSuccess: false }
-
-export type BaseUseSuspenseQueryResult<TExtended extends BaseExtended = BaseExtended> = Omit<
+export type BaseUseSuspenseQueryResult<TData> = Omit<
   UseQueryResult,
   'data' | 'status' | 'error' | 'isLoading' | 'isError' | 'isFetching'
-> &
-  TExtended
+> & { data: TData; isLoading: boolean; isSuccess: boolean; status: 'success' | 'loading' }
 
-export type UseSuspenseQueryResultOnSuccess<TData> = BaseUseSuspenseQueryResult<{
-  data: TData
+export type UseSuspenseQueryResultOnSuccess<TData> = BaseUseSuspenseQueryResult<TData> & {
   isLoading: false
   isSuccess: true
   status: 'success'
-}>
-export type UseSuspenseQueryResultOnLoading = BaseUseSuspenseQueryResult<{
+}
+export type UseSuspenseQueryResultOnLoading = BaseUseSuspenseQueryResult<undefined> & {
   data: undefined
   isLoading: true
   isSuccess: false
   status: 'loading'
-}>
+}
 
 export type UseSuspenseQueryOptions<
   TQueryFnData = unknown,
@@ -87,5 +81,5 @@ export function useSuspenseQuery<
   return useQuery(queryKey, queryFn, {
     ...options,
     suspense: true,
-  }) as BaseUseSuspenseQueryResult<BaseExtended<TData>>
+  }) as BaseUseSuspenseQueryResult<TData>
 }
