@@ -1,9 +1,9 @@
 import { QueryFunction, QueryKey, UseQueryOptions, UseQueryResult, useQuery } from '@tanstack/react-query'
 
-export type BaseUseSuspenseQueryResult<TData> = Omit<
-  UseQueryResult<TData>,
-  'status' | 'error' | 'isError' | 'isFetching'
-> & { status: 'success' | 'loading' }
+export type BaseUseSuspenseQueryResult<TData> = Omit<UseQueryResult, 'error' | 'isError' | 'isFetching'> & {
+  data: TData
+  status: 'success' | 'loading'
+}
 
 export type UseSuspenseQueryResultOnSuccess<TData> = BaseUseSuspenseQueryResult<TData> & {
   isLoading: false

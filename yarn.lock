@@ -2654,8 +2654,8 @@ __metadata:
   dependencies:
     "@emotion/react": ^11.10.5
     "@emotion/styled": ^11.10.5
-    "@suspensive/react": ^0.8.2
-    "@suspensive/react-query": ^0.8.2
+    "@suspensive/react": ^0.8.5
+    "@suspensive/react-query": ^0.8.5
     "@tanstack/react-query": ^4.19.0
     "@tanstack/react-query-devtools": ^4.19.0
     "@types/node": 18.11.10
@@ -3210,7 +3210,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@suspensive/react-query@^0.8.2, @suspensive/react-query@workspace:packages/react-query":
+"@suspensive/react-query@^0.8.5, @suspensive/react-query@workspace:packages/react-query":
   version: 0.0.0-use.local
   resolution: "@suspensive/react-query@workspace:packages/react-query"
   dependencies:
@@ -3234,7 +3234,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@suspensive/react@^0.8.2, @suspensive/react@workspace:^0.8.2, @suspensive/react@workspace:packages/react":
+"@suspensive/react@^0.8.5, @suspensive/react@workspace:^0.8.2, @suspensive/react@workspace:packages/react":
   version: 0.0.0-use.local
   resolution: "@suspensive/react@workspace:packages/react"
   dependencies:
