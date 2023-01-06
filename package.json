@@ -60,6 +60,7 @@
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-prettier": "^4.2.1",
     "husky": "^8.0.3",
+    "lint-staged": "^13.1.0",
     "prettier": "^2.7.1",
     "typescript": "4.8.4"
   },
