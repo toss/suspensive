@@ -7,11 +7,11 @@ type Props = {
 }
 
 export const UseSuspenseQuery = ({ queryKey, queryFn }: Props) => {
-  const { data } = useSuspenseQuery(queryKey, queryFn)
+  const query = useSuspenseQuery(queryKey, queryFn)
 
   return (
     <Box.Success>
-      <Description.Success>{data.data}</Description.Success>
+      <Description.Success>{query.data.data}</Description.Success>
     </Box.Success>
   )
 }
