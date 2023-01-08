@@ -7,17 +7,19 @@ import {
   useInfiniteQuery,
 } from '@tanstack/react-query'
 
-export type BaseUseSuspenseInfiniteQueryResult<TData> = Omit<
-  UseInfiniteQueryResult,
+export type BaseUseSuspenseInfiniteQueryResult<TData = unknown> = Omit<
+  UseInfiniteQueryResult<TData>,
   'error' | 'isLoadingError' | 'isError' | 'isRefetchError' | 'isFetching'
-> & { data: InfiniteData<TData>; status: 'success' | 'loading' }
+> & { status: 'success' | 'loading' }
 
-export type UseSuspenseInfiniteQueryResultOnSuccess<TData> = BaseUseSuspenseInfiniteQueryResult<TData> & {
+export interface UseSuspenseInfiniteQueryResultOnSuccess<TData> extends BaseUseSuspenseInfiniteQueryResult<TData> {
+  data: InfiniteData<TData>
   isLoading: false
   isSuccess: true
   status: 'success'
 }
-export type UseSuspenseInfiniteQueryResultOnLoading = BaseUseSuspenseInfiniteQueryResult<undefined> & {
+export interface UseSuspenseInfiniteQueryResultOnLoading extends BaseUseSuspenseInfiniteQueryResult {
+  data: undefined
   isLoading: true
   isSuccess: false
   status: 'loading'
