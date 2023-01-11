@@ -1,4 +1,3 @@
 {
-  "*.ts": "eslint",
-  "*.md": "prettier --list-different"
+  "*.ts": "eslint"
 }
