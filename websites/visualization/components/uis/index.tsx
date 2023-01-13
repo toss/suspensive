@@ -1,4 +1,4 @@
-import { PropsWithChildren } from 'react'
+import { PropsWithChildren, ReactNode } from 'react'
 import styled from '@emotion/styled'
 
 export const Button = styled.button`
@@ -7,9 +7,9 @@ export const Button = styled.button`
   color: black;
   border: 0;
   transition: all 200ms;
-  font-size: 22px;
-  width: 32px;
-  height: 32px;
+  font-size: 14px;
+  width: 20px;
+  height: 20px;
   font-weight: 900;
   border-radius: 60px;
   cursor: pointer;
@@ -27,18 +27,18 @@ export const Description = {
 
 export const DescriptionText = styled.div`
   align-self: center;
-  font-size: 16px;
+  font-size: 8px;
   font-weight: 900;
 `
 
 export const Spinner = styled.div`
-  height: 30px;
-  width: 30px;
+  height: 15px;
+  width: 15px;
   border: 1px solid white;
   border-radius: 50%;
   border-top: none;
   border-right: none;
-  margin: 16px auto;
+  margin: 8px auto;
   animation: rotation 1s linear infinite;
 
   @keyframes rotation {
@@ -57,13 +57,14 @@ export const BaseBox = styled.div`
   justify-content: space-between;
   align-items: center;
   box-sizing: border-box;
-  padding: 12px 20px;
+  padding: 8px 16px;
   border-radius: 8px;
   border: 0;
   gap: 8px;
   color: black;
   transition: all 200ms;
   animation: fadein 200ms;
+  font-size: 12px;
 
   :hover {
     opacity: 0.8;
@@ -105,15 +106,20 @@ const AreaStyled = {
   Content: styled.div`
     display: flex;
     flex-direction: column;
-    border: 4px solid white;
+    border: 2px solid white;
     border-radius: 16px;
-    padding: 12px;
-    gap: 16px;
+    padding: 6px;
+    gap: 8px;
   `,
 
   Title: styled.h2`
     margin: 0;
-    margin-left: 20px;
-    margin-bottom: 4px;
+    margin-left: 10px;
+    margin-bottom: 2px;
+    font-size: 14px;
   `,
 }
+
+export const Flex = styled.div`
+  display: flex;
+`

@@ -1,7 +1,7 @@
 {
   "name": "@suspensive/rollup",
   "private": true,
-  "main": "./src/index.js",
+  "main": "index.js",
   "packageManager": "yarn@3.3.0",
   "devDependencies": {
     "rollup": "^3.5.1"

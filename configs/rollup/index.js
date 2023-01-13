@@ -6,7 +6,6 @@ const resolve = require('@rollup/plugin-node-resolve').default
 const builtins = require('builtin-modules')
 
 exports.generateRollupConfig = function generateRollupConfig({ packageDir }) {
-  // eslint-disable-next-line
   const packageJSON = require(path.join(packageDir, 'package.json'))
 
   if (packageJSON.exports == null) {
@@ -25,7 +24,7 @@ exports.generateRollupConfig = function generateRollupConfig({ packageDir }) {
 
   const extensions = ['.js', '.jsx', '.ts', '.tsx']
 
-  function buildJS(input, output, format) {
+  const build = (format) => (input, output) => {
     const isESMFormat = format === 'es'
     return {
       input,
@@ -37,7 +36,8 @@ exports.generateRollupConfig = function generateRollupConfig({ packageDir }) {
             ? {
                 dir: path.dirname(output),
                 entryFileNames: `[name]${path.extname(output)}`,
-                preserveModulesRoot: isESMFormat ? path.dirname(input) : undefined,
+                preserveModulesRoot: path.dirname(input),
+                preserveModules: isESMFormat,
               }
             : { file: output }),
         },
@@ -54,16 +54,7 @@ exports.generateRollupConfig = function generateRollupConfig({ packageDir }) {
         }),
         json(),
       ],
-      preserveModules: isESMFormat,
     }
-  }
-
-  function buildCJS(input, output) {
-    return buildJS(input, output, 'cjs')
-  }
-
-  function buildESM(input, output) {
-    return buildJS(input, output, 'es')
   }
 
   return entrypoints.flatMap((entrypoint) => {
@@ -85,7 +76,7 @@ exports.generateRollupConfig = function generateRollupConfig({ packageDir }) {
       ensure(packageJSON?.publishConfig.exports?.[entrypoint].import, 'ESM outputfile not found')
     )
 
-    return [buildCJS(cjsEntrypoint, cjsOutput), buildESM(esmEntrypoint, esmOutput)]
+    return [build('cjs')(cjsEntrypoint, cjsOutput), build('es')(esmEntrypoint, esmOutput)]
   })
 }
 
@@ -101,7 +92,6 @@ function handleCJSEntrypoint(exports, entrypoint) {
   return undefined
 }
 
-// eslint-disable-next-line
 function handleESMEntrypoint(exports = {}, entrypoint) {
   if (exports?.[entrypoint].import != null) {
     return exports?.[entrypoint].import

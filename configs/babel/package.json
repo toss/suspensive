@@ -1,7 +1,7 @@
 {
     "name": "@suspensive/babel",
     "private": true,
-    "main": "./src/index.js",
+    "main": "index.js",
     "dependencies": {
         "@babel/core": "^7.20.5",
         "@babel/preset-env": "^7.20.2",

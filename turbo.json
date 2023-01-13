@@ -3,9 +3,9 @@
   "pipeline": {
     "build": {
       "dependsOn": ["^build"],
-      "outputs": ["dist/**", ".next/**"]
+      "outputs": ["dist/**", ".next/**", ".docusaurus/**", "build/**"]
     },
-    "publish": {
+    "npm:publish": {
       "dependsOn": ["^build"]
     },
     "lint": {
