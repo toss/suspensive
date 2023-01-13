@@ -1,6 +1,6 @@
 {
   "name": "@suspensive/react",
-  "version": "1.3.1",
+  "version": "1.4.0",
   "sideEffects": false,
   "exports": {
     ".": {
@@ -17,13 +17,14 @@
   "scripts": {
     "build": "rm -rf dist esm && tsc -p tsconfig.json --declaration --emitDeclarationOnly --declarationDir dist && rollup -c rollup.config.js",
     "prepack": "yarn build",
-    "publish": "yarn npm publish",
+    "npm:publish": "yarn npm publish",
     "test": "echo \"Error: no test specified\" && exit 1",
     "type:check": "tsc --noEmit"
   },
   "devDependencies": {
     "@suspensive/babel": "workspace:^",
     "@suspensive/rollup": "workspace:^",
+    "@suspensive/tsconfig": "workspace:^",
     "@types/node": "^18.11.9",
     "@types/react": "^18.0.25",
     "@types/react-dom": "^18.0.9",
@@ -33,8 +34,7 @@
     "typescript": "^4.9.3"
   },
   "peerDependencies": {
-    "react": "^16.8 || ^17 || ^18",
-    "react-dom": "*"
+    "react": "^16.8 || ^17 || ^18"
   },
   "publishConfig": {
     "access": "public",
