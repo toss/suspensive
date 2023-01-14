@@ -3,7 +3,7 @@ sidebar_position: 4
 title: AsyncBoundary
 ---
 
-This component is just wrapping [Suspense](https://react.suspensive.org/docs/reference/Suspense) and [ErrorBoundary](https://react.suspensive.org/docs/reference/ErrorBoundary) in this library. to use Suspense with ErrorBoundary at once easily.
+This component is just wrapping [Suspense](https://docs.suspensive.org/docs/reference/Suspense) and [ErrorBoundary](https://docs.suspensive.org/docs/reference/ErrorBoundary) in this library. to use Suspense with ErrorBoundary at once easily.
 
 ### Default mode
 
