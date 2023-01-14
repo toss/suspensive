@@ -5,7 +5,7 @@ title: 'QueryErrorBoundary, QueryAsyncBoundary'
 
 ### Motivation
 
-With the [QueryErrorResetBoundary](https://tanstack.com/query/v4/docs/reference/QueryErrorResetBoundary) component you can reset any query errors within the boundaries of the component. but If you use react-query with suspense continuously, Continuous repeating to use QueryErrorResetBoundary + [ErrorBoundary](https://react.suspensive.org/docs/reference/ErrorBoundary), QueryErrorResetBoundary + [AsyncBoundary](https://react.suspensive.org/docs/reference/AsyncBoundary) will be coded.
+With the [QueryErrorResetBoundary](https://tanstack.com/query/v4/docs/reference/QueryErrorResetBoundary) component you can reset any query errors within the boundaries of the component. but If you use react-query with suspense continuously, Continuous repeating to use QueryErrorResetBoundary + [ErrorBoundary](https://docs.suspensive.org/docs/reference/ErrorBoundary), QueryErrorResetBoundary + [AsyncBoundary](https://docs.suspensive.org/docs/reference/AsyncBoundary) will be coded.
 
 #### QueryErrorResetBoundary + ErrorBoundary
 
@@ -70,4 +70,4 @@ const Example = () => (
 )
 ```
 
-You can just use QueryErrorBoundary / QueryAsyncBoundary like using [ErrorBoundary](https://react.suspensive.org/docs/reference/ErrorBoundary) / [AsyncBoundary](https://react.suspensive.org/docs/reference/AsyncBoundary). All other features are same with original ErrorBoundary, AsyncBoundary of @suspensive/react without resetting react-query's error.
+You can just use QueryErrorBoundary / QueryAsyncBoundary like using [ErrorBoundary](https://docs.suspensive.org/docs/reference/ErrorBoundary) / [AsyncBoundary](https://docs.suspensive.org/docs/reference/AsyncBoundary). All other features are same with original ErrorBoundary, AsyncBoundary of @suspensive/react without resetting react-query's error.
