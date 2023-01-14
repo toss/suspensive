@@ -1,5 +1,5 @@
 ---
-sidebar_position: 3
+sidebar_position: 4
 title: AsyncBoundary
 ---
 
@@ -49,7 +49,6 @@ const AsyncBoundaryAvoidSSR = () => (
 
 If you want to use default AsyncBoundary working in both SSR/CSR, You can change AsyncBoundary.CSROnly to default AsyncBoundary gradually.
 
-
 ## Props
 
 ```tsx
@@ -59,4 +58,3 @@ type Props = Omit<SuspenseProps, 'fallback'> &
     rejectedFallback: ErrorBoundaryProps['fallback']
   }
 ```
-

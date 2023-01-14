@@ -35,11 +35,3 @@ const CSROnlyMode = () => (
 #### Migration support SSR gradually (Susepense.CSROnly -> default Suspense)
 
 If you want to use default Suspense working in both SSR/CSR, You can change Suspense.CSROnly to default Suspense gradually.
-
-## Props
-
-Same with React.SuspenseProps
-
-```ts
-type Props = React.SuspenseProps
-```

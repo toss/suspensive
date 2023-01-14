@@ -1,6 +1,6 @@
 ---
 sidebar_position: 4
-title: "QueryErrorBoundary, QueryAsyncBoundary"
+title: 'QueryErrorBoundary, QueryAsyncBoundary'
 ---
 
 ### Motivation
@@ -16,12 +16,7 @@ import { QueryErrorResetBoundary } from '@tanstack/react-query'
 const Example = () => (
   <QueryErrorResetBoundary>
     {({ reset }) => (
-      <ErrorBoundary
-        onReset={reset}
-        fallback={({ reset: resetErrorBoundary }) => (
-          <button onClick={resetErrorBoundary}>Try again</button>
-        )}
-      >
+      <ErrorBoundary onReset={reset} fallback={(boundary) => <button onClick={boundary.reset}>Try again</button>}>
         <Page />
       </ErrorBoundary>
     )}
@@ -40,9 +35,7 @@ const Example = () => (
     {({ reset }) => (
       <AsyncBoundary
         onReset={reset}
-        rejectedFallback={({ reset: resetAsyncBoundary }) => (
-          <button onClick={resetAsyncBoundary}>Try again</button>
-        )}
+        rejectedFallback={(boundary) => <button onClick={boundary.reset}>Try again</button>}
       >
         <Page />
       </AsyncBoundary>
@@ -59,11 +52,7 @@ const Example = () => (
 import { QueryErrorBoundary } from '@suspensive/react-query'
 
 const Example = () => (
-  <QueryErrorBoundary
-    fallback={({ reset }) => (
-      <button onClick={reset}>Try again</button>
-    )}
-  >
+  <QueryErrorBoundary fallback={(boundary) => <button onClick={boundary.reset}>Try again</button>}>
     <Page />
   </QueryErrorBoundary>
 )
@@ -75,11 +64,7 @@ const Example = () => (
 import { QueryAsyncBoundary } from '@suspensive/react-query'
 
 const Example = () => (
-  <QueryAsyncBoundary
-    rejectedFallback={({ reset }) => (
-      <button onClick={reset}>Try again</button>
-    )}
-  >
+  <QueryAsyncBoundary rejectedFallback={(boundary) => <button onClick={boundary.reset}>Try again</button>}>
     <Page />
   </QueryAsyncBoundary>
 )
