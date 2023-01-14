@@ -4,11 +4,11 @@
 
 ## Libraries
 
-### [@suspensive/react](https://github.com/suspensive/react/tree/main/docs/react)
+### [@suspensive/react](https://github.com/suspensive/react/tree/main/packages/react)
 
 All declarative components to use suspense on both CSR, SSR.
 
-### [@suspensive/react-query](https://github.com/suspensive/react/tree/main/docs/react-query)
+### [@suspensive/react-query](https://github.com/suspensive/react/tree/main/packages/react-query)
 
 Declarative apis to use [@tanstack/react-query with suspense](https://tanstack.com/query/v4/docs/guides/suspense) easily.
 
