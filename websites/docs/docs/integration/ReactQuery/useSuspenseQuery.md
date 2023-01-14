@@ -1,6 +1,6 @@
 ---
 sidebar_position: 2
-title: "useSuspenseQuery"
+title: 'useSuspenseQuery'
 ---
 
 ### Motivation
@@ -34,14 +34,13 @@ Return type of this hook have no isLoading, isError property. because Suspense a
 In addition, this hook's options have default suspense: true. and you can provide new options to this hook like useQuery of @tanstack/react-query.
 
 ```tsx
-
 import { useSuspenseQuery } from '@suspensive/react-query'
 
 const Example = () => {
   const query = useSuspenseQuery(queryKey, queryFn, options) // suspense:true is default.
 
   // No need to do type narrowing by isSuccess
-  query.data // TData 
+  query.data // TData
 }
 ```
 

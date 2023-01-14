@@ -1,6 +1,6 @@
 ---
 sidebar_position: 3
-title: "useSuspenseInfiniteQuery"
+title: 'useSuspenseInfiniteQuery'
 ---
 
 ### Motivation
@@ -34,14 +34,13 @@ Return type of this hook have no isLoading, isError property. because Suspense a
 In addition, this hook's options have default suspense: true. and you can provide new options to this hook like useInfiniteQuery of @tanstack/react-query.
 
 ```tsx
-
 import { useSuspenseInfiniteQuery } from '@suspensive/react-query'
 
 const Example = () => {
   const query = useSuspenseInfiniteQuery(queryKey, queryFn, options) // suspense:true is default.
 
   // No need to do type narrowing by isSuccess
-  query.data // InfiniteData<TData> 
+  query.data // InfiniteData<TData>
 }
 ```
 

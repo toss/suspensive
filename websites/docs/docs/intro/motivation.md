@@ -33,7 +33,7 @@ It's why [AsyncBoundary](https://react.suspensive.org/docs/reference/AsyncBounda
 To reset ErrorBoundary, you can use reset, fallback prop of ErrorBoundary.
 but If you want to reset multiple ErrorBoundaries outside of its fallback, you have to provide new element of resetKeys to props of each ErrorBoundaries. but If you use ErrorBoundaryGroup, You don't need to do this tiresome. ErrorBoundaryGroup will reset multiple ErrorBoundary easily.
 
-It's why [ErrorBoundaryGroup](https://react.suspensive.org/docs/reference/ErrorBoundary#errorboundarygroup) is added in this library.
+It's why [ErrorBoundaryGroup](https://react.suspensive.org/docs/reference/ErrorBoundaryGroup) is added in this library.
 
 ## Visualization
 
@@ -47,7 +47,5 @@ I made [Concepts Visualization](https://visualization.suspensive.org/react) that
 4. How [ErrorBoundaryGroup](https://react.suspensive.org/docs/reference/ErrorBoundary#errorboundarygroup) reset multiple ErrorBoundaries without using resetKeys easily.
 
 [**🔗 Click here to see Visualization**](https://visualization.suspensive.org/react)
-
-[**🔗 Click here to see Repository containing source with Suspensive**](https://github.com/suspensive/visualization.suspensive.org/blob/main/pages/react.tsx)
 
 ![Visualization Core Concepts](./../../static/gif/visualization-core-concepts.gif)
