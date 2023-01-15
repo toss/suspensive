@@ -4879,6 +4879,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/node", "npm:18.11.18"],\
             ["@types/react", "npm:18.0.26"],\
             ["@types/react-dom", "npm:18.0.10"],\
+            ["@types/suspensive__react", null],\
             ["@types/tanstack__react-query", null],\
             ["react", "npm:18.2.0"],\
             ["react-dom", "virtual:ca7bc36f4419f45545fe2641bea7daf899cb49f5b7f99244401022f9d0fab06498cf6d996ec6c57928a3199da8d8ccaef6faf76da25de56e5024c2b707d1549d#npm:18.2.0"],\
@@ -4886,8 +4887,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["typescript", "patch:typescript@npm%3A4.9.4#~builtin<compat/typescript>::version=4.9.4&hash=ad5954"]\
           ],\
           "packagePeers": [\
+            "@suspensive/react",\
             "@tanstack/react-query",\
             "@types/react",\
+            "@types/suspensive__react",\
             "@types/tanstack__react-query",\
             "react"\
           ],\
