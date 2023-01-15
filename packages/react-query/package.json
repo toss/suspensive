@@ -1,6 +1,6 @@
 {
   "name": "@suspensive/react-query",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "sideEffects": false,
   "exports": {
     ".": {
@@ -21,11 +21,9 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "type:check": "tsc --noEmit"
   },
-  "dependencies": {
-    "@suspensive/react": "workspace:^1.4.0"
-  },
   "devDependencies": {
     "@suspensive/babel": "workspace:^",
+    "@suspensive/react": "workspace:^1.5.0",
     "@suspensive/rollup": "workspace:^",
     "@suspensive/tsconfig": "workspace:^",
     "@tanstack/react-query": "^4.16.1",
@@ -38,6 +36,7 @@
     "typescript": "^4.9.3"
   },
   "peerDependencies": {
+    "@suspensive/react": "^1.5.0",
     "@tanstack/react-query": "^4.16.1",
     "react": "^16.8 || ^17 || ^18"
   },
