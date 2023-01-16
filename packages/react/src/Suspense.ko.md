@@ -3,14 +3,14 @@ sidebar_position: 1
 title: Suspense
 ---
 
-이 컴포넌트는 단지 [Next.js](https://nextjs.org)와 같은 서버 측 렌더링 환경에서 Suspense를 쉽게 사용하기 위한 [React's Suspense](https://reactjs.org/docs/react-api.html#reactsuspense)를 래핑하는 것입니다. 
+이 컴포넌트는 단지 [Next.js](https://nextjs.org)와 같은 서버 측 렌더링 환경에서 쉽게 [React Suspense](https://reactjs.org/docs/react-api.html#reactsuspense)를 사용하기 위해 만들어졌습니다.
 
-### Default mode
+### Default 모드
 
-Default Suspense will be just Suspense of original React.
+기본적으로 @suspensive/react의 Suspense는 React의 Suspense가 됩니다.
 
 ```tsx
-// Suspense is just React.Suspense
+// @suspensive/react의 Suspense는 단지 React.Suspense입니다.
 const DefaultMode = () => (
   <Suspense fallback={<Loading />}>
     <Children />
@@ -18,13 +18,12 @@ const DefaultMode = () => (
 )
 ```
 
-### CSROnly mode
+### CSROnly 모드
 
-But if you turn on CSROnly mode, Suspense will return fallback first. After mount, return children only in client. but in server, return fallback only.
-If you want to use React.Suspense working in both SSR / CSR, You can change Suspense.CSROnly to Suspense gradually.
+CSROnly 모드를 사용하면 Suspense는 fallback을 먼저 return하고 컴포넌트가 마운트된 후, 클라이언트 사이드에서만 children이 return됩니다. 하지만 서버 사이드에서는 fallback만이 return됩니다.
 
 ```tsx
-// This will expose children in client-side rendering only.
+// 오직 클라이언트 사이드 렌던링에서만 children을 노출합니다.
 const CSROnlyMode = () => (
   <Suspense.CSROnly fallback={<Loading />}>
     <Children />
@@ -32,6 +31,6 @@ const CSROnlyMode = () => (
 )
 ```
 
-#### Migration support SSR gradually (Susepense.CSROnly -> default Suspense)
+#### SSR을 지원하도록 점진적으로 마이그레이션하기 (Suspense.CSROnly -> default Suspense)
 
-If you want to use default Suspense working in both SSR/CSR, You can change Suspense.CSROnly to default Suspense gradually.
+React.Suspense를 SSR과 CSR에서 모두 사용하고 싶다면 Suspense.CSROnly에서 Default Suspense로 점진적으로 마이그레이션하면 쉽게 적용할 수 있습니다.
