@@ -4,13 +4,15 @@
   "private": true,
   "scripts": {
     "docusaurus": "docusaurus",
-    "dev": "docusaurus start --port 4000",
+    "dev": "yarn prebuild && docusaurus start",
+    "dev:ko": "yarn prebuild && docusaurus start --locale ko",
     "build": "docusaurus build",
     "swizzle": "docusaurus swizzle",
     "deploy": "docusaurus deploy",
     "clear": "docusaurus clear",
-    "serve": "docusaurus serve",
-    "write-translations": "docusaurus write-translations",
+    "serve": "yarn prebuild && yarn build && yarn write-translations && docusaurus serve",
+    "prebuild": "rm -rf docs i18n/ko/docusaurus-plugin-content-docs/current && yarn ts-node -T ./scripts/build-docs/index.ts",
+    "write-translations": "docusaurus write-translations --locale ko",
     "write-heading-ids": "docusaurus write-heading-ids",
     "typecheck": "tsc"
   },
@@ -25,10 +27,15 @@
   },
   "devDependencies": {
     "@docusaurus/module-type-aliases": "2.2.0",
+    "@docusaurus/theme-classic": "^2.2.0",
     "@tsconfig/docusaurus": "^1.0.5",
     "@types/node": "^18.11.9",
     "@types/react": "^18.0.25",
-    "@types/react-dom": "^18.0.9"
+    "@types/react-dom": "^18.0.9",
+    "documentation": "^14.0.1",
+    "fs-extra": "^11.1.0",
+    "globby": "^11",
+    "ts-node": "^10.9.1"
   },
   "browserslist": {
     "production": [

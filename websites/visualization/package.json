@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "build": "next build",
-    "dev": "next dev --port 4001",
+    "dev": "next dev --port 3001",
     "start": "next start"
   },
   "dependencies": {
