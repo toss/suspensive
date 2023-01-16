@@ -24,7 +24,15 @@ const config = {
   // to replace "en" with "zh-Hans".
   i18n: {
     defaultLocale: 'en',
-    locales: ['en'],
+    locales: ['en', 'ko'],
+    localeConfigs: {
+      en: {
+        htmlLang: 'en-US',
+      },
+      ko: {
+        htmlLang: 'ko-KR',
+      },
+    },
   },
 
   presets: [
@@ -60,13 +68,17 @@ const config = {
         items: [
           {
             type: 'doc',
-            docId: 'intro/motivation',
+            docId: 'intro/motivation.i18n',
             position: 'left',
             label: 'Docs',
           },
           {
             href: 'https://github.com/suspensive/react/tree/main/packages/react',
             label: 'GitHub',
+            position: 'right',
+          },
+          {
+            type: 'localeDropdown',
             position: 'right',
           },
         ],
@@ -79,15 +91,15 @@ const config = {
             items: [
               {
                 label: 'Getting Started',
-                to: '/docs/intro/motivation',
+                to: '/docs/intro/motivation.i18n',
               },
               {
                 label: 'Installation',
-                to: '/docs/intro/installation',
+                to: '/docs/intro/installation.i18n',
               },
               {
                 label: 'API Reference',
-                to: '/docs/reference/suspense',
+                to: '/docs/react/README.i18n',
               },
               {
                 label: 'Visualization',

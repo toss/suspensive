@@ -29,8 +29,5 @@
     "turbo": "1.6.3",
     "typescript": "^4.9.4"
   },
-  "packageManager": "yarn@3.3.1",
-  "engines": {
-    "node": ">=14.0.0"
-  }
+  "packageManager": "yarn@3.3.1"
 }

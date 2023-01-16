@@ -1,27 +1,40 @@
 import React from 'react'
 import clsx from 'clsx'
 import styles from './styles.module.css'
+import Translate from '@docusaurus/Translate'
 
 type FeatureItem = {
-  title: string
-  description: string
+  title: JSX.Element
+  description: JSX.Element
 }
 
 const FeatureList: FeatureItem[] = [
   {
-    title: 'All Declarative Boundaries ready',
-    description:
-      'Suspense, ErrorBoundary, AsyncBoundary, ErrorBoundaryGroup is provided. You can use them easily without any efforts',
+    title: <Translate>All Declarative Boundaries ready</Translate>,
+    description: (
+      <Translate>
+        Suspense, ErrorBoundary, AsyncBoundary, ErrorBoundaryGroup is provided. You can use them easily without any
+        efforts
+      </Translate>
+    ),
   },
   {
-    title: 'Zero peer dependency, Only React',
-    description:
-      "It is simply extensions of react's concepts. Named friendly with originals like just Suspense, ErrorBoundary, AsyncBoundary",
+    title: <Translate>Zero peer dependency, Only React</Translate>,
+    description: (
+      <Translate>
+        It is simply extensions of react's concepts. Named friendly with originals like just Suspense, ErrorBoundary,
+        AsyncBoundary
+      </Translate>
+    ),
   },
   {
-    title: 'Suspense in SSR easily',
-    description:
-      'Suspensive provide CSROnly mode that make developer can adopt Suspense gradually in Server-side rendering environment',
+    title: <Translate>Suspense in SSR easily</Translate>,
+    description: (
+      <Translate>
+        Suspensive provide CSROnly mode that make developer can adopt Suspense gradually in Server-side rendering
+        environment
+      </Translate>
+    ),
   },
 ]
 
