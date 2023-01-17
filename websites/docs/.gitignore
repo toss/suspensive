@@ -19,5 +19,7 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-docs
 .yarn
+
+docs
+i18n/ko/docusaurus-plugin-content-docs/current
