@@ -16,8 +16,8 @@
   ],
   "scripts": {
     "build": "rm -rf dist esm && tsc -p tsconfig.json --declaration --emitDeclarationOnly --declarationDir dist && rollup -c rollup.config.js",
-    "prepack": "yarn build",
     "npm:publish": "yarn npm publish",
+    "prepack": "yarn build",
     "test": "echo \"Error: no test specified\" && exit 1",
     "type:check": "tsc --noEmit"
   },

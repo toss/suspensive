@@ -2,13 +2,6 @@
   "name": "@suspensive/rollup",
   "private": true,
   "main": "index.js",
-  "packageManager": "yarn@3.3.0",
-  "devDependencies": {
-    "rollup": "^3.5.1"
-  },
-  "peerDependencies": {
-    "rollup": "^3"
-  },
   "dependencies": {
     "@babel/core": "^7.20.5",
     "@babel/preset-env": "^7.20.2",
@@ -19,5 +12,12 @@
     "@rollup/plugin-json": "^5.0.2",
     "@rollup/plugin-node-resolve": "^15.0.1",
     "builtin-modules": "^3.3.0"
-  }
+  },
+  "devDependencies": {
+    "rollup": "^3.5.1"
+  },
+  "peerDependencies": {
+    "rollup": "^3"
+  },
+  "packageManager": "yarn@3.3.0"
 }
