@@ -3,13 +3,13 @@ sidebar_position: 2
 title: ErrorBoundary
 ---
 
-This component provide a simple and reusable wrapper that you can use to wrap around your components. Any rendering errors in your components hierarchy can then be gracefully handled.
+이 컴포넌트는 간단하고 재사용가능하게 다른 컴포넌트들을 감싸서 감싼 컴포넌트의 렌더링 중 어떠한 에러가 발생하면 처리할 수 있습니다.
 
 ![Example banner](/gif/errorboundary-example.gif)
 
 ## fallback
 
-If there is any thrown error in children, ErrorBoundary will catch it and then fallback will be rendered.
+자식에 오류가 발생하면 ErrorBoundary가 오류를 포착한 fallback이 렌더링됩니다.
 
 ```tsx
 const Example = () => (
@@ -40,7 +40,7 @@ const ErrorAfter4s = () => {
 
 ## resetKeys: unknown[]
 
-If you want to reset ErrorBoundary by component where is outside of ErrorBoundary's fallback. Inject any resetKey in resetKeys. resetKeys work only when at least one element of array is changed. you don't need to worry about provide new array as resetKeys like how useEffect's dependency array work.
+ErrorBoundary의 fallback 외부에 있는 컴포넌트가 ErrorBoundary를 reset하려면 resetKeys배열에 resetKey를 할당하면 됩니다. resetKeys는 배열의 하나 이상의 요소가 변경된 경우에만 작동합니다. useEffect의 종속성 배열이 작동하는 방식과 같이 resetKeys로 매 렌더링마다 새 배열을 주입하는 것을 걱정할 필요도 없습니다.
 
 ```tsx
 const Example = () => {
