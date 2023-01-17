@@ -1,9 +1,9 @@
 ---
-sidebar_position: 2
+sidebar_position: 3
 title: Installation
 ---
 
-### NPM
+### npm
 
 The Suspensive package lives in npm. To install the latest stable version, run the following command
 
@@ -11,7 +11,7 @@ The Suspensive package lives in npm. To install the latest stable version, run t
 npm install @suspensive/react
 ```
 
-### Yarn
+### yarn
 
 Or if you're using <a href="https://classic.yarnpkg.com/en/docs/install/" target="_blank">yarn</a>:
 

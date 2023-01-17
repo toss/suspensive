@@ -1,19 +1,19 @@
 ---
-sidebar_position: 2
+sidebar_position: 3
 title: 설치하기
 ---
 
-### NPM
+### npm
 
-The Suspensive package lives in npm. To install the latest stable version, run the following command
+@suspensive/react 는 npm에 있습니다. 최신 안정버전을 설치하기 위해 아래 커맨드를 실행하세요
 
 ```shell
 npm install @suspensive/react
 ```
 
-### Yarn
+### yarn
 
-Or if you're using <a href="https://classic.yarnpkg.com/en/docs/install/" target="_blank">yarn</a>:
+혹은 <a href="https://classic.yarnpkg.com/en/docs/install/" target="_blank">yarn</a>을 사용한다면:
 
 ```shell
 yarn add @suspensive/react

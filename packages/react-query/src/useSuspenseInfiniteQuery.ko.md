@@ -3,9 +3,9 @@ sidebar_position: 3
 title: 'useSuspenseInfiniteQuery'
 ---
 
-### Motivation
+### 동기
 
-If you turn suspense mode on in @tanstack/react-query, You can use useInfiniteQuery with Suspense and ErrorBoundary.
+@tanstack/react-query에서 suspense 옵션을 사용하면, useInfiniteQuery를 Suspense, ErrorBoundary와 함께 사용할 수 있습니다.
 
 ```tsx
 import { useInfiniteQuery } from '@tanstack/react-query'
@@ -23,27 +23,27 @@ const Example = () => {
 }
 ```
 
-but useInfiniteQuery's return type:query.data will be always fulfilled because of Suspense as parent of this component.
+하지만 useInfiniteQuery의 return 타입(query.data)은 이 컴포넌트의 부모인 Suspense 덕분에 항상 성공한 경우일 것입니다.
 
-This is why @suspensive/react-query provide **useSuspenseInfiniteQuery**
+이것이 @suspensive/react-query가 **useSuspenseInfiniteQuery**를 제공하는 이유입니다.
 
 ## useSuspenseInfiniteQuery
 
-Return type of this hook have no isLoading, isError property. because Suspense and ErrorBoundary will guarantee this hook's data.
+이 hook의 return 타입에는 isLoading, isError이 없습니다. Suspense and ErrorBoundary가 이 hook의 data를 보장해주기 때문입니다.
 
-In addition, this hook's options have default suspense: true. and you can provide new options to this hook like useInfiniteQuery of @tanstack/react-query.
+또한, 이 hook의 options에는 기본적으로 suspense가 true입니다. 필요한 새 options는 @tanstack/react-query의 useInfiniteQuery처럼 사용하면 됩니다. 
 
 ```tsx
 import { useSuspenseInfiniteQuery } from '@suspensive/react-query'
 
 const Example = () => {
-  const query = useSuspenseInfiniteQuery(queryKey, queryFn, options) // suspense:true is default.
+  const query = useSuspenseInfiniteQuery(queryKey, queryFn, options) // suspense 옵션은 true가 기본입니다.
 
-  // No need to do type narrowing by isSuccess
+  // isSuccess으로 type narrowing이 필요하지 않습니다.
   query.data // InfiniteData<TData>
 }
 ```
 
-### Concentrate on only Success
+### 성공한 케이스에 집중하세요.
 
-Now, we can concentrate component as any fetching will be always success.
+이제 우리는 컴포넌트 내부에서 fetching이 항상 성공하므로 성공한 경우에만 집중할 수 있습니다.
