@@ -8,7 +8,7 @@ title: Introduction
 
 ### NPM
 
-The Suspensive React Query lives in npm. To install the latest stable version, run the following command
+@suspensive/react-query lives in npm. To install the latest stable version, run the following command
 
 ```shell
 npm install @suspensive/react @suspensive/react-query
