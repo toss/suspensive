@@ -3,18 +3,30 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "docusaurus": "docusaurus",
-    "dev": "yarn prebuild && docusaurus start",
-    "dev:ko": "yarn prebuild && docusaurus start --locale ko",
-    "build": "docusaurus build",
-    "swizzle": "docusaurus swizzle",
+    "build": "yarn gen:i18n && docusaurus build",
+    "clear": "docusaurus clear && rm -rf docs i18n/ko/docusaurus-plugin-content-docs/current",
     "deploy": "docusaurus deploy",
-    "clear": "docusaurus clear",
-    "serve": "yarn prebuild && yarn build && yarn write-translations && docusaurus serve",
-    "prebuild": "rm -rf docs i18n/ko/docusaurus-plugin-content-docs/current && yarn ts-node -T ./scripts/build-docs/index.ts",
-    "write-translations": "docusaurus write-translations --locale ko",
+    "dev": "yarn gen:i18n && docusaurus start",
+    "dev:ko": "yarn gen:i18n && docusaurus start --locale ko",
+    "docusaurus": "docusaurus",
+    "gen:i18n": "yarn clear && yarn ts-node -T ./scripts/build-docs/index.ts && yarn write-translations",
+    "serve": "docusaurus serve",
+    "swizzle": "docusaurus swizzle",
+    "typecheck": "tsc",
     "write-heading-ids": "docusaurus write-heading-ids",
-    "typecheck": "tsc"
+    "write-translations": "docusaurus write-translations --locale ko"
+  },
+  "browserslist": {
+    "production": [
+      ">0.5%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   },
   "dependencies": {
     "@docusaurus/core": "2.2.0",
@@ -36,17 +48,5 @@
     "fs-extra": "^11.1.0",
     "globby": "^11",
     "ts-node": "^10.9.1"
-  },
-  "browserslist": {
-    "production": [
-      ">0.5%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
   }
 }
