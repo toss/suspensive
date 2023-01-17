@@ -48,13 +48,3 @@ const AsyncBoundaryAvoidSSR = () => (
 #### Migration support SSR gradually (AsyncBoundary.CSROnly -> default AsyncBoundary)
 
 If you want to use default AsyncBoundary working in both SSR/CSR, You can change AsyncBoundary.CSROnly to default AsyncBoundary gradually.
-
-## Props
-
-```tsx
-type Props = Omit<SuspenseProps, 'fallback'> &
-  Omit<ErrorBoundaryProps, 'fallback'> & {
-    pendingFallback: SuspenseProps['fallback']
-    rejectedFallback: ErrorBoundaryProps['fallback']
-  }
-```
