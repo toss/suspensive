@@ -3,27 +3,27 @@ sidebar_position: 3
 title: ErrorBoundaryGroup
 ---
 
-This is a component for managing multiple ErrorBoundaries at once.
+다수의 ErrorBoundary들을 한 번에 관리하기 위한 컴포넌트입니다.
 
-If you use ErrorBoundaryGroup, you can easily reset multiple ErrorBoundaries at once if they are children of ErrorBoundaryGroup, without having to connect resetKey state to resetKeys of multiple ErrorBoundary.
+ErrorBoundaryGroup을 사용하면 다수의 ErrorBoundary의 resetKeys에 일일이 resetKey상태를 연결해주지 않아도 ErrorBoundaryGroup의 children으로 있다면 ErrorBoundary들을 쉽게 한 번에 reset할 수 있습니다.
 
 ### ErrorBoundaryGroup.Reset
 
-Multiple ErrorBoundary as children of ErrorBoundaryGroup can be reset at once by ErrorBoundaryGroup.Reset.
+ErrorBoundaryGroup의 children으로 다수의 ErrorBoundary가 있다면 ErrorBoundaryGroup.Reset으로 한번에 reset할 수 있습니다.
 
 ```tsx
 const Example = () => (
   <ErrorBoundaryGroup>
     <ErrorBoundaryGroup.Reset trigger={(group) => <button onClick={group.reset}>Reset Children</button>} />
     <ErrorBoundary />
-    <AsyncBoundary /* ErrorBoundary wrapped by AsyncBoundary also will be reset by ErrorBoundaryGroup.Reset */ />
+    <AsyncBoundary /* AsyncBoundary 또한 ErrorBoundary를 래핑한 컴포넌트이므로 reset됩니다. */ />
   </ErrorBoundaryGroup>
 )
 ```
 
 ### withErrorBoundaryGroup, useErrorBoundaryGroup
 
-If you want to use HOC(Higher Order Component) with hook, Use withErrorBoundaryGroup, useErrorBoundaryGroup.
+만약 HOC(Higher Order Component)와 hook을 사용하고 싶다면 withErrorBoundaryGroup, useErrorBoundaryGroup를 사용하세요.
 
 ```tsx
 const Example = withErrorBoundaryGroup(() => {
@@ -41,17 +41,16 @@ const Example = withErrorBoundaryGroup(() => {
 
 ### Nested ErrorBoundaryGroup
 
-ErrorBoundary as children of nested ErrorBoundaryGroup will be reset by parent ErrorBoundary.Reset.
-But nested ErrorBoundary.Reset will reset only ErrorBoundary inside of nested ErrorBoundaryGroup self.
+중첩된 ErrorBoundaryGroup의 children인 ErrorBoundary는 상위 ErrorBoundaryGroup.Reset으로도 reset됩니다. 하지만 하위 ErrorBoundaryGroup.Reset은 오직 하위 ErrorBoundaryGroup 자신의 children의 ErrorBoundary만을 reset합니다.
 
 ```tsx
 const Example = () => (
   <ErrorBoundaryGroup>
-    <ErrorBoundaryGroup.Reset /* reset all of children */ />
+    <ErrorBoundaryGroup.Reset /* 모든 children을 reset합니다 */ />
     <ErrorBoundary />
     <AsyncBoundary />
     <ErrorBoundaryGroup>
-      <ErrorBoundaryGroup.Reset /* reset all of children */ />
+      <ErrorBoundaryGroup.Reset /* 모든 children을 reset합니다 */ />
       <ErrorBoundary />
       <AsyncBoundary />
     </ErrorBoundaryGroup>
@@ -61,7 +60,7 @@ const Example = () => (
 
 ### blockOutside: boolean
 
-If you want to block resetting nested ErrorBoundaryGroup by parent ErrorBoundaryGroup, Use blockOutside.
+만약 상위 ErrorBoundaryGroup에 의한 하위 ErrorBoundaryGroup의 reset을 막고 싶다면 blockOutside을 사용하면 됩니다.
 
 ```tsx
 const Example = () => (
@@ -69,7 +68,7 @@ const Example = () => (
     <ErrorBoundaryGroup.Reset />
     <ErrorBoundary />
     <AsyncBoundary />
-    <ErrorBoundaryGroup blockOutside /* block resetting by parent ErrorBoundaryGroup */>
+    <ErrorBoundaryGroup blockOutside /* 상위 ErrorBoundaryGroup에 의한 reset을 막습니다 */>
       <ErrorBoundaryGroup.Reset />
       <ErrorBoundary />
       <AsyncBoundary />

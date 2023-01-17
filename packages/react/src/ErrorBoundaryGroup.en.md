@@ -41,8 +41,8 @@ const Example = withErrorBoundaryGroup(() => {
 
 ### Nested ErrorBoundaryGroup
 
-ErrorBoundary as children of nested ErrorBoundaryGroup will be reset by parent ErrorBoundary.Reset.
-But nested ErrorBoundary.Reset will reset only ErrorBoundary inside of nested ErrorBoundaryGroup self.
+ErrorBoundary as children of nested ErrorBoundaryGroup will be reset by parent ErrorBoundaryGroup.Reset.
+But nested ErrorBoundaryGroup.Reset will reset only ErrorBoundary inside of nested ErrorBoundaryGroup self.
 
 ```tsx
 const Example = () => (
