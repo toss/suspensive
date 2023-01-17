@@ -6,7 +6,7 @@ title: Introduction
 
 ## Installation
 
-### NPM
+### npm
 
 @suspensive/react lives in npm. To install the latest stable version, run the following command
 
@@ -14,7 +14,7 @@ title: Introduction
 npm install @suspensive/react
 ```
 
-### Yarn
+### yarn
 
 Or if you're using <a href="https://classic.yarnpkg.com/en/docs/install/" target="_blank">yarn</a>:
 

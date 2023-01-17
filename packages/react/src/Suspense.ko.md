@@ -23,7 +23,7 @@ const DefaultMode = () => (
 CSROnly 모드를 사용하면 Suspense는 fallback을 먼저 return하고 컴포넌트가 마운트된 후, 클라이언트 사이드에서만 children이 return됩니다. 하지만 서버 사이드에서는 fallback만이 return됩니다.
 
 ```tsx
-// 오직 클라이언트 사이드 렌던링에서만 children을 노출합니다.
+// 오직 클라이언트 사이드 렌더링에서만 children을 노출합니다.
 const CSROnlyMode = () => (
   <Suspense.CSROnly fallback={<Loading />}>
     <Children />

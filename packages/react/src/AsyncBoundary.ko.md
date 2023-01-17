@@ -3,7 +3,7 @@ sidebar_position: 4
 title: AsyncBoundary
 ---
 
-AsyncBoundary는 @suspensive/react의 [Suspense](https://docs.suspensive.org/docs/reference/Suspense)와 [ErrorBoundary](https://docs.suspensive.org/docs/reference/ErrorBoundary)를 쉽게 한번에 사용하기 위해 래핑한 컴포넌트입니다.
+AsyncBoundary는 @suspensive/react의 [Suspense](/docs/react/src/Suspense.i18n)와 [ErrorBoundary](/docs/react/src/ErrorBoundary.i18n)를 쉽게 한번에 사용하기 위해 래핑한 컴포넌트입니다.
 
 ### Default 모드
 

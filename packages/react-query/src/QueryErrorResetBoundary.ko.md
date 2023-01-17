@@ -3,9 +3,9 @@ sidebar_position: 4
 title: 'QueryErrorBoundary, QueryAsyncBoundary'
 ---
 
-### Motivation
+### 동기
 
-With the [QueryErrorResetBoundary](https://tanstack.com/query/v4/docs/reference/QueryErrorResetBoundary) component you can reset any query errors within the boundaries of the component. but If you use react-query with suspense continuously, Continuous repeating to use QueryErrorResetBoundary + [ErrorBoundary](https://docs.suspensive.org/docs/reference/ErrorBoundary), QueryErrorResetBoundary + [AsyncBoundary](https://docs.suspensive.org/docs/reference/AsyncBoundary) will be coded.
+[QueryErrorResetBoundary](https://tanstack.com/query/v4/docs/reference/QueryErrorResetBoundary)를 사용하면 캐싱된 임의의 query error들을 reset할 수 있습니다. 하지만 react-query와 suspense를 계속 사용하면, QueryErrorResetBoundary + [ErrorBoundary](/docs/react/src/ErrorBoundary.i18n), QueryErrorResetBoundary + [AsyncBoundary](/docs/react/src/AsyncBoundary.i18n)를 계속 반복적으로 작성해야 합니다.
 
 #### QueryErrorResetBoundary + ErrorBoundary
 
@@ -43,8 +43,7 @@ const Example = () => (
   </QueryErrorResetBoundary>
 )
 ```
-
-@suspensive/react-query provide QueryErrorBoundary, QueryAsyncBoundary to reduce repeating implementation like using QueryErrorResetBoundary + ErrorBoundary, QueryErrorResetBoundary + AsyncBoundary.
+@suspensive/react-query는 QueryErrorResetBoundary + ErrorBoundary, QueryErrorResetBoundary + AsyncBoundary와 같은 반복되는 구현을 줄이기 위해 QueryErrorBoundary, QueryAsyncBoundary를 제공합니다.
 
 ## QueryErrorBoundary
 
@@ -70,4 +69,4 @@ const Example = () => (
 )
 ```
 
-You can just use QueryErrorBoundary / QueryAsyncBoundary like using [ErrorBoundary](https://docs.suspensive.org/docs/reference/ErrorBoundary) / [AsyncBoundary](https://docs.suspensive.org/docs/reference/AsyncBoundary). All other features are same with original ErrorBoundary, AsyncBoundary of @suspensive/react without resetting react-query's error.
+[ErrorBoundary](/docs/react/src/ErrorBoundary.i18n) / [AsyncBoundary](/docs/react/src/AsyncBoundary.i18n)를 사용하는 것처럼 QueryErrorBoundary / QueryAsyncBoundary를 사용할 수 있습니다. react-query의 캐싱된 error를 reset한다는 점만 빼면 모든 다른 기능은 @suspensive/react의 ErrorBoundary, AsyncBoundary와 같습니다. 
