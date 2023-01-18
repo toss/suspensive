@@ -1,5 +1,5 @@
 ---
-title: 소개
+title: 라이브러리 소개
 ---
 
 # @suspensive/react-query
