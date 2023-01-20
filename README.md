@@ -16,7 +16,7 @@ Declarative apis to use [@tanstack/react-query with suspense](https://tanstack.c
 
 Welcome contribution from everyone in the community.
 
-[CONTRIBUTING](<[./.github/CONTRIBUTING.md](https://github.com/suspensive/react/pulls)>)
+[CONTRIBUTING](https://github.com/suspensive/react/pulls)
 
 ## License
 
