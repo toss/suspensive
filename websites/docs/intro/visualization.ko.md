@@ -14,4 +14,16 @@ Suspensive(Suspense, ErrorBoundary, AsyncBoundary, ErrorBoundaryGroup)의 핵심
 
 [**🔗 시각화자료를 보려면 클릭하기**](https://visualization.suspensive.org/react)
 
-![Visualization Core Concepts](/gif/visualization-core-concepts.gif)
+<iframe
+  src="https://visualization.suspensive.org/react"
+  title="@suspensive/react"
+  sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
+  style={{
+    width: '100%',
+    border: '0',
+    borderRadius: 8,
+    overflow: 'hidden',
+    position: 'static',
+    zIndex: 0,
+  }}
+></iframe>
