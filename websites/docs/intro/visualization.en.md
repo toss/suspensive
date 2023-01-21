@@ -14,4 +14,17 @@ I made [Concepts Visualization](https://visualization.suspensive.org/react) that
 
 [**🔗 Click here to see Visualization**](https://visualization.suspensive.org/react)
 
-![Visualization Core Concepts](/gif/visualization-core-concepts.gif)
+<iframe
+  src="https://visualization.suspensive.org/react"
+  title="@suspensive/react"
+  sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
+  style={{
+    width: '100%',
+    height: '75vh',
+    border: '0',
+    borderRadius: 8,
+    overflow: 'hidden',
+    position: 'static',
+    zIndex: 0,
+  }}
+></iframe>
