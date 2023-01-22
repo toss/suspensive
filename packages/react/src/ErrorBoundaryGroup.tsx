@@ -6,11 +6,23 @@ if (process.env.NODE_ENV !== 'production') {
   ErrorBoundaryGroupContext.displayName = 'ErrorBoundaryGroupContext'
 }
 
+/**
+ * ErrorBoundaryGroup is Component to manage multiple ErrorBoundaries
+ * @see {@link https://docs.suspensive.org/docs/react/src/ErrorBoundaryGroup.i18n Suspensive Official Docs}
+ * @see {@link https://github.com/toss/slash/pull/157 Pull Request to add ErrorBoundaryGroup in @toss/error-boundary}
+ */
 export const ErrorBoundaryGroup = ({
   blockOutside = false,
   children,
 }: {
+  /**
+   * If you use blockOutside as true, ErrorBoundaryGroup will protect multiple ErrorBoundaries as its children from external ErrorBoundaryGroup's resetKey
+   * @default false
+   */
   blockOutside?: boolean
+  /**
+   * Use multiple ErrorBoundaries inside of children
+   */
   children?: ReactNode
 }) => {
   const [resetKey, reset] = useKey()
@@ -26,7 +38,14 @@ export const ErrorBoundaryGroup = ({
   return <ErrorBoundaryGroupContext.Provider value={{ reset, resetKey }}>{children}</ErrorBoundaryGroupContext.Provider>
 }
 
-const ErrorBoundaryGroupReset = ({ trigger: Trigger }: { trigger: ComponentType<{ reset: () => void }> }) => {
+const ErrorBoundaryGroupReset = ({
+  trigger: Trigger,
+}: {
+  /**
+   * When you want to reset multiple ErrorBoundaries as children of ErrorBoundaryGroup, You can combine any other components with this trigger's reset
+   */
+  trigger: ComponentType<ReturnType<typeof useErrorBoundaryGroup>>
+}) => {
   const { reset } = useErrorBoundaryGroup()
 
   return <Trigger reset={reset} />
@@ -37,7 +56,12 @@ ErrorBoundaryGroup.Reset = ErrorBoundaryGroupReset
 export const useErrorBoundaryGroup = () => {
   const { reset } = useContext(ErrorBoundaryGroupContext)
 
-  return { reset }
+  return {
+    /**
+     * When you want to reset multiple ErrorBoundaries as children of ErrorBoundaryGroup, You can use this reset
+     */
+    reset,
+  }
 }
 
 export const withErrorBoundaryGroup =

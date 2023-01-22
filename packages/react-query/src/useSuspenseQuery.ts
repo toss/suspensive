@@ -23,6 +23,10 @@ export type UseSuspenseQueryOptions<
   TQueryKey extends QueryKey = QueryKey
 > = Omit<UseQueryOptions<TQueryFnData, TError, TData, TQueryKey>, 'suspense' | 'queryKey' | 'queryFn'>
 
+/**
+ * This hook wrapping useQuery of @tanstack/react-query with default suspense option. with this hook, you don't have to make unnecessary type narrowing
+ * @see {@link https://docs.suspensive.org/docs/react-query/src/useSuspenseQuery.i18n Suspensive Official Docs}
+ */
 export function useSuspenseQuery<
   TQueryFnData = unknown,
   TError = unknown,
