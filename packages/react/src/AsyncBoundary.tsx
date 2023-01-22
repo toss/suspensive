@@ -25,7 +25,15 @@ const CSROnlyAsyncBoundary = forwardRef<ComponentRef<typeof ErrorBoundary>, Prop
   )
 )
 
+/**
+ * This component is just wrapping Suspense and ErrorBoundary in this library. to use Suspense with ErrorBoundary at once easily.
+ * @see {@link https://docs.suspensive.org/docs/react/src/AsyncBoundary.i18n Suspensive Official Docs}
+ */
 export const AsyncBoundary = BaseAsyncBoundary as typeof BaseAsyncBoundary & {
+  /**
+   * CSROnly mode make AsyncBoundary can be used in SSR framework like Next.js with React 17 or under
+   * @see {@link https://docs.suspensive.org/docs/react/src/AsyncBoundary.i18n Suspensive Official Docs}
+   */
   CSROnly: typeof CSROnlyAsyncBoundary
 }
 AsyncBoundary.CSROnly = CSROnlyAsyncBoundary

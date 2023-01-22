@@ -35,6 +35,10 @@ export type UseSuspenseInfiniteQueryOptions<
   'suspense' | 'queryKey' | 'queryFn'
 >
 
+/**
+ * This hook wrapping useInfiniteQuery of @tanstack/react-query with default suspense option. with this hook, you don't have to make unnecessary type narrowing
+ * @see {@link https://docs.suspensive.org/docs/react-query/src/useSuspenseInfiniteQuery.i18n Suspensive Official Docs}
+ */
 export function useSuspenseInfiniteQuery<
   TQueryFnData = unknown,
   TError = unknown,
