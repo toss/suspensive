@@ -64,14 +64,20 @@ export const useErrorBoundaryGroup = () => {
   }
 }
 
-export const withErrorBoundaryGroup =
-  <P extends Record<string, unknown> = Record<string, never>>(
-    Component: ComponentType<P>,
-    errorBoundaryGroupProps?: ComponentPropsWithoutRef<typeof ErrorBoundaryGroup>
-  ) =>
-  (props: P) =>
-    (
-      <ErrorBoundaryGroup {...errorBoundaryGroupProps}>
-        <Component {...props} />
-      </ErrorBoundaryGroup>
-    )
+export const withErrorBoundaryGroup = <P extends Record<string, unknown> = Record<string, never>>(
+  Component: ComponentType<P>,
+  errorBoundaryGroupProps?: ComponentPropsWithoutRef<typeof ErrorBoundaryGroup>
+) => {
+  const Wrapped = (props: P) => (
+    <ErrorBoundaryGroup {...errorBoundaryGroupProps}>
+      <Component {...props} />
+    </ErrorBoundaryGroup>
+  )
+
+  if (process.env.NODE_ENV !== 'production') {
+    const name = Component.displayName || Component.name || 'Component'
+    Wrapped.displayName = `withErrorBoundaryGroup(${name})`
+  }
+
+  return Wrapped
+}
