@@ -41,7 +41,7 @@ async function copyMDDocs(cwd: string, outdir: string, excludes: string[]) {
 }
 
 async function generateLanguageDocs(cwd: string, lang: string, outdir: string) {
-  const filepaths = await globby(`**/*.${lang}.md`, {
+  const filepaths = await globby(`**/*.${lang}.{md,mdx}`, {
     cwd,
     ignore: [`**/README.${lang}.md`, `**/node_modules`],
   })
@@ -49,7 +49,7 @@ async function generateLanguageDocs(cwd: string, lang: string, outdir: string) {
   await Promise.all(
     filepaths.map(async (filepath) => {
       const source = path.join(cwd, filepath)
-      const destination = path.join(outdir, filepath).replace(new RegExp(`\\.${lang}\\.md$`), '.i18n.md')
+      const destination = path.join(outdir, filepath).replace(new RegExp(`\\.${lang}\\.`), '.i18n.')
 
       await fse.ensureDir(path.dirname(destination))
       await fse.copy(source, destination)
@@ -68,7 +68,7 @@ async function generateDefaultREADMEDocs(outdir: string) {
       console.log(`Generating docs from README: ${filepath}`)
 
       const source = path.join(PACKAGES_ROOT, filepath)
-      const destination = path.join(outdir, filepath).replace('/README.md', '/README.i18n.md')
+      const destination = path.join(outdir, filepath).replace('/README.', '/README.i18n.')
 
       await fse.ensureDir(path.dirname(destination))
       await fse.copy(source, destination)
@@ -87,7 +87,7 @@ async function generateI18nREADMEDocs(lang: string, outdir: string) {
       console.log(`Generating docs from README: ${filepath}`)
 
       const source = path.join(PACKAGES_ROOT, filepath)
-      const destination = path.join(outdir, filepath).replace(new RegExp(`\\.${lang}\\.md$`), '.i18n.md')
+      const destination = path.join(outdir, filepath).replace(new RegExp(`\\.${lang}\\.`), '.i18n.')
 
       await fse.ensureDir(path.dirname(destination))
       await fse.copy(source, destination)
