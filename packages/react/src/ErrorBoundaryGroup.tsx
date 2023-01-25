@@ -1,4 +1,12 @@
-import { ComponentPropsWithoutRef, ComponentType, ReactNode, createContext, useContext, useEffect } from 'react'
+import {
+  ComponentPropsWithoutRef,
+  ComponentType,
+  ReactNode,
+  createContext,
+  useContext,
+  useEffect,
+  useMemo,
+} from 'react'
 import { useIsMounted, useKey } from './hooks'
 
 export const ErrorBoundaryGroupContext = createContext({ resetKey: 0, reset: () => {} })
@@ -56,12 +64,15 @@ ErrorBoundaryGroup.Reset = ErrorBoundaryGroupReset
 export const useErrorBoundaryGroup = () => {
   const { reset } = useContext(ErrorBoundaryGroupContext)
 
-  return {
-    /**
-     * When you want to reset multiple ErrorBoundaries as children of ErrorBoundaryGroup, You can use this reset
-     */
-    reset,
-  }
+  return useMemo(
+    () => ({
+      /**
+       * When you want to reset multiple ErrorBoundaries as children of ErrorBoundaryGroup, You can use this reset
+       */
+      reset,
+    }),
+    [reset]
+  )
 }
 
 export const withErrorBoundaryGroup = <P extends Record<string, unknown> = Record<string, never>>(
