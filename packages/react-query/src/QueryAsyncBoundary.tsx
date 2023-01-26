@@ -20,7 +20,7 @@ const BaseQueryAsyncBoundary = forwardRef<
   </QueryErrorResetBoundary>
 ))
 const CSROnlyQueryAsyncBoundary = forwardRef<
-  ComponentRef<typeof AsyncBoundary>,
+  ComponentRef<typeof AsyncBoundary.CSROnly>,
   ComponentPropsWithoutRef<typeof AsyncBoundary.CSROnly>
 >(({ onReset, ...props }, resetRef) => (
   <QueryErrorResetBoundary>
