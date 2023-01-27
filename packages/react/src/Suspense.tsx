@@ -3,7 +3,13 @@ import { useIsMounted } from './hooks'
 
 type Props = SuspenseProps
 const DefaultSuspense = (props: Props) => <BaseSuspense {...props} />
+if (process.env.NODE_ENV !== 'production') {
+  DefaultSuspense.displayName = 'Suspense'
+}
 const CSROnlySuspense = (props: Props) => (useIsMounted() ? <BaseSuspense {...props} /> : <>{props.fallback}</>)
+if (process.env.NODE_ENV !== 'production') {
+  CSROnlySuspense.displayName = 'Suspense.CSROnly'
+}
 
 /**
  * This component is just wrapping React's Suspense. to use Suspense easily in Server-side rendering environment like Next.js
