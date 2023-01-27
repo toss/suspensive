@@ -1,6 +1,7 @@
 import { ComponentProps, ComponentRef, forwardRef } from 'react'
 import { ErrorBoundary } from './ErrorBoundary'
 import { Suspense } from './Suspense'
+import { isDevelopment } from './utils'
 
 type SuspenseProps = ComponentProps<typeof Suspense>
 type ErrorBoundaryProps = ComponentProps<typeof ErrorBoundary>
@@ -17,7 +18,7 @@ const BaseAsyncBoundary = forwardRef<ComponentRef<typeof ErrorBoundary>, Props>(
     </ErrorBoundary>
   )
 )
-if (process.env.NODE_ENV !== 'production') {
+if (isDevelopment) {
   BaseAsyncBoundary.displayName = 'AsyncBoundary'
 }
 const CSROnlyAsyncBoundary = forwardRef<ComponentRef<typeof ErrorBoundary>, Props>(
@@ -27,7 +28,7 @@ const CSROnlyAsyncBoundary = forwardRef<ComponentRef<typeof ErrorBoundary>, Prop
     </ErrorBoundary>
   )
 )
-if (process.env.NODE_ENV !== 'production') {
+if (isDevelopment) {
   CSROnlyAsyncBoundary.displayName = 'AsyncBoundary.CSROnly'
 }
 

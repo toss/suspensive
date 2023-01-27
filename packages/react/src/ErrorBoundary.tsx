@@ -12,7 +12,7 @@ import {
   useRef,
 } from 'react'
 import { ErrorBoundaryGroupContext } from './ErrorBoundaryGroup'
-import { isDifferentArray } from './utils'
+import { isDevelopment, isDifferentArray } from './utils'
 
 type Props = PropsWithRef<
   PropsWithChildren<{
@@ -121,6 +121,6 @@ export const ErrorBoundary = forwardRef<{ reset(): void }, ComponentPropsWithout
     return <BaseErrorBoundary {...props} resetKeys={resetKeys} ref={ref} />
   }
 )
-if (process.env.NODE_ENV !== 'production') {
+if (isDevelopment) {
   ErrorBoundary.displayName = 'ErrorBoundary'
 }

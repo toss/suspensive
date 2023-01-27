@@ -8,9 +8,10 @@ import {
   useMemo,
 } from 'react'
 import { useIsMounted, useKey } from './hooks'
+import { isDevelopment } from './utils'
 
 export const ErrorBoundaryGroupContext = createContext({ resetKey: 0, reset: () => {} })
-if (process.env.NODE_ENV !== 'production') {
+if (isDevelopment) {
   ErrorBoundaryGroupContext.displayName = 'ErrorBoundaryGroupContext'
 }
 
@@ -85,7 +86,7 @@ export const withErrorBoundaryGroup = <P extends Record<string, unknown> = Recor
     </ErrorBoundaryGroup>
   )
 
-  if (process.env.NODE_ENV !== 'production') {
+  if (isDevelopment) {
     const name = Component.displayName || Component.name || 'Component'
     Wrapped.displayName = `withErrorBoundaryGroup(${name})`
   }
