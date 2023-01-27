@@ -17,6 +17,9 @@ const BaseAsyncBoundary = forwardRef<ComponentRef<typeof ErrorBoundary>, Props>(
     </ErrorBoundary>
   )
 )
+if (process.env.NODE_ENV !== 'production') {
+  BaseAsyncBoundary.displayName = 'AsyncBoundary'
+}
 const CSROnlyAsyncBoundary = forwardRef<ComponentRef<typeof ErrorBoundary>, Props>(
   ({ pendingFallback, rejectedFallback, children, ...errorBoundaryProps }, resetRef) => (
     <ErrorBoundary {...errorBoundaryProps} ref={resetRef} fallback={rejectedFallback}>
@@ -24,6 +27,9 @@ const CSROnlyAsyncBoundary = forwardRef<ComponentRef<typeof ErrorBoundary>, Prop
     </ErrorBoundary>
   )
 )
+if (process.env.NODE_ENV !== 'production') {
+  CSROnlyAsyncBoundary.displayName = 'AsyncBoundary.CSROnly'
+}
 
 /**
  * This component is just wrapping Suspense and ErrorBoundary in this library. to use Suspense with ErrorBoundary at once easily.

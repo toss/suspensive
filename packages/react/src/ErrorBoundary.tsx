@@ -121,3 +121,6 @@ export const ErrorBoundary = forwardRef<{ reset(): void }, ComponentPropsWithout
     return <BaseErrorBoundary {...props} resetKeys={resetKeys} ref={ref} />
   }
 )
+if (process.env.NODE_ENV !== 'production') {
+  ErrorBoundary.displayName = 'ErrorBoundary'
+}
