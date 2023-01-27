@@ -1,13 +1,14 @@
 import { Suspense as BaseSuspense, SuspenseProps, ComponentProps, ComponentType } from 'react'
 import { useIsMounted } from './hooks'
+import { isDevelopment } from './utils'
 
 type Props = SuspenseProps
 const DefaultSuspense = (props: Props) => <BaseSuspense {...props} />
-if (process.env.NODE_ENV !== 'production') {
+if (isDevelopment) {
   DefaultSuspense.displayName = 'Suspense'
 }
 const CSROnlySuspense = (props: Props) => (useIsMounted() ? <BaseSuspense {...props} /> : <>{props.fallback}</>)
-if (process.env.NODE_ENV !== 'production') {
+if (isDevelopment) {
   CSROnlySuspense.displayName = 'Suspense.CSROnly'
 }
 
@@ -34,7 +35,7 @@ export function withSuspense<Props extends Record<string, unknown> = Record<stri
     </Suspense>
   )
 
-  if (process.env.NODE_ENV !== 'production') {
+  if (isDevelopment) {
     const name = Component.displayName || Component.name || 'Component'
     Wrapped.displayName = `withSuspense(${name})`
   }
@@ -52,7 +53,7 @@ withSuspense.CSROnly = function withSuspenseCSROnly<Props extends Record<string,
     </Suspense.CSROnly>
   )
 
-  if (process.env.NODE_ENV !== 'production') {
+  if (isDevelopment) {
     const name = Component.displayName || Component.name || 'Component'
     Wrapped.displayName = `withSuspense.CSROnly(${name})`
   }
