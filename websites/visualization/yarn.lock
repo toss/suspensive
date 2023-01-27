@@ -674,23 +674,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@suspensive/react-query@npm:1.6.4":
-  version: 1.6.4
-  resolution: "@suspensive/react-query@npm:1.6.4"
+"@suspensive/react-query@npm:1.6.5":
+  version: 1.6.5
+  resolution: "@suspensive/react-query@npm:1.6.5"
   peerDependencies:
-    "@suspensive/react": ^1.6.4
+    "@suspensive/react": ^1.6.5
     "@tanstack/react-query": ^4.16.1
     react: ^16.8 || ^17 || ^18
-  checksum: 3f46b1f90367ff60ddae1e036bf868b081b34161d1a218a757865b59e00a14d34b02bf3101d4488784470253210ae0e23d27b789965131e8b8b8e65caf52fb8a
+  checksum: 6007f2a1e889f10812b79bc0a0c17bfd445e693dd5849ae3effba3f55acdf169c5d3cd22d34ddf3d9c669000d0d27014b36ba4fcc0ba11b3ac4f66dad98620bb
   languageName: node
   linkType: hard
 
-"@suspensive/react@npm:1.6.4":
-  version: 1.6.4
-  resolution: "@suspensive/react@npm:1.6.4"
+"@suspensive/react@npm:1.6.5":
+  version: 1.6.5
+  resolution: "@suspensive/react@npm:1.6.5"
   peerDependencies:
     react: ^16.8 || ^17 || ^18
-  checksum: c09a94adf2f4e18d6dd92d20e639199dc66f4d4641813a450195d88209b966b8717de87a79e9b79814e6e9c2aea7ecd921040c35c5f100c4500e01bfa4d7bee1
+  checksum: 5ae4749fb70d1eb6d35259748fccdcb2732682fd654f697ddd1eb70db28a8b0b40ec26a97db5c33350510d16dcf0497754d8848ecc41bfd7020b79e9b24e68e4
   languageName: node
   linkType: hard
 
@@ -701,8 +701,8 @@ __metadata:
     "@babel/core": ^7.0.0
     "@emotion/react": ^11.10.5
     "@emotion/styled": ^11.10.5
-    "@suspensive/react": 1.6.4
-    "@suspensive/react-query": 1.6.4
+    "@suspensive/react": 1.6.5
+    "@suspensive/react-query": 1.6.5
     "@tanstack/react-query": ^4.16.1
     "@tanstack/react-query-devtools": ^4.16.1
     "@types/node": ^17.0.12
