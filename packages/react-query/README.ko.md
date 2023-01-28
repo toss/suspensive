@@ -2,7 +2,7 @@
 title: 라이브러리 소개
 ---
 
-# @suspensive/react-query
+# @suspensive/react-query [![npm version](https://badge.fury.io/js/@suspensive%2Freact-query.svg?)](https://badge.fury.io/js/@suspensive%2Freact-query)
 
 ## 설치하기
 

@@ -1,4 +1,4 @@
-# Suspensive Libraries [![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/suspensive/react/blob/main/LICENSE) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/suspensive/react/pulls) [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
+# Suspensive Libraries <img alt="Suspensive" src="https://github.com/suspensive.png" width="24"> [![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/suspensive/react/blob/main/LICENSE) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-yellowgreen.svg)](https://github.com/suspensive/react/pulls) [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-yellowgreen.svg)](http://commitizen.github.io/cz-cli/)
 
 [OFFICIAL DOCS](https://docs.suspensive.org) | [VISUALIZATION](https://visualization.suspensive.org) | [CONTRIBUTING](https://github.com/suspensive/react/pulls) | [LICENSE](./LICENSE)
 
