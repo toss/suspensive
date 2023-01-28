@@ -2,7 +2,7 @@
 title: Introduction
 ---
 
-# @suspensive/react-query [![npm version](https://badge.fury.io/js/@suspensive%2Freact-query.svg)](https://badge.fury.io/js/@suspensive%2Freact-query)
+# @suspensive/react-query [![npm version](https://badge.fury.io/js/@suspensive%2Freact-query.svg?)](https://badge.fury.io/js/@suspensive%2Freact-query)
 
 ## Installation
 

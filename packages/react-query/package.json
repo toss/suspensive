@@ -1,6 +1,6 @@
 {
   "name": "@suspensive/react-query",
-  "version": "1.7.1",
+  "version": "1.7.2",
   "keywords": [
     "suspensive",
     "react-query"
@@ -35,7 +35,7 @@
   },
   "devDependencies": {
     "@suspensive/babel": "workspace:^",
-    "@suspensive/react": "workspace:^1.7.1",
+    "@suspensive/react": "workspace:^1.7.2",
     "@suspensive/rollup": "workspace:^",
     "@suspensive/tsconfig": "workspace:^",
     "@tanstack/react-query": "^4.16.1",
@@ -48,7 +48,7 @@
     "typescript": "^4.9.3"
   },
   "peerDependencies": {
-    "@suspensive/react": "^1.7.1",
+    "@suspensive/react": "^1.7.2",
     "@tanstack/react-query": "^4.16.1",
     "react": "^16.8 || ^17 || ^18"
   },
