@@ -2,7 +2,7 @@
 title: Introduction
 ---
 
-# @suspensive/react
+# @suspensive/react [![npm version](https://badge.fury.io/js/@suspensive%2Freact.svg)](https://badge.fury.io/js/@suspensive%2Freact)
 
 ## Installation
 
