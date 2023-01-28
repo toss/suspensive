@@ -1,24 +1,26 @@
-# Suspensive
+# Suspensive Libraries [![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/suspensive/react/blob/main/LICENSE) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/suspensive/react/pulls) [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 
-[![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/suspensive/react/blob/main/LICENSE) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/suspensive/react/pulls) [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
+[OFFICIAL DOCS](https://docs.suspensive.org) | [VISUALIZATION](https://visualization.suspensive.org) | [CONTRIBUTING](https://github.com/suspensive/react/pulls) | [LICENSE](./LICENSE)
 
-## Libraries
-
-### [@suspensive/react](https://github.com/suspensive/react/tree/main/packages/react)
+## [@suspensive/react](https://docs.suspensive.org/docs/react/README.i18n)
 
 All declarative components to use suspense on both CSR, SSR.
 
-### [@suspensive/react-query](https://github.com/suspensive/react/tree/main/packages/react-query)
+## [@suspensive/react-query](https://docs.suspensive.org/docs/react-query/README.i18n)
 
 Declarative apis to use [@tanstack/react-query with suspense](https://tanstack.com/query/v4/docs/guides/suspense) easily.
 
-## Contributing
+### Contributing
 
 Welcome contribution from everyone in the community.
 
-[CONTRIBUTING](https://github.com/suspensive/react/pulls)
+### Visualization
 
-## License
+Concepts Visualization ready. You can see core concepts of Suspensive visually
+
+See [VISUALIZATION](https://visualization.suspensive.org).
+
+### License
 
 MIT © Suspensive. See [LICENSE](./LICENSE) for details.
 
