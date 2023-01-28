@@ -3015,6 +3015,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@next/eslint-plugin-next@npm:12.3.4":
+  version: 12.3.4
+  resolution: "@next/eslint-plugin-next@npm:12.3.4"
+  dependencies:
+    glob: 7.1.7
+  checksum: e4ae97062f3efe8f70904cf0da296ab501a2924423273352d01b18d8ffff1eb2e9a65c47dd6f9cfa0d696eada272486a3f519b2786918d0a9ab735b93f5ce4b3
+  languageName: node
+  linkType: hard
+
 "@next/eslint-plugin-next@npm:13.0.0":
   version: 13.0.0
   resolution: "@next/eslint-plugin-next@npm:13.0.0"
@@ -3380,12 +3389,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@suspensive/react-query@1.7.2, @suspensive/react-query@workspace:packages/react-query":
+"@suspensive/react-query@1.7.3, @suspensive/react-query@workspace:packages/react-query":
   version: 0.0.0-use.local
   resolution: "@suspensive/react-query@workspace:packages/react-query"
   dependencies:
     "@suspensive/babel": "workspace:^"
-    "@suspensive/react": "workspace:^1.7.2"
+    "@suspensive/react": "workspace:^1.7.3"
     "@suspensive/rollup": "workspace:^"
     "@suspensive/tsconfig": "workspace:^"
     "@tanstack/react-query": ^4.16.1
@@ -3397,13 +3406,13 @@ __metadata:
     rollup: ^3.5.1
     typescript: ^4.9.3
   peerDependencies:
-    "@suspensive/react": ^1.7.2
+    "@suspensive/react": ^1.7.3
     "@tanstack/react-query": ^4.16.1
     react: ^16.8 || ^17 || ^18
   languageName: unknown
   linkType: soft
 
-"@suspensive/react@1.7.2, @suspensive/react@workspace:^1.7.2, @suspensive/react@workspace:packages/react":
+"@suspensive/react@1.7.3, @suspensive/react@workspace:^1.7.3, @suspensive/react@workspace:packages/react":
   version: 0.0.0-use.local
   resolution: "@suspensive/react@workspace:packages/react"
   dependencies:
@@ -3454,8 +3463,8 @@ __metadata:
     "@babel/core": ^7.0.0
     "@emotion/react": ^11.10.5
     "@emotion/styled": ^11.10.5
-    "@suspensive/react": 1.7.2
-    "@suspensive/react-query": 1.7.2
+    "@suspensive/react": 1.7.3
+    "@suspensive/react-query": 1.7.3
     "@tanstack/react-query": ^4.16.1
     "@tanstack/react-query-devtools": ^4.16.1
     "@types/node": ^17.0.12
@@ -4880,7 +4889,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"array-includes@npm:^3.1.5, array-includes@npm:^3.1.6":
+"array-includes@npm:^3.1.4, array-includes@npm:^3.1.5, array-includes@npm:^3.1.6":
   version: 3.1.6
   resolution: "array-includes@npm:3.1.6"
   dependencies:
@@ -4912,7 +4921,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"array.prototype.flatmap@npm:^1.3.0, array.prototype.flatmap@npm:^1.3.1":
+"array.prototype.flatmap@npm:^1.2.5, array.prototype.flatmap@npm:^1.3.0, array.prototype.flatmap@npm:^1.3.1":
   version: 1.3.1
   resolution: "array.prototype.flatmap@npm:1.3.1"
   dependencies:
@@ -7337,7 +7346,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-config-custom@*, eslint-config-custom@workspace:configs/eslint-config-custom":
+"eslint-config-custom@npm:*":
+  version: 0.0.0
+  resolution: "eslint-config-custom@npm:0.0.0"
+  dependencies:
+    eslint-config-next: ^12.0.8
+    eslint-config-prettier: ^8.3.0
+    eslint-plugin-react: 7.28.0
+  checksum: 5547fc411e4deb779ecd293d6d40e552125a356e38762b0e5e96e4d4c8898ac588b396dddc47ce331ca9b363f9dc05286275e45e42d25791910b9a6d17e1d7bd
+  languageName: node
+  linkType: hard
+
+"eslint-config-custom@workspace:configs/eslint-config-custom":
   version: 0.0.0-use.local
   resolution: "eslint-config-custom@workspace:configs/eslint-config-custom"
   dependencies:
@@ -7373,6 +7393,29 @@ __metadata:
     typescript:
       optional: true
   checksum: 69f04df8d831aba78df30edec2ce7a7cc5779af89159bfdc42f015d2e038a26e8b2b6e8407873a3827098f5abd21b5657aace0ff014d345465ae98d133ddb285
+  languageName: node
+  linkType: hard
+
+"eslint-config-next@npm:^12.0.8":
+  version: 12.3.4
+  resolution: "eslint-config-next@npm:12.3.4"
+  dependencies:
+    "@next/eslint-plugin-next": 12.3.4
+    "@rushstack/eslint-patch": ^1.1.3
+    "@typescript-eslint/parser": ^5.21.0
+    eslint-import-resolver-node: ^0.3.6
+    eslint-import-resolver-typescript: ^2.7.1
+    eslint-plugin-import: ^2.26.0
+    eslint-plugin-jsx-a11y: ^6.5.1
+    eslint-plugin-react: ^7.31.7
+    eslint-plugin-react-hooks: ^4.5.0
+  peerDependencies:
+    eslint: ^7.23.0 || ^8.0.0
+    typescript: ">=3.3.1"
+  peerDependenciesMeta:
+    typescript:
+      optional: true
+  checksum: 53cd24d7b764fe382812a5e76571083fe59e892ac88ac5ccddf171e261f5a3ea36cb1c34283f97569c97a4bae51ece5252d5aa71fd130d31ada94310dc4147ee
   languageName: node
   linkType: hard
 
@@ -7550,6 +7593,30 @@ __metadata:
   peerDependencies:
     eslint: ^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0-0
   checksum: 23001801f14c1d16bf0a837ca7970d9dd94e7b560384b41db378b49b6e32dc43d6e2790de1bd737a652a86f81a08d6a91f402525061b47719328f586a57e86c3
+  languageName: node
+  linkType: hard
+
+"eslint-plugin-react@npm:7.28.0":
+  version: 7.28.0
+  resolution: "eslint-plugin-react@npm:7.28.0"
+  dependencies:
+    array-includes: ^3.1.4
+    array.prototype.flatmap: ^1.2.5
+    doctrine: ^2.1.0
+    estraverse: ^5.3.0
+    jsx-ast-utils: ^2.4.1 || ^3.0.0
+    minimatch: ^3.0.4
+    object.entries: ^1.1.5
+    object.fromentries: ^2.0.5
+    object.hasown: ^1.1.0
+    object.values: ^1.1.5
+    prop-types: ^15.7.2
+    resolve: ^2.0.0-next.3
+    semver: ^6.3.0
+    string.prototype.matchall: ^4.0.6
+  peerDependencies:
+    eslint: ^3 || ^4 || ^5 || ^6 || ^7 || ^8
+  checksum: 90293d0fd53bb1f735ffd32141cdd211fb1120c9f7bbe5342f9e923261a39e52a2b2575d4e46c9cd77d257f42db4a99b8b339689fc5b5c1c26048929f69b1784
   languageName: node
   linkType: hard
 
@@ -12269,7 +12336,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"object.hasown@npm:^1.1.1, object.hasown@npm:^1.1.2":
+"object.hasown@npm:^1.1.0, object.hasown@npm:^1.1.1, object.hasown@npm:^1.1.2":
   version: 1.1.2
   resolution: "object.hasown@npm:1.1.2"
   dependencies:
@@ -15203,7 +15270,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"string.prototype.matchall@npm:^4.0.7, string.prototype.matchall@npm:^4.0.8":
+"string.prototype.matchall@npm:^4.0.6, string.prototype.matchall@npm:^4.0.7, string.prototype.matchall@npm:^4.0.8":
   version: 4.0.8
   resolution: "string.prototype.matchall@npm:4.0.8"
   dependencies:
