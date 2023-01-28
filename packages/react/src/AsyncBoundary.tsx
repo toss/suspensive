@@ -1,17 +1,18 @@
-import { ComponentProps, ComponentRef, forwardRef } from 'react'
+import { ComponentProps, ComponentRef, ComponentType, forwardRef } from 'react'
 import { ErrorBoundary } from './ErrorBoundary'
 import { Suspense } from './Suspense'
+import { ComponentPropsWithoutChildren } from './types'
 import { isDevelopment } from './utils'
 
 type SuspenseProps = ComponentProps<typeof Suspense>
 type ErrorBoundaryProps = ComponentProps<typeof ErrorBoundary>
-type Props = Omit<SuspenseProps, 'fallback'> &
+type AsyncBoundaryProps = Omit<SuspenseProps, 'fallback'> &
   Omit<ErrorBoundaryProps, 'fallback'> & {
-    pendingFallback: SuspenseProps['fallback']
+    pendingFallback?: SuspenseProps['fallback']
     rejectedFallback: ErrorBoundaryProps['fallback']
   }
 
-const BaseAsyncBoundary = forwardRef<ComponentRef<typeof ErrorBoundary>, Props>(
+const BaseAsyncBoundary = forwardRef<ComponentRef<typeof ErrorBoundary>, AsyncBoundaryProps>(
   ({ pendingFallback, rejectedFallback, children, ...errorBoundaryProps }, resetRef) => (
     <ErrorBoundary {...errorBoundaryProps} ref={resetRef} fallback={rejectedFallback}>
       <Suspense fallback={pendingFallback}>{children}</Suspense>
@@ -21,7 +22,7 @@ const BaseAsyncBoundary = forwardRef<ComponentRef<typeof ErrorBoundary>, Props>(
 if (isDevelopment) {
   BaseAsyncBoundary.displayName = 'AsyncBoundary'
 }
-const CSROnlyAsyncBoundary = forwardRef<ComponentRef<typeof ErrorBoundary>, Props>(
+const CSROnlyAsyncBoundary = forwardRef<ComponentRef<typeof ErrorBoundary>, AsyncBoundaryProps>(
   ({ pendingFallback, rejectedFallback, children, ...errorBoundaryProps }, resetRef) => (
     <ErrorBoundary {...errorBoundaryProps} ref={resetRef} fallback={rejectedFallback}>
       <Suspense.CSROnly fallback={pendingFallback}>{children}</Suspense.CSROnly>
@@ -44,3 +45,38 @@ export const AsyncBoundary = BaseAsyncBoundary as typeof BaseAsyncBoundary & {
   CSROnly: typeof CSROnlyAsyncBoundary
 }
 AsyncBoundary.CSROnly = CSROnlyAsyncBoundary
+
+export const withAsyncBoundary = <Props extends Record<string, unknown> = Record<string, never>>(
+  Component: ComponentType<Props>,
+  asyncBoundaryProps: ComponentPropsWithoutChildren<typeof AsyncBoundary>
+) => {
+  const Wrapped = (props: Props) => (
+    <AsyncBoundary {...asyncBoundaryProps}>
+      <Component {...props} />
+    </AsyncBoundary>
+  )
+
+  if (isDevelopment) {
+    const name = Component.displayName || Component.name || 'Component'
+    Wrapped.displayName = `withAsyncBoundary(${name})`
+  }
+
+  return Wrapped
+}
+withAsyncBoundary.CSROnly = <Props extends Record<string, unknown> = Record<string, never>>(
+  Component: ComponentType<Props>,
+  asyncBoundaryProps: ComponentPropsWithoutChildren<typeof AsyncBoundary.CSROnly>
+) => {
+  const Wrapped = (props: Props) => (
+    <AsyncBoundary.CSROnly {...asyncBoundaryProps}>
+      <Component {...props} />
+    </AsyncBoundary.CSROnly>
+  )
+
+  if (isDevelopment) {
+    const name = Component.displayName || Component.name || 'Component'
+    Wrapped.displayName = `withAsyncBoundary.CSROnly(${name})`
+  }
+
+  return Wrapped
+}

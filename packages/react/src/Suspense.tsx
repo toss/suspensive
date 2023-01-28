@@ -1,13 +1,13 @@
-import { Suspense as BaseSuspense, SuspenseProps, ComponentProps, ComponentType } from 'react'
+import { Suspense as BaseSuspense, SuspenseProps, ComponentType } from 'react'
 import { useIsMounted } from './hooks'
+import { ComponentPropsWithoutChildren } from './types'
 import { isDevelopment } from './utils'
 
-type Props = SuspenseProps
-const DefaultSuspense = (props: Props) => <BaseSuspense {...props} />
+const DefaultSuspense = (props: SuspenseProps) => <BaseSuspense {...props} />
 if (isDevelopment) {
   DefaultSuspense.displayName = 'Suspense'
 }
-const CSROnlySuspense = (props: Props) => (useIsMounted() ? <BaseSuspense {...props} /> : <>{props.fallback}</>)
+const CSROnlySuspense = (props: SuspenseProps) => (useIsMounted() ? <BaseSuspense {...props} /> : <>{props.fallback}</>)
 if (isDevelopment) {
   CSROnlySuspense.displayName = 'Suspense.CSROnly'
 }
@@ -27,7 +27,7 @@ Suspense.CSROnly = CSROnlySuspense
 
 export function withSuspense<Props extends Record<string, unknown> = Record<string, never>>(
   Component: ComponentType<Props>,
-  suspenseProps: ComponentProps<typeof Suspense>
+  suspenseProps?: ComponentPropsWithoutChildren<typeof Suspense>
 ) {
   const Wrapped = (props: Props) => (
     <Suspense {...suspenseProps}>
@@ -45,7 +45,7 @@ export function withSuspense<Props extends Record<string, unknown> = Record<stri
 
 withSuspense.CSROnly = function withSuspenseCSROnly<Props extends Record<string, unknown> = Record<string, never>>(
   Component: ComponentType<Props>,
-  suspenseProps: ComponentProps<typeof Suspense.CSROnly>
+  suspenseProps?: ComponentPropsWithoutChildren<typeof Suspense.CSROnly>
 ) {
   const Wrapped = (props: Props) => (
     <Suspense.CSROnly {...suspenseProps}>

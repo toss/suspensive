@@ -1,13 +1,6 @@
-import {
-  ComponentPropsWithoutRef,
-  ComponentType,
-  ReactNode,
-  createContext,
-  useContext,
-  useEffect,
-  useMemo,
-} from 'react'
+import { ComponentType, ReactNode, createContext, useContext, useEffect, useMemo } from 'react'
 import { useIsMounted, useKey } from './hooks'
+import { ComponentPropsWithoutChildren } from './types'
 import { isDevelopment } from './utils'
 
 export const ErrorBoundaryGroupContext = createContext({ resetKey: 0, reset: () => {} })
@@ -76,11 +69,11 @@ export const useErrorBoundaryGroup = () => {
   )
 }
 
-export const withErrorBoundaryGroup = <P extends Record<string, unknown> = Record<string, never>>(
-  Component: ComponentType<P>,
-  errorBoundaryGroupProps?: ComponentPropsWithoutRef<typeof ErrorBoundaryGroup>
+export const withErrorBoundaryGroup = <Props extends Record<string, unknown> = Record<string, never>>(
+  Component: ComponentType<Props>,
+  errorBoundaryGroupProps?: ComponentPropsWithoutChildren<typeof ErrorBoundaryGroup>
 ) => {
-  const Wrapped = (props: P) => (
+  const Wrapped = (props: Props) => (
     <ErrorBoundaryGroup {...errorBoundaryGroupProps}>
       <Component {...props} />
     </ErrorBoundaryGroup>

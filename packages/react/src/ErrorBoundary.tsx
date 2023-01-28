@@ -10,11 +10,13 @@ import {
   useContext,
   useImperativeHandle,
   useRef,
+  ComponentType,
 } from 'react'
 import { ErrorBoundaryGroupContext } from './ErrorBoundaryGroup'
+import { ComponentPropsWithoutChildren } from './types'
 import { isDevelopment, isDifferentArray } from './utils'
 
-type Props = PropsWithRef<
+type ErrorBoundaryProps = PropsWithRef<
   PropsWithChildren<{
     /**
      * an array of elements for the ErrorBoundary to check each render. If any of those elements change between renders, then the ErrorBoundary will reset the state which will re-render the children
@@ -46,15 +48,15 @@ type Props = PropsWithRef<
   }>
 >
 
-type State = {
+type ErrorBoundaryState = {
   error: Error | null
 }
 
-const initialState: State = {
+const initialState: ErrorBoundaryState = {
   error: null,
 }
 
-class BaseErrorBoundary extends Component<Props, State> {
+class BaseErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
   static getDerivedStateFromError(error: Error) {
     return { error }
   }
@@ -74,7 +76,7 @@ class BaseErrorBoundary extends Component<Props, State> {
     this.props.onError?.(error, info)
   }
 
-  componentDidUpdate(prevProps: Props, prevState: State) {
+  componentDidUpdate(prevProps: ErrorBoundaryProps, prevState: ErrorBoundaryState) {
     const { error } = this.state
     const { resetKeys } = this.props
 
@@ -123,4 +125,22 @@ export const ErrorBoundary = forwardRef<{ reset(): void }, ComponentPropsWithout
 )
 if (isDevelopment) {
   ErrorBoundary.displayName = 'ErrorBoundary'
+}
+
+export const withErrorBoundary = <Props extends Record<string, unknown> = Record<string, never>>(
+  Component: ComponentType<Props>,
+  errorBoundaryProps: ComponentPropsWithoutChildren<typeof ErrorBoundary>
+) => {
+  const Wrapped = (props: Props) => (
+    <ErrorBoundary {...errorBoundaryProps}>
+      <Component {...props} />
+    </ErrorBoundary>
+  )
+
+  if (isDevelopment) {
+    const name = Component.displayName || Component.name || 'Component'
+    Wrapped.displayName = `withErrorBoundary(${name})`
+  }
+
+  return Wrapped
 }
