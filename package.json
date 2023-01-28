@@ -20,15 +20,14 @@
   ],
   "scripts": {
     "build": "turbo run build",
+    "changeset": "changeset && changeset version",
     "commit": "cz",
     "dev": "turbo run dev --parallel",
-    "turbo:install": "turbo run install",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "postinstall": "husky install",
     "lint": "turbo run lint",
     "npm:publish": "turbo run npm:publish && yarn post:publish",
-    "type:check": "turbo run type:check --parallel",
-    "changeset": "changeset && changeset version"
+    "type:check": "turbo run type:check --parallel"
   },
   "devDependencies": {
     "@changesets/cli": "^2.26.0",

@@ -2,7 +2,7 @@
 title: 라이브러리 소개
 ---
 
-# @suspensive/react
+# @suspensive/react [![npm version](https://badge.fury.io/js/@suspensive%2Freact.svg?)](https://badge.fury.io/js/@suspensive%2Freact)
 
 ## 설치하기
 
