@@ -28,6 +28,7 @@
   ],
   "scripts": {
     "build": "rm -rf dist esm && tsc -p tsconfig.json --declaration --emitDeclarationOnly --declarationDir dist && rollup -c rollup.config.js",
+    "lint": "eslint .",
     "npm:publish": "yarn npm publish",
     "prepack": "yarn build",
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -35,11 +36,13 @@
   },
   "devDependencies": {
     "@suspensive/babel": "workspace:^",
+    "@suspensive/config": "workspace:^",
     "@suspensive/rollup": "workspace:^",
     "@suspensive/tsconfig": "workspace:^",
     "@types/node": "^18.11.9",
     "@types/react": "^18.0.25",
     "@types/react-dom": "^18.0.9",
+    "eslint": "^8.33.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "rollup": "^3.5.1",

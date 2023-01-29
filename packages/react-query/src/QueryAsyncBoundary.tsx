@@ -1,6 +1,7 @@
 import { ComponentPropsWithoutRef, ComponentRef, forwardRef } from 'react'
 import { AsyncBoundary } from '@suspensive/react'
 import { QueryErrorResetBoundary } from '@tanstack/react-query'
+import { isDevelopment } from './utils'
 
 const BaseQueryAsyncBoundary = forwardRef<
   ComponentRef<typeof AsyncBoundary>,
@@ -19,6 +20,9 @@ const BaseQueryAsyncBoundary = forwardRef<
     )}
   </QueryErrorResetBoundary>
 ))
+if (isDevelopment) {
+  BaseQueryAsyncBoundary.displayName = 'QueryAsyncBoundary'
+}
 const CSROnlyQueryAsyncBoundary = forwardRef<
   ComponentRef<typeof AsyncBoundary.CSROnly>,
   ComponentPropsWithoutRef<typeof AsyncBoundary.CSROnly>
@@ -36,6 +40,9 @@ const CSROnlyQueryAsyncBoundary = forwardRef<
     )}
   </QueryErrorResetBoundary>
 ))
+if (isDevelopment) {
+  CSROnlyQueryAsyncBoundary.displayName = 'QueryAsyncBoundary.CSROnly'
+}
 
 /**
  * This component wrapping QueryErrorResetBoundary of @tanstack/react-query with @suspensive/react's AsyncBoundary.
