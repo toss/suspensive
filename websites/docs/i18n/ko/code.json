@@ -277,5 +277,13 @@
   "theme.docs.sidebar.expandButtonAriaLabel": {
     "message": "사이드바 열기",
     "description": "The ARIA label and title attribute for expand button of doc sidebar"
+  },
+  "theme.common.skipToMainContent": {
+    "message": "본문으로 건너뛰기",
+    "description": "The skip to content label used for accessibility, allowing to rapidly navigate to main content with keyboard tab/enter navigation"
+  },
+  "theme.tags.tagsPageTitle": {
+    "message": "태그",
+    "description": "The title of the tag list page"
   }
 }
