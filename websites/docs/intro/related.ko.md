@@ -9,3 +9,4 @@ title: 관련 링크
 - [Pull Request to add ErrorBoundaryGroup in @toss/error-boundary](https://github.com/toss/slash/pull/157)
 - [Pull Request to fix useSuspendedQuery in @toss/react-query wrapping react-query v3](https://github.com/toss/slash/pull/73)
 - [Pull Request to remove error-boundary's difficulty because of type of reset's args](https://github.com/toss/slash/pull/178)
+- [Dan Abramov: Beyond React 16 | JSConf Iceland](https://youtu.be/nLF0n9SACd4)
