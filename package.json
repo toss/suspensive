@@ -26,7 +26,7 @@
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "postinstall": "husky install",
     "lint": "turbo run lint",
-    "npm:publish": "turbo run npm:publish && yarn post:publish",
+    "npm:publish": "turbo run npm:publish",
     "type:check": "turbo run type:check --parallel"
   },
   "devDependencies": {
