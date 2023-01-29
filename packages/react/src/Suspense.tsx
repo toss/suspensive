@@ -1,4 +1,4 @@
-import { Suspense as BaseSuspense, SuspenseProps, ComponentType } from 'react'
+import { Suspense as BaseSuspense, ComponentType, SuspenseProps } from 'react'
 import { useIsMounted } from './hooks'
 import { ComponentPropsWithoutChildren } from './types'
 import { isDevelopment } from './utils'

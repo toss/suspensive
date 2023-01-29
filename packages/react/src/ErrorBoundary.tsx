@@ -1,6 +1,7 @@
 import {
   Component,
   ComponentPropsWithoutRef,
+  ComponentType,
   ErrorInfo,
   PropsWithChildren,
   PropsWithRef,
@@ -10,7 +11,6 @@ import {
   useContext,
   useImperativeHandle,
   useRef,
-  ComponentType,
 } from 'react'
 import { ErrorBoundaryGroupContext } from './ErrorBoundaryGroup'
 import { ComponentPropsWithoutChildren } from './types'
@@ -63,19 +63,6 @@ class BaseErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState
 
   state = initialState
 
-  resetErrorBoundary = () => {
-    this.props.onReset?.()
-    this.reset()
-  }
-
-  reset() {
-    this.setState(initialState)
-  }
-
-  componentDidCatch(error: Error, info: ErrorInfo) {
-    this.props.onError?.(error, info)
-  }
-
   componentDidUpdate(prevProps: ErrorBoundaryProps, prevState: ErrorBoundaryState) {
     const { error } = this.state
     const { resetKeys } = this.props
@@ -83,6 +70,19 @@ class BaseErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState
     if (error !== null && prevState.error !== null && isDifferentArray(prevProps.resetKeys, resetKeys)) {
       this.resetErrorBoundary()
     }
+  }
+
+  componentDidCatch(error: Error, info: ErrorInfo) {
+    this.props.onError?.(error, info)
+  }
+
+  resetErrorBoundary = () => {
+    this.props.onReset?.()
+    this.reset()
+  }
+
+  reset() {
+    this.setState(initialState)
   }
 
   render() {

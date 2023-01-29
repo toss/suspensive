@@ -37,7 +37,9 @@ export const ErrorBoundaryGroup = ({
     }
   }, [group.resetKey, isMounted, reset])
 
-  return <ErrorBoundaryGroupContext.Provider value={{ reset, resetKey }}>{children}</ErrorBoundaryGroupContext.Provider>
+  const value = useMemo(() => ({ reset, resetKey }), [reset, resetKey])
+
+  return <ErrorBoundaryGroupContext.Provider value={value}>{children}</ErrorBoundaryGroupContext.Provider>
 }
 
 const ErrorBoundaryGroupReset = ({
