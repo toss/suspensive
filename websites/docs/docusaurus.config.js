@@ -44,7 +44,7 @@ const config = {
           sidebarPath: require.resolve('./sidebars.js'),
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
-          editUrl: 'https://github.com/suspensive/react/tree/main/docs/react',
+          editUrl: 'https://github.com/suspensive/react',
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
@@ -73,7 +73,7 @@ const config = {
             label: 'Docs',
           },
           {
-            href: 'https://github.com/suspensive/react/tree/main/packages/react',
+            href: 'https://github.com/suspensive/react',
             label: 'GitHub',
             position: 'right',
           },
@@ -112,7 +112,7 @@ const config = {
             items: [
               {
                 label: 'GitHub',
-                href: 'https://github.com/suspensive/react/tree/main/packages/react',
+                href: 'https://github.com/suspensive/react',
               },
             ],
           },
@@ -121,11 +121,11 @@ const config = {
             items: [
               {
                 label: '@suspensive/react',
-                href: 'https://github.com/suspensive/react/tree/main/packages/react',
+                href: 'https://www.npmjs.com/package/@suspensive/react',
               },
               {
                 label: '@suspensive/react-query',
-                href: 'https://github.com/suspensive/react/tree/main/packages/react-query',
+                href: 'https://www.npmjs.com/package/@suspensive/react-query',
               },
             ],
           },
