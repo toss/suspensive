@@ -1,11 +1,11 @@
 {
-  "name": "@suspensive/config",
+  "name": "@suspensive/eslint",
   "private": true,
   "main": "index.js",
   "license": "MIT",
   "files": [
-    "eslint-next.js",
-    "eslint-react.js"
+    "next.js",
+    "react.js"
   ],
   "dependencies": {
     "@typescript-eslint/eslint-plugin": "^5.7.0",
@@ -18,5 +18,8 @@
     "eslint-config-prettier": "^8.3.0",
     "eslint-import-resolver-typescript": "^2.5.0",
     "eslint-plugin-import": "^2.25.3"
+  },
+  "devDependencies": {
+    "eslint-plugin-prettier": "^4.2.1"
   }
 }

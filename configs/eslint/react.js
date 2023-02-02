@@ -4,12 +4,13 @@ module.exports = {
     node: true,
   },
   extends: ['airbnb', 'airbnb-typescript', 'plugin:import/recommended', 'plugin:import/typescript', 'prettier'],
-  plugins: ['@typescript-eslint', 'import'],
+  plugins: ['@typescript-eslint', 'import', 'prettier'],
   settings: {
     'import/parsers': { '@typescript-eslint/parser': ['.ts', '.tsx'] },
     'import/resolver': { typescript: { alwaysTryTypes: true, project: ['packages/*/tsconfig.json'] } },
   },
   rules: {
+    'prettier/prettier': 'error',
     'react/function-component-definition': ['error', { namedComponents: 'arrow-function' }],
     'react/jsx-props-no-spreading': ['off'],
     'react/destructuring-assignment': ['off'],
