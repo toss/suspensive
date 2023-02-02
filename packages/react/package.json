@@ -36,7 +36,7 @@
   },
   "devDependencies": {
     "@suspensive/babel": "workspace:^",
-    "@suspensive/config": "workspace:^",
+    "@suspensive/eslint": "workspace:^",
     "@suspensive/rollup": "workspace:^",
     "@suspensive/tsconfig": "workspace:^",
     "@types/node": "^18.11.9",
