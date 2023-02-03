@@ -1,9 +1,10 @@
 import { ErrorBoundary, ErrorBoundaryGroup, Suspense, withErrorBoundaryGroup } from '@suspensive/react'
 import { QueryAsyncBoundary, QueryErrorBoundary } from '@suspensive/react-query'
 import { QueryErrorResetBoundary } from '@tanstack/react-query'
-import { api } from '../api'
-import { RejectedFallback, UseSuspenseQuery } from '../components'
-import { Area, Button, Spinner } from '../components/uis'
+import Link from 'next/link'
+import { api } from '../../api'
+import { RejectedFallback, UseSuspenseQuery } from '../../components'
+import { Area, Box, Button, Spinner } from '../../components/uis'
 
 const ReactQueryPage = withErrorBoundaryGroup(() => {
   return (
@@ -42,6 +43,12 @@ const ReactQueryPage = withErrorBoundaryGroup(() => {
           <UseSuspenseQuery queryKey={['query', 5]} queryFn={api.almostFailure} />
           <UseSuspenseQuery queryKey={['query', 6]} queryFn={api.almostFailure} />
         </QueryAsyncBoundary.CSROnly>
+      </Area>
+
+      <Area title="Playground">
+        <Link href={'/react-query/playground'} style={{ flex: 1 }}>
+          <Box.Default>🔗 @tanstack/react-query vs @suspensive/react-query</Box.Default>
+        </Link>
       </Area>
     </Area>
   )
