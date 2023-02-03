@@ -29,15 +29,15 @@
   },
   "link.item.label.GitHub": {
     "message": "GitHub",
-    "description": "The label of footer link with label=GitHub linking to https://github.com/suspensive/react/tree/main/packages/react"
+    "description": "The label of footer link with label=GitHub linking to https://github.com/suspensive/react"
   },
   "link.item.label.@suspensive/react": {
     "message": "@suspensive/react",
-    "description": "The label of footer link with label=@suspensive/react linking to https://github.com/suspensive/react/tree/main/packages/react"
+    "description": "The label of footer link with label=@suspensive/react linking to https://www.npmjs.com/package/@suspensive/react"
   },
   "link.item.label.@suspensive/react-query": {
     "message": "@suspensive/react-query",
-    "description": "The label of footer link with label=@suspensive/react-query linking to https://github.com/suspensive/react/tree/main/packages/react-query"
+    "description": "The label of footer link with label=@suspensive/react-query linking to https://www.npmjs.com/package/@suspensive/react-query"
   },
   "copyright": {
     "message": "Copyright © 2023 Jonghyeon Ko and the Suspensive authors.",
