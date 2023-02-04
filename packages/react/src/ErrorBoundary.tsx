@@ -14,7 +14,7 @@ import {
 } from 'react'
 import { ErrorBoundaryGroupContext } from './ErrorBoundaryGroup'
 import { ComponentPropsWithoutChildren } from './types'
-import { isDevelopment, isDifferentArray } from './utils'
+import { isDifferentArray } from './utils'
 
 type ErrorBoundaryProps = PropsWithRef<
   PropsWithChildren<{
@@ -123,7 +123,7 @@ export const ErrorBoundary = forwardRef<{ reset(): void }, ComponentPropsWithout
     return <BaseErrorBoundary {...props} resetKeys={resetKeys} ref={ref} />
   }
 )
-if (isDevelopment) {
+if (process.env.NODE_ENV !== 'production') {
   ErrorBoundary.displayName = 'ErrorBoundary'
 }
 
@@ -137,7 +137,7 @@ export const withErrorBoundary = <Props extends Record<string, unknown> = Record
     </ErrorBoundary>
   )
 
-  if (isDevelopment) {
+  if (process.env.NODE_ENV !== 'production') {
     const name = Component.displayName || Component.name || 'Component'
     Wrapped.displayName = `withErrorBoundary(${name})`
   }

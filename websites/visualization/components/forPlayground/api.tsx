@@ -2,14 +2,14 @@ import axios from 'axios'
 
 const delay = (ms: number = 1000) => new Promise((resolve) => setTimeout(resolve, ms))
 
-type Post = { id: number; title: string; body: string; userId: number }
-type Album = { id: number; title: string; userId: number }
-type Todo = { id: number; title: string; completed: boolean; userId: number }
+export type Post = { id: number; title: string; body: string; userId: number }
+export type Album = { id: number; title: string; userId: number }
+export type Todo = { id: number; title: string; completed: boolean; userId: number }
 
 export const posts = {
   getMany: async () => {
-    await delay()
-    return axios.get<Post[]>('https://jsonplaceholder.typicode.com/posts').then(({ data }) => data.splice(0, 5))
+    await delay(Math.random() * 2000)
+    return axios.get<Post[]>('https://jsonplaceholder.typicode.com/posts').then(({ data }) => data)
   },
   getOneBy: async ({ id }: { id: Post['id'] }) => {
     await delay(Math.random() * 3000)

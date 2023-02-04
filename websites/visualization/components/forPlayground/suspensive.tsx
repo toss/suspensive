@@ -1,7 +1,9 @@
 import { Suspense } from '@suspensive/react'
 import { useSuspenseQuery } from '@suspensive/react-query'
-import { albums, posts, todos } from './api'
+import { albums, Post, posts, todos } from './api'
 import { Spinner } from '../uis'
+import { useIntersectionObserver } from './useIntersectionObserver'
+import { useEffect, useRef, useState } from 'react'
 
 export const PostListSuspensive = () => {
   const postsQuery = useSuspenseQuery(['posts'], posts.getMany)
@@ -9,18 +11,36 @@ export const PostListSuspensive = () => {
   return (
     <ul style={{ maxWidth: 600 }}>
       {postsQuery.data.map((post) => (
-        <li key={post.id}>
-          <h3>Title: {post.title}</h3>
-          <Suspense.CSROnly fallback={<Spinner />}>
-            <Post id={post.id} />
-          </Suspense.CSROnly>
-        </li>
+        <PostListItem key={post.id} post={post} />
       ))}
     </ul>
   )
 }
 
-export const Post = ({ id }: { id: number }) => {
+const PostListItem = ({ post }: { post: Post }) => {
+  const ref = useRef(null)
+  const entry = useIntersectionObserver(ref)
+  const [isShow, setIsShow] = useState(false)
+
+  useEffect(() => {
+    if (entry?.isIntersecting) {
+      setIsShow(true)
+    }
+  }, [entry?.isIntersecting])
+
+  return (
+    <li key={post.id} ref={ref} style={{ minHeight: 200 }}>
+      <h3>Title: {post.title}</h3>
+      {isShow && (
+        <Suspense.CSROnly fallback={<Spinner />}>
+          <PostContent id={post.id} />
+        </Suspense.CSROnly>
+      )}
+    </li>
+  )
+}
+
+const PostContent = ({ id }: { id: number }) => {
   const postQuery = useSuspenseQuery(['posts', id], () => posts.getOneBy({ id }))
   const albumsQuery = useSuspenseQuery(['users', postQuery.data.userId, 'albums'], () =>
     albums.getManyBy({ userId: postQuery.data.userId })

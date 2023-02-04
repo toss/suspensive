@@ -1,6 +1,8 @@
 import { useQuery } from '@tanstack/react-query'
-import { albums, posts, todos } from './api'
+import { albums, Post, posts, todos } from './api'
 import { Spinner } from '../uis'
+import { useEffect, useRef, useState } from 'react'
+import { useIntersectionObserver } from './useIntersectionObserver'
 
 export const PostListTanStack = () => {
   const postsQuery = useQuery(['posts'], posts.getMany)
@@ -15,16 +17,32 @@ export const PostListTanStack = () => {
   return (
     <ul style={{ maxWidth: 600 }}>
       {postsQuery.data.map((post) => (
-        <li key={post.id}>
-          <h3>Title: {post.title}</h3>
-          <Post id={post.id} />
-        </li>
+        <PostListItem key={post.id} post={post} />
       ))}
     </ul>
   )
 }
 
-export const Post = ({ id }: { id: number }) => {
+const PostListItem = ({ post }: { post: Post }) => {
+  const ref = useRef(null)
+  const entry = useIntersectionObserver(ref)
+  const [isShow, setIsShow] = useState(false)
+
+  useEffect(() => {
+    if (entry?.isIntersecting) {
+      setIsShow(true)
+    }
+  }, [entry?.isIntersecting])
+
+  return (
+    <li key={post.id} ref={ref} style={{ minHeight: 200 }}>
+      <h3>Title: {post.title}</h3>
+      {isShow && <PostContent id={post.id} />}
+    </li>
+  )
+}
+
+const PostContent = ({ id }: { id: number }) => {
   const postQuery = useQuery(['posts', id], () => posts.getOneBy({ id }))
   const albumsQuery = useQuery(
     ['users', postQuery.data?.userId, 'albums'],

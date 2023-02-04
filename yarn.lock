@@ -3433,14 +3433,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@suspensive/react-query@npm:1.7.3":
-  version: 1.7.3
-  resolution: "@suspensive/react-query@npm:1.7.3"
+"@suspensive/react-query@npm:1.8.0":
+  version: 1.8.0
+  resolution: "@suspensive/react-query@npm:1.8.0"
   peerDependencies:
-    "@suspensive/react": ^1.7.3
+    "@suspensive/react": ^1.8.0
     "@tanstack/react-query": ^4.16.1
     react: ^16.8 || ^17 || ^18
-  checksum: 4837bc5f866ad928f9a0fd5da3f66be0049fa5e00c9d5e935a7745268db769d2b21834f16c5585224d8a7c1d5853142e8ddd4b1f831121b286f7691ee77d1464
+  checksum: b1f350f4f444c2947f56036d3a1035d0fae53309e00bdae8abe433d337e0d031e513d5812c977457f2e4433674d9bc55cc0dd13f0b215a19d779b1855bc7093a
   languageName: node
   linkType: hard
 
@@ -3449,7 +3449,7 @@ __metadata:
   resolution: "@suspensive/react-query@workspace:packages/react-query"
   dependencies:
     "@suspensive/babel": "workspace:^"
-    "@suspensive/react": "workspace:^1.7.4"
+    "@suspensive/react": "workspace:^1.8.1"
     "@suspensive/rollup": "workspace:^"
     "@suspensive/tsconfig": "workspace:^"
     "@tanstack/react-query": ^4.16.1
@@ -3462,22 +3462,22 @@ __metadata:
     rollup: ^3.5.1
     typescript: ^4.9.3
   peerDependencies:
-    "@suspensive/react": ^1.7.4
+    "@suspensive/react": ^1.8.1
     "@tanstack/react-query": ^4.16.1
     react: ^16.8 || ^17 || ^18
   languageName: unknown
   linkType: soft
 
-"@suspensive/react@npm:1.7.3":
-  version: 1.7.3
-  resolution: "@suspensive/react@npm:1.7.3"
+"@suspensive/react@npm:1.8.0":
+  version: 1.8.0
+  resolution: "@suspensive/react@npm:1.8.0"
   peerDependencies:
     react: ^16.8 || ^17 || ^18
-  checksum: 9f51378f46de90e7bd6a306a6e61455df234e50c40a4a4e58047699885028cba1ec00314741f11cef5e49caf3a1ca307a8d72c45c3ffcfd725d0c4eb4473583c
+  checksum: 6231aab2771c5d8bf1cf038e90de147469ca66b2861e03d76a575f5531ddcc33cd2331ef40c1fbe0d6b9df82c69ac6b16cb026ace62e0facb1a553da4dbf5de6
   languageName: node
   linkType: hard
 
-"@suspensive/react@workspace:^1.7.4, @suspensive/react@workspace:packages/react":
+"@suspensive/react@workspace:^1.8.1, @suspensive/react@workspace:packages/react":
   version: 0.0.0-use.local
   resolution: "@suspensive/react@workspace:packages/react"
   dependencies:
@@ -3530,8 +3530,8 @@ __metadata:
     "@babel/core": ^7.0.0
     "@emotion/react": ^11.10.5
     "@emotion/styled": ^11.10.5
-    "@suspensive/react": 1.7.3
-    "@suspensive/react-query": 1.7.3
+    "@suspensive/react": 1.8.0
+    "@suspensive/react-query": 1.8.0
     "@tanstack/react-query": ^4.16.1
     "@tanstack/react-query-devtools": ^4.16.1
     "@types/node": ^17.0.12
