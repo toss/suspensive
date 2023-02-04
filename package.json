@@ -38,8 +38,7 @@
     "husky": "^8.0.3",
     "lint-staged": "^13.1.0",
     "prettier": "^2.8.2",
-    "turbo": "1.6.3",
+    "turbo": "latest",
     "typescript": "^4.9.4"
-  },
-  "packageManager": "yarn@3.3.1"
+  }
 }

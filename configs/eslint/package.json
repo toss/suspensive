@@ -17,9 +17,11 @@
     "eslint-config-next": "^12.0.3",
     "eslint-config-prettier": "^8.3.0",
     "eslint-import-resolver-typescript": "^2.5.0",
-    "eslint-plugin-import": "^2.25.3"
+    "eslint-plugin-import": "^2.25.3",
+    "eslint-plugin-prettier": "^4.2.1"
   },
   "devDependencies": {
-    "eslint-plugin-prettier": "^4.2.1"
+    "prettier": "^2.8.2",
+    "typescript": "^4.9.5"
   }
 }
