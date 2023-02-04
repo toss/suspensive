@@ -1,0 +1,4 @@
+packages:
+  - "configs/*"
+  - "packages/*"
+  - "websites/*"

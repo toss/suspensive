@@ -18,6 +18,5 @@
   },
   "peerDependencies": {
     "rollup": "^3"
-  },
-  "packageManager": "yarn@3.3.0"
+  }
 }

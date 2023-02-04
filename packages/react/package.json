@@ -29,16 +29,16 @@
   "scripts": {
     "build": "rm -rf dist esm && tsc -p tsconfig.json --declaration --emitDeclarationOnly --declarationDir dist && rollup -c rollup.config.js",
     "lint": "eslint .",
-    "npm:publish": "yarn npm publish",
-    "prepack": "yarn build",
+    "npm:publish": "pnpm npm publish",
+    "prepack": "pnpm build",
     "test": "echo \"Error: no test specified\" && exit 1",
     "type:check": "tsc --noEmit"
   },
   "devDependencies": {
-    "@suspensive/babel": "workspace:^",
-    "@suspensive/eslint": "workspace:^",
-    "@suspensive/rollup": "workspace:^",
-    "@suspensive/tsconfig": "workspace:^",
+    "@suspensive/babel": "*",
+    "@suspensive/eslint": "*",
+    "@suspensive/rollup": "*",
+    "@suspensive/tsconfig": "*",
     "@types/node": "^18.11.9",
     "@types/react": "^18.0.25",
     "@types/react-dom": "^18.0.9",
