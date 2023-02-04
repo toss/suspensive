@@ -1,4 +1,4 @@
-import { PropsWithChildren, ReactNode } from 'react'
+import { PropsWithChildren } from 'react'
 import styled from '@emotion/styled'
 
 export const Button = styled.button`

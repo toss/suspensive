@@ -1,10 +1,9 @@
 import { ComponentType, ReactNode, createContext, useContext, useEffect, useMemo } from 'react'
 import { useIsMounted, useKey } from './hooks'
 import { ComponentPropsWithoutChildren } from './types'
-import { isDevelopment } from './utils'
 
 export const ErrorBoundaryGroupContext = createContext({ resetKey: 0, reset: () => {} })
-if (isDevelopment) {
+if (process.env.NODE_ENV !== 'production') {
   ErrorBoundaryGroupContext.displayName = 'ErrorBoundaryGroupContext'
 }
 
@@ -81,7 +80,7 @@ export const withErrorBoundaryGroup = <Props extends Record<string, unknown> = R
     </ErrorBoundaryGroup>
   )
 
-  if (isDevelopment) {
+  if (process.env.NODE_ENV !== 'production') {
     const name = Component.displayName || Component.name || 'Component'
     Wrapped.displayName = `withErrorBoundaryGroup(${name})`
   }

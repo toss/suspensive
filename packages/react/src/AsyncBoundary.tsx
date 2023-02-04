@@ -2,7 +2,6 @@ import { ComponentProps, ComponentRef, ComponentType, forwardRef } from 'react'
 import { ErrorBoundary } from './ErrorBoundary'
 import { Suspense } from './Suspense'
 import { ComponentPropsWithoutChildren } from './types'
-import { isDevelopment } from './utils'
 
 type SuspenseProps = ComponentProps<typeof Suspense>
 type ErrorBoundaryProps = ComponentProps<typeof ErrorBoundary>
@@ -19,7 +18,7 @@ const BaseAsyncBoundary = forwardRef<ComponentRef<typeof ErrorBoundary>, AsyncBo
     </ErrorBoundary>
   )
 )
-if (isDevelopment) {
+if (process.env.NODE_ENV !== 'production') {
   BaseAsyncBoundary.displayName = 'AsyncBoundary'
 }
 const CSROnlyAsyncBoundary = forwardRef<ComponentRef<typeof ErrorBoundary>, AsyncBoundaryProps>(
@@ -29,7 +28,7 @@ const CSROnlyAsyncBoundary = forwardRef<ComponentRef<typeof ErrorBoundary>, Asyn
     </ErrorBoundary>
   )
 )
-if (isDevelopment) {
+if (process.env.NODE_ENV !== 'production') {
   CSROnlyAsyncBoundary.displayName = 'AsyncBoundary.CSROnly'
 }
 
@@ -56,7 +55,7 @@ export const withAsyncBoundary = <Props extends Record<string, unknown> = Record
     </AsyncBoundary>
   )
 
-  if (isDevelopment) {
+  if (process.env.NODE_ENV !== 'production') {
     const name = Component.displayName || Component.name || 'Component'
     Wrapped.displayName = `withAsyncBoundary(${name})`
   }
@@ -73,7 +72,7 @@ withAsyncBoundary.CSROnly = <Props extends Record<string, unknown> = Record<stri
     </AsyncBoundary.CSROnly>
   )
 
-  if (isDevelopment) {
+  if (process.env.NODE_ENV !== 'production') {
     const name = Component.displayName || Component.name || 'Component'
     Wrapped.displayName = `withAsyncBoundary.CSROnly(${name})`
   }
