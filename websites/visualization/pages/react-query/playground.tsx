@@ -1,4 +1,3 @@
-import { Spinner } from '../../components/uis'
 import { Suspense } from '@suspensive/react'
 import { PostListTanStack, PostListSuspensive } from '../../components/forPlayground'
 
@@ -26,7 +25,7 @@ const Page = () => (
         >
           <h1>🔗 See code for @suspensive/react-query</h1>
         </a>
-        <Suspense.CSROnly fallback={<Spinner />}>
+        <Suspense.CSROnly>
           <PostListSuspensive />
         </Suspense.CSROnly>
       </section>

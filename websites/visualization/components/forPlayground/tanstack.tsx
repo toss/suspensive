@@ -3,12 +3,17 @@ import { albums, Post, posts, todos } from './api'
 import { Spinner } from '../uis'
 import { useEffect, useRef, useState } from 'react'
 import { useIntersectionObserver } from './useIntersectionObserver'
+import { Delay } from '@suspensive/react'
 
 export const PostListTanStack = () => {
   const postsQuery = useQuery(['posts'], posts.getMany)
 
   if (postsQuery.isLoading) {
-    return <Spinner />
+    return (
+      <Delay>
+        <Spinner />
+      </Delay>
+    )
   }
   if (postsQuery.isError) {
     return <>error</>
@@ -56,7 +61,11 @@ const PostContent = ({ id }: { id: number }) => {
   )
 
   if (postQuery.isLoading || albumsQuery.isLoading || todosQuery.isLoading) {
-    return <Spinner />
+    return (
+      <Delay>
+        <Spinner />
+      </Delay>
+    )
   }
   if (postQuery.isError || albumsQuery.isError || todosQuery.isError) {
     return <>error</>

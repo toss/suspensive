@@ -129,7 +129,7 @@ importers:
     specifiers:
       '@suspensive/babel': '*'
       '@suspensive/eslint': '*'
-      '@suspensive/react': ^1.8.1
+      '@suspensive/react': 1.9.2
       '@suspensive/rollup': '*'
       '@suspensive/tsconfig': '*'
       '@tanstack/react-query': ^4.16.1
@@ -201,8 +201,8 @@ importers:
       '@babel/core': ^7.0.0
       '@emotion/react': ^11.10.5
       '@emotion/styled': ^11.10.5
-      '@suspensive/react': 1.8.1
-      '@suspensive/react-query': 1.8.1
+      '@suspensive/react': '*'
+      '@suspensive/react-query': '*'
       '@tanstack/react-query': ^4.16.1
       '@tanstack/react-query-devtools': ^4.16.1
       '@types/node': ^17.0.12

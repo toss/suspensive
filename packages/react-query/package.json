@@ -1,6 +1,6 @@
 {
   "name": "@suspensive/react-query",
-  "version": "1.8.1",
+  "version": "1.9.2",
   "keywords": [
     "suspensive",
     "react-query"
@@ -29,7 +29,7 @@
   "scripts": {
     "build": "rm -rf dist esm && tsc -p tsconfig.json --declaration --emitDeclarationOnly --declarationDir dist && rollup -c rollup.config.js",
     "lint": "eslint .",
-    "npm:publish": "pnpm npm publish",
+    "npm:publish": "pnpm publish",
     "prepack": "pnpm build",
     "test": "echo \"Error: no test specified\" && exit 1",
     "type:check": "tsc --noEmit"
@@ -37,7 +37,7 @@
   "devDependencies": {
     "@suspensive/babel": "*",
     "@suspensive/eslint": "*",
-    "@suspensive/react": "^1.8.1",
+    "@suspensive/react": "1.9.2",
     "@suspensive/rollup": "*",
     "@suspensive/tsconfig": "*",
     "@tanstack/react-query": "^4.16.1",
@@ -51,7 +51,7 @@
     "typescript": "^4.9.3"
   },
   "peerDependencies": {
-    "@suspensive/react": "^1.8.1",
+    "@suspensive/react": "1.9.2",
     "@tanstack/react-query": "^4.16.1",
     "react": "^16.8 || ^17 || ^18"
   },
@@ -65,9 +65,9 @@
       },
       "./package.json": "./package.json"
     },
-    "import": "./esm/index.mjs",
-    "main": "./dist/index.js",
-    "module": "./esm/index.mjs",
-    "types": "./dist/index.d.ts"
+    "import": "esm/index.mjs",
+    "main": "dist/index.js",
+    "module": "esm/index.mjs",
+    "types": "dist/index.d.ts"
   }
 }
