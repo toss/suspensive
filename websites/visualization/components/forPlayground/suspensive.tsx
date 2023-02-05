@@ -1,7 +1,6 @@
 import { Suspense } from '@suspensive/react'
 import { useSuspenseQuery } from '@suspensive/react-query'
 import { albums, Post, posts, todos } from './api'
-import { Spinner } from '../uis'
 import { useIntersectionObserver } from './useIntersectionObserver'
 import { useEffect, useRef, useState } from 'react'
 
@@ -32,7 +31,7 @@ const PostListItem = ({ post }: { post: Post }) => {
     <li key={post.id} ref={ref} style={{ minHeight: 200 }}>
       <h3>Title: {post.title}</h3>
       {isShow && (
-        <Suspense.CSROnly fallback={<Spinner />}>
+        <Suspense.CSROnly>
           <PostContent id={post.id} />
         </Suspense.CSROnly>
       )}

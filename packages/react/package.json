@@ -1,6 +1,6 @@
 {
   "name": "@suspensive/react",
-  "version": "1.8.1",
+  "version": "1.9.2",
   "keywords": [
     "suspensive",
     "react"
@@ -29,7 +29,7 @@
   "scripts": {
     "build": "rm -rf dist esm && tsc -p tsconfig.json --declaration --emitDeclarationOnly --declarationDir dist && rollup -c rollup.config.js",
     "lint": "eslint .",
-    "npm:publish": "pnpm npm publish",
+    "npm:publish": "pnpm publish",
     "prepack": "pnpm build",
     "test": "echo \"Error: no test specified\" && exit 1",
     "type:check": "tsc --noEmit"
@@ -61,9 +61,9 @@
       },
       "./package.json": "./package.json"
     },
-    "import": "./esm/index.mjs",
-    "main": "./dist/index.js",
-    "module": "./esm/index.mjs",
-    "types": "./dist/index.d.ts"
+    "import": "esm/index.mjs",
+    "main": "dist/index.js",
+    "module": "esm/index.mjs",
+    "types": "dist/index.d.ts"
   }
 }

@@ -1,12 +1,28 @@
-import { Suspense as BaseSuspense, ComponentType, SuspenseProps } from 'react'
+import { ComponentType, ReactNode, Suspense as ReactSuspense, SuspenseProps, createContext, useContext } from 'react'
 import { useIsMounted } from './hooks'
 import { ComponentPropsWithoutChildren } from './types'
 
-const DefaultSuspense = (props: SuspenseProps) => <BaseSuspense {...props} />
+export const SuspenseContext = createContext<{ fallback?: ReactNode }>({ fallback: undefined })
+const useFallbackWithContext = (fallback: ReactNode) => {
+  const contextFallback = useContext(SuspenseContext).fallback
+
+  return fallback === null ? null : fallback ?? contextFallback
+}
+
+const DefaultSuspense = (props: SuspenseProps) => {
+  const fallback = useFallbackWithContext(props.fallback)
+
+  return <ReactSuspense {...props} fallback={fallback} />
+}
 if (process.env.NODE_ENV !== 'production') {
   DefaultSuspense.displayName = 'Suspense'
 }
-const CSROnlySuspense = (props: SuspenseProps) => (useIsMounted() ? <BaseSuspense {...props} /> : <>{props.fallback}</>)
+const CSROnlySuspense = (props: SuspenseProps) => {
+  const isMounted = useIsMounted()
+  const fallback = useFallbackWithContext(props.fallback)
+
+  return isMounted ? <ReactSuspense {...props} fallback={fallback} /> : <>{fallback}</>
+}
 if (process.env.NODE_ENV !== 'production') {
   CSROnlySuspense.displayName = 'Suspense.CSROnly'
 }

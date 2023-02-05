@@ -5,6 +5,8 @@ import Link from 'next/link'
 import styled from '@emotion/styled'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import { Delay, SuspensiveConfigs, SuspensiveProvider } from '@suspensive/react'
+import { Spinner } from '../components/uis'
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -14,22 +16,39 @@ const queryClient = new QueryClient({
   },
 })
 
+const suspensiveConfigs = new SuspensiveConfigs({
+  defaultOptions: {
+    delay: {
+      ms: 1200,
+    },
+    suspense: {
+      fallback: (
+        <Delay>
+          <Spinner />
+        </Delay>
+      ),
+    },
+  },
+})
+
 export default function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <QueryClientProvider client={queryClient}>
-      <TopNav>
-        <Link href={'/'}>
-          <Home>
-            <Image src={'/logo_notcropped.png'} width={40} height={40} alt="logo" />
-            {"Suspensive's Concepts Visualization"}
-          </Home>
-        </Link>
-      </TopNav>
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
-      <ReactQueryDevtools initialIsOpen={false} />
-    </QueryClientProvider>
+    <SuspensiveProvider configs={suspensiveConfigs}>
+      <QueryClientProvider client={queryClient}>
+        <TopNav>
+          <Link href={'/'}>
+            <Home>
+              <Image src={'/logo_notcropped.png'} width={40} height={40} alt="logo" />
+              {"Suspensive's Concepts Visualization"}
+            </Home>
+          </Link>
+        </TopNav>
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+        <ReactQueryDevtools initialIsOpen={false} />
+      </QueryClientProvider>
+    </SuspensiveProvider>
   )
 }
 
