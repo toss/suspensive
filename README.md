@@ -41,18 +41,16 @@ All declarative components to use suspense on both CSR, SSR.
 
 ## Installation
 
-### npm
-
 ```shell
 npm install @suspensive/react
 ```
 
-or
-
-### yarn
-
 ```shell
 yarn add @suspensive/react
+```
+
+```shell
+pnpm add @suspensive/react
 ```
 
 ## Usage
@@ -94,18 +92,16 @@ Declarative apis to use [@tanstack/react-query with suspense](https://tanstack.c
 
 ## Installation
 
-### npm
-
 ```shell
 npm install @suspensive/react @suspensive/react-query
 ```
 
-or
-
-### yarn
-
 ```shell
 yarn add @suspensive/react @suspensive/react-query
+```
+
+```shell
+pnpm add @suspensive/react @suspensive/react-query
 ```
 
 ## Usage
