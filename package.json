@@ -23,6 +23,7 @@
     "changeset": "changeset && changeset version",
     "commit": "cz",
     "dev": "turbo run dev --parallel",
+    "dev:ko": "turbo run dev:ko --scope='@suspensive/docs'",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "postinstall": "husky install",
     "lint": "turbo run lint",

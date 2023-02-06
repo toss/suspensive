@@ -14,6 +14,9 @@
     "dev": {
       "cache": false
     },
+    "dev:ko": {
+      "cache": false
+    },
     "type:check": {}
   },
   "globalEnv": ["NODE_ENV"]
