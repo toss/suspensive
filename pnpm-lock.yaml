@@ -11,6 +11,7 @@ importers:
       cz-conventional-changelog: ^3.3.0
       husky: ^8.0.3
       lint-staged: ^13.1.0
+      packlint: ^0.2.4
       prettier: ^2.8.2
       turbo: latest
       typescript: ^4.9.4
@@ -22,6 +23,7 @@ importers:
       cz-conventional-changelog: 3.3.0
       husky: 8.0.3
       lint-staged: 13.1.0
+      packlint: 0.2.4
       prettier: 2.8.3
       turbo: 1.7.3
       typescript: 4.9.5
@@ -3856,6 +3858,40 @@ packages:
       '@nodelib/fs.scandir': 2.1.5
       fastq: 1.15.0
 
+  /@packlint/command/0.2.0:
+    resolution: {integrity: sha512-pvz6LKyH+Az5Y4ukZ7l6ioWna64/aE3ScUxuewQLLQ2L7RcF5WcRD2lq7j7lm4faVLlwPL+zQjKWRkk9yloqFw==}
+    dependencies:
+      '@packlint/core': 0.2.0
+      '@types/ramda': 0.28.22
+      clipanion: 3.2.0-rc.16
+      ramda: 0.28.0
+      zod: 3.19.1
+    transitivePeerDependencies:
+      - fast-check
+      - zod-fast-check
+    dev: true
+
+  /@packlint/core/0.2.0:
+    resolution: {integrity: sha512-1vNOJkT60iSnPxOsaQ9F1LMjDwePypLbplmIHMS6JoajyuaRKjeb1ihEomtZOOlQRnSohmb2U1Qky4zWwm65Og==}
+    peerDependencies:
+      fast-check: '*'
+      zod-fast-check: '*'
+    peerDependenciesMeta:
+      fast-check:
+        optional: true
+      zod-fast-check:
+        optional: true
+    dependencies:
+      '@types/ramda': 0.28.22
+      chalk: 5.2.0
+      cosmiconfig: 7.1.0
+      fast-glob: 3.2.12
+      find-up: 6.3.0
+      fs-extra: 10.1.0
+      ramda: 0.28.0
+      zod: 3.20.2
+    dev: true
+
   /@pkgr/utils/2.3.1:
     resolution: {integrity: sha512-wfzX8kc1PMyUILA+1Z/EqoE4UCXGy0iRGMhPwdfae1+f0OXlLqCk+By+aMzgJBzR9AzS4CDizioG6Ss1gvAFJw==}
     engines: {node: ^12.20.0 || ^14.18.0 || >=16.0.0}
@@ -4371,6 +4407,12 @@ packages:
 
   /@types/qs/6.9.7:
     resolution: {integrity: sha512-FGa1F62FT09qcrueBA6qYTrJPVDzah9a+493+o2PCXsesWHIn27G98TsSMs3WPNbZIEj4+VJf6saSFpvD+3Zsw==}
+
+  /@types/ramda/0.28.22:
+    resolution: {integrity: sha512-DoIfh0sBxrL/aqADk+SGrfjJT9cB8modg+4NRlF7/Tfg4N2+KBEkAgpYYzrjiZxxR5YzWizjfVrTEdVDwYK7xQ==}
+    dependencies:
+      ts-toolbelt: 6.15.5
+    dev: true
 
   /@types/range-parser/1.2.4:
     resolution: {integrity: sha512-EEhsLsD6UsDM1yFhAvy0Cjr6VwmpMWqFBCb9w07wVugF7w9nfajxLuVmngTIpgS6svCnm6Vaw+MZhoDCKnOfsw==}
@@ -5557,6 +5599,12 @@ packages:
   /client-only/0.0.1:
     resolution: {integrity: sha512-IV3Ou0jSMzZrd3pZ48nLkT9DA7Ag1pnPzaiQhpW7c3RbcqqzvzzVu+L8gfqMp/8IM2MQtSiqaCxrrcfu8I8rMA==}
     dev: false
+
+  /clipanion/3.2.0-rc.16:
+    resolution: {integrity: sha512-xF72P8TKJ5NWXn66jb3UPw6MF+emGyH7FQizXjMKDFyI1RGS5mJC5p8eKI3+LQQlBiKQ++GamE+RaZ+tuLaolg==}
+    dependencies:
+      typanion: 3.12.1
+    dev: true
 
   /cliui/6.0.0:
     resolution: {integrity: sha512-t6wbgtoCXvAzst7QgXxJYqPt0usEfbgQdftEPbLL/cvv6HPE5VgvqCuAIDR0NgU52ds6rFwqrgakNLrHEjCbrQ==}
@@ -10273,6 +10321,18 @@ packages:
       registry-url: 5.1.0
       semver: 6.3.0
 
+  /packlint/0.2.4:
+    resolution: {integrity: sha512-qaP961LjEMgmu5RiofWIq2zyw8HE1RTSSmqxAN3WBT0Waprgd5gAUIOGIUhxwEP35+IVpB76R0V0LtB8QK7hnQ==}
+    hasBin: true
+    dependencies:
+      '@packlint/command': 0.2.0
+      '@packlint/core': 0.2.0
+      clipanion: 3.2.0-rc.16
+    transitivePeerDependencies:
+      - fast-check
+      - zod-fast-check
+    dev: true
+
   /param-case/3.0.4:
     resolution: {integrity: sha512-RXlj7zCYokReqWpOPH9oYivUzLYZ5vAPIfEmCTNViosC78F8F0H9y7T7gG2M39ymgutxF5gcFEsyZQSph9Bp3A==}
     dependencies:
@@ -10980,6 +11040,10 @@ packages:
   /quick-lru/4.0.1:
     resolution: {integrity: sha512-ARhCpm70fzdcvNQfPoy49IaanKkTlRWF2JMzqhcJbhSFRZv7nPTvZJdcY7301IPmvW+/p0RgIWnQDLJxifsQ7g==}
     engines: {node: '>=8'}
+    dev: true
+
+  /ramda/0.28.0:
+    resolution: {integrity: sha512-9QnLuG/kPVgWvMQ4aODhsBUFKOUmnbUnsSXACv+NCQZcHbeb+v8Lodp8OVxtRULN1/xOyYLLaL6npE6dMq5QTA==}
     dev: true
 
   /randombytes/2.1.0:
@@ -12485,6 +12549,10 @@ packages:
       yn: 3.1.1
     dev: true
 
+  /ts-toolbelt/6.15.5:
+    resolution: {integrity: sha512-FZIXf1ksVyLcfr7M317jbB67XFJhOO1YqdTcuGaq9q5jLUoTikukZ+98TPjKiP2jC5CgmYdWWYs0s2nLSU0/1A==}
+    dev: true
+
   /tsconfig-paths/3.14.1:
     resolution: {integrity: sha512-fxDhWnFSLt3VuTwtvJt5fpwxBHg5AdKWMsgcPOOIilyjymcYVZoCQF8fvFRezCNfblEXmi+PcM1eYHeOAgXCOQ==}
     dependencies:
@@ -12581,6 +12649,10 @@ packages:
       turbo-linux-arm64: 1.7.3
       turbo-windows-64: 1.7.3
       turbo-windows-arm64: 1.7.3
+    dev: true
+
+  /typanion/3.12.1:
+    resolution: {integrity: sha512-3SJF/czpzqq6G3lprGFLa6ps12yb1uQ1EmitNnep2fDMNh1aO/Zbq9sWY+3lem0zYb2oHJnQWyabTGUZ+L1ScQ==}
     dev: true
 
   /type-check/0.4.0:
@@ -13486,6 +13558,14 @@ packages:
   /yocto-queue/1.0.0:
     resolution: {integrity: sha512-9bnSc/HEW2uRy67wc+T8UwauLuPJVn28jb+GtJY16iiKWyvmYJRXVT4UamsAEGQfPohgr2q4Tq0sQbQlxTfi1g==}
     engines: {node: '>=12.20'}
+    dev: true
+
+  /zod/3.19.1:
+    resolution: {integrity: sha512-LYjZsEDhCdYET9ikFu6dVPGp2YH9DegXjdJToSzD9rO6fy4qiRYFoyEYwps88OseJlPyl2NOe2iJuhEhL7IpEA==}
+    dev: true
+
+  /zod/3.20.2:
+    resolution: {integrity: sha512-1MzNQdAvO+54H+EaK5YpyEy0T+Ejo/7YLHS93G3RnYWh5gaotGHwGeN/ZO687qEDU2y4CdStQYXVHIgrUl5UVQ==}
     dev: true
 
   /zwitch/1.0.5:

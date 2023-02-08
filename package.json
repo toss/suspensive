@@ -13,6 +13,7 @@
     "url": "https://github.com/suspensive/react.git"
   },
   "license": "MIT",
+  "packageManager": "pnpm@7.5.2",
   "workspaces": [
     "configs/*",
     "packages/*",
@@ -25,9 +26,10 @@
     "dev": "turbo run dev --parallel",
     "dev:ko": "turbo run dev:ko --scope='@suspensive/docs'",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "postinstall": "husky install",
     "lint": "turbo run lint",
+    "lint:pack": "packlint sort -R",
     "npm:publish": "turbo run npm:publish",
+    "postinstall": "husky install",
     "type:check": "turbo run type:check --parallel"
   },
   "devDependencies": {
@@ -38,6 +40,7 @@
     "cz-conventional-changelog": "^3.3.0",
     "husky": "^8.0.3",
     "lint-staged": "^13.1.0",
+    "packlint": "^0.2.4",
     "prettier": "^2.8.2",
     "turbo": "latest",
     "typescript": "^4.9.4"
