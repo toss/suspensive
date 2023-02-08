@@ -57,6 +57,8 @@
   },
   "publishConfig": {
     "access": "public",
+    "main": "dist/index.js",
+    "module": "esm/index.mjs",
     "exports": {
       ".": {
         "require": "./dist/index.js",
@@ -65,9 +67,7 @@
       },
       "./package.json": "./package.json"
     },
-    "import": "esm/index.mjs",
-    "main": "dist/index.js",
-    "module": "esm/index.mjs",
-    "types": "dist/index.d.ts"
+    "types": "dist/index.d.ts",
+    "import": "esm/index.mjs"
   }
 }

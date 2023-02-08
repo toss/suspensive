@@ -1,8 +1,8 @@
 {
   "name": "@suspensive/eslint",
   "private": true,
-  "main": "index.js",
   "license": "MIT",
+  "main": "index.js",
   "files": [
     "next.js",
     "react.js"
