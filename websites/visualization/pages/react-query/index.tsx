@@ -1,12 +1,14 @@
 import { ErrorBoundary, ErrorBoundaryGroup, Suspense, withErrorBoundaryGroup } from '@suspensive/react'
 import { QueryAsyncBoundary, QueryErrorBoundary } from '@suspensive/react-query'
-import { QueryErrorResetBoundary } from '@tanstack/react-query'
+import { useQueryErrorResetBoundary } from '@tanstack/react-query'
 import Link from 'next/link'
 import { api } from '../../api'
 import { RejectedFallback, UseSuspenseQuery } from '../../components'
 import { Area, Box, Button, Spinner } from '../../components/uis'
 
 const ReactQueryPage = withErrorBoundaryGroup(() => {
+  const errorResetBoundary = useQueryErrorResetBoundary()
+
   return (
     <Area title="ErrorBoundaryGroup">
       <ErrorBoundaryGroup.Reset
@@ -17,16 +19,12 @@ const ReactQueryPage = withErrorBoundaryGroup(() => {
         )}
       />
       <Area title="QueryErrorResetBoundary + ErrorBoundary + Suspense">
-        <QueryErrorResetBoundary>
-          {({ reset }) => (
-            <ErrorBoundary onReset={reset} fallback={RejectedFallback}>
-              <Suspense.CSROnly fallback={<Spinner />}>
-                <UseSuspenseQuery queryKey={['query', 1]} queryFn={api.almostFailure} />
-                <UseSuspenseQuery queryKey={['query', 2]} queryFn={api.almostFailure} />
-              </Suspense.CSROnly>
-            </ErrorBoundary>
-          )}
-        </QueryErrorResetBoundary>
+        <ErrorBoundary onReset={errorResetBoundary.reset} fallback={RejectedFallback}>
+          <Suspense.CSROnly fallback={<Spinner />}>
+            <UseSuspenseQuery queryKey={['query', 1]} queryFn={api.almostFailure} />
+            <UseSuspenseQuery queryKey={['query', 2]} queryFn={api.almostFailure} />
+          </Suspense.CSROnly>
+        </ErrorBoundary>
       </Area>
 
       <Area title="QueryErrorBoundary + Suspense">

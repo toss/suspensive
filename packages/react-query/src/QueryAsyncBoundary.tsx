@@ -1,46 +1,43 @@
 import { ComponentPropsWithoutRef, ComponentRef, forwardRef } from 'react'
 import { AsyncBoundary } from '@suspensive/react'
-import { QueryErrorResetBoundary } from '@tanstack/react-query'
-import { isDevelopment } from './utils'
+import { useQueryErrorResetBoundary } from '@tanstack/react-query'
 
 const BaseQueryAsyncBoundary = forwardRef<
   ComponentRef<typeof AsyncBoundary>,
   ComponentPropsWithoutRef<typeof AsyncBoundary>
->(({ onReset, ...props }, resetRef) => (
-  <QueryErrorResetBoundary>
-    {({ reset }) => (
-      <AsyncBoundary
-        {...props}
-        onReset={() => {
-          onReset?.()
-          reset()
-        }}
-        ref={resetRef}
-      />
-    )}
-  </QueryErrorResetBoundary>
-))
-if (isDevelopment) {
+>(({ onReset, ...props }, resetRef) => {
+  const { reset } = useQueryErrorResetBoundary()
+  return (
+    <AsyncBoundary.CSROnly
+      {...props}
+      onReset={() => {
+        onReset?.()
+        reset()
+      }}
+      ref={resetRef}
+    />
+  )
+})
+if (process.env.NODE_ENV !== 'production') {
   BaseQueryAsyncBoundary.displayName = 'QueryAsyncBoundary'
 }
 const CSROnlyQueryAsyncBoundary = forwardRef<
   ComponentRef<typeof AsyncBoundary.CSROnly>,
   ComponentPropsWithoutRef<typeof AsyncBoundary.CSROnly>
->(({ onReset, ...props }, resetRef) => (
-  <QueryErrorResetBoundary>
-    {({ reset }) => (
-      <AsyncBoundary.CSROnly
-        {...props}
-        onReset={() => {
-          onReset?.()
-          reset()
-        }}
-        ref={resetRef}
-      />
-    )}
-  </QueryErrorResetBoundary>
-))
-if (isDevelopment) {
+>(({ onReset, ...props }, resetRef) => {
+  const { reset } = useQueryErrorResetBoundary()
+  return (
+    <AsyncBoundary.CSROnly
+      {...props}
+      onReset={() => {
+        onReset?.()
+        reset()
+      }}
+      ref={resetRef}
+    />
+  )
+})
+if (process.env.NODE_ENV !== 'production') {
   CSROnlyQueryAsyncBoundary.displayName = 'QueryAsyncBoundary.CSROnly'
 }
 
