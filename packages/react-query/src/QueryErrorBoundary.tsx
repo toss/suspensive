@@ -1,7 +1,6 @@
 import { ComponentPropsWithoutRef, ComponentRef, forwardRef } from 'react'
 import { ErrorBoundary } from '@suspensive/react'
-import { QueryErrorResetBoundary } from '@tanstack/react-query'
-import { isDevelopment } from './utils'
+import { useQueryErrorResetBoundary } from '@tanstack/react-query'
 
 /**
  * This component wrapping QueryErrorResetBoundary of @tanstack/react-query with @suspensive/react's ErrorBoundary.
@@ -12,20 +11,19 @@ import { isDevelopment } from './utils'
 export const QueryErrorBoundary = forwardRef<
   ComponentRef<typeof ErrorBoundary>,
   ComponentPropsWithoutRef<typeof ErrorBoundary>
->(({ onReset, ...props }, resetRef) => (
-  <QueryErrorResetBoundary>
-    {({ reset }) => (
-      <ErrorBoundary
-        {...props}
-        onReset={() => {
-          onReset?.()
-          reset()
-        }}
-        ref={resetRef}
-      />
-    )}
-  </QueryErrorResetBoundary>
-))
-if (isDevelopment) {
+>(({ onReset, ...props }, resetRef) => {
+  const { reset } = useQueryErrorResetBoundary()
+  return (
+    <ErrorBoundary
+      {...props}
+      onReset={() => {
+        onReset?.()
+        reset()
+      }}
+      ref={resetRef}
+    />
+  )
+})
+if (process.env.NODE_ENV !== 'production') {
   QueryErrorBoundary.displayName = 'QueryErrorBoundary'
 }
