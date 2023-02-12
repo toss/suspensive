@@ -33,7 +33,7 @@ configuration:
 documentation:
   - "**/*.md"
 dependencies:
-  - "**/yarn.lock"
+  - "**/pnpm-lock.yaml"
 workflows:
   - .github/*
   - .github/**/*
