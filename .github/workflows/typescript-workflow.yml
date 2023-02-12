@@ -1,0 +1,26 @@
+name: 'Type checking for typescript'
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  test:
+    name: 'Validating Type'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/cache@v2
+        id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
+        with:
+          path: .yarn
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+
+      - name: Validate a project when using Zero-Installs
+        if: ${{ steps.yarn-cache.outputs.cache-hit != 'true' }}
+        run: YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn
+
+      - name: Run Test
+        run: pnpm type:check
