@@ -1,11 +1,11 @@
-name: 'Checking various test  for continuous integration'
+name: "Checking various test for continuous integration"
 on:
   pull_request:
     types: [opened, synchronize, reopened]
 
 jobs:
   test:
-    name: 'Execute various script for CI '
+    name: "Execute various script for CI "
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3

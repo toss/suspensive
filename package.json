@@ -27,10 +27,10 @@
     "dev:ko": "turbo run dev:ko --scope='@suspensive/docs'",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "lint": "turbo run lint",
-    "test": "turbo run test",
     "lint:pack": "packlint sort -R",
     "npm:publish": "turbo run npm:publish",
     "postinstall": "husky install",
+    "test": "turbo run test",
     "type:check": "turbo run type:check --parallel"
   },
   "devDependencies": {
