@@ -30,6 +30,7 @@
     "lint:pack": "packlint sort -R",
     "npm:publish": "turbo run npm:publish",
     "postinstall": "husky install",
+    "test": "turbo run test",
     "type:check": "turbo run type:check --parallel"
   },
   "devDependencies": {
