@@ -1,0 +1,39 @@
+react:
+  - packages/react/*
+  - packages/react/**/*
+react-query:
+  - packages/react-query/*
+  - packages/react-query/**/*
+websites/docs:
+  - websites/docs/*
+  - websites/docs/**/*
+visualization:
+  - websites/visualization/*
+  - websites/visualization/**/*
+babel:
+  - configs/babel/*
+  - configs/babel/**/*
+eslint:
+  - configs/eslint/*
+  - configs/eslint/**/*
+rollup:
+  - configs/rollup/*
+  - configs/rollup/**/*
+tsconfig:
+  - configs/tsconfig/*
+  - configs/tsconfig/**/*
+configuration:
+  - next.config.js
+  - package*.json
+  - "**/.*"
+  - "**/jest*.ts"
+  - "**/jest*.js"
+  - "**/tsconfig*.json"
+  - .*/**
+documentation:
+  - "**/*.md"
+dependencies:
+  - "**/pnpm-lock.yaml"
+workflows:
+  - .github/*
+  - .github/**/*
