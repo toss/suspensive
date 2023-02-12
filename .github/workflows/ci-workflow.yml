@@ -1,11 +1,11 @@
-name: 'Type checking for typescript'
+name: 'Checking various test  for continuous integration'
 on:
   pull_request:
     types: [opened, synchronize, reopened]
 
 jobs:
   test:
-    name: 'Validating Type'
+    name: 'Execute various script for CI '
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -16,5 +16,11 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - name: Run Test
+      - name: check typescript
         run: pnpm type:check
+
+      - name: check eslint
+        run: pnpm lint
+
+      - name: test by jest
+        run: pnpm test
