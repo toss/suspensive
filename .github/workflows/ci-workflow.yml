@@ -1,0 +1,27 @@
+name: "Continuous Integration"
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  quality:
+    name: "CI: Check quality"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install pnpm
+        run: npm install -g pnpm
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Check typescript
+        run: pnpm type:check
+
+      - name: Check eslint
+        run: pnpm lint
+
+      - name: Test by jest
+        run: pnpm test
