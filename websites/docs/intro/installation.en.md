@@ -24,5 +24,5 @@ yarn add @suspensive/react
 Or if you're using <a href="https://pnpm.io/" target="_blank">pnpm</a>:
 
 ```shell
-pnpm add @suspensive/react
+pnpm install @suspensive/react
 ```
