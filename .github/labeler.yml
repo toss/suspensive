@@ -16,6 +16,9 @@ babel:
 eslint:
   - configs/eslint/*
   - configs/eslint/**/*
+jest:
+  - configs/jest/*
+  - configs/jest/**/*
 rollup:
   - configs/rollup/*
   - configs/rollup/**/*
