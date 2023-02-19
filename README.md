@@ -16,7 +16,7 @@
 
 <div align="center">
 
-[OFFICIAL DOCS](https://docs.suspensive.org) | [VISUALIZATION](https://visualization.suspensive.org) | [CONTRIBUTING](https://github.com/suspensive/react/pulls) | [LICENSE](./LICENSE)
+[OFFICIAL DOCS](https://docs.suspensive.org) | [VISUALIZATION](https://visualization.suspensive.org) | [DEPENDENCY GRAPH](https://suspensive.github.io/react/graph) | [CONTRIBUTING](https://github.com/suspensive/react/pulls) | [LICENSE](./LICENSE)
 
 </div>
 
