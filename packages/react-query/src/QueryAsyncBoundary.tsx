@@ -45,12 +45,12 @@ if (process.env.NODE_ENV !== 'production') {
  * This component wrapping QueryErrorResetBoundary of @tanstack/react-query with @suspensive/react's AsyncBoundary.
  *
  * with this component, You don't have to make unnecessary repetitive implementation to combine AsyncBoundary with QueryErrorResetBoundary
- * @see {@link https://docs.suspensive.org/docs/react-query/src/QueryErrorResetBoundary.i18n Suspensive Official Docs}
+ * @see {@link https://suspensive.org/docs/react-query/src/QueryErrorResetBoundary.i18n Suspensive Official Docs}
  */
 export const QueryAsyncBoundary = BaseQueryAsyncBoundary as typeof BaseQueryAsyncBoundary & {
   /**
    * CSROnly mode make QueryAsyncBoundary can be used in SSR framework like Next.js with React 17 or under
-   * @see {@link https://docs.suspensive.org/docs/react/src/QueryErrorResetBoundary.i18n Suspensive Official Docs}
+   * @see {@link https://suspensive.org/docs/react/src/QueryErrorResetBoundary.i18n Suspensive Official Docs}
    */
   CSROnly: typeof CSROnlyQueryAsyncBoundary
 }

@@ -6,7 +6,7 @@ import { useQueryErrorResetBoundary } from '@tanstack/react-query'
  * This component wrapping QueryErrorResetBoundary of @tanstack/react-query with @suspensive/react's ErrorBoundary.
  *
  * with this component, You don't have to make unnecessary repetitive implementation to combine ErrorBoundary with QueryErrorResetBoundary
- * @see {@link https://docs.suspensive.org/docs/react-query/src/QueryErrorResetBoundary.i18n Suspensive Official Docs}
+ * @see {@link https://suspensive.org/docs/react-query/src/QueryErrorResetBoundary.i18n Suspensive Official Docs}
  */
 export const QueryErrorBoundary = forwardRef<
   ComponentRef<typeof ErrorBoundary>,
