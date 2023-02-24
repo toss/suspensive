@@ -153,7 +153,7 @@ MIT © Suspensive. See [LICENSE](./LICENSE) for details.
 <div align="center">
   <a title="Suspensive" href="https://github.com/suspensive">
     <div style='display:flex; align-items:center;'>
-      <img alt="Suspensive" src="https://github.com/suspensive.png" width="24">
+      <img alt="Suspensive" src="https://raw.githubusercontent.com/suspensive/react/main/websites/docs/static/img/logo_notcropped.png" width="24">
       <sup>Suspensive</sup>
     </div>
   </a>
