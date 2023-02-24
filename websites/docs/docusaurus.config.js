@@ -8,7 +8,7 @@ const lightCodeTheme = require('prism-react-renderer/themes/github')
 const config = {
   title: 'Suspensive',
   tagline: 'Declarative components to use suspense for React',
-  url: 'https://docs.suspensive.org',
+  url: 'https://suspensive.org',
   baseUrl: '/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
