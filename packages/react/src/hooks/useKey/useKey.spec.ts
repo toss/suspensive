@@ -1,35 +1,19 @@
 import { act, renderHook } from '@testing-library/react'
 import useKey from './useKey'
 
-const INITIAL_VALUE = 0
-
 describe('useKey', () => {
   describe('refresh function', () => {
-    it('should update key state', async () => {
+    it('should increment the key state by 1', () => {
       const { result } = renderHook(() => useKey())
 
-      expect(result.current[0]).toBe(INITIAL_VALUE)
+      const initialKey = result.current[0]
+      const refresh = result.current[1]
 
-      act(() => {
-        result.current[1]()
-      })
-      expect(result.current[0]).toBe(INITIAL_VALUE + 1)
-    })
-
-    it('should update key state not only one', async () => {
-      const { result } = renderHook(() => useKey())
-
-      expect(result.current[0]).toBe(INITIAL_VALUE)
-
-      act(() => {
-        result.current[1]()
-      })
-      expect(result.current[0]).toBe(INITIAL_VALUE + 1)
-
-      act(() => {
-        result.current[1]()
-      })
-      expect(result.current[0]).toBe(INITIAL_VALUE + 2)
+      expect(initialKey).toBe(0)
+      act(refresh)
+      expect(result.current[0]).toBe(initialKey + 1)
+      act(refresh)
+      expect(result.current[0]).toBe(initialKey + 2)
     })
   })
 })
