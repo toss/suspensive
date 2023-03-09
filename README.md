@@ -1,5 +1,5 @@
 <div align="center">
-  <a href="https://docs.suspensive.org" title="Suspensive Libraries - TypeScript/JavaScript packages to use React Suspense easily">
+  <a href="https://suspensive.org" title="Suspensive Libraries - TypeScript/JavaScript packages to use React Suspense easily">
     <img src="https://raw.githubusercontent.com/suspensive/react/main/websites/docs/static/banner.png" alt="Suspensive Libraries Logo - TypeScript/JavaScript packages to use React Suspense easily." />
   </a>
 </div>
@@ -16,14 +16,14 @@
 
 <div align="center">
 
-[OFFICIAL DOCS](https://docs.suspensive.org) | [VISUALIZATION](https://visualization.suspensive.org) | [DEPENDENCY GRAPH](https://suspensive.github.io/react/graph) | [CONTRIBUTING](https://github.com/suspensive/react/pulls) | [LICENSE](./LICENSE)
+[OFFICIAL DOCS](https://suspensive.org) | [VISUALIZATION](https://visualization.suspensive.org) | [DEPENDENCY GRAPH](https://graph.suspensive.org) | [CONTRIBUTING](https://github.com/suspensive/react/pulls) | [LICENSE](./LICENSE)
 
 </div>
 
 <br/>
 <br/>
 
-# [@suspensive/react](https://docs.suspensive.org/docs/react/README.i18n)
+# [@suspensive/react](https://suspensive.org/docs/react/README.i18n)
 
 [![npm version](https://img.shields.io/npm/v/@suspensive/react?color=61DAFB)](https://www.npmjs.com/package/@suspensive/react) ![npm bundle size](https://img.shields.io/bundlephobia/minzip/@suspensive/react?color=blue) ![npm](https://img.shields.io/npm/dm/@suspensive/react?color=blue)
 
@@ -78,7 +78,7 @@ const Example = (
 <br/>
 <br/>
 
-# [@suspensive/react-query](https://docs.suspensive.org/docs/react-query/README.i18n)
+# [@suspensive/react-query](https://suspensive.org/docs/react-query/README.i18n)
 
 [![npm version](https://img.shields.io/npm/v/@suspensive/react-query?color=61DAFB)](https://www.npmjs.com/package/@suspensive/react-query) ![npm bundle size](https://img.shields.io/bundlephobia/minzip/@suspensive/react-query?color=blue) ![npm](https://img.shields.io/npm/dm/@suspensive/react-query?color=blue)
 
@@ -128,11 +128,11 @@ const SuspendedComponent = () => {
 <br/>
 <br/>
 
-# Docs [![deployment](https://img.shields.io/github/deployments/suspensive/react/Production%20%E2%80%93%20docs?label=vercel&logo=vercel&logoColor=white)](https://docs.suspensive.org)
+# Docs [![deployment](https://img.shields.io/github/deployments/suspensive/react/Production%20%E2%80%93%20docs?label=vercel&logo=vercel&logoColor=white)](https://suspensive.org)
 
 We provide Official Docs
 
-See [OFFICIAL DOCS](https://docs.suspensive.org)
+See [OFFICIAL DOCS](https://suspensive.org)
 
 <br/>
 <br/>
@@ -153,7 +153,7 @@ MIT © Suspensive. See [LICENSE](./LICENSE) for details.
 <div align="center">
   <a title="Suspensive" href="https://github.com/suspensive">
     <div style='display:flex; align-items:center;'>
-      <img alt="Suspensive" src="https://github.com/suspensive.png" width="24">
+      <img alt="Suspensive" src="https://raw.githubusercontent.com/suspensive/react/main/websites/docs/static/img/logo_notcropped.png" width="24">
       <sup>Suspensive</sup>
     </div>
   </a>
