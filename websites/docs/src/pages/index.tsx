@@ -8,11 +8,13 @@ import Translate from '@docusaurus/Translate'
 
 function HomepageHeader() {
   return (
-    <header className={clsx(styles.heroBanner)} style={{ backgroundColor: '#1C1C1D' }}>
-      <div className="container" style={{ color: 'white' }}>
+    <header className={clsx(styles.heroBanner)}>
+      <div className="container">
         <img src="img/logo_notcropped.png" alt="logo" style={{ height: 180, width: 180, marginBottom: -16 }} />
         <h1 className="hero__title">Suspensive</h1>
-        <p className="hero__subtitle"><Translate>Declarative components to use suspense for React</Translate></p>
+        <p className="hero__subtitle">
+          <Translate>Declarative components to use suspense for React</Translate>
+        </p>
         <div className={styles.buttons}>
           <Link className="button button--secondary button--lg" to="/docs/intro/motivation.i18n">
             <Translate>Get started</Translate>

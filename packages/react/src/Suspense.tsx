@@ -29,12 +29,12 @@ if (process.env.NODE_ENV !== 'production') {
 
 /**
  * This component is just wrapping React's Suspense. to use Suspense easily in Server-side rendering environment like Next.js
- * @see {@link https://docs.suspensive.org/docs/react/src/Suspense.i18n Suspensive Official Docs}
+ * @see {@link https://suspensive.org/docs/react/src/Suspense.i18n Suspensive Official Docs}
  */
 export const Suspense = DefaultSuspense as typeof DefaultSuspense & {
   /**
    * CSROnly mode make Suspense can be used in SSR framework like Next.js with React 17 or under
-   * @see {@link https://docs.suspensive.org/docs/react/src/Suspense.i18n Suspensive Official Docs}
+   * @see {@link https://suspensive.org/docs/react/src/Suspense.i18n Suspensive Official Docs}
    */
   CSROnly: typeof CSROnlySuspense
 }

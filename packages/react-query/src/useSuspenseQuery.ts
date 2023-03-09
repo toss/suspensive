@@ -25,7 +25,7 @@ export type UseSuspenseQueryOptions<
 
 /**
  * This hook wrapping useQuery of @tanstack/react-query with default suspense option. with this hook, you don't have to make unnecessary type narrowing
- * @see {@link https://docs.suspensive.org/docs/react-query/src/useSuspenseQuery.i18n Suspensive Official Docs}
+ * @see {@link https://suspensive.org/docs/react-query/src/useSuspenseQuery.i18n Suspensive Official Docs}
  */
 export function useSuspenseQuery<
   TQueryFnData = unknown,
