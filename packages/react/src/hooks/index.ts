@@ -1,2 +1,2 @@
-export { default as useIsMounted } from './useIsMounted'
-export { default as useKey } from './useKey'
+export * from './useIsMounted'
+export * from './useKey'
