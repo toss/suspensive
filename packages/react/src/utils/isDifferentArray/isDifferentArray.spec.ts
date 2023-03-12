@@ -47,4 +47,3 @@ describe('isDifferentArray', () => {
     expect(isDifferentArray(array1, array2)).toBe(false)
   })
 })
-
