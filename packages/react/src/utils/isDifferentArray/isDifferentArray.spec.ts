@@ -1,48 +1,50 @@
 import { isDifferentArray } from '.'
 
+const primitive = 0
+const reference1 = { test: 0 }
+const reference2 = { test: 0 }
+
 describe('isDifferentArray', () => {
-  it('should return true if the two values are different in length.', () => {
-    const value1 = [1]
-    const value2 = [2, 3]
+  it('should return true if the two arrays have different lengths.', () => {
+    const array1 = Array.from({ length: 1 }).map((_, index) => primitive + index)
+    const array2 = Array.from({ length: 2 }).map((_, index) => primitive + index)
 
-    const result = isDifferentArray(value1, value2)
-
-    expect(result).toBe(true)
+    expect(isDifferentArray(array1, array2)).toBe(true)
   })
 
-  it('should return true if the two arrays have the same length but one primitive value is different.', () => {
-    const value1 = [1, 3]
-    const value2 = [1, 2]
+  it('should return false if the two arrays have same lengths and same primitive element in each index of arrays.', () => {
+    const array1 = Array.from({ length: 1 }).map((_, index) => primitive + index)
+    const array2 = Array.from({ length: 1 }).map((_, index) => primitive + index)
 
-    const result = isDifferentArray(value1, value2)
-
-    expect(result).toBe(true)
+    expect(isDifferentArray(array1, array2)).toBe(false)
   })
 
-  it('should return true if two arrays have the same length but have different field', () => {
-    const value1 = [{ test: 1 }, { test: 2 }]
-    const value2 = [{ test: 1 }, { test: 3 }]
+  it('should return true if the two arrays have same lengths but at least one primitive element is different in each index of arrays.', () => {
+    const array1 = [primitive, primitive + 1]
+    const array2 = [primitive, primitive]
 
-    const result = isDifferentArray(value1, value2)
-
-    expect(result).toBe(true)
+    expect(isDifferentArray(array1, array2)).toBe(true)
   })
 
-  it('should return false when two array with primitive values is same', () => {
-    const value1 = [1, 2]
-    const value2 = [1, 2]
+  it('should return true if the two arrays have same lengths and have all same primitive elements but order is different', () => {
+    const array1 = [primitive, primitive + 1]
+    const array2 = [primitive + 1, primitive]
 
-    const result = isDifferentArray(value1, value2)
-
-    expect(result).toBe(false)
+    expect(isDifferentArray(array1, array2)).toBe(true)
   })
 
-  it('should return true when two array is same object', () => {
-    const value1 = [{ test: 1 }, { test: 2 }]
-    const value2 = [{ test: 1 }, { test: 2 }]
+  it('should return true when two arrays have each references elements in index of array have different references', () => {
+    const array1 = [reference1, { test: 2 }]
+    const array2 = [reference1, { test: 2 }]
 
-    const result = isDifferentArray(value1, value2)
+    expect(isDifferentArray(array1, array2)).toBe(true)
+  })
 
-    expect(result).toBe(true)
+  it('should return false when two arrays have each references elements in index of array have same references', () => {
+    const array1 = [reference1, reference2]
+    const array2 = [reference1, reference2]
+
+    expect(isDifferentArray(array1, array2)).toBe(false)
   })
 })
+
