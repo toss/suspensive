@@ -1,1 +1,1 @@
-export { default as isDifferentArray } from './isDifferentArray'
+export * from './isDifferentArray'
