@@ -13,7 +13,7 @@
     "url": "https://github.com/suspensive/react.git"
   },
   "license": "MIT",
-  "packageManager": "pnpm@7.5.2",
+  "packageManager": "pnpm@8.1.1",
   "workspaces": [
     "configs/*",
     "packages/*",
