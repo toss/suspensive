@@ -14,7 +14,7 @@ import {
 } from 'react'
 import { ErrorBoundaryGroupContext } from './ErrorBoundaryGroup'
 import { ComponentPropsWithoutChildren } from './types'
-import { isDifferentArray } from './utils'
+import { hasResetKeysChanged } from './utils'
 
 type ErrorBoundaryProps = PropsWithRef<
   PropsWithChildren<{
@@ -67,7 +67,7 @@ class BaseErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState
     const { error } = this.state
     const { resetKeys } = this.props
 
-    if (error !== null && prevState.error !== null && isDifferentArray(prevProps.resetKeys, resetKeys)) {
+    if (error !== null && prevState.error !== null && hasResetKeysChanged(prevProps.resetKeys, resetKeys)) {
       this.resetErrorBoundary()
     }
   }
