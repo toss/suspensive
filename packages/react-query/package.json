@@ -59,8 +59,8 @@
     "typescript": "^4.9.3"
   },
   "peerDependencies": {
-    "@suspensive/react": "1.9.2",
-    "@tanstack/react-query": "^4.24.4",
+    "@suspensive/react": "^1",
+    "@tanstack/react-query": "^4",
     "react": "^16.8 || ^17 || ^18"
   },
   "publishConfig": {
