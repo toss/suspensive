@@ -1,4 +1,4 @@
-name: "Continuous Integration"
+name: ci-workflow
 
 on:
   pull_request:
@@ -6,13 +6,21 @@ on:
 
 jobs:
   quality:
-    name: "CI: Check quality"
+    name: Check quality
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
 
       - name: Install pnpm
-        run: npm install -g pnpm
+        uses: pnpm/action-setup@v2.2.4
+        with:
+          version: 8
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16.17'
+          check-latest: true
 
       - name: Install dependencies
         run: pnpm install
@@ -25,3 +33,6 @@ jobs:
 
       - name: Test by jest
         run: pnpm test
+
+      - name: Build package
+        run: pnpm run build
