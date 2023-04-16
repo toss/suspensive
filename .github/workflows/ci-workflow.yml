@@ -17,13 +17,13 @@ jobs:
           version: 8
 
       - name: Read .nvmrc
-         run: echo "##[set-output name=NVMRC;]$(cat .nvmrc)"
-         id: nvm
+        run: echo "##[set-output name=NVMRC;]$(cat .nvmrc)"
+        id: nvm
 
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
-          node-version: "${{ steps.nvm.outputs.NVMRC }}"
+          node-version: ${{ steps.nvm.outputs.NVMRC }}
           check-latest: true
 
       - name: Install dependencies
