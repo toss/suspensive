@@ -1,4 +1,5 @@
-name: "Pull Request Labeler"
+name: labeler-workflow
+
 on:
   - pull_request_target
 
@@ -8,4 +9,4 @@ jobs:
     steps:
       - uses: actions/labeler@main
         with:
-          repo-token: "${{ secrets.GITHUB_TOKEN }}"
+          repo-token: ${{ secrets.GITHUB_TOKEN }}

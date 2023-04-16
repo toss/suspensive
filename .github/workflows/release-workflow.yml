@@ -1,0 +1,50 @@
+name: release-workflow
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    name: Release to NPM
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2.2.4
+        with:
+          version: 8
+
+      - name: Read .nvmrc
+        run: echo "##[set-output name=NVMRC;]$(cat .nvmrc)"
+        id: nvm
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ steps.nvm.outputs.NVMRC }}
+          check-latest: true
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Set git user
+        run: |
+          git config --global user.email "manudeli.ko@gmail.com"
+          git config --global user.name "Jonghyeon Ko"
+
+      - name: Create Changesets Pull Request or Publish to NPM
+        id: changesets
+        uses: changesets/action@v1
+        with:
+          setupGitUser: false
+          title: 'chore(changesets): bump packages version'
+          commit: 'chore: bump packages version'
+          version: node .github/changeset-version.js
+          publish: pnpm npm:publish
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
