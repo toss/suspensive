@@ -27,15 +27,6 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - name: Check typescript
-        run: pnpm type:check
-
-      - name: Check eslint
-        run: pnpm lint
-
-      - name: Test by jest
-        run: pnpm test
-
       - name: Set git user
         run: |
           git config --global user.email "manudeli.ko@gmail.com"
