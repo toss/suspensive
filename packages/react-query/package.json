@@ -1,6 +1,6 @@
 {
   "name": "@suspensive/react-query",
-  "version": "1.9.2",
+  "version": "1.9.3",
   "keywords": [
     "suspensive",
     "react-query"
@@ -38,7 +38,7 @@
     "@suspensive/babel": "*",
     "@suspensive/eslint": "*",
     "@suspensive/jest": "*",
-    "@suspensive/react": "1.9.2",
+    "@suspensive/react": "1.9.3",
     "@suspensive/rollup": "*",
     "@suspensive/tsconfig": "*",
     "@tanstack/react-query": "^4.24.4",
