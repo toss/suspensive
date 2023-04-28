@@ -1,4 +1,4 @@
-import { expectType } from 'tsd'
+import { expectError, expectType } from 'tsd'
 import { useSuspenseQuery } from '../dist'
 
 const queryKey = ['key'] as const
@@ -65,3 +65,6 @@ expectType<undefined>(
     enabled: false,
   }).data
 )
+
+// no arg
+expectError(useSuspenseQuery())

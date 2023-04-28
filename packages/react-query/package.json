@@ -33,7 +33,7 @@
     "prepack": "pnpm build && pnpm test:tsd",
     "test": "jest",
     "test:tsd": "tsd -t ./dist/index.d.ts",
-    "type:check": "tsc --noEmit"
+    "type:check": "tsc --noEmit -p tsconfig.build.json"
   },
   "devDependencies": {
     "@suspensive/babel": "workspace:*",

@@ -1,5 +1,5 @@
 import { InfiniteData } from '@tanstack/react-query'
-import { expectType } from 'tsd'
+import { expectError, expectType } from 'tsd'
 import { useSuspenseInfiniteQuery } from '../dist'
 
 const queryKey = ['key'] as const
@@ -66,3 +66,6 @@ expectType<undefined>(
     enabled: false,
   }).data
 )
+
+// no arg
+expectError(useSuspenseInfiniteQuery())

@@ -141,7 +141,7 @@ export function useSuspenseInfiniteQuery<
   TData = TQueryFnData,
   TQueryKey extends QueryKey = QueryKey
 >(
-  options?: Omit<UseSuspenseInfiniteQueryOptions<TQueryFnData, TError, TData, TQueryKey>, 'enabled'>
+  options: Omit<UseSuspenseInfiniteQueryOptions<TQueryFnData, TError, TData, TQueryKey>, 'enabled'>
 ): UseSuspenseInfiniteQueryResultOnSuccess<TData>
 export function useSuspenseInfiniteQuery<
   TQueryFnData = unknown,

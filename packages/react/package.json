@@ -32,7 +32,7 @@
     "npm:publish": "pnpm publish",
     "prepack": "pnpm build",
     "test": "jest",
-    "type:check": "tsc --noEmit"
+    "type:check": "tsc --noEmit -p tsconfig.build.json"
   },
   "devDependencies": {
     "@suspensive/babel": "workspace:*",
