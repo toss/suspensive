@@ -3,6 +3,7 @@ import { useSuspenseQuery } from '../dist'
 
 const queryKey = ['key'] as const
 const queryFn = async () => 'response' as const
+const boolean = Math.random() > 0.5
 
 type AwaitedQueryFnReturn = Awaited<ReturnType<typeof queryFn>>
 
@@ -14,7 +15,7 @@ expectType<AwaitedQueryFnReturn>(
 )
 expectType<AwaitedQueryFnReturn | undefined>(
   useSuspenseQuery(queryKey, queryFn, {
-    enabled: Math.random() > 0.5,
+    enabled: boolean,
   }).data
 )
 expectType<undefined>(
@@ -33,7 +34,7 @@ expectType<AwaitedQueryFnReturn>(
 expectType<AwaitedQueryFnReturn | undefined>(
   useSuspenseQuery(queryKey, {
     queryFn,
-    enabled: Math.random() > 0.5,
+    enabled: boolean,
   }).data
 )
 expectType<undefined>(
@@ -55,7 +56,7 @@ expectType<AwaitedQueryFnReturn | undefined>(
   useSuspenseQuery({
     queryKey,
     queryFn,
-    enabled: Math.random() > 0.5,
+    enabled: boolean,
   }).data
 )
 expectType<undefined>(
