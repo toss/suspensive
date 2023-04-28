@@ -1,9 +1,10 @@
 {
   "name": "@suspensive/jest",
+  "version": "0.0.0-development",
   "private": true,
   "main": "jest.config.js",
   "devDependencies": {
-    "jest": "^29.4.3"
+    "jest": "^29.5.0"
   },
   "peerDependencies": {
     "jest": "^29.4.3"

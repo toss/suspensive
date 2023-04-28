@@ -1,11 +1,12 @@
 {
   "name": "@suspensive/babel",
+  "version": "0.0.0-development",
   "private": true,
   "main": "index.js",
   "dependencies": {
-    "@babel/core": "^7.20.5",
-    "@babel/preset-env": "^7.20.2",
+    "@babel/core": "^7.21.4",
+    "@babel/preset-env": "^7.21.4",
     "@babel/preset-react": "^7.18.6",
-    "@babel/preset-typescript": "^7.18.6"
+    "@babel/preset-typescript": "^7.21.4"
   }
 }
