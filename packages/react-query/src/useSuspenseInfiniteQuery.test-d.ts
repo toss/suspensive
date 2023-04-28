@@ -4,6 +4,7 @@ import { useSuspenseInfiniteQuery } from '../dist'
 
 const queryKey = ['key'] as const
 const queryFn = async () => 'response' as const
+const boolean = Math.random() > 0.5
 
 type AwaitedQueryFnReturn = Awaited<ReturnType<typeof queryFn>>
 
@@ -15,7 +16,7 @@ expectType<InfiniteData<AwaitedQueryFnReturn>>(
 )
 expectType<InfiniteData<AwaitedQueryFnReturn> | undefined>(
   useSuspenseInfiniteQuery(queryKey, queryFn, {
-    enabled: Math.random() > 0.5,
+    enabled: boolean,
   }).data
 )
 expectType<undefined>(
@@ -34,7 +35,7 @@ expectType<InfiniteData<AwaitedQueryFnReturn>>(
 expectType<InfiniteData<AwaitedQueryFnReturn> | undefined>(
   useSuspenseInfiniteQuery(queryKey, {
     queryFn,
-    enabled: Math.random() > 0.5,
+    enabled: boolean,
   }).data
 )
 expectType<undefined>(
@@ -56,7 +57,7 @@ expectType<InfiniteData<AwaitedQueryFnReturn> | undefined>(
   useSuspenseInfiniteQuery({
     queryKey,
     queryFn,
-    enabled: Math.random() > 0.5,
+    enabled: boolean,
   }).data
 )
 expectType<undefined>(
