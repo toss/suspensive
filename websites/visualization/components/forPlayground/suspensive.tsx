@@ -5,7 +5,10 @@ import { useIntersectionObserver } from './useIntersectionObserver'
 import { useEffect, useRef, useState } from 'react'
 
 export const PostListSuspensive = () => {
-  const postsQuery = useSuspenseQuery(['posts'], posts.getMany)
+  const postsQuery = useSuspenseQuery({
+    queryKey: ['posts'] as const,
+    queryFn: posts.getMany,
+  })
 
   return (
     <ul style={{ maxWidth: 600 }}>
@@ -40,13 +43,18 @@ const PostListItem = ({ post }: { post: Post }) => {
 }
 
 const PostContent = ({ id }: { id: number }) => {
-  const postQuery = useSuspenseQuery(['posts', id], () => posts.getOneBy({ id }))
-  const albumsQuery = useSuspenseQuery(['users', postQuery.data.userId, 'albums'], () =>
-    albums.getManyBy({ userId: postQuery.data.userId })
-  )
-  const todosQuery = useSuspenseQuery(['users', postQuery.data.userId, 'todos'], () =>
-    todos.getManyBy({ userId: postQuery.data.userId })
-  )
+  const postQuery = useSuspenseQuery({
+    queryKey: ['posts', id] as const,
+    queryFn: () => posts.getOneBy({ id }),
+  })
+  const albumsQuery = useSuspenseQuery({
+    queryKey: ['users', postQuery.data.userId, 'albums'] as const,
+    queryFn: () => albums.getManyBy({ userId: postQuery.data.userId }),
+  })
+  const todosQuery = useSuspenseQuery({
+    queryKey: ['users', postQuery.data.userId, 'todos'] as const,
+    queryFn: () => todos.getManyBy({ userId: postQuery.data.userId }),
+  })
 
   return (
     <div>

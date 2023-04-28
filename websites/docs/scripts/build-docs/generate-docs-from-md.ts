@@ -1,6 +1,6 @@
+import path from 'path'
 import fse from 'fs-extra'
 import globby from 'globby'
-import path from 'path'
 import { DOCUSAURUS_ROOT, PACKAGES_ROOT } from './constants'
 
 const EN_OUTDIR = path.resolve(DOCUSAURUS_ROOT, 'docs')
@@ -8,7 +8,7 @@ const KO_OUTDIR = path.resolve(DOCUSAURUS_ROOT, 'i18n/ko/docusaurus-plugin-conte
 
 const excludes = ['**/*.en.md', '**/*.ko.md', '**/README.md', '**/CHANGELOG.md', '**/node_modules']
 export async function generateDocsFromMD() {
-  return await Promise.all([
+  return Promise.all([
     copyMDDocs(PACKAGES_ROOT, EN_OUTDIR, excludes),
     copyMDDocs(path.join(DOCUSAURUS_ROOT, 'intro'), path.join(EN_OUTDIR, 'intro'), excludes),
 

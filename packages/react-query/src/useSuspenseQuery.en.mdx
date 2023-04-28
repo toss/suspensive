@@ -11,7 +11,9 @@ If you turn suspense mode on in @tanstack/react-query, You can use useQuery with
 import { useQuery } from '@tanstack/react-query'
 
 const Example = () => {
-  const query = useQuery(queryKey, queryFn, {
+  const query = useQuery({
+    queryKey,
+    queryFn,
     suspense: true,
   })
 
@@ -37,7 +39,10 @@ In addition, this hook's options have default suspense: true. and you can provid
 import { useSuspenseQuery } from '@suspensive/react-query'
 
 const Example = () => {
-  const query = useSuspenseQuery(queryKey, queryFn, options) // suspense:true is default.
+  const query = useSuspenseQuery({
+    queryKey,
+    queryFn,
+  }) // suspense:true is default.
 
   // No need to do type narrowing by isSuccess
   query.data // TData

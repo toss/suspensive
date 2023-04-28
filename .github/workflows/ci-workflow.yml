@@ -29,6 +29,9 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
+      - name: Build core packages
+        run: pnpm build --filter=@suspensive/react --filter=@suspensive/react-query
+
       - name: Check typescript
         run: pnpm type:check
 
@@ -37,6 +40,3 @@ jobs:
 
       - name: Test by jest
         run: pnpm test
-
-      - name: Build package
-        run: pnpm run build

@@ -119,7 +119,10 @@ const Example = () => (
 )
 
 const SuspendedComponent = () => {
-  const query = useSuspenseQuery(key, queryFn, options)
+  const query = useSuspenseQuery({
+    queryKey,
+    queryFn,
+  })
 
   return <>{query.data}</>
 }

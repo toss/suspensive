@@ -36,16 +36,16 @@
     "type:check": "turbo run type:check --parallel"
   },
   "devDependencies": {
-    "@changesets/cli": "^2.26.0",
-    "@commitlint/cli": "^17.4.0",
-    "@commitlint/config-conventional": "^17.4.0",
-    "commitizen": "^4.2.6",
+    "@changesets/cli": "^2.26.1",
+    "@commitlint/cli": "^17.6.1",
+    "@commitlint/config-conventional": "^17.6.1",
+    "commitizen": "^4.3.0",
     "cz-conventional-changelog": "^3.3.0",
     "husky": "^8.0.3",
-    "lint-staged": "^13.1.0",
+    "lint-staged": "^13.2.2",
     "packlint": "^0.2.4",
-    "prettier": "^2.8.2",
+    "prettier": "^2.8.8",
     "turbo": "latest",
-    "typescript": "^4.9.4"
+    "typescript": "^4.9.5"
   }
 }
