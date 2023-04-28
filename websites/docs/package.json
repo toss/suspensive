@@ -1,5 +1,6 @@
 {
   "name": "@suspensive/docs",
+  "version": "0.0.0-development",
   "private": true,
   "scripts": {
     "build": "pnpm gen:i18n && docusaurus build",
@@ -9,6 +10,7 @@
     "dev:ko": "pnpm gen:i18n && docusaurus start --locale ko",
     "docusaurus": "docusaurus",
     "gen:i18n": "pnpm clear && pnpm ts-node -T ./scripts/build-docs/index.ts && pnpm write-translations",
+    "lint": "eslint .",
     "serve": "docusaurus serve",
     "swizzle": "docusaurus swizzle",
     "typecheck": "tsc",
@@ -26,16 +28,22 @@
   },
   "devDependencies": {
     "@docusaurus/module-type-aliases": "2.2.0",
-    "@docusaurus/theme-classic": "^2.2.0",
-    "@tsconfig/docusaurus": "^1.0.5",
-    "@types/node": "^18.11.9",
-    "@types/react": "^18.0.25",
-    "@types/react-dom": "^18.0.9",
+    "@docusaurus/theme-classic": "^2.4.0",
+    "@docusaurus/types": "^2.4.0",
+    "@suspensive/eslint": "workspace:*",
+    "@tsconfig/docusaurus": "^1.0.7",
+    "@types/node": "^18.16.2",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.1",
     "documentation": "^14.0.1",
-    "fs-extra": "^11.1.0",
-    "globby": "^11",
+    "fs-extra": "^11.1.1",
+    "globby": "^11.1.0",
     "ts-node": "^10.9.1"
   },
+  "bundledDependencies": [
+    "fs-extra",
+    "globby"
+  ],
   "browserslist": {
     "production": [
       ">0.5%",

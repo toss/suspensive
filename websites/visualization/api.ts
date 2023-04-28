@@ -3,12 +3,14 @@ import axios from 'axios'
 const getAxios =
   ({ waitMs = 500, successPercentage }: { waitMs?: number; successPercentage: number }) =>
   async () =>
-    axios.get<string>('/api/during', {
-      params: {
-        waitMs,
-        successPercentage,
-      },
-    })
+    axios
+      .get<string>('/api/during', {
+        params: {
+          waitMs,
+          successPercentage,
+        },
+      })
+      .then(({ data }) => data)
 
 export const api = {
   alwaysSuccess500: getAxios({ successPercentage: 100, waitMs: 500 }),

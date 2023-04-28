@@ -11,7 +11,9 @@ title: 'useSuspenseInfiniteQuery'
 import { useInfiniteQuery } from '@tanstack/react-query'
 
 const Example = () => {
-  const query = useInfiniteQuery(queryKey, queryFn, {
+  const query = useInfiniteQuery({
+    queryKey,
+    queryFn,
     suspense: true,
   })
 
@@ -31,13 +33,16 @@ const Example = () => {
 
 이 hook의 return 타입에는 isLoading, isError이 없습니다. Suspense and ErrorBoundary가 이 hook의 data를 보장해주기 때문입니다.
 
-또한, 이 hook의 options에는 기본적으로 suspense가 true입니다. 필요한 새 options는 @tanstack/react-query의 useInfiniteQuery처럼 사용하면 됩니다. 
+또한, 이 hook의 options에는 기본적으로 suspense가 true입니다. 필요한 새 options는 @tanstack/react-query의 useInfiniteQuery처럼 사용하면 됩니다.
 
 ```tsx
 import { useSuspenseInfiniteQuery } from '@suspensive/react-query'
 
 const Example = () => {
-  const query = useSuspenseInfiniteQuery(queryKey, queryFn, options) // suspense 옵션은 true가 기본입니다.
+  const query = useSuspenseInfiniteQuery({
+    queryKey,
+    queryFn,
+  }) // suspense 옵션은 true가 기본입니다.
 
   // isSuccess으로 type narrowing이 필요하지 않습니다.
   query.data // InfiniteData<TData>

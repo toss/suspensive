@@ -11,7 +11,9 @@ title: 'useSuspenseQuery'
 import { useQuery } from '@tanstack/react-query'
 
 const Example = () => {
-  const query = useQuery(queryKey, queryFn, {
+  const query = useQuery({
+    queryKey,
+    queryFn,
     suspense: true,
   })
 
@@ -37,7 +39,10 @@ const Example = () => {
 import { useSuspenseQuery } from '@suspensive/react-query'
 
 const Example = () => {
-  const query = useSuspenseQuery(queryKey, queryFn, options) // suspense 옵션은 true가 기본입니다.
+  const query = useSuspenseQuery({
+    queryKey,
+    queryFn,
+  }) // suspense 옵션은 true가 기본입니다.
 
   // isSuccess으로 type narrowing이 필요하지 않습니다.
   query.data // TData
