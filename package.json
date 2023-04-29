@@ -22,7 +22,7 @@
   "scripts": {
     "build": "turbo run build",
     "changeset": "changeset",
-    "changeset:version": "changeset version",
+    "changeset:version": "changeset version && pnpm i --lockfile-only",
     "commit": "cz",
     "dev": "turbo run dev --parallel",
     "dev:ko": "turbo run dev:ko --scope='@suspensive/docs'",
