@@ -1,7 +1,0 @@
-const { exec } = require('child_process')
-// This script is used by the `.github/workflows/release-workflow.yml` workflow to update the version of the packages being released.
-// The standard step is only to run `changeset version` but this does not update the pnpm-lock.yaml file.
-// So we also run `pnpm install`, which does this update.
-// See https://github.com/changesets/changesets/issues/421.
-exec('pnpm run changeset version')
-exec('pnpm install --lockfile-only')
