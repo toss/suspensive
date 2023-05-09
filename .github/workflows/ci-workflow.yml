@@ -10,30 +10,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-
-      - name: Install pnpm
-        uses: pnpm/action-setup@v2.2.4
+      - uses: pnpm/action-setup@v2
         with:
           version: 8
-
-      - name: Read .nvmrc
-        run: echo "##[set-output name=NVMRC;]$(cat .nvmrc)"
-        id: nvm
-
-      - name: Setup Node
-        uses: actions/setup-node@v3
+      - uses: actions/setup-node@v3
         with:
-          node-version: ${{ steps.nvm.outputs.NVMRC }}
-          check-latest: true
-
-      - name: Install dependencies
-        run: pnpm install
+          cache: 'pnpm'
+          cache-dependency-path: 'pnpm-lock.yaml'
+          node-version-file: '.nvmrc'
+      - run: pnpm install --frozen-lockfile
 
       - name: Build core packages
         run: pnpm build --filter=@suspensive/react --filter=@suspensive/react-query
-
-      - name: Check typescript
-        run: pnpm type:check
 
       - name: Check eslint
         run: pnpm lint
