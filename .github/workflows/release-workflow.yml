@@ -10,26 +10,16 @@ jobs:
     name: Release to NPM
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v3
-
-      - name: Install pnpm
-        uses: pnpm/action-setup@v2.2.4
+      - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2
         with:
           version: 8
-
-      - name: Read .nvmrc
-        run: echo "##[set-output name=NVMRC;]$(cat .nvmrc)"
-        id: nvm
-
-      - name: Setup Node
-        uses: actions/setup-node@v3
+      - uses: actions/setup-node@v3
         with:
-          node-version: ${{ steps.nvm.outputs.NVMRC }}
-          check-latest: true
-
-      - name: Install dependencies
-        run: pnpm install
+          cache: 'pnpm'
+          cache-dependency-path: 'pnpm-lock.yaml'
+          node-version-file: '.nvmrc'
+      - run: pnpm install --frozen-lockfile
 
       - name: Set git user
         run: |
