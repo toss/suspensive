@@ -33,6 +33,7 @@
     "npm:publish": "turbo run npm:publish",
     "postinstall": "husky install",
     "test": "turbo run test",
+    "test:tsd": "turbo run test:tsd",
     "type:check": "turbo run type:check --parallel"
   },
   "devDependencies": {
