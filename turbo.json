@@ -14,6 +14,9 @@
     "test": {
       "outputs": []
     },
+    "test:tsd": {
+      "outputs": []
+    },
     "dev": {
       "cache": false
     },
