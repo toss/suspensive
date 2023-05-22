@@ -1,5 +1,11 @@
 # @suspensive/react-query
 
+## 1.9.5
+
+### Patch Changes
+
+- 5bc846e: chore(react-query): fix LICENSE.md in @suspensive/react-query to conform MIT license of toss/slash
+
 ## 1.9.4
 
 ### Patch Changes
