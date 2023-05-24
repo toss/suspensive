@@ -1,4 +1,5 @@
 export { useSuspenseQuery } from './useSuspenseQuery'
+export { useSuspenseQueries } from './useSuspenseQueries'
 export type {
   BaseUseSuspenseQueryResult,
   UseSuspenseQueryOptions,

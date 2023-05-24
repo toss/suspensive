@@ -7,17 +7,19 @@ import {
   useQuery,
 } from '@tanstack/react-query'
 
-export type BaseUseSuspenseQueryResult<TData> = Omit<UseQueryResult, 'error' | 'isError' | 'isFetching'> & {
-  data: TData
+export interface BaseUseSuspenseQueryResult<TData = unknown>
+  extends Omit<UseQueryResult<TData>, 'error' | 'isError' | 'isFetching'> {
   status: 'success' | 'loading'
 }
 
-export type UseSuspenseQueryResultOnSuccess<TData> = BaseUseSuspenseQueryResult<TData> & {
+export interface UseSuspenseQueryResultOnSuccess<TData> extends BaseUseSuspenseQueryResult<TData> {
+  data: TData
   isLoading: false
   isSuccess: true
   status: 'success'
 }
-export type UseSuspenseQueryResultOnLoading = BaseUseSuspenseQueryResult<undefined> & {
+export interface UseSuspenseQueryResultOnLoading extends BaseUseSuspenseQueryResult {
+  data: undefined
   isLoading: true
   isSuccess: false
   status: 'loading'
