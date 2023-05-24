@@ -132,7 +132,11 @@ export type QueriesResults<
   ? UseSuspenseQueryResultOnSuccess<unknown extends TData ? TQueryFnData : TData>[]
   : UseSuspenseQueryResultOnSuccess<unknown> | UseSuspenseQueryResultOnLoading[]
 
-export const useSuspenseQueries = <T extends any[]>({
+type UseSuspenseQueries = <T extends any[]>(arg: {
+  queries: readonly [...SuspenseQueriesOptions<T>]
+  context?: UseQueryOptions['context']
+}) => QueriesResults<T>
+export const useSuspenseQueries: UseSuspenseQueries = <T extends any[]>({
   queries,
   context,
 }: {
