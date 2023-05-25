@@ -44,17 +44,17 @@ const PostListItem = ({ post }: { post: Post }) => {
 
 const PostContent = ({ id }: { id: number }) => {
   const postQuery = useSuspenseQuery({
-    queryKey: ['posts1', id] as const,
+    queryKey: ['suspensive', 'posts', id] as const,
     queryFn: () => posts.getOneBy({ id }),
   })
   const [albumsQuery, todosQuery] = useSuspenseQueries({
     queries: [
       {
-        queryKey: ['users2', postQuery.data.userId, 'albums'] as const,
+        queryKey: ['suspensive', 'users', postQuery.data.userId, 'albums'],
         queryFn: () => albums.getManyBy({ userId: postQuery.data.userId }),
       },
       {
-        queryKey: ['users2', postQuery.data.userId, 'todos'] as const,
+        queryKey: ['suspensive', 'users', postQuery.data.userId, 'todos'],
         queryFn: () => todos.getManyBy({ userId: postQuery.data.userId }),
       },
     ] as const,

@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query'
+import { useQueries, useQuery } from '@tanstack/react-query'
 import { albums, Post, posts, todos } from './api'
 import { Spinner } from '../uis'
 import { useEffect, useRef, useState } from 'react'
@@ -49,16 +49,20 @@ const PostListItem = ({ post }: { post: Post }) => {
 
 const PostContent = ({ id }: { id: number }) => {
   const postQuery = useQuery(['posts', id], () => posts.getOneBy({ id }))
-  const albumsQuery = useQuery(
-    ['users', postQuery.data?.userId, 'albums'],
-    () => albums.getManyBy({ userId: postQuery.data?.userId || 0 }),
-    { enabled: !!postQuery.data?.userId }
-  )
-  const todosQuery = useQuery(
-    ['users', postQuery.data?.userId, 'todos'],
-    () => todos.getManyBy({ userId: postQuery.data?.userId || 0 }),
-    { enabled: !!postQuery.data?.userId }
-  )
+  const [albumsQuery, todosQuery] = useQueries({
+    queries: [
+      {
+        queryKey: ['tanstack', 'users', postQuery.data?.userId, 'albums'],
+        queryFn: () => albums.getManyBy({ userId: postQuery.data?.userId || 0 }),
+        enabled: !!postQuery.data?.userId,
+      },
+      {
+        queryKey: ['tanstack', 'users', postQuery.data?.userId, 'todos'],
+        queryFn: () => todos.getManyBy({ userId: postQuery.data?.userId || 0 }),
+        enabled: !!postQuery.data?.userId,
+      },
+    ],
+  })
 
   if (postQuery.isLoading || albumsQuery.isLoading || todosQuery.isLoading) {
     return (
