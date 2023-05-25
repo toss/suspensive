@@ -26,7 +26,7 @@
     "@types/node": "^17.0.45",
     "@types/react": "^18.2.0",
     "@types/react-dom": "^18.2.1",
-    "eslint-config-suspensive-next": "workspace:*",
+    "eslint-config-suspensive": "workspace:*",
     "typescript": "^4.9.5"
   }
 }

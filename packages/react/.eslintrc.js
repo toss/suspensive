@@ -1,6 +1,6 @@
 module.exports = {
   root: true,
-  extends: ['suspensive-react'],
+  extends: ['suspensive/react'],
   parserOptions: {
     tsconfigRootDir: __dirname,
     project: './tsconfig.json',
