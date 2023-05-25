@@ -27,8 +27,6 @@ tsconfig:
   - configs/tsconfig/**/*
 configuration:
   - next.config.js
-  - package*.json
-  - "**/.*"
   - "**/jest*.ts"
   - "**/jest*.js"
   - "**/tsconfig*.json"
@@ -37,6 +35,7 @@ documentation:
   - "**/*.md"
 dependencies:
   - "**/pnpm-lock.yaml"
-workflows:
+  - package*.json
+.github:
   - .github/*
   - .github/**/*
