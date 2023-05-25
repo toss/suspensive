@@ -1,0 +1,75 @@
+module.exports = {
+  env: {
+    browser: true,
+    node: true,
+  },
+  globals: { JSX: true },
+  parser: '@typescript-eslint/parser',
+  extends: ['airbnb', 'turbo', 'plugin:import/recommended', 'plugin:import/typescript', 'prettier'],
+  plugins: ['@typescript-eslint', 'import', 'prettier'],
+  overrides: [
+    {
+      files: ['*.spec.ts*', '*.test.ts*'],
+      plugins: ['jest'],
+      extends: ['plugin:jest/recommended'],
+      rules: { 'jest/prefer-expect-assertions': 'off' },
+    },
+    {
+      files: ['*.test-d.ts*', '*.test-d.ts*'],
+      rules: { 'import/no-unresolved': ['error', { ignore: ['tsd'] }] },
+    },
+  ],
+  rules: {
+    'consistent-return': ['off'],
+    'no-shadow': ['off'],
+    'no-use-before-define': ['off'],
+    'react/destructuring-assignment': ['off'],
+    'react/no-unescaped-entities': ['off'],
+    'react/state-in-constructor': ['off'],
+    'react/prop-types': ['off'],
+    'react/require-default-props': ['off'],
+    'react/jsx-no-useless-fragment': ['off'],
+    'react/jsx-props-no-spreading': ['off'],
+    'react/no-unstable-nested-components': ['off'],
+    'react/function-component-definition': ['off'],
+    'react/no-unused-prop-types': ['off'],
+    'react/react-in-jsx-scope': ['off'],
+    'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx', '.ts', '.tsx'] }],
+    'prettier/prettier': 'error',
+    '@typescript-eslint/no-shadow': ['off'],
+    '@typescript-eslint/no-use-before-define': ['off'],
+    'import/prefer-default-export': ['off'],
+    'import/no-extraneous-dependencies': ['off'],
+    'import/extensions': ['off'],
+    'import/order': [
+      'error',
+      {
+        groups: ['builtin', 'external', 'internal', ['parent', 'sibling'], 'index'],
+        pathGroups: [{ pattern: 'react', group: 'external', position: 'before' }],
+        pathGroupsExcludedImportTypes: ['react'],
+        alphabetize: { order: 'asc', caseInsensitive: true },
+      },
+    ],
+    'sort-imports': ['error', { ignoreDeclarationSort: true }],
+
+    /** fix */
+    // no-unused-vars
+    'no-unused-vars': ['off'],
+    '@typescript-eslint/no-unused-vars': ['error'],
+    // no-redeclare
+    'no-redeclare': ['off'],
+    '@typescript-eslint/no-redeclare': ['error'],
+  },
+  ignorePatterns: [
+    'node_modules',
+    'public',
+    '.vscode',
+    '.next',
+    'coverage',
+    'dist',
+    'esm',
+    '.turbo',
+    'next.config.js',
+    '.eslintrc.js',
+  ],
+}

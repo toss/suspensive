@@ -1,0 +1,9 @@
+{
+  "name": "eslint-config-suspensive-react",
+  "version": "0.0.0",
+  "private": true,
+  "main": ".eslintrc.js",
+  "dependencies": {
+    "eslint-config-suspensive-common": "workspace:*"
+  }
+}
