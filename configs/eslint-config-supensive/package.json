@@ -8,9 +8,10 @@
     "react.js",
     "next.js"
   ],
+  "dependencies": {
+    "eslint-plugin-import": "^2.25.3"
+  },
   "devDependencies": {
-    "eslint-plugin-import": "^2.25.3",
-    "eslint-plugin-jest": "^27.2.1",
     "@typescript-eslint/eslint-plugin": "^5.7.0",
     "@typescript-eslint/parser": "^5.7.0",
     "eslint-config-airbnb": "^19.0.2",
@@ -20,6 +21,7 @@
     "eslint-config-prettier": "^8.3.0",
     "eslint-config-turbo": "^1.9.3",
     "eslint-import-resolver-typescript": "^2.5.0",
+    "eslint-plugin-jest": "^27.2.1",
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-react": "7.28.0"
   }
