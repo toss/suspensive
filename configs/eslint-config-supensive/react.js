@@ -1,5 +1,5 @@
 module.exports = {
-  extends: ['airbnb', 'airbnb-typescript', './common'],
+  extends: ['airbnb', 'airbnb-typescript', './common.js'],
   globals: { JSX: true },
   rules: {
     'consistent-return': ['off'],

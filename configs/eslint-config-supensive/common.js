@@ -4,8 +4,8 @@ module.exports = {
     node: true,
   },
   parser: '@typescript-eslint/parser',
-  extends: ['airbnb-base', 'airbnb-typescript/base', 'turbo', 'plugin:import/recommended', 'plugin:import/typescript', 'prettier'],
-  plugins: ['@typescript-eslint', 'import', 'prettier'],
+  extends: ['plugin:import/recommended', 'airbnb-base', 'airbnb-typescript/base', 'turbo', 'prettier'],
+  plugins: ['import', '@typescript-eslint', 'prettier'],
   overrides: [
     {
       files: ['*.spec.ts*', '*.test.ts*'],
@@ -22,6 +22,7 @@ module.exports = {
     'prettier/prettier': 'error',
     '@typescript-eslint/no-shadow': ['off'],
     '@typescript-eslint/no-use-before-define': ['off'],
+
     'import/prefer-default-export': ['off'],
     'import/no-extraneous-dependencies': ['off'],
     'import/extensions': ['off'],
@@ -44,14 +45,5 @@ module.exports = {
     'no-redeclare': ['off'],
     '@typescript-eslint/no-redeclare': ['error'],
   },
-  ignorePatterns: [
-    'node_modules',
-    'public',
-    '.vscode',
-    'coverage',
-    'dist',
-    'esm',
-    '.turbo',
-    '.eslintrc.js',
-  ],
+  ignorePatterns: ['node_modules', 'public', '.vscode', 'coverage', 'dist', 'esm', '.turbo', '.eslintrc.js'],
 }
