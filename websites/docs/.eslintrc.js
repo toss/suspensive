@@ -1,6 +1,6 @@
 module.exports = {
   root: true,
-  extends: ['suspensive/react'],
+  extends: ['@suspensive/eslint-config/react'],
   parserOptions: {
     tsconfigRootDir: __dirname,
     project: './tsconfig.json',

@@ -1,6 +1,6 @@
 module.exports = {
   root: true,
-  extends: ['suspensive/next'],
+  extends: ['@suspensive/eslint-config/next'],
   parserOptions: {
     tsconfigRootDir: __dirname,
     project: './tsconfig.json',

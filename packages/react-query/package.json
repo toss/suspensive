@@ -37,6 +37,7 @@
   },
   "devDependencies": {
     "@suspensive/babel": "workspace:*",
+    "@suspensive/eslint-config": "workspace:*",
     "@suspensive/jest": "workspace:*",
     "@suspensive/react": "workspace:*",
     "@suspensive/rollup": "workspace:*",
@@ -51,7 +52,6 @@
     "@types/react-dom": "^18.2.1",
     "@types/testing-library__jest-dom": "^5.14.5",
     "eslint": "^8.39.0",
-    "eslint-config-suspensive": "workspace:*",
     "jest": "^29.5.0",
     "jest-environment-jsdom": "^29.5.0",
     "react": "^18.2.0",

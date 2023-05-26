@@ -1,5 +1,5 @@
 {
-  "name": "eslint-config-suspensive",
+  "name": "@suspensive/eslint-config",
   "version": "0.0.0",
   "private": true,
   "main": "common.js",
