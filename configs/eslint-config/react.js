@@ -1,0 +1,22 @@
+module.exports = {
+  extends: ['airbnb', 'airbnb-typescript', './common.js'],
+  globals: { JSX: true },
+  rules: {
+    'consistent-return': ['off'],
+    'no-shadow': ['off'],
+    'no-use-before-define': ['off'],
+    'react/destructuring-assignment': ['off'],
+    'react/no-unescaped-entities': ['off'],
+    'react/state-in-constructor': ['off'],
+    'react/prop-types': ['off'],
+    'react/require-default-props': ['off'],
+    'react/jsx-no-useless-fragment': ['off'],
+    'react/jsx-props-no-spreading': ['off'],
+    'react/no-unstable-nested-components': ['off'],
+    'react/function-component-definition': ['off'],
+    'react/no-unused-prop-types': ['off'],
+    'react/react-in-jsx-scope': ['off'],
+    'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx', '.ts', '.tsx'] }],
+  },
+  ignorePatterns: ['.next', 'next.config.js'],
+}

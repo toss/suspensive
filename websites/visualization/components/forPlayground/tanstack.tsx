@@ -1,9 +1,9 @@
-import { useQuery } from '@tanstack/react-query'
-import { albums, Post, posts, todos } from './api'
-import { Spinner } from '../uis'
 import { useEffect, useRef, useState } from 'react'
-import { useIntersectionObserver } from './useIntersectionObserver'
 import { Delay } from '@suspensive/react'
+import { useQuery } from '@tanstack/react-query'
+import { Post, albums, posts, todos } from './api'
+import { useIntersectionObserver } from './useIntersectionObserver'
+import { Spinner } from '../uis'
 
 export const PostListTanStack = () => {
   const postsQuery = useQuery(['posts'], posts.getMany)
@@ -84,7 +84,7 @@ const PostContent = ({ id }: { id: number }) => {
       <ul>
         {todosQuery.data.map((todo) => (
           <li key={todo.id}>
-            <button>{todo.completed ? 'completed' : 'todo'}</button> {todo.title}
+            <button type="button">{todo.completed ? 'completed' : 'todo'}</button> {todo.title}
           </li>
         ))}
       </ul>

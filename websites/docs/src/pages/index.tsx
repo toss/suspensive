@@ -1,3 +1,4 @@
+// eslint-disable import/no-unresolved
 import React from 'react'
 import Link from '@docusaurus/Link'
 import Translate from '@docusaurus/Translate'

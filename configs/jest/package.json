@@ -7,6 +7,6 @@
     "jest": "^29.5.0"
   },
   "peerDependencies": {
-    "jest": "^29.4.3"
+    "jest": "^29.5.0"
   }
 }

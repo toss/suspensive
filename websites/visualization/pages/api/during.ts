@@ -7,9 +7,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
   const percentage = Number(successPercentage)
 
   const isSuccess = Math.random() < percentage / 100
-  callAfter(time, () => {
-    return !isSuccess ? res.status(500).json('Server Error') : res.status(200).json(`Axios Success after ${waitMs}ms`)
-  })
+  callAfter(time, () =>
+    !isSuccess ? res.status(500).json('Server Error') : res.status(200).json(`Axios Success after ${waitMs}ms`)
+  )
 }
 
 const callAfter = async (ms: number, callback: () => void) => {

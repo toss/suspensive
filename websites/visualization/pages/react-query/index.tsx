@@ -44,7 +44,7 @@ const ReactQueryPage = withErrorBoundaryGroup(() => {
       </Area>
 
       <Area title="Playground">
-        <Link href={'/react-query/playground'} style={{ flex: 1 }}>
+        <Link href="/react-query/playground" style={{ flex: 1 }}>
           <Box.Default>🔗 @tanstack/react-query vs @suspensive/react-query</Box.Default>
         </Link>
       </Area>
