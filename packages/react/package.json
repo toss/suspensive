@@ -28,7 +28,7 @@
   ],
   "scripts": {
     "build": "rm -rf dist esm && tsc -p tsconfig.build.json --declaration --emitDeclarationOnly --declarationDir dist && rollup -c rollup.config.js",
-    "lint": "eslint .",
+    "lint": "eslint \"**/*.ts*\"",
     "npm:publish": "pnpm publish",
     "prepack": "pnpm build",
     "test": "jest",
@@ -36,7 +36,7 @@
   },
   "devDependencies": {
     "@suspensive/babel": "workspace:*",
-    "@suspensive/eslint": "workspace:*",
+    "@suspensive/eslint-config": "workspace:*",
     "@suspensive/jest": "workspace:*",
     "@suspensive/rollup": "workspace:*",
     "@suspensive/tsconfig": "workspace:*",
@@ -48,7 +48,6 @@
     "@types/react": "^18.2.0",
     "@types/react-dom": "^18.2.1",
     "@types/testing-library__jest-dom": "^5.14.5",
-    "eslint": "^8.39.0",
     "jest": "^29.5.0",
     "jest-environment-jsdom": "^29.5.0",
     "react": "^18.2.0",

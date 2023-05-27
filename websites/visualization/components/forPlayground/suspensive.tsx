@@ -1,8 +1,8 @@
+import { useEffect, useRef, useState } from 'react'
 import { Suspense } from '@suspensive/react'
 import { useSuspenseQueries, useSuspenseQuery } from '@suspensive/react-query'
-import { albums, Post, posts, todos } from './api'
+import { Post, albums, posts, todos } from './api'
 import { useIntersectionObserver } from './useIntersectionObserver'
-import { useEffect, useRef, useState } from 'react'
 
 export const PostListSuspensive = () => {
   const postsQuery = useSuspenseQuery({
@@ -73,7 +73,7 @@ const PostContent = ({ id }: { id: number }) => {
       <ul>
         {todosQuery.data.map((todo) => (
           <li key={todo.id}>
-            <button>{todo.completed ? 'completed' : 'todo'}</button> {todo.title}
+            <button type="button">{todo.completed ? 'completed' : 'todo'}</button> {todo.title}
           </li>
         ))}
       </ul>

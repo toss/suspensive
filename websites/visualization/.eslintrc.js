@@ -1,4 +1,8 @@
 module.exports = {
   root: true,
-  extends: ['next/core-web-vitals'],
+  extends: ['@suspensive/eslint-config/next'],
+  parserOptions: {
+    tsconfigRootDir: __dirname,
+    project: './tsconfig.json',
+  },
 }

@@ -1,6 +1,9 @@
 import axios from 'axios'
 
-const delay = (ms: number = 1000) => new Promise((resolve) => setTimeout(resolve, ms))
+const delay = (ms: number = 1000) =>
+  new Promise((resolve) => {
+    setTimeout(resolve, ms)
+  })
 const delayRandom = (maxMs: number = 1000) => delay(maxMs * Math.random())
 
 export type Post = { id: number; title: string; body: string; userId: number }
