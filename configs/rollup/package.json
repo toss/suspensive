@@ -15,7 +15,8 @@
     "builtin-modules": "^3.3.0"
   },
   "devDependencies": {
-    "rollup": "^3.21.0"
+    "rollup": "^3.21.0",
+    "@suspensive/eslint-config": "workspace:*"
   },
   "peerDependencies": {
     "rollup": "^3"

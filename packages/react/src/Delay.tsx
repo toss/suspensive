@@ -1,3 +1,5 @@
+'use client'
+
 import { ComponentType, ReactNode, createContext, useContext, useEffect, useState } from 'react'
 import { ComponentPropsWithoutChildren } from './types'
 
