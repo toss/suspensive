@@ -1,2 +1,2 @@
-export { UseSuspenseQuery } from './UseSuspenseQuery'
 export { RejectedFallback } from './RejectedFallback'
+export { UseSuspenseQuery } from './UseSuspenseQuery'

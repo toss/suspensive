@@ -1,7 +1,7 @@
 'use client'
 
 import { Suspense } from '@suspensive/react'
-import { PostListSuspensive, PostListTanStack } from '../../../components/forPlayground'
+import { PostListSuspensive, PostListTanStack } from './components'
 
 const Page = () => (
   <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
