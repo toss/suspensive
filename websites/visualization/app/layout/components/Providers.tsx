@@ -1,5 +1,5 @@
 import React, { PropsWithChildren } from 'react'
-import { Delay, SuspensiveConfigs, SuspensiveProvider } from '@suspensive/react'
+import { SuspensiveConfigs, SuspensiveProvider } from '@suspensive/react'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { Spinner } from '../../../components/uis'
@@ -18,11 +18,7 @@ const suspensiveConfigs = new SuspensiveConfigs({
       ms: 1200,
     },
     suspense: {
-      fallback: (
-        <Delay>
-          <Spinner />
-        </Delay>
-      ),
+      fallback: <Spinner />,
     },
   },
 })

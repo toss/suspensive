@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 // These styles apply to every route in the application
 import '../global.css'
 import { Layout, Providers, TopNavigation } from './components'
@@ -15,6 +16,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <Providers>
           <TopNavigation />
+          <Link href="/suspenseCache">🔗 Experimental Feature: suspenseCache</Link>
           <Layout>{children}</Layout>
         </Providers>
       </body>
