@@ -1,3 +1,5 @@
+'use client'
+
 import { ComponentType, ReactNode, createContext, useContext, useEffect, useMemo } from 'react'
 import { useIsMounted, useKey } from './hooks'
 import { ComponentPropsWithoutChildren } from './types'

@@ -1,3 +1,5 @@
+'use client'
+
 import { ComponentProps, ComponentRef, ComponentType, forwardRef } from 'react'
 import { ErrorBoundary } from './ErrorBoundary'
 import { Suspense } from './Suspense'

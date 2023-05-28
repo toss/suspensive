@@ -1,3 +1,5 @@
+'use client'
+
 import { AsyncBoundary, ErrorBoundary, ErrorBoundaryGroup, Suspense } from '@suspensive/react'
 import { useQueryErrorResetBoundary } from '@tanstack/react-query'
 import { api } from '../../api'
