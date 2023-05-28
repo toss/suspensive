@@ -1,5 +1,7 @@
 # @suspensive/react-query
 
+## 1.9.6
+
 ## 1.9.5
 
 ### Patch Changes
