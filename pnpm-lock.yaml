@@ -132,9 +132,6 @@ importers:
         specifier: ^3.3.0
         version: 3.3.0
     devDependencies:
-      '@suspensive/eslint-config':
-        specifier: workspace:*
-        version: link:../eslint-config
       rollup:
         specifier: ^3.21.0
         version: 3.21.0
