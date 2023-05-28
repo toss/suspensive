@@ -1,3 +1,5 @@
+'use client'
+
 import { ComponentProps } from 'react'
 import { ErrorBoundary } from '@suspensive/react'
 import { Box, Button, Description } from './uis'

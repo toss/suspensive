@@ -4,16 +4,19 @@ body,
   color-scheme: dark;
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans,
+    Helvetica Neue, sans-serif;
   position: fixed;
-  top:0;right:0;left:0;bottom:0;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
   height: 100%;
   display: flex;
   flex-direction: column;
   overflow: auto;
 }
-  
+
 a {
   color: inherit;
   text-decoration: none;
@@ -23,10 +26,16 @@ a {
   box-sizing: border-box;
 }
 
+body {
+  color: white;
+  background: black;
+}
+
 @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;
   }
+
   body {
     color: white;
     background: black;
