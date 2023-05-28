@@ -1,3 +1,5 @@
+'use client'
+
 import { ComponentType, ReactNode, Suspense as ReactSuspense, SuspenseProps, createContext, useContext } from 'react'
 import { useIsMounted } from './hooks'
 import { ComponentPropsWithoutChildren } from './types'

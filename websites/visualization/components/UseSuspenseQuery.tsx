@@ -1,3 +1,5 @@
+'use client'
+
 import { useSuspenseQuery } from '@suspensive/react-query'
 import { Box, Description } from './uis'
 
