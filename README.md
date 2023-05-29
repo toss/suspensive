@@ -47,11 +47,11 @@ npm install @suspensive/react
 ```
 
 ```shell
-yarn add @suspensive/react
+pnpm add @suspensive/react
 ```
 
 ```shell
-pnpm add @suspensive/react
+yarn add @suspensive/react
 ```
 
 ## Usage
@@ -94,15 +94,15 @@ Declarative apis to use [@tanstack/react-query with suspense](https://tanstack.c
 ## Installation
 
 ```shell
-npm install @suspensive/react @suspensive/react-query
+npm install @suspensive/react-query
 ```
 
 ```shell
-yarn add @suspensive/react @suspensive/react-query
+pnpm add @suspensive/react-query
 ```
 
 ```shell
-pnpm add @suspensive/react @suspensive/react-query
+yarn add @suspensive/react-query
 ```
 
 ## Usage
