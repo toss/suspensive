@@ -1,5 +1,11 @@
 # @suspensive/react-query
 
+## 1.10.0
+
+### Minor Changes
+
+- 0e07b84: feat(react-query): add useSuspenseQueries
+
 ## 1.9.6
 
 ## 1.9.5
