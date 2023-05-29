@@ -19,4 +19,13 @@ export const api = {
   halfSuccess: getAxios({ successPercentage: 50 }),
   almostFailure: getAxios({ successPercentage: 40 }),
   alwaysFailure: getAxios({ successPercentage: 0 }),
+  manual: (options: Parameters<typeof getAxios>[0]) =>
+    axios
+      .get<string>('/api/during', {
+        params: {
+          successPercentage: options.successPercentage,
+          waitMs: options.waitMs,
+        },
+      })
+      .then(({ data }) => data),
 }
