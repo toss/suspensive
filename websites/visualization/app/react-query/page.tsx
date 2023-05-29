@@ -9,7 +9,7 @@ import { RejectedFallback, UseSuspenseQuery } from '../../components'
 import { Area, Box, Button, Spinner } from '../../components/uis'
 
 const ReactQueryPage = withErrorBoundaryGroup(() => {
-  const errorResetBoundary = useQueryErrorResetBoundary()
+  const queryErrorResetBoundary = useQueryErrorResetBoundary()
 
   return (
     <Area title="ErrorBoundaryGroup">
@@ -21,7 +21,7 @@ const ReactQueryPage = withErrorBoundaryGroup(() => {
         )}
       />
       <Area title="QueryErrorResetBoundary + ErrorBoundary + Suspense">
-        <ErrorBoundary onReset={errorResetBoundary.reset} fallback={RejectedFallback}>
+        <ErrorBoundary onReset={queryErrorResetBoundary.reset} fallback={RejectedFallback}>
           <Suspense.CSROnly fallback={<Spinner />}>
             <UseSuspenseQuery queryKey={['query', 1]} queryFn={api.almostFailure} />
             <UseSuspenseQuery queryKey={['query', 2]} queryFn={api.almostFailure} />

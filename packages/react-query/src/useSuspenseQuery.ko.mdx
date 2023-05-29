@@ -1,5 +1,5 @@
 ---
-sidebar_position: 2
+sidebar_position: 1
 title: 'useSuspenseQuery'
 ---
 
@@ -25,13 +25,14 @@ const Example = () => {
 }
 ```
 
-하지만 useQuery의 return 타입(query.data)은 이 컴포넌트의 부모인 Suspense 덕분에 항상 성공한 경우일 것입니다.
+useQuery의 return 타입(query.data)은 이 컴포넌트의 부모인 Suspense와 ErrorBoundary 덕분에 항상 성공한 경우일 것입니다.
+하지만 @tanstack/react-query는 타입스크립트 타입적으로 이것을 표현하지 않습니다.
 
 이것이 @suspensive/react-query가 **useSuspenseQuery**를 제공하는 이유입니다.
 
 ## useSuspenseQuery
 
-이 hook의 return 타입에는 isLoading, isError이 없습니다. Suspense and ErrorBoundary가 이 hook의 data를 보장해주기 때문입니다.
+이 hook의 return 타입에는 isLoading, isError이 없습니다. Suspense와 ErrorBoundary가 이 hook의 data를 보장해주기 때문입니다.
 
 또한, 이 hook의 options에는 기본적으로 suspense가 true입니다. 필요한 새 options는 @tanstack/react-query의 useQuery처럼 사용하면 됩니다.
 
@@ -42,7 +43,7 @@ const Example = () => {
   const query = useSuspenseQuery({
     queryKey,
     queryFn,
-  }) // suspense 옵션은 true가 기본입니다.
+  }) // suspense: true가 기본입니다.
 
   // isSuccess으로 type narrowing이 필요하지 않습니다.
   query.data // TData
