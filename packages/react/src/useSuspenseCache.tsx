@@ -105,6 +105,9 @@ class SuspenseCacheObserver {
       : this.keyNotifiesMap.forEach((keyNotifies) => keyNotifies.forEach((notify) => notify()))
 }
 
+/**
+ * @experimental This is experimental feature.
+ */
 export const suspenseCache = new SuspenseCacheObserver()
 
 type UseSuspenseCacheOption<
@@ -116,6 +119,9 @@ type UseSuspenseCacheOption<
   fn: TFn
 }
 
+/**
+ * @experimental This is experimental feature.
+ */
 export const useSuspenseCache = <TKey extends Tuple, TData extends unknown>(
   options: UseSuspenseCacheOption<TData, TKey, (options: { key: TKey }) => Promise<TData>>
 ): SuspenseCache<TData> => {
