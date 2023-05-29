@@ -20,7 +20,7 @@ class SuspenseCacheObserver {
   public reset = <TKey extends string>(key?: TKey) => {
     if (key === undefined || key.length === 0) {
       this.cache.clear()
-      suspenseCache.notifyToAttacher()
+      this.notifyToAttacher()
       return
     }
 
@@ -28,7 +28,7 @@ class SuspenseCacheObserver {
       this.cache.delete(key)
     }
 
-    suspenseCache.notifyToAttacher(key)
+    this.notifyToAttacher(key)
   }
 
   public clearError = <TKey extends string>(key?: TKey) => {

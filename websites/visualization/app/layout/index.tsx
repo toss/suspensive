@@ -16,7 +16,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <Providers>
           <TopNavigation />
-          <Link href="/suspenseCache">🔗 Experimental Feature: suspenseCache</Link>
+          <Link href="/useSuspenseCache">🔗 Experimental Feature: useSuspenseCache</Link>
           <Layout>{children}</Layout>
         </Providers>
       </body>
