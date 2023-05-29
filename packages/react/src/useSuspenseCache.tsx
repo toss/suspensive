@@ -9,7 +9,6 @@ type Cache<Key extends string = string> = {
   key: Key
   error?: unknown
   data?: unknown
-  onNotifies: ((...args: unknown[]) => unknown)[]
 }
 type CacheAction = { reset: () => void }
 type SuspenseCache<TData extends unknown = unknown> = CacheAction & { data: TData }
@@ -73,7 +72,6 @@ class SuspenseCacheObserver {
         .catch((error) => {
           newCache.error = error
         }),
-      onNotifies: [],
     }
 
     this.cache.set(key, newCache)
