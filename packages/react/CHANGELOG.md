@@ -1,5 +1,11 @@
 # @suspensive/react
 
+## 1.11.0
+
+### Minor Changes
+
+- a89dd4f: feat(react): add useSuspenseCache, suspenseCache(experimental)
+
 ## 1.10.0
 
 ## 1.9.6
