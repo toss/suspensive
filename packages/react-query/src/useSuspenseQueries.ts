@@ -30,7 +30,7 @@ interface ToInferWithSelectEnabledOption<TQueryFnData, TData, TQueryKey extends 
   select: (data: unknown) => TData
 }
 
-type GetOptions<T> =
+type GetOption<T> =
   // enabled: false
   T extends ToInferWithSelectEnabledOption<infer TQueryFnData, infer TData, infer TQueryKey, false>
     ? UseQueryOptionsForUseSuspenseQueries<TQueryFnData, TData, TQueryKey, false>
@@ -67,9 +67,9 @@ type SuspenseQueriesOptions<
   : T extends []
   ? []
   : T extends [infer Head]
-  ? [...Result, GetOptions<Head>]
+  ? [...Result, GetOption<Head>]
   : T extends [infer Head, ...infer Tail]
-  ? SuspenseQueriesOptions<[...Tail], [...Result, GetOptions<Head>], [...Depth, 1]>
+  ? SuspenseQueriesOptions<[...Tail], [...Result, GetOption<Head>], [...Depth, 1]>
   : unknown[] extends T
   ? T
   : T extends UseQueryOptionsForUseSuspenseQueries<infer TQueryFnData, infer TData, infer TQueryKey>[]
@@ -77,7 +77,7 @@ type SuspenseQueriesOptions<
   : UseQueryOptionsForUseSuspenseQueries[]
 
 // results
-type GetResults<T> = T extends { queryFnData: any; data: infer TData }
+type GetResult<T> = T extends { queryFnData: any; data: infer TData }
   ? UseSuspenseQueryResultOnSuccess<TData>
   : T extends { queryFnData: infer TQueryFnData }
   ? UseSuspenseQueryResultOnSuccess<TQueryFnData>
@@ -125,12 +125,12 @@ export type QueriesResults<
   : T extends []
   ? []
   : T extends [infer Head]
-  ? [...Result, GetResults<Head>]
+  ? [...Result, GetResult<Head>]
   : T extends [infer Head, ...infer Tail]
-  ? QueriesResults<[...Tail], [...Result, GetResults<Head>], [...Depth, 1]>
+  ? QueriesResults<[...Tail], [...Result, GetResult<Head>], [...Depth, 1]>
   : T extends UseQueryOptionsForUseSuspenseQueries<infer TQueryFnData, infer TData, QueryKey>[]
   ? UseSuspenseQueryResultOnSuccess<unknown extends TData ? TQueryFnData : TData>[]
-  : UseSuspenseQueryResultOnSuccess<unknown> | UseSuspenseQueryResultOnLoading[]
+  : (UseSuspenseQueryResultOnSuccess<unknown> | UseSuspenseQueryResultOnLoading)[]
 
 type UseSuspenseQueries = <T extends any[]>(arg: {
   queries: readonly [...SuspenseQueriesOptions<T>]
