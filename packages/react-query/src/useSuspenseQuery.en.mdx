@@ -1,11 +1,11 @@
 ---
-sidebar_position: 2
+sidebar_position: 1
 title: 'useSuspenseQuery'
 ---
 
-### Motivation
+### motivation
 
-If you turn suspense mode on in @tanstack/react-query, You can use useQuery with Suspense and ErrorBoundary.
+You can use useQuery with Suspense and ErrorBoundary by using the suspense option in @tanstack/react-query.
 
 ```tsx
 import { useQuery } from '@tanstack/react-query'
@@ -25,15 +25,16 @@ const Example = () => {
 }
 ```
 
-but useQuery's return type:query.data will be always fulfilled because of Suspense as parent of this component.
+The return type of useQuery (query.data) will always be a success case thanks to this component's parents, Suspense and ErrorBoundary.
+But @tanstack/react-query doesn't express this typescript typely.
 
-This is why @suspensive/react-query provide **useSuspenseQuery**
+That's why @suspensive/react-query provides **useSuspenseQuery**.
 
 ## useSuspenseQuery
 
-Return type of this hook have no isLoading, isError property. because Suspense and ErrorBoundary will guarantee this hook's data.
+There is no isLoading or isError in the return type of this hook. This is because Suspense and ErrorBoundary guarantee the data of this hook.
 
-In addition, this hook's options have default suspense: true. and you can provide new options to this hook like useQuery of @tanstack/react-query.
+Also, in the options of this hook, suspense is set to true by default. Any new options you need can be used like @tanstack/react-query's useQuery.
 
 ```tsx
 import { useSuspenseQuery } from '@suspensive/react-query'
@@ -42,13 +43,13 @@ const Example = () => {
   const query = useSuspenseQuery({
     queryKey,
     queryFn,
-  }) // suspense:true is default.
+  }) // suspense: true is the default.
 
-  // No need to do type narrowing by isSuccess
+  // No type narrowing required with isSuccess.
   query.data // TData
 }
 ```
 
-### Concentrate on only Success
+### Focus on successful cases.
 
-Now, we can concentrate component as any fetching will be always success.
+Now we can focus only on successful cases as fetching always succeeds inside our component.
