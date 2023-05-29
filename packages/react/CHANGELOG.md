@@ -1,5 +1,7 @@
 # @suspensive/react
 
+## 1.10.0
+
 ## 1.9.6
 
 ### Patch Changes

@@ -1,5 +1,14 @@
 # @suspensive/visualization
 
+## 0.0.3
+
+### Patch Changes
+
+- 0e07b84: feat(react-query): add useSuspenseQueries
+- Updated dependencies [0e07b84]
+  - @suspensive/react-query@1.10.0
+  - @suspensive/react@1.10.0
+
 ## 0.0.2
 
 ### Patch Changes
