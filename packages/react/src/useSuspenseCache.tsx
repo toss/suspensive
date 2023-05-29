@@ -79,7 +79,7 @@ class SuspenseCacheObserver {
     throw newCache.promise
   }
 
-  public getData = <TKey extends string>(key: TKey) => this.cache.get(key)?.data
+  public getData = <TKey extends string[]>(key: TKey) => this.cache.get(JSON.stringify(key))?.data
 
   private keyNotifiesMap = new Map<string, ((...args: unknown[]) => unknown)[]>()
 
