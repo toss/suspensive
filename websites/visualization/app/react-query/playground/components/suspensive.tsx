@@ -1,23 +1,14 @@
 import { useEffect, useRef, useState } from 'react'
-import { Delay } from '@suspensive/react'
-import { useQuery } from '@tanstack/react-query'
+import { Suspense } from '@suspensive/react'
+import { useSuspenseQueries, useSuspenseQuery } from '@suspensive/react-query'
 import { Post, albums, posts, todos } from './api'
 import { useIntersectionObserver } from './useIntersectionObserver'
-import { Spinner } from '../uis'
 
-export const PostListTanStack = () => {
-  const postsQuery = useQuery(['posts'], posts.getMany)
-
-  if (postsQuery.isLoading) {
-    return (
-      <Delay>
-        <Spinner />
-      </Delay>
-    )
-  }
-  if (postsQuery.isError) {
-    return <>error</>
-  }
+export const PostListSuspensive = () => {
+  const postsQuery = useSuspenseQuery({
+    queryKey: ['posts'] as const,
+    queryFn: posts.getMany,
+  })
 
   return (
     <ul style={{ maxWidth: 600 }}>
@@ -42,34 +33,32 @@ const PostListItem = ({ post }: { post: Post }) => {
   return (
     <li key={post.id} ref={ref} style={{ minHeight: 200 }}>
       <h3>Title: {post.title}</h3>
-      {isShow && <PostContent id={post.id} />}
+      {isShow && (
+        <Suspense.CSROnly>
+          <PostContent id={post.id} />
+        </Suspense.CSROnly>
+      )}
     </li>
   )
 }
 
 const PostContent = ({ id }: { id: number }) => {
-  const postQuery = useQuery(['posts', id], () => posts.getOneBy({ id }))
-  const albumsQuery = useQuery(
-    ['users', postQuery.data?.userId, 'albums'],
-    () => albums.getManyBy({ userId: postQuery.data?.userId || 0 }),
-    { enabled: !!postQuery.data?.userId }
-  )
-  const todosQuery = useQuery(
-    ['users', postQuery.data?.userId, 'todos'],
-    () => todos.getManyBy({ userId: postQuery.data?.userId || 0 }),
-    { enabled: !!postQuery.data?.userId }
-  )
-
-  if (postQuery.isLoading || albumsQuery.isLoading || todosQuery.isLoading) {
-    return (
-      <Delay>
-        <Spinner />
-      </Delay>
-    )
-  }
-  if (postQuery.isError || albumsQuery.isError || todosQuery.isError) {
-    return <>error</>
-  }
+  const postQuery = useSuspenseQuery({
+    queryKey: ['suspensive', 'posts', id] as const,
+    queryFn: () => posts.getOneBy({ id }),
+  })
+  const [albumsQuery, todosQuery] = useSuspenseQueries({
+    queries: [
+      {
+        queryKey: ['suspensive', 'users', postQuery.data.userId, 'albums'],
+        queryFn: () => albums.getManyBy({ userId: postQuery.data.userId }),
+      },
+      {
+        queryKey: ['suspensive', 'users', postQuery.data.userId, 'todos'],
+        queryFn: () => todos.getManyBy({ userId: postQuery.data.userId }),
+      },
+    ] as const,
+  })
 
   return (
     <div>
