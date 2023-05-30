@@ -44,6 +44,19 @@ if (process.env.NODE_ENV !== 'production') {
 /**
  * This component wrapping QueryErrorResetBoundary of @tanstack/react-query with @suspensive/react's AsyncBoundary.
  *
+ * So you must install @suspensive/react first, then use it.
+ * ```shell
+ * npm install @suspensive/react
+ * ```
+ *
+ * ```shell
+ * pnpm add @suspensive/react
+ * ```
+ *
+ * ```shell
+ * yarn add @suspensive/react
+ * ```
+ *
  * with this component, You don't have to make unnecessary repetitive implementation to combine AsyncBoundary with QueryErrorResetBoundary
  * @see {@link https://suspensive.org/docs/react-query/src/QueryErrorResetBoundary.i18n Suspensive Official Docs}
  */
