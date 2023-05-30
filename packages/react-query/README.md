@@ -9,13 +9,13 @@
 @suspensive/react-query lives in npm. To install the latest stable version, run the following command
 
 ```shell
-npm install @suspensive/react @suspensive/react-query
+npm install @suspensive/react-query
 ```
 
 ```shell
-yarn add @suspensive/react @suspensive/react-query
+pnpm add @suspensive/react-query
 ```
 
 ```shell
-pnpm add @suspensive/react @suspensive/react-query
+yarn add @suspensive/react-query
 ```

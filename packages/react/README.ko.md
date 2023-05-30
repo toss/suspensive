@@ -13,9 +13,9 @@ npm install @suspensive/react
 ```
 
 ```shell
-yarn add @suspensive/react
+pnpm add @suspensive/react
 ```
 
 ```shell
-pnpm add @suspensive/react
+yarn add @suspensive/react
 ```
