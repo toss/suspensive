@@ -7,15 +7,15 @@ import { useQueryErrorResetBoundary } from '@tanstack/react-query'
  *
  * So you must install @suspensive/react first, then use it.
  * ```shell
- * npm install @suspensive/react @suspensive/react-query
+ * npm install @suspensive/react
  * ```
  *
  * ```shell
- * pnpm add @suspensive/react @suspensive/react-query
+ * pnpm add @suspensive/react
  * ```
  *
  * ```shell
- * yarn add @suspensive/react @suspensive/react-query
+ * yarn add @suspensive/react
  * ```
  *
  * with this component, You don't have to make unnecessary repetitive implementation to combine ErrorBoundary with QueryErrorResetBoundary
