@@ -31,3 +31,6 @@ npm-debug.log*
 # for build
 dist
 esm
+
+# graph
+graph/

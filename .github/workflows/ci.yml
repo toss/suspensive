@@ -1,4 +1,4 @@
-name: ci-workflow
+name: CI
 
 on:
   pull_request:
