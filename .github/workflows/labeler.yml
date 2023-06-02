@@ -1,4 +1,4 @@
-name: labeler-workflow
+name: Labeler
 
 on:
   - pull_request_target

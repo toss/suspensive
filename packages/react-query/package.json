@@ -29,7 +29,6 @@
   "scripts": {
     "build": "rm -rf dist esm && tsc -p tsconfig.build.json --declaration --emitDeclarationOnly --declarationDir dist && rollup -c rollup.config.js",
     "lint": "eslint \"**/*.ts*\"",
-    "npm:publish": "pnpm publish",
     "prepack": "pnpm build && pnpm test:tsd",
     "test": "jest",
     "test:tsd": "tsd -t ./dist/index.d.ts",
