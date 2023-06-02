@@ -1,5 +1,11 @@
 # @suspensive/react-query
 
+## 1.11.1
+
+### Patch Changes
+
+- 38487ab: fix(react-query): add @suspensive/react as peerDependenciesMeta
+
 ## 1.11.0
 
 ## 1.10.0
