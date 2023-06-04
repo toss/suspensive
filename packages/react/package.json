@@ -31,6 +31,7 @@
     "lint": "eslint \"**/*.ts*\"",
     "prepack": "pnpm build",
     "test": "jest",
+    "test:watchAll": "jest --watchAll",
     "type:check": "tsc --noEmit -p tsconfig.build.json"
   },
   "devDependencies": {
