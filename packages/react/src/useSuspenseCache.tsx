@@ -11,7 +11,7 @@ type Cache<Key extends string = string> = {
   data?: unknown
 }
 type CacheAction = { reset: () => void }
-type SuspenseCache<TData extends unknown = unknown> = CacheAction & { data: TData }
+type SuspenseCache<TData = unknown> = CacheAction & { data: TData }
 
 class SuspenseCacheObserver {
   private cache = new Map<string, Cache>()
@@ -44,10 +44,7 @@ class SuspenseCacheObserver {
     }
   }
 
-  public suspend = <TKey extends string, TData extends unknown>(
-    key: TKey,
-    fn: (options: { key: TKey }) => Promise<TData>
-  ): TData => {
+  public suspend = <TKey extends string, TData>(key: TKey, fn: (options: { key: TKey }) => Promise<TData>): TData => {
     const cacheGot = this.cache.get(key)
 
     if (cacheGot?.error) {
@@ -110,11 +107,7 @@ class SuspenseCacheObserver {
  */
 export const suspenseCache = new SuspenseCacheObserver()
 
-type UseSuspenseCacheOption<
-  TData extends unknown,
-  TKey extends Tuple,
-  TFn extends (options: { key: TKey }) => Promise<TData>
-> = {
+type UseSuspenseCacheOption<TData, TKey extends Tuple, TFn extends (options: { key: TKey }) => Promise<TData>> = {
   key: TKey
   fn: TFn
 }
@@ -122,7 +115,7 @@ type UseSuspenseCacheOption<
 /**
  * @experimental This is experimental feature.
  */
-export const useSuspenseCache = <TKey extends Tuple, TData extends unknown>(
+export const useSuspenseCache = <TKey extends Tuple, TData>(
   options: UseSuspenseCacheOption<TData, TKey, (options: { key: TKey }) => Promise<TData>>
 ): SuspenseCache<TData> => {
   const stringifiedKey = JSON.stringify(options.key)
