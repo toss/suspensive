@@ -1,6 +1,6 @@
-import { useEffect, useRef, useState } from 'react'
 import { Suspense } from '@suspensive/react'
 import { useSuspenseQueries, useSuspenseQuery } from '@suspensive/react-query'
+import { useEffect, useRef, useState } from 'react'
 import { Post, albums, posts, todos } from './api'
 import { useIntersectionObserver } from './useIntersectionObserver'
 

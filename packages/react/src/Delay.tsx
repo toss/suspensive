@@ -10,7 +10,8 @@ type DelayProps = { ms?: number; children: ReactNode }
  * @experimental This is experimental feature.
  */
 export const Delay = ({ ms, children }: DelayProps) => {
-  const delayMs = ms ?? useContext(DelayContext).ms ?? 0
+  const delayContextValue = useContext(DelayContext)
+  const delayMs = ms ?? delayContextValue.ms ?? 0
   const [isDelayed, setIsDelayed] = useState(delayMs === 0)
 
   useEffect(() => {

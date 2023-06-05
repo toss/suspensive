@@ -1,7 +1,7 @@
 'use client'
 
-import { ComponentProps } from 'react'
 import { ErrorBoundary, ErrorBoundaryGroup, Suspense, suspenseCache, useSuspenseCache } from '@suspensive/react'
+import { ComponentProps } from 'react'
 import { api } from '../../api'
 import { Area, Box, Button } from '../../components/uis'
 
