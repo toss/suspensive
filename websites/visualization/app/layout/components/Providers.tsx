@@ -1,7 +1,7 @@
-import React, { PropsWithChildren } from 'react'
 import { SuspensiveConfigs, SuspensiveProvider } from '@suspensive/react'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import { PropsWithChildren } from 'react'
 import { Spinner } from '../../../components/uis'
 
 const queryClient = new QueryClient({

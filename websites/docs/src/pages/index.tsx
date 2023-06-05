@@ -1,10 +1,9 @@
-// eslint-disable import/no-unresolved
-import React from 'react'
 import Link from '@docusaurus/Link'
 import Translate from '@docusaurus/Translate'
-import HomepageFeatures from '@site/src/components/HomepageFeatures'
 import Layout from '@theme/Layout'
 import clsx from 'clsx'
+import React from 'react'
+import HomepageFeatures from '../components/HomepageFeatures'
 import styles from './index.module.css'
 
 const HomepageHeader = () => (

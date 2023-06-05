@@ -12,7 +12,7 @@ exports.generateRollupConfig = function generateRollupConfig({ packageDir }) {
     throw new Error('package.json의 exports 필드를 정의해주세요.')
   }
 
-  const entrypoints = Object.keys(packageJSON.exports).filter((x) => x !== './package.json')
+  const entryPoints = Object.keys(packageJSON.exports).filter((x) => x !== './package.json')
 
   const external = (pkg) => {
     const externals = [...Object.keys({ ...packageJSON.dependencies, ...packageJSON.peerDependencies }), ...builtins]
@@ -78,7 +78,7 @@ exports.generateRollupConfig = function generateRollupConfig({ packageDir }) {
     }
   }
 
-  return entrypoints.flatMap((entrypoint) => {
+  return entryPoints.flatMap((entrypoint) => {
     const cjsEntrypoint = path.resolve(
       packageDir,
       ensure(handleCJSEntrypoint(packageJSON.exports, entrypoint), 'CJS entrypoint not found')

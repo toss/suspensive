@@ -3,6 +3,9 @@
   "version": "0.0.0-development",
   "private": true,
   "main": "index.js",
+  "scripts": {
+    "lint": "eslint ."
+  },
   "dependencies": {
     "@babel/core": "^7.21.4",
     "@babel/preset-env": "^7.21.4",
@@ -15,6 +18,8 @@
     "builtin-modules": "^3.3.0"
   },
   "devDependencies": {
+    "@suspensive/eslint-config-js": "workspace:*",
+    "eslint": "^8.42.0",
     "rollup": "^3.21.0"
   },
   "peerDependencies": {

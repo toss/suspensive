@@ -1,9 +1,9 @@
-import { useEffect, useRef, useState } from 'react'
 import { Delay } from '@suspensive/react'
 import { useQueries, useQuery } from '@tanstack/react-query'
+import { useEffect, useRef, useState } from 'react'
+import { Spinner } from '../../../../components/uis'
 import { Post, albums, posts, todos } from './api'
 import { useIntersectionObserver } from './useIntersectionObserver'
-import { Spinner } from '../../../../components/uis'
 
 export const PostListTanStack = () => {
   const postsQuery = useQuery(['posts'], posts.getMany)

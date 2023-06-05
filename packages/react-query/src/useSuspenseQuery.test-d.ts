@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import { expectError, expectType } from 'tsd'
 import { useSuspenseQuery } from '../dist'
 

@@ -1,6 +1,6 @@
-import { ComponentPropsWithoutRef, ComponentRef, forwardRef } from 'react'
 import { AsyncBoundary } from '@suspensive/react'
 import { useQueryErrorResetBoundary } from '@tanstack/react-query'
+import { ComponentPropsWithoutRef, ComponentRef, forwardRef } from 'react'
 
 const BaseQueryAsyncBoundary = forwardRef<
   ComponentRef<typeof AsyncBoundary>,

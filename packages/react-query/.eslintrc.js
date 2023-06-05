@@ -1,8 +1,6 @@
+/** @type {import('eslint').Linter.Config} */
 module.exports = {
   root: true,
-  extends: ['@suspensive/eslint-config/react'],
-  parserOptions: {
-    tsconfigRootDir: __dirname,
-    project: './tsconfig.json',
-  },
+  extends: ['@suspensive/eslint-config/react-ts'],
+  ignorePatterns: ['*.js*', 'dist', 'esm', 'coverage'],
 }
