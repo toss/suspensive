@@ -46,4 +46,8 @@ describe('hasResetKeysChanged', () => {
 
     expect(hasResetKeysChanged(array1, array2)).toBe(false)
   })
+
+  it('should return false when no arrays as parameters. because of default value', () => {
+    expect(hasResetKeysChanged()).toBe(false)
+  })
 })
