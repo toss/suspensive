@@ -1,0 +1,26 @@
+coverage:
+  status:
+    project:
+      default:
+        target: 100%
+        threshold: 20%
+      suspensive-react:
+        target: 100%
+        threshold: 20%
+      suspensive-react-query:
+        target: 100%
+        threshold: 20%
+
+comment:
+  layout: "header, reach, diff, flags, components"
+
+component_management:
+  individual_components:
+    - component_id: suspensive-react
+      name: "@suspensive/react"
+      paths:
+        - packages/react
+    - component_id: suspensive-react-query
+      name: "@suspensive/react-query"
+      paths:
+        - packages/react-query
