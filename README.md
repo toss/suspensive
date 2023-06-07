@@ -10,7 +10,7 @@
 
 [![MIT License](https://img.shields.io/badge/license-MIT-blue.svg?style=for-the-badge&color=61DAFB)](https://github.com/suspensive/react/blob/main/LICENSE) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-deepgreen.svg?style=for-the-badge&color=blue)](https://github.com/suspensive/react/pulls) [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-deepgreen.svg?style=for-the-badge&color=blue)](http://commitizen.github.io/cz-cli/)
 
-![GitHub stars](https://img.shields.io/github/stars/suspensive/react?style=social) ![GitHub stars](https://img.shields.io/github/forks/suspensive/react?style=social)
+[![codecov](https://codecov.io/gh/suspensive/react/branch/main/graph/badge.svg?token=H4VQ71NJ16)](https://codecov.io/gh/suspensive/react) ![GitHub stars](https://img.shields.io/github/stars/suspensive/react?style=social) ![GitHub forks](https://img.shields.io/github/forks/suspensive/react?style=social) 
 
 </div>
 
