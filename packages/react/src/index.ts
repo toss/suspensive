@@ -12,6 +12,7 @@ export { withErrorBoundaryGroup } from './withErrorBoundaryGroup'
 
 export { SuspensiveProvider, SuspensiveConfigs } from './SuspensiveProvider'
 
-export { Delay, withDelay } from './Delay'
+export { Delay } from './Delay'
+export { withDelay } from './withDelay'
 
 export { useSuspenseCache, suspenseCache } from './useSuspenseCache'

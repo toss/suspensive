@@ -1,51 +1,20 @@
 import { act, render, screen, waitFor } from '@testing-library/react'
-import { Delay, withDelay } from './Delay'
+import { Delay } from './Delay'
 
-const delayMs = 1000
-
-const INNER_TEXT = 'Child Component'
-const ChildComponent = () => <div>{INNER_TEXT}</div>
-
-const TestComponent = () => (
-  <Delay ms={delayMs}>
-    <ChildComponent />
-  </Delay>
-)
+const ms = 1000
+const TEXT = 'Child'
 
 describe('Delay', () => {
-  it('renders the children after the delay', async () => {
+  it('should render the children after the delay', async () => {
     jest.useFakeTimers()
-
-    render(<TestComponent />)
-
-    expect(screen.queryByText(INNER_TEXT)).not.toBeInTheDocument()
-
-    act(() => {
-      jest.advanceTimersByTime(delayMs)
-    })
-
-    await waitFor(() => {
-      expect(screen.queryByText(INNER_TEXT)).toBeInTheDocument()
-    })
+    render(<Delay ms={ms}>{TEXT}</Delay>)
+    expect(screen.queryByText(TEXT)).not.toBeInTheDocument()
+    act(() => jest.advanceTimersByTime(ms))
+    await waitFor(() => expect(screen.queryByText(TEXT)).toBeInTheDocument())
   })
-})
 
-describe('withDelay', () => {
-  it('renders the children after the delay with component', async () => {
-    jest.useFakeTimers()
-
-    const WrapperComponent = withDelay(() => <ChildComponent />, { ms: delayMs })
-
-    render(<WrapperComponent />)
-
-    expect(screen.queryByText(INNER_TEXT)).not.toBeInTheDocument()
-
-    act(() => {
-      jest.advanceTimersByTime(delayMs)
-    })
-
-    await waitFor(() => {
-      expect(screen.queryByText(INNER_TEXT)).toBeInTheDocument()
-    })
+  it('should render the children directly if no ms prop', () => {
+    render(<Delay>{TEXT}</Delay>)
+    expect(screen.queryByText(TEXT)).toBeInTheDocument()
   })
 })
