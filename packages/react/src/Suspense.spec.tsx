@@ -49,6 +49,16 @@ describe('Suspense', () => {
     jest.advanceTimersByTime(ms)
     await waitFor(() => expect(screen.queryByText(TEXT)).toBeInTheDocument())
   })
+  it('.CSROnly should render the fallback during suspense', () => {
+    render(
+      <Suspense.CSROnly fallback={FALLBACK}>
+        {TEXT}
+        <ThrowDuring ms={ms} />
+      </Suspense.CSROnly>
+    )
+    expect(screen.queryByText(FALLBACK)).toBeInTheDocument()
+    expect(screen.queryByText(TEXT)).not.toBeInTheDocument()
+  })
   it('.CSROnly should render the children after the suspense', async () => {
     jest.useFakeTimers()
     render(
@@ -57,10 +67,10 @@ describe('Suspense', () => {
         <ThrowDuring ms={ms} />
       </Suspense.CSROnly>
     )
-    expect(screen.queryByText(FALLBACK)).toBeInTheDocument()
     needThrow = false
     jest.advanceTimersByTime(ms)
     await waitFor(() => expect(screen.queryByText(TEXT)).toBeInTheDocument())
+    expect(screen.queryByText(FALLBACK)).not.toBeInTheDocument()
   })
   it('.CSROnly should render the children if nothing to suspend in children', async () => {
     render(<Suspense.CSROnly fallback={FALLBACK}>{TEXT}</Suspense.CSROnly>)
