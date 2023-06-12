@@ -1,25 +1,9 @@
-import { render, screen, waitFor } from '@testing-library/react'
+import { act, render, screen, waitFor } from '@testing-library/react'
 import { Suspense } from './Suspense'
-
-const ms = 1000
-const TEXT = 'Child'
-const FALLBACK = 'Fallback'
-
-const Throw = () => {
-  throw new Promise((resolve) => resolve('resolved'))
-}
+import { Suspend, TEXT, FALLBACK, MS_100 } from './test-utils'
 
 describe('Suspense', () => {
-  let needThrow = true
-  beforeEach(() => {
-    needThrow = true
-  })
-  const ThrowDuring = (props: { ms: number }) => {
-    if (needThrow) {
-      throw new Promise((resolve) => setTimeout(() => resolve('resolved'), props.ms))
-    }
-    return <></>
-  }
+  beforeEach(Suspend.reset)
 
   it('should render the children if nothing to suspend', async () => {
     render(<Suspense fallback={FALLBACK}>{TEXT}</Suspense>)
@@ -29,8 +13,7 @@ describe('Suspense', () => {
   it('should render the fallback if something to suspend in children', async () => {
     render(
       <Suspense fallback={FALLBACK}>
-        {TEXT}
-        <Throw />
+        <Suspend during={Infinity} toShow={TEXT} />
       </Suspense>
     )
     expect(screen.queryByText(FALLBACK)).toBeInTheDocument()
@@ -40,20 +23,18 @@ describe('Suspense', () => {
     jest.useFakeTimers()
     render(
       <Suspense>
-        {TEXT}
-        <ThrowDuring ms={ms} />
+        <Suspend during={MS_100} toShow={TEXT} />
       </Suspense>
     )
     expect(screen.queryByText(TEXT)).not.toBeInTheDocument()
-    needThrow = false
-    jest.advanceTimersByTime(ms)
+    act(() => jest.advanceTimersByTime(MS_100))
     await waitFor(() => expect(screen.queryByText(TEXT)).toBeInTheDocument())
   })
+
   it('.CSROnly should render the fallback during suspense', () => {
     render(
       <Suspense.CSROnly fallback={FALLBACK}>
-        {TEXT}
-        <ThrowDuring ms={ms} />
+        <Suspend during={Infinity} toShow={TEXT} />
       </Suspense.CSROnly>
     )
     expect(screen.queryByText(FALLBACK)).toBeInTheDocument()
@@ -63,12 +44,10 @@ describe('Suspense', () => {
     jest.useFakeTimers()
     render(
       <Suspense.CSROnly fallback={FALLBACK}>
-        {TEXT}
-        <ThrowDuring ms={ms} />
+        <Suspend during={MS_100} toShow={TEXT} />
       </Suspense.CSROnly>
     )
-    needThrow = false
-    jest.advanceTimersByTime(ms)
+    jest.advanceTimersByTime(MS_100)
     await waitFor(() => expect(screen.queryByText(TEXT)).toBeInTheDocument())
     expect(screen.queryByText(FALLBACK)).not.toBeInTheDocument()
   })
