@@ -1,1 +1,1 @@
-export * from './hasResetKeysChanged'
+export { hasResetKeysChanged } from './hasResetKeysChanged'
