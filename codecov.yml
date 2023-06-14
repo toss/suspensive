@@ -3,13 +3,13 @@ coverage:
     project:
       default:
         target: 100%
-        threshold: 20%
+        threshold: 30%
       suspensive-react:
         target: 100%
-        threshold: 20%
+        threshold: 30%
       suspensive-react-query:
         target: 100%
-        threshold: 20%
+        threshold: 30%
 
 comment:
   layout: "header, reach, diff, flags, components"

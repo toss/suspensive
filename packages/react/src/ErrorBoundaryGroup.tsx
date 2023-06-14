@@ -3,7 +3,7 @@
 import { ComponentType, ReactNode, createContext, useContext, useEffect, useMemo } from 'react'
 import { useIsMounted, useKey } from './hooks'
 
-export const ErrorBoundaryGroupContext = createContext({ resetKey: 0, reset: () => {} })
+export const ErrorBoundaryGroupContext = createContext<{ reset: () => void; resetKey: number } | undefined>(undefined)
 if (process.env.NODE_ENV !== 'production') {
   ErrorBoundaryGroupContext.displayName = 'ErrorBoundaryGroupContext'
 }
@@ -35,7 +35,7 @@ export const ErrorBoundaryGroup = ({
     if (isMounted && !blockOutside) {
       reset()
     }
-  }, [group.resetKey, isMounted, reset])
+  }, [group?.resetKey, isMounted, reset])
 
   const value = useMemo(() => ({ reset, resetKey }), [reset, resetKey])
 
@@ -58,15 +58,19 @@ const ErrorBoundaryGroupReset = ({
 ErrorBoundaryGroup.Reset = ErrorBoundaryGroupReset
 
 export const useErrorBoundaryGroup = () => {
-  const { reset } = useContext(ErrorBoundaryGroupContext)
+  const group = useContext(ErrorBoundaryGroupContext)
+
+  if (group === undefined) {
+    throw new Error('useErrorBoundaryGroup: ErrorBoundaryGroup is required in parent')
+  }
 
   return useMemo(
     () => ({
       /**
        * When you want to reset multiple ErrorBoundaries as children of ErrorBoundaryGroup, You can use this reset
        */
-      reset,
+      reset: group.reset,
     }),
-    [reset]
+    [group.reset]
   )
 }
