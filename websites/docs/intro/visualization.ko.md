@@ -5,7 +5,7 @@ title: 시각화 자료
 
 Suspensive(Suspense, ErrorBoundary, AsyncBoundary, ErrorBoundaryGroup)의 핵심 개념을 누구나 시각적으로 이해할 수 있도록 [시각화 자료](https://visualization.suspensive.org/react)를 만들었습니다. 지금 바로 이 사이트에 들어갈 수 있습니다.
 
-### 먼저, 각 컴포넌트들이 어떤 일을 하는 지 봅시다.
+### 먼저, 각 컴포넌트들이 어떤 일을 하는지 봅시다
 
 1. [Suspense](/docs/react/src/Suspense.i18n)에서 다수의 fetch에서 로딩과 성공을 한 번에 선언적으로 처리하는 방법.
 2. [ErrorBoundary](/docs/react/src/ErrorBoundary.i18n)에서 실패를 한 번에 선언적으로 처리하는 방법과 ErrorBoundary를 reset하는 방법. 그리고 resetKeys가 하는 일.
@@ -20,6 +20,7 @@ Suspensive(Suspense, ErrorBoundary, AsyncBoundary, ErrorBoundaryGroup)의 핵심
   sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
   style={{
     width: '100%',
+    height: '75vh',
     border: '0',
     borderRadius: 8,
     overflow: 'hidden',
