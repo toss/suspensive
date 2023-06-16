@@ -4,33 +4,34 @@ import { useEffect, useMemo } from 'react'
 import { useRerender } from './hooks'
 
 type Tuple<T = unknown> = T[] | readonly T[]
-type Cache<Key extends string = string> = {
+type Cache<Key extends Tuple = Tuple> = {
   promise?: Promise<unknown>
   key: Key
   error?: unknown
   data?: unknown
 }
-type CacheAction = { reset: () => void }
-type SuspenseCache<TData = unknown> = CacheAction & { data: TData }
 
 class SuspenseCacheObserver {
   private cache = new Map<string, Cache>()
 
-  public reset = <TKey extends string>(key?: TKey) => {
+  public reset = <TKey extends Tuple>(key?: TKey) => {
     if (key === undefined || key.length === 0) {
       this.cache.clear()
       this.notifyToAttacher()
       return
     }
 
-    if (this.cache.has(key)) {
-      this.cache.delete(key)
+    const stringifiedKey = JSON.stringify(key)
+
+    if (this.cache.has(stringifiedKey)) {
+      // TODO: reset with key index hierarchy
+      this.cache.delete(stringifiedKey)
     }
 
-    this.notifyToAttacher(key)
+    this.notifyToAttacher(stringifiedKey)
   }
 
-  public clearError = <TKey extends string>(key?: TKey) => {
+  public clearError = <TKey extends Tuple>(key?: TKey) => {
     if (key === undefined || key.length === 0) {
       this.cache.forEach((value, key, map) => {
         map.set(key, { ...value, promise: undefined, error: undefined })
@@ -38,14 +39,17 @@ class SuspenseCacheObserver {
       return
     }
 
-    const cacheGot = this.cache.get(key)
+    const stringifiedKey = JSON.stringify(key)
+    const cacheGot = this.cache.get(stringifiedKey)
     if (cacheGot) {
-      this.cache.set(key, { ...cacheGot, promise: undefined, error: undefined })
+      // TODO: clearError with key index hierarchy
+      this.cache.set(stringifiedKey, { ...cacheGot, promise: undefined, error: undefined })
     }
   }
 
-  public suspend = <TKey extends string, TData>(key: TKey, fn: (options: { key: TKey }) => Promise<TData>): TData => {
-    const cacheGot = this.cache.get(key)
+  public suspend = <TKey extends Tuple, TData>(key: TKey, fn: (options: { key: TKey }) => Promise<TData>): TData => {
+    const stringifiedKey = JSON.stringify(key)
+    const cacheGot = this.cache.get(stringifiedKey)
 
     if (cacheGot?.error) {
       // eslint-disable-next-line @typescript-eslint/no-throw-literal
@@ -71,7 +75,7 @@ class SuspenseCacheObserver {
         }),
     }
 
-    this.cache.set(key, newCache)
+    this.cache.set(stringifiedKey, newCache)
     // eslint-disable-next-line @typescript-eslint/no-throw-literal
     throw newCache.promise
   }
@@ -80,17 +84,22 @@ class SuspenseCacheObserver {
 
   private keyNotifiesMap = new Map<string, ((...args: unknown[]) => unknown)[]>()
 
-  public attach<TKey extends string>(key: TKey, onNotify: (...args: unknown[]) => unknown) {
-    const keyNotifies = this.keyNotifiesMap.get(key)
-    this.keyNotifiesMap.set(key, [...(keyNotifies ?? []), onNotify])
+  public attach<TKey extends Tuple>(key: TKey, onNotify: (...args: unknown[]) => unknown) {
+    const stringifiedKey = JSON.stringify(key)
+    const keyNotifies = this.keyNotifiesMap.get(stringifiedKey)
+    this.keyNotifiesMap.set(stringifiedKey, [...(keyNotifies ?? []), onNotify])
+
+    const detachSelf = () => this.detach(key, onNotify)
+    return detachSelf
   }
 
-  public detach<TKey extends string>(key: TKey, onNotify: (...args: unknown[]) => unknown) {
-    const keyNotifies = this.keyNotifiesMap.get(key)
+  public detach<TKey extends Tuple>(key: TKey, onNotify: (...args: unknown[]) => unknown) {
+    const stringifiedKey = JSON.stringify(key)
+    const keyNotifies = this.keyNotifiesMap.get(stringifiedKey)
 
     if (keyNotifies) {
       this.keyNotifiesMap.set(
-        key,
+        stringifiedKey,
         keyNotifies.filter((notify) => notify !== onNotify)
       )
     }
@@ -107,6 +116,8 @@ class SuspenseCacheObserver {
  */
 export const suspenseCache = new SuspenseCacheObserver()
 
+type SuspenseCache<TData = unknown> = { data: TData; reset: () => void }
+
 type UseSuspenseCacheOption<TData, TKey extends Tuple, TFn extends (options: { key: TKey }) => Promise<TData>> = {
   key: TKey
   fn: TFn
@@ -118,22 +129,18 @@ type UseSuspenseCacheOption<TData, TKey extends Tuple, TFn extends (options: { k
 export const useSuspenseCache = <TKey extends Tuple, TData>(
   options: UseSuspenseCacheOption<TData, TKey, (options: { key: TKey }) => Promise<TData>>
 ): SuspenseCache<TData> => {
-  const stringifiedKey = JSON.stringify(options.key)
-
-  const data = suspenseCache.suspend(stringifiedKey, () => options.fn({ key: options.key }))
+  const data = suspenseCache.suspend(options.key, () => options.fn({ key: options.key }))
 
   const rerender = useRerender()
+  const stringifiedKey = JSON.stringify(options.key)
 
-  useEffect(() => {
-    suspenseCache.attach(stringifiedKey, rerender)
-    return () => suspenseCache.detach(stringifiedKey, rerender)
-  }, [stringifiedKey, rerender])
+  useEffect(() => suspenseCache.attach(options.key, rerender), [stringifiedKey, rerender])
 
   return useMemo(
     () => ({
       data,
-      reset: () => suspenseCache.reset(stringifiedKey),
+      reset: () => suspenseCache.reset(options.key),
     }),
-    [data]
+    [stringifiedKey, data]
   )
 }
