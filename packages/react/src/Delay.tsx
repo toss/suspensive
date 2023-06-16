@@ -1,7 +1,6 @@
 'use client'
 
-import { ComponentType, ReactNode, createContext, useContext, useEffect, useState } from 'react'
-import { ComponentPropsWithoutChildren } from './types'
+import { ReactNode, createContext, useContext, useEffect, useState } from 'react'
 
 export const DelayContext = createContext<{ ms?: number }>({ ms: 0 })
 
