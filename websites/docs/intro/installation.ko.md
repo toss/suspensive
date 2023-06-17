@@ -11,18 +11,18 @@ title: 설치하기
 npm install @suspensive/react
 ```
 
+### pnpm
+
+혹은 <a href="https://pnpm.io/" target="_blank">pnpm</a>을 사용한다면:
+
+```shell
+pnpm add @suspensive/react
+```
+
 ### yarn
 
 혹은 <a href="https://classic.yarnpkg.com/en/docs/install/" target="_blank">yarn</a>을 사용한다면:
 
 ```shell
 yarn add @suspensive/react
-```
-
-### pnpm
-
-혹은 <a href="https://pnpm.io/" target="_blank">pnpm</a>을 사용한다면:
-
-```shell
-pnpm install @suspensive/react
 ```
