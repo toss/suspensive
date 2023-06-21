@@ -1,9 +1,6 @@
 // @ts-check
 // Note: type annotations allow type checking and IDEs autocompletion
 
-const darkCodeTheme = require('prism-react-renderer/themes/dracula')
-const lightCodeTheme = require('prism-react-renderer/themes/github')
-
 const package = {
   intro: 'websites/docs/',
   react: 'packages/',
@@ -145,8 +142,8 @@ const config = {
         copyright: `Copyright © ${new Date().getFullYear()} Jonghyeon Ko and the Suspensive authors.`,
       },
       prism: {
-        theme: lightCodeTheme,
-        darkTheme: darkCodeTheme,
+        theme: require('prism-react-renderer/themes/github'),
+        darkTheme: require('prism-react-renderer/themes/dracula'),
       },
       colorMode: {
         respectPrefersColorScheme: true,
