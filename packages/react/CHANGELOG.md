@@ -1,5 +1,11 @@
 # @suspensive/react
 
+## 1.11.2
+
+### Patch Changes
+
+- ef0350c: fix(react): fix useErrorBoundaryGroup to guarantee parent ErrorBoundaryGroup
+
 ## 1.11.1
 
 ## 1.11.0
