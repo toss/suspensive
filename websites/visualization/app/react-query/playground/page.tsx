@@ -9,7 +9,7 @@ const Page = () => (
     <div style={{ display: 'flex', gap: 16, justifyContent: 'space-around', width: '100vw' }}>
       <section>
         <a
-          href="https://github.com/suspensive/react/tree/main/websites/visualization/components/forPlayground/suspensive.tsx"
+          href="https://github.com/suspensive/react/blob/main/websites/visualization/app/react-query/playground/components/suspensive.tsx"
           style={{ color: '#61DAFB' }}
           target="_blank"
           rel="noreferrer"
@@ -22,7 +22,7 @@ const Page = () => (
       </section>
       <section>
         <a
-          href="https://github.com/suspensive/react/tree/main/websites/visualization/components/forPlayground/tanstack.tsx"
+          href="https://github.com/suspensive/react/blob/main/websites/visualization/app/react-query/playground/components/tanstack.tsx"
           style={{ color: '#61DAFB' }}
           target="_blank"
           rel="noreferrer"
