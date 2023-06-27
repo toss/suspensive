@@ -12,7 +12,7 @@ const HomepageHeader = () => (
       <img src="img/logo_notcropped.png" alt="logo" style={{ height: 180, width: 180, marginBottom: -16 }} />
       <h1 className="hero__title">Suspensive</h1>
       <p className="hero__subtitle">
-        <Translate>Declarative components to use suspense for React</Translate>
+        <Translate>Packages to use React Suspense easily</Translate>
       </p>
       <div className={styles.buttons}>
         <Link className="button button--secondary button--lg" to="/docs/intro/motivation.i18n">
