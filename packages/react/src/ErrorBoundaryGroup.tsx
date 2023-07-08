@@ -29,13 +29,13 @@ export const ErrorBoundaryGroup = ({
 }) => {
   const [resetKey, reset] = useKey()
   const parentGroup = useContext(ErrorBoundaryGroupContext)
-  const prevParentGroupResetKey = usePrevious(parentGroup?.resetKey)
+  const previousParentGroup = usePrevious(parentGroup)
 
   useEffect(() => {
-    if (!blockOutside && prevParentGroupResetKey !== parentGroup?.resetKey) {
+    if (!blockOutside && previousParentGroup?.resetKey !== parentGroup?.resetKey) {
       reset()
     }
-  }, [prevParentGroupResetKey, parentGroup?.resetKey, reset, blockOutside])
+  }, [previousParentGroup?.resetKey, parentGroup?.resetKey, reset, blockOutside])
 
   const value = useMemo(() => ({ reset, resetKey }), [reset, resetKey])
 
