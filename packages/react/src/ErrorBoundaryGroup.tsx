@@ -1,7 +1,7 @@
 'use client'
 
 import { ComponentType, ReactNode, createContext, useContext, useEffect, useMemo } from 'react'
-import { useKey, usePrevious } from './hooks'
+import { useIsChanged, useKey } from './hooks'
 
 export const ErrorBoundaryGroupContext = createContext<{ reset: () => void; resetKey: number } | undefined>(undefined)
 if (process.env.NODE_ENV !== 'production') {
@@ -29,13 +29,13 @@ export const ErrorBoundaryGroup = ({
 }) => {
   const [resetKey, reset] = useKey()
   const parentGroup = useContext(ErrorBoundaryGroupContext)
-  const previousParentGroup = usePrevious(parentGroup)
+  const isChangedParentGroupResetKey = useIsChanged(parentGroup?.resetKey)
 
   useEffect(() => {
-    if (!blockOutside && previousParentGroup?.resetKey !== parentGroup?.resetKey) {
+    if (!blockOutside && isChangedParentGroupResetKey) {
       reset()
     }
-  }, [previousParentGroup?.resetKey, parentGroup?.resetKey, reset, blockOutside])
+  }, [isChangedParentGroupResetKey, reset, blockOutside])
 
   const value = useMemo(() => ({ reset, resetKey }), [reset, resetKey])
 
