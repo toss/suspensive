@@ -1,7 +1,7 @@
 'use client'
 
 import { ComponentType, ReactNode, createContext, useContext, useEffect, useMemo } from 'react'
-import { useIsMounted, useKey } from './hooks'
+import { useIsChanged, useKey } from './hooks'
 
 export const ErrorBoundaryGroupContext = createContext<{ reset: () => void; resetKey: number } | undefined>(undefined)
 if (process.env.NODE_ENV !== 'production') {
@@ -28,14 +28,14 @@ export const ErrorBoundaryGroup = ({
   children?: ReactNode
 }) => {
   const [resetKey, reset] = useKey()
+  const parentGroup = useContext(ErrorBoundaryGroupContext)
+  const isParentGroupResetKeyChanged = useIsChanged(parentGroup?.resetKey)
 
-  const isMounted = useIsMounted()
-  const group = useContext(ErrorBoundaryGroupContext)
   useEffect(() => {
-    if (isMounted && !blockOutside) {
+    if (!blockOutside && isParentGroupResetKeyChanged) {
       reset()
     }
-  }, [group?.resetKey, isMounted, reset])
+  }, [isParentGroupResetKeyChanged, reset, blockOutside])
 
   const value = useMemo(() => ({ reset, resetKey }), [reset, resetKey])
 
@@ -50,9 +50,9 @@ const ErrorBoundaryGroupReset = ({
    */
   trigger: ComponentType<ReturnType<typeof useErrorBoundaryGroup>>
 }) => {
-  const { reset } = useErrorBoundaryGroup()
+  const errorBoundaryGroup = useErrorBoundaryGroup()
 
-  return <Trigger reset={reset} />
+  return <Trigger reset={errorBoundaryGroup.reset} />
 }
 
 ErrorBoundaryGroup.Reset = ErrorBoundaryGroupReset
