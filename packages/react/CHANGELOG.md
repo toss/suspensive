@@ -1,5 +1,11 @@
 # @suspensive/react
 
+## 1.11.3
+
+### Patch Changes
+
+- a9b97c2: fix(react): remove ErrorBoundaryGroup's unnecessary rerender by usePrevious, remove not on purpose situation's group.reset by isMounted's side effect
+
 ## 1.11.2
 
 ### Patch Changes
