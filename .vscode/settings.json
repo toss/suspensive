@@ -2,5 +2,5 @@
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact"],
   "typescript.tsdk": "node_modules/typescript/lib",
-  "cSpell.words": ["packlint", "codecov"]
+  "cSpell.words": ["packlint", "codecov", "tsup"]
 }
