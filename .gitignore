@@ -35,7 +35,3 @@ esm
 # graph
 graph/
 
-# rollup-plugin-visualizer
-stats.html
-stats.json
-stats.yml

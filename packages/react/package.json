@@ -27,7 +27,7 @@
     "esm"
   ],
   "scripts": {
-    "build": "rm -rf dist esm && tsc -p tsconfig.build.json --declaration --emitDeclarationOnly --declarationDir dist && rollup -c rollup.config.js",
+    "build": "tsup src/index.ts --format cjs,esm --dts --minify",
     "lint": "eslint \"**/*.ts*\"",
     "prepack": "pnpm build",
     "test": "jest",
@@ -38,7 +38,6 @@
     "@suspensive/babel": "workspace:*",
     "@suspensive/eslint-config": "workspace:*",
     "@suspensive/jest": "workspace:*",
-    "@suspensive/rollup": "workspace:*",
     "@suspensive/tsconfig": "workspace:*",
     "@testing-library/dom": "^8.20.0",
     "@testing-library/jest-dom": "^5.16.5",
@@ -53,8 +52,8 @@
     "jest-environment-jsdom": "^29.5.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "rollup": "^3.21.0",
-    "typescript": "^4.9.5"
+    "typescript": "^4.9.5",
+    "tsup":"^7.1.0"
   },
   "peerDependencies": {
     "react": "^16.8 || ^17 || ^18"
