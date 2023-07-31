@@ -18,6 +18,7 @@
       "outputs": []
     },
     "prepack": {
+      "dependsOn": ["^prepack"],
       "cache": false
     },
     "dev": {

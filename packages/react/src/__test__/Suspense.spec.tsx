@@ -1,6 +1,6 @@
 import { act, render, screen, waitFor } from '@testing-library/react'
-import { Suspense } from './Suspense'
-import { Suspend, TEXT, FALLBACK, MS_100 } from './test-utils'
+import { Suspense } from '../Suspense'
+import { Suspend, TEXT, FALLBACK, MS_100 } from './utils'
 
 describe('Suspense', () => {
   beforeEach(Suspend.reset)
