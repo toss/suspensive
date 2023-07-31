@@ -23,7 +23,6 @@
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.21.4",
     "@next/eslint-plugin-next": "13.4.6",
     "@suspensive/eslint-config": "workspace:*",
     "@types/node": "^17.0.45",

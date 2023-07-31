@@ -10,9 +10,6 @@ websites/docs:
 visualization:
   - websites/visualization/*
   - websites/visualization/**/*
-babel:
-  - configs/babel/*
-  - configs/babel/**/*
 eslint:
   - configs/eslint/*
   - configs/eslint/**/*

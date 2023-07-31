@@ -26,7 +26,7 @@
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "tsup src/index.ts",
+    "build": "tsup",
     "lint": "eslint \"**/*.ts*\"",
     "prepack": "pnpm build",
     "test": "jest",
@@ -34,7 +34,6 @@
     "type:check": "tsc --noEmit -p tsconfig.build.json"
   },
   "devDependencies": {
-    "@suspensive/babel": "workspace:*",
     "@suspensive/eslint-config": "workspace:*",
     "@suspensive/jest": "workspace:*",
     "@suspensive/tsconfig": "workspace:*",
