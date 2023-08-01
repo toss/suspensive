@@ -1,5 +1,3 @@
-'use client'
-
 import { useEffect, useMemo } from 'react'
 import { useRerender } from './hooks'
 
