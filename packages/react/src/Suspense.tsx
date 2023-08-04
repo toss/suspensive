@@ -1,5 +1,3 @@
-'use client'
-
 import { ReactNode, Suspense as ReactSuspense, SuspenseProps, createContext, useContext } from 'react'
 import { useIsMounted } from './hooks'
 

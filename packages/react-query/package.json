@@ -16,18 +16,17 @@
   "sideEffects": false,
   "exports": {
     ".": {
-      "require": "./src/index.ts",
-      "import": "./src/index.ts"
+      "require": "./dist/index.js",
+      "import": "./dist/index.mjs",
+      "types": "./dist/index.d.ts"
     },
     "./package.json": "./package.json"
   },
-  "main": "./src/index.ts",
-  "files": [
-    "dist",
-    "esm"
-  ],
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
   "scripts": {
-    "build": "rm -rf dist esm && tsc -p tsconfig.build.json --declaration --emitDeclarationOnly --declarationDir dist && rollup -c rollup.config.js",
+    "build": "tsup",
     "lint": "eslint \"**/*.ts*\"",
     "prepack": "pnpm build && pnpm test:tsd",
     "test": "jest",
@@ -40,8 +39,8 @@
     "@suspensive/eslint-config": "workspace:*",
     "@suspensive/jest": "workspace:*",
     "@suspensive/react": "workspace:*",
-    "@suspensive/rollup": "workspace:*",
     "@suspensive/tsconfig": "workspace:*",
+    "@suspensive/tsup": "workspace:*",
     "@tanstack/react-query": "^4.29.5",
     "@testing-library/dom": "^8.20.0",
     "@testing-library/jest-dom": "^5.16.5",
@@ -56,8 +55,8 @@
     "jest-environment-jsdom": "^29.5.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "rollup": "^3.21.0",
     "tsd": "^0.28.1",
+    "tsup": "^7.1.0",
     "typescript": "^4.9.5"
   },
   "peerDependencies": {
@@ -73,21 +72,6 @@
   "bundledDependencies": [
     "tsd"
   ],
-  "publishConfig": {
-    "access": "public",
-    "main": "dist/index.js",
-    "module": "esm/index.mjs",
-    "exports": {
-      ".": {
-        "require": "./dist/index.js",
-        "import": "./esm/index.mjs",
-        "types": "./dist/index.d.ts"
-      },
-      "./package.json": "./package.json"
-    },
-    "types": "dist/index.d.ts",
-    "import": "esm/index.mjs"
-  },
   "tsd": {
     "directory": "./src"
   }

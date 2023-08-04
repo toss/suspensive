@@ -1,5 +1,3 @@
-'use client'
-
 import { ComponentType, ReactNode, createContext, useContext, useEffect, useMemo } from 'react'
 import { useIsChanged, useKey } from './hooks'
 
