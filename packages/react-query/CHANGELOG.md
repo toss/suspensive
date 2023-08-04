@@ -1,5 +1,13 @@
 # @suspensive/react-query
 
+## 1.11.4-beta.0
+
+### Patch Changes
+
+- 5b87ae4: chore(bundler): migrate from rollup to tsup
+- Updated dependencies [5b87ae4]
+  - @suspensive/react@1.11.4-beta.0
+
 ## 1.11.3
 
 ## 1.11.2

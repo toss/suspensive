@@ -1,6 +1,6 @@
 {
   "name": "@suspensive/react-query",
-  "version": "1.11.3",
+  "version": "1.11.4-beta.0",
   "keywords": [
     "suspensive",
     "react-query"
@@ -60,7 +60,7 @@
     "typescript": "^4.9.5"
   },
   "peerDependencies": {
-    "@suspensive/react": "^1",
+    "@suspensive/react": "^1.11.4-beta.0",
     "@tanstack/react-query": "^4",
     "react": "^16.8 || ^17 || ^18"
   },
