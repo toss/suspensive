@@ -74,5 +74,8 @@
   ],
   "tsd": {
     "directory": "./src"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
