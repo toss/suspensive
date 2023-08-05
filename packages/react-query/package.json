@@ -72,10 +72,10 @@
   "bundledDependencies": [
     "tsd"
   ],
-  "tsd": {
-    "directory": "./src"
-  },
   "publishConfig": {
     "access": "public"
+  },
+  "tsd": {
+    "directory": "./src"
   }
 }
