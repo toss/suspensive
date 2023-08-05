@@ -1,0 +1,20 @@
+{
+  "mode": "exit",
+  "tag": "beta",
+  "initialVersions": {
+    "@suspensive/babel": "0.0.0-development",
+    "@suspensive/eslint-config": "0.0.0",
+    "@suspensive/eslint-config-js": "0.0.0",
+    "@suspensive/eslint-config-ts": "0.0.0",
+    "@suspensive/jest": "0.0.0-development",
+    "@suspensive/tsconfig": "0.0.0-development",
+    "@suspensive/tsup": "0.0.0-development",
+    "@suspensive/react": "1.11.3",
+    "@suspensive/react-query": "1.11.3",
+    "@suspensive/docs": "0.0.0-development",
+    "@suspensive/visualization": "0.0.7"
+  },
+  "changesets": [
+    "calm-deers-deliver"
+  ]
+}

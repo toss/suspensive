@@ -1,0 +1,21 @@
+{
+  "name": "@suspensive/tsup",
+  "version": "0.0.0-development",
+  "private": true,
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "lint": "eslint ."
+  },
+  "devDependencies": {
+    "@suspensive/eslint-config-ts": "workspace:*",
+    "@suspensive/tsconfig": "workspace:*",
+    "eslint": "^8.42.0",
+    "tsup": "^7.1.0",
+    "typescript": "^4.9.5"
+  },
+  "peerDependencies": {
+    "tsup": "^7"
+  }
+}
