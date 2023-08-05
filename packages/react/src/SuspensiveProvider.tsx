@@ -1,5 +1,3 @@
-'use client'
-
 import { ContextType, ReactNode, useMemo } from 'react'
 import { DelayContext } from './Delay'
 import { SuspenseContext } from './Suspense'
