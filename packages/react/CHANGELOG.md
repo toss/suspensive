@@ -1,5 +1,11 @@
 # @suspensive/react
 
+## 1.11.4
+
+### Patch Changes
+
+- 80cc215: chore(bundler): migrate from rollup to tsup
+
 ## 1.11.4-beta.0
 
 ### Patch Changes
