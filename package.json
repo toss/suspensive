@@ -22,7 +22,7 @@
   "scripts": {
     "build": "turbo run build",
     "changeset": "changeset",
-    "changeset:publish": "changeset publish",
+    "changeset:publish": "pnpm prepack && changeset publish",
     "changeset:version": "changeset version && pnpm i --lockfile-only",
     "commit": "cz",
     "dev": "pnpm prepack && turbo run dev --parallel",

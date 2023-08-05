@@ -1,12 +1,13 @@
 {
   "name": "@suspensive/tsup",
-  "version": "0.0.0-development",
+  "version": "0.0.0",
   "private": true,
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "prepack": "pnpm build"
   },
   "devDependencies": {
     "@suspensive/eslint-config-ts": "workspace:*",

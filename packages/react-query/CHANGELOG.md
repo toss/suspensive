@@ -1,5 +1,11 @@
 # @suspensive/react-query
 
+## 1.11.5
+
+### Patch Changes
+
+- resolve @suspensive/tsup error
+
 ## 1.11.4
 
 ### Patch Changes
