@@ -1,5 +1,31 @@
 # @suspensive/react-query
 
+## 1.11.6
+
+### Patch Changes
+
+- eb8b6a9: fix(react, react-query): remove unnecessary files by package.json's files
+
+## 1.11.5
+
+### Patch Changes
+
+- resolve @suspensive/tsup error
+
+## 1.11.4
+
+### Patch Changes
+
+- 80cc215: chore(bundler): migrate from rollup to tsup
+
+## 1.11.4-beta.0
+
+### Patch Changes
+
+- 5b87ae4: chore(bundler): migrate from rollup to tsup
+- Updated dependencies [5b87ae4]
+  - @suspensive/react@1.11.4-beta.0
+
 ## 1.11.3
 
 ## 1.11.2

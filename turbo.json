@@ -17,7 +17,12 @@
     "test:tsd": {
       "outputs": []
     },
+    "prepack": {
+      "dependsOn": ["^prepack"],
+      "cache": false
+    },
     "dev": {
+      "dependsOn": ["^prepack"],
       "cache": false
     },
     "dev:ko": {
