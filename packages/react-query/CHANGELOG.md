@@ -1,5 +1,11 @@
 # @suspensive/react-query
 
+## 1.11.6
+
+### Patch Changes
+
+- eb8b6a9: fix(react, react-query): remove unnecessary files by package.json's files
+
 ## 1.11.5
 
 ### Patch Changes
