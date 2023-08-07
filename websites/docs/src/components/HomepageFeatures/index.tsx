@@ -10,7 +10,7 @@ type FeatureItem = {
 
 const FeatureList: FeatureItem[] = [
   {
-    title: <Translate>All Declarative Boundaries ready</Translate>,
+    title: <Translate>All Declarative APIs ready</Translate>,
     description: (
       <Translate>
         Suspense, ErrorBoundary, AsyncBoundary, ErrorBoundaryGroup is provided. You can use them easily without any
@@ -52,7 +52,6 @@ const HomepageFeatures = () => (
     <div className="container">
       <div className="row">
         {FeatureList.map((props, idx) => (
-          // eslint-disable-next-line react/no-array-index-key
           <Feature key={idx} {...props} />
         ))}
       </div>

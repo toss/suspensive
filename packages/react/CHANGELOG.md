@@ -1,5 +1,41 @@
 # @suspensive/react
 
+## 1.11.6
+
+### Patch Changes
+
+- eb8b6a9: fix(react, react-query): remove unnecessary files by package.json's files
+
+## 1.11.5
+
+### Patch Changes
+
+- resolve @suspensive/tsup error
+
+## 1.11.4
+
+### Patch Changes
+
+- 80cc215: chore(bundler): migrate from rollup to tsup
+
+## 1.11.4-beta.0
+
+### Patch Changes
+
+- 5b87ae4: chore(bundler): migrate from rollup to tsup
+
+## 1.11.3
+
+### Patch Changes
+
+- a9b97c2: fix(react): remove ErrorBoundaryGroup's unnecessary rerender by usePrevious, remove not on purpose situation's group.reset by isMounted's side effect
+
+## 1.11.2
+
+### Patch Changes
+
+- ef0350c: fix(react): fix useErrorBoundaryGroup to guarantee parent ErrorBoundaryGroup
+
 ## 1.11.1
 
 ## 1.11.0

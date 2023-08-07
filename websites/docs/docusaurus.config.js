@@ -9,7 +9,7 @@ const package = {
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: 'Suspensive',
+  title: 'Suspensive Libraries',
   tagline: 'Declarative components to use suspense for React',
   url: 'https://suspensive.org',
   baseUrl: '/',
@@ -110,10 +110,6 @@ const config = {
                 label: 'API Reference',
                 to: '/docs/react/README.i18n',
               },
-              {
-                label: 'Visualization',
-                href: 'https://visualization.suspensive.org/react',
-              },
             ],
           },
           {
@@ -122,6 +118,10 @@ const config = {
               {
                 label: 'GitHub',
                 href: 'https://github.com/suspensive/react',
+              },
+              {
+                label: 'Visualization',
+                href: 'https://visualization.suspensive.org/react',
               },
             ],
           },
@@ -147,6 +147,13 @@ const config = {
       },
       colorMode: {
         respectPrefersColorScheme: true,
+      },
+      algolia: {
+        appId: 'SAE4NOBAMB',
+        apiKey: '3c1acc86feac8230e241562791f6a6d3',
+        indexName: 'suspensive',
+        branch: 'main',
+        contextualSearch: true,
       },
     }),
 }
