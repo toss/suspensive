@@ -38,7 +38,7 @@
     "test": "jest",
     "test:tsd": "tsd -t ./dist/index.d.ts",
     "test:watchAll": "jest --watchAll",
-    "type:check": "tsc --noEmit -p tsconfig.build.json"
+    "type:check": "tsc --noEmit"
   },
   "devDependencies": {
     "@suspensive/babel": "workspace:*",
