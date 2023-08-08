@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        command: ['pnpm lint', 'pnpm test', 'pnpm test:tsd']
+        command: ['pnpm lint', 'pnpm test', 'pnpm test:tsd', 'pnpm type:check']
     steps:
       - uses: actions/checkout@v3
       - uses: pnpm/action-setup@v2
