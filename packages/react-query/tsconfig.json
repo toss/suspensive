@@ -1,4 +1,5 @@
 {
   "extends": "@suspensive/tsconfig/react-library.json",
-  "include": ["."]
+  "include": ["."],
+  "exclude": ["**/*.test-d.ts", "**/*.test-d.tsx"]
 }

@@ -37,7 +37,7 @@
     "prepack": "pnpm build",
     "test": "jest",
     "test:watchAll": "jest --watchAll",
-    "type:check": "tsc --noEmit -p tsconfig.build.json"
+    "type:check": "tsc --noEmit"
   },
   "devDependencies": {
     "@suspensive/babel": "workspace:*",
