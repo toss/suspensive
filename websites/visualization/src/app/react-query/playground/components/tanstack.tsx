@@ -1,7 +1,7 @@
 import { Delay } from '@suspensive/react'
 import { useQueries, useQuery } from '@tanstack/react-query'
 import { useEffect, useRef, useState } from 'react'
-import { Spinner } from '../../../../components/uis'
+import { Spinner } from '~/components/uis'
 import { Post, albums, posts, todos } from './api'
 import { useIntersectionObserver } from './useIntersectionObserver'
 
