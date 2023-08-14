@@ -2,9 +2,9 @@
 
 import { AsyncBoundary, ErrorBoundary, ErrorBoundaryGroup, Suspense } from '@suspensive/react'
 import { useQueryErrorResetBoundary } from '@tanstack/react-query'
-import { api } from '~/utils/api'
 import { RejectedFallback, UseSuspenseQuery } from '~/components'
 import { Area, Button, DescriptionText, Spinner } from '~/components/uis'
+import { api } from '~/utils/api'
 
 const BoundaryPage = () => {
   const { reset: queryErrorReset } = useQueryErrorResetBoundary()

@@ -1,4 +1,4 @@
-import { defineConfig } from 'tsup'
 import { options } from '@suspensive/tsup'
+import { defineConfig } from 'tsup'
 
 export default defineConfig(options)
