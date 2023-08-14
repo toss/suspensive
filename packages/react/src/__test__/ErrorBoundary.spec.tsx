@@ -1,8 +1,8 @@
 import { act } from '@testing-library/react'
+import { ComponentProps, ComponentRef, createRef } from 'react'
 import { createRoot } from 'react-dom/client'
-import { ComponentProps, createRef, ComponentRef } from 'react'
 import { ErrorBoundary } from '../ErrorBoundary'
-import { TEXT, MS_100, ThrowError, ERROR_MESSAGE, FALLBACK } from './utils'
+import { ERROR_MESSAGE, FALLBACK, MS_100, TEXT, ThrowError } from './utils'
 
 let container = document.createElement('div')
 let root = createRoot(container)
