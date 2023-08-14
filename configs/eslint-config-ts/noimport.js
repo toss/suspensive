@@ -1,5 +1,6 @@
 /** @type {import('eslint').Linter.Config} */
 module.exports = {
+  root: true,
   parser: '@typescript-eslint/parser',
   extends: ['@suspensive/eslint-config-js/noimport', 'plugin:@typescript-eslint/recommended'],
   plugins: ['@typescript-eslint'],

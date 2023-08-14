@@ -1,7 +1,7 @@
 import './global.css'
-import { Providers } from './providers'
 import { Metadata } from 'next'
 import { CommonLayout } from './CommonLayout'
+import { Providers } from './providers'
 
 export const metadata: Metadata = {
   title: 'Suspensive - Visualization',

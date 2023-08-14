@@ -1,13 +1,8 @@
 /** @type {import('eslint').Linter.Config} */
 module.exports = {
+  root: true,
   extends: ['plugin:import/recommended', './noimport.js'],
   plugins: ['import'],
-  overrides: [
-    {
-      files: ['*.test-d.ts*', '*.test-d.ts*'],
-      rules: { 'import/no-unresolved': ['error', { ignore: ['tsd'] }] },
-    },
-  ],
   rules: {
     'import/order': [
       'warn',
