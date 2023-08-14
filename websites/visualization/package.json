@@ -6,7 +6,8 @@
     "build": "next build",
     "dev": "next dev --port 4001",
     "lint": "next lint",
-    "start": "next start"
+    "start": "next start",
+    "type:check": "tsc --noEmit"
   },
   "dependencies": {
     "@emotion/react": "^11.10.8",
