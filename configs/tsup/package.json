@@ -14,8 +14,7 @@
     "@suspensive/eslint-config-ts": "workspace:*",
     "@suspensive/tsconfig": "workspace:*",
     "eslint": "^8.42.0",
-    "tsup": "^7.1.0",
-    "typescript": "^4.9.5"
+    "tsup": "^7.1.0"
   },
   "peerDependencies": {
     "tsup": "^7"
