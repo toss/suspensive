@@ -62,8 +62,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "tsd": "^0.28.1",
-    "tsup": "^7.1.0",
-    "typescript": "^4.9.5"
+    "tsup": "^7.1.0"
   },
   "peerDependencies": {
     "@suspensive/react": "^1.11.4-beta.0",
