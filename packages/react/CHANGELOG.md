@@ -1,5 +1,11 @@
 # @suspensive/react
 
+## 1.11.7
+
+### Patch Changes
+
+- f23a241: fix(typescript): update version from v4 to v5
+
 ## 1.11.6
 
 ### Patch Changes
