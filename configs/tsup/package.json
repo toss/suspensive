@@ -11,9 +11,6 @@
     "type:check": "tsc --noEmit"
   },
   "devDependencies": {
-    "@suspensive/eslint-config-ts": "workspace:*",
-    "@suspensive/tsconfig": "workspace:*",
-    "eslint": "^8.42.0",
     "tsup": "^7.1.0"
   },
   "peerDependencies": {
