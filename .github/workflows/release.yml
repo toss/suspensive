@@ -30,8 +30,12 @@ jobs:
         uses: changesets/action@v1
         with:
           setupGitUser: false
-          title: 'chore(changesets): bump packages version'
-          commit: 'chore: bump packages version'
+          title: 'chore: version packages'
+          commit: |
+            chore: version packages
+
+            Co-authored-by: Jonghyeon Ko <manudeli.ko@gmail.com>
+            Co-authored-by: Chanhyuk Park <pgg6713@gmail.com>
           version: pnpm changeset:version
           publish: pnpm changeset:publish
         env:
