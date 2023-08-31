@@ -10,7 +10,7 @@ describe('AsyncBoundary', () => {
 })
 
 describe('AsyncBoundary.CSROnly', () => {
-  it('should show children', () => {
+  it('should show children when mounted', () => {
     const rendered = render(<AsyncBoundary.CSROnly rejectedFallback={FALLBACK}>{TEXT}</AsyncBoundary.CSROnly>)
     expect(rendered.getByText(TEXT)).toBeInTheDocument()
   })
