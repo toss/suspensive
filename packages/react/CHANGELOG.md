@@ -1,5 +1,16 @@
 # @suspensive/react
 
+## 1.12.0
+
+### Minor Changes
+
+- e3df644: feat(react): add ErrorBoundaryFallbackProps type
+
+### Patch Changes
+
+- f4b1ac7: fix(react): enable hook in ErrorBoundary
+- 8c23785: refactor(eslint, tsconfig): simply
+
 ## 1.11.7
 
 ### Patch Changes
