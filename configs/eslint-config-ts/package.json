@@ -18,9 +18,6 @@
     "eslint-plugin-import": "^2.25.3",
     "eslint-plugin-prettier": "^4.2.1"
   },
-  "devDependencies": {
-    "eslint": "^8.42.0"
-  },
   "peerDependencies": {
     "eslint": "^6.0.0 || ^7.0.0 || ^8.0.0"
   }
