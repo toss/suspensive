@@ -1,4 +1,4 @@
-import { act } from '@testing-library/react'
+import { act, render } from '@testing-library/react'
 import { ComponentProps, ComponentRef, createRef } from 'react'
 import { createRoot } from 'react-dom/client'
 import { ErrorBoundary } from '../ErrorBoundary'
@@ -139,5 +139,19 @@ describe('ErrorBoundary', () => {
     expect(container.textContent).toBe(TEXT)
     expect(container.textContent).not.toBe(ERROR_MESSAGE)
     expect(onReset).toHaveBeenCalledTimes(1)
+  })
+
+  it('should throw error with no fallback', () => {
+    const Throw = () => {
+      throw new Error('something error')
+    }
+
+    expect(() =>
+      render(
+        <ErrorBoundary fallback={undefined}>
+          <Throw />
+        </ErrorBoundary>
+      )
+    ).toThrow('ErrorBoundary requires fallback')
   })
 })
