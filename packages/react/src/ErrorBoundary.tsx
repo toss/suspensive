@@ -1,8 +1,10 @@
 import {
   Component,
   ErrorInfo,
+  FunctionComponent,
   PropsWithChildren,
   ReactNode,
+  createElement,
   forwardRef,
   isValidElement,
   useContext,
@@ -40,7 +42,7 @@ type ErrorBoundaryProps = PropsWithChildren<{
   /**
    * when ErrorBoundary catch error, fallback will be render instead of children
    */
-  fallback: ReactNode | ((props: ErrorBoundaryFallbackProps) => ReactNode)
+  fallback: ReactNode | FunctionComponent<ErrorBoundaryFallbackProps>
 }>
 
 type ErrorBoundaryState = {
@@ -90,12 +92,12 @@ class BaseErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState
         return fallback
       }
       if (typeof fallback === 'function') {
-        return fallback({
+        return createElement(fallback, {
           error,
           reset: this.resetErrorBoundary,
         })
       }
-      throw new Error('react-error-boundary requires either a fallback')
+      throw new Error('ErrorBoundary requires fallback')
     }
 
     return children
