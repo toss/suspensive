@@ -1,18 +1,15 @@
-export { AsyncBoundary } from './AsyncBoundary'
-export { withAsyncBoundary } from './withAsyncBoundary'
-
-export { Suspense } from './Suspense'
-export { withSuspense } from './withSuspense'
-
-export { ErrorBoundary } from './ErrorBoundary'
-export { withErrorBoundary } from './withErrorBoundary'
-
-export { ErrorBoundaryGroup, useErrorBoundaryGroup } from './ErrorBoundaryGroup'
-export { withErrorBoundaryGroup } from './withErrorBoundaryGroup'
-
 export { SuspensiveProvider, SuspensiveConfigs } from './SuspensiveProvider'
-
+export { Suspense } from './Suspense'
+export { ErrorBoundary } from './ErrorBoundary'
+export { ErrorBoundaryGroup, useErrorBoundaryGroup } from './ErrorBoundaryGroup'
+export { AsyncBoundary } from './AsyncBoundary'
 export { Delay } from './Delay'
+export { useSuspenseCache, suspenseCache } from './useSuspenseCache'
+
+export { withSuspense } from './withSuspense'
+export { withErrorBoundary } from './withErrorBoundary'
+export { withAsyncBoundary } from './withAsyncBoundary'
+export { withErrorBoundaryGroup } from './withErrorBoundaryGroup'
 export { withDelay } from './withDelay'
 
-export { useSuspenseCache, suspenseCache } from './useSuspenseCache'
+export type { ErrorBoundaryFallbackProps } from './ErrorBoundary'
