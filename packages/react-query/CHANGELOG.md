@@ -1,5 +1,11 @@
 # @suspensive/react-query
 
+## 1.12.0
+
+### Patch Changes
+
+- 8c23785: refactor(eslint, tsconfig): simply
+
 ## 1.11.7
 
 ### Patch Changes
