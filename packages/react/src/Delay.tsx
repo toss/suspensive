@@ -10,7 +10,7 @@ export const Delay = ({ ms, children }: DelayProps) => {
   const [isDelayed, setIsDelayed] = useState(delayMs === 0)
 
   useEffect(() => {
-    const timerId = setTimeout(() => !isDelayed && setIsDelayed(true), delayMs)
+    const timerId = setTimeout(() => setIsDelayed(true), delayMs)
     return () => clearTimeout(timerId)
   }, [delayMs])
 
