@@ -1,31 +1,26 @@
-import { ContextType, ReactNode, useMemo } from 'react'
+import { ContextType, PropsWithChildren, useMemo } from 'react'
 import { DelayContext } from './Delay'
 import { SuspenseContext } from './Suspense'
 
-type Configs = {
+interface Configs {
   defaultOptions?: {
     suspense?: ContextType<typeof SuspenseContext>
     delay?: ContextType<typeof DelayContext>
   }
 }
 
-/**
- * @experimental This is experimental feature.
- */
-export class SuspensiveConfigs {
-  public defaultOptions?: Configs['defaultOptions']
+export class Suspensive implements Configs {
+  public defaultOptions
 
   constructor(config: Configs = {}) {
     this.defaultOptions = config.defaultOptions
   }
 }
 
-/**
- * @experimental This is experimental feature.
- */
-export const SuspensiveProvider = ({ configs, children }: { configs: SuspensiveConfigs; children: ReactNode }) => {
-  const delayValue = useMemo(() => configs.defaultOptions?.delay || {}, [])
-  const suspenseValue = useMemo(() => configs.defaultOptions?.suspense || {}, [])
+type SuspensiveProviderProps = PropsWithChildren<{ value: Suspensive }>
+export const SuspensiveProvider = ({ value, children }: SuspensiveProviderProps) => {
+  const delayValue = useMemo(() => value.defaultOptions?.delay || {}, [value.defaultOptions?.delay])
+  const suspenseValue = useMemo(() => value.defaultOptions?.suspense || {}, [value.defaultOptions?.suspense])
 
   return (
     <DelayContext.Provider value={delayValue}>

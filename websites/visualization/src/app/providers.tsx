@@ -2,7 +2,7 @@
 'use client'
 
 import { MediaQueryProvider } from '@jsxcss/emotion'
-import { SuspensiveConfigs, SuspensiveProvider } from '@suspensive/react'
+import { Suspensive, SuspensiveProvider } from '@suspensive/react'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { PropsWithChildren } from 'react'
@@ -16,7 +16,7 @@ const queryClient = new QueryClient({
   },
 })
 
-const suspensiveConfigs = new SuspensiveConfigs({
+const suspensive = new Suspensive({
   defaultOptions: {
     delay: {
       ms: 1200,
@@ -29,7 +29,7 @@ const suspensiveConfigs = new SuspensiveConfigs({
 
 export const Providers = ({ children }: PropsWithChildren) => (
   <MediaQueryProvider>
-    <SuspensiveProvider configs={suspensiveConfigs}>
+    <SuspensiveProvider value={suspensive}>
       <QueryClientProvider client={queryClient}>
         {children}
         <ReactQueryDevtools initialIsOpen={false} />

@@ -2,11 +2,11 @@ import { ComponentType } from 'react'
 import { AsyncBoundary } from './AsyncBoundary'
 import { ComponentPropsWithoutChildren } from './types'
 
-export const withAsyncBoundary = <Props extends Record<string, unknown> = Record<string, never>>(
-  Component: ComponentType<Props>,
+export const withAsyncBoundary = <TProps extends Record<string, unknown> = Record<string, never>>(
+  Component: ComponentType<TProps>,
   asyncBoundaryProps: ComponentPropsWithoutChildren<typeof AsyncBoundary>
 ) => {
-  const Wrapped = (props: Props) => (
+  const Wrapped = (props: TProps) => (
     <AsyncBoundary {...asyncBoundaryProps}>
       <Component {...props} />
     </AsyncBoundary>
@@ -19,11 +19,11 @@ export const withAsyncBoundary = <Props extends Record<string, unknown> = Record
 
   return Wrapped
 }
-withAsyncBoundary.CSROnly = <Props extends Record<string, unknown> = Record<string, never>>(
-  Component: ComponentType<Props>,
+withAsyncBoundary.CSROnly = <TProps extends Record<string, unknown> = Record<string, never>>(
+  Component: ComponentType<TProps>,
   asyncBoundaryProps: ComponentPropsWithoutChildren<typeof AsyncBoundary.CSROnly>
 ) => {
-  const Wrapped = (props: Props) => (
+  const Wrapped = (props: TProps) => (
     <AsyncBoundary.CSROnly {...asyncBoundaryProps}>
       <Component {...props} />
     </AsyncBoundary.CSROnly>

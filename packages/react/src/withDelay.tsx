@@ -5,11 +5,11 @@ import { ComponentPropsWithoutChildren } from './types'
 /**
  * @experimental This is experimental feature.
  */
-export const withDelay = <Props extends Record<string, unknown> = Record<string, never>>(
-  Component: ComponentType<Props>,
+export const withDelay = <TProps extends Record<string, unknown> = Record<string, never>>(
+  Component: ComponentType<TProps>,
   delayProps?: ComponentPropsWithoutChildren<typeof Delay>
 ) => {
-  const Wrapped = (props: Props) => (
+  const Wrapped = (props: TProps) => (
     <Delay {...delayProps}>
       <Component {...props} />
     </Delay>

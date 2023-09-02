@@ -1,0 +1,25 @@
+---
+sidebar_position: 6
+title: SuspensiveProvider
+---
+
+This component controls the settings of the components provided by Suspensive (Suspense, Delay, etc.) at once.
+
+```tsx
+import { Suspensive, SuspensiveProvider } from '@suspensive/react'
+
+const suspensive = new Suspensive({
+  defaultOptions: {
+    delay: {
+      ms: 1200,
+    },
+    suspense: {
+      fallback: <Spinner />,
+    },
+  },
+})
+
+function App() {
+  return <SuspensiveProvider value={suspensive}>...</SuspensiveProvider>
+}
+```
