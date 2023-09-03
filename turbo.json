@@ -11,6 +11,9 @@
     "lint": {
       "outputs": []
     },
+    "lint:pub": {
+      "outputs": []
+    },
     "test": {
       "outputs": []
     },
