@@ -14,22 +14,22 @@ describe('withSuspense', () => {
   beforeEach(Suspend.reset)
 
   it('should wrap component by Suspense', async () => {
-    jest.useFakeTimers()
+    vi.useFakeTimers()
     render(<SuspendDuring100msToShowTEXTInSuspense />)
     expect(screen.queryByText(FALLBACK)).toBeInTheDocument()
     expect(screen.queryByText(TEXT)).not.toBeInTheDocument()
-    jest.advanceTimersByTime(MS_100)
+    vi.advanceTimersByTime(MS_100)
     await waitFor(() => expect(screen.queryByText(FALLBACK)).not.toBeInTheDocument())
     expect(screen.queryByText(TEXT)).toBeInTheDocument()
     expect(screen.queryByText(FALLBACK)).not.toBeInTheDocument()
   })
 
   it('.CSROnly should wrap component by Suspense.CSROnly', async () => {
-    jest.useFakeTimers()
+    vi.useFakeTimers()
     render(<SuspendDuring100msToShowTEXTInSuspenseCSROnly />)
     expect(screen.queryByText(FALLBACK)).toBeInTheDocument()
     expect(screen.queryByText(TEXT)).not.toBeInTheDocument()
-    jest.advanceTimersByTime(MS_100)
+    vi.advanceTimersByTime(MS_100)
     await waitFor(() => expect(screen.queryByText(FALLBACK)).not.toBeInTheDocument())
     expect(screen.queryByText(TEXT)).toBeInTheDocument()
     expect(screen.queryByText(FALLBACK)).not.toBeInTheDocument()

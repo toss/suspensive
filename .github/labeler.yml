@@ -16,18 +16,9 @@ babel:
 eslint:
   - configs/eslint/*
   - configs/eslint/**/*
-jest:
-  - configs/jest/*
-  - configs/jest/**/*
 tsconfig:
   - configs/tsconfig/*
   - configs/tsconfig/**/*
-configuration:
-  - next.config.js
-  - "**/jest*.ts"
-  - "**/jest*.js"
-  - "**/tsconfig*.json"
-  - .*/**
 documentation:
   - "**/*.md"
 dependencies:
