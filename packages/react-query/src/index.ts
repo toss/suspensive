@@ -1,11 +1,11 @@
 export { useSuspenseQuery } from './useSuspenseQuery'
-export { useSuspenseQueries } from './useSuspenseQueries'
 export type {
   BaseUseSuspenseQueryResult,
   UseSuspenseQueryOptions,
   UseSuspenseQueryResultOnLoading,
   UseSuspenseQueryResultOnSuccess,
 } from './useSuspenseQuery'
+export { useSuspenseQueries } from './useSuspenseQueries'
 export { useSuspenseInfiniteQuery } from './useSuspenseInfiniteQuery'
 export type {
   BaseUseSuspenseInfiniteQueryResult,
