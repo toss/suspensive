@@ -17,7 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        command: ['pnpm lint', 'pnpm test', 'pnpm test:tsd', 'pnpm type:check']
+        command: ['pnpm lint', 'pnpm lint:pub', 'pnpm test', 'pnpm test:tsd', 'pnpm type:check']
     steps:
       - uses: actions/checkout@v3
       - uses: pnpm/action-setup@v2
@@ -29,6 +29,6 @@ jobs:
           cache-dependency-path: 'pnpm-lock.yaml'
           node-version-file: '.nvmrc'
       - run: pnpm install --frozen-lockfile
-      - run: pnpm build --filter=@suspensive/react --filter=@suspensive/react-query
+      - run: pnpm build
       - name: Run commands
         run: ${{ matrix.command }}
