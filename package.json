@@ -14,6 +14,7 @@
   },
   "license": "MIT",
   "packageManager": "pnpm@8.5.1",
+  "type": "module",
   "workspaces": [
     "configs/*",
     "packages/*",
@@ -31,6 +32,7 @@
     "graph": "mkdir graph && turbo run build --graph=graph/index.html",
     "lint": "turbo run lint",
     "lint:pack": "packlint sort -R",
+    "lint:pub": "turbo run lint:pub",
     "postinstall": "husky install",
     "prepack": "turbo run prepack",
     "test": "turbo run test",
@@ -52,6 +54,7 @@
     "lint-staged": "^13.2.2",
     "packlint": "^0.2.4",
     "prettier": "^2.8.8",
+    "publint": "^0.2.2",
     "turbo": "latest",
     "typescript": "^5.1.6"
   }
