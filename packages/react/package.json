@@ -46,7 +46,6 @@
     "type:check": "tsc --noEmit"
   },
   "devDependencies": {
-    "@suspensive/babel": "workspace:*",
     "@suspensive/tsup": "workspace:*",
     "@types/node": "^18.16.2",
     "@types/react": "^18.2.0",

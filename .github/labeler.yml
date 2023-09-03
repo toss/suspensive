@@ -10,20 +10,15 @@ websites/docs:
 visualization:
   - websites/visualization/*
   - websites/visualization/**/*
-babel:
-  - configs/babel/*
-  - configs/babel/**/*
 eslint:
   - configs/eslint/*
   - configs/eslint/**/*
 tsconfig:
   - configs/tsconfig/*
   - configs/tsconfig/**/*
-documentation:
-  - "**/*.md"
 dependencies:
-  - "**/pnpm-lock.yaml"
+  - pnpm-lock.yaml
   - package*.json
-.github:
-  - .github/*
-  - .github/**/*
+workflows:
+  - .github/workflows/*
+  - .github/workflows/**/*

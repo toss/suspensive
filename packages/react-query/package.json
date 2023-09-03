@@ -47,7 +47,6 @@
     "type:check": "tsc --noEmit"
   },
   "devDependencies": {
-    "@suspensive/babel": "workspace:*",
     "@suspensive/react": "workspace:*",
     "@suspensive/tsup": "workspace:*",
     "@tanstack/react-query": "^4.29.5",
