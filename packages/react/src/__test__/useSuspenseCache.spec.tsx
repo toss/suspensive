@@ -65,7 +65,7 @@ describe('useSuspenseCache', () => {
   it('should throw Error, and It will be cached', async () => {
     jest.useFakeTimers()
     const { unmount } = render(
-      <ErrorBoundary fallback={(caught) => caught.error.message}>
+      <ErrorBoundary fallback={(caught) => <>{caught.error.message}</>}>
         <Suspense fallback={FALLBACK}>
           <SuspenseCacheFailure />
         </Suspense>
@@ -78,7 +78,7 @@ describe('useSuspenseCache', () => {
     // error cache test
     unmount()
     render(
-      <ErrorBoundary fallback={(caught) => caught.error.message}>
+      <ErrorBoundary fallback={(caught) => <>{caught.error.message}</>}>
         <Suspense fallback={FALLBACK}>
           <SuspenseCacheFailure />
         </Suspense>
