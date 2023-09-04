@@ -62,7 +62,7 @@ const BoundaryPage = () => {
             />
             <Area title="Suspense">
               <Suspense.CSROnly fallback={<Spinner />}>
-                <UseSuspenseQuery queryKey={['boundary', 1]} queryFn={api.alwaysSuccess500} />
+                <UseSuspenseQuery queryKey={['react', 1]} queryFn={api.alwaysSuccess500} />
               </Suspense.CSROnly>
             </Area>
 
@@ -71,8 +71,8 @@ const BoundaryPage = () => {
             <Area title="ErrorBoundary (100% Error)">
               <ErrorBoundary onReset={queryErrorReset} fallback={RejectedFallback}>
                 <Suspense.CSROnly fallback={<Spinner />}>
-                  <UseSuspenseQuery queryKey={['boundary', 4]} queryFn={api.alwaysFailure} />
-                  <UseSuspenseQuery queryKey={['boundary', 5]} queryFn={api.alwaysSuccess500} />
+                  <UseSuspenseQuery queryKey={['react', 4]} queryFn={api.alwaysFailure} />
+                  <UseSuspenseQuery queryKey={['react', 5]} queryFn={api.alwaysSuccess500} />
                 </Suspense.CSROnly>
               </ErrorBoundary>
             </Area>
@@ -82,8 +82,8 @@ const BoundaryPage = () => {
         <Area title="ErrorBoundary (100% Error)">
           <ErrorBoundary onReset={queryErrorReset} fallback={RejectedFallback}>
             <Suspense.CSROnly fallback={<Spinner />}>
-              <UseSuspenseQuery queryKey={['boundary', 4]} queryFn={api.alwaysFailure} />
-              <UseSuspenseQuery queryKey={['boundary', 5]} queryFn={api.alwaysSuccess500} />
+              <UseSuspenseQuery queryKey={['react', 4]} queryFn={api.alwaysFailure} />
+              <UseSuspenseQuery queryKey={['react', 5]} queryFn={api.alwaysSuccess500} />
             </Suspense.CSROnly>
           </ErrorBoundary>
         </Area>
