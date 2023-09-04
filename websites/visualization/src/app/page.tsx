@@ -1,8 +1,9 @@
+/** @jsxImportSource @emotion/react */
 'use client'
 
 import { Flex } from '@jsxcss/emotion'
 import Link from 'next/link'
-import { Area, Box } from '../components/uis'
+import { Area, Box } from '~/components/uis'
 
 export default function Home() {
   return (

@@ -1,10 +1,17 @@
 import { render } from '@testing-library/react'
+import { AsyncBoundary } from '../AsyncBoundary'
+import { FALLBACK, TEXT } from './utils'
 
-describe('test', () => {
-  it('should test', () => {
-    const TEST_TEXT = 'suspensive'
-    const fixture = render(<div>{TEST_TEXT}</div>)
+describe('AsyncBoundary', () => {
+  it('should show children', () => {
+    const rendered = render(<AsyncBoundary rejectedFallback={FALLBACK}>{TEXT}</AsyncBoundary>)
+    expect(rendered.getByText(TEXT)).toBeInTheDocument()
+  })
+})
 
-    expect(fixture.getByText(TEST_TEXT)).toBeInTheDocument()
+describe('AsyncBoundary.CSROnly', () => {
+  it('should show children when mounted', () => {
+    const rendered = render(<AsyncBoundary.CSROnly rejectedFallback={FALLBACK}>{TEXT}</AsyncBoundary.CSROnly>)
+    expect(rendered.getByText(TEXT)).toBeInTheDocument()
   })
 })

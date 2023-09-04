@@ -1,5 +1,6 @@
 /** @type {import('eslint').Linter.Config} */
 module.exports = {
+  root: true,
   extends: ['plugin:react/recommended', 'plugin:react-hooks/recommended'],
   globals: { JSX: true },
   rules: {

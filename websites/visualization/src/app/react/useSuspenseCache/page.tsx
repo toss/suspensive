@@ -2,8 +2,8 @@
 
 import { ErrorBoundary, ErrorBoundaryGroup, Suspense, suspenseCache, useSuspenseCache } from '@suspensive/react'
 import { ComponentProps } from 'react'
-import { api } from '../../../api'
-import { Area, Box, Button } from '../../../components/uis'
+import { Area, Box, Button } from '~/components/uis'
+import { api } from '~/utils/api'
 
 const useManualCache = (manualOption = { successPercentage: 50, waitMs: 500 }) =>
   useSuspenseCache({

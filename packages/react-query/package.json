@@ -1,6 +1,6 @@
 {
   "name": "@suspensive/react-query",
-  "version": "1.11.6",
+  "version": "1.12.1",
   "keywords": [
     "suspensive",
     "react-query"
@@ -14,16 +14,21 @@
   },
   "license": "MIT",
   "sideEffects": false,
+  "type": "module",
   "exports": {
     ".": {
-      "require": "./dist/index.js",
-      "import": "./dist/index.mjs",
-      "types": "./dist/index.d.ts"
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
     },
     "./package.json": "./package.json"
   },
-  "main": "dist/index.js",
-  "module": "dist/index.mjs",
+  "main": "dist/index.cjs",
   "types": "dist/index.d.ts",
   "files": [
     "dist",
@@ -34,6 +39,7 @@
   "scripts": {
     "build": "tsup",
     "lint": "eslint \"**/*.ts*\"",
+    "lint:pub": "publint --strict",
     "prepack": "pnpm build && pnpm test:tsd",
     "test": "jest",
     "test:tsd": "tsd -t ./dist/index.d.ts",
@@ -42,10 +48,8 @@
   },
   "devDependencies": {
     "@suspensive/babel": "workspace:*",
-    "@suspensive/eslint-config": "workspace:*",
     "@suspensive/jest": "workspace:*",
     "@suspensive/react": "workspace:*",
-    "@suspensive/tsconfig": "workspace:*",
     "@suspensive/tsup": "workspace:*",
     "@tanstack/react-query": "^4.29.5",
     "@testing-library/dom": "^8.20.0",
@@ -56,14 +60,12 @@
     "@types/react": "^18.2.0",
     "@types/react-dom": "^18.2.1",
     "@types/testing-library__jest-dom": "^5.14.5",
-    "eslint": "^8.42.0",
     "jest": "^29.5.0",
     "jest-environment-jsdom": "^29.5.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "tsd": "^0.28.1",
-    "tsup": "^7.1.0",
-    "typescript": "^4.9.5"
+    "tsup": "^7.1.0"
   },
   "peerDependencies": {
     "@suspensive/react": "^1.11.4-beta.0",

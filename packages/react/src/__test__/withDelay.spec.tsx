@@ -1,4 +1,4 @@
-import { render, act, screen, waitFor } from '@testing-library/react'
+import { act, render, screen, waitFor } from '@testing-library/react'
 import { withDelay } from '../withDelay'
 import { MS_100, TEXT } from './utils'
 

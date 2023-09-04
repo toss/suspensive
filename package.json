@@ -14,6 +14,7 @@
   },
   "license": "MIT",
   "packageManager": "pnpm@8.5.1",
+  "type": "module",
   "workspaces": [
     "configs/*",
     "packages/*",
@@ -31,6 +32,7 @@
     "graph": "mkdir graph && turbo run build --graph=graph/index.html",
     "lint": "turbo run lint",
     "lint:pack": "packlint sort -R",
+    "lint:pub": "turbo run lint:pub",
     "postinstall": "husky install",
     "prepack": "turbo run prepack",
     "test": "turbo run test",
@@ -41,13 +43,19 @@
     "@changesets/cli": "^2.26.1",
     "@commitlint/cli": "^17.6.1",
     "@commitlint/config-conventional": "^17.6.1",
+    "@suspensive/eslint-config": "workspace:*",
+    "@suspensive/eslint-config-js": "workspace:*",
+    "@suspensive/eslint-config-ts": "workspace:*",
+    "@suspensive/tsconfig": "workspace:*",
     "commitizen": "^4.3.0",
     "cz-conventional-changelog": "^3.3.0",
+    "eslint": "^8.42.0",
     "husky": "^8.0.3",
     "lint-staged": "^13.2.2",
     "packlint": "^0.2.4",
     "prettier": "^2.8.8",
+    "publint": "^0.2.2",
     "turbo": "latest",
-    "typescript": "^4.9.5"
+    "typescript": "^5.1.6"
   }
 }

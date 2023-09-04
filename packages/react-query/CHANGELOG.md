@@ -1,5 +1,23 @@
 # @suspensive/react-query
 
+## 1.12.1
+
+### Patch Changes
+
+- 7109191: fix(esm): cjs to esm as default
+
+## 1.12.0
+
+### Patch Changes
+
+- 8c23785: refactor(eslint, tsconfig): simply
+
+## 1.11.7
+
+### Patch Changes
+
+- f23a241: fix(typescript): update version from v4 to v5
+
 ## 1.11.6
 
 ### Patch Changes
