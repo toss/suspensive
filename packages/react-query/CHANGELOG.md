@@ -1,5 +1,11 @@
 # @suspensive/react-query
 
+## 1.12.1
+
+### Patch Changes
+
+- 7109191: fix(esm): cjs to esm as default
+
 ## 1.12.0
 
 ### Patch Changes
