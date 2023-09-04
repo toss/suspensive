@@ -1,7 +1,7 @@
 'use client'
 
 import { ErrorBoundary, ErrorBoundaryGroup, Suspense, withErrorBoundaryGroup } from '@suspensive/react'
-import { QueryAsyncBoundary, QueryErrorBoundary } from '@suspensive/react-query'
+import { QueryErrorBoundary } from '@suspensive/react-query'
 import { useQueryErrorResetBoundary } from '@tanstack/react-query'
 import Link from 'next/link'
 import { RejectedFallback, UseSuspenseQuery } from '~/components'
@@ -36,13 +36,6 @@ const ReactQueryPage = withErrorBoundaryGroup(() => {
             <UseSuspenseQuery queryKey={['query', 4]} queryFn={api.almostFailure} />
           </Suspense.CSROnly>
         </QueryErrorBoundary>
-      </Area>
-
-      <Area title="QueryAsyncBoundary">
-        <QueryAsyncBoundary.CSROnly pendingFallback={<Spinner />} rejectedFallback={RejectedFallback}>
-          <UseSuspenseQuery queryKey={['query', 5]} queryFn={api.almostFailure} />
-          <UseSuspenseQuery queryKey={['query', 6]} queryFn={api.almostFailure} />
-        </QueryAsyncBoundary.CSROnly>
       </Area>
 
       <Area title="Playground">

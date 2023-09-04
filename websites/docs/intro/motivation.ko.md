@@ -21,14 +21,7 @@ bvaughn/react-error-boundary의 ErrorBoundary는 fallback prop을 위해 Fallbac
 
 이것이 [ErrorBoundary](/docs/react/src/ErrorBoundary.i18n)를 이 라이브러리에 추가한 이유입니다.
 
-### 3. Suspense와 ErrorBoundary를 합치고 싶습니다.
-
-Promise가 Pending 상태이면 성공뿐만 아니라 실패도 한번에 쉽게 처리할 수 있어야 합니다.
-그래서 Suspense, ErrorBoundary를 래핑하는 컴포넌트를 만들고 싶어집니다. 또한 Next.js와 같은 SSR 환경에서 이 구성 요소를 사용하려면 CSROnly 모드가 필요합니다.
-
-이것이 CSROnly모드가 있는 [AsyncBoundary](/docs/react/src/AsyncBoundary.i18n)를 이 라이브러리에 추가한 이유입니다.
-
-### 4. ErrorBoundary.fallback의 외부에서 다수의 ErrorBoundary를 reset하고 싶습니다.
+### 3. ErrorBoundary.fallback의 외부에서 다수의 ErrorBoundary를 reset하고 싶습니다.
 
 ErrorBoundary를 reset하려면 ErrorBoundary.fallback 렌더링 시에 주어지는 props의 reset을 사용하면 됩니다.
 

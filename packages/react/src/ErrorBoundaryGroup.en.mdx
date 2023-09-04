@@ -16,7 +16,6 @@ const Example = () => (
   <ErrorBoundaryGroup>
     <ErrorBoundaryGroup.Reset trigger={(group) => <button onClick={group.reset}>Reset Children</button>} />
     <ErrorBoundary />
-    <AsyncBoundary /* ErrorBoundary wrapped by AsyncBoundary also will be reset by ErrorBoundaryGroup.Reset */ />
   </ErrorBoundaryGroup>
 )
 ```
@@ -33,7 +32,6 @@ const Example = withErrorBoundaryGroup(() => {
     <>
       <button onClick={group.reset}>Reset All</button>
       <ErrorBoundary />
-      <AsyncBoundary />
     </>
   )
 })
@@ -49,11 +47,9 @@ const Example = () => (
   <ErrorBoundaryGroup>
     <ErrorBoundaryGroup.Reset /* reset all of children */ />
     <ErrorBoundary />
-    <AsyncBoundary />
     <ErrorBoundaryGroup>
       <ErrorBoundaryGroup.Reset /* reset all of children */ />
       <ErrorBoundary />
-      <AsyncBoundary />
     </ErrorBoundaryGroup>
   </ErrorBoundaryGroup>
 )
@@ -68,11 +64,9 @@ const Example = () => (
   <ErrorBoundaryGroup>
     <ErrorBoundaryGroup.Reset />
     <ErrorBoundary />
-    <AsyncBoundary />
     <ErrorBoundaryGroup blockOutside /* block resetting by parent ErrorBoundaryGroup */>
       <ErrorBoundaryGroup.Reset />
       <ErrorBoundary />
-      <AsyncBoundary />
     </ErrorBoundaryGroup>
   </ErrorBoundaryGroup>
 )

@@ -34,7 +34,6 @@ All declarative components to use suspense on both CSR, SSR.
 - Suspense (containing CSROnly mode)
 - ErrorBoundary
 - ErrorBoundaryGroup, useErrorBoundaryGroup
-- AsyncBoundary (CSROnly mode)
 - SuspensiveProvider, SuspensiveConfigs (Experimental)
 - useSuspenseCache, suspenseCache (Experimental)
 - Delay (Experimental)
@@ -87,8 +86,9 @@ Declarative apis to use [@tanstack/react-query with suspense](https://tanstack.c
 
 ## Features
 
-- QueryErrorBoundary, QueryAsyncBoundary
+- QueryErrorBoundary
 - useSuspenseQuery
+- useSuspenseQueries
 - useSuspenseInfiniteQuery
 
 ## Installation

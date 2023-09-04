@@ -21,14 +21,7 @@ I want to make ErrorBoundary's interface about fallback more simply like only fa
 
 It's why [ErrorBoundary](/docs/react/src/ErrorBoundary.i18n) is added in this library.
 
-### 3. Merging Suspense and ErrorBoundary
-
-If Promise have pending, not only success also failure need to be treated at once easily.
-so, I want to make a component wrapping Suspense, ErrorBoundary. also CSROnly mode is required to use this component in SSR environment like Next.js
-
-It's why [AsyncBoundary](/docs/react/src/AsyncBoundary.i18n) containing CSROnly mode is added in this library.
-
-### 4. Resetting ErrorBoundaries outside of fallback
+### 3. Resetting ErrorBoundaries outside of fallback
 
 To reset ErrorBoundary, you can use reset, fallback prop of ErrorBoundary.
 but If you want to reset multiple ErrorBoundaries outside of its fallback, you have to provide new element of resetKeys to props of each ErrorBoundaries. but If you use ErrorBoundaryGroup, You don't need to do this tiresome. ErrorBoundaryGroup will reset multiple ErrorBoundary easily.

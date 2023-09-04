@@ -13,8 +13,7 @@ const FeatureList: FeatureItem[] = [
     title: <Translate>All Declarative APIs ready</Translate>,
     description: (
       <Translate>
-        Suspense, ErrorBoundary, AsyncBoundary, ErrorBoundaryGroup is provided. You can use them easily without any
-        efforts
+        Suspense, ErrorBoundary, ErrorBoundaryGroup is provided. You can use them easily without any efforts
       </Translate>
     ),
   },
@@ -23,7 +22,7 @@ const FeatureList: FeatureItem[] = [
     description: (
       <Translate>
         It is simply extensions of react's concepts. Named friendly with originals like just Suspense, ErrorBoundary,
-        AsyncBoundary
+        ErrorBoundaryGroup
       </Translate>
     ),
   },

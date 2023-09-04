@@ -16,7 +16,6 @@ const Example = () => (
   <ErrorBoundaryGroup>
     <ErrorBoundaryGroup.Reset trigger={(group) => <button onClick={group.reset}>Reset Children</button>} />
     <ErrorBoundary />
-    <AsyncBoundary /* AsyncBoundary 또한 ErrorBoundary를 래핑한 컴포넌트이므로 reset됩니다. */ />
   </ErrorBoundaryGroup>
 )
 ```
@@ -33,7 +32,6 @@ const Example = withErrorBoundaryGroup(() => {
     <>
       <button onClick={group.reset}>Reset All</button>
       <ErrorBoundary />
-      <AsyncBoundary />
     </>
   )
 })
@@ -48,11 +46,9 @@ const Example = () => (
   <ErrorBoundaryGroup>
     <ErrorBoundaryGroup.Reset /* 모든 children을 reset합니다 */ />
     <ErrorBoundary />
-    <AsyncBoundary />
     <ErrorBoundaryGroup>
       <ErrorBoundaryGroup.Reset /* 모든 children을 reset합니다 */ />
       <ErrorBoundary />
-      <AsyncBoundary />
     </ErrorBoundaryGroup>
   </ErrorBoundaryGroup>
 )
@@ -67,11 +63,9 @@ const Example = () => (
   <ErrorBoundaryGroup>
     <ErrorBoundaryGroup.Reset />
     <ErrorBoundary />
-    <AsyncBoundary />
     <ErrorBoundaryGroup blockOutside /* 상위 ErrorBoundaryGroup에 의한 reset을 막습니다 */>
       <ErrorBoundaryGroup.Reset />
       <ErrorBoundary />
-      <AsyncBoundary />
     </ErrorBoundaryGroup>
   </ErrorBoundaryGroup>
 )

@@ -8,14 +8,14 @@
   "All Declarative Boundaries ready": {
     "message": "모든 선언적 바운더리 제공"
   },
-  "Suspense, ErrorBoundary, AsyncBoundary, ErrorBoundaryGroup is provided. You can use them easily without any efforts": {
-    "message": "Suspense, ErrorBoundary, AsyncBoundary, ErrorBoundaryGroup를 제공합니다. 별 다른 노력없이 쉽게 사용할 수 있습니다"
+  "Suspense, ErrorBoundary, ErrorBoundaryGroup is provided. You can use them easily without any efforts": {
+    "message": "Suspense, ErrorBoundary, ErrorBoundaryGroup를 제공합니다. 별 다른 노력없이 쉽게 사용할 수 있습니다"
   },
   "Zero peer dependency, Only React": {
     "message": "Zero 의존성, 오직 React"
   },
-  "It is simply extensions of react's concepts. Named friendly with originals like just Suspense, ErrorBoundary, AsyncBoundary": {
-    "message": "단순히 React의 개념을 확장한 것입니다. Suspense, ErrorBoundary, AsyncBoundary와 같은 React 개발자에게 친숙한 이름으로 컴포넌트들을 제공합니다"
+  "It is simply extensions of react's concepts. Named friendly with originals like just Suspense, ErrorBoundary, ErrorBoundaryGroup": {
+    "message": "단순히 React의 개념을 확장한 것입니다. Suspense, ErrorBoundary, ErrorBoundaryGroup와 같은 React 개발자에게 친숙한 이름으로 컴포넌트들을 제공합니다"
   },
   "Suspense in SSR easily": {
     "message": "서버 사이드 렌더링에서도 쉽게"

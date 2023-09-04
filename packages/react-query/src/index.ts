@@ -13,5 +13,4 @@ export type {
   UseSuspenseInfiniteQueryResultOnLoading,
   UseSuspenseInfiniteQueryResultOnSuccess,
 } from './useSuspenseInfiniteQuery'
-export { QueryAsyncBoundary } from './QueryAsyncBoundary'
 export { QueryErrorBoundary } from './QueryErrorBoundary'
