@@ -14,9 +14,8 @@ module.exports = {
   overrides: [
     {
       files: ['*.spec.ts*', '*.test.ts*'],
-      plugins: ['jest'],
-      extends: ['plugin:jest/recommended'],
-      rules: { 'jest/prefer-expect-assertions': 'off' },
+      plugins: ['vitest'],
+      extends: ['plugin:vitest/recommended'],
     },
   ],
 }
