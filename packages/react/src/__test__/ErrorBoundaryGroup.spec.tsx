@@ -1,6 +1,5 @@
 import { act, render, screen } from '@testing-library/react'
-import { ErrorBoundary } from '../ErrorBoundary'
-import { ErrorBoundaryGroup, useErrorBoundaryGroup } from '../ErrorBoundaryGroup'
+import { ErrorBoundary, ErrorBoundaryGroup, useErrorBoundaryGroup } from '..'
 import { ERROR_MESSAGE, MS_100, TEXT, ThrowError } from './utils'
 
 const innerErrorBoundaryCount = 3
@@ -8,7 +7,7 @@ const resetButtonText = 'reset button'
 
 describe('ErrorBoundaryGroup', () => {
   it('should reset all ErrorBoundaries in children', () => {
-    jest.useFakeTimers()
+    vi.useFakeTimers()
     render(
       <ErrorBoundaryGroup>
         <ErrorBoundaryGroup.Reset trigger={(group) => <button onClick={group.reset}>{resetButtonText}</button>} />
@@ -23,7 +22,7 @@ describe('ErrorBoundaryGroup', () => {
     )
 
     expect(screen.getAllByText(TEXT).length).toBe(innerErrorBoundaryCount)
-    act(() => jest.advanceTimersByTime(MS_100))
+    act(() => vi.advanceTimersByTime(MS_100))
     expect(screen.getAllByText(ERROR_MESSAGE).length).toBe(innerErrorBoundaryCount)
 
     const resetButton = screen.getByRole('button', { name: resetButtonText })
@@ -36,7 +35,7 @@ describe('ErrorBoundaryGroup', () => {
   })
 
   it('should reset all ErrorBoundaries in children even if it is nested, but if use blockOutside, can block reset by outside', () => {
-    jest.useFakeTimers()
+    vi.useFakeTimers()
     render(
       <ErrorBoundaryGroup>
         <ErrorBoundaryGroup.Reset trigger={(group) => <button onClick={group.reset}>{resetButtonText}</button>} />
@@ -53,7 +52,7 @@ describe('ErrorBoundaryGroup', () => {
     )
 
     expect(screen.getAllByText(TEXT).length).toBe(innerErrorBoundaryCount)
-    act(() => jest.advanceTimersByTime(MS_100))
+    act(() => vi.advanceTimersByTime(MS_100))
     expect(screen.getAllByText(ERROR_MESSAGE).length).toBe(innerErrorBoundaryCount)
 
     const resetButton = screen.getByRole('button', { name: resetButtonText })
