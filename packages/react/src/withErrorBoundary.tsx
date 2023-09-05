@@ -2,11 +2,11 @@ import { ComponentType } from 'react'
 import { ErrorBoundary } from './ErrorBoundary'
 import { ComponentPropsWithoutChildren } from './types'
 
-export const withErrorBoundary = <TProps extends Record<string, unknown> = Record<string, never>>(
-  Component: ComponentType<TProps>,
+export const withErrorBoundary = <Props extends Record<string, unknown> = Record<string, never>>(
+  Component: ComponentType<Props>,
   errorBoundaryProps: ComponentPropsWithoutChildren<typeof ErrorBoundary>
 ) => {
-  const Wrapped = (props: TProps) => (
+  const Wrapped = (props: Props) => (
     <ErrorBoundary {...errorBoundaryProps}>
       <Component {...props} />
     </ErrorBoundary>

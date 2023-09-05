@@ -2,11 +2,11 @@ import { ComponentType } from 'react'
 import { Suspense } from './Suspense'
 import { ComponentPropsWithoutChildren } from './types'
 
-export function withSuspense<TProps extends Record<string, unknown> = Record<string, never>>(
-  Component: ComponentType<TProps>,
+export function withSuspense<Props extends Record<string, unknown> = Record<string, never>>(
+  Component: ComponentType<Props>,
   suspenseProps?: ComponentPropsWithoutChildren<typeof Suspense>
 ) {
-  const Wrapped = (props: TProps) => (
+  const Wrapped = (props: Props) => (
     <Suspense {...suspenseProps}>
       <Component {...props} />
     </Suspense>
@@ -20,11 +20,11 @@ export function withSuspense<TProps extends Record<string, unknown> = Record<str
   return Wrapped
 }
 
-withSuspense.CSROnly = function withSuspenseCSROnly<TProps extends Record<string, unknown> = Record<string, never>>(
-  Component: ComponentType<TProps>,
+withSuspense.CSROnly = function withSuspenseCSROnly<Props extends Record<string, unknown> = Record<string, never>>(
+  Component: ComponentType<Props>,
   suspenseProps?: ComponentPropsWithoutChildren<typeof Suspense.CSROnly>
 ) {
-  const Wrapped = (props: TProps) => (
+  const Wrapped = (props: Props) => (
     <Suspense.CSROnly {...suspenseProps}>
       <Component {...props} />
     </Suspense.CSROnly>
