@@ -49,6 +49,7 @@
   "devDependencies": {
     "@suspensive/react": "workspace:*",
     "@suspensive/tsup": "workspace:*",
+    "@suspensive/vitest": "workspace:*",
     "@tanstack/react-query": "^4.29.5",
     "@types/node": "^18.16.2",
     "@types/react": "^18.2.0",

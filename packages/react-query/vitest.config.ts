@@ -1,13 +1,4 @@
+import { forPackage } from '@suspensive/vitest'
 import { defineConfig } from 'vitest/config'
 
-export default defineConfig({
-  test: {
-    name: '@suspensive/react-query',
-    dir: './src',
-    watch: false,
-    environment: 'jsdom',
-    globals: true,
-    setupFiles: './test.setup.ts',
-    coverage: { provider: 'v8' },
-  },
-})
+export default defineConfig(forPackage())
