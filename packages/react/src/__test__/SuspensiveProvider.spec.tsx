@@ -1,21 +1,19 @@
 import { act, render, screen, waitFor } from '@testing-library/react'
-import { Delay } from '../Delay'
-import { Suspense } from '../Suspense'
-import { Suspensive, SuspensiveProvider } from '../SuspensiveProvider'
+import { Delay, Suspense, Suspensive, SuspensiveProvider } from '..'
 import { FALLBACK, MS_100, Suspend, TEXT } from './utils'
 
 const FALLBACK_GLOBAL = 'FALLBACK_GLOBAL'
 
 describe('SuspensiveProvider', () => {
   it('should provide default ms prop of Delay', async () => {
-    jest.useFakeTimers()
+    vi.useFakeTimers()
     render(
       <SuspensiveProvider value={new Suspensive({ defaultOptions: { delay: { ms: MS_100 } } })}>
         <Delay>{TEXT}</Delay>
       </SuspensiveProvider>
     )
     expect(screen.queryByText(TEXT)).not.toBeInTheDocument()
-    act(() => jest.advanceTimersByTime(MS_100))
+    act(() => vi.advanceTimersByTime(MS_100))
     await waitFor(() => expect(screen.queryByText(TEXT)).toBeInTheDocument())
   })
   it('should accept suspensive value with nothing about Delay', () => {
