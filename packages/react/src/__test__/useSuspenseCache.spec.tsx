@@ -40,7 +40,7 @@ const SuspenseCacheFailure = () => {
 describe('useSuspenseCache', () => {
   beforeEach(() => suspenseCache.reset())
   it('should return object containing data field with only success, and It will be cached', async () => {
-    jest.useFakeTimers()
+    vi.useFakeTimers()
     const { unmount } = render(
       <Suspense fallback={FALLBACK}>
         <SuspenseCacheSuccess />
@@ -48,7 +48,7 @@ describe('useSuspenseCache', () => {
     )
     expect(screen.queryByText(FALLBACK)).toBeInTheDocument()
 
-    act(() => jest.advanceTimersByTime(MS_100))
+    act(() => vi.advanceTimersByTime(MS_100))
     await waitFor(() => expect(screen.queryByText(TEXT)).toBeInTheDocument())
 
     // success data cache test
@@ -63,7 +63,7 @@ describe('useSuspenseCache', () => {
   })
 
   it('should throw Error, and It will be cached', async () => {
-    jest.useFakeTimers()
+    vi.useFakeTimers()
     const { unmount } = render(
       <ErrorBoundary fallback={(caught) => <>{caught.error.message}</>}>
         <Suspense fallback={FALLBACK}>
@@ -72,7 +72,7 @@ describe('useSuspenseCache', () => {
       </ErrorBoundary>
     )
     expect(screen.queryByText(FALLBACK)).toBeInTheDocument()
-    act(() => jest.advanceTimersByTime(MS_100))
+    act(() => vi.advanceTimersByTime(MS_100))
     await waitFor(() => expect(screen.queryByText(ERROR_MESSAGE)).toBeInTheDocument())
 
     // error cache test
@@ -89,14 +89,14 @@ describe('useSuspenseCache', () => {
   })
 
   it('should return object containing reset method to reset cache by key', async () => {
-    jest.useFakeTimers()
+    vi.useFakeTimers()
     const { rerender } = render(
       <Suspense fallback={FALLBACK}>
         <SuspenseCacheSuccess />
       </Suspense>
     )
     expect(screen.queryByText(FALLBACK)).toBeInTheDocument()
-    act(() => jest.advanceTimersByTime(MS_100))
+    act(() => vi.advanceTimersByTime(MS_100))
     await waitFor(() => expect(screen.queryByText(TEXT)).toBeInTheDocument())
     const resetButton = await screen.findByRole('button', { name: 'reset' })
     resetButton.click()
@@ -106,7 +106,7 @@ describe('useSuspenseCache', () => {
       </Suspense>
     )
     expect(screen.queryByText(FALLBACK)).toBeInTheDocument()
-    act(() => jest.advanceTimersByTime(MS_100))
+    act(() => vi.advanceTimersByTime(MS_100))
     await waitFor(() => expect(screen.queryByText(TEXT)).toBeInTheDocument())
   })
 })
