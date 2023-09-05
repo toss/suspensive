@@ -1,5 +1,5 @@
 import { act, render, screen, waitFor } from '@testing-library/react'
-import { Delay } from '../Delay'
+import { Delay } from '..'
 import { MS_100, TEXT } from './utils'
 
 describe('Delay', () => {
