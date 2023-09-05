@@ -10,29 +10,15 @@ websites/docs:
 visualization:
   - websites/visualization/*
   - websites/visualization/**/*
-babel:
-  - configs/babel/*
-  - configs/babel/**/*
 eslint:
   - configs/eslint/*
   - configs/eslint/**/*
-jest:
-  - configs/jest/*
-  - configs/jest/**/*
 tsconfig:
   - configs/tsconfig/*
   - configs/tsconfig/**/*
-configuration:
-  - next.config.js
-  - "**/jest*.ts"
-  - "**/jest*.js"
-  - "**/tsconfig*.json"
-  - .*/**
-documentation:
-  - "**/*.md"
 dependencies:
-  - "**/pnpm-lock.yaml"
+  - pnpm-lock.yaml
   - package*.json
-.github:
-  - .github/*
-  - .github/**/*
+workflows:
+  - .github/workflows/*
+  - .github/workflows/**/*

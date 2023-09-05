@@ -1,7 +1,7 @@
 import { act } from '@testing-library/react'
 import { ComponentProps, ComponentRef, createRef } from 'react'
 import { createRoot } from 'react-dom/client'
-import { ErrorBoundary } from '../ErrorBoundary'
+import { ErrorBoundary } from '..'
 import { ERROR_MESSAGE, FALLBACK, MS_100, TEXT, ThrowError } from './utils'
 
 let container = document.createElement('div')
@@ -23,8 +23,8 @@ describe('ErrorBoundary', () => {
     )
 
   it('should show children if no error but if error in children, catch it and show fallback and call onError', () => {
-    const onError = jest.fn()
-    jest.useFakeTimers()
+    const onError = vi.fn()
+    vi.useFakeTimers()
     renderErrorBoundary({
       onError,
       fallback: <>{FALLBACK}</>,
@@ -37,14 +37,14 @@ describe('ErrorBoundary', () => {
     expect(container.textContent).toBe(TEXT)
     expect(container.textContent).not.toBe(FALLBACK)
     expect(onError).toHaveBeenCalledTimes(0)
-    act(() => jest.advanceTimersByTime(MS_100))
+    act(() => vi.advanceTimersByTime(MS_100))
     expect(container.textContent).toBe(FALLBACK)
     expect(container.textContent).not.toBe(TEXT)
     expect(onError).toHaveBeenCalledTimes(1)
   })
 
   it('should show children if no error but if error in children, catch it and show fallback component', () => {
-    jest.useFakeTimers()
+    vi.useFakeTimers()
     renderErrorBoundary({
       fallback: (caught) => <>{caught.error.message}</>,
       children: (
@@ -55,14 +55,14 @@ describe('ErrorBoundary', () => {
     })
     expect(container.textContent).toBe(TEXT)
     expect(container.textContent).not.toBe(ERROR_MESSAGE)
-    act(() => jest.advanceTimersByTime(MS_100))
+    act(() => vi.advanceTimersByTime(MS_100))
     expect(container.textContent).toBe(ERROR_MESSAGE)
     expect(container.textContent).not.toBe(TEXT)
   })
 
   it('should be reset by items of resetKeys, and call onReset', () => {
-    const onReset = jest.fn()
-    jest.useFakeTimers()
+    const onReset = vi.fn()
+    vi.useFakeTimers()
     // reset by resetKeys[0]
     renderErrorBoundary({
       resetKeys: [0],
@@ -73,7 +73,7 @@ describe('ErrorBoundary', () => {
       ),
       onReset,
     })
-    act(() => jest.advanceTimersByTime(MS_100))
+    act(() => vi.advanceTimersByTime(MS_100))
     expect(container.textContent).toBe(ERROR_MESSAGE)
     expect(container.textContent).not.toBe(TEXT)
     expect(onReset).toHaveBeenCalledTimes(0)
@@ -95,7 +95,7 @@ describe('ErrorBoundary', () => {
       ),
       onReset,
     })
-    act(() => jest.advanceTimersByTime(MS_100))
+    act(() => vi.advanceTimersByTime(MS_100))
     expect(container.textContent).toBe(ERROR_MESSAGE)
     expect(container.textContent).not.toBe(TEXT)
 
@@ -109,8 +109,8 @@ describe('ErrorBoundary', () => {
   })
 
   it('should be reset by ref.reset(), and call onReset', () => {
-    const onReset = jest.fn()
-    jest.useFakeTimers()
+    const onReset = vi.fn()
+    vi.useFakeTimers()
     renderErrorBoundary({
       children: (
         <ThrowError message={ERROR_MESSAGE} after={MS_100}>
@@ -119,7 +119,7 @@ describe('ErrorBoundary', () => {
       ),
       onReset,
     })
-    act(() => jest.advanceTimersByTime(MS_100))
+    act(() => vi.advanceTimersByTime(MS_100))
     expect(container.textContent).toBe(ERROR_MESSAGE)
     expect(container.textContent).not.toBe(TEXT)
     expect(onReset).toHaveBeenCalledTimes(0)
