@@ -29,6 +29,6 @@ jobs:
           cache-dependency-path: 'pnpm-lock.yaml'
           node-version-file: '.nvmrc'
       - run: pnpm install --frozen-lockfile
-      - run: pnpm build --filter=@suspensive/react --filter=@suspensive/react-query
+      - run: pnpm prepack
       - name: Run commands
         run: ${{ matrix.command }}
