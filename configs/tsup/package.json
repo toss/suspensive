@@ -9,11 +9,5 @@
     "lint": "eslint .",
     "prepack": "pnpm build",
     "type:check": "tsc --noEmit"
-  },
-  "devDependencies": {
-    "tsup": "^7.1.0"
-  },
-  "peerDependencies": {
-    "tsup": "^7"
   }
 }
