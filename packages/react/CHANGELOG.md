@@ -1,5 +1,12 @@
 # @suspensive/react
 
+## 1.12.2
+
+### Patch Changes
+
+- 6237e94: feat(vitest): add @suspensive/vitest generating named config automatically by packageJson.name
+- 6c5e097: ci(test): migrate jest to vitest
+
 ## 1.12.1
 
 ### Patch Changes
