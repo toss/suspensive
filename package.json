@@ -61,6 +61,7 @@
     "packlint": "^0.2.4",
     "prettier": "^2.8.8",
     "publint": "^0.2.2",
+    "tsup": "^7.1.0",
     "turbo": "latest",
     "typescript": "^5.1.6",
     "vite": "^4.4.9",
