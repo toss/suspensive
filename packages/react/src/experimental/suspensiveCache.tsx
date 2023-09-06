@@ -1,7 +1,5 @@
-import { useEffect, useMemo } from 'react'
-import { useRerender } from './hooks'
+import { Tuple } from '../types'
 
-type Tuple<T = unknown> = T[] | readonly T[]
 type Cache<Key extends Tuple = Tuple> = {
   promise?: Promise<unknown>
   key: Key
@@ -9,7 +7,7 @@ type Cache<Key extends Tuple = Tuple> = {
   data?: unknown
 }
 
-class SuspenseCacheObserver {
+class SuspensiveCacheObserver {
   private cache = new Map<string, Cache>()
 
   public reset = <TKey extends Tuple>(key?: TKey) => {
@@ -112,33 +110,4 @@ class SuspenseCacheObserver {
 /**
  * @experimental This is experimental feature.
  */
-export const suspenseCache = new SuspenseCacheObserver()
-
-type SuspenseCache<TData = unknown> = { data: TData; reset: () => void }
-
-type UseSuspenseCacheOption<TData, TKey extends Tuple, TFn extends (options: { key: TKey }) => Promise<TData>> = {
-  key: TKey
-  fn: TFn
-}
-
-/**
- * @experimental This is experimental feature.
- */
-export const useSuspenseCache = <TKey extends Tuple, TData>(
-  options: UseSuspenseCacheOption<TData, TKey, (options: { key: TKey }) => Promise<TData>>
-): SuspenseCache<TData> => {
-  const data = suspenseCache.suspend(options.key, () => options.fn({ key: options.key }))
-
-  const rerender = useRerender()
-  const stringifiedKey = JSON.stringify(options.key)
-
-  useEffect(() => suspenseCache.attach(options.key, rerender), [stringifiedKey, rerender])
-
-  return useMemo(
-    () => ({
-      data,
-      reset: () => suspenseCache.reset(options.key),
-    }),
-    [stringifiedKey, data]
-  )
-}
+export const suspensiveCache = new SuspensiveCacheObserver()

@@ -1,9 +1,8 @@
 import { act, render, screen, waitFor } from '@testing-library/react'
-import { ErrorBoundary } from '../ErrorBoundary'
-import { Suspense } from '../Suspense'
-import { suspenseCache } from '../useSuspenseCache'
-import { useSuspenseCache } from '../useSuspenseCache'
-import { ERROR_MESSAGE, FALLBACK, MS_100, TEXT } from './utils'
+import { ErrorBoundary, Suspense } from '../..'
+import { useAwait } from '../../experimental'
+import { suspensiveCache } from '../../experimental/suspensiveCache'
+import { ERROR_MESSAGE, FALLBACK, MS_100, TEXT } from '../utils'
 
 const delay = (ms: number) => new Promise((resolve) => setTimeout(() => resolve('done'), ms))
 const cacheFnSuccess = () => delay(MS_100).then(() => TEXT)
@@ -14,8 +13,8 @@ const cacheFnFailure = () =>
 
 const cacheKey = ['cacheKey'] as const
 
-const SuspenseCacheSuccess = () => {
-  const cache = useSuspenseCache({
+const AwaitCacheSuccess = () => {
+  const cache = useAwait({
     key: cacheKey,
     fn: cacheFnSuccess,
   })
@@ -28,8 +27,8 @@ const SuspenseCacheSuccess = () => {
   )
 }
 
-const SuspenseCacheFailure = () => {
-  const cache = useSuspenseCache({
+const AwaitCacheFailure = () => {
+  const cache = useAwait({
     key: cacheKey,
     fn: cacheFnFailure,
   })
@@ -37,13 +36,13 @@ const SuspenseCacheFailure = () => {
   return <>{cache.data}</>
 }
 
-describe('useSuspenseCache', () => {
-  beforeEach(() => suspenseCache.reset())
+describe('useAwait', () => {
+  beforeEach(() => suspensiveCache.reset())
   it('should return object containing data field with only success, and It will be cached', async () => {
     vi.useFakeTimers()
     const { unmount } = render(
       <Suspense fallback={FALLBACK}>
-        <SuspenseCacheSuccess />
+        <AwaitCacheSuccess />
       </Suspense>
     )
     expect(screen.queryByText(FALLBACK)).toBeInTheDocument()
@@ -55,7 +54,7 @@ describe('useSuspenseCache', () => {
     unmount()
     render(
       <Suspense fallback={FALLBACK}>
-        <SuspenseCacheSuccess />
+        <AwaitCacheSuccess />
       </Suspense>
     )
     expect(screen.queryByText(FALLBACK)).not.toBeInTheDocument()
@@ -67,7 +66,7 @@ describe('useSuspenseCache', () => {
     const { unmount } = render(
       <ErrorBoundary fallback={(caught) => <>{caught.error.message}</>}>
         <Suspense fallback={FALLBACK}>
-          <SuspenseCacheFailure />
+          <AwaitCacheFailure />
         </Suspense>
       </ErrorBoundary>
     )
@@ -80,7 +79,7 @@ describe('useSuspenseCache', () => {
     render(
       <ErrorBoundary fallback={(caught) => <>{caught.error.message}</>}>
         <Suspense fallback={FALLBACK}>
-          <SuspenseCacheFailure />
+          <AwaitCacheFailure />
         </Suspense>
       </ErrorBoundary>
     )
@@ -92,7 +91,7 @@ describe('useSuspenseCache', () => {
     vi.useFakeTimers()
     const { rerender } = render(
       <Suspense fallback={FALLBACK}>
-        <SuspenseCacheSuccess />
+        <AwaitCacheSuccess />
       </Suspense>
     )
     expect(screen.queryByText(FALLBACK)).toBeInTheDocument()
@@ -102,7 +101,7 @@ describe('useSuspenseCache', () => {
     resetButton.click()
     rerender(
       <Suspense fallback={FALLBACK}>
-        <SuspenseCacheSuccess />
+        <AwaitCacheSuccess />
       </Suspense>
     )
     expect(screen.queryByText(FALLBACK)).toBeInTheDocument()

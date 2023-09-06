@@ -11,7 +11,7 @@ import {
   useRef,
 } from 'react'
 import { ErrorBoundaryGroupContext } from './ErrorBoundaryGroup'
-import { suspenseCache } from './useSuspenseCache'
+import { suspensiveCache } from './experimental/suspensiveCache'
 import { hasResetKeysChanged } from './utils'
 
 export type ErrorBoundaryFallbackProps = {
@@ -78,7 +78,7 @@ class BaseErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState
   }
 
   reset() {
-    suspenseCache.clearError()
+    suspensiveCache.clearError()
     this.setState(initialState)
   }
 

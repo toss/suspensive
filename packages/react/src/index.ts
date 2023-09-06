@@ -4,7 +4,6 @@ export { ErrorBoundary } from './ErrorBoundary'
 export { ErrorBoundaryGroup, useErrorBoundaryGroup } from './ErrorBoundaryGroup'
 export { AsyncBoundary } from './AsyncBoundary'
 export { Delay } from './Delay'
-export { useSuspenseCache, suspenseCache } from './useSuspenseCache'
 
 export { withSuspense } from './withSuspense'
 export { withErrorBoundary } from './withErrorBoundary'

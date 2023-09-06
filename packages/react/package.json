@@ -26,6 +26,16 @@
         "default": "./dist/index.cjs"
       }
     },
+    "./experimental": {
+      "import": {
+        "types": "./dist/experimental/index.d.ts",
+        "default": "./dist/experimental/index.js"
+      },
+      "require": {
+        "types": "./dist/experimental/index.d.cts",
+        "default": "./dist/experimental/index.cjs"
+      }
+    },
     "./package.json": "./package.json"
   },
   "main": "dist/index.cjs",

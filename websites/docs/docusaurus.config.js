@@ -1,7 +1,7 @@
 // @ts-check
 // Note: type annotations allow type checking and IDEs autocompletion
 
-const package = {
+const packages = {
   intro: 'websites/docs/',
   react: 'packages/',
   'react-query': 'packages/',
@@ -50,7 +50,7 @@ const config = {
           editUrl: (editUrlParams) => {
             const defaultUrl = 'https://github.com/suspensive/react/'
             const packageKey = editUrlParams.docPath.split('/')[0]
-            const scope = package[packageKey]
+            const scope = packages[packageKey]
             const restPath = editUrlParams.docPath.replace('.i18n.', `.${editUrlParams.locale}.`)
             const editUrl = scope
               ? `${defaultUrl}blob/main/${scope}${restPath}`.replace('/README.en.md', '/README.md')
