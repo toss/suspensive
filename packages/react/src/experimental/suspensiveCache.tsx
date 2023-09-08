@@ -85,8 +85,10 @@ class SuspensiveCacheObserver {
     const keyNotifies = this.keyNotifiesMap.get(stringifiedKey)
     this.keyNotifiesMap.set(stringifiedKey, [...(keyNotifies ?? []), onNotify])
 
-    const detachSelf = () => this.detach(key, onNotify)
-    return detachSelf
+    const attached = {
+      detach: () => this.detach(key, onNotify),
+    }
+    return attached
   }
 
   public detach<TKey extends Tuple>(key: TKey, onNotify: (...args: unknown[]) => unknown) {

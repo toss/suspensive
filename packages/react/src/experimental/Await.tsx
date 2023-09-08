@@ -23,7 +23,10 @@ export const useAwait = <TData, TKey extends Tuple>(options: AwaitOptions<TData,
   const rerender = useRerender()
   const stringifiedKey = JSON.stringify(options.key)
 
-  useEffect(() => suspensiveCache.attach(options.key, rerender), [stringifiedKey, rerender])
+  useEffect(() => {
+    const attached = suspensiveCache.attach(options.key, rerender)
+    return attached.detach
+  }, [stringifiedKey, rerender])
 
   return useMemo(
     () => ({
