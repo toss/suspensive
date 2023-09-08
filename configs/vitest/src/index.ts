@@ -11,7 +11,6 @@ export const forPackage = (userConfig?: UserConfig): UserConfig => {
     test: {
       name: packageJson.name,
       dir: './src',
-      watch: false,
       environment: 'jsdom',
       globals: true,
       setupFiles: './test.setup.ts',
