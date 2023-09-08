@@ -2,4 +2,4 @@
 '@suspensive/react': patch
 ---
 
-fix(react): rename experimental suspenseCache to Await
+fix(react): rename useSuspenseCache to useAwait, suspenseCache to SuspensiveCache
