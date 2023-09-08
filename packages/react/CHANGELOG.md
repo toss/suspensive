@@ -1,5 +1,11 @@
 # @suspensive/react
 
+## 1.13.0
+
+### Minor Changes
+
+- 95be8a2: fix(react): change experimental Delay, SuspensiveProvider to stable
+
 ## 1.12.2
 
 ### Patch Changes
