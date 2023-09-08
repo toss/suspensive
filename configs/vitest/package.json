@@ -6,6 +6,7 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc",
+    "clean": "rimraf ./dist",
     "lint": "eslint .",
     "prepack": "pnpm build",
     "type:check": "tsc --noEmit"
