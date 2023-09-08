@@ -5,7 +5,6 @@ export const options: Options = {
   format: ['cjs', 'esm'],
   entry: ['src/*.ts', 'src/*.tsx', 'src/experimental/*.ts', 'src/experimental/*.tsx'],
   sourcemap: true,
-  clean: true,
   dts: true,
   splitting: false,
 }

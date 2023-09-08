@@ -48,11 +48,13 @@
   ],
   "scripts": {
     "build": "tsup",
+    "build:watch": "tsup --watch",
+    "clean": "rimraf ./dist && rimraf ./coverage",
     "lint": "eslint \"**/*.ts*\"",
     "lint:pub": "publint --strict",
     "prepack": "pnpm build",
     "test": "vitest run --coverage",
-    "test:watch": "vitest run --watch",
+    "test:watch": "vitest",
     "type:check": "tsc --noEmit"
   },
   "devDependencies": {
