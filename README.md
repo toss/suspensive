@@ -40,8 +40,6 @@ All declarative components to use suspense on both CSR, SSR.
 - HOC(Higher Order Component)s
 - useAwait, Await (Experimental)
 
-- HOC(Higher Order Component)s
-
 ## Installation
 
 ```shell
