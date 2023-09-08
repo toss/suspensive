@@ -1,24 +1,16 @@
 react:
-  - packages/react/*
-  - packages/react/**/*
+  - packages/react/**
 react-query:
-  - packages/react-query/*
-  - packages/react-query/**/*
+  - packages/react-query/**
 websites/docs:
-  - websites/docs/*
-  - websites/docs/**/*
+  - websites/docs/**
 visualization:
-  - websites/visualization/*
-  - websites/visualization/**/*
+  - websites/visualization/**
 eslint:
-  - configs/eslint/*
-  - configs/eslint/**/*
+  - configs/eslint/**
 tsconfig:
-  - configs/tsconfig/*
-  - configs/tsconfig/**/*
+  - configs/tsconfig/**
 dependencies:
   - pnpm-lock.yaml
-  - package*.json
 workflows:
-  - .github/workflows/*
-  - .github/workflows/**/*
+  - .github/workflows/**
