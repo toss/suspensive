@@ -1,4 +1,4 @@
-export { SuspensiveProvider, SuspensiveConfigs } from './SuspensiveProvider'
+export { SuspensiveProvider, Suspensive } from './SuspensiveProvider'
 export { Suspense } from './Suspense'
 export { ErrorBoundary } from './ErrorBoundary'
 export { ErrorBoundaryGroup, useErrorBoundaryGroup } from './ErrorBoundaryGroup'
