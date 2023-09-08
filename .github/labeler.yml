@@ -1,16 +1,22 @@
 "@suspensive/react":
-  - packages/react/**/*
+  - "packages/react/**/*"
 "@suspensive/react-query":
-  - packages/react-query/**/*
-"websites/docs":
-  - websites/docs/**/*
+  - "packages/react-query/**/*"
+"official docs":
+  - "websites/docs/**/*"
+  - "packages/**/*.md"
+  - "packages/**/*.mdx"
+  - "!packages/**/CHANGELOG.md"
+  - "packages/**/_category_.json"
 "visualization":
-  - websites/visualization/**/*
+  - "websites/visualization/**/*"
 "eslint":
-  - configs/eslint/**/*
+  - "configs/eslint/**/*"
+  - "**/.eslint*"
 "tsconfig":
-  - configs/tsconfig/**/*
+  - "configs/tsconfig/**/*"
+  - "**/.tsconfig*"
 "dependencies":
-  - pnpm-lock.yaml
+  - "pnpm-lock.yaml"
 "workflows":
-  - .github/workflows/**/*
+  - ".github/workflows/**/*"
