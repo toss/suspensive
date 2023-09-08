@@ -22,9 +22,11 @@
   ],
   "scripts": {
     "build": "turbo run build",
+    "build:watch": "turbo run build:watch",
     "changeset": "changeset",
     "changeset:publish": "pnpm prepack && changeset publish",
     "changeset:version": "changeset version && pnpm i --lockfile-only",
+    "clean": "pnpm --filter \"./packages/**\" run clean",
     "commit": "cz",
     "dev": "pnpm prepack && turbo run dev --parallel",
     "dev:ko": "turbo run dev:ko --scope='@suspensive/docs'",
@@ -37,6 +39,7 @@
     "prepack": "turbo run prepack",
     "test": "turbo run test",
     "test:tsd": "turbo run test:tsd",
+    "test:watch": "turbo run test:watch",
     "type:check": "turbo run type:check --parallel"
   },
   "devDependencies": {
@@ -61,6 +64,7 @@
     "packlint": "^0.2.4",
     "prettier": "^2.8.8",
     "publint": "^0.2.2",
+    "rimraf": "^5.0.1",
     "tsup": "^7.1.0",
     "turbo": "latest",
     "typescript": "^5.1.6",
