@@ -1,10 +1,8 @@
 import { act, render, screen, waitFor } from '@testing-library/react'
 import { ErrorBoundary, Suspense } from '../..'
-import { useAwait } from '../../experimental'
-import { suspensiveCache } from '../../experimental/suspensiveCache'
-import { ERROR_MESSAGE, FALLBACK, MS_100, TEXT } from '../utils'
+import { suspensiveCache, useAwait } from '../../experimental'
+import { ERROR_MESSAGE, FALLBACK, MS_100, TEXT, delay } from '../utils'
 
-const delay = (ms: number) => new Promise((resolve) => setTimeout(() => resolve('done'), ms))
 const cacheFnSuccess = () => delay(MS_100).then(() => TEXT)
 const cacheFnFailure = () =>
   delay(MS_100).then(() => {

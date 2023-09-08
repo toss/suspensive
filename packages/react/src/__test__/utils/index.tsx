@@ -33,6 +33,8 @@ ThrowError.reset = () => {
   throwErrorIsNeed.current = false
 }
 
+export const delay = (ms: number) => new Promise((resolve) => setTimeout(() => resolve('done'), ms))
+
 export const TEXT = 'TEXT' as const
 export const ERROR_MESSAGE = 'ERROR_MESSAGE' as const
 export const FALLBACK = 'FALLBACK' as const
