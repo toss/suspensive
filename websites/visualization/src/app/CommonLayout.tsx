@@ -10,7 +10,7 @@ export const CommonLayout = ({ children }: PropsWithChildren) => {
   return (
     <>
       <TopNavigation />
-      <Link href="/react/await">🔗 Experimental Feature: Await</Link>
+      <Link href="/react/experimental/await">🔗 Experimental Feature: Await</Link>
       <Flex.Center flex={1}>{children}</Flex.Center>
     </>
   )
