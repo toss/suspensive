@@ -1,5 +1,11 @@
 # @suspensive/react
 
+## 1.14.0
+
+### Minor Changes
+
+- 252d1d3: fix(react): rename useSuspenseCache to useAwait, suspenseCache to SuspensiveCache
+
 ## 1.13.0
 
 ### Minor Changes
