@@ -1,6 +1,6 @@
 import { act, render, screen, waitFor } from '@testing-library/react'
-import { Delay } from '..'
-import { MS_100, TEXT } from './utils'
+import { MS_100, TEXT } from './utils.spec'
+import { Delay } from '.'
 
 describe('Delay', () => {
   it('should render the children after the delay', async () => {

@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { expectError, expectType } from 'tsd'
-import { useSuspenseQueries } from '../../dist'
+import { useSuspenseQueries } from '../dist'
 
 const queryKey = ['key'] as const
 const queryFn = async () => 'response' as const

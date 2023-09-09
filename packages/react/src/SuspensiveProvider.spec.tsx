@@ -1,6 +1,6 @@
 import { act, render, screen, waitFor } from '@testing-library/react'
-import { Delay, Suspense, Suspensive, SuspensiveProvider } from '..'
-import { FALLBACK, MS_100, Suspend, TEXT } from './utils'
+import { FALLBACK, MS_100, Suspend, TEXT } from './utils.spec'
+import { Delay, Suspense, Suspensive, SuspensiveProvider } from '.'
 
 const FALLBACK_GLOBAL = 'FALLBACK_GLOBAL'
 
