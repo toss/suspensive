@@ -6,7 +6,6 @@
   - "websites/docs/**/*"
   - "packages/**/*.md"
   - "packages/**/*.mdx"
-  - "!packages/**/CHANGELOG.md"
   - "packages/**/_category_.json"
 "visualization":
   - "websites/visualization/**/*"
