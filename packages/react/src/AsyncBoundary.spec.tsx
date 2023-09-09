@@ -1,5 +1,5 @@
 import { render } from '@testing-library/react'
-import { FALLBACK, TEXT } from './utils.spec'
+import { FALLBACK, TEXT } from './utils/toTest'
 import { AsyncBoundary } from '.'
 
 describe('AsyncBoundary', () => {

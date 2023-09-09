@@ -1,5 +1,5 @@
 import { act, render, screen } from '@testing-library/react'
-import { ERROR_MESSAGE, MS_100, TEXT, ThrowError } from './utils.spec'
+import { ERROR_MESSAGE, MS_100, TEXT, ThrowError } from './utils/toTest'
 import { ErrorBoundary, ErrorBoundaryGroup, useErrorBoundaryGroup } from '.'
 
 const innerErrorBoundaryCount = 3

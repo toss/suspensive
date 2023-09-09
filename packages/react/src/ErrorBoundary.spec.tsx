@@ -1,7 +1,7 @@
 import { act } from '@testing-library/react'
 import { ComponentProps, ComponentRef, createRef } from 'react'
 import { createRoot } from 'react-dom/client'
-import { ERROR_MESSAGE, FALLBACK, MS_100, TEXT, ThrowError } from './utils.spec'
+import { ERROR_MESSAGE, FALLBACK, MS_100, TEXT, ThrowError } from './utils/toTest'
 import { ErrorBoundary } from '.'
 
 let container = document.createElement('div')

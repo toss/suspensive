@@ -1,5 +1,5 @@
 import { render, screen, waitFor } from '@testing-library/react'
-import { FALLBACK, MS_100, Suspend, TEXT } from './utils.spec'
+import { FALLBACK, MS_100, Suspend, TEXT } from './utils/toTest'
 import { withSuspense } from '.'
 
 const SuspendDuring100msToShowTEXTInSuspense = withSuspense(() => <Suspend during={MS_100} toShow={TEXT} />, {
