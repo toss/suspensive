@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { InfiniteData } from '@tanstack/react-query'
 import { expectError, expectType } from 'tsd'
-import { useSuspenseInfiniteQuery } from '../../dist'
+import { useSuspenseInfiniteQuery } from '../dist'
 
 const queryKey = ['key'] as const
 const queryFn = async () => 'response' as const

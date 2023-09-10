@@ -1,6 +1,6 @@
 import { act, render, screen, waitFor } from '@testing-library/react'
-import { withDelay } from '..'
-import { MS_100, TEXT } from './utils'
+import { MS_100, TEXT } from './utils/toTest'
+import { withDelay } from '.'
 
 const TEXTAfterDelay100ms = withDelay(() => <>{TEXT}</>, { ms: MS_100 })
 
