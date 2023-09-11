@@ -1,6 +1,6 @@
 import { act, render, screen } from '@testing-library/react'
 import { ERROR_MESSAGE, MS_100, TEXT, ThrowError } from './utils/toTest'
-import { ErrorBoundary, ErrorBoundaryGroup, useErrorBoundaryGroup } from '.'
+import { ErrorBoundary, ErrorBoundaryGroup, useErrorBoundaryGroup, withErrorBoundaryGroup } from '.'
 
 const innerErrorBoundaryCount = 3
 const resetButtonText = 'reset button'
@@ -74,5 +74,13 @@ describe('useErrorBoundaryGroup', () => {
     expect(() => render(<WithoutErrorBoundaryGroup />)).toThrow(
       'useErrorBoundaryGroup: ErrorBoundaryGroup is required in parent'
     )
+  })
+})
+
+const TestWithErrorBoundaryGroup = withErrorBoundaryGroup(() => <>{TEXT}</>)
+describe('withErrorBoundaryGroup', () => {
+  it('should show children', () => {
+    const rendered = render(<TestWithErrorBoundaryGroup />)
+    expect(rendered.queryByText(TEXT)).toBeInTheDocument()
   })
 })
