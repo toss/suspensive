@@ -44,6 +44,5 @@ type AwaitProps<TData, TKey extends Tuple> = {
  */
 export const Await = <TData, TKey extends Tuple>({ children: Children, options }: AwaitProps<TData, TKey>) => {
   const awaited = useAwait<TData, TKey>(options)
-
   return <Children {...awaited} />
 }
