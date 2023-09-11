@@ -1,5 +1,5 @@
-import { FunctionComponent, useEffect, useMemo } from 'react'
-import { useRerender } from '../hooks'
+import { FunctionComponent, useMemo } from 'react'
+import { useSyncExternalStore } from 'use-sync-external-store/shim'
 import { Tuple } from '../types'
 import { suspensiveCache } from './suspensiveCache'
 
@@ -18,22 +18,19 @@ export const awaitOptions = <TData, TKey extends Tuple>(options: AwaitOptions<TD
  * @experimental This is experimental feature.
  */
 export const useAwait = <TData, TKey extends Tuple>(options: AwaitOptions<TData, TKey>): Awaited<TData> => {
-  const data = suspensiveCache.suspend(options.key, () => options.fn({ key: options.key }))
-
-  const rerender = useRerender()
-  const stringifiedKey = JSON.stringify(options.key)
-
-  useEffect(() => {
-    const attached = suspensiveCache.attach(options.key, rerender)
-    return attached.detach
-  }, [stringifiedKey, rerender])
+  const getSnapshot = () => suspensiveCache.suspend(options.key, () => options.fn({ key: options.key }))
+  const data = useSyncExternalStore<TData>(
+    (onStoreChange) => suspensiveCache.attach(options.key, onStoreChange).detach,
+    getSnapshot,
+    getSnapshot
+  )
 
   return useMemo(
     () => ({
       data,
       reset: () => suspensiveCache.reset(options.key),
     }),
-    [stringifiedKey, data]
+    [data, options.key]
   )
 }
 
@@ -47,5 +44,6 @@ type AwaitProps<TData, TKey extends Tuple> = {
  */
 export const Await = <TData, TKey extends Tuple>({ children: Children, options }: AwaitProps<TData, TKey>) => {
   const awaited = useAwait<TData, TKey>(options)
+
   return <Children {...awaited} />
 }

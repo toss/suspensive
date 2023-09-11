@@ -23,8 +23,8 @@ const ReactQueryPage = withErrorBoundaryGroup(() => {
       <Area title="QueryErrorResetBoundary + ErrorBoundary + Suspense">
         <ErrorBoundary onReset={queryErrorResetBoundary.reset} fallback={RejectedFallback}>
           <Suspense.CSROnly fallback={<Spinner />}>
-            <UseSuspenseQuery queryKey={['query', 1]} queryFn={api.almostFailure} />
-            <UseSuspenseQuery queryKey={['query', 2]} queryFn={api.almostFailure} />
+            <UseSuspenseQuery queryKey={['query', 1]} queryFn={() => api.delay(500, { percentage: 40 })} />
+            <UseSuspenseQuery queryKey={['query', 2]} queryFn={() => api.delay(500, { percentage: 40 })} />
           </Suspense.CSROnly>
         </ErrorBoundary>
       </Area>
@@ -32,16 +32,16 @@ const ReactQueryPage = withErrorBoundaryGroup(() => {
       <Area title="QueryErrorBoundary + Suspense">
         <QueryErrorBoundary fallback={RejectedFallback}>
           <Suspense.CSROnly fallback={<Spinner />}>
-            <UseSuspenseQuery queryKey={['query', 3]} queryFn={api.almostFailure} />
-            <UseSuspenseQuery queryKey={['query', 4]} queryFn={api.almostFailure} />
+            <UseSuspenseQuery queryKey={['query', 3]} queryFn={() => api.delay(500, { percentage: 40 })} />
+            <UseSuspenseQuery queryKey={['query', 4]} queryFn={() => api.delay(500, { percentage: 40 })} />
           </Suspense.CSROnly>
         </QueryErrorBoundary>
       </Area>
 
       <Area title="QueryAsyncBoundary">
         <QueryAsyncBoundary.CSROnly pendingFallback={<Spinner />} rejectedFallback={RejectedFallback}>
-          <UseSuspenseQuery queryKey={['query', 5]} queryFn={api.almostFailure} />
-          <UseSuspenseQuery queryKey={['query', 6]} queryFn={api.almostFailure} />
+          <UseSuspenseQuery queryKey={['query', 5]} queryFn={() => api.delay(500, { percentage: 40 })} />
+          <UseSuspenseQuery queryKey={['query', 6]} queryFn={() => api.delay(500, { percentage: 40 })} />
         </QueryAsyncBoundary.CSROnly>
       </Area>
 

@@ -159,6 +159,10 @@ importers:
   configs/vitest: {}
 
   packages/react:
+    dependencies:
+      use-sync-external-store:
+        specifier: ^1.2.0
+        version: 1.2.0(react@18.2.0)
     devDependencies:
       '@suspensive/tsup':
         specifier: workspace:*
@@ -175,6 +179,9 @@ importers:
       '@types/react-dom':
         specifier: ^18.2.1
         version: 18.2.1
+      '@types/use-sync-external-store':
+        specifier: ^0.0.4
+        version: 0.0.4
       react:
         specifier: ^18.2.0
         version: 18.2.0
@@ -4127,6 +4134,10 @@ packages:
 
   /@types/unist@2.0.6:
     resolution: {integrity: sha512-PBjIUxZHOuj0R15/xuwJYjFi+KZdNFrehocChv4g5hu6aFroHue8m0lBP0POdK2nKzbw0cgV1mws8+V/JAcEkQ==}
+
+  /@types/use-sync-external-store@0.0.4:
+    resolution: {integrity: sha512-DMBc2WDEfaGsWXqH/Sk2oBaUkvlUwqgt/YEygpqX0MaiEjqR7afd1QgE4Pq2zBr/TRz0Mpu92eBBo5UQjtTD5Q==}
+    dev: true
 
   /@types/ws@8.5.4:
     resolution: {integrity: sha512-zdQDHKUgcX/zBc4GrwsE/7dVdAD8JR4EuiAXiiUhhfyIJXXb2+PrGshFyeXWQPMmmZ2XxgaqclgpIC7eTXc1mg==}
