@@ -1,5 +1,11 @@
 # @suspensive/react
 
+## 1.14.1
+
+### Patch Changes
+
+- c5906c9: refactor(react, react-query): remove **test** directory to collocate
+
 ## 1.14.0
 
 ### Minor Changes
