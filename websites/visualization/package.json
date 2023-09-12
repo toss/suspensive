@@ -2,6 +2,22 @@
   "name": "@suspensive/visualization",
   "version": "0.0.7",
   "private": true,
+  "description": "Visualization of Suspensive core concepts",
+  "keywords": [
+    "suspensive",
+    "@suspensive/react",
+    "@suspensive/react-query"
+  ],
+  "homepage": "https://visualization.suspensive.org",
+  "bugs": "https://github.com/suspensive/react/issues",
+  "funding": {
+    "type": "github",
+    "url": "https://github.com/sponsors/manudeli"
+  },
+  "author": {
+    "name": "Jonghyeon Ko",
+    "email": "manudeli.ko@gmail.com"
+  },
   "scripts": {
     "build": "next build",
     "dev": "next dev --port 4001",

@@ -2,6 +2,22 @@
   "name": "@suspensive/docs",
   "version": "0.0.0-development",
   "private": true,
+  "description": "Suspensive Official Docs",
+  "keywords": [
+    "suspensive",
+    "@suspensive/react",
+    "@suspensive/react-query"
+  ],
+  "homepage": "https://suspensive.org",
+  "bugs": "https://github.com/suspensive/react/issues",
+  "funding": {
+    "type": "github",
+    "url": "https://github.com/sponsors/manudeli"
+  },
+  "author": {
+    "name": "Jonghyeon Ko",
+    "email": "manudeli.ko@gmail.com"
+  },
   "scripts": {
     "build": "pnpm gen:i18n && docusaurus build",
     "clear": "docusaurus clear && rm -rf docs i18n/ko/docusaurus-plugin-content-docs/current",
