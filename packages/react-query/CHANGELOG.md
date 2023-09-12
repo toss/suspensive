@@ -1,5 +1,11 @@
 # @suspensive/react-query
 
+## 1.14.2
+
+### Patch Changes
+
+- ada618e: chore(package.json): more detail
+
 ## 1.14.1
 
 ### Patch Changes
