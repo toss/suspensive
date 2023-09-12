@@ -1,6 +1,7 @@
 {
   "name": "@suspensive/react",
   "version": "1.14.1",
+  "description": "Useful interfaces for React Suspense",
   "keywords": [
     "suspensive",
     "react"
@@ -12,7 +13,15 @@
     "url": "https://github.com/suspensive/react.git",
     "directory": "packages/react"
   },
+  "funding": {
+    "type": "github",
+    "url": "https://github.com/sponsors/manudeli"
+  },
   "license": "MIT",
+  "author": {
+    "name": "Jonghyeon Ko",
+    "email": "manudeli.ko@gmail.com"
+  },
   "sideEffects": false,
   "type": "module",
   "exports": {
@@ -43,7 +52,6 @@
   "files": [
     "dist",
     "src",
-    "!**/*/__test__",
     "!**/*/_category_.json"
   ],
   "scripts": {
