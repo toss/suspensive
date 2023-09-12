@@ -1,8 +1,10 @@
 {
   "name": "@suspensive/react-query",
   "version": "1.14.1",
+  "description": "Useful helpers for @tanstack/react-query with suspense",
   "keywords": [
     "suspensive",
+    "react",
     "react-query"
   ],
   "homepage": "https://suspensive.org",
@@ -12,7 +14,15 @@
     "url": "https://github.com/suspensive/react.git",
     "directory": "packages/react-query"
   },
+  "funding": {
+    "type": "github",
+    "url": "https://github.com/sponsors/manudeli"
+  },
   "license": "MIT",
+  "author": {
+    "name": "Jonghyeon Ko",
+    "email": "manudeli.ko@gmail.com"
+  },
   "sideEffects": false,
   "type": "module",
   "exports": {
@@ -33,7 +43,6 @@
   "files": [
     "dist",
     "src",
-    "!**/*/__test__",
     "!**/*/_category_.json"
   ],
   "scripts": {
