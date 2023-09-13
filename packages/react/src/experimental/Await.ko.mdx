@@ -2,3 +2,22 @@
 sidebar_position: 7
 title: Await
 ---
+
+이 컴포넌트는 받은 비동기 함수가 리턴한 Promise가 pending이면 가장 가까운 부모 Suspense의 fallback을 노출합니다.
+이후 Promise가 fulfilled되면 children 컴포넌트들에서 보장된 awaited data를 사용할 수 있게 합니다.
+
+또한 이 data는 받은 키에 cache되어 재사용하는 경우 pending없이 즉시 사용할 수 있습니다.
+
+```tsx
+import { Await, Suspense } from '@supensive/react'
+
+const getPost = (postId: number) => fetch(`/post/${postId}`).then((res) => res.json()) as Post
+
+const Example = () => (
+  <Suspense fallback="awaiting...">
+    <Await options={{ key: ['post', 2] as const, fn: ({ key: [, postId] }) => getPost(postId) }}>
+      {(awaited) => <>{awiated.data}</>} // Post
+    </Await>
+  </Suspense>
+)
+```
