@@ -62,5 +62,9 @@
   "sidebar.tutorialSidebar.category.APIs": {
     "message": "APIs",
     "description": "The label for category APIs in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Experimental Features": {
+    "message": "Experimental Features",
+    "description": "The label for category Experimental Features in sidebar tutorialSidebar"
   }
 }
