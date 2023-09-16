@@ -2,4 +2,4 @@
 "@suspensive/react": patch
 ---
 
-fix(react): fix throw null
+fix(react): ErrorBoundary should catch null thrown by children
