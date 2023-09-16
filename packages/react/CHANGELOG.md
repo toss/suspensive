@@ -1,5 +1,11 @@
 # @suspensive/react
 
+## 1.14.3
+
+### Patch Changes
+
+- da62f3a: refactor(react): merge hoc's code into original component file
+
 ## 1.14.2
 
 ### Patch Changes
