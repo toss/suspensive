@@ -1,5 +1,7 @@
 import {
   Component,
+  ComponentProps,
+  ComponentType,
   ErrorInfo,
   FunctionComponent,
   PropsWithChildren,
@@ -12,6 +14,7 @@ import {
 } from 'react'
 import { ErrorBoundaryGroupContext } from './ErrorBoundaryGroup'
 import { suspensiveCache } from './experimental/suspensiveCache'
+import { PropsWithoutChildren } from './types'
 import { hasResetKeysChanged } from './utils'
 
 export type ErrorBoundaryFallbackProps = {
@@ -117,4 +120,23 @@ export const ErrorBoundary = forwardRef<{ reset(): void }, ErrorBoundaryProps>((
 })
 if (process.env.NODE_ENV !== 'production') {
   ErrorBoundary.displayName = 'ErrorBoundary'
+}
+
+// HOC
+export const withErrorBoundary = <TProps extends ComponentProps<ComponentType> = Record<string, never>>(
+  Component: ComponentType<TProps>,
+  errorBoundaryProps: PropsWithoutChildren<ErrorBoundaryProps>
+) => {
+  const Wrapped = (props: TProps) => (
+    <ErrorBoundary {...errorBoundaryProps}>
+      <Component {...props} />
+    </ErrorBoundary>
+  )
+
+  if (process.env.NODE_ENV !== 'production') {
+    const name = Component.displayName || Component.name || 'Component'
+    Wrapped.displayName = `withErrorBoundary(${name})`
+  }
+
+  return Wrapped
 }

@@ -1,4 +1,4 @@
-import hasResetKeysChanged from './hasResetKeysChanged'
+import { hasResetKeysChanged } from '.'
 
 const primitive = 0
 const reference1 = { test: 0 }
