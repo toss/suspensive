@@ -47,26 +47,32 @@ type ErrorBoundaryProps = PropsWithChildren<{
   fallback: NonNullable<ReactNode> | FunctionComponent<ErrorBoundaryFallbackProps>
 }>
 
-type ErrorBoundaryState = {
-  error: Error | null
-}
+type ErrorBoundaryState<TError extends Error = Error> =
+  | {
+      isError: true
+      error: TError
+    }
+  | {
+      isError: false
+      error: null
+    }
 
 const initialState: ErrorBoundaryState = {
+  isError: false,
   error: null,
 }
 
 class BaseErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
-  static getDerivedStateFromError(error: Error) {
-    return { error }
+  static getDerivedStateFromError(error: Error): ErrorBoundaryState {
+    return { isError: true, error }
   }
 
   state = initialState
 
   componentDidUpdate(prevProps: ErrorBoundaryProps, prevState: ErrorBoundaryState) {
-    const { error } = this.state
+    const { isError } = this.state
     const { resetKeys } = this.props
-
-    if (error !== null && prevState.error !== null && hasResetKeysChanged(prevProps.resetKeys, resetKeys)) {
+    if (isError && prevState.isError && hasResetKeysChanged(prevProps.resetKeys, resetKeys)) {
       this.resetErrorBoundary()
     }
   }
@@ -86,10 +92,10 @@ class BaseErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState
   }
 
   render() {
-    const { error } = this.state
+    const { isError, error } = this.state
     const { children, fallback } = this.props
 
-    if (error !== null) {
+    if (isError) {
       if (typeof fallback === 'function') {
         return createElement(fallback, {
           error,
