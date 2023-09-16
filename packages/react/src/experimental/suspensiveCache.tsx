@@ -1,8 +1,8 @@
 import { Tuple } from '../types'
 
-type Cache<Key extends Tuple = Tuple> = {
+type Cache<TKey extends Tuple = Tuple> = {
   promise?: Promise<unknown>
-  key: Key
+  key: TKey
   error?: unknown
   data?: unknown
 }

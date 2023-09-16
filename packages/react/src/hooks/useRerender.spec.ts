@@ -1,5 +1,5 @@
 import { act, renderHook } from '@testing-library/react'
-import useRerender from './useRerender'
+import { useRerender } from '.'
 
 describe('useRerender', () => {
   it('should return function to rerender component when calling', () => {

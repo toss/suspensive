@@ -1,5 +1,5 @@
 import { renderHook } from '@testing-library/react'
-import usePrevious from './usePrevious'
+import { usePrevious } from '.'
 
 describe('usePrevious', () => {
   it('should return value given as an argument in the previous rendering', () => {
