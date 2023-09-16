@@ -1,7 +1,7 @@
 import { FunctionComponent, createElement, useMemo } from 'react'
 import { useSyncExternalStore } from 'use-sync-external-store/shim'
 import { Tuple } from '../types'
-import { hashKey } from '../utils/hashKey'
+import { hashKey } from '../utils'
 
 export type Key = Tuple
 type Awaited<TData = unknown> = { data: TData; reset: () => void }
