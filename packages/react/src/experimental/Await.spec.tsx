@@ -1,7 +1,7 @@
 import { act, render, screen, waitFor } from '@testing-library/react'
 import { ErrorBoundary, Suspense } from '..'
 import { ERROR_MESSAGE, FALLBACK, MS_100, TEXT, delay } from '../utils/toTest'
-import { suspensiveCache, useAwait } from '.'
+import { awaitClient, useAwait } from '.'
 
 const cacheFnSuccess = () => delay(MS_100).then(() => TEXT)
 const cacheFnFailure = () =>
@@ -35,7 +35,7 @@ const AwaitCacheFailure = () => {
 }
 
 describe('useAwait', () => {
-  beforeEach(() => suspensiveCache.reset())
+  beforeEach(() => awaitClient.reset())
   it('should return object containing data field with only success, and It will be cached', async () => {
     vi.useFakeTimers()
     const { unmount } = render(
