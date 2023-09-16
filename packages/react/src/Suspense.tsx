@@ -1,4 +1,12 @@
-import { ReactNode, Suspense as ReactSuspense, SuspenseProps, createContext, useContext } from 'react'
+import {
+  ComponentProps,
+  ComponentType,
+  ReactNode,
+  Suspense as ReactSuspense,
+  SuspenseProps,
+  createContext,
+  useContext,
+} from 'react'
 import { useIsMounted } from './hooks'
 import { PropsWithoutChildren } from './types'
 
@@ -39,3 +47,39 @@ export const Suspense = DefaultSuspense as typeof DefaultSuspense & {
   CSROnly: typeof CSROnlySuspense
 }
 Suspense.CSROnly = CSROnlySuspense
+
+// HOC
+export function withSuspense<TProps extends ComponentProps<ComponentType> = Record<string, never>>(
+  Component: ComponentType<TProps>,
+  suspenseProps?: PropsWithoutChildren<SuspenseProps>
+) {
+  const Wrapped = (props: TProps) => (
+    <Suspense {...suspenseProps}>
+      <Component {...props} />
+    </Suspense>
+  )
+
+  if (process.env.NODE_ENV !== 'production') {
+    const name = Component.displayName || Component.name || 'Component'
+    Wrapped.displayName = `withSuspense(${name})`
+  }
+
+  return Wrapped
+}
+
+withSuspense.CSROnly = function withSuspenseCSROnly<
+  TProps extends ComponentProps<ComponentType> = Record<string, never>
+>(Component: ComponentType<TProps>, suspenseProps?: PropsWithoutChildren<SuspenseProps>) {
+  const Wrapped = (props: TProps) => (
+    <Suspense.CSROnly {...suspenseProps}>
+      <Component {...props} />
+    </Suspense.CSROnly>
+  )
+
+  if (process.env.NODE_ENV !== 'production') {
+    const name = Component.displayName || Component.name || 'Component'
+    Wrapped.displayName = `withSuspense.CSROnly(${name})`
+  }
+
+  return Wrapped
+}

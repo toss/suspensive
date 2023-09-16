@@ -1,5 +1,5 @@
 import { renderHook } from '@testing-library/react'
-import useIsMounted from './useIsMounted'
+import { useIsMounted } from '.'
 
 describe('useIsMounted', () => {
   it('should return true when component is mounted', () => {

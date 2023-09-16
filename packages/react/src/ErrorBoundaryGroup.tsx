@@ -1,30 +1,26 @@
-import { ComponentType, ReactNode, createContext, useContext, useEffect, useMemo } from 'react'
+import { ComponentProps, ComponentType, PropsWithChildren, createContext, useContext, useEffect, useMemo } from 'react'
 import { useIsChanged, useKey } from './hooks'
+import { PropsWithoutChildren } from './types'
 
 export const ErrorBoundaryGroupContext = createContext<{ reset: () => void; resetKey: number } | undefined>(undefined)
 if (process.env.NODE_ENV !== 'production') {
   ErrorBoundaryGroupContext.displayName = 'ErrorBoundaryGroupContext'
 }
 
-/**
- * ErrorBoundaryGroup is Component to manage multiple ErrorBoundaries
- * @see {@link https://suspensive.org/docs/react/src/ErrorBoundaryGroup.i18n Suspensive Official Docs}
- * @see {@link https://github.com/toss/slash/pull/157 Pull Request to add ErrorBoundaryGroup in @toss/error-boundary}
- */
-export const ErrorBoundaryGroup = ({
-  blockOutside = false,
-  children,
-}: {
+type ErrorBoundaryGroupProps = PropsWithChildren<{
   /**
    * If you use blockOutside as true, ErrorBoundaryGroup will protect multiple ErrorBoundaries as its children from external ErrorBoundaryGroup's resetKey
    * @default false
    */
   blockOutside?: boolean
-  /**
-   * Use multiple ErrorBoundaries inside of children
-   */
-  children?: ReactNode
-}) => {
+}>
+
+/**
+ * ErrorBoundaryGroup is Component to manage multiple ErrorBoundaries
+ * @see {@link https://suspensive.org/docs/react/src/ErrorBoundaryGroup.i18n Suspensive Official Docs}
+ * @see {@link https://github.com/toss/slash/pull/157 Pull Request to add ErrorBoundaryGroup in @toss/error-boundary}
+ */
+export const ErrorBoundaryGroup = ({ blockOutside = false, children }: ErrorBoundaryGroupProps) => {
   const [resetKey, reset] = useKey()
   const parentGroup = useContext(ErrorBoundaryGroupContext)
   const isParentGroupResetKeyChanged = useIsChanged(parentGroup?.resetKey)
@@ -71,4 +67,23 @@ export const useErrorBoundaryGroup = () => {
     }),
     [group.reset]
   )
+}
+
+// HOC
+export const withErrorBoundaryGroup = <TProps extends ComponentProps<ComponentType> = Record<string, never>>(
+  Component: ComponentType<TProps>,
+  errorBoundaryGroupProps?: PropsWithoutChildren<ErrorBoundaryGroupProps>
+) => {
+  const Wrapped = (props: TProps) => (
+    <ErrorBoundaryGroup {...errorBoundaryGroupProps}>
+      <Component {...props} />
+    </ErrorBoundaryGroup>
+  )
+
+  if (process.env.NODE_ENV !== 'production') {
+    const name = Component.displayName || Component.name || 'Component'
+    Wrapped.displayName = `withErrorBoundaryGroup(${name})`
+  }
+
+  return Wrapped
 }

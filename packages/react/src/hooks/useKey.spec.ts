@@ -1,5 +1,5 @@
 import { act, renderHook } from '@testing-library/react'
-import useKey from './useKey'
+import { useKey } from '.'
 
 describe('useKey', () => {
   describe('refresh function', () => {
