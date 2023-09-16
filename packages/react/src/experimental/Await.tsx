@@ -1,9 +1,9 @@
 import { FunctionComponent, createElement, useMemo } from 'react'
 import { useSyncExternalStore } from 'use-sync-external-store/shim'
 import { Tuple } from '../types'
+import { hashKey } from '../utils/hashKey'
 
-const hashKey = <TKey extends Tuple>(key: TKey) => JSON.stringify(key)
-type HashedKey = ReturnType<typeof hashKey>
+export type Key = Tuple
 type Awaited<TData = unknown> = { data: TData; reset: () => void }
 type AwaitOptions<TData, TKey extends Tuple> = {
   key: TKey
@@ -12,7 +12,7 @@ type AwaitOptions<TData, TKey extends Tuple> = {
 type AwaitState<TKey extends Tuple = Tuple> = {
   promise?: Promise<unknown>
   key: TKey
-  hashedKey: HashedKey
+  hashedKey: ReturnType<typeof hashKey>
   error?: unknown
   data?: unknown
 }
@@ -54,8 +54,8 @@ export const Await = <TData, TKey extends Tuple>({ children, options }: AwaitPro
   createElement(children, useAwait<TData, TKey>(options))
 
 class AwaitClient {
-  private awaitCache = new Map<HashedKey, AwaitState>()
-  private syncsMap = new Map<HashedKey, ((...args: unknown[]) => unknown)[]>()
+  private awaitCache = new Map<ReturnType<typeof hashKey>, AwaitState>()
+  private syncsMap = new Map<ReturnType<typeof hashKey>, ((...args: unknown[]) => unknown)[]>()
 
   public reset = <TKey extends Tuple>(key?: TKey) => {
     if (key === undefined || key.length === 0) {
