@@ -3,35 +3,23 @@ import { ErrorBoundary, Suspense } from '..'
 import { ERROR_MESSAGE, FALLBACK, MS_100, TEXT, delay } from '../utils/toTest'
 import { awaitClient, useAwait } from '.'
 
-const cacheFnSuccess = () => delay(MS_100).then(() => TEXT)
-const cacheFnFailure = () =>
-  delay(MS_100).then(() => {
-    throw Error(ERROR_MESSAGE)
-  })
+const key = ['key'] as const
 
-const cacheKey = ['cacheKey'] as const
-
-const AwaitCacheSuccess = () => {
-  const cache = useAwait({
-    key: cacheKey,
-    fn: cacheFnSuccess,
-  })
+const AwaitSuccess = () => {
+  const awaited = useAwait({ key, fn: () => delay(MS_100).then(() => TEXT) })
 
   return (
     <>
-      {cache.data}
-      <button onClick={cache.reset}>reset</button>
+      {awaited.data}
+      <button onClick={awaited.reset}>reset</button>
     </>
   )
 }
 
-const AwaitCacheFailure = () => {
-  const cache = useAwait({
-    key: cacheKey,
-    fn: cacheFnFailure,
-  })
+const AwaitFailure = () => {
+  const awaited = useAwait({ key, fn: () => delay(MS_100).then(() => Promise.reject(new Error(ERROR_MESSAGE))) })
 
-  return <>{cache.data}</>
+  return <>{awaited.data}</>
 }
 
 describe('useAwait', () => {
@@ -40,7 +28,7 @@ describe('useAwait', () => {
     vi.useFakeTimers()
     const { unmount } = render(
       <Suspense fallback={FALLBACK}>
-        <AwaitCacheSuccess />
+        <AwaitSuccess />
       </Suspense>
     )
     expect(screen.queryByText(FALLBACK)).toBeInTheDocument()
@@ -52,7 +40,7 @@ describe('useAwait', () => {
     unmount()
     render(
       <Suspense fallback={FALLBACK}>
-        <AwaitCacheSuccess />
+        <AwaitSuccess />
       </Suspense>
     )
     expect(screen.queryByText(FALLBACK)).not.toBeInTheDocument()
@@ -64,7 +52,7 @@ describe('useAwait', () => {
     const { unmount } = render(
       <ErrorBoundary fallback={(caught) => <>{caught.error.message}</>}>
         <Suspense fallback={FALLBACK}>
-          <AwaitCacheFailure />
+          <AwaitFailure />
         </Suspense>
       </ErrorBoundary>
     )
@@ -77,7 +65,7 @@ describe('useAwait', () => {
     render(
       <ErrorBoundary fallback={(caught) => <>{caught.error.message}</>}>
         <Suspense fallback={FALLBACK}>
-          <AwaitCacheFailure />
+          <AwaitFailure />
         </Suspense>
       </ErrorBoundary>
     )
@@ -89,7 +77,7 @@ describe('useAwait', () => {
     vi.useFakeTimers()
     const { rerender } = render(
       <Suspense fallback={FALLBACK}>
-        <AwaitCacheSuccess />
+        <AwaitSuccess />
       </Suspense>
     )
     expect(screen.queryByText(FALLBACK)).toBeInTheDocument()
@@ -99,7 +87,7 @@ describe('useAwait', () => {
     resetButton.click()
     rerender(
       <Suspense fallback={FALLBACK}>
-        <AwaitCacheSuccess />
+        <AwaitSuccess />
       </Suspense>
     )
     expect(screen.queryByText(FALLBACK)).toBeInTheDocument()

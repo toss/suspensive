@@ -4,12 +4,13 @@ import { Tuple } from '../types'
 import { hashKey } from '../utils'
 
 export type Key = Tuple
-type Awaited<TData = unknown> = { data: TData; reset: () => void }
-type AwaitOptions<TData, TKey extends Tuple> = {
+
+type AwaitOptions<TData, TKey extends Key> = {
   key: TKey
   fn: (options: { key: TKey }) => Promise<TData>
 }
-type AwaitState<TKey extends Tuple = Tuple> = {
+
+type AwaitState<TKey extends Key = Key> = {
   promise?: Promise<unknown>
   key: TKey
   hashedKey: ReturnType<typeof hashKey>
@@ -17,15 +18,15 @@ type AwaitState<TKey extends Tuple = Tuple> = {
   data?: unknown
 }
 
-/**
- * @experimental This is experimental feature.
- */
-export const awaitOptions = <TData, TKey extends Tuple>(options: AwaitOptions<TData, TKey>) => options
+type Awaited<TData> = {
+  data: TData
+  reset: () => void
+}
 
 /**
  * @experimental This is experimental feature.
  */
-export const useAwait = <TData, TKey extends Tuple>(options: AwaitOptions<TData, TKey>): Awaited<TData> => {
+export const useAwait = <TData, TKey extends Key>(options: AwaitOptions<TData, TKey>): Awaited<TData> => {
   const syncData = () => awaitClient.suspend(options)
   const data = useSyncExternalStore<TData>(
     (sync) => awaitClient.subscribe(options.key, sync).unsubscribe,
@@ -35,6 +36,7 @@ export const useAwait = <TData, TKey extends Tuple>(options: AwaitOptions<TData,
 
   return useMemo(
     () => ({
+      key: options.key,
       data,
       reset: () => awaitClient.reset(options.key),
     }),
@@ -42,7 +44,7 @@ export const useAwait = <TData, TKey extends Tuple>(options: AwaitOptions<TData,
   )
 }
 
-type AwaitProps<TData, TKey extends Tuple> = {
+type AwaitProps<TData, TKey extends Key> = {
   options: AwaitOptions<TData, TKey>
   children: FunctionComponent<Awaited<TData>>
 }
@@ -50,14 +52,14 @@ type AwaitProps<TData, TKey extends Tuple> = {
 /**
  * @experimental This is experimental feature.
  */
-export const Await = <TData, TKey extends Tuple>({ children, options }: AwaitProps<TData, TKey>) =>
+export const Await = <TData, TKey extends Key>({ children, options }: AwaitProps<TData, TKey>) =>
   createElement(children, useAwait<TData, TKey>(options))
 
 class AwaitClient {
   private awaitCache = new Map<ReturnType<typeof hashKey>, AwaitState>()
   private syncsMap = new Map<ReturnType<typeof hashKey>, ((...args: unknown[]) => unknown)[]>()
 
-  public reset = <TKey extends Tuple>(key?: TKey) => {
+  public reset = <TKey extends Key>(key?: TKey) => {
     if (key === undefined || key.length === 0) {
       this.awaitCache.clear()
       this.syncSubscribers()
@@ -74,7 +76,7 @@ class AwaitClient {
     this.syncSubscribers(key)
   }
 
-  public clearError = <TKey extends Tuple>(key?: TKey) => {
+  public clearError = <TKey extends Key>(key?: TKey) => {
     if (key === undefined || key.length === 0) {
       this.awaitCache.forEach((value, key, map) => {
         map.set(key, { ...value, promise: undefined, error: undefined })
@@ -90,7 +92,7 @@ class AwaitClient {
     }
   }
 
-  public suspend = <TKey extends Tuple, TData>({ key, fn }: AwaitOptions<TData, TKey>): TData => {
+  public suspend = <TKey extends Key, TData>({ key, fn }: AwaitOptions<TData, TKey>): TData => {
     const hashedKey = hashKey(key)
     const awaitState = this.awaitCache.get(hashedKey)
 
@@ -124,9 +126,9 @@ class AwaitClient {
     throw newAwaitState.promise
   }
 
-  public getData = <TKey extends Tuple>(key: TKey) => this.awaitCache.get(hashKey(key))?.data
+  public getData = <TKey extends Key>(key: TKey) => this.awaitCache.get(hashKey(key))?.data
 
-  public subscribe<TKey extends Tuple>(key: TKey, syncSubscriber: (...args: unknown[]) => unknown) {
+  public subscribe<TKey extends Key>(key: TKey, syncSubscriber: (...args: unknown[]) => unknown) {
     const hashedKey = hashKey(key)
     const syncs = this.syncsMap.get(hashedKey)
     this.syncsMap.set(hashedKey, [...(syncs ?? []), syncSubscriber])
@@ -137,7 +139,7 @@ class AwaitClient {
     return subscribed
   }
 
-  public unsubscribe<TKey extends Tuple>(key: TKey, syncSubscriber: (...args: unknown[]) => unknown) {
+  public unsubscribe<TKey extends Key>(key: TKey, syncSubscriber: (...args: unknown[]) => unknown) {
     const hashedKey = hashKey(key)
     const syncs = this.syncsMap.get(hashedKey)
 
@@ -149,7 +151,7 @@ class AwaitClient {
     }
   }
 
-  private syncSubscribers = <TKey extends Tuple>(key?: TKey) => {
+  private syncSubscribers = <TKey extends Key>(key?: TKey) => {
     const hashedKey = key ? hashKey(key) : undefined
 
     return hashedKey

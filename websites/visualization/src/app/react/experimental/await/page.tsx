@@ -10,7 +10,27 @@ export default function Page() {
     <ErrorBoundary fallback={() => <div>error</div>}>
       <Stack.Vertical>
         <Suspense.CSROnly fallback={<div>loading...</div>}>
-          <Await options={{ key: [2000] as const, fn: ({ key: [ms] }) => api.delay(ms, { percentage: 100 }) }}>
+          <Await
+            options={{
+              key: [2000] as const,
+              fn: ({ key: [ms] }) => api.delay(ms, { percentage: 100 }),
+            }}
+          >
+            {(awaited) => (
+              <div>
+                <button onClick={awaited.reset}>reset</button>
+                <div>{awaited.data}</div>
+              </div>
+            )}
+          </Await>
+        </Suspense.CSROnly>
+        <Suspense.CSROnly fallback={<div>loading...</div>}>
+          <Await
+            options={{
+              key: [2000] as const,
+              fn: ({ key: [ms] }) => api.delay(ms, { percentage: 100 }),
+            }}
+          >
             {(awaited) => (
               <div>
                 <button onClick={awaited.reset}>reset</button>
@@ -30,17 +50,12 @@ export default function Page() {
           </Await>
         </Suspense.CSROnly>
         <Suspense.CSROnly fallback={<div>loading...</div>}>
-          <Await options={{ key: [2000] as const, fn: ({ key: [ms] }) => api.delay(ms, { percentage: 100 }) }}>
-            {(awaited) => (
-              <div>
-                <button onClick={awaited.reset}>reset</button>
-                <div>{awaited.data}</div>
-              </div>
-            )}
-          </Await>
-        </Suspense.CSROnly>
-        <Suspense.CSROnly fallback={<div>loading...</div>}>
-          <Await options={{ key: [2000] as const, fn: ({ key: [ms] }) => api.delay(ms, { percentage: 100 }) }}>
+          <Await
+            options={{
+              key: [2000] as const,
+              fn: ({ key: [ms] }) => api.delay(ms, { percentage: 100 }),
+            }}
+          >
             {(awaited) => (
               <div>
                 <button onClick={awaited.reset}>reset</button>
