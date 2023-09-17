@@ -6,11 +6,14 @@ import {
   FunctionComponent,
   PropsWithChildren,
   ReactNode,
+  createContext,
   createElement,
   forwardRef,
   useContext,
   useImperativeHandle,
+  useMemo,
   useRef,
+  useState,
 } from 'react'
 import { ErrorBoundaryGroupContext } from './ErrorBoundaryGroup'
 import { suspensiveCache } from './experimental/Await'
@@ -92,20 +95,17 @@ class BaseErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState
   }
 
   render() {
-    const { isError, error } = this.state
     const { children, fallback } = this.props
 
-    if (isError) {
-      if (typeof fallback === 'function') {
-        return createElement(fallback, {
-          error,
-          reset: this.resetErrorBoundary,
-        })
-      }
-      return fallback
-    }
-
-    return children
+    return (
+      <ErrorBoundaryContext.Provider value={{ ...this.state, reset: this.resetErrorBoundary }}>
+        {this.state.isError
+          ? typeof fallback === 'function'
+            ? createElement(fallback, { error: this.state.error, reset: this.resetErrorBoundary })
+            : fallback
+          : children}
+      </ErrorBoundaryContext.Provider>
+    )
   }
 }
 
@@ -145,4 +145,38 @@ export const withErrorBoundary = <TProps extends ComponentProps<ComponentType> =
   }
 
   return Wrapped
+}
+
+type ErrorBoundaryContextType<TError extends Error = Error> = {
+  reset: () => void
+} & ErrorBoundaryState<TError>
+
+const ErrorBoundaryContext = createContext<ErrorBoundaryContextType | null>(null)
+
+export const useErrorBoundary = <TError extends Error = Error>() => {
+  const [state, setState] = useState<ErrorBoundaryState<TError>>({
+    isError: false,
+    error: null,
+  })
+
+  if (state.isError) {
+    throw state.error
+  }
+
+  const context = useContext(ErrorBoundaryContext)
+  assert(
+    context != null && typeof context.isError === 'boolean' && typeof context.reset === 'function',
+    'ErrorBoundary is required in parent'
+  )
+
+  return useMemo(
+    () => ({
+      reset: () => {
+        context.reset()
+        setState({ isError: false, error: null })
+      },
+      error: (error: TError) => setState({ isError: true, error }),
+    }),
+    [context]
+  )
 }
