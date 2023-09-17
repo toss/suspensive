@@ -1,2 +1,2 @@
-export * from './delay'
-export * from './api'
+export { delay } from './delay'
+export { api } from './api'

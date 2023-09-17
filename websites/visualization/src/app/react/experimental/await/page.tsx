@@ -1,48 +1,88 @@
 'use client'
 
+import { Stack } from '@jsxcss/emotion'
 import { ErrorBoundary, Suspense } from '@suspensive/react'
 import { Await } from '@suspensive/react/experimental'
-
-const delay = (ms: number) =>
-  new Promise((resolve) =>
-    setTimeout(() => {
-      resolve('resolved')
-    }, ms)
-  )
-
-const asyncFn = () => delay(4000 * Math.random()).then(() => 'success' as const)
+import { api } from '~/utils'
 
 export default function Page() {
   return (
-    <ErrorBoundary fallback={() => <>error</>}>
-      <Suspense fallback={<>loading...</>}>
-        <Await options={{ key: [2000] as const, fn: asyncFn }}>
-          {(awaited) => (
-            <div>
-              <div>{awaited.data}</div>
-              <div>{awaited.data}</div>
-            </div>
-          )}
-        </Await>
-      </Suspense>
-      <Suspense fallback={<>loading...</>}>
-        <Await options={{ key: [3000] as const, fn: asyncFn }}>
-          {(awaited) => (
-            <div>
-              <div>{awaited.data}</div>
-              <div>{awaited.data}</div>
-            </div>
-          )}
-        </Await>
-        <Await options={{ key: [4000] as const, fn: asyncFn }}>
-          {(awaited) => (
-            <div>
-              <div>{awaited.data}</div>
-              <div>{awaited.data}</div>
-            </div>
-          )}
-        </Await>
-      </Suspense>
+    <ErrorBoundary fallback={() => <div>error</div>}>
+      <Stack.Vertical>
+        <Suspense.CSROnly fallback={<div>loading...</div>}>
+          <Await options={{ key: [2000] as const, fn: ({ key: [ms] }) => api.delay(ms, { percentage: 100 }) }}>
+            {(awaited) => (
+              <div>
+                <button onClick={awaited.reset}>reset</button>
+                <div>{awaited.data}</div>
+              </div>
+            )}
+          </Await>
+        </Suspense.CSROnly>
+        <Suspense.CSROnly fallback={<div>loading...</div>}>
+          <Await options={{ key: [2000] as const, fn: ({ key: [ms] }) => api.delay(ms, { percentage: 100 }) }}>
+            {(awaited) => (
+              <div>
+                <button onClick={awaited.reset}>reset</button>
+                <div>{awaited.data}</div>
+              </div>
+            )}
+          </Await>
+        </Suspense.CSROnly>
+        <Suspense.CSROnly fallback={<div>loading...</div>}>
+          <Await options={{ key: [2000] as const, fn: ({ key: [ms] }) => api.delay(ms, { percentage: 100 }) }}>
+            {(awaited) => (
+              <div>
+                <button onClick={awaited.reset}>reset</button>
+                <div>{awaited.data}</div>
+              </div>
+            )}
+          </Await>
+        </Suspense.CSROnly>
+        <Suspense.CSROnly fallback={<div>loading...</div>}>
+          <Await options={{ key: [2000] as const, fn: ({ key: [ms] }) => api.delay(ms, { percentage: 100 }) }}>
+            {(awaited) => (
+              <div>
+                <button onClick={awaited.reset}>reset</button>
+                <div>{awaited.data}</div>
+              </div>
+            )}
+          </Await>
+        </Suspense.CSROnly>
+      </Stack.Vertical>
+
+      <Stack.Vertical>
+        <Suspense.CSROnly fallback={<div>loading...</div>}>
+          <Await options={{ key: [3000] as const, fn: ({ key: [ms] }) => api.delay(ms, { percentage: 100 }) }}>
+            {(awaited) => (
+              <div>
+                <button onClick={awaited.reset}>reset</button>
+                <div>{awaited.data}</div>
+              </div>
+            )}
+          </Await>
+        </Suspense.CSROnly>
+        <Suspense.CSROnly fallback={<div>loading...</div>}>
+          <Await options={{ key: [4000] as const, fn: ({ key: [ms] }) => api.delay(ms, { percentage: 100 }) }}>
+            {(awaited) => (
+              <div>
+                <button onClick={awaited.reset}>reset</button>
+                <div>{awaited.data}</div>
+              </div>
+            )}
+          </Await>
+        </Suspense.CSROnly>
+        <Suspense.CSROnly fallback={<div>loading...</div>}>
+          <Await options={{ key: [4000] as const, fn: ({ key: [ms] }) => api.delay(ms, { percentage: 100 }) }}>
+            {(awaited) => (
+              <div>
+                <button onClick={awaited.reset}>reset</button>
+                <div>{awaited.data}</div>
+              </div>
+            )}
+          </Await>
+        </Suspense.CSROnly>
+      </Stack.Vertical>
     </ErrorBoundary>
   )
 }
