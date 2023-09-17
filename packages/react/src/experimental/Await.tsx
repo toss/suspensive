@@ -10,6 +10,8 @@ type AwaitOptions<TData, TKey extends Key> = {
   fn: (options: { key: TKey }) => Promise<TData>
 }
 
+type Sync = (...args: unknown[]) => unknown
+
 type AwaitState<TKey extends Key = Key> = {
   promise?: Promise<unknown>
   key: TKey
@@ -56,21 +58,21 @@ export const Await = <TData, TKey extends Key>({ children, options }: AwaitProps
   createElement(children, useAwait<TData, TKey>(options))
 
 class AwaitClient {
-  private awaitCache = new Map<ReturnType<typeof hashKey>, AwaitState>()
+  private cache = new Map<ReturnType<typeof hashKey>, AwaitState>()
   private syncsMap = new Map<ReturnType<typeof hashKey>, ((...args: unknown[]) => unknown)[]>()
 
   public reset = <TKey extends Key>(key?: TKey) => {
     if (key === undefined || key.length === 0) {
-      this.awaitCache.clear()
+      this.cache.clear()
       this.syncSubscribers()
       return
     }
 
     const hashedKey = hashKey(key)
 
-    if (this.awaitCache.has(hashedKey)) {
+    if (this.cache.has(hashedKey)) {
       // TODO: reset with key index hierarchy
-      this.awaitCache.delete(hashedKey)
+      this.cache.delete(hashedKey)
     }
 
     this.syncSubscribers(key)
@@ -78,23 +80,23 @@ class AwaitClient {
 
   public clearError = <TKey extends Key>(key?: TKey) => {
     if (key === undefined || key.length === 0) {
-      this.awaitCache.forEach((value, key, map) => {
+      this.cache.forEach((value, key, map) => {
         map.set(key, { ...value, promise: undefined, error: undefined })
       })
       return
     }
 
     const hashedKey = hashKey(key)
-    const awaitState = this.awaitCache.get(hashedKey)
+    const awaitState = this.cache.get(hashedKey)
     if (awaitState) {
       // TODO: clearError with key index hierarchy
-      this.awaitCache.set(hashedKey, { ...awaitState, promise: undefined, error: undefined })
+      this.cache.set(hashedKey, { ...awaitState, promise: undefined, error: undefined })
     }
   }
 
   public suspend = <TKey extends Key, TData>({ key, fn }: AwaitOptions<TData, TKey>): TData => {
     const hashedKey = hashKey(key)
-    const awaitState = this.awaitCache.get(hashedKey)
+    const awaitState = this.cache.get(hashedKey)
 
     if (awaitState?.error) {
       // eslint-disable-next-line @typescript-eslint/no-throw-literal
@@ -121,14 +123,14 @@ class AwaitClient {
         }),
     }
 
-    this.awaitCache.set(hashedKey, newAwaitState)
+    this.cache.set(hashedKey, newAwaitState)
     // eslint-disable-next-line @typescript-eslint/no-throw-literal
     throw newAwaitState.promise
   }
 
-  public getData = <TKey extends Key>(key: TKey) => this.awaitCache.get(hashKey(key))?.data
+  public getData = <TKey extends Key>(key: TKey) => this.cache.get(hashKey(key))?.data
 
-  public subscribe<TKey extends Key>(key: TKey, syncSubscriber: (...args: unknown[]) => unknown) {
+  public subscribe<TKey extends Key>(key: TKey, syncSubscriber: Sync) {
     const hashedKey = hashKey(key)
     const syncs = this.syncsMap.get(hashedKey)
     this.syncsMap.set(hashedKey, [...(syncs ?? []), syncSubscriber])
@@ -139,7 +141,7 @@ class AwaitClient {
     return subscribed
   }
 
-  public unsubscribe<TKey extends Key>(key: TKey, syncSubscriber: (...args: unknown[]) => unknown) {
+  public unsubscribe<TKey extends Key>(key: TKey, syncSubscriber: Sync) {
     const hashedKey = hashKey(key)
     const syncs = this.syncsMap.get(hashedKey)
 
