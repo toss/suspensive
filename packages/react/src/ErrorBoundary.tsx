@@ -13,7 +13,7 @@ import {
   useRef,
 } from 'react'
 import { ErrorBoundaryGroupContext } from './ErrorBoundaryGroup'
-import { suspensiveCache } from './experimental/suspensiveCache'
+import { suspensiveCache } from './experimental/Await'
 import { PropsWithoutChildren } from './types'
 import { hasResetKeysChanged } from './utils'
 
