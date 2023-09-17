@@ -13,7 +13,7 @@ coverage:
         threshold: 30%
 
 comment:
-  layout: "header, reach, flags, components"
+  layout: "header, reach, diff, flags, components"
 
 component_management:
   individual_components:
