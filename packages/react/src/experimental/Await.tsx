@@ -83,10 +83,10 @@ class AwaitClient {
     }
 
     const hashedKey = hashKey(key)
-    const awaitCacheGot = this.awaitCache.get(hashedKey)
-    if (awaitCacheGot) {
+    const awaitState = this.awaitCache.get(hashedKey)
+    if (awaitState) {
       // TODO: clearError with key index hierarchy
-      this.awaitCache.set(hashedKey, { ...awaitCacheGot, promise: undefined, error: undefined })
+      this.awaitCache.set(hashedKey, { ...awaitState, promise: undefined, error: undefined })
     }
   }
 
