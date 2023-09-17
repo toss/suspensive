@@ -6,8 +6,8 @@ import { RejectedFallback, UseSuspenseQuery } from '~/components'
 import { Area, Button, DescriptionText, Spinner } from '~/components/uis'
 import { api } from '~/utils/api'
 
-const BoundaryPage = () => {
-  const { reset: queryErrorReset } = useQueryErrorResetBoundary()
+export default function Page() {
+  const queryErrorResetBoundary = useQueryErrorResetBoundary()
 
   return (
     <Area title="ErrorBoundaryGroup">
@@ -39,7 +39,7 @@ const BoundaryPage = () => {
             <DescriptionText>+</DescriptionText>
 
             <Area title="ErrorBoundary (100% Error)">
-              <ErrorBoundary onReset={queryErrorReset} fallback={RejectedFallback}>
+              <ErrorBoundary onReset={queryErrorResetBoundary.reset} fallback={RejectedFallback}>
                 <Suspense.CSROnly fallback={<Spinner />}>
                   <UseSuspenseQuery queryKey={['boundary', 4]} queryFn={() => api.delay(500, { percentage: 0 })} />
                   <UseSuspenseQuery queryKey={['boundary', 5]} queryFn={() => api.delay(500, { percentage: 100 })} />
@@ -51,7 +51,7 @@ const BoundaryPage = () => {
 
             <Area title="AsyncBoundary (50% Success)">
               <AsyncBoundary.CSROnly
-                onReset={queryErrorReset}
+                onReset={queryErrorResetBoundary.reset}
                 pendingFallback={<Spinner />}
                 rejectedFallback={RejectedFallback}
               >
@@ -80,7 +80,7 @@ const BoundaryPage = () => {
             <DescriptionText>+</DescriptionText>
 
             <Area title="ErrorBoundary (100% Error)">
-              <ErrorBoundary onReset={queryErrorReset} fallback={RejectedFallback}>
+              <ErrorBoundary onReset={queryErrorResetBoundary.reset} fallback={RejectedFallback}>
                 <Suspense.CSROnly fallback={<Spinner />}>
                   <UseSuspenseQuery queryKey={['boundary', 4]} queryFn={() => api.delay(500, { percentage: 0 })} />
                   <UseSuspenseQuery queryKey={['boundary', 5]} queryFn={() => api.delay(500, { percentage: 100 })} />
@@ -92,7 +92,7 @@ const BoundaryPage = () => {
 
             <Area title="AsyncBoundary (50% Success)">
               <AsyncBoundary.CSROnly
-                onReset={queryErrorReset}
+                onReset={queryErrorResetBoundary.reset}
                 pendingFallback={<Spinner />}
                 rejectedFallback={RejectedFallback}
               >
@@ -103,7 +103,7 @@ const BoundaryPage = () => {
         </Area>
 
         <Area title="ErrorBoundary (100% Error)">
-          <ErrorBoundary onReset={queryErrorReset} fallback={RejectedFallback}>
+          <ErrorBoundary onReset={queryErrorResetBoundary.reset} fallback={RejectedFallback}>
             <Suspense.CSROnly fallback={<Spinner />}>
               <UseSuspenseQuery queryKey={['boundary', 4]} queryFn={() => api.delay(500, { percentage: 0 })} />
               <UseSuspenseQuery queryKey={['boundary', 5]} queryFn={() => api.delay(500, { percentage: 100 })} />
@@ -114,5 +114,3 @@ const BoundaryPage = () => {
     </Area>
   )
 }
-
-export default BoundaryPage

@@ -8,7 +8,7 @@ import { RejectedFallback, UseSuspenseQuery } from '~/components'
 import { Area, Box, Button, Spinner } from '~/components/uis'
 import { api } from '~/utils/api'
 
-const ReactQueryPage = withErrorBoundaryGroup(() => {
+export default withErrorBoundaryGroup(function Page() {
   const queryErrorResetBoundary = useQueryErrorResetBoundary()
 
   return (
@@ -53,5 +53,3 @@ const ReactQueryPage = withErrorBoundaryGroup(() => {
     </Area>
   )
 })
-
-export default ReactQueryPage
