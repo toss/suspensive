@@ -38,7 +38,7 @@ All declarative components to use suspense on both CSR, SSR.
 - Delay
 - SuspensiveProvider
 - HOC(Higher Order Component)s
-- useAwait, Await, suspensiveCache (Experimental)
+- useAwait, Await, awaitClient (Experimental)
 
 ## Installation
 
