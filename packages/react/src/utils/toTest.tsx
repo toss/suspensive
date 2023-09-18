@@ -29,6 +29,20 @@ export const ThrowError = ({ message, after, children }: ThrowErrorProps) => {
   }, [after])
   return <>{children}</>
 }
+
+type ThrowNullProps = PropsWithChildren<{ after: number }>
+export const ThrowNull = ({ after, children }: ThrowNullProps) => {
+  const [isNeedError, setIsNeedError] = useState(throwErrorIsNeed.current)
+  if (isNeedError) {
+    throw null
+  }
+  useEffect(() => {
+    const timerId = setTimeout(() => setIsNeedError(true), after)
+    return () => clearTimeout(timerId)
+  }, [after])
+  return <>{children}</>
+}
+
 ThrowError.reset = () => {
   throwErrorIsNeed.current = false
 }
