@@ -13,7 +13,7 @@ import {
   useRef,
 } from 'react'
 import { ErrorBoundaryGroupContext } from './ErrorBoundaryGroup'
-import { suspensiveCache } from './experimental/Await'
+import { awaitClient } from './experimental/Await'
 import { PropsWithoutChildren } from './types'
 import { hasResetKeysChanged } from './utils'
 
@@ -81,7 +81,7 @@ class BaseErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState
   }
 
   reset() {
-    suspensiveCache.clearError()
+    awaitClient.clearError()
     this.setState(initialState)
   }
 

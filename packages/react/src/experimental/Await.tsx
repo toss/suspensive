@@ -1,42 +1,52 @@
-import { FunctionComponent, useEffect, useMemo } from 'react'
-import { useRerender } from '../hooks'
+import { FunctionComponent, createElement, useMemo } from 'react'
+import { useSyncExternalStore } from 'use-sync-external-store/shim'
 import { Tuple } from '../types'
+import { hashKey } from '../utils'
 
-type Awaited<TData = unknown> = { data: TData; reset: () => void }
-type AwaitOptions<TData, TKey extends Tuple> = {
+export type Key = Tuple
+
+type AwaitOptions<TData, TKey extends Key> = {
   key: TKey
   fn: (options: { key: TKey }) => Promise<TData>
 }
 
-/**
- * @experimental This is experimental feature.
- */
-export const awaitOptions = <TData, TKey extends Tuple>(options: AwaitOptions<TData, TKey>) => options
+type Sync = (...args: unknown[]) => unknown
+
+type AwaitState<TKey extends Key = Key> = {
+  promise?: Promise<unknown>
+  key: TKey
+  hashedKey: ReturnType<typeof hashKey>
+  error?: unknown
+  data?: unknown
+}
+
+type Awaited<TData> = {
+  data: TData
+  reset: () => void
+}
 
 /**
  * @experimental This is experimental feature.
  */
-export const useAwait = <TData, TKey extends Tuple>(options: AwaitOptions<TData, TKey>): Awaited<TData> => {
-  const data = suspensiveCache.suspend(options.key, () => options.fn({ key: options.key }))
-
-  const rerender = useRerender()
-  const stringifiedKey = JSON.stringify(options.key)
-
-  useEffect(() => {
-    const attached = suspensiveCache.attach(options.key, rerender)
-    return attached.detach
-  }, [stringifiedKey, rerender])
+export const useAwait = <TData, TKey extends Key>(options: AwaitOptions<TData, TKey>): Awaited<TData> => {
+  const syncData = () => awaitClient.suspend(options)
+  const data = useSyncExternalStore<TData>(
+    (sync) => awaitClient.subscribe(options.key, sync).unsubscribe,
+    syncData,
+    syncData
+  )
 
   return useMemo(
     () => ({
+      key: options.key,
       data,
-      reset: () => suspensiveCache.reset(options.key),
+      reset: () => awaitClient.reset(options.key),
     }),
-    [stringifiedKey, data]
+    [data, options.key]
   )
 }
 
-type AwaitProps<TData, TKey extends Tuple> = {
+type AwaitProps<TData, TKey extends Key> = {
   options: AwaitOptions<TData, TKey>
   children: FunctionComponent<Awaited<TData>>
 }
@@ -44,39 +54,31 @@ type AwaitProps<TData, TKey extends Tuple> = {
 /**
  * @experimental This is experimental feature.
  */
-export const Await = <TData, TKey extends Tuple>({ children: Children, options }: AwaitProps<TData, TKey>) => {
-  const awaited = useAwait<TData, TKey>(options)
-  return <Children {...awaited} />
-}
+export const Await = <TData, TKey extends Key>({ children, options }: AwaitProps<TData, TKey>) =>
+  createElement(children, useAwait<TData, TKey>(options))
 
-type Cache<TKey extends Tuple = Tuple> = {
-  promise?: Promise<unknown>
-  key: TKey
-  error?: unknown
-  data?: unknown
-}
+class AwaitClient {
+  private cache = new Map<ReturnType<typeof hashKey>, AwaitState>()
+  private syncsMap = new Map<ReturnType<typeof hashKey>, Sync[]>()
 
-class SuspensiveCacheObserver {
-  private cache = new Map<string, Cache>()
-
-  public reset = <TKey extends Tuple>(key?: TKey) => {
+  public reset = <TKey extends Key>(key?: TKey) => {
     if (key === undefined || key.length === 0) {
       this.cache.clear()
-      this.notifyToAttacher()
+      this.syncSubscribers()
       return
     }
 
-    const stringifiedKey = JSON.stringify(key)
+    const hashedKey = hashKey(key)
 
-    if (this.cache.has(stringifiedKey)) {
+    if (this.cache.has(hashedKey)) {
       // TODO: reset with key index hierarchy
-      this.cache.delete(stringifiedKey)
+      this.cache.delete(hashedKey)
     }
 
-    this.notifyToAttacher(stringifiedKey)
+    this.syncSubscribers(key)
   }
 
-  public clearError = <TKey extends Tuple>(key?: TKey) => {
+  public clearError = <TKey extends Key>(key?: TKey) => {
     if (key === undefined || key.length === 0) {
       this.cache.forEach((value, key, map) => {
         map.set(key, { ...value, promise: undefined, error: undefined })
@@ -84,81 +86,83 @@ class SuspensiveCacheObserver {
       return
     }
 
-    const stringifiedKey = JSON.stringify(key)
-    const cacheGot = this.cache.get(stringifiedKey)
-    if (cacheGot) {
+    const hashedKey = hashKey(key)
+    const awaitState = this.cache.get(hashedKey)
+    if (awaitState) {
       // TODO: clearError with key index hierarchy
-      this.cache.set(stringifiedKey, { ...cacheGot, promise: undefined, error: undefined })
+      this.cache.set(hashedKey, { ...awaitState, promise: undefined, error: undefined })
     }
   }
 
-  public suspend = <TKey extends Tuple, TData>(key: TKey, fn: (options: { key: TKey }) => Promise<TData>): TData => {
-    const stringifiedKey = JSON.stringify(key)
-    const cacheGot = this.cache.get(stringifiedKey)
+  public suspend = <TKey extends Key, TData>({ key, fn }: AwaitOptions<TData, TKey>): TData => {
+    const hashedKey = hashKey(key)
+    const awaitState = this.cache.get(hashedKey)
 
-    if (cacheGot?.error) {
+    if (awaitState?.error) {
       // eslint-disable-next-line @typescript-eslint/no-throw-literal
-      throw cacheGot.error
+      throw awaitState.error
     }
-    if (cacheGot?.data) {
-      return cacheGot.data as TData
+    if (awaitState?.data) {
+      return awaitState.data as TData
     }
 
-    if (cacheGot?.promise) {
+    if (awaitState?.promise) {
       // eslint-disable-next-line @typescript-eslint/no-throw-literal
-      throw cacheGot.promise
+      throw awaitState.promise
     }
 
-    const newCache: Cache<TKey> = {
+    const newAwaitState: AwaitState<TKey> = {
       key,
+      hashedKey,
       promise: fn({ key })
         .then((data) => {
-          newCache.data = data
+          newAwaitState.data = data
         })
         .catch((error) => {
-          newCache.error = error
+          newAwaitState.error = error
         }),
     }
 
-    this.cache.set(stringifiedKey, newCache)
+    this.cache.set(hashedKey, newAwaitState)
     // eslint-disable-next-line @typescript-eslint/no-throw-literal
-    throw newCache.promise
+    throw newAwaitState.promise
   }
 
-  public getData = <TKey extends Tuple>(key: TKey) => this.cache.get(JSON.stringify(key))?.data
+  public getData = <TKey extends Key>(key: TKey) => this.cache.get(hashKey(key))?.data
 
-  private keyNotifiesMap = new Map<string, ((...args: unknown[]) => unknown)[]>()
+  public subscribe<TKey extends Key>(key: TKey, syncSubscriber: Sync) {
+    const hashedKey = hashKey(key)
+    const syncs = this.syncsMap.get(hashedKey)
+    this.syncsMap.set(hashedKey, [...(syncs ?? []), syncSubscriber])
 
-  public attach<TKey extends Tuple>(key: TKey, onNotify: (...args: unknown[]) => unknown) {
-    const stringifiedKey = JSON.stringify(key)
-    const keyNotifies = this.keyNotifiesMap.get(stringifiedKey)
-    this.keyNotifiesMap.set(stringifiedKey, [...(keyNotifies ?? []), onNotify])
-
-    const attached = {
-      detach: () => this.detach(key, onNotify),
+    const subscribed = {
+      unsubscribe: () => this.unsubscribe(key, syncSubscriber),
     }
-    return attached
+    return subscribed
   }
 
-  public detach<TKey extends Tuple>(key: TKey, onNotify: (...args: unknown[]) => unknown) {
-    const stringifiedKey = JSON.stringify(key)
-    const keyNotifies = this.keyNotifiesMap.get(stringifiedKey)
+  public unsubscribe<TKey extends Key>(key: TKey, syncSubscriber: Sync) {
+    const hashedKey = hashKey(key)
+    const syncs = this.syncsMap.get(hashedKey)
 
-    if (keyNotifies) {
-      this.keyNotifiesMap.set(
-        stringifiedKey,
-        keyNotifies.filter((notify) => notify !== onNotify)
+    if (syncs) {
+      this.syncsMap.set(
+        hashedKey,
+        syncs.filter((sync) => sync !== syncSubscriber)
       )
     }
   }
 
-  private notifyToAttacher = <TKey extends string>(key?: TKey) =>
-    key
-      ? this.keyNotifiesMap.get(key)?.forEach((notify) => notify())
-      : this.keyNotifiesMap.forEach((keyNotifies) => keyNotifies.forEach((notify) => notify()))
+  private syncSubscribers = <TKey extends Key>(key?: TKey) => {
+    const hashedKey = key ? hashKey(key) : undefined
+
+    return hashedKey
+      ? this.syncsMap.get(hashedKey)?.forEach((sync) => sync())
+      : this.syncsMap.forEach((syncs) => syncs.forEach((sync) => sync()))
+  }
 }
 
 /**
  * @experimental This is experimental feature.
  */
-export const suspensiveCache = new SuspensiveCacheObserver()
+export const awaitClient = new AwaitClient()
