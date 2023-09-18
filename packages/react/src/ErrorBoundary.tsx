@@ -16,7 +16,7 @@ import {
   useState,
 } from 'react'
 import { ErrorBoundaryGroupContext } from './ErrorBoundaryGroup'
-import { suspensiveCache } from './experimental/Await'
+import { awaitClient } from './experimental/Await'
 import { PropsWithoutChildren } from './types'
 import { hasResetKeysChanged } from './utils'
 
@@ -76,7 +76,7 @@ class BaseErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState
     const { isError } = this.state
     const { resetKeys } = this.props
     if (isError && prevState.isError && hasResetKeysChanged(prevProps.resetKeys, resetKeys)) {
-      this.resetErrorBoundary()
+      this.reset()
     }
   }
 
@@ -84,13 +84,9 @@ class BaseErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState
     this.props.onError?.(error, info)
   }
 
-  resetErrorBoundary = () => {
-    this.props.onReset?.()
-    this.reset()
-  }
-
   reset() {
-    suspensiveCache.clearError()
+    this.props.onReset?.()
+    awaitClient.clearError()
     this.setState(initialState)
   }
 
@@ -98,10 +94,18 @@ class BaseErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState
     const { children, fallback } = this.props
 
     return (
-      <ErrorBoundaryContext.Provider value={{ ...this.state, reset: this.resetErrorBoundary }}>
+      <ErrorBoundaryContext.Provider
+        value={{
+          ...this.state,
+          reset: this.reset,
+        }}
+      >
         {this.state.isError
           ? typeof fallback === 'function'
-            ? createElement(fallback, { error: this.state.error, reset: this.resetErrorBoundary })
+            ? createElement(fallback, {
+                error: this.state.error,
+                reset: this.reset,
+              })
             : fallback
           : children}
       </ErrorBoundaryContext.Provider>
@@ -119,7 +123,7 @@ export const ErrorBoundary = forwardRef<{ reset(): void }, ErrorBoundaryProps>((
 
   const ref = useRef<BaseErrorBoundary>(null)
   useImperativeHandle(resetRef, () => ({
-    reset: () => ref.current?.resetErrorBoundary(),
+    reset: () => ref.current?.reset(),
   }))
 
   return <BaseErrorBoundary {...props} resetKeys={resetKeys} ref={ref} />
