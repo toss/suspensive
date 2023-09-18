@@ -1,1 +1,1 @@
-export { Await, useAwait, suspensiveCache } from './Await'
+export { Await, useAwait, awaitClient } from './Await'
