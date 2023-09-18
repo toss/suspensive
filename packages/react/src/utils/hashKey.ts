@@ -1,26 +1,26 @@
 import { Key } from '../experimental/Await'
 
-export const hashKey = (key: Key) => {
-  return JSON.stringify(key, (_, val) =>
+type PlainObject = Record<string, any>
+
+export const hashKey = (key: Key) =>
+  JSON.stringify(key, (_, val) =>
     isPlainObject(val)
       ? Object.keys(val)
           .sort()
-          .reduce((result, key) => {
-            result[key] = val[key]
-            return result
-          }, {} as any)
+          .reduce((acc: PlainObject, cur) => {
+            acc[cur] = val[cur]
+            return acc
+          }, {})
       : val
   )
-}
 
-// eslint-disable-next-line @typescript-eslint/ban-types
-const isPlainObject = (o: any): o is Object => {
-  if (!hasObjectPrototype(o)) {
+const isPlainObject = (value: any): value is PlainObject => {
+  if (!hasObjectPrototype(value)) {
     return false
   }
 
   // If has modified constructor
-  const ctor = o.constructor
+  const ctor = value.constructor
   if (typeof ctor === 'undefined') {
     return true
   }
@@ -32,8 +32,7 @@ const isPlainObject = (o: any): o is Object => {
   }
 
   // If constructor does not have an Object-specific method
-  // eslint-disable-next-line no-prototype-builtins
-  if (!prot.hasOwnProperty('isPrototypeOf')) {
+  if (!Object.prototype.hasOwnProperty.call(prot, 'isPrototypeOf')) {
     return false
   }
 
@@ -41,4 +40,4 @@ const isPlainObject = (o: any): o is Object => {
   return true
 }
 
-const hasObjectPrototype = (o: any) => Object.prototype.toString.call(o) === '[object Object]'
+const hasObjectPrototype = (value: any) => Object.prototype.toString.call(value) === '[object Object]'
