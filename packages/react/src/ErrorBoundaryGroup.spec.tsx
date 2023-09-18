@@ -1,4 +1,5 @@
 import { act, render, screen } from '@testing-library/react'
+import { createElement } from 'react'
 import { ERROR_MESSAGE, MS_100, TEXT, ThrowError } from './utils/toTest'
 import { ErrorBoundary, ErrorBoundaryGroup, useErrorBoundaryGroup, withErrorBoundaryGroup } from '.'
 
@@ -65,22 +66,21 @@ describe('ErrorBoundaryGroup', () => {
   })
 })
 
+const UsingUseErrorBoundary = () => {
+  useErrorBoundaryGroup()
+  return <>{TEXT}</>
+}
 describe('useErrorBoundaryGroup', () => {
   it('should throw error without ErrorBoundaryGroup in parent', () => {
-    const WithoutErrorBoundaryGroup = () => {
-      useErrorBoundaryGroup()
-      return <></>
-    }
-    expect(() => render(<WithoutErrorBoundaryGroup />)).toThrow(
+    expect(() => render(<UsingUseErrorBoundary />)).toThrow(
       'useErrorBoundaryGroup: ErrorBoundaryGroup is required in parent'
     )
   })
 })
 
-const TestWithErrorBoundaryGroup = withErrorBoundaryGroup(() => <>{TEXT}</>)
 describe('withErrorBoundaryGroup', () => {
-  it('should show children', () => {
-    const rendered = render(<TestWithErrorBoundaryGroup />)
+  it('should wrap component. we can check by useErrorBoundaryGroup', () => {
+    const rendered = render(createElement(withErrorBoundaryGroup(UsingUseErrorBoundary)))
     expect(rendered.queryByText(TEXT)).toBeInTheDocument()
   })
 })

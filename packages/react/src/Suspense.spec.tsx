@@ -1,4 +1,5 @@
 import { act, render, screen, waitFor } from '@testing-library/react'
+import { createElement } from 'react'
 import { FALLBACK, MS_100, Suspend, TEXT } from './utils/toTest'
 import { Suspense, withSuspense } from '.'
 
@@ -19,7 +20,7 @@ describe('Suspense', () => {
     expect(screen.queryByText(FALLBACK)).toBeInTheDocument()
     expect(screen.queryByText(TEXT)).not.toBeInTheDocument()
   })
-  it('should render the children after the suspense', async () => {
+  it('should render the children after suspending', async () => {
     vi.useFakeTimers()
     render(
       <Suspense>
@@ -30,8 +31,11 @@ describe('Suspense', () => {
     act(() => vi.advanceTimersByTime(MS_100))
     await waitFor(() => expect(screen.queryByText(TEXT)).toBeInTheDocument())
   })
+})
+describe('Suspense.CSROnly', () => {
+  beforeEach(Suspend.reset)
 
-  it('.CSROnly should render the fallback during suspense', () => {
+  it('should render the fallback during suspending', () => {
     render(
       <Suspense.CSROnly fallback={FALLBACK}>
         <Suspend during={Infinity} toShow={TEXT} />
@@ -40,7 +44,7 @@ describe('Suspense', () => {
     expect(screen.queryByText(FALLBACK)).toBeInTheDocument()
     expect(screen.queryByText(TEXT)).not.toBeInTheDocument()
   })
-  it('.CSROnly should render the children after the suspense', async () => {
+  it('should render the children after the suspending', async () => {
     vi.useFakeTimers()
     render(
       <Suspense.CSROnly fallback={FALLBACK}>
@@ -51,27 +55,25 @@ describe('Suspense', () => {
     await waitFor(() => expect(screen.queryByText(TEXT)).toBeInTheDocument())
     expect(screen.queryByText(FALLBACK)).not.toBeInTheDocument()
   })
-  it('.CSROnly should render the children if nothing to suspend in children', async () => {
+  it('should render the children if nothing to suspend in children', async () => {
     render(<Suspense.CSROnly fallback={FALLBACK}>{TEXT}</Suspense.CSROnly>)
     expect(screen.queryByText(FALLBACK)).not.toBeInTheDocument()
     expect(screen.queryByText(TEXT)).toBeInTheDocument()
   })
 })
 
-const SuspendDuring100msToShowTEXTInSuspense = withSuspense(() => <Suspend during={MS_100} toShow={TEXT} />, {
-  fallback: FALLBACK,
-})
-const SuspendDuring100msToShowTEXTInSuspenseCSROnly = withSuspense.CSROnly(
-  () => <Suspend during={MS_100} toShow={TEXT} />,
-  { fallback: FALLBACK }
-)
-
 describe('withSuspense', () => {
   beforeEach(Suspend.reset)
 
   it('should wrap component by Suspense', async () => {
     vi.useFakeTimers()
-    render(<SuspendDuring100msToShowTEXTInSuspense />)
+    render(
+      createElement(
+        withSuspense(() => <Suspend during={MS_100} toShow={TEXT} />, {
+          fallback: FALLBACK,
+        })
+      )
+    )
     expect(screen.queryByText(FALLBACK)).toBeInTheDocument()
     expect(screen.queryByText(TEXT)).not.toBeInTheDocument()
     vi.advanceTimersByTime(MS_100)
@@ -79,10 +81,19 @@ describe('withSuspense', () => {
     expect(screen.queryByText(TEXT)).toBeInTheDocument()
     expect(screen.queryByText(FALLBACK)).not.toBeInTheDocument()
   })
+})
+describe('withSuspense.CSROnly', () => {
+  beforeEach(Suspend.reset)
 
-  it('.CSROnly should wrap component by Suspense.CSROnly', async () => {
+  it('should wrap component by Suspense.CSROnly', async () => {
     vi.useFakeTimers()
-    render(<SuspendDuring100msToShowTEXTInSuspenseCSROnly />)
+    render(
+      createElement(
+        withSuspense.CSROnly(() => <Suspend during={MS_100} toShow={TEXT} />, {
+          fallback: FALLBACK,
+        })
+      )
+    )
     expect(screen.queryByText(FALLBACK)).toBeInTheDocument()
     expect(screen.queryByText(TEXT)).not.toBeInTheDocument()
     vi.advanceTimersByTime(MS_100)
