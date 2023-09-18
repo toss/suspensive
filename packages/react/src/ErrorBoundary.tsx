@@ -65,9 +65,8 @@ class BaseErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState
   componentDidUpdate(prevProps: ErrorBoundaryProps, prevState: ErrorBoundaryState) {
     const { error } = this.state
     const { resetKeys } = this.props
-
     if (error !== null && prevState.error !== null && hasResetKeysChanged(prevProps.resetKeys, resetKeys)) {
-      this.resetErrorBoundary()
+      this.reset()
     }
   }
 
@@ -75,12 +74,8 @@ class BaseErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState
     this.props.onError?.(error, info)
   }
 
-  resetErrorBoundary = () => {
-    this.props.onReset?.()
-    this.reset()
-  }
-
   reset() {
+    this.props.onReset?.()
     suspensiveCache.clearError()
     this.setState(initialState)
   }
@@ -93,7 +88,7 @@ class BaseErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState
       if (typeof fallback === 'function') {
         return createElement(fallback, {
           error,
-          reset: this.resetErrorBoundary,
+          reset: this.reset,
         })
       }
       return fallback
@@ -113,7 +108,7 @@ export const ErrorBoundary = forwardRef<{ reset(): void }, ErrorBoundaryProps>((
 
   const ref = useRef<BaseErrorBoundary>(null)
   useImperativeHandle(resetRef, () => ({
-    reset: () => ref.current?.resetErrorBoundary(),
+    reset: () => ref.current?.reset(),
   }))
 
   return <BaseErrorBoundary {...props} resetKeys={resetKeys} ref={ref} />
