@@ -59,7 +59,7 @@ export const Await = <TData, TKey extends Key>({ children, options }: AwaitProps
 
 class AwaitClient {
   private cache = new Map<ReturnType<typeof hashKey>, AwaitState>()
-  private syncsMap = new Map<ReturnType<typeof hashKey>, ((...args: unknown[]) => unknown)[]>()
+  private syncsMap = new Map<ReturnType<typeof hashKey>, Sync[]>()
 
   public reset = <TKey extends Key>(key?: TKey) => {
     if (key === undefined || key.length === 0) {
