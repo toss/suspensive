@@ -1,5 +1,14 @@
 # @suspensive/react
 
+## 1.14.4
+
+### Patch Changes
+
+- 8d8ef53: fix(react): object that elment of key don't care field's order by hashKey
+- 482cfc4: fix(react): update BaseErrorBoundary method simply
+- d636e85: fix(react): ErrorBoundary should catch null thrown by children
+- 8d8ef53: fix(react): replace useEffect to use-sync-external-store
+
 ## 1.14.3
 
 ### Patch Changes
