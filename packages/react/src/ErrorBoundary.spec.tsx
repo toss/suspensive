@@ -1,7 +1,7 @@
 import { act } from '@testing-library/react'
 import { ComponentProps, ComponentRef, createRef } from 'react'
 import { createRoot } from 'react-dom/client'
-import { ERROR_MESSAGE, FALLBACK, MS_100, TEXT, ThrowError } from './utils/toTest'
+import { ERROR_MESSAGE, FALLBACK, MS_100, TEXT, ThrowError, ThrowNull } from './utils/toTest'
 import { ErrorBoundary } from '.'
 
 let container = document.createElement('div')
@@ -58,6 +58,23 @@ describe('ErrorBoundary', () => {
     act(() => vi.advanceTimersByTime(MS_100))
     expect(container.textContent).toBe(ERROR_MESSAGE)
     expect(container.textContent).not.toBe(TEXT)
+  })
+
+  it('should catch it even if thrown null', () => {
+    const onError = vi.fn()
+    vi.useFakeTimers()
+    renderErrorBoundary({
+      onError,
+      fallback: <>{FALLBACK}</>,
+      children: <ThrowNull after={MS_100}>{TEXT}</ThrowNull>,
+    })
+    expect(container.textContent).toBe(TEXT)
+    expect(container.textContent).not.toBe(FALLBACK)
+    expect(onError).toHaveBeenCalledTimes(0)
+    act(() => vi.advanceTimersByTime(MS_100))
+    expect(container.textContent).toBe(FALLBACK)
+    expect(container.textContent).not.toBe(TEXT)
+    expect(onError).toHaveBeenCalledTimes(1)
   })
 
   it('should be reset by items of resetKeys, and call onReset', () => {
