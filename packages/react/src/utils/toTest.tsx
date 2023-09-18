@@ -37,7 +37,11 @@ export const ThrowNull = ({ after, children }: ThrowNullProps) => {
     throw null
   }
   useEffect(() => {
-    setTimeout(() => setIsNeedError(true), after)
+    const timerId = setTimeout(() => setIsNeedError(true), after)
+
+    return () => {
+      clearTimeout(timerId)
+    }
   }, [after])
   return <>{children}</>
 }
