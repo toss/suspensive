@@ -38,10 +38,7 @@ export const ThrowNull = ({ after, children }: ThrowNullProps) => {
   }
   useEffect(() => {
     const timerId = setTimeout(() => setIsNeedError(true), after)
-
-    return () => {
-      clearTimeout(timerId)
-    }
+    return () => clearTimeout(timerId)
   }, [after])
   return <>{children}</>
 }
