@@ -19,6 +19,7 @@ import { ErrorBoundaryGroupContext } from './ErrorBoundaryGroup'
 import { awaitClient } from './experimental/Await'
 import { PropsWithoutChildren } from './types'
 import { hasResetKeysChanged } from './utils'
+import { assert } from './utils'
 
 export type ErrorBoundaryFallbackProps = {
   /**
@@ -64,7 +65,6 @@ const initialState: ErrorBoundaryState = {
   isError: false,
   error: null,
 }
-
 class BaseErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
   static getDerivedStateFromError(error: Error): ErrorBoundaryState {
     return { isError: true, error }
@@ -84,7 +84,7 @@ class BaseErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState
     this.props.onError?.(error, info)
   }
 
-  reset() {
+  reset = () => {
     this.props.onReset?.()
     awaitClient.clearError()
     this.setState(initialState)
@@ -167,20 +167,14 @@ export const useErrorBoundary = <TError extends Error = Error>() => {
     throw state.error
   }
 
-  const context = useContext(ErrorBoundaryContext)
-  assert(
-    context != null && typeof context.isError === 'boolean' && typeof context.reset === 'function',
-    'ErrorBoundary is required in parent'
-  )
+  const errorBoundaryContext = useContext(ErrorBoundaryContext)
+  assert(errorBoundaryContext != null, 'useErrorBoundary: ErrorBoundary is required in parent')
 
   return useMemo(
     () => ({
-      reset: () => {
-        context.reset()
-        setState({ isError: false, error: null })
-      },
-      error: (error: TError) => setState({ isError: true, error }),
+      ...errorBoundaryContext,
+      setError: (error: TError) => setState({ isError: true, error }),
     }),
-    [context]
+    [errorBoundaryContext]
   )
 }
