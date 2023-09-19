@@ -5,7 +5,7 @@ import { useSetTimeout } from '.'
 
 vi.useFakeTimers()
 
-describe('useSetTimeout()', () => {
+describe('useSetTimeout', () => {
   it('should run given function once after given timeout', () => {
     const fn = vi.fn()
     const rendered = renderHook(() => useSetTimeout(fn, MS_100))
