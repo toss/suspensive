@@ -2,4 +2,4 @@
 "@suspensive/react": patch
 ---
 
-fix(assert): add assertion function to assert condition
+fix(react): add assertion function to assert condition
