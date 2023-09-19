@@ -86,7 +86,7 @@ const SetErrorAfterFetch = () => {
   useEffect(() => {
     fetchSomething().then(
       (response) => {},
-      (error) => errorBoundary.setError(error) instead of throw inside
+      (error) => errorBoundary.setError(error) // instead of throw inside
     )
   })
 
