@@ -54,7 +54,7 @@
     "prepack": "pnpm build && pnpm test:tsd",
     "test": "vitest run --coverage",
     "test:tsd": "tsd -t ./dist/index.d.ts",
-    "test:watch": "vitest --ui --coverage",
+    "test:watch": "vitest --ui --coverage.enabled=true",
     "type:check": "tsc --noEmit"
   },
   "devDependencies": {

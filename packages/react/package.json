@@ -62,7 +62,7 @@
     "lint:pub": "publint --strict",
     "prepack": "pnpm build",
     "test": "vitest run --coverage",
-    "test:watch": "vitest --ui --coverage",
+    "test:watch": "vitest --ui --coverage.enabled=true",
     "type:check": "tsc --noEmit"
   },
   "dependencies": {
