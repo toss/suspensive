@@ -1,6 +1,7 @@
 import { ComponentProps, ComponentType, PropsWithChildren, createContext, useContext, useEffect, useMemo } from 'react'
 import { useIsChanged, useKey } from './hooks'
 import { PropsWithoutChildren } from './types'
+import { assert } from './utils'
 
 export const ErrorBoundaryGroupContext = createContext<{ reset: () => void; resetKey: number } | undefined>(undefined)
 if (process.env.NODE_ENV !== 'production') {
@@ -53,11 +54,7 @@ ErrorBoundaryGroup.Reset = ErrorBoundaryGroupReset
 
 export const useErrorBoundaryGroup = () => {
   const group = useContext(ErrorBoundaryGroupContext)
-
-  if (group === undefined) {
-    throw new Error('useErrorBoundaryGroup: ErrorBoundaryGroup is required in parent')
-  }
-
+  assert(group != null, 'useErrorBoundaryGroup: ErrorBoundaryGroup is required in parent')
   return useMemo(
     () => ({
       /**

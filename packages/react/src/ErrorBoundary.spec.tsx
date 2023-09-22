@@ -1,6 +1,7 @@
 import { act } from '@testing-library/react'
 import { ComponentProps, ComponentRef, createRef } from 'react'
 import { createRoot } from 'react-dom/client'
+import { vi } from 'vitest'
 import { ERROR_MESSAGE, FALLBACK, MS_100, TEXT, ThrowError, ThrowNull } from './utils/toTest'
 import { ErrorBoundary } from '.'
 
