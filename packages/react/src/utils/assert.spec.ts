@@ -20,6 +20,7 @@ function get(type: 'foo' | 'bar') {
 }
 
 describe('assert', () => {
+  // eslint-disable-next-line vitest/expect-expect
   it('should assert condition', () => {
     const data = get('foo')
     assert(data.foo1 === 'foo1', 'dummy-message')
