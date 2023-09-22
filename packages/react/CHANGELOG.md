@@ -1,5 +1,11 @@
 # @suspensive/react
 
+## 1.14.6
+
+### Patch Changes
+
+- eac6832: fix(react): add assertion function to assert condition
+
 ## 1.14.5
 
 ### Patch Changes
