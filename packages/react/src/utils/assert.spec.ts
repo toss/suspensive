@@ -29,6 +29,6 @@ describe('assert', () => {
 
   it('should throw error if given condition is not met', () => {
     const value = 'baz' as string
-    expect(() => assert(value === 'paz', 'condition is false')).toThrow('condition is false')
+    expect(() => assert(value === 'paz', "value should be 'paz'")).toThrow("value should be 'paz'")
   })
 })
