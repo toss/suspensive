@@ -3,6 +3,6 @@
   "include": ["."],
   "exclude": ["**/*.test-d.ts", "**/*.test-d.tsx"],
   "compilerOptions": {
-    "types": ["@testing-library/jest-dom"]
+    "types": ["node", "@testing-library/jest-dom"]
   }
 }
