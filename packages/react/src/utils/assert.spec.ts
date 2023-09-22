@@ -1,4 +1,3 @@
-/* eslint-disable vitest/expect-expect */
 import { assert } from '.'
 
 function get(type: 'foo' | 'bar') {
