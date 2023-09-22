@@ -1,4 +1,5 @@
-import { PropsWithChildren, ReactNode, useEffect, useState } from 'react'
+import { PropsWithChildren, ReactNode, useState } from 'react'
+import { useSetTimeout } from '../hooks'
 
 const suspendIsNeed = { current: true }
 type SuspendProps = { during: number; toShow?: ReactNode }
@@ -24,9 +25,7 @@ export const ThrowError = ({ message, after, children }: ThrowErrorProps) => {
   if (isNeedError) {
     throw new Error(message)
   }
-  useEffect(() => {
-    setTimeout(() => setIsNeedError(true), after)
-  }, [after])
+  useSetTimeout(() => setIsNeedError(true), after)
   return <>{children}</>
 }
 
@@ -36,10 +35,7 @@ export const ThrowNull = ({ after, children }: ThrowNullProps) => {
   if (isNeedError) {
     throw null
   }
-  useEffect(() => {
-    const timerId = setTimeout(() => setIsNeedError(true), after)
-    return () => clearTimeout(timerId)
-  }, [after])
+  useSetTimeout(() => setIsNeedError(true), after)
   return <>{children}</>
 }
 
