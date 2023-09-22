@@ -295,10 +295,10 @@ importers:
         specifier: ^1.3.9
         version: 1.3.9(@emotion/react@11.11.0)(react@18.2.0)
       '@suspensive/react':
-        specifier: workspace:1.14.4
+        specifier: workspace:1.14.5
         version: link:../../packages/react
       '@suspensive/react-query':
-        specifier: workspace:1.14.4
+        specifier: workspace:1.14.5
         version: link:../../packages/react-query
       '@tanstack/react-query':
         specifier: ^4.29.5

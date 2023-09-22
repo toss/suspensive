@@ -1,5 +1,12 @@
 # @suspensive/react
 
+## 1.14.5
+
+### Patch Changes
+
+- da0bd52: refactor(react): clarify variable name
+- 2c30f6d: refactor(react): add useSetTimeout to reduce code
+
 ## 1.14.4
 
 ### Patch Changes
