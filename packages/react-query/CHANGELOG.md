@@ -1,5 +1,7 @@
 # @suspensive/react-query
 
+## 1.14.7
+
 ## 1.14.6
 
 ## 1.14.5
