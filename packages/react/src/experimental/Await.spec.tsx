@@ -1,4 +1,5 @@
 import { act, render, screen, waitFor } from '@testing-library/react'
+import { vi } from 'vitest'
 import { ErrorBoundary, Suspense } from '..'
 import { ERROR_MESSAGE, FALLBACK, MS_100, TEXT, delay } from '../utils/toTest'
 import { awaitClient, useAwait } from '.'

@@ -1,4 +1,5 @@
 import { act, render, screen, waitFor } from '@testing-library/react'
+import { vi } from 'vitest'
 import { FALLBACK, MS_100, Suspend, TEXT } from './utils/toTest'
 import { Delay, Suspense, Suspensive, SuspensiveProvider } from '.'
 
