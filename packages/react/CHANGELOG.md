@@ -1,5 +1,11 @@
 # @suspensive/react
 
+## 1.14.7
+
+### Patch Changes
+
+- 085cbe6: refactor(react): apply assert
+
 ## 1.14.6
 
 ### Patch Changes
