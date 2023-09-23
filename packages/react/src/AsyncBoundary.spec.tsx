@@ -1,6 +1,7 @@
 import { act, render, waitFor } from '@testing-library/react'
 import { ComponentProps, createElement } from 'react'
 import { createRoot } from 'react-dom/client'
+import { vi } from 'vitest'
 import { ERROR_MESSAGE, FALLBACK, MS_100, Suspend, TEXT, ThrowError } from './utils/toTest'
 import { AsyncBoundary, withAsyncBoundary } from '.'
 
