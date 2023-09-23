@@ -2,6 +2,7 @@ import { act, render } from '@testing-library/react'
 import { ComponentProps, ComponentRef, createElement, createRef, useEffect } from 'react'
 import { createRoot } from 'react-dom/client'
 import { useSetTimeout } from './hooks'
+import { vi } from 'vitest'
 import { ERROR_MESSAGE, FALLBACK, MS_100, TEXT, ThrowError, ThrowNull } from './utils/toTest'
 import { ErrorBoundary, useErrorBoundary } from '.'
 

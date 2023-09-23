@@ -1,5 +1,6 @@
 import { act, render, screen } from '@testing-library/react'
 import { createElement } from 'react'
+import { vi } from 'vitest'
 import { ERROR_MESSAGE, MS_100, TEXT, ThrowError } from './utils/toTest'
 import { ErrorBoundary, ErrorBoundaryGroup, useErrorBoundaryGroup, withErrorBoundaryGroup } from '.'
 

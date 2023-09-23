@@ -1,3 +1,4 @@
+import { expectTypeOf } from 'vitest'
 import { assert } from '.'
 
 function get(type: 'foo' | 'bar') {
