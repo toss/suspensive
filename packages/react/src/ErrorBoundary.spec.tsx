@@ -3,7 +3,7 @@ import { ComponentProps, ComponentRef, createRef } from 'react'
 import { createRoot } from 'react-dom/client'
 import { vi } from 'vitest'
 import { ERROR_MESSAGE, FALLBACK, MS_100, TEXT, ThrowError, ThrowNull } from './utils/toTest'
-import { ErrorBoundary } from '.'
+import { ErrorBoundary, withErrorBoundary } from '.'
 
 let container = document.createElement('div')
 let root = createRoot(container)
@@ -157,5 +157,42 @@ describe('ErrorBoundary', () => {
     expect(container.textContent).toBe(TEXT)
     expect(container.textContent).not.toBe(ERROR_MESSAGE)
     expect(onReset).toHaveBeenCalledTimes(1)
+  })
+})
+
+describe('withErrorBoundary', () => {
+  beforeEach(() => {
+    container = document.createElement('div')
+    root = createRoot(container)
+    ThrowError.reset()
+  })
+
+  it('should render the wrapped component when there`s no error', () => {
+    const WrappedComponent = withErrorBoundary(() => <>{TEXT}</>, {
+      fallback: (caught) => <>{caught.error.message}</>,
+    })
+
+    act(() => root.render(<WrappedComponent />))
+    expect(container.textContent).toBe(TEXT)
+  })
+
+  it('should render the fallback when there`s an error in the wrapped component', () => {
+    vi.useFakeTimers()
+
+    const WrappedComponentWithError = withErrorBoundary(
+      () => (
+        <ThrowError message={ERROR_MESSAGE} after={MS_100}>
+          {TEXT}
+        </ThrowError>
+      ),
+      {
+        fallback: (caught) => <>{caught.error.message}</>,
+      }
+    )
+
+    act(() => root.render(<WrappedComponentWithError />))
+    expect(container.textContent).toBe(TEXT)
+    act(() => vi.advanceTimersByTime(MS_100))
+    expect(container.textContent).toBe(ERROR_MESSAGE)
   })
 })
