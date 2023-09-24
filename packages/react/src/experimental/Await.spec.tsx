@@ -109,10 +109,10 @@ describe('Await component', () => {
   })
 })
 
-describe('class AwaitClient clearError', () => {
+describe('awaitClient', () => {
   beforeEach(() => awaitClient.reset())
 
-  it('clears promise & error for all cache without key', async () => {
+  it('should have clearError method to clear promise & error for all cache without key', async () => {
     try {
       await awaitClient.suspend({ key, fn: () => Promise.reject(new Error(ERROR_MESSAGE)) })
     } catch {
@@ -120,6 +120,6 @@ describe('class AwaitClient clearError', () => {
     }
 
     awaitClient.clearError()
-    expect(awaitClient.getData([key])).toBeUndefined()
+    expect(awaitClient.getData(key)).toBeUndefined()
   })
 })
