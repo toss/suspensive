@@ -2,7 +2,7 @@ import { act, render, screen, waitFor } from '@testing-library/react'
 import { vi } from 'vitest'
 import { ErrorBoundary, Suspense } from '..'
 import { ERROR_MESSAGE, FALLBACK, MS_100, TEXT, delay } from '../utils/toTest'
-import { awaitClient, useAwait } from '.'
+import { Await, awaitClient, useAwait } from '.'
 
 const key = ['key'] as const
 
@@ -94,5 +94,32 @@ describe('useAwait', () => {
     expect(screen.queryByText(FALLBACK)).toBeInTheDocument()
     act(() => vi.advanceTimersByTime(MS_100))
     await waitFor(() => expect(screen.queryByText(TEXT)).toBeInTheDocument())
+  })
+})
+
+describe('Await component', () => {
+  it('should render child component with data from useAwait hook', async () => {
+    render(
+      <Suspense fallback="Loading...">
+        <Await options={{ key, fn: () => Promise.resolve(TEXT) }}>{({ data }) => <>{data}</>}</Await>
+      </Suspense>
+    )
+
+    expect(await screen.findByText(TEXT)).toBeInTheDocument()
+  })
+})
+
+describe('class AwaitClient clearError', () => {
+  beforeEach(() => awaitClient.reset())
+
+  it('clears promise & error for all cache without key', async () => {
+    try {
+      await awaitClient.suspend({ key, fn: () => Promise.reject(new Error(ERROR_MESSAGE)) })
+    } catch {
+      // Expected an error
+    }
+
+    awaitClient.clearError()
+    expect(awaitClient.getData([key])).toBeUndefined()
   })
 })
