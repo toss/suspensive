@@ -87,9 +87,10 @@ Declarative apis to use [@tanstack/react-query with suspense](https://tanstack.c
 
 ## Features
 
-- QueryErrorBoundary, QueryAsyncBoundary
 - useSuspenseQuery
+- useSuspenseQueries
 - useSuspenseInfiniteQuery
+- QueryErrorBoundary, QueryAsyncBoundary
 
 ## Installation
 
