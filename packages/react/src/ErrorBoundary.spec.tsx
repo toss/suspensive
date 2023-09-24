@@ -167,7 +167,7 @@ describe('withErrorBoundary', () => {
     ThrowError.reset()
   })
 
-  it('should render the wrapped component when there`s no error', () => {
+  it("should render the wrapped component when there's no error", () => {
     const WrappedComponent = withErrorBoundary(() => <>{TEXT}</>, {
       fallback: (caught) => <>{caught.error.message}</>,
     })
