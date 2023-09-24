@@ -84,4 +84,15 @@ describe('withErrorBoundaryGroup', () => {
     const rendered = render(createElement(withErrorBoundaryGroup(UsingUseErrorBoundary)))
     expect(rendered.queryByText(TEXT)).toBeInTheDocument()
   })
+
+  it('should set displayName based on Component.displayName', () => {
+    const TestComponentWithDisplayName = () => <>{TEXT}</>
+    TestComponentWithDisplayName.displayName = 'TestDisplayName'
+
+    expect(withErrorBoundaryGroup(TestComponentWithDisplayName).displayName).toBe(
+      'withErrorBoundaryGroup(TestDisplayName)'
+    )
+
+    expect(withErrorBoundaryGroup(() => <>{TEXT}</>).displayName).toBe('withErrorBoundaryGroup(Component)')
+  })
 })
