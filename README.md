@@ -1,35 +1,38 @@
 <div align="center">
   <a href="https://suspensive.org" title="Suspensive Libraries - TypeScript/JavaScript packages to use React Suspense easily">
-    <img src="https://raw.githubusercontent.com/suspensive/react/main/websites/docs/static/banner.png" alt="Suspensive Libraries Logo - TypeScript/JavaScript packages to use React Suspense easily." />
+    <img src="https://github.com/suspensive/react/blob/main/assets/logo_readme.png?raw=true" alt="Suspensive Libraries Logo - TypeScript/JavaScript packages to use React Suspense easily." height="180" />
+    <h1 align="center">Suspensive</h1>
   </a>
 </div>
 
-<br/>
-
 <div align="center">
 
-[![MIT License](https://img.shields.io/badge/license-MIT-blue.svg?style=for-the-badge&color=61DAFB)](https://github.com/suspensive/react/blob/main/LICENSE) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-deepgreen.svg?style=for-the-badge&color=blue)](https://github.com/suspensive/react/pulls) [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-deepgreen.svg?style=for-the-badge&color=blue)](http://commitizen.github.io/cz-cli/)
+[![MIT License](https://img.shields.io/badge/license-MIT-blue.svg?style=for-the-badge&color=000&labelColor=000)](https://github.com/suspensive/react/blob/main/LICENSE)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-deepgreen.svg?style=for-the-badge&color=000&labelColor=000)](https://github.com/suspensive/react/pulls)
+[![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-deepgreen.svg?style=for-the-badge&color=000&labelColor=000)](http://commitizen.github.io/cz-cli/)
 
-[![codecov](https://codecov.io/gh/suspensive/react/branch/main/graph/badge.svg?token=H4VQ71NJ16)](https://codecov.io/gh/suspensive/react) ![GitHub stars](https://img.shields.io/github/stars/suspensive/react?style=social) ![GitHub forks](https://img.shields.io/github/forks/suspensive/react?style=social) 
+[![codecov](https://codecov.io/gh/suspensive/react/branch/main/graph/badge.svg?token=H4VQ71NJ16)](https://codecov.io/gh/suspensive/react) ![GitHub stars](https://img.shields.io/github/stars/suspensive/react?style=social) ![GitHub forks](https://img.shields.io/github/forks/suspensive/react?style=social)
 
 </div>
 
 <div align="center">
 
-[OFFICIAL DOCS](https://suspensive.org) | [VISUALIZATION](https://visualization.suspensive.org) | [DEPENDENCY GRAPH](https://graph.suspensive.org) | [CONTRIBUTING](https://github.com/suspensive/react/pulls) | [LICENSE](./LICENSE)
+[OFFICIAL DOCS](https://suspensive.org) | [VISUALIZATION](https://visualization.suspensive.org) | [DEPENDENCY GRAPH](https://graph.suspensive.org)
 
 </div>
 
 <br/>
 <br/>
 
-# [@suspensive/react](https://suspensive.org/docs/react/README.i18n)
+## [@suspensive/react](https://suspensive.org/docs/react/README.i18n)
 
-[![npm version](https://img.shields.io/npm/v/@suspensive/react?color=61DAFB)](https://www.npmjs.com/package/@suspensive/react) ![npm bundle size](https://img.shields.io/bundlephobia/minzip/@suspensive/react?color=blue) ![npm](https://img.shields.io/npm/dm/@suspensive/react?color=blue)
+[![npm version](https://img.shields.io/npm/v/@suspensive/react?color=000&labelColor=000&logo=npm&label=)](https://www.npmjs.com/package/@suspensive/react)
+[![npm](https://img.shields.io/npm/dm/@suspensive/react?color=000&labelColor=000)](https://www.npmjs.com/package/@suspensive/react)
+[![npm bundle size](https://img.shields.io/bundlephobia/minzip/@suspensive/react?color=000&labelColor=000)](https://www.npmjs.com/package/@suspensive/react)
 
 All declarative components to use suspense on both CSR, SSR.
 
-## Features
+### Features
 
 - Suspense (containing CSROnly mode)
 - ErrorBoundary
@@ -40,7 +43,7 @@ All declarative components to use suspense on both CSR, SSR.
 - HOC(Higher Order Component)s
 - useAwait, Await, awaitClient (Experimental)
 
-## Installation
+### Installation
 
 ```shell
 npm install @suspensive/react
@@ -54,7 +57,7 @@ pnpm add @suspensive/react
 yarn add @suspensive/react
 ```
 
-## Usage
+### Usage
 
 ```tsx
 import { Suspense, ErrorBoundary, ErrorBoundaryGroup } from '@suspensive/react'
@@ -79,20 +82,22 @@ const Example = (
 <br/>
 <br/>
 
-# [@suspensive/react-query](https://suspensive.org/docs/react-query/README.i18n)
+## [@suspensive/react-query](https://suspensive.org/docs/react-query/README.i18n)
 
-[![npm version](https://img.shields.io/npm/v/@suspensive/react-query?color=61DAFB)](https://www.npmjs.com/package/@suspensive/react-query) ![npm bundle size](https://img.shields.io/bundlephobia/minzip/@suspensive/react-query?color=blue) ![npm](https://img.shields.io/npm/dm/@suspensive/react-query?color=blue)
+[![npm version](https://img.shields.io/npm/v/@suspensive/react-query?color=000&labelColor=000&logo=npm&label=)](https://www.npmjs.com/package/@suspensive/react-query)
+[![npm](https://img.shields.io/npm/dm/@suspensive/react-query?color=000&labelColor=000)](https://www.npmjs.com/package/@suspensive/react-query)
+[![npm bundle size](https://img.shields.io/bundlephobia/minzip/@suspensive/react-query?color=000&labelColor=000)](https://www.npmjs.com/package/@suspensive/react-query)
 
 Declarative apis to use [@tanstack/react-query with suspense](https://tanstack.com/query/v4/docs/guides/suspense) easily.
 
-## Features
+### Features
 
 - useSuspenseQuery
 - useSuspenseQueries
 - useSuspenseInfiniteQuery
 - QueryErrorBoundary, QueryAsyncBoundary
 
-## Installation
+### Installation
 
 ```shell
 npm install @suspensive/react-query
@@ -106,7 +111,7 @@ pnpm add @suspensive/react-query
 yarn add @suspensive/react-query
 ```
 
-## Usage
+### Usage
 
 ```tsx
 import { Suspense } from '@suspensive/react'
@@ -131,27 +136,24 @@ const SuspendedComponent = () => {
 ```
 
 <br/>
-<br/>
 
-# Docs [![deployment](https://img.shields.io/github/deployments/suspensive/react/Production%20%E2%80%93%20docs?label=vercel&logo=vercel&logoColor=white)](https://suspensive.org)
+## Docs [![deployment](https://img.shields.io/github/deployments/suspensive/react/Production%20%E2%80%93%20docs?label=vercel&logo=vercel&logoColor=white&color=000&labelColor=000)](https://suspensive.org)
 
 We provide Official Docs
 
 See [OFFICIAL DOCS](https://suspensive.org)
 
 <br/>
-<br/>
 
-# Visualization [![deployment](https://img.shields.io/github/deployments/suspensive/react/Production%20%E2%80%93%20Visualization?label=vercel&logo=vercel&logoColor=white)](https://visualization.suspensive.org)
+## Visualization [![deployment](https://img.shields.io/github/deployments/suspensive/react/Production%20%E2%80%93%20Visualization?label=vercel&logo=vercel&logoColor=white&color=000&labelColor=000)](https://visualization.suspensive.org)
 
 Concepts Visualization ready. You can see core concepts of Suspensive visually
 
 See [VISUALIZATION](https://visualization.suspensive.org).
 
 <br/>
-<br/>
 
-# License
+## License
 
 MIT © Suspensive. See [LICENSE](./LICENSE) for details.
 
