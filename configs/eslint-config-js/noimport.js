@@ -10,7 +10,14 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 2020,
   },
-  extends: ['eslint:recommended', 'plugin:prettier/recommended'],
+  plugins: ['jsdoc'],
+  extends: ['eslint:recommended', 'plugin:prettier/recommended', 'plugin:jsdoc/recommended'],
+  rules: {
+    'jsdoc/require-description': 'warn',
+    'jsdoc/require-returns': 'off',
+    'jsdoc/require-jsdoc': 'off',
+    'jsdoc/check-param-names': 'error',
+  },
   overrides: [
     {
       files: ['*.spec.ts*', '*.test.ts*'],
