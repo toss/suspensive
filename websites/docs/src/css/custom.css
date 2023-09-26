@@ -6,26 +6,32 @@
 
 /* You can override the default Infima variables here. */
 :root {
-  --ifm-color-primary: #00a2ec;
-  --ifm-color-primary-dark: #008fd8;
-  --ifm-color-primary-darker: #007ec4;
-  --ifm-color-primary-darkest: #005ea2;
-  --ifm-color-primary-light: #51c9fc;
-  --ifm-color-primary-lighter: #b4e8fe;
-  --ifm-color-primary-lightest: #e2f6ff;
+  --ifm-color-primary: #0056b8;
+  --ifm-color-primary-dark: #004da6;
+  --ifm-color-primary-darker: #00499c;
+  --ifm-color-primary-darkest: #003c81;
+  --ifm-color-primary-light: #005fca;
+  --ifm-color-primary-lighter: #0063d4;
+  --ifm-color-primary-lightest: #0070ef;
+  --ifm-navbar-background-color: #ffffff;
+  --ifm-background-color: #ffffff;
+  --ifm-footer-background-color: #ffffff;
   --ifm-code-font-size: 95%;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
 }
 
 /* For readability concerns, you should choose a lighter palette in dark mode. */
 [data-theme='dark'] {
-  --ifm-color-primary: #00cafa;
-  --ifm-color-primary-dark: #00b1fb;
-  --ifm-color-primary-darker: #00a3ed;
-  --ifm-color-primary-darkest: #0090db;
-  --ifm-color-primary-light: #61dafb;
-  --ifm-color-primary-lighter: #a6e9fb;
-  --ifm-color-primary-lightest: #ddf7fe;
+  --ifm-color-primary: #9ecbff;
+  --ifm-color-primary-dark: #75b5ff;
+  --ifm-color-primary-darker: #60aaff;
+  --ifm-color-primary-darkest: #2289ff;
+  --ifm-color-primary-light: #c7e1ff;
+  --ifm-color-primary-lighter: #dcecff;
+  --ifm-color-primary-lightest: #ffffff;
+  --ifm-navbar-background-color: #000000;
+  --ifm-background-color: #0c0c0c !important; 
+  --ifm-footer-background-color: #000000;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
 }
 
@@ -54,9 +60,9 @@
   --docsearch-muted-color: var(--ifm-color-secondary-darkest);
   --docsearch-container-background: rgba(0, 0, 0, 0.7);
   /* Modal */
-  --docsearch-modal-background: var(--ifm-background-color);
+  --docsearch-modal-background: #101010;
   /* Search box */
-  --docsearch-searchbox-background: var(--ifm-background-color);
+  --docsearch-searchbox-background: #101010;
   --docsearch-searchbox-focus-background: var(--ifm-color-black);
   /* Hit */
   --docsearch-hit-color: var(--ifm-font-color-base);
