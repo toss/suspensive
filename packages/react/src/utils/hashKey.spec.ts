@@ -25,7 +25,7 @@ describe('hashKey', () => {
   })
 })
 
-describe('isPlainObject function', () => {
+describe('isPlainObject', () => {
   it('should return true for a plain object', () => {
     expect(isPlainObject({})).toBe(true)
   })
