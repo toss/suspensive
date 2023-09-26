@@ -21,7 +21,7 @@ const TopNavigation = () => (
     <Link href="/">
       <Flex align={'center'}>
         <Image src="/logo_notcropped.png" width={40} height={40} alt="logo" />
-        Suspensive's Concepts Visualization
+        Visualization
       </Flex>
     </Link>
   </Flex.Center>

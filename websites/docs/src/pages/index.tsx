@@ -9,7 +9,14 @@ import styles from './index.module.css'
 const HomepageHeader = () => (
   <header className={clsx(styles.heroBanner)}>
     <div className="container">
-      <img src="img/logo_notcropped.png" alt="logo" style={{ height: 180, width: 180, marginBottom: -16 }} />
+      <img
+        src="img/logo_background_star.png"
+        alt="logo"
+        style={{
+          width: 348,
+          marginBottom: 30,
+        }}
+      />
       <h1 className="hero__title">Suspensive</h1>
       <p className="hero__subtitle">
         <Translate>Packages to use React Suspense easily</Translate>
