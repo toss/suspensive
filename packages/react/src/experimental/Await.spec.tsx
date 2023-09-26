@@ -97,7 +97,7 @@ describe('useAwait', () => {
   })
 })
 
-describe('Await component', () => {
+describe('<Await>', () => {
   it('should render child component with data from useAwait hook', async () => {
     render(
       <Suspense fallback="Loading...">
