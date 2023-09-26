@@ -14,7 +14,7 @@ export const hashKey = (key: Key) =>
       : val
   )
 
-const isPlainObject = (value: any): value is PlainObject => {
+export const isPlainObject = (value: any): value is PlainObject => {
   if (!hasObjectPrototype(value)) {
     return false
   }
