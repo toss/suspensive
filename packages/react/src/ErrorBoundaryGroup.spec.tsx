@@ -7,7 +7,7 @@ import { ErrorBoundary, ErrorBoundaryGroup, useErrorBoundaryGroup, withErrorBoun
 const innerErrorBoundaryCount = 3
 const resetButtonText = 'reset button'
 
-describe('ErrorBoundaryGroup', () => {
+describe('<ErrorBoundaryGroup/>', () => {
   it('should reset all ErrorBoundaries in children', () => {
     vi.useFakeTimers()
     render(

@@ -72,7 +72,8 @@ const config = {
         title: 'Suspensive',
         logo: {
           alt: 'Suspensive Logo',
-          src: 'img/logo.svg',
+          src: 'img/logo_light.png',
+          srcDark: 'img/logo_dark.png',
         },
         items: [
           {
