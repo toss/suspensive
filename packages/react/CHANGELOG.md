@@ -1,5 +1,12 @@
 # @suspensive/react
 
+## 1.14.8
+
+### Patch Changes
+
+- dd75647: feat(react): add getError, remove unnecessary generic
+- a803b48: fix(react): fix ErrorBoundary reset using render prop
+
 ## 1.14.7
 
 ### Patch Changes
