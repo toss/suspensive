@@ -4,7 +4,7 @@ import { vi } from 'vitest'
 import { FALLBACK, MS_100, Suspend, TEXT } from './utils/toTest'
 import { Suspense, withSuspense } from '.'
 
-describe('Suspense', () => {
+describe('<Suspense/>', () => {
   beforeEach(Suspend.reset)
 
   it('should render the children if nothing to suspend', async () => {
@@ -33,7 +33,7 @@ describe('Suspense', () => {
     await waitFor(() => expect(screen.queryByText(TEXT)).toBeInTheDocument())
   })
 })
-describe('Suspense.CSROnly', () => {
+describe('<Suspense.CSROnly/>', () => {
   beforeEach(Suspend.reset)
 
   it('should render the fallback during suspending', () => {

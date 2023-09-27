@@ -3,7 +3,7 @@ import { vi } from 'vitest'
 import { MS_100, TEXT } from './utils/toTest'
 import { Delay, withDelay } from '.'
 
-describe('Delay', () => {
+describe('<Delay/>', () => {
   it('should render the children after the delay', async () => {
     vi.useFakeTimers()
     render(<Delay ms={MS_100}>{TEXT}</Delay>)
