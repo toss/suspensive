@@ -61,7 +61,7 @@ class AwaitClient {
   private cache = new Map<ReturnType<typeof hashKey>, AwaitState>()
   private syncsMap = new Map<ReturnType<typeof hashKey>, Sync[]>()
 
-  public reset = <TKey extends Key>(key?: TKey) => {
+  public reset = (key?: Key) => {
     if (key === undefined || key.length === 0) {
       this.cache.clear()
       this.syncSubscribers()
@@ -78,7 +78,7 @@ class AwaitClient {
     this.syncSubscribers(key)
   }
 
-  public clearError = <TKey extends Key>(key?: TKey) => {
+  public clearError = (key?: Key) => {
     if (key === undefined || key.length === 0) {
       this.cache.forEach((value, key, map) => {
         map.set(key, { ...value, promise: undefined, error: undefined })
@@ -94,7 +94,7 @@ class AwaitClient {
     }
   }
 
-  public suspend = <TKey extends Key, TData>({ key, fn }: AwaitOptions<TData, TKey>): TData => {
+  public suspend = <TData, TKey extends Key = Key>({ key, fn }: AwaitOptions<TData, TKey>): TData => {
     const hashedKey = hashKey(key)
     const awaitState = this.cache.get(hashedKey)
 
@@ -128,9 +128,10 @@ class AwaitClient {
     throw newAwaitState.promise
   }
 
-  public getData = <TKey extends Key>(key: TKey) => this.cache.get(hashKey(key))?.data
+  public getData = (key: Key) => this.cache.get(hashKey(key))?.data
+  public getError = (key: Key) => this.cache.get(hashKey(key))?.error
 
-  public subscribe<TKey extends Key>(key: TKey, syncSubscriber: Sync) {
+  public subscribe(key: Key, syncSubscriber: Sync) {
     const hashedKey = hashKey(key)
     const syncs = this.syncsMap.get(hashedKey)
     this.syncsMap.set(hashedKey, [...(syncs ?? []), syncSubscriber])
@@ -141,7 +142,7 @@ class AwaitClient {
     return subscribed
   }
 
-  public unsubscribe<TKey extends Key>(key: TKey, syncSubscriber: Sync) {
+  public unsubscribe(key: Key, syncSubscriber: Sync) {
     const hashedKey = hashKey(key)
     const syncs = this.syncsMap.get(hashedKey)
 
@@ -153,7 +154,7 @@ class AwaitClient {
     }
   }
 
-  private syncSubscribers = <TKey extends Key>(key?: TKey) => {
+  private syncSubscribers = (key?: Key) => {
     const hashedKey = key ? hashKey(key) : undefined
 
     return hashedKey

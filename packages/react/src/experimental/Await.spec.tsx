@@ -4,10 +4,10 @@ import { ErrorBoundary, Suspense } from '..'
 import { ERROR_MESSAGE, FALLBACK, MS_100, TEXT, delay } from '../utils/toTest'
 import { Await, awaitClient, useAwait } from '.'
 
-const key = ['key'] as const
+const key = (id: number) => ['key', id] as const
 
 const AwaitSuccess = () => {
-  const awaited = useAwait({ key, fn: () => delay(MS_100).then(() => TEXT) })
+  const awaited = useAwait({ key: key(1), fn: () => delay(MS_100).then(() => TEXT) })
 
   return (
     <>
@@ -18,7 +18,10 @@ const AwaitSuccess = () => {
 }
 
 const AwaitFailure = () => {
-  const awaited = useAwait({ key, fn: () => delay(MS_100).then(() => Promise.reject(new Error(ERROR_MESSAGE))) })
+  const awaited = useAwait({
+    key: key(1),
+    fn: () => delay(MS_100).then(() => Promise.reject(new Error(ERROR_MESSAGE))),
+  })
 
   return <>{awaited.data}</>
 }
@@ -27,7 +30,7 @@ describe('<Await />', () => {
   it('should render child component with data from useAwait hook', async () => {
     render(
       <Suspense fallback="Loading...">
-        <Await options={{ key, fn: () => Promise.resolve(TEXT) }}>{({ data }) => <>{data}</>}</Await>
+        <Await options={{ key: key(1), fn: () => Promise.resolve(TEXT) }}>{({ data }) => <>{data}</>}</Await>
       </Suspense>
     )
 
@@ -109,17 +112,93 @@ describe('useAwait', () => {
   })
 })
 
+const asyncErrorFn = async () => {
+  throw ERROR_MESSAGE
+}
 describe('awaitClient', () => {
   beforeEach(() => awaitClient.reset())
 
-  it('should have clearError method to clear promise & error for all cache without key', async () => {
+  it("have clearError method without key should clear promise & error for all key's awaitState", async () => {
+    expect(awaitClient.getError(key(1))).toBeUndefined()
+    expect(awaitClient.getError(key(2))).toBeUndefined()
     try {
-      await awaitClient.suspend({ key, fn: () => Promise.reject(new Error(ERROR_MESSAGE)) })
-    } catch {
-      // Expected an error
+      awaitClient.suspend({ key: key(1), fn: asyncErrorFn })
+    } catch (promiseToSuspense) {
+      expect(await promiseToSuspense).toBeUndefined()
     }
+    try {
+      awaitClient.suspend({ key: key(1), fn: asyncErrorFn })
+    } catch (error) {
+      expect(error).toBe(ERROR_MESSAGE)
+    }
+    try {
+      awaitClient.suspend({ key: key(2), fn: asyncErrorFn })
+    } catch (promiseToSuspense) {
+      expect(await promiseToSuspense).toBeUndefined()
+    }
+    try {
+      awaitClient.suspend({ key: key(2), fn: asyncErrorFn })
+    } catch (error) {
+      expect(error).toBe(ERROR_MESSAGE)
+    }
+    expect(awaitClient.getError(key(1))).toBe(ERROR_MESSAGE)
+    expect(awaitClient.getError(key(2))).toBe(ERROR_MESSAGE)
 
     awaitClient.clearError()
-    expect(awaitClient.getData(key)).toBeUndefined()
+    expect(awaitClient.getError(key(1))).toBeUndefined()
+    expect(awaitClient.getError(key(2))).toBeUndefined()
+  })
+
+  it("have clearError method with key should clear promise & error for key's awaitState", async () => {
+    expect(awaitClient.getError(key(1))).toBeUndefined()
+    expect(awaitClient.getError(key(2))).toBeUndefined()
+    try {
+      awaitClient.suspend({ key: key(1), fn: asyncErrorFn })
+    } catch (promiseToSuspense) {
+      expect(await promiseToSuspense).toBeUndefined()
+    }
+    try {
+      awaitClient.suspend({ key: key(1), fn: asyncErrorFn })
+    } catch (error) {
+      expect(error).toBe(ERROR_MESSAGE)
+    }
+    try {
+      awaitClient.suspend({ key: key(2), fn: asyncErrorFn })
+    } catch (promiseToSuspense) {
+      expect(await promiseToSuspense).toBeUndefined()
+    }
+    try {
+      awaitClient.suspend({ key: key(2), fn: asyncErrorFn })
+    } catch (error) {
+      expect(error).toBe(ERROR_MESSAGE)
+    }
+    expect(awaitClient.getError(key(1))).toBe(ERROR_MESSAGE)
+    expect(awaitClient.getError(key(2))).toBe(ERROR_MESSAGE)
+
+    awaitClient.clearError(key(1))
+    expect(awaitClient.getError(key(1))).toBeUndefined()
+    expect(awaitClient.getError(key(2))).toBe(ERROR_MESSAGE)
+    awaitClient.clearError(key(2))
+    expect(awaitClient.getError(key(1))).toBeUndefined()
+    expect(awaitClient.getError(key(2))).toBeUndefined()
+  })
+
+  it("have getData method with key should get data of key's awaitState", async () => {
+    vi.useFakeTimers()
+    render(
+      <Suspense fallback={FALLBACK}>
+        <Await options={{ key: key(1), fn: () => delay(MS_100).then(() => TEXT) }}>
+          {(awaited) => <>{awaited.data}</>}
+        </Await>
+      </Suspense>
+    )
+
+    expect(screen.queryByText(FALLBACK)).toBeInTheDocument()
+    expect(screen.queryByText(TEXT)).not.toBeInTheDocument()
+    expect(awaitClient.getData(key(1))).toBeUndefined()
+    act(() => vi.advanceTimersByTime(MS_100))
+    await waitFor(() => expect(screen.queryByText(TEXT)).toBeInTheDocument())
+    expect(screen.queryByText(FALLBACK)).not.toBeInTheDocument()
+    expect(awaitClient.getData(key(1))).toBe(TEXT)
   })
 })
