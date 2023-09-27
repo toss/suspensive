@@ -23,6 +23,18 @@ const AwaitFailure = () => {
   return <>{awaited.data}</>
 }
 
+describe('<Await />', () => {
+  it('should render child component with data from useAwait hook', async () => {
+    render(
+      <Suspense fallback="Loading...">
+        <Await options={{ key, fn: () => Promise.resolve(TEXT) }}>{({ data }) => <>{data}</>}</Await>
+      </Suspense>
+    )
+
+    expect(await screen.findByText(TEXT)).toBeInTheDocument()
+  })
+})
+
 describe('useAwait', () => {
   beforeEach(() => awaitClient.reset())
   it('should return object containing data field with only success, and It will be cached', async () => {
@@ -94,18 +106,6 @@ describe('useAwait', () => {
     expect(screen.queryByText(FALLBACK)).toBeInTheDocument()
     act(() => vi.advanceTimersByTime(MS_100))
     await waitFor(() => expect(screen.queryByText(TEXT)).toBeInTheDocument())
-  })
-})
-
-describe('<Await />', () => {
-  it('should render child component with data from useAwait hook', async () => {
-    render(
-      <Suspense fallback="Loading...">
-        <Await options={{ key, fn: () => Promise.resolve(TEXT) }}>{({ data }) => <>{data}</>}</Await>
-      </Suspense>
-    )
-
-    expect(await screen.findByText(TEXT)).toBeInTheDocument()
   })
 })
 

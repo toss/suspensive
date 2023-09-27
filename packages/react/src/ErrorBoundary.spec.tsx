@@ -9,7 +9,7 @@ let container = document.createElement('div')
 let root = createRoot(container)
 const errorBoundaryRef = createRef<ComponentRef<typeof ErrorBoundary>>()
 
-describe('ErrorBoundary', () => {
+describe('<ErrorBoundary/>', () => {
   beforeEach(() => {
     container = document.createElement('div')
     root = createRoot(container)
