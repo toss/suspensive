@@ -5,7 +5,7 @@ import { Delay, Suspense, Suspensive, SuspensiveProvider } from '.'
 
 const FALLBACK_GLOBAL = 'FALLBACK_GLOBAL'
 
-describe('SuspensiveProvider', () => {
+describe('<SuspensiveProvider/>', () => {
   it('should provide default ms prop of Delay', async () => {
     vi.useFakeTimers()
     render(

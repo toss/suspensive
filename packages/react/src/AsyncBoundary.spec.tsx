@@ -14,7 +14,7 @@ const renderAsyncBoundary = (props: ComponentProps<typeof AsyncBoundary>) =>
 const renderAsyncBoundaryCSROnly = (props: ComponentProps<typeof AsyncBoundary.CSROnly>) =>
   act(() => root.render(<AsyncBoundary.CSROnly {...props} />))
 
-describe('AsyncBoundary', () => {
+describe('<AsyncBoundary/>', () => {
   beforeEach(() => {
     container = document.createElement('div')
     root = createRoot(container)
@@ -74,7 +74,7 @@ describe('AsyncBoundary', () => {
   })
 })
 
-describe('AsyncBoundary.CSROnly', () => {
+describe('<AsyncBoundary.CSROnly/>', () => {
   beforeEach(() => {
     container = document.createElement('div')
     root = createRoot(container)
