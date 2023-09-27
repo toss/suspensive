@@ -84,7 +84,7 @@ class BaseErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState
     this.props.onError?.(error, info)
   }
 
-  reset = () => {
+  reset() {
     this.props.onReset?.()
     awaitClient.clearError()
     this.setState(initialState)
@@ -97,14 +97,14 @@ class BaseErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState
       <ErrorBoundaryContext.Provider
         value={{
           ...this.state,
-          reset: this.reset,
+          reset: this.reset.bind(this),
         }}
       >
         {this.state.isError
           ? typeof fallback === 'function'
             ? createElement(fallback, {
                 error: this.state.error,
-                reset: this.reset,
+                reset: this.reset.bind(this),
               })
             : fallback
           : children}
