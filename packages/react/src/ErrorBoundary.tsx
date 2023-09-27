@@ -95,7 +95,7 @@ class BaseErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState
       if (typeof fallback === 'function') {
         return createElement(fallback, {
           error,
-          reset: this.reset,
+          reset: this.reset.bind(this),
         })
       }
       return fallback
