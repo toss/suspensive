@@ -2,4 +2,4 @@
 '@suspensive/react': patch
 ---
 
-fix error boundary reset using render prop
+fix(react): fix ErrorBoundary reset using render prop
