@@ -82,6 +82,13 @@ describe('withSuspense', () => {
     expect(screen.queryByText(TEXT)).toBeInTheDocument()
     expect(screen.queryByText(FALLBACK)).not.toBeInTheDocument()
   })
+
+  it('should set displayName based on Component.displayName', () => {
+    const TestComponentWithDisplayName = () => <>{TEXT}</>
+    TestComponentWithDisplayName.displayName = 'TestDisplayName'
+    expect(withSuspense(TestComponentWithDisplayName).displayName).toBe('withSuspense(TestDisplayName)')
+    expect(withSuspense(() => <>{TEXT}</>).displayName).toBe('withSuspense(Component)')
+  })
 })
 describe('withSuspense.CSROnly', () => {
   beforeEach(Suspend.reset)
@@ -101,5 +108,12 @@ describe('withSuspense.CSROnly', () => {
     await waitFor(() => expect(screen.queryByText(FALLBACK)).not.toBeInTheDocument())
     expect(screen.queryByText(TEXT)).toBeInTheDocument()
     expect(screen.queryByText(FALLBACK)).not.toBeInTheDocument()
+  })
+
+  it('should set displayName based on Component.displayName', () => {
+    const TestComponentWithDisplayName = () => <>{TEXT}</>
+    TestComponentWithDisplayName.displayName = 'TestDisplayName'
+    expect(withSuspense.CSROnly(TestComponentWithDisplayName).displayName).toBe('withSuspense.CSROnly(TestDisplayName)')
+    expect(withSuspense.CSROnly(() => <>{TEXT}</>).displayName).toBe('withSuspense.CSROnly(Component)')
   })
 })

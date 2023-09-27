@@ -213,4 +213,15 @@ describe('withErrorBoundary', () => {
     act(() => vi.advanceTimersByTime(MS_100))
     expect(container.textContent).toBe(ERROR_MESSAGE)
   })
+
+  it('should set displayName based on Component.displayName', () => {
+    const TestComponentWithDisplayName = () => <>{TEXT}</>
+    TestComponentWithDisplayName.displayName = 'TestDisplayName'
+    expect(withErrorBoundary(TestComponentWithDisplayName, { fallback: () => <></> }).displayName).toBe(
+      'withErrorBoundary(TestDisplayName)'
+    )
+    expect(withErrorBoundary(() => <>{TEXT}</>, { fallback: () => <></> }).displayName).toBe(
+      'withErrorBoundary(Component)'
+    )
+  })
 })

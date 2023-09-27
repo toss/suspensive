@@ -27,4 +27,11 @@ describe('withDelay', () => {
     act(() => vi.advanceTimersByTime(MS_100))
     await waitFor(() => expect(screen.queryByText(TEXT)).toBeInTheDocument())
   })
+
+  it('should set displayName based on Component.displayName', () => {
+    const TestComponentWithDisplayName = () => <>{TEXT}</>
+    TestComponentWithDisplayName.displayName = 'TestDisplayName'
+    expect(withDelay(TestComponentWithDisplayName).displayName).toBe('withDelay(TestDisplayName)')
+    expect(withDelay(() => <>{TEXT}</>).displayName).toBe('withDelay(Component)')
+  })
 })
