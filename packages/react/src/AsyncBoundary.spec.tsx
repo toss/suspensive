@@ -145,6 +145,17 @@ describe('withAsyncBoundary', () => {
     )
     expect(rendered.queryByText(TEXT)).toBeInTheDocument()
   })
+
+  it('should set displayName based on Component.displayName', () => {
+    const TestComponentWithDisplayName = () => <>{TEXT}</>
+    TestComponentWithDisplayName.displayName = 'TestDisplayName'
+    expect(withAsyncBoundary(TestComponentWithDisplayName, { rejectedFallback: () => <></> }).displayName).toBe(
+      'withAsyncBoundary(TestDisplayName)'
+    )
+    expect(withAsyncBoundary(() => <>{TEXT}</>, { rejectedFallback: () => <></> }).displayName).toBe(
+      'withAsyncBoundary(Component)'
+    )
+  })
 })
 describe('withAsyncBoundary.CSROnly', () => {
   it('should wrap component by AsyncBoundary.CSROnly', () => {
@@ -156,5 +167,16 @@ describe('withAsyncBoundary.CSROnly', () => {
       )
     )
     expect(rendered.queryByText(TEXT)).toBeInTheDocument()
+  })
+
+  it('should set displayName based on Component.displayName', () => {
+    const TestComponentWithDisplayName = () => <>{TEXT}</>
+    TestComponentWithDisplayName.displayName = 'TestDisplayName'
+    expect(withAsyncBoundary.CSROnly(TestComponentWithDisplayName, { rejectedFallback: () => <></> }).displayName).toBe(
+      'withAsyncBoundary.CSROnly(TestDisplayName)'
+    )
+    expect(withAsyncBoundary.CSROnly(() => <>{TEXT}</>, { rejectedFallback: () => <></> }).displayName).toBe(
+      'withAsyncBoundary.CSROnly(Component)'
+    )
   })
 })
