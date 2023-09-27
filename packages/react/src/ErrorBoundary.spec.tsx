@@ -126,6 +126,24 @@ describe('<ErrorBoundary/>', () => {
     expect(onReset).toHaveBeenCalledTimes(2)
   })
 
+  it('should be reset by render prop reset(), and call onReset', () => {
+    const onReset = vi.fn()
+    const fallbackFn = vi.fn()
+    act(() =>
+      root.render(
+        <ErrorBoundary ref={errorBoundaryRef} fallback={fallbackFn} onReset={onReset}>
+          <ThrowError message={ERROR_MESSAGE} after={MS_100}>
+            {TEXT}
+          </ThrowError>
+        </ErrorBoundary>
+      )
+    )
+    act(() => vi.advanceTimersByTime(MS_100))
+    expect(fallbackFn).toHaveBeenCalled()
+    fallbackFn.mock.calls[0][0].reset()
+    expect(onReset).toHaveBeenCalledTimes(1)
+  })
+
   it('should be reset by ref.reset(), and call onReset', () => {
     const onReset = vi.fn()
     vi.useFakeTimers()
