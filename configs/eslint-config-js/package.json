@@ -12,6 +12,7 @@
   "dependencies": {
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-import": "^2.25.3",
+    "eslint-plugin-jsdoc": "^46.8.2",
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-vitest": "0.3.1"
   },
