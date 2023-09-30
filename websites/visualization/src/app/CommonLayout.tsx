@@ -11,6 +11,7 @@ export const CommonLayout = ({ children }: PropsWithChildren) => {
     <>
       <TopNavigation />
       <Link href="/react/experimental/await">🔗 Experimental Feature: Await</Link>
+      <Link href="/react/experimental/useErrorBoundary">🔗 Experimental Feature: useErrorBoundary</Link>
       <Flex.Center flex={1}>{children}</Flex.Center>
     </>
   )
