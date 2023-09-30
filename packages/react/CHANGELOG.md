@@ -1,5 +1,11 @@
 # @suspensive/react
 
+## 2.0.0
+
+### Minor Changes
+
+- b431a4d: feat(react): add useErrorBoundary
+
 ## 1.14.9
 
 ## 1.14.8
