@@ -62,3 +62,44 @@ const Example = () => {
   )
 }
 ```
+
+## useErrorBoundary (experimental feature)
+
+We can reset ErrorBoundary without props using useErrorBoundary.reset in ErrorBoundaryFallback.
+
+```tsx
+const ErrorBoundaryFallback = () => {
+  const errorBoundary = useErrorBoundary()
+
+  return <button onClick={errorBoundary.reset} />
+}
+
+const Example = () => (
+  <ErrorBoundary fallback={ErrorBoundaryFallback}>
+    <Error />
+  </ErrorBoundary>
+)
+```
+
+We can use useErrorBoundary.setError in ErrorBoundaryFallback to make ErrorBoundary aware of the Error without throw.
+
+```tsx
+const SetErrorAfterFetch = () => {
+  const errorBoundary = useErrorBoundary()
+
+  useEffect(() => {
+    fetchSomething().then(
+      (response) => {},
+      (error) => errorBoundary.setError(error) // instead of throw inside
+    )
+  })
+
+  return <>...</>
+}
+
+const Example = () => (
+  <ErrorBoundary fallback={ErrorBoundaryFallback}>
+    <SetErrorAfterFetch />
+  </ErrorBoundary>
+)
+```
