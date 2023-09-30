@@ -157,6 +157,9 @@ type ErrorBoundaryContextType<TError extends Error = Error> = {
 
 const ErrorBoundaryContext = createContext<ErrorBoundaryContextType | null>(null)
 
+/**
+ * @experimental This is experimental feature.
+ */
 export const useErrorBoundary = <TError extends Error = Error>() => {
   const [state, setState] = useState<ErrorBoundaryState<TError>>({
     isError: false,
