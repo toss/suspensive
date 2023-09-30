@@ -1,6 +1,6 @@
 ---
 sidebar_position: 3
-title: ErrorBoundaryGroup
+title: <ErrorBoundaryGroup/>
 ---
 
 This is a component for managing multiple ErrorBoundaries at once.
@@ -12,6 +12,8 @@ If you use ErrorBoundaryGroup, you can easily reset multiple ErrorBoundaries at 
 Multiple ErrorBoundary as children of ErrorBoundaryGroup can be reset at once by ErrorBoundaryGroup.Reset.
 
 ```tsx
+import { ErrorBoundaryGroup, ErrorBoundary, AsyncBoundary } from '@suspensive/react'
+
 const Example = () => (
   <ErrorBoundaryGroup>
     <ErrorBoundaryGroup.Reset trigger={(group) => <button onClick={group.reset}>Reset Children</button>} />
@@ -26,6 +28,8 @@ const Example = () => (
 If you want to use HOC(Higher Order Component) with hook, Use withErrorBoundaryGroup, useErrorBoundaryGroup.
 
 ```tsx
+import { withErrorBoundaryGroup, useErrorBoundaryGroup, ErrorBoundary, AsyncBoundary } from '@suspensive/react'
+
 const Example = withErrorBoundaryGroup(() => {
   const group = useErrorBoundaryGroup()
 
@@ -45,6 +49,8 @@ ErrorBoundary as children of nested ErrorBoundaryGroup will be reset by parent E
 But nested ErrorBoundaryGroup.Reset will reset only ErrorBoundary inside of nested ErrorBoundaryGroup self.
 
 ```tsx
+import { ErrorBoundaryGroup, ErrorBoundary, AsyncBoundary } from '@suspensive/react'
+
 const Example = () => (
   <ErrorBoundaryGroup>
     <ErrorBoundaryGroup.Reset /* reset all of children */ />
@@ -64,6 +70,8 @@ const Example = () => (
 If you want to block resetting nested ErrorBoundaryGroup by parent ErrorBoundaryGroup, Use blockOutside.
 
 ```tsx
+import { ErrorBoundaryGroup, ErrorBoundary, AsyncBoundary } from '@suspensive/react'
+
 const Example = () => (
   <ErrorBoundaryGroup>
     <ErrorBoundaryGroup.Reset />
