@@ -1,5 +1,12 @@
 # @suspensive/react-query
 
+## 1.14.9
+
+### Patch Changes
+
+- e823dc0: fix(react-query): correct peerDeps version
+  - @suspensive/react@1.14.9
+
 ## 1.14.8
 
 ## 1.14.7
