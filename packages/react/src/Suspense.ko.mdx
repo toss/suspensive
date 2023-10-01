@@ -7,6 +7,14 @@ title: <Suspense/>
 
 @suspensive/react의 `<Suspense/>`는 React의 Suspense가 됩니다.
 
+### `<Suspense.CSROnly/>`
+
+`<Suspense.CSROnly/>`는 먼저 fallback를 return합니다. mount 후 클라이언트에서만 children을 return합니다. 하지만 서버에서는 fallback만 반환합니다.
+
+### props.fallback
+
+fallback은 react의 suspense와 동일하게 동작합니다.
+
 ```tsx
 import { Suspense } from '@suspensive/react'
 
@@ -15,12 +23,6 @@ const Example = () => (
     <Children />
   </Suspense>
 )
-```
-
-### `<Suspense.CSROnly/>`
-
-```tsx
-import { Suspense } from '@suspensive/react'
 
 const Example = () => (
   <Suspense.CSROnly fallback={<Loading />}>
@@ -29,9 +31,12 @@ const Example = () => (
 )
 ```
 
-#### SSR을 지원하도록 점진적으로 마이그레이션하기 (`<Suspense.CSROnly/>` -> `<Suspense/>`)
+#### Default fallback
 
-React.Suspense를 SSR과 CSR에서 모두 사용하고 싶다면 `<Suspense.CSROnly/>`에서 `<Suspense/>`로 점진적으로 마이그레이션하면 쉽게 적용할 수 있습니다.
+`<Suspsense/>`와 `<Suspsense.CSROnly/>`는 `<SuspensiveProvider/>`와 함께 사용할 때 더욱 강력해집니다.
+`<SuspensiveProvider/>`를 사용하여 여러 `<Suspense/>`의 default fallback를 제어합니다.
+
+자세한 내용은 [`<SuspensiveProvider/>` 페이지](./SuspensiveProvider.i18n)에 소개되어 있습니다.
 
 ## withSuspense
 
@@ -42,7 +47,7 @@ withSuspense의 두 번째 인자는 children이 없는 `<Suspense/>`의 props�
 ```tsx
 import { withSuspense } from '@suspensive/react'
 
-const SuspenseWrapped = withSuspense(
+const Example = withSuspense(
   function Component() {
     // code make suspending
 
@@ -51,7 +56,7 @@ const SuspenseWrapped = withSuspense(
   { fallback: <Spinner /> }
 )
 
-const SuspenseCSROnlyWrapped = withSuspense.CSROnly(
+const Example = withSuspense.CSROnly(
   function Component() {
     // code make suspending
 
@@ -60,3 +65,7 @@ const SuspenseCSROnlyWrapped = withSuspense.CSROnly(
   { fallback: <Spinner /> }
 )
 ```
+
+#### SSR을 지원하도록 점진적으로 마이그레이션하기 (`<Suspense.CSROnly/>` -> `<Suspense/>`)
+
+React.Suspense를 SSR과 CSR에서 모두 사용하고 싶다면 `<Suspense.CSROnly/>`에서 `<Suspense/>`로 점진적으로 마이그레이션하면 쉽게 적용할 수 있습니다.
