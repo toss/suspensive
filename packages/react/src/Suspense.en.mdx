@@ -5,7 +5,15 @@ title: <Suspense/>
 
 ### `<Suspense/>`
 
-@suspensive/react's `<Suspense/>` will be just Suspense of original React.
+@suspensive/react's `<Suspense/>` will be just [Suspense of original React](https://react.dev/reference/react/Suspense).
+
+### `<Suspense.CSROnly/>`
+
+`<Suspense.CSROnly/>` will return fallback in server. After mount(in client) return children. 
+
+### props.fallback
+
+fallback works the same as fallback of original React's Suspense.
 
 ```tsx
 import { Suspense } from '@suspensive/react'
@@ -15,14 +23,6 @@ const Example = () => (
     <Children />
   </Suspense>
 )
-```
-
-### `<Suspense.CSROnly/>`
-
-`<Suspense.CSROnly/>` will return fallback first. After mount, return children only in client. but in server, return fallback only.
-
-```tsx
-import { Suspense } from '@suspensive/react'
 
 const Example = () => (
   <Suspense.CSROnly fallback={<Loading />}>
@@ -31,9 +31,12 @@ const Example = () => (
 )
 ```
 
-#### Migration support SSR gradually (`<Suspense.CSROnly/>` -> `<Suspense/>`)
+#### Default fallback
 
-If you want to use Suspense working in both SSR/CSR, You can change `<Suspense.CSROnly/>` to `<Suspense/>` gradually.
+`<Suspsense/>` and `<Suspsense.CSROnly/>` are more powerful when used with `<SuspensiveProvider/>`.
+Control multiple `<Suspense/>`s default fallback with `<SuspensiveProvider/>`.
+
+Details are introduced in [`<SuspensiveProvider/>` page](./SuspensiveProvider.i18n).
 
 ## withSuspense
 
@@ -44,7 +47,7 @@ withSuspense's 2nd parameter is props of `<Suspense/>` without children
 ```tsx
 import { withSuspense } from '@suspensive/react'
 
-const SuspenseWrapped = withSuspense(
+const Example = withSuspense(
   function Component() {
     // code make suspending
 
@@ -53,7 +56,7 @@ const SuspenseWrapped = withSuspense(
   { fallback: <Spinner /> }
 )
 
-const SuspenseCSROnlyWrapped = withSuspense.CSROnly(
+const Example = withSuspense.CSROnly(
   function Component() {
     // code make suspending
 
@@ -62,3 +65,7 @@ const SuspenseCSROnlyWrapped = withSuspense.CSROnly(
   { fallback: <Spinner /> }
 )
 ```
+
+#### Migration support SSR gradually (`<Suspense.CSROnly/>` -> `<Suspense/>`)
+
+If you want to use Suspense working in both SSR/CSR, You can change `<Suspense.CSROnly/>` to `<Suspense/>` gradually.
