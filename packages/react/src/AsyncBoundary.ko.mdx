@@ -1,6 +1,6 @@
 ---
 sidebar_position: 4
-title: AsyncBoundary
+title: <AsyncBoundary/>
 ---
 
 AsyncBoundary는 @suspensive/react의 [Suspense](/docs/react/src/Suspense.i18n)와 [ErrorBoundary](/docs/react/src/ErrorBoundary.i18n)를 쉽게 한번에 사용하기 위해 래핑한 컴포넌트입니다.
@@ -10,6 +10,8 @@ AsyncBoundary는 @suspensive/react의 [Suspense](/docs/react/src/Suspense.i18n)�
 기본 AsyncBoundary는 default Suspense와 ErrorBoundary를 return합니다.
 
 ```tsx
+import { AsyncBoundary } from '@suspensive/react'
+
 const AsyncBoundaryDefault = () => (
   <AsyncBoundary
     pendingFallback={<Loading />}
@@ -28,6 +30,8 @@ const AsyncBoundaryDefault = () => (
 서버에서는 Suspense.CSROnly는 fallback만을 return합니다. 그래서 AsyncBoundary.CSROnly는 서버에서 pendingFallback만을 return하게 됩니다.
 
 ```tsx
+import { AsyncBoundary } from '@suspensive/react'
+
 /** 먼저, AsyncBoundary.CSROnly는 pendingFallback을 return합니다. 클라이언트 사이드에서는 마운트 후, children을 return합니다.
 하지만 children에 error가 있다면, AsyncBoundary는 이 thrown error를 잡고 rejectedFallback가 render됩니다. */
 

@@ -1,17 +1,16 @@
 ---
 sidebar_position: 1
-title: Suspense
+title: <Suspense/>
 ---
-
-This component is just wrapping [React's Suspense](https://reactjs.org/docs/react-api.html#reactsuspense). to use Suspense easily in Server-side rendering environment like [Next.js](https://nextjs.org)
 
 ### `<Suspense/>`
 
 @suspensive/react's `<Suspense/>` will be just Suspense of original React.
 
 ```tsx
-// @suspensive/react's Suspense is just React.Suspense
-const DefaultMode = () => (
+import { Suspense } from '@suspensive/react'
+
+const Example = () => (
   <Suspense fallback={<Loading />}>
     <Children />
   </Suspense>
@@ -23,8 +22,9 @@ const DefaultMode = () => (
 `<Suspense.CSROnly/>` will return fallback first. After mount, return children only in client. but in server, return fallback only.
 
 ```tsx
-// This will expose children in client-side rendering only.
-const CSROnlyMode = () => (
+import { Suspense } from '@suspensive/react'
+
+const Example = () => (
   <Suspense.CSROnly fallback={<Loading />}>
     <Children />
   </Suspense.CSROnly>
@@ -33,7 +33,7 @@ const CSROnlyMode = () => (
 
 #### Migration support SSR gradually (`<Suspense.CSROnly/>` -> `<Suspense/>`)
 
-If you want to use default Suspense working in both SSR/CSR, You can change `<Suspense.CSROnly/>` to `<Suspense/>` gradually.
+If you want to use Suspense working in both SSR/CSR, You can change `<Suspense.CSROnly/>` to `<Suspense/>` gradually.
 
 ## withSuspense
 
@@ -42,6 +42,8 @@ we don't need to make unncessary code to wrap it if we use withSuspense like bel
 withSuspense's 2nd parameter is props of `<Suspense/>` without children
 
 ```tsx
+import { withSuspense } from '@suspensive/react'
+
 const SuspenseWrapped = withSuspense(
   function Component() {
     // code make suspending
