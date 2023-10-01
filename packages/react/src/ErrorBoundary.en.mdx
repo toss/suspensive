@@ -120,7 +120,7 @@ const Example = () => (
 )
 ```
 
-We can use useErrorBoundary.setError in ErrorBoundaryFallback to make `<ErrorBoundary/>` aware of the Error without throw.
+In children of `<ErrorBoundary/>`, we can use useErrorBoundary.setError to make `<ErrorBoundary/>` aware of the Error without throw.
 
 ```tsx
 import { ErrorBoundary, useErrorBoundary } from '@suspensive/react'
