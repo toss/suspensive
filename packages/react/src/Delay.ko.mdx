@@ -1,11 +1,13 @@
 ---
 sidebar_position: 5
-title: Delay
+title: <Delay/>
 ---
 
 이 컴포넌트는 children이 노출되는 시점을 지연시킵니다.
 
 ```tsx
+import { Delay } from '@suspensive/react'
+
 const Example = () => (
   <Delay ms={2000}>
     <Delayed />

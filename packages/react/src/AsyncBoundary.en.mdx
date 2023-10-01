@@ -1,6 +1,6 @@
 ---
 sidebar_position: 4
-title: AsyncBoundary
+title: <AsyncBoundary/>
 ---
 
 This component is just wrapping [Suspense](/docs/react/src/Suspense.i18n) and [ErrorBoundary](/docs/react/src/ErrorBoundary.i18n) in this library. to use Suspense with ErrorBoundary at once easily.
@@ -10,6 +10,8 @@ This component is just wrapping [Suspense](/docs/react/src/Suspense.i18n) and [E
 default AsyncBoundary will return just default Suspense with ErrorBoundary.
 
 ```tsx
+import { AsyncBoundary } from '@suspensive/react'
+
 const AsyncBoundaryDefault = () => (
   <AsyncBoundary
     pendingFallback={<Loading />}
@@ -28,6 +30,8 @@ But if you use CSROnly mode, AsyncBoundary.CSROnly will return ErrorBoundary wit
 In server, Suspense.CSROnly return fallback only. so AsyncBoundary.CSROnly return only pendingFallback in server.
 
 ```tsx
+import { AsyncBoundary } from '@suspensive/react'
+
 /** First, AsyncBoundary.CSROnly return pendingFallback.
 After mount, return children only in client.
 but if there is error in children, AsyncBoundary will catch this thrown error.

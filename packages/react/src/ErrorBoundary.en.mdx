@@ -1,6 +1,6 @@
 ---
 sidebar_position: 2
-title: ErrorBoundary
+title: <ErrorBoundary/>
 ---
 
 This component provide a simple and reusable wrapper that you can use to wrap around your components. Any rendering errors in your components hierarchy can then be gracefully handled.
@@ -12,6 +12,8 @@ This component provide a simple and reusable wrapper that you can use to wrap ar
 If there is any thrown error in children, ErrorBoundary will catch it and then fallback will be rendered.
 
 ```tsx
+import { ErrorBoundary } from '@suspensive/react'
+
 const Example = () => (
   <ErrorBoundary fallback={({ error, reset }) => <button onClick={reset}>{JSON.stringify(error)}</button>}>
     <ErrorAfter4s />
@@ -43,6 +45,8 @@ const ErrorAfter4s = () => {
 If you want to reset ErrorBoundary by component where is outside of ErrorBoundary's fallback. Inject any resetKey in resetKeys. resetKeys work only when at least one element of array is changed. you don't need to worry about provide new array as resetKeys like how useEffect's dependency array work.
 
 ```tsx
+import { ErrorBoundary } from '@suspensive/react'
+
 const Example = () => {
   const [resetKey, setResetKey] = useState(0)
 
