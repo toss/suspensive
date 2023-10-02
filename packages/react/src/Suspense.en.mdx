@@ -1,48 +1,53 @@
 ---
 sidebar_position: 1
-title: Suspense
+title: <Suspense/>
 ---
-
-This component is just wrapping [React's Suspense](https://reactjs.org/docs/react-api.html#reactsuspense). to use Suspense easily in Server-side rendering environment like [Next.js](https://nextjs.org)
 
 ### `<Suspense/>`
 
-@suspensive/react's `<Suspense/>` will be just Suspense of original React.
+@suspensive/react's `<Suspense/>` will be just [Suspense of original React](https://react.dev/reference/react/Suspense).
+
+### `<Suspense.CSROnly/>`
+
+`<Suspense.CSROnly/>` will return fallback in server. After mount(in client) return children. 
+
+### props.fallback
+
+fallback works the same as fallback of original React's Suspense.
 
 ```tsx
-// @suspensive/react's Suspense is just React.Suspense
-const DefaultMode = () => (
+import { Suspense } from '@suspensive/react'
+
+const Example = () => (
   <Suspense fallback={<Loading />}>
     <Children />
   </Suspense>
 )
-```
 
-### `<Suspense.CSROnly/>`
-
-`<Suspense.CSROnly/>` will return fallback first. After mount, return children only in client. but in server, return fallback only.
-
-```tsx
-// This will expose children in client-side rendering only.
-const CSROnlyMode = () => (
+const Example = () => (
   <Suspense.CSROnly fallback={<Loading />}>
     <Children />
   </Suspense.CSROnly>
 )
 ```
 
-#### Migration support SSR gradually (`<Suspense.CSROnly/>` -> `<Suspense/>`)
+#### Default fallback
 
-If you want to use default Suspense working in both SSR/CSR, You can change `<Suspense.CSROnly/>` to `<Suspense/>` gradually.
+`<Suspsense/>` and `<Suspsense.CSROnly/>` are more powerful when used with `<SuspensiveProvider/>`.
+Control multiple `<Suspense/>`s default fallback with `<SuspensiveProvider/>`.
+
+Details are introduced in [`<SuspensiveProvider/>` page](./SuspensiveProvider.i18n).
 
 ## withSuspense
 
-You can use withSuspense to wrap component easily.
+You can use withSuspense to wrap component by `<Suspense/>` easily.
 we don't need to make unncessary code to wrap it if we use withSuspense like below.
 withSuspense's 2nd parameter is props of `<Suspense/>` without children
 
 ```tsx
-const SuspenseWrapped = withSuspense(
+import { withSuspense } from '@suspensive/react'
+
+const Example = withSuspense(
   function Component() {
     // code make suspending
 
@@ -51,7 +56,7 @@ const SuspenseWrapped = withSuspense(
   { fallback: <Spinner /> }
 )
 
-const SuspenseCSROnlyWrapped = withSuspense.CSROnly(
+const Example = withSuspense.CSROnly(
   function Component() {
     // code make suspending
 
@@ -60,3 +65,7 @@ const SuspenseCSROnlyWrapped = withSuspense.CSROnly(
   { fallback: <Spinner /> }
 )
 ```
+
+#### Migration support SSR gradually (`<Suspense.CSROnly/>` -> `<Suspense/>`)
+
+If you want to use Suspense working in both SSR/CSR, You can change `<Suspense.CSROnly/>` to `<Suspense/>` gradually.

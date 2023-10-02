@@ -13,8 +13,7 @@ const FeatureList: FeatureItem[] = [
     title: <Translate>All Declarative APIs ready</Translate>,
     description: (
       <Translate>
-        Suspense, ErrorBoundary, AsyncBoundary, ErrorBoundaryGroup is provided. You can use them easily without any
-        efforts
+        {`<Suspense/>, <ErrorBoundary/>, <ErrorBoundaryGroup/>, <AsyncBoundary/>, etc. are provided. Use them easily without any efforts`}
       </Translate>
     ),
   },
@@ -22,8 +21,7 @@ const FeatureList: FeatureItem[] = [
     title: <Translate>Zero peer dependency, Only React</Translate>,
     description: (
       <Translate>
-        It is simply extensions of react's concepts. Named friendly with originals like just Suspense, ErrorBoundary,
-        AsyncBoundary
+        {`It is simply extensions of react's concepts. Named friendly with originals like just <Suspense/>, <ErrorBoundary/>, <ErrorBoundaryGroup/>, <AsyncBoundary/>`}
       </Translate>
     ),
   },
@@ -31,7 +29,7 @@ const FeatureList: FeatureItem[] = [
     title: <Translate>Suspense in SSR easily</Translate>,
     description: (
       <Translate>
-        Suspensive provide CSROnly mode that make developer can adopt Suspense gradually in Server-side rendering
+        Suspensive provide CSROnly mode that make developer can adopt React Suspense gradually in Server-side rendering
         environment
       </Translate>
     ),

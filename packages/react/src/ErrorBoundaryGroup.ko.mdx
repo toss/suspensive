@@ -1,6 +1,6 @@
 ---
 sidebar_position: 3
-title: ErrorBoundaryGroup
+title: <ErrorBoundaryGroup/>
 ---
 
 다수의 ErrorBoundary들을 한 번에 관리하기 위한 컴포넌트입니다.
@@ -12,6 +12,8 @@ ErrorBoundaryGroup을 사용하면 다수의 ErrorBoundary의 resetKeys에 일�
 ErrorBoundaryGroup의 children으로 다수의 ErrorBoundary가 있다면 ErrorBoundaryGroup.Reset으로 한번에 reset할 수 있습니다.
 
 ```tsx
+import { ErrorBoundaryGroup, ErrorBoundary, AsyncBoundary } from '@suspensive/react'
+
 const Example = () => (
   <ErrorBoundaryGroup>
     <ErrorBoundaryGroup.Reset trigger={(group) => <button onClick={group.reset}>Reset Children</button>} />
@@ -26,6 +28,8 @@ const Example = () => (
 만약 HOC(Higher Order Component)와 hook을 사용하고 싶다면 withErrorBoundaryGroup, useErrorBoundaryGroup를 사용하세요.
 
 ```tsx
+import { withErrorBoundaryGroup, useErrorBoundaryGroup, ErrorBoundary, AsyncBoundary } from '@suspensive/react'
+
 const Example = withErrorBoundaryGroup(() => {
   const group = useErrorBoundaryGroup()
 
@@ -44,6 +48,8 @@ const Example = withErrorBoundaryGroup(() => {
 중첩된 ErrorBoundaryGroup의 children인 ErrorBoundary는 상위 ErrorBoundaryGroup.Reset으로도 reset됩니다. 하지만 하위 ErrorBoundaryGroup.Reset은 오직 하위 ErrorBoundaryGroup 자신의 children의 ErrorBoundary만을 reset합니다.
 
 ```tsx
+import { ErrorBoundaryGroup, ErrorBoundary, AsyncBoundary } from '@suspensive/react'
+
 const Example = () => (
   <ErrorBoundaryGroup>
     <ErrorBoundaryGroup.Reset /* 모든 children을 reset합니다 */ />
@@ -63,6 +69,8 @@ const Example = () => (
 만약 상위 ErrorBoundaryGroup에 의한 하위 ErrorBoundaryGroup의 reset을 막고 싶다면 blockOutside을 사용하면 됩니다.
 
 ```tsx
+import { ErrorBoundaryGroup, ErrorBoundary, AsyncBoundary } from '@suspensive/react'
+
 const Example = () => (
   <ErrorBoundaryGroup>
     <ErrorBoundaryGroup.Reset />
