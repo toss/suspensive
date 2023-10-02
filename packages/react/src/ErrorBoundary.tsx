@@ -32,7 +32,7 @@ export type ErrorBoundaryFallbackProps = {
   reset: () => void
 }
 
-type ErrorBoundaryProps = PropsWithChildren<{
+export type ErrorBoundaryProps = PropsWithChildren<{
   /**
    * an array of elements for the ErrorBoundary to check each render. If any of those elements change between renders, then the ErrorBoundary will reset the state which will re-render the children
    */
@@ -132,7 +132,6 @@ if (process.env.NODE_ENV !== 'production') {
   ErrorBoundary.displayName = 'ErrorBoundary'
 }
 
-// HOC
 export const withErrorBoundary = <TProps extends ComponentProps<ComponentType> = Record<string, never>>(
   Component: ComponentType<TProps>,
   errorBoundaryProps: PropsWithoutChildren<ErrorBoundaryProps>

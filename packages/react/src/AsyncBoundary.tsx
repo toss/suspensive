@@ -1,10 +1,9 @@
-import { ComponentProps, ComponentRef, ComponentType, SuspenseProps, forwardRef } from 'react'
-import { ErrorBoundary } from './ErrorBoundary'
-import { Suspense } from './Suspense'
+import { ComponentProps, ComponentRef, ComponentType, forwardRef } from 'react'
+import { ErrorBoundary, ErrorBoundaryProps } from './ErrorBoundary'
+import { Suspense, SuspenseProps } from './Suspense'
 import { PropsWithoutChildren } from './types'
 
-type ErrorBoundaryProps = ComponentProps<typeof ErrorBoundary>
-type AsyncBoundaryProps = Omit<SuspenseProps, 'fallback'> &
+export type AsyncBoundaryProps = Omit<SuspenseProps, 'fallback'> &
   Omit<ErrorBoundaryProps, 'fallback'> & {
     pendingFallback?: SuspenseProps['fallback']
     rejectedFallback: ErrorBoundaryProps['fallback']
@@ -44,7 +43,6 @@ export const AsyncBoundary = BaseAsyncBoundary as typeof BaseAsyncBoundary & {
 }
 AsyncBoundary.CSROnly = CSROnlyAsyncBoundary
 
-// HOC
 export const withAsyncBoundary = <TProps extends ComponentProps<ComponentType> = Record<string, never>>(
   Component: ComponentType<TProps>,
   asyncBoundaryProps: PropsWithoutChildren<AsyncBoundaryProps>

@@ -2,9 +2,10 @@ import { ComponentProps, ComponentType, PropsWithChildren, createContext, useCon
 import { useSetTimeout } from './hooks'
 import { PropsWithoutChildren } from './types'
 
-type DelayProps = PropsWithChildren<{
+export type DelayProps = PropsWithChildren<{
   ms?: number
 }>
+
 export const Delay = ({ ms, children }: DelayProps) => {
   const delayContextValue = useContext(DelayContext)
   const delayMs = ms ?? delayContextValue.ms ?? 0
@@ -15,7 +16,6 @@ export const Delay = ({ ms, children }: DelayProps) => {
 
 export const DelayContext = createContext<PropsWithoutChildren<DelayProps>>({ ms: 0 })
 
-// HOC
 export const withDelay = <TProps extends ComponentProps<ComponentType> = Record<string, never>>(
   Component: ComponentType<TProps>,
   delayProps?: PropsWithoutChildren<DelayProps>
