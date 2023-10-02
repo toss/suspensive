@@ -3,13 +3,7 @@ sidebar_position: 1
 title: <Suspense/>
 ---
 
-### `<Suspense/>`
-
 @suspensive/react의 `<Suspense/>`는 [React의 Suspense](https://react.dev/reference/react/Suspense)가 됩니다.
-
-### `<Suspense.CSROnly/>`
-
-`<Suspense.CSROnly/>`는 서버에서는 fallback을 반환합니다. mount 후(클라이언트에서는) children을 반환합니다.
 
 ### props.fallback
 
@@ -23,6 +17,21 @@ const Example = () => (
     <Children />
   </Suspense>
 )
+```
+
+#### Default fallback
+
+`<Suspsense/>`는 `<SuspensiveProvider/>`와 함께 사용할 때 더욱 강력해집니다.
+`<SuspensiveProvider/>`를 사용하여 여러 `<Suspense/>`의 default fallback를 제어합니다.
+
+자세한 내용은 [`<SuspensiveProvider/>` 페이지](./SuspensiveProvider.i18n)에 소개되어 있습니다.
+
+### 서버사이드 렌더링을 피하기 (CSROnly)
+
+`<Suspense.CSROnly/>`는 서버에서는 fallback을 반환합니다. mount 후(클라이언트에서는) children을 반환합니다. mount는 클라이언트에서만 일어나기 때문에 서버사이드 렌더링을 피할 수 있습니다.
+
+```tsx
+import { Suspense } from '@suspensive/react'
 
 const Example = () => (
   <Suspense.CSROnly fallback={<Loading />}>
@@ -31,12 +40,9 @@ const Example = () => (
 )
 ```
 
-#### Default fallback
+#### SSR을 지원하도록 점진적으로 마이그레이션하기 (`<Suspense.CSROnly/>` -> `<Suspense/>`)
 
-`<Suspsense/>`와 `<Suspsense.CSROnly/>`는 `<SuspensiveProvider/>`와 함께 사용할 때 더욱 강력해집니다.
-`<SuspensiveProvider/>`를 사용하여 여러 `<Suspense/>`의 default fallback를 제어합니다.
-
-자세한 내용은 [`<SuspensiveProvider/>` 페이지](./SuspensiveProvider.i18n)에 소개되어 있습니다.
+React.Suspense를 SSR과 CSR에서 모두 사용하고 싶다면 `<Suspense.CSROnly/>`에서 `<Suspense/>`로 점진적으로 마이그레이션하면 쉽게 적용할 수 있습니다.
 
 ## withSuspense
 
@@ -65,7 +71,3 @@ const Example = withSuspense.CSROnly(
   { fallback: <Spinner /> }
 )
 ```
-
-#### SSR을 지원하도록 점진적으로 마이그레이션하기 (`<Suspense.CSROnly/>` -> `<Suspense/>`)
-
-React.Suspense를 SSR과 CSR에서 모두 사용하고 싶다면 `<Suspense.CSROnly/>`에서 `<Suspense/>`로 점진적으로 마이그레이션하면 쉽게 적용할 수 있습니다.

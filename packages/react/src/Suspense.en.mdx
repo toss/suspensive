@@ -3,13 +3,7 @@ sidebar_position: 1
 title: <Suspense/>
 ---
 
-### `<Suspense/>`
-
 @suspensive/react's `<Suspense/>` will be just [Suspense of original React](https://react.dev/reference/react/Suspense).
-
-### `<Suspense.CSROnly/>`
-
-`<Suspense.CSROnly/>` will return fallback in server. After mount(in client) return children. 
 
 ### props.fallback
 
@@ -23,6 +17,21 @@ const Example = () => (
     <Children />
   </Suspense>
 )
+```
+
+#### Default fallback
+
+`<Suspsense/>` are more powerful when used with `<SuspensiveProvider/>`.
+Control multiple `<Suspense/>`s default fallback with `<SuspensiveProvider/>`.
+
+Details are introduced in [`<SuspensiveProvider/>` page](./SuspensiveProvider.i18n).
+
+### Avoid Server side rendering (CSROnly)
+
+`<Suspense.CSROnly/>` will return fallback in server. After mount(in client) return children. Since mount only happens on the client, server-side rendering can be avoided.
+
+```tsx
+import { Suspense } from '@suspensive/react'
 
 const Example = () => (
   <Suspense.CSROnly fallback={<Loading />}>
@@ -31,12 +40,9 @@ const Example = () => (
 )
 ```
 
-#### Default fallback
+#### Migration support SSR gradually (`<Suspense.CSROnly/>` -> `<Suspense/>`)
 
-`<Suspsense/>` and `<Suspsense.CSROnly/>` are more powerful when used with `<SuspensiveProvider/>`.
-Control multiple `<Suspense/>`s default fallback with `<SuspensiveProvider/>`.
-
-Details are introduced in [`<SuspensiveProvider/>` page](./SuspensiveProvider.i18n).
+If you want to use Suspense working in both SSR/CSR, You can change `<Suspense.CSROnly/>` to `<Suspense/>` gradually.
 
 ## withSuspense
 
@@ -65,7 +71,3 @@ const Example = withSuspense.CSROnly(
   { fallback: <Spinner /> }
 )
 ```
-
-#### Migration support SSR gradually (`<Suspense.CSROnly/>` -> `<Suspense/>`)
-
-If you want to use Suspense working in both SSR/CSR, You can change `<Suspense.CSROnly/>` to `<Suspense/>` gradually.
