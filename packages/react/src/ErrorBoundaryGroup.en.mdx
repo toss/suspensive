@@ -3,85 +3,88 @@ sidebar_position: 3
 title: <ErrorBoundaryGroup/>
 ---
 
-This is a component for managing multiple ErrorBoundaries at once.
+This is a component for managing multiple `<ErrorBoundary/>`s easily.
 
-If you use ErrorBoundaryGroup, you can easily reset multiple ErrorBoundaries at once if they are children of ErrorBoundaryGroup, without having to connect resetKey state to resetKeys of multiple ErrorBoundary.
-
-### ErrorBoundaryGroup.Reset
-
-Multiple ErrorBoundary as children of ErrorBoundaryGroup can be reset at once by ErrorBoundaryGroup.Reset.
+`<ErrorBoundary/>`s as children of nested `<ErrorBoundaryGroup/>` will also be reset by parent `<ErrorBoundaryGroup.Reset/>`.
 
 ```tsx
-import { ErrorBoundaryGroup, ErrorBoundary, AsyncBoundary } from '@suspensive/react'
+import { ErrorBoundaryGroup, ErrorBoundary } from '@suspensive/react'
 
 const Example = () => (
   <ErrorBoundaryGroup>
-    <ErrorBoundaryGroup.Reset trigger={(group) => <button onClick={group.reset}>Reset Children</button>} />
-    <ErrorBoundary />
-    <AsyncBoundary /* ErrorBoundary wrapped by AsyncBoundary also will be reset by ErrorBoundaryGroup.Reset */ />
+    {/* Resets all ErrorBoundaries that are children of ErrorBoundaryGroup. All ErrorBoundaries within nested ErrorBoundaryGroups are also reset. */}
+    <ErrorBoundaryGroup.Reset trigger={(group) => <button onClick={group.reset}>Reset</button>} />
+    <ErrorBoundary fallback={(caught) => <>{caught.error}</>}>
+      <CanThrowError />
+    </ErrorBoundary>
+    <ErrorBoundaryGroup>
+      <ErrorBoundaryGroup.Reset trigger={(group) => <button onClick={group.reset}>Reset</button>} />
+      <ErrorBoundary fallback={(caught) => <>{caught.error}</>}>
+        <CanThrowError />
+      </ErrorBoundary>
+    </ErrorBoundaryGroup>
   </ErrorBoundaryGroup>
 )
 ```
 
-### withErrorBoundaryGroup, useErrorBoundaryGroup
+### props.blockOutside
 
-If you want to use HOC(Higher Order Component) with hook, Use withErrorBoundaryGroup, useErrorBoundaryGroup.
+If you want to block resetting nested `<ErrorBoundaryGroup/>` by parent `<ErrorBoundaryGroup/>`, Use blockOutside.
 
 ```tsx
-import { withErrorBoundaryGroup, useErrorBoundaryGroup, ErrorBoundary, AsyncBoundary } from '@suspensive/react'
+import { ErrorBoundaryGroup, ErrorBoundary } from '@suspensive/react'
 
-const Example = withErrorBoundaryGroup(() => {
+const Example = () => (
+  <ErrorBoundaryGroup>
+    <ErrorBoundaryGroup.Reset trigger={(group) => <button onClick={group.reset}>Reset</button>} />
+    <ErrorBoundary fallback={(caught) => <>{caught.error}</>}>
+      <CanThrowError />
+    </ErrorBoundary>
+    {/* blockOutside prop prevents reset by the parent ErrorBoundaryGroup*/}
+    <ErrorBoundaryGroup blockOutside>
+      <ErrorBoundaryGroup.Reset trigger={(group) => <button onClick={group.reset}>Reset</button>} />
+      <ErrorBoundary fallback={(caught) => <>{caught.error}</>}>
+        <CanThrowError />
+      </ErrorBoundary>
+    </ErrorBoundaryGroup>
+  </ErrorBoundaryGroup>
+)
+```
+
+## useErrorBoundaryGroup
+
+If you use useErrorBoundaryGroup, you can get a function to reset `<ErrorBoundary/>`s in `<ErrorBoundaryGroup/>`.
+
+```tsx
+const Example = () => {
   const group = useErrorBoundaryGroup()
 
-  return (
-    <>
-      <button onClick={group.reset}>Reset All</button>
-      <ErrorBoundary />
-      <AsyncBoundary />
-    </>
-  )
-})
+  return <button onClick={group.reset}>reset</button>
+}
 ```
 
-### Nested ErrorBoundaryGroup
+## withErrorBoundaryGroup
 
-ErrorBoundary as children of nested ErrorBoundaryGroup will be reset by parent ErrorBoundaryGroup.Reset.
-But nested ErrorBoundaryGroup.Reset will reset only ErrorBoundary inside of nested ErrorBoundaryGroup self.
-
-```tsx
-import { ErrorBoundaryGroup, ErrorBoundary, AsyncBoundary } from '@suspensive/react'
-
-const Example = () => (
-  <ErrorBoundaryGroup>
-    <ErrorBoundaryGroup.Reset /* reset all of children */ />
-    <ErrorBoundary />
-    <AsyncBoundary />
-    <ErrorBoundaryGroup>
-      <ErrorBoundaryGroup.Reset /* reset all of children */ />
-      <ErrorBoundary />
-      <AsyncBoundary />
-    </ErrorBoundaryGroup>
-  </ErrorBoundaryGroup>
-)
-```
-
-### blockOutside: boolean
-
-If you want to block resetting nested ErrorBoundaryGroup by parent ErrorBoundaryGroup, Use blockOutside.
+withErrorBoundaryGroup allows you to easily wrap your component in `<ErrorBoundaryGroup/>`.
+If you use withErrorBoundaryGroup as shown below, you don't need to create unnecessary code to wrap it.
+The second argument to withErrorBoundaryGroup is a prop of `<ErrorBoundaryGroup/>` without children.
 
 ```tsx
-import { ErrorBoundaryGroup, ErrorBoundary, AsyncBoundary } from '@suspensive/react'
+import { withErrorBoundaryGroup, useErrorBoundaryGroup, ErrorBoundary } from '@suspensive/react'
 
-const Example = () => (
-  <ErrorBoundaryGroup>
-    <ErrorBoundaryGroup.Reset />
-    <ErrorBoundary />
-    <AsyncBoundary />
-    <ErrorBoundaryGroup blockOutside /* block resetting by parent ErrorBoundaryGroup */>
-      <ErrorBoundaryGroup.Reset />
-      <ErrorBoundary />
-      <AsyncBoundary />
-    </ErrorBoundaryGroup>
-  </ErrorBoundaryGroup>
+const Example = withErrorBoundaryGroup(
+  function Component() {
+    const group = useErrorBoundaryGroup()
+
+    return (
+      <>
+        <button onClick={group.reset}>Reset</button>
+        <ErrorBoundary fallback={(caught) => <>{caught.error}</>}>
+          <CanThrowError />
+        </ErrorBoundary>
+      </>
+    )
+  },
+  { blockOutside: true }
 )
 ```
