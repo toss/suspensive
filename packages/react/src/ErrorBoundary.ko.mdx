@@ -141,7 +141,7 @@ const SetErrorAfterFetch = () => {
       (response) => {},
       (error) => errorBoundary.setError(error) // instead of throw inside
     )
-  })
+  }, [])
 
   return <>...</>
 }
