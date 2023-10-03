@@ -3,52 +3,85 @@ sidebar_position: 4
 title: <AsyncBoundary/>
 ---
 
-This component is just wrapping [Suspense](/docs/react/src/Suspense.i18n) and [ErrorBoundary](/docs/react/src/ErrorBoundary.i18n) in this library. to use Suspense with ErrorBoundary at once easily.
+`<AsyncBoundary/>` wraps @suspensive/react's [`<Suspense/>`](./Suspense.i18n) and [`<ErrorBoundary/>`](./ErrorBoundary.i18n) to use them at once.
 
-### Default mode
+### AsyncBoundaryProps
 
-default AsyncBoundary will return just default Suspense with ErrorBoundary.
+```tsx
+type AsyncBoundaryProps = Omit<SuspenseProps, 'fallback'> &
+  Omit<ErrorBoundaryProps, 'fallback'> & {
+    pendingFallback?: SuspenseProps['fallback']
+    rejectedFallback: ErrorBoundaryProps['fallback']
+  }
+```
 
 ```tsx
 import { AsyncBoundary } from '@suspensive/react'
 
-const AsyncBoundaryDefault = () => (
+const Example = () => (
   <AsyncBoundary
     pendingFallback={<Loading />}
-    rejectedFallback={({ reset, error }) => <button onClick={reset}>{JSON.stringify(error)}</button>}
-    onReset={() => console.log('ErrorBoundary in AsyncBoundary has reset')} // ex) reset react-query cache on ErrorBoundary reset.
-    onError={(error, info) => alert(JSON.stringify(error))}
+    rejectedFallback={(errorBoundary) => (
+      <>
+        <button onClick={errorBoundary.reset}>reset</button>
+        {JSON.stringify(errorBoundary.error)}
+      </>
+    )}
+    onReset={() => console.log('reset')}
+    onError={(error) => console.log(JSON.stringify(error))}
   >
     <Children />
   </AsyncBoundary>
 )
 ```
 
-### CSROnly mode
+### Avoid Server side rendering (CSROnly)
 
-But if you use CSROnly mode, AsyncBoundary.CSROnly will return ErrorBoundary with Suspense.CSROnly, not default Suspense.
-In server, Suspense.CSROnly return fallback only. so AsyncBoundary.CSROnly return only pendingFallback in server.
+Since it wraps `<Suspense.CSROnly/>`, it provides the same CSROnly.
 
 ```tsx
 import { AsyncBoundary } from '@suspensive/react'
 
-/** First, AsyncBoundary.CSROnly return pendingFallback.
-After mount, return children only in client.
-but if there is error in children, AsyncBoundary will catch this thrown error.
-then rejectedFallback will be rendered. */
-
-const AsyncBoundaryAvoidSSR = () => (
+const Example = () => (
   <AsyncBoundary.CSROnly
     pendingFallback={<Loading />}
-    rejectedFallback={({ reset, error }) => <button onClick={reset}>{JSON.stringify(error)}</button>}
-    onReset={() => console.log('ErrorBoundary in AsyncBoundary has reset')} // ex) reset react-query cache on ErrorBoundary reset.
-    onError={(error, info) => alert(JSON.stringify(error))}
+    rejectedFallback={(errorBoundary) => (
+      <>
+        <button onClick={errorBoundary.reset}>reset</button>
+        {JSON.stringify(errorBoundary.error)}
+      </>
+    )}
+    onReset={() => console.log('reset')}
+    onError={(error) => console.log(JSON.stringify(error))}
   >
     <Children />
-  </AsyncBoundary.CSROnly>
+  </AsyncBoundary>
 )
 ```
 
-#### Migration support SSR gradually (AsyncBoundary.CSROnly -> default AsyncBoundary)
+## withAsyncBoundary
 
-If you want to use default AsyncBoundary working in both SSR/CSR, You can change AsyncBoundary.CSROnly to default AsyncBoundary gradually.
+You can use withAsyncBoundary to wrap component by `<AsyncBoundary/>` easily.
+we don't need to make unncessary code to wrap it if we use withAsyncBoundary like below.
+withAsyncBoundary's 2nd parameter is props of `<AsyncBoundary/>` without children
+
+```tsx
+import { AsyncBoundary } from '@suspensive/react'
+
+const Example = withAsyncBoundary(
+  function Component() {
+    return <>...</>
+  },
+  {
+    pendingFallback: <Loading />,
+    rejectedFallback: (errorBoundary) => (
+      <>
+        <button onClick={errorBoundary.reset}>reset</button>
+        {JSON.stringify(errorBoundary.error)}
+      </>
+    ),
+    onReset: () => console.log('reset'),
+    onError: (error) => console.log(JSON.stringify(error)),
+  }
+)
+```
