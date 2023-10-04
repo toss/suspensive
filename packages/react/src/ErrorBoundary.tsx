@@ -16,7 +16,6 @@ import {
   useState,
 } from 'react'
 import { ErrorBoundaryGroupContext } from './ErrorBoundaryGroup'
-import { awaitClient } from './experimental/Await'
 import { PropsWithoutChildren } from './types'
 import { hasResetKeysChanged } from './utils'
 import { assert } from './utils'
@@ -86,7 +85,6 @@ class BaseErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState
 
   reset() {
     this.props.onReset?.()
-    awaitClient.clearError()
     this.setState(initialState)
   }
 
