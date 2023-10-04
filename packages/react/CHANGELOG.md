@@ -1,5 +1,12 @@
 # @suspensive/react
 
+## 1.15.1
+
+### Patch Changes
+
+- 5dfdf71: fix: remove awaitClient from ErrorBoundary
+- c9bc99d: docs: update experimental feature mark as admonitions of docusaurus
+
 ## 1.15.0
 
 ### Minor Changes
