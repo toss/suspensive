@@ -5,7 +5,7 @@ title: '<QueryErrorBoundary/>, <QueryAsyncBoundary/>'
 
 @suspensive/react-query provide `<QueryErrorBoundary/>`, `<QueryAsyncBoundary/>` to reduce repeating implementation like using `<QueryErrorResetBoundary/>` + `<ErrorBoundary/>`, `<QueryErrorResetBoundary/>` + `<AsyncBoundary/>`.
 
-## `<QueryErrorBoundary/>`
+You can just use `<QueryErrorBoundary/>`, `<QueryAsyncBoundary/>` like using [`<ErrorBoundary/>`](/docs/react/src/ErrorBoundary.i18n), [`<AsyncBoundary/>`](/docs/react/src/AsyncBoundary.i18n). All other features are same with original `<ErrorBoundary/>`, `<AsyncBoundary/>` of @suspensive/react without resetting react-query's error.
 
 ```tsx
 import { QueryErrorBoundary } from '@suspensive/react-query'
@@ -17,8 +17,6 @@ const Example = () => (
 )
 ```
 
-## `<QueryAsyncBoundary/>`
-
 ```tsx
 import { QueryAsyncBoundary } from '@suspensive/react-query'
 
@@ -28,8 +26,6 @@ const Example = () => (
   </QueryAsyncBoundary>
 )
 ```
-
-You can just use `<QueryErrorBoundary/>`, `<QueryAsyncBoundary/>` like using [`<ErrorBoundary/>`](/docs/react/src/ErrorBoundary.i18n), [`<AsyncBoundary/>`](/docs/react/src/AsyncBoundary.i18n). All other features are same with original `<ErrorBoundary/>`, `<AsyncBoundary/>` of @suspensive/react without resetting react-query's error.
 
 :::note
 

@@ -5,7 +5,7 @@ title: '<QueryErrorBoundary/>, <QueryAsyncBoundary/>'
 
 @suspensive/react-query는 `<QueryErrorResetBoundary/>` + `<ErrorBoundary/>`, `<QueryErrorResetBoundary/>` + `AsyncBoundary/`와 같은 반복되는 구현을 줄이기 위해 `<QueryErrorBoundary/>`, `<QueryAsyncBoundary/>`를 제공합니다.
 
-## `<QueryErrorBoundary/>`
+[`<ErrorBoundary/>`](/docs/react/src/ErrorBoundary.i18n), [`<AsyncBoundary/>`](/docs/react/src/AsyncBoundary.i18n)를 사용하는 것처럼 `<QueryErrorBoundary/>`, `<QueryAsyncBoundary/>`를 사용할 수 있습니다. react-query의 캐싱된 error를 reset한다는 점만 빼면 모든 다른 기능은 @suspensive/react의 `<ErrorBoundary/>`, `<AsyncBoundary/>`와 같습니다.
 
 ```tsx
 import { QueryErrorBoundary } from '@suspensive/react-query'
@@ -17,8 +17,6 @@ const Example = () => (
 )
 ```
 
-## `<QueryAsyncBoundary/>`
-
 ```tsx
 import { QueryAsyncBoundary } from '@suspensive/react-query'
 
@@ -28,8 +26,6 @@ const Example = () => (
   </QueryAsyncBoundary>
 )
 ```
-
-[`<ErrorBoundary/>`](/docs/react/src/ErrorBoundary.i18n), [`<AsyncBoundary/>`](/docs/react/src/AsyncBoundary.i18n)를 사용하는 것처럼 `<QueryErrorBoundary/>`, `<QueryAsyncBoundary/>`를 사용할 수 있습니다. react-query의 캐싱된 error를 reset한다는 점만 빼면 모든 다른 기능은 @suspensive/react의 `<ErrorBoundary/>`, `<AsyncBoundary/>`와 같습니다.
 
 :::note
 
