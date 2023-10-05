@@ -49,16 +49,8 @@ const Example = () => (
 Below apis (QueryErrorBoundary, QueryAsyncBoundary) have peerDependency on @suspensive/react's ErrorBoundary, AsyncBoundary.
 So if you want to use these, you must install @suspensive/react first.
 
-```shell
+```shell npm2yarn
 npm install @suspensive/react @suspensive/react-query
-```
-
-```shell
-pnpm add @suspensive/react @suspensive/react-query
-```
-
-```shell
-yarn add @suspensive/react @suspensive/react-query
 ```
 
 @suspensive/react-query provide QueryErrorBoundary, QueryAsyncBoundary to reduce repeating implementation like using QueryErrorResetBoundary + ErrorBoundary, QueryErrorResetBoundary + AsyncBoundary.
