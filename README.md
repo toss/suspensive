@@ -34,14 +34,13 @@ All declarative components to use suspense on both CSR, SSR.
 
 ### Features
 
-- Suspense (containing CSROnly mode)
-- ErrorBoundary
-- ErrorBoundaryGroup
-- AsyncBoundary (containing CSROnly mode)
-- Delay
-- SuspensiveProvider
-- HOC(Higher Order Component)s
-- useAwait, Await, awaitClient (Experimental)
+- Suspense, withSuspense (containing CSROnly)
+- ErrorBoundary, withErrorBoundary, useErrorBoundary
+- ErrorBoundaryGroup, withErrorBoundaryGroup, useErrorBoundaryGroup
+- AsyncBoundary, withAsyncBoundary (containing CSROnly)
+- Delay, withDelay
+- SuspensiveProvider, Suspensive
+- Await, useAwait, awaitClient (Experimental)
 
 ### Installation
 
@@ -60,18 +59,19 @@ yarn add @suspensive/react
 ### Usage
 
 ```tsx
-import { Suspense, ErrorBoundary, ErrorBoundaryGroup } from '@suspensive/react'
+import { Suspense, ErrorBoundary, ErrorBoundaryGroup, Delay } from '@suspensive/react'
 
-const Example = (
+const Example = () => (
   <ErrorBoundaryGroup>
     <ErrorBoundaryGroup.Reset trigger={(group) => <Button onClick={group.reset}>Reset All</Button>} />
-    <ErrorBoundary fallback={(caught) => <Button onClick={caught.reset}>Reset {caught.error}</Button>}>
-      <Suspense fallback={<Spinner />}>
-        <SuspendedComponent />
-      </Suspense>
-    </ErrorBoundary>
-    <ErrorBoundary fallback={(caught) => <Button onClick={caught.reset}>Reset {caught.error}</Button>}>
-      <Suspense fallback={<Spinner />}>
+    <ErrorBoundary fallback={(caught) => <Button onClick={caught.reset}>Reset {caught.error.message}</Button>}>
+      <Suspense
+        fallback={
+          <Delay>
+            <Spinner />
+          </Delay>
+        }
+      >
         <SuspendedComponent />
       </Suspense>
     </ErrorBoundary>
@@ -118,7 +118,7 @@ import { Suspense } from '@suspensive/react'
 import { QueryErrorBoundary, useSuspenseQuery } from '@suspensive/react-query'
 
 const Example = () => (
-  <QueryErrorBoundary fallback={(caught) => <Button onClick={caught.reset}>Reset {caught.error}</Button>}>
+  <QueryErrorBoundary fallback={(caught) => <Button onClick={caught.reset}>Reset {caught.error.message}</Button>}>
     <Suspense fallback={<Spinner />}>
       <SuspendedComponent />
     </Suspense>
