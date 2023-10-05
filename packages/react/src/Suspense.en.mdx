@@ -19,12 +19,14 @@ const Example = () => (
 )
 ```
 
+:::info Tip
+
 #### Default fallback
 
 `<Suspense/>` are more powerful when used with `<SuspensiveProvider/>`.
-Control multiple `<Suspense/>`s default fallback with `<SuspensiveProvider/>`.
+Control multiple `<Suspense/>`s default fallback with `<SuspensiveProvider/>`. Details are introduced in [`<SuspensiveProvider/>` page](./SuspensiveProvider.i18n).
 
-Details are introduced in [`<SuspensiveProvider/>` page](./SuspensiveProvider.i18n).
+:::
 
 ### Avoid Server side rendering (CSROnly)
 
@@ -40,9 +42,13 @@ const Example = () => (
 )
 ```
 
+:::info Tip
+
 #### Migration support SSR gradually (`<Suspense.CSROnly/>` -> `<Suspense/>`)
 
 If you want to use Suspense working in both SSR/CSR, You can change `<Suspense.CSROnly/>` to `<Suspense/>` gradually.
+
+:::
 
 ## withSuspense
 

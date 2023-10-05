@@ -112,7 +112,6 @@ ErrorBoundaryFallback에서 useErrorBoundary.reset을 사용해 props 없이도 
 
 ```tsx
 import { ErrorBoundary, useErrorBoundary } from '@suspensive/react'
-import { useState } from 'react'
 
 const ErrorBoundaryFallback = () => {
   const errorBoundary = useErrorBoundary()
@@ -172,9 +171,10 @@ const Example = withErrorBoundary(
 )
 ```
 
-## 다수의 `<ErrorBoundary/>`를 제어하기
+:::info Tip
 
-`<ErrorBoundary/>`은 `<ErrorBoundaryGroup/>`과 사용하면 더 강력하게 사용할 수 있습니다.
-`<ErrorBoundaryGroup/>`로 다수의 `<ErrorBoundary/>`를 제어하세요.
+#### 다수의 `<ErrorBoundary/>`를 제어하기
 
-자세한 내용은 [`<ErrorBoundaryGroup/>`페이지](./ErrorBoundaryGroup.i18n)에서 소개합니다.
+`<ErrorBoundary/>`은 `<ErrorBoundaryGroup/>`과 사용하면 더 강력하게 사용할 수 있습니다. `<ErrorBoundaryGroup/>`로 다수의 `<ErrorBoundary/>`를 제어하세요. 자세한 내용은 [`<ErrorBoundaryGroup/>`페이지](./ErrorBoundaryGroup.i18n)에서 소개합니다.
+
+:::
