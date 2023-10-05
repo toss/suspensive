@@ -57,6 +57,15 @@ const config = {
               : defaultUrl
             return editUrl
           },
+          remarkPlugins: [
+            [
+              require('@docusaurus/remark-plugin-npm2yarn'),
+              {
+                sync: true,
+                converters: ['pnpm', 'yarn'],
+              },
+            ],
+          ],
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),

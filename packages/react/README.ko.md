@@ -10,14 +10,6 @@
 
 @suspensive/react 는 npm에 있습니다. 최신 안정버전을 설치하기 위해 아래 커맨드를 실행하세요
 
-```shell
+```shell npm2yarn
 npm install @suspensive/react
-```
-
-```shell
-pnpm add @suspensive/react
-```
-
-```shell
-yarn add @suspensive/react
 ```
