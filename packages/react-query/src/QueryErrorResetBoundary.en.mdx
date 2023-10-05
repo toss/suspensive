@@ -3,11 +3,60 @@ sidebar_position: 4
 title: '<QueryErrorBoundary/>, <QueryAsyncBoundary/>'
 ---
 
+@suspensive/react-query provide `<QueryErrorBoundary/>`, `<QueryAsyncBoundary/>` to reduce repeating implementation like using `<QueryErrorResetBoundary/>` + `<ErrorBoundary/>`, `<QueryErrorResetBoundary/>` + `<AsyncBoundary/>`.
+
+## `<QueryErrorBoundary/>`
+
+```tsx
+import { QueryErrorBoundary } from '@suspensive/react-query'
+
+const Example = () => (
+  <QueryErrorBoundary fallback={(boundary) => <button onClick={boundary.reset}>Try again</button>}>
+    <Page />
+  </QueryErrorBoundary>
+)
+```
+
+## `<QueryAsyncBoundary/>`
+
+```tsx
+import { QueryAsyncBoundary } from '@suspensive/react-query'
+
+const Example = () => (
+  <QueryAsyncBoundary rejectedFallback={(boundary) => <button onClick={boundary.reset}>Try again</button>}>
+    <Page />
+  </QueryAsyncBoundary>
+)
+```
+
+You can just use `<QueryErrorBoundary/>`, `<QueryAsyncBoundary/>` like using [`<ErrorBoundary/>`](/docs/react/src/ErrorBoundary.i18n), [`<AsyncBoundary/>`](/docs/react/src/AsyncBoundary.i18n). All other features are same with original `<ErrorBoundary/>`, `<AsyncBoundary/>` of @suspensive/react without resetting react-query's error.
+
+:::note
+
+### peerDependency
+
+these apis (`<QueryErrorBoundary/>`, `<QueryAsyncBoundary/>`) have peerDependency on @suspensive/react's `<ErrorBoundary/>`, `<AsyncBoundary/>`.
+So if you want to use these, you must install @suspensive/react first.
+
+```shell
+npm install @suspensive/react @suspensive/react-query
+```
+
+```shell
+pnpm add @suspensive/react @suspensive/react-query
+```
+
+```shell
+yarn add @suspensive/react @suspensive/react-query
+```
+
+:::
+
 ### Motivation
 
-With the [QueryErrorResetBoundary](https://tanstack.com/query/v4/docs/reference/QueryErrorResetBoundary) component you can reset any query errors within the boundaries of the component. but If you use react-query with suspense continuously, Continuous repeating to use QueryErrorResetBoundary + [ErrorBoundary](/docs/react/src/ErrorBoundary.i18n), QueryErrorResetBoundary + [AsyncBoundary](/docs/react/src/AsyncBoundary.i18n) will be coded.
+With the [`<QueryErrorResetBoundary/>`](https://tanstack.com/query/v4/docs/reference/QueryErrorResetBoundary) component you can reset any query errors within the boundaries of the component. but If you use react-query with suspense continuously, Continuous repeating to use `<QueryErrorResetBoundary/>` + [`<ErrorBoundary/>`](/docs/react/src/ErrorBoundary.i18n), `<QueryErrorResetBoundary/>` + [`<AsyncBoundary/>`](/docs/react/src/AsyncBoundary.i18n) will be coded.
 
-#### QueryErrorResetBoundary + ErrorBoundary
+#### `<QueryErrorResetBoundary/>` + `<ErrorBoundary/>`
 
 ```tsx
 import { ErrorBoundary } from '@suspensive/react'
@@ -24,7 +73,7 @@ const Example = () => (
 )
 ```
 
-#### QueryErrorResetBoundary + AsyncBoundary
+#### `<QueryErrorResetBoundary/>` + `<AsyncBoundary/>`
 
 ```tsx
 import { AsyncBoundary } from '@suspensive/react'
@@ -43,48 +92,3 @@ const Example = () => (
   </QueryErrorResetBoundary>
 )
 ```
-
-### peerDependency
-
-Below apis (QueryErrorBoundary, QueryAsyncBoundary) have peerDependency on @suspensive/react's ErrorBoundary, AsyncBoundary.
-So if you want to use these, you must install @suspensive/react first.
-
-```shell
-npm install @suspensive/react @suspensive/react-query
-```
-
-```shell
-pnpm add @suspensive/react @suspensive/react-query
-```
-
-```shell
-yarn add @suspensive/react @suspensive/react-query
-```
-
-@suspensive/react-query provide QueryErrorBoundary, QueryAsyncBoundary to reduce repeating implementation like using QueryErrorResetBoundary + ErrorBoundary, QueryErrorResetBoundary + AsyncBoundary.
-
-## QueryErrorBoundary
-
-```tsx
-import { QueryErrorBoundary } from '@suspensive/react-query'
-
-const Example = () => (
-  <QueryErrorBoundary fallback={(boundary) => <button onClick={boundary.reset}>Try again</button>}>
-    <Page />
-  </QueryErrorBoundary>
-)
-```
-
-## QueryAsyncBoundary
-
-```tsx
-import { QueryAsyncBoundary } from '@suspensive/react-query'
-
-const Example = () => (
-  <QueryAsyncBoundary rejectedFallback={(boundary) => <button onClick={boundary.reset}>Try again</button>}>
-    <Page />
-  </QueryAsyncBoundary>
-)
-```
-
-You can just use QueryErrorBoundary / QueryAsyncBoundary like using [ErrorBoundary](/docs/react/src/ErrorBoundary.i18n) / [AsyncBoundary](/docs/react/src/AsyncBoundary.i18n). All other features are same with original ErrorBoundary, AsyncBoundary of @suspensive/react without resetting react-query's error.
