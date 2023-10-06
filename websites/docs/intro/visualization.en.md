@@ -5,14 +5,18 @@ title: Visualization
 
 I made [Concepts Visualization](https://visualization.suspensive.org/react) that whoever can understand core concepts of Suspensive(`<Suspense/>`, `ErrorBoundary/>`, `<ErrorBoundaryGroup/>`, `<AsyncBoundary/>`) visually. You can interact this site now.
 
-### First, See how boundaries do
+### See how each components work
 
 1. How [`<Suspense/>`](/docs/react/src/Suspense.i18n) treat loading and success at once in multiple fetching.
 2. How [`<ErrorBoundary/>`](/docs/react/src/ErrorBoundary.i18n) treat error at once and how to reset. and what resetKeys do.
 3. How [`<ErrorBoundaryGroup/>`](/docs/react/src/ErrorBoundaryGroup.i18n) reset multiple `<ErrorBoundary/>`s without using resetKeys easily.
 4. How [`<AsyncBoundary/>`](/docs/react/src/AsyncBoundary.i18n) treat loading, success and error at once.
 
-[**🔗 Click here to see Visualization**](https://visualization.suspensive.org/react)
+:::info
+
+[**Click here to see Visualization**](https://visualization.suspensive.org/react)
+
+:::
 
 <iframe
   src="https://visualization.suspensive.org/react"
