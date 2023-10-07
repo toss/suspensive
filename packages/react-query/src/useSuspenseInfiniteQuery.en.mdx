@@ -3,9 +3,25 @@ sidebar_position: 3
 title: 'useSuspenseInfiniteQuery'
 ---
 
+Return type of this hook have no isLoading, isError property. because `<Suspense/>` and `<ErrorBoundary/>` will guarantee this hook's data. In addition, this hook's options have default suspense: true. and you can provide new options to this hook like useInfiniteQuery of @tanstack/react-query.
+
+```tsx
+import { useSuspenseInfiniteQuery } from '@suspensive/react-query'
+
+const Example = () => {
+  const query = useSuspenseInfiniteQuery({
+    queryKey,
+    queryFn,
+  }) // suspense:true is default.
+
+  // No need to do type narrowing by isSuccess
+  query.data // InfiniteData<TData>
+}
+```
+
 ### Motivation
 
-If you turn suspense mode on in @tanstack/react-query, You can use useInfiniteQuery with Suspense and ErrorBoundary.
+If you turn suspense mode on in @tanstack/react-query, You can use useInfiniteQuery with `<Suspense/>` and `<ErrorBoundary/>`.
 
 ```tsx
 import { useInfiniteQuery } from '@tanstack/react-query'
@@ -25,30 +41,14 @@ const Example = () => {
 }
 ```
 
-but useInfiniteQuery's return type:query.data will be always fulfilled because of Suspense as parent of this component.
+but useInfiniteQuery's return type:query.data will be always fulfilled because of `<Suspense/>` as parent of this component.
 
 This is why @suspensive/react-query provide **useSuspenseInfiniteQuery**
 
-## useSuspenseInfiniteQuery
-
-Return type of this hook have no isLoading, isError property. because Suspense and ErrorBoundary will guarantee this hook's data.
-
-In addition, this hook's options have default suspense: true. and you can provide new options to this hook like useInfiniteQuery of @tanstack/react-query.
-
-```tsx
-import { useSuspenseInfiniteQuery } from '@suspensive/react-query'
-
-const Example = () => {
-  const query = useSuspenseInfiniteQuery({
-    queryKey,
-    queryFn,
-  }) // suspense:true is default.
-
-  // No need to do type narrowing by isSuccess
-  query.data // InfiniteData<TData>
-}
-```
+:::info
 
 ### Concentrate on only Success
 
 Now, we can concentrate component as any fetching will be always success.
+
+:::

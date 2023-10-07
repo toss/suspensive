@@ -1,5 +1,15 @@
 # @suspensive/react-query
 
+## 1.15.2
+
+### Patch Changes
+
+- cbfbc02: docs(docusaurus): add npm2yarn plugin
+- cfcafd2: docs(react): update tips as admonitions
+- Updated dependencies [cbfbc02]
+- Updated dependencies [cfcafd2]
+  - @suspensive/react@1.15.2
+
 ## 1.15.1
 
 ### Patch Changes
