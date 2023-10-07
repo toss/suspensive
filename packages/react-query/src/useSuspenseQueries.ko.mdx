@@ -3,9 +3,28 @@ sidebar_position: 2
 title: 'useSuspenseQueries'
 ---
 
+이 hook의 return 타입에는 isLoading, isError이 없습니다. `<Suspense/>` and `<ErrorBoundary/>`가 이 hook의 data를 보장해주기 때문입니다. 또한, 이 hook의 options에는 기본적으로 suspense가 true입니다. 필요한 새 options는 @tanstack/react-query의 useQueries처럼 사용하면 됩니다.
+
+```tsx
+import { useSuspenseQueries } from '@suspensive/react-query'
+
+const Example = () => {
+  const [query1, query2] = useSuspenseQueries({
+    queries: [
+      { queryKey: [1], queryFn },
+      { queryKey: [2], queryFn },
+    ],
+  }) // suspense: true가 기본입니다.
+
+  // isSuccess으로 type narrowing이 필요하지 않습니다.
+  query1.data // TData
+  query2.data // TData
+}
+```
+
 ### 동기
 
-@tanstack/react-query useQueries의 suspense 옵션을 사용하면, useQueries를 Suspense and ErrorBoundary와 함께 사용할 수 있습니다.
+@tanstack/react-query useQueries의 suspense 옵션을 사용하면, useQueries를 `<Suspense/>`, `<ErrorBoundary/>`와 함께 사용할 수 있습니다.
 
 ```tsx
 import { useQueries } from '@tanstack/react-query'
@@ -30,34 +49,15 @@ const Example = () => {
 }
 ```
 
-useQueries의 return 타입(query1.data, query2.data)은 이 컴포넌트의 부모인 Suspense와 ErrorBoundary 덕분에 항상 성공한 경우일 것입니다.
+useQueries의 return 타입(query1.data, query2.data)은 이 컴포넌트의 부모인 `<Suspense/>`와 `<ErrorBoundary/>` 덕분에 항상 성공한 경우일 것입니다.
 하지만 @tanstack/react-query는 타입적으로 이것을 표현하지 않습니다.
 
 이것이 @suspensive/react-query가 **useSuspenseQueries**를 제공하는 이유입니다.
 
-## useSuspenseQueries
-
-이 hook의 return 타입에는 isLoading, isError이 없습니다. Suspense and ErrorBoundary가 이 hook의 data를 보장해주기 때문입니다.
-
-또한, 이 hook의 options에는 기본적으로 suspense가 true입니다. 필요한 새 options는 @tanstack/react-query의 useQueries처럼 사용하면 됩니다.
-
-```tsx
-import { useSuspenseQueries } from '@suspensive/react-query'
-
-const Example = () => {
-  const [query1, query2] = useSuspenseQueries({
-    queries: [
-      { queryKey: [1], queryFn },
-      { queryKey: [2], queryFn },
-    ],
-  }) // suspense: true가 기본입니다.
-
-  // isSuccess으로 type narrowing이 필요하지 않습니다.
-  query1.data // TData
-  query2.data // TData
-}
-```
+:::info
 
 ### 성공한 케이스에 집중하세요.
 
 이제 우리는 컴포넌트 내부에서 fetching이 항상 성공하므로 성공한 경우에만 집중할 수 있습니다.
+
+:::
