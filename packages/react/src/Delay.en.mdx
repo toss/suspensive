@@ -5,7 +5,7 @@ title: <Delay/>
 
 ### props.ms
 
-This component delays the exposure of children by ms.
+This component delays the exposure of children by ms. In the code below, exposure of children is delayed by 200ms.
 
 ```tsx
 import { Delay } from '@suspensive/react'
@@ -17,7 +17,7 @@ const Example = () => (
 )
 ```
 
-In the code above, exposure of children is delayed by 200ms.
+:::info
 
 #### Delayed loading UI sometimes provides better usability
 
@@ -37,12 +37,15 @@ const Example = () => (
 )
 ```
 
-#### Default ms
+:::
 
-`<Delay/>` are more powerful when used with `<SuspensiveProvider/>`.
-Control multiple `<Delay/>`s default ms with `<SuspensiveProvider/>`.
+:::tip
 
-Details are introduced in [`<SuspensiveProvider/>` page](./SuspensiveProvider.i18n).
+### Default ms
+
+`<Delay/>` are more powerful when used with `<SuspensiveProvider/>`. Control multiple `<Delay/>`s default ms with `<SuspensiveProvider/>`. Details are introduced in [`<SuspensiveProvider/>` page](./SuspensiveProvider.i18n).
+
+:::
 
 ## withDelay
 
