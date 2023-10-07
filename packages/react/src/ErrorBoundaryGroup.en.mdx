@@ -27,6 +27,14 @@ const Example = () => (
 )
 ```
 
+:::note
+
+#### `<ErrorBoundaryGroup>` manage `<AsyncBoundary>`s too
+
+[`<AsyncBoundary/>`](./AsyncBoundary.i18n) is influenced by `<ErrorBoundaryGroup>` because it wraps `<ErrorBoundary>`.
+
+:::
+
 ### props.blockOutside
 
 If you want to block resetting nested `<ErrorBoundaryGroup/>` by parent `<ErrorBoundaryGroup/>`, Use blockOutside.
@@ -88,7 +96,3 @@ const Example = withErrorBoundaryGroup(
   { blockOutside: true }
 )
 ```
-
-#### `<ErrorBoundaryGroup>` manage `<AsyncBoundary>`s too
-
-[`<AsyncBoundary/>`](./AsyncBoundary.i18n) is influenced by `<ErrorBoundaryGroup>` because it wraps `<ErrorBoundary>`.
