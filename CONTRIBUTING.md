@@ -23,7 +23,7 @@ Some search tips:
 ## 2. Do you have a question?
 
 The issue tracker is for **issues**, in other words, bugs and suggestions.
-If you have a _question_, please use [Stack Overflow](https://stackoverflow.com/questions/tagged/suspensive), your favorite search engine, or other resources.
+If you have a _question_, please use [github discussions](https://github.com/suspensive/react/discussions), your favorite search engine, or other resources.
 
 ## 3. Did you find a bug?
 
