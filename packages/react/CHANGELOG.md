@@ -1,5 +1,11 @@
 # @suspensive/react
 
+## 1.15.4
+
+### Patch Changes
+
+- ba1e1a6: refactor(react): to easier code
+
 ## 1.15.3
 
 ### Patch Changes
