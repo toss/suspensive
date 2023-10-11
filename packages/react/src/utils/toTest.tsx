@@ -19,9 +19,9 @@ Suspend.reset = () => {
 }
 
 const throwErrorIsNeed = { current: false }
-type ThrowErrorProps = PropsWithChildren<{ message: string; after: number }>
-export const ThrowError = ({ message, after, children }: ThrowErrorProps) => {
-  const [isNeedError, setIsNeedError] = useState(throwErrorIsNeed.current)
+type ThrowErrorProps = PropsWithChildren<{ message: string; after?: number }>
+export const ThrowError = ({ message, after = 0, children }: ThrowErrorProps) => {
+  const [isNeedError, setIsNeedError] = useState(after === 0 ? true : throwErrorIsNeed.current)
   if (isNeedError) {
     throw new Error(message)
   }
