@@ -63,8 +63,15 @@ import { Suspense, ErrorBoundary, ErrorBoundaryGroup, Delay } from '@suspensive/
 
 const Example = () => (
   <ErrorBoundaryGroup>
-    <ErrorBoundaryGroup.Reset trigger={(group) => <Button onClick={group.reset}>Reset All</Button>} />
-    <ErrorBoundary fallback={(caught) => <Button onClick={caught.reset}>Reset {caught.error.message}</Button>}>
+    <ErrorBoundaryGroup.Reset trigger={(group) => <button onClick={group.reset}>Reset All</button>} />
+    <ErrorBoundary
+      fallback={(props) => (
+        <>
+          <button onClick={props.reset}>Try again</button>
+          {props.error.message}
+        </>
+      )}
+    >
       <Suspense
         fallback={
           <Delay>
@@ -118,7 +125,14 @@ import { Suspense } from '@suspensive/react'
 import { QueryErrorBoundary, useSuspenseQuery } from '@suspensive/react-query'
 
 const Example = () => (
-  <QueryErrorBoundary fallback={(caught) => <Button onClick={caught.reset}>Reset {caught.error.message}</Button>}>
+  <QueryErrorBoundary
+    fallback={(props) => (
+      <>
+        <button onClick={props.reset}>Try again</button>
+        {props.error.message}
+      </>
+    )}
+  >
     <Suspense fallback={<Spinner />}>
       <SuspendedComponent />
     </Suspense>

@@ -13,13 +13,13 @@ import { ErrorBoundaryGroup, ErrorBoundary } from '@suspensive/react'
 const Example = () => (
   <ErrorBoundaryGroup>
     {/* ErrorBoundaryGroup의 children인 ErrorBoundary를 모두 reset합니다. 중첩된 ErrorBoundaryGroup내의 ErrorBoundary도 모두 reset합니다. */}
-    <ErrorBoundaryGroup.Reset trigger={(group) => <button onClick={group.reset}>Reset</button>} />
-    <ErrorBoundary fallback={(caught) => <>{caught.error}</>}>
+    <ErrorBoundaryGroup.Reset trigger={(group) => <button onClick={group.reset}>Try again</button>} />
+    <ErrorBoundary fallback={(props) => <>{props.error}</>}>
       <CanThrowError />
     </ErrorBoundary>
     <ErrorBoundaryGroup>
-      <ErrorBoundaryGroup.Reset trigger={(group) => <button onClick={group.reset}>Reset</button>} />
-      <ErrorBoundary fallback={(caught) => <>{caught.error}</>}>
+      <ErrorBoundaryGroup.Reset trigger={(group) => <button onClick={group.reset}>Try again</button>} />
+      <ErrorBoundary fallback={(props) => <>{props.error}</>}>
         <CanThrowError />
       </ErrorBoundary>
     </ErrorBoundaryGroup>
@@ -44,14 +44,14 @@ import { ErrorBoundaryGroup, ErrorBoundary } from '@suspensive/react'
 
 const Example = () => (
   <ErrorBoundaryGroup>
-    <ErrorBoundaryGroup.Reset trigger={(group) => <button onClick={group.reset}>Reset</button>} />
-    <ErrorBoundary fallback={(caught) => <>{caught.error}</>}>
+    <ErrorBoundaryGroup.Reset trigger={(group) => <button onClick={group.reset}>Try again</button>} />
+    <ErrorBoundary fallback={(props) => <>{props.error}</>}>
       <CanThrowError />
     </ErrorBoundary>
     {/* blockOutside prop으로 상위 ErrorBoundaryGroup에 의한 reset을 막습니다 */}
     <ErrorBoundaryGroup blockOutside>
-      <ErrorBoundaryGroup.Reset trigger={(group) => <button onClick={group.reset}>Reset</button>} />
-      <ErrorBoundary fallback={(caught) => <>{caught.error}</>}>
+      <ErrorBoundaryGroup.Reset trigger={(group) => <button onClick={group.reset}>Try again</button>} />
+      <ErrorBoundary fallback={(props) => <>{props.error}</>}>
         <CanThrowError />
       </ErrorBoundary>
     </ErrorBoundaryGroup>
@@ -67,7 +67,7 @@ useErrorBoundaryGroup을 사용하면 `<ErrorBoundaryGroup/>`내의 `<ErrorBound
 const Example = () => {
   const group = useErrorBoundaryGroup()
 
-  return <button onClick={group.reset}>reset</button>
+  return <button onClick={group.reset}>Try again</button>
 }
 ```
 
@@ -86,8 +86,8 @@ const Example = withErrorBoundaryGroup(
 
     return (
       <>
-        <button onClick={group.reset}>Reset</button>
-        <ErrorBoundary fallback={(caught) => <>{caught.error}</>}>
+        <button onClick={group.reset}>Try again</button>
+        <ErrorBoundary fallback={(props) => <>{props.error}</>}>
           <CanThrowError />
         </ErrorBoundary>
       </>

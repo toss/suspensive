@@ -18,7 +18,7 @@ export default function Page() {
           >
             {(awaited) => (
               <div>
-                <button onClick={awaited.reset}>reset</button>
+                <button onClick={awaited.reset}>Try again</button>
                 <div>{awaited.data}</div>
               </div>
             )}
@@ -33,7 +33,7 @@ export default function Page() {
           >
             {(awaited) => (
               <div>
-                <button onClick={awaited.reset}>reset</button>
+                <button onClick={awaited.reset}>Try again</button>
                 <div>{awaited.data}</div>
               </div>
             )}
@@ -43,7 +43,7 @@ export default function Page() {
           <Await options={{ key: [2000] as const, fn: ({ key: [ms] }) => api.delay(ms, { percentage: 100 }) }}>
             {(awaited) => (
               <div>
-                <button onClick={awaited.reset}>reset</button>
+                <button onClick={awaited.reset}>Try again</button>
                 <div>{awaited.data}</div>
               </div>
             )}
@@ -58,7 +58,7 @@ export default function Page() {
           >
             {(awaited) => (
               <div>
-                <button onClick={awaited.reset}>reset</button>
+                <button onClick={awaited.reset}>Try again</button>
                 <div>{awaited.data}</div>
               </div>
             )}
@@ -71,7 +71,7 @@ export default function Page() {
           <Await options={{ key: [3000] as const, fn: ({ key: [ms] }) => api.delay(ms, { percentage: 100 }) }}>
             {(awaited) => (
               <div>
-                <button onClick={awaited.reset}>reset</button>
+                <button onClick={awaited.reset}>Try again</button>
                 <div>{awaited.data}</div>
               </div>
             )}
@@ -81,7 +81,7 @@ export default function Page() {
           <Await options={{ key: [4000] as const, fn: ({ key: [ms] }) => api.delay(ms, { percentage: 100 }) }}>
             {(awaited) => (
               <div>
-                <button onClick={awaited.reset}>reset</button>
+                <button onClick={awaited.reset}>Try again</button>
                 <div>{awaited.data}</div>
               </div>
             )}
@@ -91,7 +91,7 @@ export default function Page() {
           <Await options={{ key: [4000] as const, fn: ({ key: [ms] }) => api.delay(ms, { percentage: 100 }) }}>
             {(awaited) => (
               <div>
-                <button onClick={awaited.reset}>reset</button>
+                <button onClick={awaited.reset}>Try again</button>
                 <div>{awaited.data}</div>
               </div>
             )}

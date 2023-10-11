@@ -13,13 +13,13 @@ import { ErrorBoundaryGroup, ErrorBoundary } from '@suspensive/react'
 const Example = () => (
   <ErrorBoundaryGroup>
     {/* Resets all ErrorBoundaries that are children of ErrorBoundaryGroup. All ErrorBoundaries within nested ErrorBoundaryGroups are also reset. */}
-    <ErrorBoundaryGroup.Reset trigger={(group) => <button onClick={group.reset}>Reset</button>} />
-    <ErrorBoundary fallback={(caught) => <>{caught.error}</>}>
+    <ErrorBoundaryGroup.Reset trigger={(group) => <button onClick={group.reset}>Try again</button>} />
+    <ErrorBoundary fallback={(props) => <>{props.error}</>}>
       <CanThrowError />
     </ErrorBoundary>
     <ErrorBoundaryGroup>
-      <ErrorBoundaryGroup.Reset trigger={(group) => <button onClick={group.reset}>Reset</button>} />
-      <ErrorBoundary fallback={(caught) => <>{caught.error}</>}>
+      <ErrorBoundaryGroup.Reset trigger={(group) => <button onClick={group.reset}>Try again</button>} />
+      <ErrorBoundary fallback={(props) => <>{props.error}</>}>
         <CanThrowError />
       </ErrorBoundary>
     </ErrorBoundaryGroup>
@@ -44,14 +44,14 @@ import { ErrorBoundaryGroup, ErrorBoundary } from '@suspensive/react'
 
 const Example = () => (
   <ErrorBoundaryGroup>
-    <ErrorBoundaryGroup.Reset trigger={(group) => <button onClick={group.reset}>Reset</button>} />
-    <ErrorBoundary fallback={(caught) => <>{caught.error}</>}>
+    <ErrorBoundaryGroup.Reset trigger={(group) => <button onClick={group.reset}>Try again</button>} />
+    <ErrorBoundary fallback={(props) => <>{props.error}</>}>
       <CanThrowError />
     </ErrorBoundary>
     {/* blockOutside prop prevents reset by the parent ErrorBoundaryGroup*/}
     <ErrorBoundaryGroup blockOutside>
-      <ErrorBoundaryGroup.Reset trigger={(group) => <button onClick={group.reset}>Reset</button>} />
-      <ErrorBoundary fallback={(caught) => <>{caught.error}</>}>
+      <ErrorBoundaryGroup.Reset trigger={(group) => <button onClick={group.reset}>Try again</button>} />
+      <ErrorBoundary fallback={(props) => <>{props.error}</>}>
         <CanThrowError />
       </ErrorBoundary>
     </ErrorBoundaryGroup>
@@ -67,7 +67,7 @@ If you use useErrorBoundaryGroup, you can get a function to reset `<ErrorBoundar
 const Example = () => {
   const group = useErrorBoundaryGroup()
 
-  return <button onClick={group.reset}>reset</button>
+  return <button onClick={group.reset}>Try again</button>
 }
 ```
 
@@ -86,8 +86,8 @@ const Example = withErrorBoundaryGroup(
 
     return (
       <>
-        <button onClick={group.reset}>Reset</button>
-        <ErrorBoundary fallback={(caught) => <>{caught.error}</>}>
+        <button onClick={group.reset}>Try again</button>
+        <ErrorBoundary fallback={(props) => <>{props.error}</>}>
           <CanThrowError />
         </ErrorBoundary>
       </>

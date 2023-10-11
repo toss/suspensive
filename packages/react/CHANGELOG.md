@@ -1,5 +1,12 @@
 # @suspensive/react
 
+## 1.15.3
+
+### Patch Changes
+
+- b05b4e2: docs(react): update doc for Delay
+- e1e9a6b: docs(react): update doc for ErrorBoundaryGroup
+
 ## 1.15.2
 
 ### Patch Changes
