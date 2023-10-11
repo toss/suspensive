@@ -99,7 +99,7 @@ describe('useAwait', () => {
     expect(screen.queryByText(FALLBACK)).toBeInTheDocument()
     act(() => vi.advanceTimersByTime(MS_100))
     await waitFor(() => expect(screen.queryByText(TEXT)).toBeInTheDocument())
-    const resetButton = await screen.findByRole('button', { name: 'reset' })
+    const resetButton = await screen.findByRole('button', { name: 'Try again' })
     resetButton.click()
     rerender(
       <Suspense fallback={FALLBACK}>
