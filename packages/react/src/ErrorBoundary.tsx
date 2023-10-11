@@ -20,11 +20,11 @@ import { PropsWithoutChildren } from './types'
 import { hasResetKeysChanged } from './utils'
 import { assert } from './utils'
 
-export type ErrorBoundaryFallbackProps = {
+export type ErrorBoundaryFallbackProps<TError extends Error = Error> = {
   /**
    * when ErrorBoundary catch error, you can use this error
    */
-  error: Error
+  error: TError
   /**
    * when you want to reset caught error, you can use this reset
    */
@@ -60,7 +60,7 @@ type ErrorBoundaryState<TError extends Error = Error> =
       error: null
     }
 
-const initialState: ErrorBoundaryState = {
+const initialErrorBoundaryState: ErrorBoundaryState = {
   isError: false,
   error: null,
 }
@@ -69,7 +69,7 @@ class BaseErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState
     return { isError: true, error }
   }
 
-  state = initialState
+  state = initialErrorBoundaryState
 
   componentDidUpdate(prevProps: ErrorBoundaryProps, prevState: ErrorBoundaryState) {
     const { isError } = this.state
@@ -83,9 +83,9 @@ class BaseErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState
     this.props.onError?.(error, info)
   }
 
-  reset() {
+  reset = () => {
     this.props.onReset?.()
-    this.setState(initialState)
+    this.setState(initialErrorBoundaryState)
   }
 
   render() {
@@ -95,14 +95,14 @@ class BaseErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState
       <ErrorBoundaryContext.Provider
         value={{
           ...this.state,
-          reset: this.reset.bind(this),
+          reset: this.reset,
         }}
       >
         {this.state.isError
           ? typeof fallback === 'function'
             ? createElement(fallback, {
                 error: this.state.error,
-                reset: this.reset.bind(this),
+                reset: this.reset,
               })
             : fallback
           : children}
@@ -130,7 +130,6 @@ if (process.env.NODE_ENV !== 'production') {
   ErrorBoundary.displayName = 'ErrorBoundary'
 }
 
-// HOC
 export const withErrorBoundary = <TProps extends ComponentProps<ComponentType> = Record<string, never>>(
   Component: ComponentType<TProps>,
   errorBoundaryProps: PropsWithoutChildren<ErrorBoundaryProps>
@@ -149,11 +148,7 @@ export const withErrorBoundary = <TProps extends ComponentProps<ComponentType> =
   return Wrapped
 }
 
-type ErrorBoundaryContextType<TError extends Error = Error> = {
-  reset: () => void
-} & ErrorBoundaryState<TError>
-
-const ErrorBoundaryContext = createContext<ErrorBoundaryContextType | null>(null)
+const ErrorBoundaryContext = createContext<({ reset: () => void } & ErrorBoundaryState) | null>(null)
 
 /**
  * @experimental This is experimental feature.
@@ -163,19 +158,33 @@ export const useErrorBoundary = <TError extends Error = Error>() => {
     isError: false,
     error: null,
   })
-
   if (state.isError) {
     throw state.error
   }
 
-  const errorBoundaryContext = useContext(ErrorBoundaryContext)
-  assert(errorBoundaryContext != null, 'useErrorBoundary: ErrorBoundary is required in parent')
+  const errorBoundary = useContext(ErrorBoundaryContext)
+  assert(errorBoundary != null && !errorBoundary.isError, assert.message.useErrorBoundary.onlyInChildrenOfErrorBoundary)
 
   return useMemo(
     () => ({
-      ...errorBoundaryContext,
       setError: (error: TError) => setState({ isError: true, error }),
     }),
-    [errorBoundaryContext]
+    []
+  )
+}
+
+export const useErrorBoundaryFallbackProps = <TError extends Error = Error>(): ErrorBoundaryFallbackProps<TError> => {
+  const errorBoundary = useContext(ErrorBoundaryContext)
+  assert(
+    errorBoundary != null && errorBoundary.isError,
+    assert.message.useErrorBoundaryFallbackProps.onlyInFallbackOfErrorBoundary
+  )
+
+  return useMemo(
+    () => ({
+      error: errorBoundary.error as TError,
+      reset: errorBoundary.reset,
+    }),
+    [errorBoundary.error, errorBoundary.reset]
   )
 }

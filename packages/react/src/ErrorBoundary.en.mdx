@@ -14,7 +14,14 @@ import { ErrorBoundary } from '@suspensive/react'
 import { useState, useEffect } from 'react'
 
 const Example = () => (
-  <ErrorBoundary fallback={({ error, reset }) => <button onClick={reset}>{JSON.stringify(error)}</button>}>
+  <ErrorBoundary
+    fallback={(props) => (
+      <>
+        <button onClick={props.reset}>Try again</button>
+        {props.error.message}
+      </>
+    )}
+  >
     <ErrorAfter4s />
   </ErrorBoundary>
 )
@@ -40,6 +47,38 @@ const ErrorAfter4s = () => {
 ```
 
 ![Example banner](/gif/errorboundary-example.gif)
+
+:::tip
+
+## Use `<ErrorBoundary/>` fallback props without prop drilling
+
+### useErrorBoundaryFallbackProps
+
+In fallback of `<ErrorBoundary/>`, by calling useErrorBoundaryFallbackProps().reset/error, we can use error of `<ErrorBoundary/>` and reset it without using prop directly
+
+```tsx
+import { ErrorBoundary, useErrorBoundaryFallbackProps } from '@suspensive/react'
+
+const Nested = () => {
+  const props = useErrorBoundaryFallbackProps()
+
+  return (
+    <>
+      <button onClick={props.reset} />
+      {props.error.message}
+    </>
+  )
+}
+
+const ErrorBoundaryFallback = () => <Nested />
+const Example = () => (
+  <ErrorBoundary fallback={ErrorBoundaryFallback}>
+    <Error />
+  </ErrorBoundary>
+)
+```
+
+:::
 
 ### props.resetKeys
 
@@ -74,7 +113,15 @@ import { QueryErrorResetBoundary } from '@tanstack/react-query'
 const Example = () => (
   <QueryErrorResetBoundary>
     {({ reset }) => (
-      <ErrorBoundary onReset={reset} fallback={(boundary) => <button onClick={boundary.reset}>Try again</button>}>
+      <ErrorBoundary
+        onReset={reset}
+        fallback={(props) => (
+          <>
+            <button onClick={props.reset}>Try again</button>
+            {props.error.message}
+          </>
+        )}
+      >
         <Page />
       </ErrorBoundary>
     )}
@@ -108,25 +155,9 @@ useErrorBoundary is experimental feature, this interfaces could be changed
 
 :::
 
-We can reset `<ErrorBoundary/>` without props using useErrorBoundary.reset in ErrorBoundaryFallback.
+### useErrorBoundary().setError
 
-```tsx
-import { ErrorBoundary, useErrorBoundary } from '@suspensive/react'
-
-const ErrorBoundaryFallback = () => {
-  const errorBoundary = useErrorBoundary()
-
-  return <button onClick={errorBoundary.reset} />
-}
-
-const Example = () => (
-  <ErrorBoundary fallback={ErrorBoundaryFallback}>
-    <Error />
-  </ErrorBoundary>
-)
-```
-
-In children of `<ErrorBoundary/>`, we can use useErrorBoundary.setError to make `<ErrorBoundary/>` aware of the Error without throw.
+In children of `<ErrorBoundary/>`, we can use useErrorBoundary().setError to make `<ErrorBoundary/>` aware of the Error without throw.
 
 ```tsx
 import { ErrorBoundary, useErrorBoundary } from '@suspensive/react'

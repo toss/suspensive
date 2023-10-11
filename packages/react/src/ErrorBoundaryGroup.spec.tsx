@@ -1,6 +1,7 @@
 import { act, render, screen } from '@testing-library/react'
 import { createElement } from 'react'
 import { vi } from 'vitest'
+import { assert } from './utils'
 import { ERROR_MESSAGE, MS_100, TEXT, ThrowError } from './utils/toTest'
 import { ErrorBoundary, ErrorBoundaryGroup, useErrorBoundaryGroup, withErrorBoundaryGroup } from '.'
 
@@ -14,7 +15,7 @@ describe('<ErrorBoundaryGroup/>', () => {
       <ErrorBoundaryGroup>
         <ErrorBoundaryGroup.Reset trigger={(group) => <button onClick={group.reset}>{resetButtonText}</button>} />
         {Array.from({ length: innerErrorBoundaryCount }).map((_, key) => (
-          <ErrorBoundary key={key} fallback={(caught) => <div>{caught.error.message}</div>}>
+          <ErrorBoundary key={key} fallback={(props) => <div>{props.error.message}</div>}>
             <ThrowError message={ERROR_MESSAGE} after={MS_100}>
               <div>{TEXT}</div>
             </ThrowError>
@@ -43,7 +44,7 @@ describe('<ErrorBoundaryGroup/>', () => {
         <ErrorBoundaryGroup.Reset trigger={(group) => <button onClick={group.reset}>{resetButtonText}</button>} />
         {Array.from({ length: innerErrorBoundaryCount }).map((_, index) => (
           <ErrorBoundaryGroup key={index} blockOutside={index === innerErrorBoundaryCount - 1}>
-            <ErrorBoundary fallback={(caught) => <div>{caught.error.message}</div>}>
+            <ErrorBoundary fallback={(props) => <div>{props.error.message}</div>}>
               <ThrowError message={ERROR_MESSAGE} after={MS_100}>
                 <div>{TEXT}</div>
               </ThrowError>
@@ -67,21 +68,21 @@ describe('<ErrorBoundaryGroup/>', () => {
   })
 })
 
-const UsingUseErrorBoundary = () => {
+const UsingUseErrorBoundaryGroup = () => {
   useErrorBoundaryGroup()
   return <>{TEXT}</>
 }
 describe('useErrorBoundaryGroup', () => {
   it('should throw error without ErrorBoundaryGroup in parent', () => {
-    expect(() => render(<UsingUseErrorBoundary />)).toThrow(
-      'useErrorBoundaryGroup: ErrorBoundaryGroup is required in parent'
+    expect(() => render(<UsingUseErrorBoundaryGroup />)).toThrow(
+      assert.message.useErrorBoundaryGroup.onlyInChildrenOfErrorBoundaryGroup
     )
   })
 })
 
 describe('withErrorBoundaryGroup', () => {
   it('should wrap component. we can check by useErrorBoundaryGroup', () => {
-    const rendered = render(createElement(withErrorBoundaryGroup(UsingUseErrorBoundary)))
+    const rendered = render(createElement(withErrorBoundaryGroup(UsingUseErrorBoundaryGroup)))
     expect(rendered.queryByText(TEXT)).toBeInTheDocument()
   })
 
