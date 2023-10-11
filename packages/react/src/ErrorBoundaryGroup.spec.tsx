@@ -14,7 +14,7 @@ describe('<ErrorBoundaryGroup/>', () => {
       <ErrorBoundaryGroup>
         <ErrorBoundaryGroup.Reset trigger={(group) => <button onClick={group.reset}>{resetButtonText}</button>} />
         {Array.from({ length: innerErrorBoundaryCount }).map((_, key) => (
-          <ErrorBoundary key={key} fallback={(caught) => <div>{caught.error.message}</div>}>
+          <ErrorBoundary key={key} fallback={(props) => <div>{props.error.message}</div>}>
             <ThrowError message={ERROR_MESSAGE} after={MS_100}>
               <div>{TEXT}</div>
             </ThrowError>
@@ -43,7 +43,7 @@ describe('<ErrorBoundaryGroup/>', () => {
         <ErrorBoundaryGroup.Reset trigger={(group) => <button onClick={group.reset}>{resetButtonText}</button>} />
         {Array.from({ length: innerErrorBoundaryCount }).map((_, index) => (
           <ErrorBoundaryGroup key={index} blockOutside={index === innerErrorBoundaryCount - 1}>
-            <ErrorBoundary fallback={(caught) => <div>{caught.error.message}</div>}>
+            <ErrorBoundary fallback={(props) => <div>{props.error.message}</div>}>
               <ThrowError message={ERROR_MESSAGE} after={MS_100}>
                 <div>{TEXT}</div>
               </ThrowError>
