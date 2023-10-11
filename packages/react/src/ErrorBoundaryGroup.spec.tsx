@@ -1,6 +1,7 @@
 import { act, render, screen } from '@testing-library/react'
 import { createElement } from 'react'
 import { vi } from 'vitest'
+import { assert } from './utils'
 import { ERROR_MESSAGE, MS_100, TEXT, ThrowError } from './utils/toTest'
 import { ErrorBoundary, ErrorBoundaryGroup, useErrorBoundaryGroup, withErrorBoundaryGroup } from '.'
 
@@ -74,7 +75,7 @@ const UsingUseErrorBoundary = () => {
 describe('useErrorBoundaryGroup', () => {
   it('should throw error without ErrorBoundaryGroup in parent', () => {
     expect(() => render(<UsingUseErrorBoundary />)).toThrow(
-      'useErrorBoundaryGroup: ErrorBoundaryGroup is required in parent'
+      assert.message.useErrorBoundaryGroup.onlyInChildrenOfErrorBoundaryGroup
     )
   })
 })

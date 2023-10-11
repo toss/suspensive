@@ -3,6 +3,7 @@ import { ComponentProps, ComponentRef, createElement, createRef, useEffect } fro
 import { createRoot } from 'react-dom/client'
 import { vi } from 'vitest'
 import { useSetTimeout } from './hooks'
+import { assert } from './utils'
 import { ERROR_MESSAGE, FALLBACK, MS_100, TEXT, ThrowError, ThrowNull } from './utils/toTest'
 import { ErrorBoundary, useErrorBoundary, withErrorBoundary } from '.'
 
@@ -327,6 +328,6 @@ describe('useErrorBoundary', () => {
           return <>{TEXT}</>
         })
       )
-    ).toThrow('useErrorBoundary: ErrorBoundary is required in parent')
+    ).toThrow(assert.message.useErrorBoundary.onlyInChildrenOfErrorBoundary)
   })
 })
