@@ -14,7 +14,14 @@ import { ErrorBoundary } from '@suspensive/react'
 import { useState, useEffect } from 'react'
 
 const Example = () => (
-  <ErrorBoundary fallback={({ error, reset }) => <button onClick={reset}>{JSON.stringify(error)}</button>}>
+  <ErrorBoundary
+    fallback={(props) => (
+      <>
+        <button onClick={props.reset}>Try again</button>
+        {props.error.message}
+      </>
+    )}
+  >
     <ErrorAfter4s />
   </ErrorBoundary>
 )
@@ -74,7 +81,15 @@ import { QueryErrorResetBoundary } from '@tanstack/react-query'
 const Example = () => (
   <QueryErrorResetBoundary>
     {({ reset }) => (
-      <ErrorBoundary onReset={reset} fallback={(boundary) => <button onClick={boundary.reset}>Try again</button>}>
+      <ErrorBoundary
+        onReset={reset}
+        fallback={(props) => (
+          <>
+            <button onClick={props.reset}>Try again</button>
+            {props.error.message}
+          </>
+        )}
+      >
         <Page />
       </ErrorBoundary>
     )}
