@@ -5,7 +5,7 @@ import { Box, Button, Description } from './uis'
 
 export const RejectedFallback = (props: ErrorBoundaryFallbackProps) => (
   <Box.Error>
-    <Description.Error>Error: {JSON.stringify(props.error.message)}</Description.Error>
+    <Description.Error>Error: {props.error.message}</Description.Error>
     <Button onClick={props.reset}>↻</Button>
   </Box.Error>
 )

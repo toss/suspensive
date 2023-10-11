@@ -20,7 +20,13 @@ describe('<ErrorBoundary/>', () => {
 
   const renderErrorBoundary = (props: Partial<ComponentProps<typeof ErrorBoundary>>) =>
     act(() =>
-      root.render(<ErrorBoundary ref={errorBoundaryRef} fallback={(props) => <>{props.error.message}</>} {...props} />)
+      root.render(
+        <ErrorBoundary
+          ref={errorBoundaryRef}
+          fallback={(errorBoundaryFallbackProps) => <>{errorBoundaryFallbackProps.error.message}</>}
+          {...props}
+        />
+      )
     )
 
   it('should show children if no error but if error in children, catch it and show fallback and call onError', () => {
@@ -234,7 +240,13 @@ describe('useErrorBoundary', () => {
   })
   const renderErrorBoundary = (props: Partial<ComponentProps<typeof ErrorBoundary>>) =>
     act(() =>
-      root.render(<ErrorBoundary ref={errorBoundaryRef} fallback={(props) => <>{props.error.message}</>} {...props} />)
+      root.render(
+        <ErrorBoundary
+          ref={errorBoundaryRef}
+          fallback={(errorBoundaryFallbackProps) => <>{errorBoundaryFallbackProps.error.message}</>}
+          {...props}
+        />
+      )
     )
 
   it('should supply setError to set Error of ErrorBoundary manually', () => {

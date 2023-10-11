@@ -54,7 +54,7 @@ const Example = () => (
       </>
     )}
     onReset={() => console.log('reset')}
-    onError={(error) => error)}
+    onError={(error) => console.log(error)}
   >
     <Children />
   </AsyncBoundary>
