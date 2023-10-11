@@ -2,4 +2,4 @@
 "@suspensive/react": patch
 ---
 
-docs(react): update doc for Delay
+refactor(react): to easier code

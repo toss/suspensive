@@ -11,7 +11,14 @@ You can just use `<QueryErrorBoundary/>`, `<QueryAsyncBoundary/>` like using [`<
 import { QueryErrorBoundary } from '@suspensive/react-query'
 
 const Example = () => (
-  <QueryErrorBoundary fallback={(boundary) => <button onClick={boundary.reset}>Try again</button>}>
+  <QueryErrorBoundary
+    fallback={(props) => (
+      <>
+        <button onClick={props.reset}>Try again</button>
+        {props.error.message}
+      </>
+    )}
+  >
     <Page />
   </QueryErrorBoundary>
 )
@@ -21,7 +28,14 @@ const Example = () => (
 import { QueryAsyncBoundary } from '@suspensive/react-query'
 
 const Example = () => (
-  <QueryAsyncBoundary rejectedFallback={(boundary) => <button onClick={boundary.reset}>Try again</button>}>
+  <QueryAsyncBoundary
+    rejectedFallback={(props) => (
+      <>
+        <button onClick={props.reset}>Try again</button>
+        {props.error.message}
+      </>
+    )}
+  >
     <Page />
   </QueryAsyncBoundary>
 )
@@ -53,7 +67,15 @@ import { QueryErrorResetBoundary } from '@tanstack/react-query'
 const Example = () => (
   <QueryErrorResetBoundary>
     {({ reset }) => (
-      <ErrorBoundary onReset={reset} fallback={(boundary) => <button onClick={boundary.reset}>Try again</button>}>
+      <ErrorBoundary
+        onReset={reset}
+        fallback={(props) => (
+          <>
+            <button onClick={props.reset}>Try again</button>
+            {props.error.message}
+          </>
+        )}
+      >
         <Page />
       </ErrorBoundary>
     )}
@@ -72,7 +94,12 @@ const Example = () => (
     {({ reset }) => (
       <AsyncBoundary
         onReset={reset}
-        rejectedFallback={(boundary) => <button onClick={boundary.reset}>Try again</button>}
+        rejectedFallback={(props) => (
+          <>
+            <button onClick={props.reset}>Try again</button>
+            {props.error.message}
+          </>
+        )}
       >
         <Page />
       </AsyncBoundary>

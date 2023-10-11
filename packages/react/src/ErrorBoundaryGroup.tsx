@@ -54,7 +54,7 @@ ErrorBoundaryGroup.Reset = ErrorBoundaryGroupReset
 
 export const useErrorBoundaryGroup = () => {
   const group = useContext(ErrorBoundaryGroupContext)
-  assert(group != null, 'useErrorBoundaryGroup: ErrorBoundaryGroup is required in parent')
+  assert(group != null, assert.message.useErrorBoundaryGroup.onlyInChildrenOfErrorBoundaryGroup)
   return useMemo(
     () => ({
       /**

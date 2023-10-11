@@ -168,7 +168,7 @@ export const useErrorBoundary = <TError extends Error = Error>() => {
   }
 
   const errorBoundaryContext = useContext(ErrorBoundaryContext)
-  assert(errorBoundaryContext != null, 'useErrorBoundary: ErrorBoundary is required in parent')
+  assert(errorBoundaryContext != null, assert.message.useErrorBoundary.onlyInChildrenOfErrorBoundary)
 
   return useMemo(
     () => ({

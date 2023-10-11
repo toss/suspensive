@@ -12,7 +12,7 @@ const AwaitSuccess = () => {
   return (
     <>
       {awaited.data}
-      <button onClick={awaited.reset}>reset</button>
+      <button onClick={awaited.reset}>Try again</button>
     </>
   )
 }
@@ -66,7 +66,7 @@ describe('useAwait', () => {
   it('should throw Error, and It will be cached', async () => {
     vi.useFakeTimers()
     const { unmount } = render(
-      <ErrorBoundary fallback={(caught) => <>{caught.error.message}</>}>
+      <ErrorBoundary fallback={(props) => <>{props.error.message}</>}>
         <Suspense fallback={FALLBACK}>
           <AwaitFailure />
         </Suspense>
@@ -79,7 +79,7 @@ describe('useAwait', () => {
     // error cache test
     unmount()
     render(
-      <ErrorBoundary fallback={(caught) => <>{caught.error.message}</>}>
+      <ErrorBoundary fallback={(props) => <>{props.error.message}</>}>
         <Suspense fallback={FALLBACK}>
           <AwaitFailure />
         </Suspense>
@@ -99,7 +99,7 @@ describe('useAwait', () => {
     expect(screen.queryByText(FALLBACK)).toBeInTheDocument()
     act(() => vi.advanceTimersByTime(MS_100))
     await waitFor(() => expect(screen.queryByText(TEXT)).toBeInTheDocument())
-    const resetButton = await screen.findByRole('button', { name: 'reset' })
+    const resetButton = await screen.findByRole('button', { name: 'Try again' })
     resetButton.click()
     rerender(
       <Suspense fallback={FALLBACK}>
