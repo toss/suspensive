@@ -21,14 +21,14 @@ import { AsyncBoundary } from '@suspensive/react'
 const Example = () => (
   <AsyncBoundary
     pendingFallback={<Loading />}
-    rejectedFallback={(errorBoundary) => (
+    rejectedFallback={(props) => (
       <>
-        <button onClick={errorBoundary.reset}>reset</button>
-        {JSON.stringify(errorBoundary.error)}
+        <button onClick={props.reset}>Try again</button>
+        {props.error.message}
       </>
     )}
     onReset={() => console.log('reset')}
-    onError={(error) => console.log(JSON.stringify(error))}
+    onError={(error) => console.log(error)}
   >
     <Children />
   </AsyncBoundary>
@@ -45,14 +45,14 @@ import { AsyncBoundary } from '@suspensive/react'
 const Example = () => (
   <AsyncBoundary.CSROnly
     pendingFallback={<Loading />}
-    rejectedFallback={(errorBoundary) => (
+    rejectedFallback={(props) => (
       <>
-        <button onClick={errorBoundary.reset}>reset</button>
-        {JSON.stringify(errorBoundary.error)}
+        <button onClick={props.reset}>Try again</button>
+        {props.error.message}
       </>
     )}
     onReset={() => console.log('reset')}
-    onError={(error) => console.log(JSON.stringify(error))}
+    onError={(error) => console.log(error)}
   >
     <Children />
   </AsyncBoundary>
@@ -74,14 +74,14 @@ const Example = withAsyncBoundary(
   },
   {
     pendingFallback: <Loading />,
-    rejectedFallback: (errorBoundary) => (
+    rejectedFallback: (props) => (
       <>
-        <button onClick={errorBoundary.reset}>reset</button>
-        {JSON.stringify(errorBoundary.error)}
+        <button onClick={props.reset}>Try again</button>
+        {props.error.message}
       </>
     ),
     onReset: () => console.log('reset'),
-    onError: (error) => console.log(JSON.stringify(error)),
+    onError: (error) => console.log(error),
   }
 )
 ```

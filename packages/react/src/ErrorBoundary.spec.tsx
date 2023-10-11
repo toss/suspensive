@@ -3,6 +3,7 @@ import { ComponentProps, ComponentRef, createElement, createRef, useEffect } fro
 import { createRoot } from 'react-dom/client'
 import { vi } from 'vitest'
 import { useSetTimeout } from './hooks'
+import { assert } from './utils'
 import { ERROR_MESSAGE, FALLBACK, MS_100, TEXT, ThrowError, ThrowNull } from './utils/toTest'
 import { ErrorBoundary, useErrorBoundary, withErrorBoundary } from '.'
 
@@ -20,7 +21,11 @@ describe('<ErrorBoundary/>', () => {
   const renderErrorBoundary = (props: Partial<ComponentProps<typeof ErrorBoundary>>) =>
     act(() =>
       root.render(
-        <ErrorBoundary ref={errorBoundaryRef} fallback={(caught) => <>{caught.error.message}</>} {...props} />
+        <ErrorBoundary
+          ref={errorBoundaryRef}
+          fallback={(errorBoundaryFallbackProps) => <>{errorBoundaryFallbackProps.error.message}</>}
+          {...props}
+        />
       )
     )
 
@@ -48,7 +53,7 @@ describe('<ErrorBoundary/>', () => {
   it('should show children if no error but if error in children, catch it and show fallback component', () => {
     vi.useFakeTimers()
     renderErrorBoundary({
-      fallback: (caught) => <>{caught.error.message}</>,
+      fallback: (props) => <>{props.error.message}</>,
       children: (
         <ThrowError message={ERROR_MESSAGE} after={MS_100}>
           {TEXT}
@@ -188,7 +193,7 @@ describe('withErrorBoundary', () => {
 
   it("should render the wrapped component when there's no error", () => {
     const WrappedComponent = withErrorBoundary(() => <>{TEXT}</>, {
-      fallback: (caught) => <>{caught.error.message}</>,
+      fallback: (props) => <>{props.error.message}</>,
     })
 
     act(() => root.render(<WrappedComponent />))
@@ -205,7 +210,7 @@ describe('withErrorBoundary', () => {
         </ThrowError>
       ),
       {
-        fallback: (caught) => <>{caught.error.message}</>,
+        fallback: (props) => <>{props.error.message}</>,
       }
     )
 
@@ -236,7 +241,11 @@ describe('useErrorBoundary', () => {
   const renderErrorBoundary = (props: Partial<ComponentProps<typeof ErrorBoundary>>) =>
     act(() =>
       root.render(
-        <ErrorBoundary ref={errorBoundaryRef} fallback={(caught) => <>{caught.error.message}</>} {...props} />
+        <ErrorBoundary
+          ref={errorBoundaryRef}
+          fallback={(errorBoundaryFallbackProps) => <>{errorBoundaryFallbackProps.error.message}</>}
+          {...props}
+        />
       )
     )
 
@@ -319,6 +328,6 @@ describe('useErrorBoundary', () => {
           return <>{TEXT}</>
         })
       )
-    ).toThrow('useErrorBoundary: ErrorBoundary is required in parent')
+    ).toThrow(assert.message.useErrorBoundary.onlyInChildrenOfErrorBoundary)
   })
 })
