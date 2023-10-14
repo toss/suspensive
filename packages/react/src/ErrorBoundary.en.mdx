@@ -61,7 +61,7 @@ const Example = () => {
 
   return (
     <>
-      <button onClick={() => setResetKey((prev) => prev + 1)} />
+      <button onClick={() => setResetKey((prev) => prev + 1)}>Try again</button>
       <ErrorBoundary resetKeys={[resetKey]}>
         <ErrorAfter4s />
       </ErrorBoundary>
@@ -131,7 +131,7 @@ import { ErrorBoundary, useErrorBoundary } from '@suspensive/react'
 const ErrorBoundaryFallback = () => {
   const errorBoundary = useErrorBoundary()
 
-  return <button onClick={errorBoundary.reset} />
+  return <button onClick={errorBoundary.reset}>Try again</button>
 }
 
 const Example = () => (
