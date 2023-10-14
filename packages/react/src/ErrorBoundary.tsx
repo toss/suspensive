@@ -17,8 +17,7 @@ import {
 } from 'react'
 import { ErrorBoundaryGroupContext } from './ErrorBoundaryGroup'
 import { PropsWithoutChildren } from './types'
-import { hasResetKeysChanged } from './utils'
-import { assert } from './utils'
+import { assert, hasResetKeysChanged } from './utils'
 
 export type ErrorBoundaryFallbackProps = {
   /**
