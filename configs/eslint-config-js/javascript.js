@@ -4,6 +4,8 @@ module.exports = {
   extends: ['plugin:import/recommended', './noimport.js'],
   plugins: ['import'],
   rules: {
+    'sort-imports': ['error', { ignoreDeclarationSort: true }],
+    'import/no-duplicates': ['warn'],
     'import/order': [
       'warn',
       {
@@ -11,6 +13,5 @@ module.exports = {
         alphabetize: { order: 'asc', caseInsensitive: true },
       },
     ],
-    'sort-imports': ['error', { ignoreDeclarationSort: true }],
   },
 }
