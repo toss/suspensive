@@ -60,12 +60,12 @@ In fallback of `<ErrorBoundary/>`, by calling useErrorBoundaryFallbackProps().re
 import { ErrorBoundary, useErrorBoundaryFallbackProps } from '@suspensive/react'
 
 const Nested = () => {
-  const props = useErrorBoundaryFallbackProps()
+  const { reset, error } = useErrorBoundaryFallbackProps()
 
   return (
     <>
-      <button onClick={props.reset}>Try again</button>
-      {props.error.message}
+      <button onClick={reset}>Try again</button>
+      {error.message}
     </>
   )
 }
