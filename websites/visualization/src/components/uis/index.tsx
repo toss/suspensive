@@ -2,7 +2,7 @@
 'use client'
 
 import styled from '@emotion/styled'
-import { PropsWithChildren } from 'react'
+import type { PropsWithChildren } from 'react'
 
 export const Button = styled.button`
   box-sizing: border-box;

@@ -1,12 +1,11 @@
-import {
+import type {
   InfiniteData,
   QueryFunction,
   QueryKey,
   UseInfiniteQueryOptions,
   UseInfiniteQueryResult,
-  parseQueryArgs,
-  useInfiniteQuery,
 } from '@tanstack/react-query'
+import { parseQueryArgs, useInfiniteQuery } from '@tanstack/react-query'
 
 export type BaseUseSuspenseInfiniteQueryResult<TData = unknown> = Omit<
   UseInfiniteQueryResult<TData>,
