@@ -48,18 +48,40 @@ const ErrorAfter4s = () => {
 
 ![Example banner](/gif/errorboundary-example.gif)
 
+#### 외부 컴포넌트 불러오기
+
+만약, 이미 선언된 컴포넌트를 fallback으로 전달하고 싶다면, `ErrorBoundaryFallbackProps` 타입을 활용해 컴포넌트를 선언 할 수 있습니다.
+
+```tsx
+import { ErrorBoundaryFallbackProps } from '@suspensive/react'
+
+const Fallback = ({ reset, error }: ErrorBoundaryFallbackProps) => (
+  <>
+    <button onClick={reset}>reset</button>
+    {error.message}
+  </>
+)
+
+const Example = () => (
+  <ErrorBoundary fallback={Fallback}>
+    <ErrorAfter4s />
+  </ErrorBoundary>
+)
+```
+
 :::tip
 
 ## `<ErrorBoundary/>` fallback props을 prop drilling 없이 사용하기
 
 ### useErrorBoundaryFallbackProps
 
-ErrorBoundaryFallback에서 useErrorBoundaryFallbackProps().reset/error을 사용해 prop을 직접 사용하지 않고도 `<ErrorBoundary/>`을 reset하고 error를 사용할 수 있습니다.
+만약, fallback 컴포넌트의 depth가 깊어진다면, `error` 객체와 `reset` 메소드에 접근하기 위해 prop drilling을 피할 수 없을 것 입니다.
+이 때, `useErrorBoundaryFallbackProps`을 통해, prop drilling 없이 `reset` 메소드와 `error` 객체에 접근할 수 있습니다.
 
 ```tsx
 import { ErrorBoundary, useErrorBoundaryFallbackProps } from '@suspensive/react'
 
-const Nested = () => {
+const Fallback = () => {
   const props = useErrorBoundaryFallbackProps()
 
   return (
@@ -70,9 +92,11 @@ const Nested = () => {
   )
 }
 
-const ErrorBoundaryFallback = () => <Nested />
+// 여기서 fallbackProp 을 전달할 필요가 없어집니다!
+const FallbackWrapper = () => <Fallback />
+
 const Example = () => (
-  <ErrorBoundary fallback={ErrorBoundaryFallback}>
+  <ErrorBoundary fallback={FallbackWrapper}>
     <Error />
   </ErrorBoundary>
 )
