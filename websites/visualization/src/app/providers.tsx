@@ -5,7 +5,7 @@ import { MediaQueryProvider } from '@jsxcss/emotion'
 import { Suspensive, SuspensiveProvider } from '@suspensive/react'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
-import { PropsWithChildren } from 'react'
+import type { PropsWithChildren } from 'react'
 import { Spinner } from '~/components/uis'
 
 const queryClient = new QueryClient({

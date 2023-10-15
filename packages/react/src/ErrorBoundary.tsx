@@ -1,11 +1,6 @@
+import type { ComponentProps, ComponentType, ErrorInfo, FunctionComponent, PropsWithChildren, ReactNode } from 'react'
 import {
   Component,
-  ComponentProps,
-  ComponentType,
-  ErrorInfo,
-  FunctionComponent,
-  PropsWithChildren,
-  ReactNode,
   createContext,
   createElement,
   forwardRef,
@@ -16,9 +11,8 @@ import {
   useState,
 } from 'react'
 import { ErrorBoundaryGroupContext } from './ErrorBoundaryGroup'
-import { PropsWithoutChildren } from './types'
-import { hasResetKeysChanged } from './utils'
-import { assert } from './utils'
+import type { PropsWithoutChildren } from './types'
+import { assert, hasResetKeysChanged } from './utils'
 
 export type ErrorBoundaryFallbackProps = {
   /**

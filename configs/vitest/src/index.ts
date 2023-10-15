@@ -1,6 +1,6 @@
 import fs from 'fs'
 import path, { dirname } from 'path'
-import { UserConfig } from 'vitest/config'
+import type { UserConfig } from 'vitest/config'
 
 export const forPackage = (userConfig?: UserConfig): UserConfig => {
   const packageJsonPath = path.resolve(dirname('.'), 'package.json')
