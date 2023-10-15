@@ -167,6 +167,16 @@ See [VISUALIZATION](https://visualization.suspensive.org).
 
 <br/>
 
+## Contributing
+
+Read our [Contributing Guide](./CONTRIBUTING.md) to familiarize yourself with Suspensive's development process, how to suggest bug fixes and improvements, and the steps for building and testing your changes.
+
+### Contributors
+
+[![contributors](https://contrib.rocks/image?repo=suspensive/react)](https://github.com/suspensive/react/graphs/contributors)
+
+<br/>
+
 ## License
 
 MIT © Suspensive. See [LICENSE](./LICENSE) for details.
