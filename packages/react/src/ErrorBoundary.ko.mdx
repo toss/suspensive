@@ -81,7 +81,7 @@ const Example = () => (
 
 ### useErrorBoundaryFallbackProps
 
-만약, fallback 컴포넌트의 depth가 깊어진다면, `error` 객체와 `reset` 메소드에 접근하기 위해 prop drilling을 피할 수 없을 것 입니다.
+`error` 객체와 `reset` 메소드을 사용하려는 컴포넌트가 중첩되면 prop drilling을 피할 수 없습니다.
 이 때, `useErrorBoundaryFallbackProps`을 통해, prop drilling 없이 `reset` 메소드와 `error` 객체에 접근할 수 있습니다.
 
 ```tsx
