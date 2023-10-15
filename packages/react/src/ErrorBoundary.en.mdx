@@ -81,7 +81,7 @@ const Example = () => (
 
 ### useErrorBoundaryFallbackProps
 
-If the depth of the fallback component deepens, prop drilling will not be avoided to access `error` objects and `reset` methods.
+If component using `reset` method and `error` object is nested, prop drilling cannot be avoided.
 The `useErrorBoundaryFallbackProps` allows you to access the `reset` method and `error` objects without prop drilling.
 
 ```tsx
