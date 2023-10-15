@@ -1,5 +1,5 @@
 import './global.css'
-import { Metadata } from 'next'
+import type { Metadata } from 'next'
 import { CommonLayout } from './CommonLayout'
 import { Providers } from './providers'
 

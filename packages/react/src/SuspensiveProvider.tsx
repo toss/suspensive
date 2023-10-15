@@ -1,4 +1,5 @@
-import { ContextType, PropsWithChildren, useMemo } from 'react'
+import type { ContextType, PropsWithChildren } from 'react'
+import { useMemo } from 'react'
 import { DelayContext } from './Delay'
 import { SuspenseContext } from './Suspense'
 

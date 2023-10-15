@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import { InfiniteData } from '@tanstack/react-query'
+import type { InfiniteData } from '@tanstack/react-query'
 import { expectError, expectType } from 'tsd'
 import { useSuspenseInfiniteQuery } from '../dist'
 
