@@ -1,6 +1,7 @@
-import { ComponentProps, ComponentType, PropsWithChildren, createContext, useContext, useState } from 'react'
+import type { ComponentProps, ComponentType, PropsWithChildren } from 'react'
+import { createContext, useContext, useState } from 'react'
 import { useSetTimeout } from './hooks'
-import { PropsWithoutChildren } from './types'
+import type { PropsWithoutChildren } from './types'
 
 type DelayProps = PropsWithChildren<{
   ms?: number

@@ -1,6 +1,6 @@
 'use client'
 
-import { ErrorBoundaryFallbackProps } from '@suspensive/react'
+import type { ErrorBoundaryFallbackProps } from '@suspensive/react'
 import { Box, Button, Description } from './uis'
 
 export const RejectedFallback = (props: ErrorBoundaryFallbackProps) => (

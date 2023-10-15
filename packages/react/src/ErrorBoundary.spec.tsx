@@ -1,5 +1,6 @@
 import { act, render } from '@testing-library/react'
-import { ComponentProps, ComponentRef, createElement, createRef, useEffect } from 'react'
+import type { ComponentProps, ComponentRef } from 'react'
+import { createElement, createRef, useEffect } from 'react'
 import { createRoot } from 'react-dom/client'
 import { vi } from 'vitest'
 import { useSetTimeout } from './hooks'
