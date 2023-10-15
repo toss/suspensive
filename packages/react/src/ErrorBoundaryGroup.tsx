@@ -1,6 +1,7 @@
-import { ComponentProps, ComponentType, PropsWithChildren, createContext, useContext, useEffect, useMemo } from 'react'
+import type { ComponentProps, ComponentType, PropsWithChildren } from 'react'
+import { createContext, useContext, useEffect, useMemo } from 'react'
 import { useIsChanged, useKey } from './hooks'
-import { PropsWithoutChildren } from './types'
+import type { PropsWithoutChildren } from './types'
 import { assert } from './utils'
 
 export const ErrorBoundaryGroupContext = createContext<{ reset: () => void; resetKey: number } | undefined>(undefined)

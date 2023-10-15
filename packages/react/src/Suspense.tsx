@@ -1,14 +1,7 @@
-import {
-  ComponentProps,
-  ComponentType,
-  ReactNode,
-  Suspense as ReactSuspense,
-  SuspenseProps,
-  createContext,
-  useContext,
-} from 'react'
+import type { ComponentProps, ComponentType, ReactNode, SuspenseProps } from 'react'
+import { Suspense as ReactSuspense, createContext, useContext } from 'react'
 import { useIsMounted } from './hooks'
-import { PropsWithoutChildren } from './types'
+import type { PropsWithoutChildren } from './types'
 
 export const SuspenseContext = createContext<PropsWithoutChildren<SuspenseProps>>({ fallback: undefined })
 const useFallbackWithContext = (fallback: ReactNode) => {
