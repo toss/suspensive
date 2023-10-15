@@ -1,5 +1,6 @@
-import { QueryFunction, QueryKey, UseQueryOptions, UseQueryResult, useQueries } from '@tanstack/react-query'
-import { UseSuspenseQueryResultOnLoading, UseSuspenseQueryResultOnSuccess } from './useSuspenseQuery'
+import type { QueryFunction, QueryKey, UseQueryOptions, UseQueryResult } from '@tanstack/react-query'
+import { useQueries } from '@tanstack/react-query'
+import type { UseSuspenseQueryResultOnLoading, UseSuspenseQueryResultOnSuccess } from './useSuspenseQuery'
 
 // Avoid TS depth-limit error in case of large array literal
 // eslint-disable-next-line @typescript-eslint/naming-convention

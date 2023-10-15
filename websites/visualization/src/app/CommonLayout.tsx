@@ -4,7 +4,7 @@
 import { Flex } from '@jsxcss/emotion'
 import Image from 'next/image'
 import Link from 'next/link'
-import { PropsWithChildren } from 'react'
+import type { PropsWithChildren } from 'react'
 
 export const CommonLayout = ({ children }: PropsWithChildren) => {
   return (
