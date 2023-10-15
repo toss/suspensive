@@ -1,7 +1,9 @@
-import { ComponentProps, ComponentRef, ComponentType, forwardRef } from 'react'
-import { ErrorBoundary, ErrorBoundaryProps } from './ErrorBoundary'
-import { Suspense, SuspenseProps } from './Suspense'
-import { PropsWithoutChildren } from './types'
+import type { ComponentProps, ComponentRef, ComponentType, SuspenseProps } from 'react'
+import { forwardRef } from 'react'
+import { ErrorBoundary } from './ErrorBoundary'
+import type { ErrorBoundaryProps } from './ErrorBoundary'
+import { Suspense } from './Suspense'
+import type { PropsWithoutChildren } from './types'
 
 export type AsyncBoundaryProps = Omit<SuspenseProps, 'fallback'> &
   Omit<ErrorBoundaryProps, 'fallback'> & {

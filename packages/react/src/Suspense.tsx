@@ -1,14 +1,7 @@
-import {
-  ComponentProps,
-  ComponentType,
-  ReactNode,
-  Suspense as ReactSuspense,
-  SuspenseProps as ReactSuspenseProps,
-  createContext,
-  useContext,
-} from 'react'
+import type { ComponentProps, ComponentType, ReactNode, SuspenseProps as ReactSuspenseProps } from 'react'
+import { Suspense as ReactSuspense, createContext, useContext } from 'react'
 import { useIsMounted } from './hooks'
-import { PropsWithoutChildren } from './types'
+import type { PropsWithoutChildren } from './types'
 
 export type SuspenseProps = ReactSuspenseProps
 
