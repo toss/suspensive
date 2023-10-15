@@ -48,18 +48,40 @@ const ErrorAfter4s = () => {
 
 ![Example banner](/gif/errorboundary-example.gif)
 
+#### Importing External Components
+
+If you want to deliver a declared component to fallback, you can use the `ErrorBoundaryFallbackProps` type to declare the component.
+
+```tsx
+import { ErrorBoundaryFallbackProps } from '@suspensive/react'
+
+const Fallback = ({ reset, error }: ErrorBoundaryFallbackProps) => (
+  <>
+    <button onClick={reset}>reset</button>
+    {error.message}
+  </>
+)
+
+const Example = () => (
+  <ErrorBoundary fallback={Fallback}>
+    <ErrorAfter4s />
+  </ErrorBoundary>
+)
+```
+
 :::tip
 
 ## Use `<ErrorBoundary/>` fallback props without prop drilling
 
 ### useErrorBoundaryFallbackProps
 
-In fallback of `<ErrorBoundary/>`, by calling useErrorBoundaryFallbackProps().reset/error, we can use error of `<ErrorBoundary/>` and reset it without using prop directly
+If the depth of the fallback component deepens, prop drilling will not be avoided to access `error` objects and `reset` methods.
+The `useErrorBoundaryFallbackProps` allows you to access the `reset` method and `error` objects without prop drilling.
 
 ```tsx
 import { ErrorBoundary, useErrorBoundaryFallbackProps } from '@suspensive/react'
 
-const Nested = () => {
+const Fallback = () => {
   const props = useErrorBoundaryFallbackProps()
 
   return (
@@ -70,7 +92,9 @@ const Nested = () => {
   )
 }
 
-const ErrorBoundaryFallback = () => <Nested />
+// There's no need to pass fallback Prop here!
+const ErrorBoundaryFallback = () => <Fallback />
+
 const Example = () => (
   <ErrorBoundary fallback={ErrorBoundaryFallback}>
     <Error />
