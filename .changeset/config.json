@@ -7,7 +7,7 @@
   "access": "restricted",
   "baseBranch": "main",
   "updateInternalDependencies": "patch",
-  "ignore": ["@suspensive/docs", "@suspensive/visualization"],
+  "ignore": ["@suspensive/docs", "@suspensive/docs-legacy", "@suspensive/visualization"],
   "___experimentalUnsafeOptions_WILL_CHANGE_IN_PATCH": {
     "onlyUpdatePeerDependentsWhenOutOfRange": true
   }

@@ -1,0 +1,20 @@
+{
+  "index": {
+    "display": "hidden",
+    "type": "page",
+    "theme": {
+      "layout": "full",
+      "footer": true
+    }
+  },
+  "docs": {
+    "title": "문서보기",
+    "type": "page"
+  },
+  "visualization": {
+    "title": "시각화 자료",
+    "type": "page",
+    "href": "https://visualization.suspensive.org",
+    "newWindow": true
+  }
+}

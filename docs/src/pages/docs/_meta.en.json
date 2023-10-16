@@ -1,0 +1,17 @@
+{
+  "why": {
+    "title": "Why Suspensive?"
+  },
+  "intro": {
+    "title": "Getting Started"
+  },
+  "links": {
+    "title": "Related Links"
+  },
+  "react": {
+    "title": "@suspensive/react"
+  },
+  "react-query": {
+    "title": "@suspensive/react-query"
+  }
+}
