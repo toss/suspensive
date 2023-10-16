@@ -1,0 +1,78 @@
+import { Callout } from 'nextra/components'
+
+# Suspense
+
+@suspensive/react's `<Suspense/>` will be just [Suspense of original React](https://react.dev/reference/react/Suspense).
+
+### props.fallback
+
+fallback works the same as fallback of original React's Suspense.
+
+```tsx
+import { Suspense } from '@suspensive/react'
+
+const Example = () => (
+  <Suspense fallback={<Loading />}>
+    <Children />
+  </Suspense>
+)
+```
+
+<Callout>
+
+### Default fallback
+
+`<Suspense/>` are more powerful when used with `<SuspensiveProvider/>`.
+Control multiple `<Suspense/>`s default fallback with `<SuspensiveProvider/>`. Details are introduced in [`<SuspensiveProvider/>` page](./SuspensiveProvider).
+
+</Callout>
+
+### Avoid Server side rendering (CSROnly)
+
+`<Suspense.CSROnly/>` will return fallback in server. After mount(in client) return children. Since mount only happens on the client, server-side rendering can be avoided.
+
+```tsx
+import { Suspense } from '@suspensive/react'
+
+const Example = () => (
+  <Suspense.CSROnly fallback={<Loading />}>
+    <Children />
+  </Suspense.CSROnly>
+)
+```
+
+<Callout type='info'>
+
+Migration support SSR gradually (`<Suspense.CSROnly/>` -> `<Suspense/>`)
+
+If you want to use Suspense working in both SSR/CSR, You can change `<Suspense.CSROnly/>` to `<Suspense/>` gradually.
+
+</Callout>
+
+## withSuspense
+
+You can use withSuspense to wrap component by `<Suspense/>` easily.
+we don't need to make unncessary code to wrap it if we use withSuspense like below.
+withSuspense's 2nd parameter is props of `<Suspense/>` without children
+
+```tsx
+import { withSuspense } from '@suspensive/react'
+
+const Example = withSuspense(
+  function Component() {
+    // code make suspending
+
+    return <>...</>
+  },
+  { fallback: <Spinner /> }
+)
+
+const Example = withSuspense.CSROnly(
+  function Component() {
+    // code make suspending
+
+    return <>...</>
+  },
+  { fallback: <Spinner /> }
+)
+```

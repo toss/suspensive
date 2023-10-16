@@ -1,0 +1,20 @@
+{
+  "index": {
+    "display": "hidden",
+    "type": "page",
+    "theme": {
+      "layout": "full",
+      "footer": true
+    }
+  },
+  "docs": {
+    "title": "Documentation",
+    "type": "page"
+  },
+  "visualization": {
+    "title": "Visualization",
+    "type": "page",
+    "href": "https://visualization.suspensive.org",
+    "newWindow": true
+  }
+}

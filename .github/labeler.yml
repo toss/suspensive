@@ -3,6 +3,7 @@
 "@suspensive/react-query":
   - "packages/react-query/**/*"
 "documentation":
+  - "docs/**/*"
   - "websites/docs/**/*"
   - "packages/**/*.md"
   - "packages/**/*.mdx"
