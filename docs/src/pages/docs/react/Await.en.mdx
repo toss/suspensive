@@ -1,0 +1,28 @@
+import { Callout } from 'nextra/components'
+
+# Await
+
+<Callout type="warning">
+
+`<Await/>` is experimental feature, this interfaces could be changed
+
+</Callout>
+
+This component exposes a fallback of the nearest parent Suspense if the Promise returned by the received asynchronous function is pending.
+Afterwards, when the Promise is fulfilled, the guaranteed awaited data can be used in children components.
+
+Additionally, this data is cached in the received key and can be used immediately without pending when reused.
+
+```tsx
+import { Await, Suspense } from '@supensive/react'
+
+const getPost = (postId: number) => fetch(`/post/${postId}`).then((res) => res.json()) as Post
+
+const Example = () => (
+  <Suspense fallback="awaiting...">
+    <Await options={{ key: ['post', 2] as const, fn: ({ key: [, postId] }) => getPost(postId) }}>
+      {(awaited) => <>{awiated.data}</>} // Post
+    </Await>
+  </Suspense>
+)
+```
