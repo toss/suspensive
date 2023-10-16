@@ -36,6 +36,7 @@ jobs:
 
             Co-authored-by: Jonghyeon Ko <manudeli.ko@gmail.com>
             Co-authored-by: Chanhyuk Park <pgg6713@gmail.com>
+            Co-authored-by: Minsoo Kim <zlemzlem5656@naver.com>
           version: pnpm changeset:version
           publish: pnpm changeset:publish
         env:
