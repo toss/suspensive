@@ -1,7 +1,10 @@
 {
   "why": "왜 Suspensive 인가?",
   "intro": "시작하기",
-  "links": "관련 링크",
   "react": "@suspensive/react",
-  "react-query": "@suspensive/react-query"
+  "react-query": "@suspensive/react-query",
+  "---": {
+    "type": "separator"
+  },
+  "links": "관련 링크"
 }
