@@ -42,8 +42,7 @@
   "types": "dist/index.d.ts",
   "files": [
     "dist",
-    "src",
-    "!**/*/_category_.json"
+    "src"
   ],
   "scripts": {
     "build": "tsup",
