@@ -1,8 +1,11 @@
 {
   "why": "Why Suspensive?",
   "intro": "Getting Started",
-  "links": "Related Links",
   "react": "@suspensive/react",
   "react-query": "@suspensive/react-query",
-  "react-await": "@suspensive/react-await (experimental)"
+  "react-await": "@suspensive/react-await (experimental)",
+  "---": {
+    "type": "separator"
+  },
+  "links": "Related Links"
 }

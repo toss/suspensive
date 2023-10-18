@@ -1,7 +1,9 @@
-import type { ComponentProps, ComponentType, ReactNode, SuspenseProps } from 'react'
+import type { ComponentProps, ComponentType, ReactNode, SuspenseProps as ReactSuspenseProps } from 'react'
 import { Suspense as ReactSuspense, createContext, useContext } from 'react'
 import { useIsMounted } from './hooks'
 import type { PropsWithoutChildren } from './types'
+
+export type SuspenseProps = ReactSuspenseProps
 
 export const SuspenseContext = createContext<PropsWithoutChildren<SuspenseProps>>({ fallback: undefined })
 const useFallbackWithContext = (fallback: ReactNode) => {
@@ -41,7 +43,6 @@ export const Suspense = DefaultSuspense as typeof DefaultSuspense & {
 }
 Suspense.CSROnly = CSROnlySuspense
 
-// HOC
 export function withSuspense<TProps extends ComponentProps<ComponentType> = Record<string, never>>(
   Component: ComponentType<TProps>,
   suspenseProps?: PropsWithoutChildren<SuspenseProps>
