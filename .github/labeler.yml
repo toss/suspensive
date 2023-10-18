@@ -4,10 +4,6 @@
   - "packages/react-query/**/*"
 "documentation":
   - "docs/**/*"
-  - "websites/docs/**/*"
-  - "packages/**/*.md"
-  - "packages/**/*.mdx"
-  - "packages/**/_category_.json"
 "visualization":
   - "websites/visualization/**/*"
 "eslint":
