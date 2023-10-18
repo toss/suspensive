@@ -1,0 +1,108 @@
+import { Callout } from 'nextra/components'
+
+# QueryErrorBoundary, QueryAsyncBoundary
+
+@suspensive/react-query provide `<QueryErrorBoundary/>`, `<QueryAsyncBoundary/>` to reduce repeating implementation like using `<QueryErrorResetBoundary/>` + `<ErrorBoundary/>`, `<QueryErrorResetBoundary/>` + `<AsyncBoundary/>`.
+
+You can just use `<QueryErrorBoundary/>`, `<QueryAsyncBoundary/>` like using [`<ErrorBoundary/>`](/docs/react/ErrorBoundary), [`<AsyncBoundary/>`](/docs/react/AsyncBoundary). All other features are same with original `<ErrorBoundary/>`, `<AsyncBoundary/>` of @suspensive/react without resetting react-query's error.
+
+```tsx
+import { QueryErrorBoundary } from '@suspensive/react-query'
+
+const Example = () => (
+  <QueryErrorBoundary
+    fallback={(props) => (
+      <>
+        <button onClick={props.reset}>Try again</button>
+        {props.error.message}
+      </>
+    )}
+  >
+    <Page />
+  </QueryErrorBoundary>
+)
+```
+
+```tsx
+import { QueryAsyncBoundary } from '@suspensive/react-query'
+
+const Example = () => (
+  <QueryAsyncBoundary
+    rejectedFallback={(props) => (
+      <>
+        <button onClick={props.reset}>Try again</button>
+        {props.error.message}
+      </>
+    )}
+  >
+    <Page />
+  </QueryAsyncBoundary>
+)
+```
+
+<Callout type="info">
+
+peerDependency
+
+these apis (`<QueryErrorBoundary/>`, `<QueryAsyncBoundary/>`) have peerDependency on @suspensive/react's `<ErrorBoundary/>`, `<AsyncBoundary/>`.
+So if you want to use these, you must install @suspensive/react first.
+
+```shell npm2yarn
+npm install @suspensive/react @suspensive/react-query
+```
+
+</Callout>
+
+### Motivation
+
+With the [`<QueryErrorResetBoundary/>`](https://tanstack.com/query/v4/docs/reference/QueryErrorResetBoundary) component you can reset any query errors within the boundaries of the component. but If you use react-query with suspense continuously, Continuous repeating to use `<QueryErrorResetBoundary/>` + [`<ErrorBoundary/>`](/docs/react/ErrorBoundary), `<QueryErrorResetBoundary/>` + [`<AsyncBoundary/>`](/docs/react/AsyncBoundary) will be coded.
+
+#### `<QueryErrorResetBoundary/>` + `<ErrorBoundary/>`
+
+```tsx
+import { ErrorBoundary } from '@suspensive/react'
+import { QueryErrorResetBoundary } from '@tanstack/react-query'
+
+const Example = () => (
+  <QueryErrorResetBoundary>
+    {({ reset }) => (
+      <ErrorBoundary
+        onReset={reset}
+        fallback={(props) => (
+          <>
+            <button onClick={props.reset}>Try again</button>
+            {props.error.message}
+          </>
+        )}
+      >
+        <Page />
+      </ErrorBoundary>
+    )}
+  </QueryErrorResetBoundary>
+)
+```
+
+#### `<QueryErrorResetBoundary/>` + `<AsyncBoundary/>`
+
+```tsx
+import { AsyncBoundary } from '@suspensive/react'
+import { QueryErrorResetBoundary } from '@tanstack/react-query'
+
+const Example = () => (
+  <QueryErrorResetBoundary>
+    {({ reset }) => (
+      <AsyncBoundary
+        onReset={reset}
+        rejectedFallback={(props) => (
+          <>
+            <button onClick={props.reset}>Try again</button>
+            {props.error.message}
+          </>
+        )}
+      >
+        <Page />
+      </AsyncBoundary>
+    )}
+  </QueryErrorResetBoundary>
+)
+```

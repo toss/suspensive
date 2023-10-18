@@ -1,6 +1,6 @@
 {
   "name": "@suspensive/react",
-  "version": "1.15.4",
+  "version": "1.16.1",
   "description": "Useful interfaces for React Suspense",
   "keywords": [
     "suspensive",
@@ -51,8 +51,7 @@
   "types": "dist/index.d.ts",
   "files": [
     "dist",
-    "src",
-    "!**/*/_category_.json"
+    "src"
   ],
   "scripts": {
     "build": "tsup",
