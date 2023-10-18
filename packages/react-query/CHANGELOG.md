@@ -1,5 +1,13 @@
 # @suspensive/react-query
 
+## 1.15.5
+
+### Patch Changes
+
+- 62c3384: chore(eslint): add no-duplicates, consistent-type-imports
+- Updated dependencies [62c3384]
+  - @suspensive/react@1.15.5
+
 ## 1.15.4
 
 ### Patch Changes
