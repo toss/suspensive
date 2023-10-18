@@ -1,7 +1,7 @@
 {
   "$schema": "https://turbo.build/schema.json",
   "pipeline": {
-    "build": { "dependsOn": ["^build"], "outputs": ["dist/**", ".next/**", ".docusaurus/**", "build/**"] },
+    "build": { "dependsOn": ["^build"], "outputs": ["dist/**", ".next/**", "build/**"] },
     "build:watch": { "outputs": ["dist/**"] },
     "npm:publish": { "dependsOn": ["^build"] },
     "lint": { "cache": false },
