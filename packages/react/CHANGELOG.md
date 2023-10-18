@@ -1,5 +1,11 @@
 # @suspensive/react
 
+## 1.17.0
+
+### Minor Changes
+
+- 8ded1b2: feat(react): add all props type of all components
+
 ## 1.16.1
 
 ### Patch Changes
