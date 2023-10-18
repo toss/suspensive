@@ -48,9 +48,71 @@ const ErrorAfter4s = () => {
 
 ![Example banner](/gif/errorboundary-example.gif)
 
+:::tip
+
+## `<ErrorBoundary/>`'의 fallback로 전달할 컴포넌트 정의하기
+
+### ErrorBoundaryFallbackProps
+
+`<ErrorBoundary/>`'의 fallback으로 컴포넌트를 전달하고 싶다면 `ErrorBoundaryFallbackProps` 타입을 활용해 쉽게 컴포넌트를 선언 할 수 있습니다.
+
+```tsx
+import type { ErrorBoundaryFallbackProps } from '@suspensive/react'
+
+const ErrorBoundaryFallback = ({ reset, error }: ErrorBoundaryFallbackProps) => (
+  <>
+    <button onClick={reset}>reset</button>
+    {error.message}
+  </>
+)
+
+const Example = () => (
+  <ErrorBoundary fallback={ErrorBoundaryFallback}>
+    <ErrorAfter4s />
+  </ErrorBoundary>
+)
+```
+
+:::
+
+:::tip
+
+## `<ErrorBoundary/>` fallback props을 prop drilling 없이 사용하기
+
+### useErrorBoundaryFallbackProps
+
+`error` 객체와 `reset` 메소드을 사용하려는 컴포넌트가 중첩되면 prop drilling을 피할 수 없습니다.
+이 때, `useErrorBoundaryFallbackProps`을 통해, prop drilling 없이 `reset` 메소드와 `error` 객체에 접근할 수 있습니다.
+
+```tsx
+import { ErrorBoundary, useErrorBoundaryFallbackProps } from '@suspensive/react'
+
+const Nested = () => {
+  const { reset, error } = useErrorBoundaryFallbackProps()
+
+  return (
+    <>
+      <button onClick={reset}>Try again</button>
+      {error.message}
+    </>
+  )
+}
+
+// 여기서 fallbackProp 을 전달할 필요가 없어집니다!
+const ErrorBoundaryFallback = () => <Nested />
+
+const Example = () => (
+  <ErrorBoundary fallback={ErrorBoundaryFallback}>
+    <Error />
+  </ErrorBoundary>
+)
+```
+
+:::
+
 ### props.resetKeys
 
-`<ErrorBoundary/>`의 fallback 외부에 있는 컴포넌트가 `<ErrorBoundary/>`를 reset하려면 resetKeys배열에 resetKey를 할당하면 됩니다. resetKeys는 배열의 하나 이상의 요소가 변경된 경우에만 작동합니다. useEffect의 종속성 배열이 작동하는 방식과 같이 resetKeys로 매 렌더링마다 새 배열을 주입하는 것을 걱정할 필요도 없습니다.
+`<ErrorBoundary/>`의 fallback 외부에 있는 컴포넌트가 `<ErrorBoundary/>`를 reset하려면 resetKeys 배열에 resetKey를 할당하면 됩니다. resetKeys는 배열의 하나 이상의 요소가 변경된 경우에만 작동합니다. useEffect의 종속성 배열이 작동하는 방식과 같이 resetKeys로 매 렌더링마다 새 배열을 주입하는 것을 걱정할 필요도 없습니다.
 
 ```tsx
 import { ErrorBoundary } from '@suspensive/react'
@@ -123,25 +185,9 @@ useErrorBoundary는 실험 기능이므로 이 인터페이스는 변경될 수 
 
 :::
 
-ErrorBoundaryFallback에서 useErrorBoundary.reset을 사용해 props 없이도 `<ErrorBoundary/>`을 reset할 수 있습니다.
+### useErrorBoundary().setError
 
-```tsx
-import { ErrorBoundary, useErrorBoundary } from '@suspensive/react'
-
-const ErrorBoundaryFallback = () => {
-  const errorBoundary = useErrorBoundary()
-
-  return <button onClick={errorBoundary.reset} />
-}
-
-const Example = () => (
-  <ErrorBoundary fallback={ErrorBoundaryFallback}>
-    <Error />
-  </ErrorBoundary>
-)
-```
-
-`<ErrorBoundary/>`의 children에서 useErrorBoundary.setError을 사용해 throw 없이도 `<ErrorBoundary/>`에서 Error를 알도록 할 수 있습니다.
+`<ErrorBoundary/>`의 children에서 useErrorBoundary().setError을 사용해 throw 없이도 `<ErrorBoundary/>`에서 Error를 알게 할 수 있습니다.
 
 ```tsx
 import { ErrorBoundary, useErrorBoundary } from '@suspensive/react'
