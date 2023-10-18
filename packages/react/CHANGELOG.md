@@ -1,5 +1,11 @@
 # @suspensive/react
 
+## 1.15.5
+
+### Patch Changes
+
+- 62c3384: chore(eslint): add no-duplicates, consistent-type-imports
+
 ## 1.15.4
 
 ### Patch Changes
