@@ -25,7 +25,7 @@ export type ErrorBoundaryFallbackProps<TError extends Error = Error> = {
   reset: () => void
 }
 
-type ErrorBoundaryProps = PropsWithChildren<{
+export type ErrorBoundaryProps = PropsWithChildren<{
   /**
    * an array of elements for the ErrorBoundary to check each render. If any of those elements change between renders, then the ErrorBoundary will reset the state which will re-render the children
    */

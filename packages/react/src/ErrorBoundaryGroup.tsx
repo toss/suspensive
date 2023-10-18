@@ -9,7 +9,7 @@ if (process.env.NODE_ENV !== 'production') {
   ErrorBoundaryGroupContext.displayName = 'ErrorBoundaryGroupContext'
 }
 
-type ErrorBoundaryGroupProps = PropsWithChildren<{
+export type ErrorBoundaryGroupProps = PropsWithChildren<{
   /**
    * If you use blockOutside as true, ErrorBoundaryGroup will protect multiple ErrorBoundaries as its children from external ErrorBoundaryGroup's resetKey
    * @default false
@@ -67,7 +67,6 @@ export const useErrorBoundaryGroup = () => {
   )
 }
 
-// HOC
 export const withErrorBoundaryGroup = <TProps extends ComponentProps<ComponentType> = Record<string, never>>(
   Component: ComponentType<TProps>,
   errorBoundaryGroupProps?: PropsWithoutChildren<ErrorBoundaryGroupProps>

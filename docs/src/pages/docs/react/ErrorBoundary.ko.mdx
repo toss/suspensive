@@ -122,7 +122,7 @@ const Example = () => {
 
   return (
     <>
-      <button onClick={() => setResetKey((prev) => prev + 1)} />
+      <button onClick={() => setResetKey((prev) => prev + 1)}>Try again</button>
       <ErrorBoundary resetKeys={[resetKey]}>
         <ErrorAfter4s />
       </ErrorBoundary>
