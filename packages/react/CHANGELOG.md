@@ -1,5 +1,11 @@
 # @suspensive/react
 
+## 1.16.1
+
+### Patch Changes
+
+- d415299: chore: remove docs in packages
+
 ## 1.16.0
 
 ### Minor Changes
