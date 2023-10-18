@@ -1,19 +1,18 @@
 {
   "index": {
-    "display": "hidden",
     "type": "page",
+    "display": "hidden",
     "theme": {
-      "layout": "full",
-      "footer": true
+      "layout": "full"
     }
   },
   "docs": {
-    "title": "Documentation",
-    "type": "page"
+    "type": "page",
+    "title": "Documentation"
   },
   "visualization": {
-    "title": "Visualization",
     "type": "page",
+    "title": "Visualization",
     "href": "https://visualization.suspensive.org",
     "newWindow": true
   }

@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import { useRouter } from 'next/router.js'
 import { type DocsThemeConfig, useConfig } from 'nextra-theme-docs'
 
@@ -15,23 +16,25 @@ const config: DocsThemeConfig = {
   },
   logo: function Logo() {
     return (
-      <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
-        <img src="/img/logo_dark.png" width={34} />
+      <div className="flex items-center gap-1">
+        <Image src="/img/logo_dark.png" width={34} height={34} alt="suspensive logo" />
         <strong>Suspensive</strong>
       </div>
     )
   },
   head: function Head() {
+    const { title, frontMatter } = useConfig()
     const { asPath, defaultLocale, locale } = useRouter()
-    const { frontMatter } = useConfig()
     const url = 'https://suspensive.org' + (defaultLocale === locale ? asPath : `/${locale}${asPath}`)
 
     return (
       <>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <meta property="og:title" content={frontMatter.title || 'Suspensive'} />
+        <meta property="og:title" content={title || 'Suspensive'} />
         <meta property="og:url" content={url} />
         <meta property="og:description" content={frontMatter.description || 'Packages to use React Suspense easily'} />
+        <meta property="og:image" content="/banner.png" />
+        <link rel="icon" href="/favicon.ico" type="image/ico" />
       </>
     )
   },
@@ -39,10 +42,12 @@ const config: DocsThemeConfig = {
     link: 'https://github.com/suspensive/react',
   },
   docsRepositoryBase: 'https://github.com/suspensive/react/tree/main/docs',
-  // ... other theme options
   useNextSeoProps() {
-    return {
-      titleTemplate: '%s – Suspensive',
+    const { asPath } = useRouter()
+    if (asPath !== '/') {
+      return {
+        titleTemplate: '%s – Suspensive',
+      }
     }
   },
   feedback: { content: '' },
