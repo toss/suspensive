@@ -1,5 +1,13 @@
 # @suspensive/react-query
 
+## 1.16.1
+
+### Patch Changes
+
+- d415299: chore: remove docs in packages
+- Updated dependencies [d415299]
+  - @suspensive/react@1.16.1
+
 ## 1.16.0
 
 ### Patch Changes
