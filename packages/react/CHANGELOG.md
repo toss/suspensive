@@ -1,5 +1,11 @@
 # @suspensive/react
 
+## 1.16.0
+
+### Minor Changes
+
+- a711c19: feat(react): add useErrorBoundaryFallbackProps
+
 ## 1.15.5
 
 ### Patch Changes
