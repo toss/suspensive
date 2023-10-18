@@ -1,8 +1,8 @@
 import type { FunctionComponent } from 'react'
 import { createElement, useMemo } from 'react'
 import { useSyncExternalStore } from 'use-sync-external-store/shim'
-import type { Tuple } from '../types'
-import { hashKey } from '../utils'
+import type { Tuple } from './types'
+import { hashKey } from './utils'
 
 export type Key = Tuple
 

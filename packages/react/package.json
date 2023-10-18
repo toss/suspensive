@@ -35,16 +35,6 @@
         "default": "./dist/index.cjs"
       }
     },
-    "./experimental": {
-      "import": {
-        "types": "./dist/experimental/index.d.ts",
-        "default": "./dist/experimental/index.js"
-      },
-      "require": {
-        "types": "./dist/experimental/index.d.cts",
-        "default": "./dist/experimental/index.cjs"
-      }
-    },
     "./package.json": "./package.json"
   },
   "main": "dist/index.cjs",
@@ -58,14 +48,12 @@
     "build:watch": "tsup --watch",
     "clean": "rimraf ./dist && rimraf ./coverage",
     "lint": "eslint \"**/*.ts*\"",
+    "lint:attw": "attw --pack",
     "lint:pub": "publint --strict",
     "prepack": "pnpm build",
     "test": "vitest run --coverage",
     "test:watch": "vitest --ui --coverage.enabled=true",
     "type:check": "tsc --noEmit"
-  },
-  "dependencies": {
-    "use-sync-external-store": "^1.2.0"
   },
   "devDependencies": {
     "@suspensive/tsup": "workspace:*",

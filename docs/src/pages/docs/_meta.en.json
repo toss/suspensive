@@ -3,5 +3,6 @@
   "intro": "Getting Started",
   "links": "Related Links",
   "react": "@suspensive/react",
-  "react-query": "@suspensive/react-query"
+  "react-query": "@suspensive/react-query",
+  "react-await": "@suspensive/react-await"
 }

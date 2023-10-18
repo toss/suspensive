@@ -3,5 +3,6 @@
   "intro": "시작하기",
   "links": "관련 링크",
   "react": "@suspensive/react",
-  "react-query": "@suspensive/react-query"
+  "react-query": "@suspensive/react-query",
+  "react-await": "@suspensive/react-await"
 }

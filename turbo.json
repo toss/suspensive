@@ -5,6 +5,7 @@
     "build:watch": { "outputs": ["dist/**"] },
     "npm:publish": { "dependsOn": ["^build"] },
     "lint": { "cache": false },
+    "lint:attw": { "dependsOn": ["^build"], "cache": false  },
     "lint:pub": { "cache": false },
     "test": { "outputs": ["coverage/**"], "cache": false },
     "test:tsd": {},
