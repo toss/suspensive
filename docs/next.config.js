@@ -4,6 +4,7 @@ const withNextra = require('nextra')({
   themeConfig: './theme.config.tsx',
 })
 
+/** @type {import('next').NextConfig} */
 module.exports = withNextra({
   i18n: {
     locales: ['en', 'ko'],
