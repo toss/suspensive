@@ -1,6 +1,6 @@
 'use client'
 
-import { ErrorBoundary, useErrorBoundary } from '@suspensive/react'
+import { ErrorBoundary, useErrorBoundary, useErrorBoundaryFallbackProps } from '@suspensive/react'
 import type { PropsWithChildren } from 'react'
 import { createElement, useEffect, useState } from 'react'
 
@@ -8,9 +8,9 @@ export default function Page() {
   return (
     <ErrorBoundary
       fallback={function ErrorBoundaryFallback({ error }) {
-        const errorBoundary = useErrorBoundary()
+        const props = useErrorBoundaryFallbackProps()
 
-        return <button onClick={() => errorBoundary.reset()}>reset: {error.message}</button>
+        return <button onClick={props.reset}>reset: {error.message}</button>
       }}
     >
       {createElement(function ErrorComponent() {
