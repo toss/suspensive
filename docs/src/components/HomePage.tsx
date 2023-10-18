@@ -14,11 +14,11 @@ export const HomePage = ({
   items: { title: string; desc: string }[]
 }) => {
   return (
-    <div>
+    <div className="p-3 pb-20">
       <div className="flex flex-col justify-center items-center pt-11 gap-8 text-center">
         <Image src="/img/logo_background_star.png" alt="Suspensive with star" width={400} height={241} />
         <div className="flex flex-col items-center gap-4">
-          <h1 className="text-5xl font-bold">{title}</h1>
+          <div className="text-5xl font-bold">{title}</div>
           <p className="text-3xl">{description}</p>
         </div>
         <Link href="/docs/why">
@@ -30,7 +30,7 @@ export const HomePage = ({
       <div className="flex flex-col md:flex-row justify-between items-start gap-8">
         {items.map(({ title, desc }) => (
           <div className="flex flex-1 flex-col justify-center items-center text-center gap-3" key={title}>
-            <h3 className="text-xl font-bold">{title}</h3>
+            <div className="text-xl font-bold">{title}</div>
             <p className="text-lg">{desc}</p>
           </div>
         ))}
