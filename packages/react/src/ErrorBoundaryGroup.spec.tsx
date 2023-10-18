@@ -68,13 +68,13 @@ describe('<ErrorBoundaryGroup/>', () => {
   })
 })
 
-const UsingUseErrorBoundary = () => {
+const UsingUseErrorBoundaryGroup = () => {
   useErrorBoundaryGroup()
   return <>{TEXT}</>
 }
 describe('useErrorBoundaryGroup', () => {
   it('should throw error without ErrorBoundaryGroup in parent', () => {
-    expect(() => render(<UsingUseErrorBoundary />)).toThrow(
+    expect(() => render(<UsingUseErrorBoundaryGroup />)).toThrow(
       assert.message.useErrorBoundaryGroup.onlyInChildrenOfErrorBoundaryGroup
     )
   })
@@ -82,7 +82,7 @@ describe('useErrorBoundaryGroup', () => {
 
 describe('withErrorBoundaryGroup', () => {
   it('should wrap component. we can check by useErrorBoundaryGroup', () => {
-    const rendered = render(createElement(withErrorBoundaryGroup(UsingUseErrorBoundary)))
+    const rendered = render(createElement(withErrorBoundaryGroup(UsingUseErrorBoundaryGroup)))
     expect(rendered.queryByText(TEXT)).toBeInTheDocument()
   })
 

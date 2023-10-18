@@ -1,5 +1,28 @@
 # @suspensive/react-query
 
+## 1.16.1
+
+### Patch Changes
+
+- d415299: chore: remove docs in packages
+- Updated dependencies [d415299]
+  - @suspensive/react@1.16.1
+
+## 1.16.0
+
+### Patch Changes
+
+- Updated dependencies [a711c19]
+  - @suspensive/react@1.16.0
+
+## 1.15.5
+
+### Patch Changes
+
+- 62c3384: chore(eslint): add no-duplicates, consistent-type-imports
+- Updated dependencies [62c3384]
+  - @suspensive/react@1.15.5
+
 ## 1.15.4
 
 ### Patch Changes

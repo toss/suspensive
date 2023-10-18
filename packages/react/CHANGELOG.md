@@ -1,5 +1,23 @@
 # @suspensive/react
 
+## 1.16.1
+
+### Patch Changes
+
+- d415299: chore: remove docs in packages
+
+## 1.16.0
+
+### Minor Changes
+
+- a711c19: feat(react): add useErrorBoundaryFallbackProps
+
+## 1.15.5
+
+### Patch Changes
+
+- 62c3384: chore(eslint): add no-duplicates, consistent-type-imports
+
 ## 1.15.4
 
 ### Patch Changes

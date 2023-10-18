@@ -3,10 +3,7 @@
 "@suspensive/react-query":
   - "packages/react-query/**/*"
 "documentation":
-  - "websites/docs/**/*"
-  - "packages/**/*.md"
-  - "packages/**/*.mdx"
-  - "packages/**/_category_.json"
+  - "docs/**/*"
 "visualization":
   - "websites/visualization/**/*"
 "eslint":
