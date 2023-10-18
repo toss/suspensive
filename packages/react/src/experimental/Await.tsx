@@ -47,7 +47,7 @@ export const useAwait = <TData, TKey extends Key>(options: AwaitOptions<TData, T
   )
 }
 
-type AwaitProps<TData, TKey extends Key> = {
+export type AwaitProps<TData, TKey extends Key> = {
   options: AwaitOptions<TData, TKey>
   children: FunctionComponent<Awaited<TData>>
 }
