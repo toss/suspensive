@@ -24,7 +24,7 @@
 <br/>
 <br/>
 
-## [@suspensive/react](https://suspensive.org/docs/react/README.i18n)
+## [@suspensive/react](https://suspensive.org/docs/react/installation)
 
 [![npm version](https://img.shields.io/npm/v/@suspensive/react?color=000&labelColor=000&logo=npm&label=)](https://www.npmjs.com/package/@suspensive/react)
 [![npm](https://img.shields.io/npm/dm/@suspensive/react?color=000&labelColor=000)](https://www.npmjs.com/package/@suspensive/react)
@@ -35,7 +35,7 @@ All declarative components to use suspense on both CSR, SSR.
 ### Features
 
 - Suspense, withSuspense (containing CSROnly)
-- ErrorBoundary, withErrorBoundary, useErrorBoundary
+- ErrorBoundary, withErrorBoundary, useErrorBoundary, useErrorBoundaryFallbackProps
 - ErrorBoundaryGroup, withErrorBoundaryGroup, useErrorBoundaryGroup
 - AsyncBoundary, withAsyncBoundary (containing CSROnly)
 - Delay, withDelay
@@ -89,7 +89,7 @@ const Example = () => (
 <br/>
 <br/>
 
-## [@suspensive/react-query](https://suspensive.org/docs/react-query/README.i18n)
+## [@suspensive/react-query](https://suspensive.org/docs/react-query/installation)
 
 [![npm version](https://img.shields.io/npm/v/@suspensive/react-query?color=000&labelColor=000&logo=npm&label=)](https://www.npmjs.com/package/@suspensive/react-query)
 [![npm](https://img.shields.io/npm/dm/@suspensive/react-query?color=000&labelColor=000)](https://www.npmjs.com/package/@suspensive/react-query)
@@ -184,7 +184,7 @@ MIT © Suspensive. See [LICENSE](./LICENSE) for details.
 <div align="center">
   <a title="Suspensive" href="https://github.com/suspensive">
     <div style='display:flex; align-items:center;'>
-      <img alt="Suspensive" src="https://raw.githubusercontent.com/suspensive/react/main/websites/docs/static/img/logo_notcropped.png" width="24">
+      <img alt="Suspensive" src="https://github.com/suspensive/react/blob/main/docs/public/img/logo_dark.png?raw=true" width="24">
       <sup>Suspensive</sup>
     </div>
   </a>
