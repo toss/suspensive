@@ -3,4 +3,4 @@ import { isClient } from '../utils/isClient'
 
 const isClientEnv = isClient()
 
-export const useIsomorphicLayoutEffect = isClientEnv ? useEffect : useLayoutEffect
+export const useIsomorphicLayoutEffect = isClientEnv ? useLayoutEffect : useEffect
