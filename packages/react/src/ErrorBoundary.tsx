@@ -107,7 +107,7 @@ class BaseErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState
 
 /**
  * This component provide a simple and reusable wrapper that you can use to wrap around your components. Any rendering errors in your components hierarchy can then be gracefully handled.
- * @see {@link https://suspensive.org/docs/react/src/ErrorBoundary.i18n Suspensive Official Docs}
+ * @see {@link https://suspensive.org/docs/react/ErrorBoundary}
  */
 export const ErrorBoundary = forwardRef<{ reset(): void }, ErrorBoundaryProps>((props, ref) => {
   const group = useContext(ErrorBoundaryGroupContext) ?? { resetKey: 0 }
