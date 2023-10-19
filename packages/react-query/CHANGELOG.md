@@ -1,5 +1,13 @@
 # @suspensive/react-query
 
+## 1.17.1
+
+### Patch Changes
+
+- 7e423e7: docs: update jsdoc links
+- Updated dependencies [7e423e7]
+  - @suspensive/react@1.17.1
+
 ## 1.17.0
 
 ### Patch Changes

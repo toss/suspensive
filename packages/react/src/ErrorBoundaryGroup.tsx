@@ -19,8 +19,7 @@ export type ErrorBoundaryGroupProps = PropsWithChildren<{
 
 /**
  * ErrorBoundaryGroup is Component to manage multiple ErrorBoundaries
- * @see {@link https://suspensive.org/docs/react/src/ErrorBoundaryGroup.i18n Suspensive Official Docs}
- * @see {@link https://github.com/toss/slash/pull/157 Pull Request to add ErrorBoundaryGroup in @toss/error-boundary}
+ * @see {@link https://suspensive.org/docs/react/ErrorBoundaryGroup}
  */
 export const ErrorBoundaryGroup = ({ blockOutside = false, children }: ErrorBoundaryGroupProps) => {
   const [resetKey, reset] = useKey()

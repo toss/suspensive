@@ -20,7 +20,7 @@ import { forwardRef } from 'react'
  * ```
  *
  * with this component, You don't have to make unnecessary repetitive implementation to combine ErrorBoundary with QueryErrorResetBoundary
- * @see {@link https://suspensive.org/docs/react-query/src/QueryErrorResetBoundary.i18n Suspensive Official Docs}
+ * @see {@link https://suspensive.org/docs/react-query/QueryErrorBoundary}
  */
 export const QueryErrorBoundary = forwardRef<
   ComponentRef<typeof ErrorBoundary>,

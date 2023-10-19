@@ -59,12 +59,12 @@ if (process.env.NODE_ENV !== 'production') {
  * ```
  *
  * with this component, You don't have to make unnecessary repetitive implementation to combine AsyncBoundary with QueryErrorResetBoundary
- * @see {@link https://suspensive.org/docs/react-query/src/QueryErrorResetBoundary.i18n Suspensive Official Docs}
+ * @see {@link https://suspensive.org/docs/react-query/QueryErrorBoundary}
  */
 export const QueryAsyncBoundary = BaseQueryAsyncBoundary as typeof BaseQueryAsyncBoundary & {
   /**
-   * CSROnly mode make QueryAsyncBoundary can be used in SSR framework like Next.js with React 17 or under
-   * @see {@link https://suspensive.org/docs/react/src/QueryErrorResetBoundary.i18n Suspensive Official Docs}
+   * CSROnly make QueryAsyncBoundary can be used in SSR framework like Next.js with React 17 or under
+   * @see {@link https://suspensive.org/docs/react-query/QueryErrorBoundary}
    */
   CSROnly: typeof CSROnlyQueryAsyncBoundary
 }
