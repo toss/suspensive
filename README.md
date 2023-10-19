@@ -8,14 +8,10 @@
 <div align="center">
 
 [![MIT License](https://img.shields.io/badge/license-MIT-blue.svg?style=for-the-badge&color=000&labelColor=000)](https://github.com/suspensive/react/blob/main/LICENSE)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-deepgreen.svg?style=for-the-badge&color=000&labelColor=000)](https://github.com/suspensive/react/pulls)
-[![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-deepgreen.svg?style=for-the-badge&color=000&labelColor=000)](http://commitizen.github.io/cz-cli/)
+[![@suspensive/react downloads](https://img.shields.io/npm/dt/@suspensive/react.svg?label=@suspensive/react&color=000&labelColor=000&style=for-the-badge)](https://www.npmjs.com/package/@suspensive/react)
+[![@suspensive/react-query downloads](https://img.shields.io/npm/dt/@suspensive/react-query.svg?label=@suspensive/react-query&color=000&labelColor=000&style=for-the-badge)](https://www.npmjs.com/package/@suspensive/react-query)
 
 [![codecov](https://codecov.io/gh/suspensive/react/branch/main/graph/badge.svg?token=H4VQ71NJ16)](https://codecov.io/gh/suspensive/react) ![GitHub stars](https://img.shields.io/github/stars/suspensive/react?style=social) ![GitHub forks](https://img.shields.io/github/forks/suspensive/react?style=social)
-
-</div>
-
-<div align="center">
 
 [OFFICIAL DOCS](https://suspensive.org) | [VISUALIZATION](https://visualization.suspensive.org) | [DEPENDENCY GRAPH](https://graph.suspensive.org)
 
