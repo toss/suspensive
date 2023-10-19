@@ -14,7 +14,7 @@ export const HomePage = ({
   items: { title: string; desc: string }[]
 }) => {
   return (
-    <div className="p-3 pb-20">
+    <div className="pb-20">
       <div className="flex flex-col justify-center items-center pt-11 gap-8 text-center">
         <Image src="/img/logo_background_star.png" alt="Suspensive with star" width={400} height={241} />
         <div className="flex flex-col items-center gap-4">
