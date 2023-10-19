@@ -1,5 +1,11 @@
 # @suspensive/react
 
+## 1.17.1
+
+### Patch Changes
+
+- 7e423e7: docs: update jsdoc links
+
 ## 1.17.0
 
 ### Minor Changes
