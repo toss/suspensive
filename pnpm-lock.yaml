@@ -339,6 +339,9 @@ importers:
       '@tanstack/react-query-devtools':
         specifier: ^4.29.5
         version: 4.29.5(@tanstack/react-query@4.29.5)(react-dom@18.2.0)(react@18.2.0)
+      '@vercel/analytics':
+        specifier: ^1.1.1
+        version: 1.1.1
       axios:
         specifier: ^1.4.0
         version: 1.4.0
@@ -4415,11 +4418,11 @@ packages:
       eslint-import-resolver-webpack:
         optional: true
     dependencies:
-      '@typescript-eslint/parser': 5.59.7(eslint@8.42.0)(typescript@5.1.6)
+      '@typescript-eslint/parser': 5.59.7(eslint@8.42.0)(typescript@5.2.2)
       debug: 3.2.7
       eslint: 8.42.0
       eslint-import-resolver-node: 0.3.7
-      eslint-import-resolver-typescript: 3.5.5(@typescript-eslint/parser@5.59.7)(eslint-import-resolver-node@0.3.7)(eslint-plugin-import@2.28.1)(eslint@8.42.0)
+      eslint-import-resolver-typescript: 3.5.5(@typescript-eslint/parser@5.59.7)(eslint-import-resolver-node@0.3.7)(eslint-plugin-import@2.27.5)(eslint@8.42.0)
     transitivePeerDependencies:
       - supports-color
     dev: true
