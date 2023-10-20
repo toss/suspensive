@@ -3,6 +3,7 @@
   "intro": "시작하기",
   "react": "@suspensive/react",
   "react-query": "@suspensive/react-query",
+  "react-await": "@suspensive/react-await",
   "---": {
     "type": "separator"
   },
