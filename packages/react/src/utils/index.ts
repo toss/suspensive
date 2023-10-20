@@ -1,5 +1,3 @@
 export { assert } from './assert'
 export { hasResetKeysChanged } from './hasResetKeysChanged'
 export { hashKey } from './hashKey'
-export { isClient } from './isClient'
-export { isServer } from './isServer'
