@@ -36,7 +36,6 @@ All declarative components to use suspense on both CSR, SSR.
 - AsyncBoundary, withAsyncBoundary (containing CSROnly)
 - Delay, withDelay
 - SuspensiveProvider, Suspensive
-- Await, useAwait, awaitClient (Experimental)
 
 ### Installation
 
