@@ -1,5 +1,11 @@
 # @suspensive/react
 
+## 1.17.2
+
+### Patch Changes
+
+- 7e01577: fix(react): remove `<Await/>`
+
 ## 1.17.1
 
 ### Patch Changes
