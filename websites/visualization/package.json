@@ -35,6 +35,7 @@
     "@suspensive/react-query": "workspace:1.17.1",
     "@tanstack/react-query": "^4.29.5",
     "@tanstack/react-query-devtools": "^4.29.5",
+    "@vercel/analytics": "^1.1.1",
     "axios": "^1.4.0",
     "next": "^13.4.4",
     "react": "^18.2.0",
