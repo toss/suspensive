@@ -30,6 +30,7 @@
     "clean": "pnpm --filter \"./packages/**\" run clean",
     "commit": "cz",
     "dev": "pnpm prepack && turbo run dev --parallel",
+    "dev:docs": "turbo run dev --scope='@suspensive/docs'",
     "dev:visualization": "turbo run dev --scope='@suspensive/visualization'",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "graph": "rimraf ./graph && mkdir graph && turbo run build --graph=graph/index.html",
