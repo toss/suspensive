@@ -8,5 +8,5 @@
 
 - [ ] I did below actions if need
 
-1. I read the [Contributing Guide](https://github.com/toss/slash/blob/main/.github/CONTRIBUTING.md)
+1. I read the [Contributing Guide](https://github.com/suspensive/react/blob/main/CONTRIBUTING.md)
 2. I added documents and tests.
