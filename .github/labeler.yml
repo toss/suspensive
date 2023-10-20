@@ -2,6 +2,8 @@
   - "packages/react/**/*"
 "@suspensive/react-query":
   - "packages/react-query/**/*"
+"@suspensive/react-await":
+  - "packages/react-await/**/*"
 "documentation":
   - "docs/**/*"
 "visualization":

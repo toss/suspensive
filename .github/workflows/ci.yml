@@ -17,7 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        command: ['pnpm lint', 'pnpm lint:pub', 'pnpm test', 'pnpm test:tsd', 'pnpm type:check']
+        command: ['lint', 'lint:attw', 'lint:pub', 'test', 'test:tsd', 'type:check']
     steps:
       - uses: actions/checkout@v3
       - uses: pnpm/action-setup@v2
@@ -31,4 +31,4 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - run: pnpm prepack
       - name: Run commands
-        run: ${{ matrix.command }}
+        run: pnpm ${{ matrix.command }}

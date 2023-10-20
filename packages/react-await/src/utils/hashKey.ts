@@ -1,4 +1,4 @@
-import type { Key } from '../experimental/Await'
+import type { Key } from '../Await'
 import type { PlainObject } from './isPlainObject'
 import { isPlainObject } from './isPlainObject'
 

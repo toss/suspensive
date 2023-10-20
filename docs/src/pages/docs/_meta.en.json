@@ -3,6 +3,7 @@
   "intro": "Getting Started",
   "react": "@suspensive/react",
   "react-query": "@suspensive/react-query",
+  "react-await": "@suspensive/react-await",
   "---": {
     "type": "separator"
   },

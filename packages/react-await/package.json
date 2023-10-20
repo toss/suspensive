@@ -1,6 +1,6 @@
 {
-  "name": "@suspensive/react",
-  "version": "1.17.2",
+  "name": "@suspensive/react-await",
+  "version": "0.0.1",
   "description": "Useful interfaces for React Suspense",
   "keywords": [
     "suspensive",
@@ -55,7 +55,11 @@
     "test:watch": "vitest --ui --coverage.enabled=true",
     "type:check": "tsc --noEmit"
   },
+  "dependencies": {
+    "use-sync-external-store": "^1.2.0"
+  },
   "devDependencies": {
+    "@suspensive/react": "workspace:*",
     "@suspensive/tsup": "workspace:*",
     "@suspensive/vitest": "workspace:*",
     "@types/node": "^18.16.2",

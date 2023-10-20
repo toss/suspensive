@@ -2,7 +2,7 @@
 
 import { Stack } from '@jsxcss/emotion'
 import { ErrorBoundary, Suspense } from '@suspensive/react'
-import { Await } from '@suspensive/react/experimental'
+import { Await } from '@suspensive/react-await'
 import { api } from '~/utils'
 
 export default function Page() {

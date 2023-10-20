@@ -35,6 +35,7 @@
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "graph": "rimraf ./graph && mkdir graph && turbo run build --graph=graph/index.html",
     "lint": "turbo run lint",
+    "lint:attw": "turbo run lint:attw",
     "lint:pack": "packlint sort -R",
     "lint:pub": "turbo run lint:pub",
     "postinstall": "husky install",
@@ -45,6 +46,7 @@
     "type:check": "turbo run type:check --parallel"
   },
   "devDependencies": {
+    "@arethetypeswrong/cli": "^0.12.2",
     "@changesets/cli": "^2.26.1",
     "@commitlint/cli": "^17.6.1",
     "@commitlint/config-conventional": "^17.6.1",
