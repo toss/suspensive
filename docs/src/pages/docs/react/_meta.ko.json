@@ -5,6 +5,5 @@
   "ErrorBoundaryGroup": { "title": "<ErrorBoundaryGroup/>" },
   "Delay": { "title": "<Delay/>" },
   "AsyncBoundary": { "title": "<AsyncBoundary/>" },
-  "SuspensiveProvider": { "title": "<SuspensiveProvider/>" },
-  "Await": { "title": "<Await/>" }
+  "SuspensiveProvider": { "title": "<SuspensiveProvider/>" }
 }
