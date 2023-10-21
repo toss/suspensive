@@ -1,7 +1,7 @@
-name: Bug Report
-description: Report a bug
-labels: [bug]
-title: "[Bug]:"
+name: Feature Request
+description: Suggest an idea
+labels: [feature]
+title: "[Feature]:"
 body:
   - type: dropdown
     id: package
@@ -20,28 +20,16 @@ body:
   - type: textarea
     id: description
     attributes:
-      description: Description what bug we need to fix
-      label: Bug description
+      description: Description what feature you want
+      label: Description
     validations:
       required: true
-
-  - type: textarea
-    id: expected
-    attributes:
-      label: Expected behavior
-
-  - type: textarea
-    id: reproduction-steps
-    attributes:
-      label: To Reproduce
-      description: Please tell me in detail how to reproduce it. If it seems to occur only in a specific environment, please also provide information about the OS and the environment
-      placeholder: |
-        Minimal reproducible code or describe steps to reproduce. Optional, but recommended
 
   - type: textarea
     id: possible-solution
     attributes:
       label: Possible Solution
+      description: If you have suggestions on a fix for the bug
       placeholder: I think this is probably...
     validations:
       required: false
