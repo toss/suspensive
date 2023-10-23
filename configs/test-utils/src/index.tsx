@@ -1,6 +1,11 @@
 import type { PropsWithChildren, ReactNode } from 'react'
-import { useState } from 'react'
-import { useSetTimeout } from '../hooks'
+import { useEffect, useState } from 'react'
+
+const useSetTimeout = (fn: (...args: []) => void, delay: number) =>
+  useEffect(() => {
+    const timeout = setTimeout(fn, delay)
+    return () => clearTimeout(timeout)
+  }, [fn, delay])
 
 const suspendIsNeed = { current: true }
 type SuspendProps = { during: number; toShow?: ReactNode }
