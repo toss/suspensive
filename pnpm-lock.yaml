@@ -254,9 +254,6 @@ importers:
       '@types/react-dom':
         specifier: ^18.2.1
         version: 18.2.1
-      '@types/use-sync-external-store':
-        specifier: ^0.0.4
-        version: 0.0.4
       react:
         specifier: ^18.2.0
         version: 18.2.0
