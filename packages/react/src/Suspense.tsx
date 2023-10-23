@@ -1,6 +1,6 @@
 import type { ComponentProps, ComponentType, ReactNode, SuspenseProps as ReactSuspenseProps } from 'react'
 import { Suspense as ReactSuspense, createContext, useContext } from 'react'
-import { useIsCSROnly } from './hooks'
+import { useIsClient } from './hooks'
 import type { PropsWithoutChildren } from './types'
 
 export type SuspenseProps = ReactSuspenseProps
@@ -21,7 +21,7 @@ if (process.env.NODE_ENV !== 'production') {
   DefaultSuspense.displayName = 'Suspense'
 }
 const CSROnlySuspense = (props: SuspenseProps) => {
-  const isClient = useIsCSROnly()
+  const isClient = useIsClient()
   const fallback = useFallbackWithContext(props.fallback)
 
   return isClient ? <ReactSuspense {...props} fallback={fallback} /> : <>{fallback}</>

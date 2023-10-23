@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useIsomorphicLayoutEffect } from './useIsomorphicLayoutEffect'
 
-export const useIsCSROnly = () => {
+export const useIsClient = () => {
   const [isClient, setIsClient] = useState(false)
 
   useIsomorphicLayoutEffect(() => {
