@@ -1,5 +1,11 @@
 # @suspensive/react
 
+## 1.17.3
+
+### Patch Changes
+
+- b908c02: fix(react): remove unnecessary @types/use-sync-external-store
+
 ## 1.17.2
 
 ### Patch Changes
