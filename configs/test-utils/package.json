@@ -35,6 +35,7 @@
     "lint": "eslint \"**/*.ts*\"",
     "lint:attw": "attw --pack",
     "lint:pub": "publint --strict",
+    "prepack": "pnpm build",
     "type:check": "tsc --noEmit"
   },
   "devDependencies": {
