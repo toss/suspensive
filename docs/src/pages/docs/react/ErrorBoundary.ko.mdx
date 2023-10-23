@@ -8,7 +8,7 @@ import { Callout } from 'nextra/components'
 
 `<ErrorBoundary/>`의 children에 error가 발생하면 error는 잡히고 fallback이 렌더링됩니다.
 
-```tsx
+```tsx /ErrorBoundary/ /fallback/
 import { ErrorBoundary } from '@suspensive/react'
 import { useState, useEffect } from 'react'
 
@@ -55,7 +55,7 @@ const ErrorAfter4s = () => {
 
 `<ErrorBoundary/>`'의 fallback으로 컴포넌트를 전달하고 싶다면 `ErrorBoundaryFallbackProps` 타입을 활용해 쉽게 컴포넌트를 선언 할 수 있습니다.
 
-```tsx
+```tsx /ErrorBoundaryFallbackProps/
 import type { ErrorBoundaryFallbackProps } from '@suspensive/react'
 
 const ErrorBoundaryFallback = ({ reset, error }: ErrorBoundaryFallbackProps) => (
@@ -113,7 +113,7 @@ const Example = () => (
 
 `<ErrorBoundary/>`의 fallback 외부에 있는 컴포넌트가 `<ErrorBoundary/>`를 reset하려면 resetKeys배열에 resetKey를 할당하면 됩니다. resetKeys는 배열의 하나 이상의 요소가 변경된 경우에만 작동합니다. useEffect의 종속성 배열이 작동하는 방식과 같이 resetKeys로 매 렌더링마다 새 배열을 주입하는 것을 걱정할 필요도 없습니다.
 
-```tsx
+```tsx /resetKeys/
 import { ErrorBoundary } from '@suspensive/react'
 import { useState, useEffect } from 'react'
 
@@ -135,7 +135,7 @@ const Example = () => {
 
 `<ErrorBoundary/>`가 reset할 때 먼저 호출되는 callback입니다. @tanstack/react-query와는 아래와 같이 사용할 수 있습니다.
 
-```tsx
+```tsx /onReset/
 import { ErrorBoundary } from '@suspensive/react'
 import { QueryErrorResetBoundary } from '@tanstack/react-query'
 
@@ -162,7 +162,7 @@ const Example = () => (
 
 `<ErrorBoundary/>`가 error를 잡을 때 호출되는 callback입니다.
 
-```tsx
+```tsx /onError/
 import { ErrorBoundary } from '@suspensive/react'
 
 const logError = (error: Error, info: ErrorInfo) => {
@@ -178,15 +178,11 @@ const Example = (
 
 ## useErrorBoundary
 
-<Callout type="warning">
-
-useErrorBoundary는 실험 기능이므로 이 인터페이스는 변경될 수 있습니다.
-
-</Callout >
+<Callout type="warning">useErrorBoundary는 실험 기능이므로 이 인터페이스는 변경될 수 있습니다.</Callout>
 
 `<ErrorBoundary/>`의 children에서 useErrorBoundary().setError을 사용해 throw 없이도 `<ErrorBoundary/>`에서 Error를 알도록 할 수 있습니다.
 
-```tsx
+```tsx /useErrorBoundary/
 import { ErrorBoundary, useErrorBoundary } from '@suspensive/react'
 import { useEffect } from 'react'
 
@@ -216,7 +212,7 @@ withErrorBoundary를 사용하면 컴포넌트를 `<ErrorBoundary/>`로 쉽게 �
 아래와 같이 withErrorBoundary를 사용하면 이를 감싸기 위해 불필요한 코드를 만들 필요가 없습니다.
 withErrorBoundary의 두 번째 인자는 children이 없는 `<ErrorBoundary/>`의 props입니다.
 
-```tsx
+```tsx /withErrorBoundary/
 import { withErrorBoundary, useErrorBoundary } from '@suspensive/react'
 
 const Example = withErrorBoundary(
@@ -233,6 +229,7 @@ const Example = withErrorBoundary(
 
 다수의 `<ErrorBoundary/>`를 제어하기
 
-`<ErrorBoundary/>`은 `<ErrorBoundaryGroup/>`과 사용하면 더 강력하게 사용할 수 있습니다. `<ErrorBoundaryGroup/>`로 다수의 `<ErrorBoundary/>`를 제어하세요. 자세한 내용은 [`<ErrorBoundaryGroup/>`페이지](./ErrorBoundaryGroup)에서 소개합니다.
+`<ErrorBoundary/>`은 `<ErrorBoundaryGroup/>`과 사용하면 더 강력하게 사용할 수 있습니다. `<ErrorBoundaryGroup/>`로 다수의 `<ErrorBoundary/>`를 제어하세요.  
+자세한 내용은 [`<ErrorBoundaryGroup/>`페이지](./ErrorBoundaryGroup)에서 소개합니다.
 
 </Callout>

@@ -8,7 +8,7 @@ import { Callout } from 'nextra/components'
 
 fallback works the same as fallback of original React's Suspense.
 
-```tsx
+```tsx /Suspense/
 import { Suspense } from '@suspensive/react'
 
 const Example = () => (
@@ -31,7 +31,7 @@ Control multiple `<Suspense/>`s default fallback with `<SuspensiveProvider/>`. D
 
 `<Suspense.CSROnly/>` will return fallback in server. After mount(in client) return children. Since mount only happens on the client, server-side rendering can be avoided.
 
-```tsx
+```tsx /Suspense/
 import { Suspense } from '@suspensive/react'
 
 const Example = () => (
@@ -55,7 +55,7 @@ You can use withSuspense to wrap component by `<Suspense/>` easily.
 we don't need to make unncessary code to wrap it if we use withSuspense like below.
 withSuspense's 2nd parameter is props of `<Suspense/>` without children
 
-```tsx
+```tsx /withSuspense/
 import { withSuspense } from '@suspensive/react'
 
 const Example = withSuspense(
