@@ -1,5 +1,5 @@
 export { useIsChanged } from './useIsChanged'
-export { useIsMounted } from './useIsMounted'
+export { useIsClient } from './useIsClient'
 export { useIsomorphicLayoutEffect } from './useIsomorphicLayoutEffect'
 export { useKey } from './useKey'
 export { usePrevious } from './usePrevious'

@@ -1,5 +1,11 @@
 # @suspensive/react
 
+## 1.17.4
+
+### Patch Changes
+
+- 70d8128: fix(react): convert Suspense.CSROnly's useEffect into useIsomorphicLayoutEffect to prevent unnecessary layout shift
+
 ## 1.17.3
 
 ### Patch Changes
