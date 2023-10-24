@@ -1,5 +1,11 @@
 # @suspensive/react
 
+## 1.17.5
+
+### Patch Changes
+
+- 84d293a: refactor: add @suspensive/test-utils as dev dependency to remove unnecessary repetitive code
+
 ## 1.17.4
 
 ### Patch Changes
