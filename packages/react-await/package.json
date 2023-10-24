@@ -60,6 +60,7 @@
   },
   "devDependencies": {
     "@suspensive/react": "workspace:*",
+    "@suspensive/test-utils": "workspace:*",
     "@suspensive/tsup": "workspace:*",
     "@suspensive/vitest": "workspace:*",
     "@types/node": "^18.16.2",

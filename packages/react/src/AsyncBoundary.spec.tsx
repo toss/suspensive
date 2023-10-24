@@ -1,9 +1,9 @@
+import { ERROR_MESSAGE, FALLBACK, MS_100, Suspend, TEXT, ThrowError } from '@suspensive/test-utils'
 import { act, render, waitFor } from '@testing-library/react'
 import type { ComponentProps } from 'react'
 import { createElement } from 'react'
 import { createRoot } from 'react-dom/client'
 import { vi } from 'vitest'
-import { ERROR_MESSAGE, FALLBACK, MS_100, Suspend, TEXT, ThrowError } from './utils/toTest'
 import { AsyncBoundary, withAsyncBoundary } from '.'
 
 let container = document.createElement('div')

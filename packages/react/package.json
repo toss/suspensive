@@ -56,6 +56,7 @@
     "type:check": "tsc --noEmit"
   },
   "devDependencies": {
+    "@suspensive/test-utils": "workspace:*",
     "@suspensive/tsup": "workspace:*",
     "@suspensive/vitest": "workspace:*",
     "@types/node": "^18.16.2",

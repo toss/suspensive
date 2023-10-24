@@ -1,7 +1,7 @@
 import { ErrorBoundary, Suspense } from '@suspensive/react'
+import { ERROR_MESSAGE, FALLBACK, MS_100, TEXT, delay } from '@suspensive/test-utils'
 import { act, render, screen, waitFor } from '@testing-library/react'
 import { vi } from 'vitest'
-import { ERROR_MESSAGE, FALLBACK, MS_100, TEXT, delay } from './utils/toTest'
 import { Await, awaitClient, useAwait } from '.'
 
 const key = (id: number) => ['key', id] as const

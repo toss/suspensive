@@ -1,6 +1,6 @@
+import { MS_100 } from '@suspensive/test-utils'
 import { act, renderHook } from '@testing-library/react'
 import { describe, expect, it, vi } from 'vitest'
-import { MS_100 } from '../utils/toTest'
 import { useSetTimeout } from '.'
 
 vi.useFakeTimers()
