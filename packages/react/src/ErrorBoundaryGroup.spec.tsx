@@ -1,8 +1,8 @@
+import { ERROR_MESSAGE, MS_100, TEXT, ThrowError } from '@suspensive/test-utils'
 import { act, render, screen } from '@testing-library/react'
 import { createElement } from 'react'
 import { vi } from 'vitest'
 import { assert } from './utils'
-import { ERROR_MESSAGE, MS_100, TEXT, ThrowError } from './utils/toTest'
 import { ErrorBoundary, ErrorBoundaryGroup, useErrorBoundaryGroup, withErrorBoundaryGroup } from '.'
 
 const innerErrorBoundaryCount = 3

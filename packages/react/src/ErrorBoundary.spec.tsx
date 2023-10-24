@@ -1,3 +1,4 @@
+import { ERROR_MESSAGE, FALLBACK, MS_100, TEXT, ThrowError, ThrowNull } from '@suspensive/test-utils'
 import { act, render } from '@testing-library/react'
 import type { ComponentProps, ComponentRef } from 'react'
 import { createElement, createRef } from 'react'
@@ -5,7 +6,6 @@ import { createRoot } from 'react-dom/client'
 import { vi } from 'vitest'
 import { useSetTimeout } from './hooks'
 import { assert } from './utils'
-import { ERROR_MESSAGE, FALLBACK, MS_100, TEXT, ThrowError, ThrowNull } from './utils/toTest'
 import { ErrorBoundary, useErrorBoundary, useErrorBoundaryFallbackProps, withErrorBoundary } from '.'
 
 let container = document.createElement('div')
