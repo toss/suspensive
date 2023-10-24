@@ -1,6 +1,6 @@
 {
   "name": "@suspensive/react",
-  "version": "1.17.4",
+  "version": "1.17.5",
   "description": "Useful interfaces for React Suspense",
   "keywords": [
     "suspensive",
@@ -56,6 +56,7 @@
     "type:check": "tsc --noEmit"
   },
   "devDependencies": {
+    "@suspensive/test-utils": "workspace:*",
     "@suspensive/tsup": "workspace:*",
     "@suspensive/vitest": "workspace:*",
     "@types/node": "^18.16.2",
