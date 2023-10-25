@@ -6,7 +6,7 @@ This is a component for managing multiple `<ErrorBoundary/>`s easily.
 
 `<ErrorBoundary/>`s as children of nested `<ErrorBoundaryGroup/>` will also be reset by parent `<ErrorBoundaryGroup.Reset/>`.
 
-```tsx
+```tsx /ErrorBoundaryGroup/
 import { ErrorBoundaryGroup, ErrorBoundary } from '@suspensive/react'
 
 const Example = () => (
@@ -38,7 +38,7 @@ const Example = () => (
 
 If you want to block resetting nested `<ErrorBoundaryGroup/>` by parent `<ErrorBoundaryGroup/>`, Use blockOutside.
 
-```tsx
+```tsx /blockOutside/
 import { ErrorBoundaryGroup, ErrorBoundary } from '@suspensive/react'
 
 const Example = () => (
@@ -62,7 +62,7 @@ const Example = () => (
 
 If you use useErrorBoundaryGroup, you can get a function to reset `<ErrorBoundary/>`s in `<ErrorBoundaryGroup/>`.
 
-```tsx
+```tsx /useErrorBoundaryGroup/
 const Example = () => {
   const group = useErrorBoundaryGroup()
 
@@ -76,7 +76,7 @@ withErrorBoundaryGroup allows you to easily wrap your component in `<ErrorBounda
 If you use withErrorBoundaryGroup as shown below, you don't need to create unnecessary code to wrap it.
 The second argument to withErrorBoundaryGroup is a prop of `<ErrorBoundaryGroup/>` without children.
 
-```tsx
+```tsx /withErrorBoundaryGroup/
 import { withErrorBoundaryGroup, useErrorBoundaryGroup, ErrorBoundary } from '@suspensive/react'
 
 const Example = withErrorBoundaryGroup(

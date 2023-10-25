@@ -30,7 +30,7 @@ Default fallback
 
 `<Suspense.CSROnly/>`는 서버에서는 fallback을 반환합니다. mount 후(클라이언트에서는) children을 반환합니다. mount는 클라이언트에서만 일어나기 때문에 서버사이드 렌더링을 피할 수 있습니다.
 
-```tsx /Suspense/
+```tsx /Suspense.CSROnly/
 import { Suspense } from '@suspensive/react'
 
 const Example = () => (

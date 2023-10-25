@@ -4,7 +4,7 @@ import { Callout } from 'nextra/components'
 
 Return type of this hook have no isLoading, isError property. because `<Suspense/>` and `<ErrorBoundary/>` will guarantee this hook's data. In addition, this hook's options have default suspense: true. and you can provide new options to this hook like useInfiniteQuery of @tanstack/react-query.
 
-```tsx
+```tsx /useSuspenseInfiniteQuery/
 import { useSuspenseInfiniteQuery } from '@suspensive/react-query'
 
 const Example = () => {
@@ -22,7 +22,7 @@ const Example = () => {
 
 If you turn suspense on in @tanstack/react-query, You can use useInfiniteQuery with `<Suspense/>` and `<ErrorBoundary/>`.
 
-```tsx
+```tsx /useInfiniteQuery/
 import { useInfiniteQuery } from '@tanstack/react-query'
 
 const Example = () => {
@@ -43,7 +43,6 @@ const Example = () => {
 but useInfiniteQuery's return type:query.data will be always fulfilled because of `<Suspense/>` as parent of this component.
 
 This is why @suspensive/react-query provide **useSuspenseInfiniteQuery**
-
 
 <Callout>
 

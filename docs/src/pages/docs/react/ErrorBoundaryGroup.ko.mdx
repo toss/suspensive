@@ -6,7 +6,7 @@ import { Callout } from 'nextra/components'
 
 중첩된 `<ErrorBoundaryGroup/>`의 children인 `<ErrorBoundary/>`들도 상위 `<ErrorBoundaryGroup.Reset/>`으로도 reset됩니다.
 
-```tsx
+```tsx /ErrorBoundaryGroup/
 import { ErrorBoundaryGroup, ErrorBoundary } from '@suspensive/react'
 
 const Example = () => (
@@ -38,7 +38,7 @@ const Example = () => (
 
 만약 상위 `<ErrorBoundaryGroup/>`에 의한 하위 `<ErrorBoundaryGroup/>`의 reset을 막고 싶다면 blockOutside을 사용하면 됩니다.
 
-```tsx
+```tsx /blockOutside/
 import { ErrorBoundaryGroup, ErrorBoundary } from '@suspensive/react'
 
 const Example = () => (
@@ -62,7 +62,7 @@ const Example = () => (
 
 useErrorBoundaryGroup을 사용하면 `<ErrorBoundaryGroup/>`내의 `<ErrorBoundary/>`들을 reset하는 함수를 얻을 수 있습니다.
 
-```tsx
+```tsx /useErrorBoundaryGroup/
 const Example = () => {
   const group = useErrorBoundaryGroup()
 
@@ -76,7 +76,7 @@ withErrorBoundaryGroup를 사용하면 컴포넌트를 `<ErrorBoundaryGroup/>`�
 아래와 같이 withErrorBoundaryGroup를 사용하면 이를 감싸기 위해 불필요한 코드를 만들 필요가 없습니다.
 withErrorBoundaryGroup의 두 번째 인자는 children이 없는 `<ErrorBoundaryGroup/>`의 props입니다.
 
-```tsx
+```tsx /withErrorBoundaryGroup/
 import { withErrorBoundaryGroup, useErrorBoundaryGroup, ErrorBoundary } from '@suspensive/react'
 
 const Example = withErrorBoundaryGroup(

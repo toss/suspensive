@@ -2,11 +2,13 @@ import { Callout } from 'nextra/components'
 
 # AsyncBoundary
 
+<Callout>
+
 `<AsyncBoundary/>` wraps @suspensive/react's [`<Suspense/>`](./Suspense) and [`<ErrorBoundary/>`](./ErrorBoundary) to use them at once.
 
 ### AsyncBoundaryProps
 
-```tsx
+```tsx /AsyncBoundaryProps/
 type AsyncBoundaryProps = Omit<SuspenseProps, 'fallback'> &
   Omit<ErrorBoundaryProps, 'fallback'> & {
     pendingFallback?: SuspenseProps['fallback']
@@ -14,7 +16,9 @@ type AsyncBoundaryProps = Omit<SuspenseProps, 'fallback'> &
   }
 ```
 
-```tsx
+</Callout>
+
+```tsx /AsyncBoundary/
 import { AsyncBoundary } from '@suspensive/react'
 
 const Example = () => (
@@ -38,7 +42,7 @@ const Example = () => (
 
 Since it wraps `<Suspense.CSROnly/>`, it provides the same CSROnly.
 
-```tsx
+```tsx /AsyncBoundary.CSROnly/
 import { AsyncBoundary } from '@suspensive/react'
 
 const Example = () => (
@@ -64,7 +68,7 @@ You can use withAsyncBoundary to wrap component by `<AsyncBoundary/>` easily.
 we don't need to make unncessary code to wrap it if we use withAsyncBoundary like below.
 withAsyncBoundary's 2nd parameter is props of `<AsyncBoundary/>` without children
 
-```tsx
+```tsx /withAsyncBoundary/
 import { AsyncBoundary } from '@suspensive/react'
 
 const Example = withAsyncBoundary(
