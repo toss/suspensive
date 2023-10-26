@@ -17,7 +17,7 @@ import { Callout } from 'nextra/components'
 import { Await } from '@suspensive/react-await'
 import { Suspense } from '@suspensive/react'
 
-const getPost = (postId: number) => fetch(`/post/${postId}`).then((res) => res.json()) as Post
+const getPost = (postId: number) => fetch(`/post/${postId}`).then<Post>((res) => res.json())
 
 const Example = () => (
   <Suspense fallback="awaiting...">
