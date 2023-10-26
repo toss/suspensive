@@ -60,7 +60,7 @@ const Example = () => (
     onError={(error) => console.log(error)}
   >
     <Children />
-  </AsyncBoundary>
+  </AsyncBoundary.CSROnly>
 )
 ```
 
@@ -71,7 +71,7 @@ withAsyncBoundary를 사용하면 컴포넌트를 `<AsyncBoundary/>`로 쉽게 �
 withAsyncBoundary의 두 번째 인자는 children이 없는 `<AsyncBoundary/>`의 props입니다.
 
 ```tsx /withAsyncBoundary/
-import { AsyncBoundary } from '@suspensive/react'
+import { withAsyncBoundary } from '@suspensive/react'
 
 const Example = withAsyncBoundary(
   function Component() {

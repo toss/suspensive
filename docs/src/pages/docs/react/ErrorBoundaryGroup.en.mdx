@@ -63,6 +63,8 @@ const Example = () => (
 If you use useErrorBoundaryGroup, you can get a function to reset `<ErrorBoundary/>`s in `<ErrorBoundaryGroup/>`.
 
 ```tsx /useErrorBoundaryGroup/
+import { useErrorBoundaryGroup } from '@suspensive/react'
+
 const Example = () => {
   const group = useErrorBoundaryGroup()
 

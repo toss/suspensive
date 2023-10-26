@@ -58,7 +58,7 @@ const Example = () => (
     onError={(error) => console.log(error)}
   >
     <Children />
-  </AsyncBoundary>
+  </AsyncBoundary.CSROnly>
 )
 ```
 
@@ -69,7 +69,7 @@ we don't need to make unncessary code to wrap it if we use withAsyncBoundary lik
 withAsyncBoundary's 2nd parameter is props of `<AsyncBoundary/>` without children
 
 ```tsx /withAsyncBoundary/
-import { AsyncBoundary } from '@suspensive/react'
+import { withAsyncBoundary } from '@suspensive/react'
 
 const Example = withAsyncBoundary(
   function Component() {

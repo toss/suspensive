@@ -63,6 +63,8 @@ const Example = () => (
 useErrorBoundaryGroup을 사용하면 `<ErrorBoundaryGroup/>`내의 `<ErrorBoundary/>`들을 reset하는 함수를 얻을 수 있습니다.
 
 ```tsx /useErrorBoundaryGroup/
+import { useErrorBoundaryGroup } from '@suspensive/react'
+
 const Example = () => {
   const group = useErrorBoundaryGroup()
 
