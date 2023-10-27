@@ -42,7 +42,8 @@ In general, things we find useful when reviewing suggestions are:
     ```shell
     git clone git@github.com:suspensive/react.git
     ```
-2. Install relative packages. [We use pnpm v8. Install it please if need](https://pnpm.io/installation)
+2. Please use the correct node version. You can use the version declared in [.nvmrc](https://github.com/suspensive/react/blob/main/.nvmrc). We strongly recommend [nvm](https://github.com/nvm-sh/nvm) to control local machine's node version easily. also We recommend [nvm's deeper shell integration](https://github.com/nvm-sh/nvm#deeper-shell-integration) too.
+3. Install packages. [We use pnpm v8. Install pnpm with corepack please if you can](https://pnpm.io/installation#using-corepack). We recommend using corepack for pnpm to automatically use the version declared in the packageManager field of package.json.
     ```shell
     pnpm install
     ```
