@@ -1,6 +1,6 @@
 import type { ComponentProps, ComponentType, PropsWithChildren } from 'react'
 import { createContext, useContext, useState } from 'react'
-import { useSetTimeout } from './hooks'
+import { useTimeout } from './hooks'
 import type { PropsWithoutChildren } from './types'
 
 export type DelayProps = PropsWithChildren<{
@@ -11,7 +11,7 @@ export const Delay = ({ ms, children }: DelayProps) => {
   const delayContextValue = useContext(DelayContext)
   const delayMs = ms ?? delayContextValue.ms ?? 0
   const [isDelayed, setIsDelayed] = useState(delayMs === 0)
-  useSetTimeout(() => setIsDelayed(true), delayMs)
+  useTimeout(() => setIsDelayed(true), delayMs)
   return <>{isDelayed ? children : null}</>
 }
 
