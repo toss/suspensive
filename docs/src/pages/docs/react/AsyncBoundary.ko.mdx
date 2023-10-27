@@ -2,13 +2,15 @@ import { Callout } from 'nextra/components'
 
 # AsyncBoundary
 
+<Callout>
+
 `<AsyncBoundary/>`는 @suspensive/react의 [`<Suspense/>`](./Suspense)와 [`<ErrorBoundary/>`](./ErrorBoundary)를 한번에 사용하기 위해 래핑한 컴포넌트입니다.
 
 ### AsyncBoundaryProps
 
 `<AsyncBoundary/>` Props의 타입은 `<Suspense/>`와 `<ErrorBoundary/>`를 조합합니다.
 
-```tsx
+```tsx /AsyncBoundaryProps/
 type AsyncBoundaryProps = Omit<SuspenseProps, 'fallback'> &
   Omit<ErrorBoundaryProps, 'fallback'> & {
     pendingFallback?: SuspenseProps['fallback']
@@ -16,7 +18,9 @@ type AsyncBoundaryProps = Omit<SuspenseProps, 'fallback'> &
   }
 ```
 
-```tsx
+</Callout>
+
+```tsx /AsyncBoundary/
 import { AsyncBoundary } from '@suspensive/react'
 
 const Example = () => (
@@ -40,7 +44,7 @@ const Example = () => (
 
 `<Suspense.CSROnly/>`를 래핑하기 때문에 동일하게 CSROnly를 제공합니다.
 
-```tsx
+```tsx /AsyncBoundary.CSROnly/
 import { AsyncBoundary } from '@suspensive/react'
 
 const Example = () => (
@@ -56,7 +60,7 @@ const Example = () => (
     onError={(error) => console.log(error)}
   >
     <Children />
-  </AsyncBoundary>
+  </AsyncBoundary.CSROnly>
 )
 ```
 
@@ -66,8 +70,8 @@ withAsyncBoundary를 사용하면 컴포넌트를 `<AsyncBoundary/>`로 쉽게 �
 아래와 같이 withAsyncBoundary를 사용하면 이를 감싸기 위해 불필요한 코드를 만들 필요가 없습니다.
 withAsyncBoundary의 두 번째 인자는 children이 없는 `<AsyncBoundary/>`의 props입니다.
 
-```tsx
-import { AsyncBoundary } from '@suspensive/react'
+```tsx /withAsyncBoundary/
+import { withAsyncBoundary } from '@suspensive/react'
 
 const Example = withAsyncBoundary(
   function Component() {

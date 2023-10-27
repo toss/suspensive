@@ -31,7 +31,7 @@ Control multiple `<Suspense/>`s default fallback with `<SuspensiveProvider/>`. D
 
 `<Suspense.CSROnly/>` will return fallback in server. After mount(in client) return children. Since mount only happens on the client, server-side rendering can be avoided.
 
-```tsx /Suspense/
+```tsx /Suspense.CSROnly/
 import { Suspense } from '@suspensive/react'
 
 const Example = () => (

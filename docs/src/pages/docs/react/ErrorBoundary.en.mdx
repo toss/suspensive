@@ -8,7 +8,7 @@ this component can handle any errors in children
 
 If there is any thrown error in children of `<ErrorBoundary/>`, Error will be caught and then fallback will be rendered.
 
-```tsx /ErrorBoundary/ /fallback/
+```tsx /fallback/
 import { ErrorBoundary } from '@suspensive/react'
 import { useState, useEffect } from 'react'
 
@@ -83,7 +83,7 @@ Use `<ErrorBoundary/>` fallback props without prop drilling
 If component using `reset` method and `error` object is nested, prop drilling cannot be avoided.
 The `useErrorBoundaryFallbackProps` allows you to access the `reset` method and `error` objects without prop drilling.
 
-```tsx
+```tsx /useErrorBoundaryFallbackProps/
 import { ErrorBoundary, useErrorBoundaryFallbackProps } from '@suspensive/react'
 
 const Nested = () => {

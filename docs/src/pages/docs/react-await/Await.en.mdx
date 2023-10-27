@@ -13,11 +13,11 @@ Afterwards, when the Promise is fulfilled, the guaranteed awaited data can be us
 
 Additionally, this data is cached in the received key and can be used immediately without pending when reused.
 
-```tsx
+```tsx /Await/
 import { Await } from '@suspensive/react-await'
 import { Suspense } from '@suspensive/react'
 
-const getPost = (postId: number) => fetch(`/post/${postId}`).then((res) => res.json()) as Post
+const getPost = (postId: number) => fetch(`/post/${postId}`).then<Post>((res) => res.json())
 
 const Example = () => (
   <Suspense fallback="awaiting...">
