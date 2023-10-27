@@ -12,7 +12,7 @@ export const useTimeout = (fn: () => void, ms: number) => {
   }, [fn])
 
   useEffect(() => {
-    const id = setTimeout(() => fnRef.current(), ms)
+    const id = setTimeout(fnRef.current, ms)
     return () => clearTimeout(id)
   }, [ms])
 }
