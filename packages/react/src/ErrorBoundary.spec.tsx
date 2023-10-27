@@ -4,7 +4,7 @@ import type { ComponentProps, ComponentRef } from 'react'
 import { createElement, createRef } from 'react'
 import { createRoot } from 'react-dom/client'
 import { vi } from 'vitest'
-import { useSetTimeout } from './hooks'
+import { useTimeout } from './hooks'
 import { assert } from './utils'
 import { ErrorBoundary, useErrorBoundary, useErrorBoundaryFallbackProps, withErrorBoundary } from '.'
 
@@ -257,12 +257,12 @@ describe('useErrorBoundary', () => {
       onError,
       fallback: function ErrorBoundaryFallback() {
         const props = useErrorBoundaryFallbackProps()
-        useSetTimeout(props.reset, MS_100)
+        useTimeout(props.reset, MS_100)
         return <>{props.error.message}</>
       },
       children: createElement(() => {
         const errorBoundary = useErrorBoundary()
-        useSetTimeout(() => errorBoundary.setError(new Error(ERROR_MESSAGE)), MS_100)
+        useTimeout(() => errorBoundary.setError(new Error(ERROR_MESSAGE)), MS_100)
         return <>{TEXT}</>
       }),
     })
@@ -320,7 +320,7 @@ describe('useErrorBoundaryFallbackProps', () => {
       onReset,
       fallback: function ErrorBoundaryFallback() {
         const props = useErrorBoundaryFallbackProps()
-        useSetTimeout(props.reset, MS_100)
+        useTimeout(props.reset, MS_100)
 
         return <>{props.error.message}</>
       },

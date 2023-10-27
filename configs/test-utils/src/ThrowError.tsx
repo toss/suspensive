@@ -1,11 +1,21 @@
 import type { PropsWithChildren } from 'react'
-import { useEffect, useState } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 
-const useSetTimeout = (fn: (...args: []) => void, delay: number) =>
+const isClient = typeof window !== 'undefined'
+export const useIsomorphicLayoutEffect = isClient ? useLayoutEffect : useEffect
+
+export const useTimeout = (fn: () => void, ms: number) => {
+  const fnRef = useRef(fn)
+
+  useIsomorphicLayoutEffect(() => {
+    fnRef.current = fn
+  }, [fn])
+
   useEffect(() => {
-    const timeout = setTimeout(fn, delay)
-    return () => clearTimeout(timeout)
-  }, [fn, delay])
+    const id = setTimeout(fnRef.current, ms)
+    return () => clearTimeout(id)
+  }, [ms])
+}
 
 const throwErrorIsNeed = { current: false }
 type ThrowErrorProps = PropsWithChildren<{ message: string; after?: number }>
@@ -14,7 +24,7 @@ export const ThrowError = ({ message, after = 0, children }: ThrowErrorProps) =>
   if (isNeedError) {
     throw new Error(message)
   }
-  useSetTimeout(() => setIsNeedError(true), after)
+  useTimeout(() => setIsNeedError(true), after)
   return <>{children}</>
 }
 
@@ -24,7 +34,7 @@ export const ThrowNull = ({ after, children }: ThrowNullProps) => {
   if (isNeedError) {
     throw null
   }
-  useSetTimeout(() => setIsNeedError(true), after)
+  useTimeout(() => setIsNeedError(true), after)
   return <>{children}</>
 }
 
