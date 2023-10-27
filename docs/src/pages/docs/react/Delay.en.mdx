@@ -6,7 +6,7 @@ import { Callout } from 'nextra/components'
 
 This component delays the exposure of children by ms. In the code below, exposure of children is delayed by 200ms.
 
-```tsx
+```tsx /Delay/
 import { Delay } from '@suspensive/react'
 
 const Example = () => (
@@ -20,7 +20,7 @@ const Example = () => (
 
 Delayed loading UI sometimes provides better usability
 
-```tsx
+```tsx /Delay/
 import { Delay, Suspense } from '@suspensive/react'
 
 const Example = () => (
@@ -52,7 +52,7 @@ We can use withDelay to wrap component by `<Delay/>` easily.
 we don't need to make unncessary code to wrap it if we use withDelay like below.
 withDelay's 2nd parameter is props of `<Delay/>` without children
 
-```tsx
+```tsx /withDelay/
 import { withDelay } from '@suspensive/react'
 
 const Example = withDelay(

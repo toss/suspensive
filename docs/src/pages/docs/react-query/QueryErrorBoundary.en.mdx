@@ -6,7 +6,7 @@ import { Callout } from 'nextra/components'
 
 You can just use `<QueryErrorBoundary/>`, `<QueryAsyncBoundary/>` like using [`<ErrorBoundary/>`](/docs/react/ErrorBoundary), [`<AsyncBoundary/>`](/docs/react/AsyncBoundary). All other features are same with original `<ErrorBoundary/>`, `<AsyncBoundary/>` of @suspensive/react without resetting react-query's error.
 
-```tsx
+```tsx /QueryErrorBoundary/
 import { QueryErrorBoundary } from '@suspensive/react-query'
 
 const Example = () => (
@@ -23,7 +23,7 @@ const Example = () => (
 )
 ```
 
-```tsx
+```tsx /QueryAsyncBoundary/
 import { QueryAsyncBoundary } from '@suspensive/react-query'
 
 const Example = () => (
@@ -59,7 +59,7 @@ With the [`<QueryErrorResetBoundary/>`](https://tanstack.com/query/v4/docs/refer
 
 #### `<QueryErrorResetBoundary/>` + `<ErrorBoundary/>`
 
-```tsx
+```tsx /QueryErrorResetBoundary/ /ErrorBoundary/
 import { ErrorBoundary } from '@suspensive/react'
 import { QueryErrorResetBoundary } from '@tanstack/react-query'
 
@@ -84,7 +84,7 @@ const Example = () => (
 
 #### `<QueryErrorResetBoundary/>` + `<AsyncBoundary/>`
 
-```tsx
+```tsx /QueryErrorResetBoundary/ /AsyncBoundary/
 import { AsyncBoundary } from '@suspensive/react'
 import { QueryErrorResetBoundary } from '@tanstack/react-query'
 
