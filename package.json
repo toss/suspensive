@@ -39,6 +39,7 @@
     "lint:pack": "packlint sort -R",
     "lint:pub": "turbo run lint:pub",
     "postinstall": "husky install",
+    "preinstall": "corepack enable",
     "prepack": "turbo run prepack",
     "test": "turbo run test",
     "test:tsd": "turbo run test:tsd",
