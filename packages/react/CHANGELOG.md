@@ -1,5 +1,12 @@
 # @suspensive/react
 
+## 1.17.6
+
+### Patch Changes
+
+- b962122: test(react): add useTimeout test case
+- c09f52a: perf(react): remove unnecessary useSetTimeout's callback calling
+
 ## 1.17.5
 
 ### Patch Changes
