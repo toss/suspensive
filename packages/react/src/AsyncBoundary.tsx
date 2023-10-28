@@ -4,6 +4,7 @@ import { ErrorBoundary } from './ErrorBoundary'
 import type { ErrorBoundaryProps } from './ErrorBoundary'
 import { Suspense } from './Suspense'
 import type { PropsWithoutChildren } from './types'
+import { wrap } from './wrap'
 
 export type AsyncBoundaryProps = Omit<SuspenseProps, 'fallback'> &
   Omit<ErrorBoundaryProps, 'fallback'> & {
@@ -46,36 +47,10 @@ export const AsyncBoundary = BaseAsyncBoundary as typeof BaseAsyncBoundary & {
 AsyncBoundary.CSROnly = CSROnlyAsyncBoundary
 
 export const withAsyncBoundary = <TProps extends ComponentProps<ComponentType> = Record<string, never>>(
-  Component: ComponentType<TProps>,
+  component: ComponentType<TProps>,
   asyncBoundaryProps: PropsWithoutChildren<AsyncBoundaryProps>
-) => {
-  const Wrapped = (props: TProps) => (
-    <AsyncBoundary {...asyncBoundaryProps}>
-      <Component {...props} />
-    </AsyncBoundary>
-  )
-
-  if (process.env.NODE_ENV !== 'production') {
-    const name = Component.displayName || Component.name || 'Component'
-    Wrapped.displayName = `withAsyncBoundary(${name})`
-  }
-
-  return Wrapped
-}
+) => wrap(AsyncBoundary, asyncBoundaryProps)(component)
 withAsyncBoundary.CSROnly = <TProps extends ComponentProps<ComponentType> = Record<string, never>>(
-  Component: ComponentType<TProps>,
+  component: ComponentType<TProps>,
   asyncBoundaryProps: PropsWithoutChildren<AsyncBoundaryProps>
-) => {
-  const Wrapped = (props: TProps) => (
-    <AsyncBoundary.CSROnly {...asyncBoundaryProps}>
-      <Component {...props} />
-    </AsyncBoundary.CSROnly>
-  )
-
-  if (process.env.NODE_ENV !== 'production') {
-    const name = Component.displayName || Component.name || 'Component'
-    Wrapped.displayName = `withAsyncBoundary.CSROnly(${name})`
-  }
-
-  return Wrapped
-}
+) => wrap(AsyncBoundary.CSROnly, asyncBoundaryProps)(component)

@@ -13,6 +13,7 @@ import {
 import { ErrorBoundaryGroupContext } from './ErrorBoundaryGroup'
 import type { PropsWithoutChildren } from './types'
 import { assert, hasResetKeysChanged } from './utils'
+import { wrap } from './wrap'
 
 export type ErrorBoundaryFallbackProps<TError extends Error = Error> = {
   /**
@@ -127,20 +128,7 @@ if (process.env.NODE_ENV !== 'production') {
 export const withErrorBoundary = <TProps extends ComponentProps<ComponentType> = Record<string, never>>(
   Component: ComponentType<TProps>,
   errorBoundaryProps: PropsWithoutChildren<ErrorBoundaryProps>
-) => {
-  const Wrapped = (props: TProps) => (
-    <ErrorBoundary {...errorBoundaryProps}>
-      <Component {...props} />
-    </ErrorBoundary>
-  )
-
-  if (process.env.NODE_ENV !== 'production') {
-    const name = Component.displayName || Component.name || 'Component'
-    Wrapped.displayName = `withErrorBoundary(${name})`
-  }
-
-  return Wrapped
-}
+) => wrap(ErrorBoundary, errorBoundaryProps)(Component)
 
 const ErrorBoundaryContext = createContext<({ reset: () => void } & ErrorBoundaryState) | null>(null)
 
