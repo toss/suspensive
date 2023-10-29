@@ -1,6 +1,6 @@
 {
   "name": "@suspensive/react-await",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Useful interfaces for React Suspense",
   "keywords": [
     "suspensive",
@@ -38,6 +38,7 @@
     "./package.json": "./package.json"
   },
   "main": "dist/index.cjs",
+  "module": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
     "dist",

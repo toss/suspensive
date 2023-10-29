@@ -1,5 +1,13 @@
 # @suspensive/react-query
 
+## 1.17.7
+
+### Patch Changes
+
+- 257b672: fix: add module field of package.json
+- Updated dependencies [257b672]
+  - @suspensive/react@1.17.7
+
 ## 1.17.6
 
 ### Patch Changes
