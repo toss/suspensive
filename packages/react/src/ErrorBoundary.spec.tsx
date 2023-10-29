@@ -1,5 +1,6 @@
-import { ERROR_MESSAGE, FALLBACK, MS_100, TEXT, ThrowError, ThrowNull } from '@suspensive/test-utils'
+import { ERROR_MESSAGE, FALLBACK, TEXT, ThrowError, ThrowNull } from '@suspensive/test-utils'
 import { act, render } from '@testing-library/react'
+import ms from 'ms'
 import type { ComponentProps, ComponentRef } from 'react'
 import { createElement, createRef } from 'react'
 import { createRoot } from 'react-dom/client'
@@ -37,7 +38,7 @@ describe('<ErrorBoundary/>', () => {
       onError,
       fallback: <>{FALLBACK}</>,
       children: (
-        <ThrowError message={ERROR_MESSAGE} after={MS_100}>
+        <ThrowError message={ERROR_MESSAGE} after={ms('0.1s')}>
           {TEXT}
         </ThrowError>
       ),
@@ -45,7 +46,7 @@ describe('<ErrorBoundary/>', () => {
     expect(container.textContent).toBe(TEXT)
     expect(container.textContent).not.toBe(FALLBACK)
     expect(onError).toHaveBeenCalledTimes(0)
-    act(() => vi.advanceTimersByTime(MS_100))
+    act(() => vi.advanceTimersByTime(ms('0.1s')))
     expect(container.textContent).toBe(FALLBACK)
     expect(container.textContent).not.toBe(TEXT)
     expect(onError).toHaveBeenCalledTimes(1)
@@ -56,14 +57,14 @@ describe('<ErrorBoundary/>', () => {
     renderErrorBoundary({
       fallback: (props) => <>{props.error.message}</>,
       children: (
-        <ThrowError message={ERROR_MESSAGE} after={MS_100}>
+        <ThrowError message={ERROR_MESSAGE} after={ms('0.1s')}>
           {TEXT}
         </ThrowError>
       ),
     })
     expect(container.textContent).toBe(TEXT)
     expect(container.textContent).not.toBe(ERROR_MESSAGE)
-    act(() => vi.advanceTimersByTime(MS_100))
+    act(() => vi.advanceTimersByTime(ms('0.1s')))
     expect(container.textContent).toBe(ERROR_MESSAGE)
     expect(container.textContent).not.toBe(TEXT)
   })
@@ -74,12 +75,12 @@ describe('<ErrorBoundary/>', () => {
     renderErrorBoundary({
       onError,
       fallback: <>{FALLBACK}</>,
-      children: <ThrowNull after={MS_100}>{TEXT}</ThrowNull>,
+      children: <ThrowNull after={ms('0.1s')}>{TEXT}</ThrowNull>,
     })
     expect(container.textContent).toBe(TEXT)
     expect(container.textContent).not.toBe(FALLBACK)
     expect(onError).toHaveBeenCalledTimes(0)
-    act(() => vi.advanceTimersByTime(MS_100))
+    act(() => vi.advanceTimersByTime(ms('0.1s')))
     expect(container.textContent).toBe(FALLBACK)
     expect(container.textContent).not.toBe(TEXT)
     expect(onError).toHaveBeenCalledTimes(1)
@@ -92,13 +93,13 @@ describe('<ErrorBoundary/>', () => {
     renderErrorBoundary({
       resetKeys: [0],
       children: (
-        <ThrowError message={ERROR_MESSAGE} after={MS_100}>
+        <ThrowError message={ERROR_MESSAGE} after={ms('0.1s')}>
           {TEXT}
         </ThrowError>
       ),
       onReset,
     })
-    act(() => vi.advanceTimersByTime(MS_100))
+    act(() => vi.advanceTimersByTime(ms('0.1s')))
     expect(container.textContent).toBe(ERROR_MESSAGE)
     expect(container.textContent).not.toBe(TEXT)
     expect(onReset).toHaveBeenCalledTimes(0)
@@ -114,13 +115,13 @@ describe('<ErrorBoundary/>', () => {
     renderErrorBoundary({
       resetKeys: [0],
       children: (
-        <ThrowError message={ERROR_MESSAGE} after={MS_100}>
+        <ThrowError message={ERROR_MESSAGE} after={ms('0.1s')}>
           {TEXT}
         </ThrowError>
       ),
       onReset,
     })
-    act(() => vi.advanceTimersByTime(MS_100))
+    act(() => vi.advanceTimersByTime(ms('0.1s')))
     expect(container.textContent).toBe(ERROR_MESSAGE)
     expect(container.textContent).not.toBe(TEXT)
 
@@ -139,13 +140,13 @@ describe('<ErrorBoundary/>', () => {
     act(() =>
       root.render(
         <ErrorBoundary ref={errorBoundaryRef} fallback={fallbackFn} onReset={onReset}>
-          <ThrowError message={ERROR_MESSAGE} after={MS_100}>
+          <ThrowError message={ERROR_MESSAGE} after={ms('0.1s')}>
             {TEXT}
           </ThrowError>
         </ErrorBoundary>
       )
     )
-    act(() => vi.advanceTimersByTime(MS_100))
+    act(() => vi.advanceTimersByTime(ms('0.1s')))
     expect(fallbackFn).toHaveBeenCalled()
     fallbackFn.mock.calls[0][0].reset()
     expect(onReset).toHaveBeenCalledTimes(1)
@@ -156,13 +157,13 @@ describe('<ErrorBoundary/>', () => {
     vi.useFakeTimers()
     renderErrorBoundary({
       children: (
-        <ThrowError message={ERROR_MESSAGE} after={MS_100}>
+        <ThrowError message={ERROR_MESSAGE} after={ms('0.1s')}>
           {TEXT}
         </ThrowError>
       ),
       onReset,
     })
-    act(() => vi.advanceTimersByTime(MS_100))
+    act(() => vi.advanceTimersByTime(ms('0.1s')))
     expect(container.textContent).toBe(ERROR_MESSAGE)
     expect(container.textContent).not.toBe(TEXT)
     expect(onReset).toHaveBeenCalledTimes(0)
@@ -206,7 +207,7 @@ describe('withErrorBoundary', () => {
 
     const WrappedComponentWithError = withErrorBoundary(
       () => (
-        <ThrowError message={ERROR_MESSAGE} after={MS_100}>
+        <ThrowError message={ERROR_MESSAGE} after={ms('0.1s')}>
           {TEXT}
         </ThrowError>
       ),
@@ -217,7 +218,7 @@ describe('withErrorBoundary', () => {
 
     act(() => root.render(<WrappedComponentWithError />))
     expect(container.textContent).toBe(TEXT)
-    act(() => vi.advanceTimersByTime(MS_100))
+    act(() => vi.advanceTimersByTime(ms('0.1s')))
     expect(container.textContent).toBe(ERROR_MESSAGE)
   })
 
@@ -257,19 +258,19 @@ describe('useErrorBoundary', () => {
       onError,
       fallback: function ErrorBoundaryFallback() {
         const props = useErrorBoundaryFallbackProps()
-        useTimeout(props.reset, MS_100)
+        useTimeout(props.reset, ms('0.1s'))
         return <>{props.error.message}</>
       },
       children: createElement(() => {
         const errorBoundary = useErrorBoundary()
-        useTimeout(() => errorBoundary.setError(new Error(ERROR_MESSAGE)), MS_100)
+        useTimeout(() => errorBoundary.setError(new Error(ERROR_MESSAGE)), ms('0.1s'))
         return <>{TEXT}</>
       }),
     })
     expect(container.textContent).toBe(TEXT)
     expect(container.textContent).not.toBe(ERROR_MESSAGE)
     expect(onError).toHaveBeenCalledTimes(0)
-    act(() => vi.advanceTimersByTime(MS_100))
+    act(() => vi.advanceTimersByTime(ms('0.1s')))
     expect(container.textContent).toBe(ERROR_MESSAGE)
     expect(container.textContent).not.toBe(TEXT)
     expect(onError).toHaveBeenCalledTimes(1)
@@ -320,12 +321,12 @@ describe('useErrorBoundaryFallbackProps', () => {
       onReset,
       fallback: function ErrorBoundaryFallback() {
         const props = useErrorBoundaryFallbackProps()
-        useTimeout(props.reset, MS_100)
+        useTimeout(props.reset, ms('0.1s'))
 
         return <>{props.error.message}</>
       },
       children: (
-        <ThrowError message={ERROR_MESSAGE} after={MS_100}>
+        <ThrowError message={ERROR_MESSAGE} after={ms('0.1s')}>
           {TEXT}
         </ThrowError>
       ),
@@ -333,11 +334,11 @@ describe('useErrorBoundaryFallbackProps', () => {
     expect(container.textContent).toBe(TEXT)
     expect(container.textContent).not.toBe(ERROR_MESSAGE)
     expect(onReset).toHaveBeenCalledTimes(0)
-    act(() => vi.advanceTimersByTime(MS_100))
+    act(() => vi.advanceTimersByTime(ms('0.1s')))
     expect(container.textContent).toBe(ERROR_MESSAGE)
     expect(container.textContent).not.toBe(TEXT)
     expect(onReset).toHaveBeenCalledTimes(0)
-    act(() => vi.advanceTimersByTime(MS_100))
+    act(() => vi.advanceTimersByTime(ms('0.1s')))
     expect(container.textContent).toBe(TEXT)
     expect(container.textContent).not.toBe(ERROR_MESSAGE)
     expect(onReset).toHaveBeenCalledTimes(1)

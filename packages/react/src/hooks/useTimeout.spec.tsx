@@ -1,5 +1,5 @@
-import { MS_100 } from '@suspensive/test-utils'
 import { act, render, renderHook, screen } from '@testing-library/react'
+import ms from 'ms'
 import { useState } from 'react'
 import { describe, expect, it, vi } from 'vitest'
 import { useTimeout } from '.'
@@ -11,7 +11,7 @@ const TestComponent = () => {
 
   useTimeout(() => {
     setNumber(number + 1)
-  }, MS_100)
+  }, ms('0.1s'))
 
   return <div>{number}</div>
 }
@@ -19,15 +19,15 @@ const TestComponent = () => {
 describe('useTimeout', () => {
   it('should run given function once after given timeout', () => {
     const fn = vi.fn()
-    const rendered = renderHook(() => useTimeout(fn, MS_100))
+    const rendered = renderHook(() => useTimeout(fn, ms('0.1s')))
     expect(fn).toHaveBeenCalledTimes(0)
-    act(() => vi.advanceTimersByTime(MS_100))
+    act(() => vi.advanceTimersByTime(ms('0.1s')))
     expect(fn).toHaveBeenCalledTimes(1)
-    act(() => vi.advanceTimersByTime(MS_100))
+    act(() => vi.advanceTimersByTime(ms('0.1s')))
     expect(fn).toHaveBeenCalledTimes(1)
     rendered.rerender()
     expect(fn).toHaveBeenCalledTimes(1)
-    act(() => vi.advanceTimersByTime(MS_100))
+    act(() => vi.advanceTimersByTime(ms('0.1s')))
     expect(fn).toHaveBeenCalledTimes(1)
   })
 
@@ -36,12 +36,12 @@ describe('useTimeout', () => {
 
     expect(screen.getByText('0')).toBeInTheDocument()
 
-    act(() => vi.advanceTimersByTime(MS_100))
+    act(() => vi.advanceTimersByTime(ms('0.1s')))
     expect(screen.getByText('1')).toBeInTheDocument()
 
     rerender(<TestComponent />)
 
-    act(() => vi.advanceTimersByTime(MS_100))
+    act(() => vi.advanceTimersByTime(ms('0.1s')))
     expect(screen.getByText('1')).toBeInTheDocument()
   })
 })

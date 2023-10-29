@@ -1,5 +1,6 @@
-import { ERROR_MESSAGE, FALLBACK, MS_100, Suspend, TEXT, ThrowError } from '@suspensive/test-utils'
+import { ERROR_MESSAGE, FALLBACK, Suspend, TEXT, ThrowError } from '@suspensive/test-utils'
 import { act, render, waitFor } from '@testing-library/react'
+import ms from 'ms'
 import type { ComponentProps } from 'react'
 import { createElement } from 'react'
 import { createRoot } from 'react-dom/client'
@@ -56,7 +57,7 @@ describe('<AsyncBoundary/>', () => {
       rejectedFallback: ERROR_MESSAGE,
       onError,
       children: (
-        <ThrowError message={ERROR_MESSAGE} after={MS_100}>
+        <ThrowError message={ERROR_MESSAGE} after={ms('0.1s')}>
           {TEXT}
         </ThrowError>
       ),
@@ -65,7 +66,7 @@ describe('<AsyncBoundary/>', () => {
     expect(container.textContent).not.toBe(FALLBACK)
     expect(container.textContent).not.toBe(ERROR_MESSAGE)
     expect(onError).toHaveBeenCalledTimes(0)
-    act(() => vi.advanceTimersByTime(MS_100))
+    act(() => vi.advanceTimersByTime(ms('0.1s')))
     await waitFor(() => {
       expect(container.textContent).toBe(ERROR_MESSAGE)
       expect(container.textContent).not.toBe(TEXT)
@@ -116,7 +117,7 @@ describe('<AsyncBoundary.CSROnly/>', () => {
       rejectedFallback: ERROR_MESSAGE,
       onError,
       children: (
-        <ThrowError message={ERROR_MESSAGE} after={MS_100}>
+        <ThrowError message={ERROR_MESSAGE} after={ms('0.1s')}>
           {TEXT}
         </ThrowError>
       ),
@@ -125,7 +126,7 @@ describe('<AsyncBoundary.CSROnly/>', () => {
     expect(container.textContent).not.toBe(FALLBACK)
     expect(container.textContent).not.toBe(ERROR_MESSAGE)
     expect(onError).toHaveBeenCalledTimes(0)
-    act(() => vi.advanceTimersByTime(MS_100))
+    act(() => vi.advanceTimersByTime(ms('0.1s')))
     await waitFor(() => {
       expect(container.textContent).toBe(ERROR_MESSAGE)
       expect(container.textContent).not.toBe(TEXT)
