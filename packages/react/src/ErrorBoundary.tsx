@@ -132,9 +132,6 @@ export const withErrorBoundary = <TProps extends ComponentProps<ComponentType> =
 
 const ErrorBoundaryContext = createContext<({ reset: () => void } & ErrorBoundaryState) | null>(null)
 
-/**
- * @experimental This is experimental feature.
- */
 export const useErrorBoundary = <TError extends Error = Error>() => {
   const [state, setState] = useState<ErrorBoundaryState<TError>>({
     isError: false,
