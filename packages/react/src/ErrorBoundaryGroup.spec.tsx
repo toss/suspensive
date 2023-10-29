@@ -1,5 +1,6 @@
-import { ERROR_MESSAGE, MS_100, TEXT, ThrowError } from '@suspensive/test-utils'
+import { ERROR_MESSAGE, TEXT, ThrowError } from '@suspensive/test-utils'
 import { act, render, screen } from '@testing-library/react'
+import ms from 'ms'
 import { createElement } from 'react'
 import { vi } from 'vitest'
 import { assert } from './utils'
@@ -16,7 +17,7 @@ describe('<ErrorBoundaryGroup/>', () => {
         <ErrorBoundaryGroup.Reset trigger={(group) => <button onClick={group.reset}>{resetButtonText}</button>} />
         {Array.from({ length: innerErrorBoundaryCount }).map((_, key) => (
           <ErrorBoundary key={key} fallback={(props) => <div>{props.error.message}</div>}>
-            <ThrowError message={ERROR_MESSAGE} after={MS_100}>
+            <ThrowError message={ERROR_MESSAGE} after={ms('0.1s')}>
               <div>{TEXT}</div>
             </ThrowError>
           </ErrorBoundary>
@@ -25,7 +26,7 @@ describe('<ErrorBoundaryGroup/>', () => {
     )
 
     expect(screen.getAllByText(TEXT).length).toBe(innerErrorBoundaryCount)
-    act(() => vi.advanceTimersByTime(MS_100))
+    act(() => vi.advanceTimersByTime(ms('0.1s')))
     expect(screen.getAllByText(ERROR_MESSAGE).length).toBe(innerErrorBoundaryCount)
 
     const resetButton = screen.getByRole('button', { name: resetButtonText })
@@ -45,7 +46,7 @@ describe('<ErrorBoundaryGroup/>', () => {
         {Array.from({ length: innerErrorBoundaryCount }).map((_, index) => (
           <ErrorBoundaryGroup key={index} blockOutside={index === innerErrorBoundaryCount - 1}>
             <ErrorBoundary fallback={(props) => <div>{props.error.message}</div>}>
-              <ThrowError message={ERROR_MESSAGE} after={MS_100}>
+              <ThrowError message={ERROR_MESSAGE} after={ms('0.1s')}>
                 <div>{TEXT}</div>
               </ThrowError>
             </ErrorBoundary>
@@ -55,7 +56,7 @@ describe('<ErrorBoundaryGroup/>', () => {
     )
 
     expect(screen.getAllByText(TEXT).length).toBe(innerErrorBoundaryCount)
-    act(() => vi.advanceTimersByTime(MS_100))
+    act(() => vi.advanceTimersByTime(ms('0.1s')))
     expect(screen.getAllByText(ERROR_MESSAGE).length).toBe(innerErrorBoundaryCount)
 
     const resetButton = screen.getByRole('button', { name: resetButtonText })
