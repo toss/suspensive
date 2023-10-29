@@ -1,6 +1,6 @@
 {
   "name": "@suspensive/react",
-  "version": "1.17.6",
+  "version": "1.17.7",
   "description": "Useful interfaces for React Suspense",
   "keywords": [
     "suspensive",
@@ -38,6 +38,7 @@
     "./package.json": "./package.json"
   },
   "main": "dist/index.cjs",
+  "module": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
     "dist",

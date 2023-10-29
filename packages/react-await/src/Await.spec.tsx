@@ -1,13 +1,14 @@
 import { ErrorBoundary, Suspense } from '@suspensive/react'
-import { ERROR_MESSAGE, FALLBACK, MS_100, TEXT, delay } from '@suspensive/test-utils'
+import { ERROR_MESSAGE, FALLBACK, TEXT, delay } from '@suspensive/test-utils'
 import { act, render, screen, waitFor } from '@testing-library/react'
+import ms from 'ms'
 import { vi } from 'vitest'
 import { Await, awaitClient, useAwait } from '.'
 
 const key = (id: number) => ['key', id] as const
 
 const AwaitSuccess = () => {
-  const awaited = useAwait({ key: key(1), fn: () => delay(MS_100).then(() => TEXT) })
+  const awaited = useAwait({ key: key(1), fn: () => delay(ms('0.1s')).then(() => TEXT) })
 
   return (
     <>
@@ -20,7 +21,7 @@ const AwaitSuccess = () => {
 const AwaitFailure = () => {
   const awaited = useAwait({
     key: key(1),
-    fn: () => delay(MS_100).then(() => Promise.reject(new Error(ERROR_MESSAGE))),
+    fn: () => delay(ms('0.1s')).then(() => Promise.reject(new Error(ERROR_MESSAGE))),
   })
 
   return <>{awaited.data}</>
@@ -49,7 +50,7 @@ describe('useAwait', () => {
     )
     expect(screen.queryByText(FALLBACK)).toBeInTheDocument()
 
-    act(() => vi.advanceTimersByTime(MS_100))
+    act(() => vi.advanceTimersByTime(ms('0.1s')))
     await waitFor(() => expect(screen.queryByText(TEXT)).toBeInTheDocument())
 
     // success data cache test
@@ -73,7 +74,7 @@ describe('useAwait', () => {
       </ErrorBoundary>
     )
     expect(screen.queryByText(FALLBACK)).toBeInTheDocument()
-    act(() => vi.advanceTimersByTime(MS_100))
+    act(() => vi.advanceTimersByTime(ms('0.1s')))
     await waitFor(() => expect(screen.queryByText(ERROR_MESSAGE)).toBeInTheDocument())
 
     // error cache test
@@ -97,7 +98,7 @@ describe('useAwait', () => {
       </Suspense>
     )
     expect(screen.queryByText(FALLBACK)).toBeInTheDocument()
-    act(() => vi.advanceTimersByTime(MS_100))
+    act(() => vi.advanceTimersByTime(ms('0.1s')))
     await waitFor(() => expect(screen.queryByText(TEXT)).toBeInTheDocument())
     const resetButton = await screen.findByRole('button', { name: 'Try again' })
     resetButton.click()
@@ -107,7 +108,7 @@ describe('useAwait', () => {
       </Suspense>
     )
     expect(screen.queryByText(FALLBACK)).toBeInTheDocument()
-    act(() => vi.advanceTimersByTime(MS_100))
+    act(() => vi.advanceTimersByTime(ms('0.1s')))
     await waitFor(() => expect(screen.queryByText(TEXT)).toBeInTheDocument())
   })
 })
@@ -187,7 +188,7 @@ describe('awaitClient', () => {
     vi.useFakeTimers()
     render(
       <Suspense fallback={FALLBACK}>
-        <Await options={{ key: key(1), fn: () => delay(MS_100).then(() => TEXT) }}>
+        <Await options={{ key: key(1), fn: () => delay(ms('0.1s')).then(() => TEXT) }}>
           {(awaited) => <>{awaited.data}</>}
         </Await>
       </Suspense>
@@ -196,7 +197,7 @@ describe('awaitClient', () => {
     expect(screen.queryByText(FALLBACK)).toBeInTheDocument()
     expect(screen.queryByText(TEXT)).not.toBeInTheDocument()
     expect(awaitClient.getData(key(1))).toBeUndefined()
-    act(() => vi.advanceTimersByTime(MS_100))
+    act(() => vi.advanceTimersByTime(ms('0.1s')))
     await waitFor(() => expect(screen.queryByText(TEXT)).toBeInTheDocument())
     expect(screen.queryByText(FALLBACK)).not.toBeInTheDocument()
     expect(awaitClient.getData(key(1))).toBe(TEXT)
