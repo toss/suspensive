@@ -1,5 +1,11 @@
 # @suspensive/react-await
 
+## 0.0.4
+
+### Patch Changes
+
+- e825f93: fix(tsup): remove entry of experimental
+
 ## 0.0.3
 
 ### Patch Changes

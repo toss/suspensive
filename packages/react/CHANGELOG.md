@@ -1,5 +1,11 @@
 # @suspensive/react
 
+## 1.18.1
+
+### Patch Changes
+
+- e825f93: fix(tsup): remove entry of experimental
+
 ## 1.18.0
 
 ### Minor Changes
