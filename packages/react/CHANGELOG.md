@@ -1,5 +1,11 @@
 # @suspensive/react
 
+## 1.18.0
+
+### Minor Changes
+
+- 4ec2a19: feat(react): useErrorBoundary to stable from experimental
+
 ## 1.17.7
 
 ### Patch Changes
