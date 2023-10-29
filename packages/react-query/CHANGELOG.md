@@ -1,5 +1,13 @@
 # @suspensive/react-query
 
+## 1.18.1
+
+### Patch Changes
+
+- e825f93: fix(tsup): remove entry of experimental
+- Updated dependencies [e825f93]
+  - @suspensive/react@1.18.1
+
 ## 1.18.0
 
 ### Patch Changes
