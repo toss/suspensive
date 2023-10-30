@@ -2,7 +2,7 @@ import { Callout } from 'nextra/components'
 
 # useSuspenseQuery
 
-이 hook의 return 타입에는 isLoading, isError이 없습니다. `<Suspense/>`와 `<ErrorBoundary/>`가 이 hook의 data를 보장해주기 때문입니다. 또한, 이 hook의 options에는 기본적으로 suspense가 true입니다. 필요한 새 options는 @tanstack/react-query의 useQuery처럼 사용하면 됩니다.
+이 hook의 return 타입에는 isLoading, isError이 없습니다. `<Suspense/>`와 `<ErrorBoundary/>`가 이 hook의 data를 보장해주기 때문입니다. 또한, 이 hook의 options에는 기본적으로 suspense가 true입니다. 필요한 새 options는 @tanstack/react-query의 [useQuery](https://tanstack.com/query/v4/docs/react/reference/useQuery)처럼 사용하면 됩니다.
 
 ```tsx /useSuspenseQuery/
 import { useSuspenseQuery } from '@suspensive/react-query'
@@ -20,7 +20,7 @@ const Example = () => {
 
 ### 동기
 
-@tanstack/react-query에서 suspense 옵션을 사용하면, useQuery를 `<Suspense/>` and `<ErrorBoundary/>`와 함께 사용할 수 있습니다.
+@tanstack/react-query에서 suspense 옵션을 사용하면, [useQuery](https://tanstack.com/query/v4/docs/react/reference/useQuery)를 `<Suspense/>` and `<ErrorBoundary/>`와 함께 사용할 수 있습니다.
 
 ```tsx /useQuery/
 import { useQuery } from '@tanstack/react-query'
