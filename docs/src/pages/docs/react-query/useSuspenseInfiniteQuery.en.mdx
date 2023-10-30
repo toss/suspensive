@@ -2,7 +2,7 @@ import { Callout } from 'nextra/components'
 
 # useSuspenseInfiniteQuery
 
-Return type of this hook have no isLoading, isError property. because `<Suspense/>` and `<ErrorBoundary/>` will guarantee this hook's data. In addition, this hook's options have default suspense: true. and you can provide new options to this hook like useInfiniteQuery of @tanstack/react-query.
+Return type of this hook have no isLoading, isError property. because `<Suspense/>` and `<ErrorBoundary/>` will guarantee this hook's data. In addition, this hook's options have default suspense: true. and you can provide new options to this hook like [useInfiniteQuery](https://tanstack.com/query/v4/docs/react/reference/useInfiniteQuery) of @tanstack/react-query.
 
 ```tsx /useSuspenseInfiniteQuery/
 import { useSuspenseInfiniteQuery } from '@suspensive/react-query'

@@ -2,7 +2,7 @@ import { Callout } from 'nextra/components'
 
 # useSuspenseQuery
 
-There is no isLoading or isError in the return type of this hook. This is because `<Suspense/>` and `<ErrorBoundary/>` guarantee the data of this hook. Also, in the options of this hook, suspense is set to true by default. Any new options you need can be used like @tanstack/react-query's useQuery.
+There is no isLoading or isError in the return type of this hook. This is because `<Suspense/>` and `<ErrorBoundary/>` guarantee the data of this hook. Also, in the options of this hook, suspense is set to true by default. Any new options you need can be used like @tanstack/react-query's [useQuery](https://tanstack.com/query/v4/docs/react/reference/useQuery).
 
 ```tsx /useSuspenseQuery/
 import { useSuspenseQuery } from '@suspensive/react-query'
