@@ -47,9 +47,9 @@ Suspense.CSROnly = CSROnlySuspense
 export const withSuspense = <TProps extends ComponentProps<ComponentType> = Record<string, never>>(
   component: ComponentType<TProps>,
   suspenseProps: PropsWithoutChildren<SuspenseProps> = {}
-) => wrap(Suspense, suspenseProps)(component)
+) => wrap.Suspense(suspenseProps).on(component)
 
 withSuspense.CSROnly = <TProps extends ComponentProps<ComponentType> = Record<string, never>>(
   component: ComponentType<TProps>,
   suspenseProps: PropsWithoutChildren<SuspenseProps> = {}
-) => wrap(Suspense.CSROnly, suspenseProps)(component)
+) => wrap.Suspense.CSROnly(suspenseProps).on(component)

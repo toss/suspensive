@@ -24,4 +24,4 @@ export const DelayContext = createContext<PropsWithoutChildren<DelayProps>>({ ms
 export const withDelay = <TProps extends ComponentProps<ComponentType> = Record<string, never>>(
   component: ComponentType<TProps>,
   delayProps: PropsWithoutChildren<DelayProps> = {}
-) => wrap(Delay, delayProps)(component)
+) => wrap.Delay(delayProps).on(component)

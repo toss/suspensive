@@ -49,8 +49,8 @@ AsyncBoundary.CSROnly = CSROnlyAsyncBoundary
 export const withAsyncBoundary = <TProps extends ComponentProps<ComponentType> = Record<string, never>>(
   component: ComponentType<TProps>,
   asyncBoundaryProps: PropsWithoutChildren<AsyncBoundaryProps>
-) => wrap(AsyncBoundary, asyncBoundaryProps)(component)
+) => wrap.AsyncBoundary(asyncBoundaryProps).on(component)
 withAsyncBoundary.CSROnly = <TProps extends ComponentProps<ComponentType> = Record<string, never>>(
   component: ComponentType<TProps>,
   asyncBoundaryProps: PropsWithoutChildren<AsyncBoundaryProps>
-) => wrap(AsyncBoundary.CSROnly, asyncBoundaryProps)(component)
+) => wrap.AsyncBoundary.CSROnly(asyncBoundaryProps).on(component)
