@@ -1,5 +1,11 @@
 # @suspensive/react
 
+## 1.18.2
+
+### Patch Changes
+
+- a06c31f: fix(react): remove useless variable assigning in useIsomorphicLayoutEffect
+
 ## 1.18.1
 
 ### Patch Changes
