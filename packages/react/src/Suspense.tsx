@@ -62,7 +62,7 @@ export function withSuspense<TProps extends ComponentProps<ComponentType> = Reco
 }
 
 withSuspense.CSROnly = function withSuspenseCSROnly<
-  TProps extends ComponentProps<ComponentType> = Record<string, never>
+  TProps extends ComponentProps<ComponentType> = Record<string, never>,
 >(Component: ComponentType<TProps>, suspenseProps?: PropsWithoutChildren<SuspenseProps>) {
   const Wrapped = (props: TProps) => (
     <Suspense.CSROnly {...suspenseProps}>
