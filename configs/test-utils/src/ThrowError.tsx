@@ -1,8 +1,7 @@
 import type { PropsWithChildren } from 'react'
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 
-const isClient = typeof window !== 'undefined'
-export const useIsomorphicLayoutEffect = isClient ? useLayoutEffect : useEffect
+export const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect
 
 export const useTimeout = (fn: () => void, ms: number) => {
   const fnRef = useRef(fn)
