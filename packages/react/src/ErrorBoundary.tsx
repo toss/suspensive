@@ -126,9 +126,9 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 export const withErrorBoundary = <TProps extends ComponentProps<ComponentType> = Record<string, never>>(
-  Component: ComponentType<TProps>,
+  component: ComponentType<TProps>,
   errorBoundaryProps: PropsWithoutChildren<ErrorBoundaryProps>
-) => wrap(ErrorBoundary, errorBoundaryProps)(Component)
+) => wrap.ErrorBoundary(errorBoundaryProps).on(component)
 
 const ErrorBoundaryContext = createContext<({ reset: () => void } & ErrorBoundaryState) | null>(null)
 
