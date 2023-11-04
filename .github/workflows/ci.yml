@@ -6,7 +6,9 @@ on:
       - main
   pull_request:
     types: [opened, synchronize, reopened]
-
+env:
+  TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+  TURBO_TEAM: ${{ vars.TURBO_TEAM }}
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
