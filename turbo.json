@@ -7,10 +7,10 @@
     "lint": {},
     "lint:attw": { "dependsOn": ["^build"] },
     "lint:pub": {},
-    "test": { "dependsOn": ["^build"], "outputs": ["coverage/**"] },
+    "test": { "dependsOn": ["^prepack"], "outputs": ["coverage/**"] },
     "test:tsd": {},
-    "test:watch": {},
-    "prepack": { "dependsOn": ["^prepack"], "cache": false },
+    "test:watch": { "dependsOn": ["^prepack"], "outputs": ["coverage/**"] },
+    "prepack": { "dependsOn": ["^prepack"], "outputs": ["dist/**"] },
     "dev": { "dependsOn": ["^prepack"] },
     "type:check": { "dependsOn": ["^build"] }
   },
