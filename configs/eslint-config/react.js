@@ -9,4 +9,9 @@ module.exports = {
     'react/prop-types': 'off',
     'react/no-unescaped-entities': 'off',
   },
+  settings: {
+    react: {
+      version: 'detect',
+    },
+  },
 }
