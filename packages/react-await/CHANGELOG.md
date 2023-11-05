@@ -1,5 +1,11 @@
 # @suspensive/react-await
 
+## 0.0.5
+
+### Patch Changes
+
+- 38c1247: chore: update project's dependencies
+
 ## 0.0.4
 
 ### Patch Changes
