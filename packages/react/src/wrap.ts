@@ -11,7 +11,7 @@ type WrapperItem<
     | typeof ErrorBoundaryGroup
     | typeof AsyncBoundary
     | typeof AsyncBoundary.CSROnly
-    | typeof Delay
+    | typeof Delay,
 > = [TWrapperComponent, PropsWithoutChildren<ComponentProps<TWrapperComponent>>]
 
 type Wrapper =
