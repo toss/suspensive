@@ -1,5 +1,11 @@
 # @suspensive/react
 
+## 1.18.3
+
+### Patch Changes
+
+- 38c1247: chore: update project's dependencies
+
 ## 1.18.2
 
 ### Patch Changes
