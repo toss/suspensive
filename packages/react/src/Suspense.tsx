@@ -48,7 +48,6 @@ export const withSuspense = <TProps extends ComponentProps<ComponentType> = Reco
   component: ComponentType<TProps>,
   suspenseProps: PropsWithoutChildren<SuspenseProps> = {}
 ) => wrap.Suspense(suspenseProps).on(component)
-
 withSuspense.CSROnly = <TProps extends ComponentProps<ComponentType> = Record<string, never>>(
   component: ComponentType<TProps>,
   suspenseProps: PropsWithoutChildren<SuspenseProps> = {}
