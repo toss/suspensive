@@ -6,7 +6,9 @@ on:
       - main
   pull_request:
     types: [opened, synchronize, reopened]
-
+env:
+  TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+  TURBO_TEAM: ${{ vars.TURBO_TEAM }}
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
@@ -17,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        command: ['lint', 'lint:attw', 'lint:pub', 'test', 'test:tsd', 'type:check']
+        command: ['lint', 'lint:attw', 'lint:pub', 'test', 'test:tsd', 'type:check', 'build']
     steps:
       - uses: actions/checkout@v3
       - uses: pnpm/action-setup@v2

@@ -1,5 +1,13 @@
 # @suspensive/react-query
 
+## 1.18.3
+
+### Patch Changes
+
+- 38c1247: chore: update project's dependencies
+- Updated dependencies [38c1247]
+  - @suspensive/react@1.18.3
+
 ## 1.18.2
 
 ### Patch Changes
