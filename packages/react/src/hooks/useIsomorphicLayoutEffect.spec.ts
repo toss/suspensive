@@ -2,13 +2,13 @@ import { useEffect, useLayoutEffect } from 'react'
 import { afterEach, expect, vi } from 'vitest'
 
 describe('useIsomorphicLayoutEffect', () => {
-  const originWindow = { ...global.window }
+  const originWindow = global.window
 
   afterEach(() => {
     vi.resetModules()
   })
 
-  it('should return useEffect in server environment', async () => {
+  it('should be useEffect in server environment', async () => {
     Object.defineProperty(global, 'window', {
       value: undefined,
     })
@@ -17,7 +17,7 @@ describe('useIsomorphicLayoutEffect', () => {
     expect(useIsomorphicLayoutEffect).toEqual(useEffect)
   })
 
-  it('should return useLayoutEffect in client environment', async () => {
+  it('should be useLayoutEffect in client environment', async () => {
     Object.defineProperty(global, 'window', {
       value: originWindow,
     })
@@ -26,3 +26,4 @@ describe('useIsomorphicLayoutEffect', () => {
     expect(useIsomorphicLayoutEffect).toEqual(useLayoutEffect)
   })
 })
+
