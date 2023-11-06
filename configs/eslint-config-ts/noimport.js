@@ -16,5 +16,7 @@ module.exports = {
     'jsdoc/require-returns': 'off',
     'jsdoc/require-jsdoc': 'off',
     'jsdoc/check-param-names': 'error',
+    'jsdoc/check-tag-names': 'off',
+    'jsdoc/no-types': 'off',
   },
 }

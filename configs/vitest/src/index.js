@@ -1,8 +1,11 @@
 import fs from 'fs'
 import path, { dirname } from 'path'
-import type { UserConfig } from 'vitest/config'
 
-export const forPackage = (userConfig?: UserConfig): UserConfig => {
+/**
+ * @param {import('vitest').UserConfig} userConfig
+ * @returns {import('vitest').UserConfig}
+ */
+export const forPackage = (userConfig) => {
   const packageJsonPath = path.resolve(dirname('.'), 'package.json')
   const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf-8'))
 
