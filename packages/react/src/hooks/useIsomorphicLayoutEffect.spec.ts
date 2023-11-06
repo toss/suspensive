@@ -26,4 +26,3 @@ describe('useIsomorphicLayoutEffect', () => {
     expect(useIsomorphicLayoutEffect).toEqual(useLayoutEffect)
   })
 })
-
