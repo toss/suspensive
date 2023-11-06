@@ -2,13 +2,10 @@
   "name": "@suspensive/tsup",
   "version": "0.0.0",
   "private": true,
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "type": "module",
+  "main": "src/index.js",
+  "types": "src/index.d.ts",
   "scripts": {
-    "build": "tsc",
-    "clean": "rimraf ./dist",
-    "lint": "eslint .",
-    "prepack": "pnpm build",
-    "type:check": "tsc --noEmit"
+    "lint": "eslint ."
   }
 }
