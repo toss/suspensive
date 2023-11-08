@@ -1,5 +1,11 @@
 # @suspensive/react-await
 
+## 0.0.6
+
+### Patch Changes
+
+- ad8d3a0: ci(deps): update dependency @types/use-sync-external-store to ^0.0.6
+
 ## 0.0.5
 
 ### Patch Changes
