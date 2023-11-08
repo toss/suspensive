@@ -1,6 +1,6 @@
 {
   "name": "@suspensive/react-await",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Useful interfaces for React Suspense",
   "keywords": [
     "suspensive",
