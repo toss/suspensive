@@ -47,7 +47,7 @@
     "type:check": "turbo run type:check --parallel"
   },
   "devDependencies": {
-    "@arethetypeswrong/cli": "^0.12.2",
+    "@arethetypeswrong/cli": "^0.13.0",
     "@changesets/cli": "^2.26.2",
     "@commitlint/cli": "^17.8.1",
     "@commitlint/config-conventional": "^17.8.1",

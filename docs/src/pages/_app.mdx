@@ -1,11 +1,21 @@
 import '../styles/globals.css'
-import { Analytics } from '@vercel/analytics/react'
+import Script from 'next/script'
 
 export default function App({ Component, pageProps }) {
   return (
     <>
       <Component {...pageProps} />
-      <Analytics />
+      <Script src="https://www.googletagmanager.com/gtag/js?id=G-NYQZGKRL0Y"/>
+      <Script id="google-analytics">
+      {`
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-NYQZGKRL0Y');
+      `}
+      </Script>
     </>
-  )
+
+)
 }
