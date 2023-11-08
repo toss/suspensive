@@ -1,6 +1,6 @@
 {
   "name": "@suspensive/react-await",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Useful interfaces for React Suspense",
   "keywords": [
     "suspensive",
@@ -67,7 +67,7 @@
     "@types/node": "^18.18.8",
     "@types/react": "^18.2.34",
     "@types/react-dom": "^18.2.14",
-    "@types/use-sync-external-store": "^0.0.4",
+    "@types/use-sync-external-store": "^0.0.6",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
