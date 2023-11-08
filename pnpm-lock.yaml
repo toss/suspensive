@@ -33,8 +33,8 @@ importers:
         specifier: workspace:*
         version: link:configs/tsconfig
       '@testing-library/dom':
-        specifier: ^8.20.1
-        version: 8.20.1
+        specifier: ^9.0.0
+        version: 9.3.3
       '@testing-library/jest-dom':
         specifier: ^5.17.0
         version: 5.17.0
@@ -1993,6 +1993,20 @@ packages:
   /@testing-library/dom@8.20.1:
     resolution: {integrity: sha512-/DiOQ5xBxgdYRC8LNk7U+RWat0S3qRLeIw3ZIkMQ9kkVlRmwD/Eg8k8CqIpD6GW7u20JIUOfMKbxtiLutpjQ4g==}
     engines: {node: '>=12'}
+    dependencies:
+      '@babel/code-frame': 7.22.13
+      '@babel/runtime': 7.23.2
+      '@types/aria-query': 5.0.3
+      aria-query: 5.1.3
+      chalk: 4.1.2
+      dom-accessibility-api: 0.5.16
+      lz-string: 1.5.0
+      pretty-format: 27.5.1
+    dev: true
+
+  /@testing-library/dom@9.3.3:
+    resolution: {integrity: sha512-fB0R+fa3AUqbLHWyxXa2kGVtf1Fe1ZZFr0Zp6AIbIAzXb2mKbEXl+PCQNUOaq5lbTab5tfctfXRNsWXxa2f7Aw==}
+    engines: {node: '>=14'}
     dependencies:
       '@babel/code-frame': 7.22.13
       '@babel/runtime': 7.23.2
