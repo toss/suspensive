@@ -1,5 +1,4 @@
 import './global.css'
-import { Analytics } from '@vercel/analytics/react'
 import type { Metadata } from 'next'
 import { CommonLayout } from './CommonLayout'
 import { Providers } from './providers'
@@ -15,7 +14,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Providers>
           <CommonLayout>{children}</CommonLayout>
         </Providers>
-        <Analytics />
       </body>
     </html>
   )
