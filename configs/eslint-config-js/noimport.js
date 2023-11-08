@@ -11,12 +11,25 @@ module.exports = {
     ecmaVersion: 2020,
   },
   plugins: ['jsdoc'],
-  extends: ['eslint:recommended', 'plugin:prettier/recommended', 'plugin:jsdoc/recommended'],
+  extends: [
+    'eslint:recommended',
+    'plugin:prettier/recommended',
+    'plugin:jsdoc/recommended',
+    'plugin:@cspell/recommended',
+  ],
   rules: {
     'jsdoc/require-description': 'warn',
     'jsdoc/require-returns': 'off',
     'jsdoc/require-jsdoc': 'off',
     'jsdoc/check-param-names': 'error',
+    '@cspell/spellchecker': [
+      'warn',
+      {
+        cspell: {
+          words: ['packlint', 'codecov', 'tsup'],
+        },
+      },
+    ],
   },
   overrides: [
     {
