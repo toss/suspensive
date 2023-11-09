@@ -4,7 +4,7 @@ import { useSuspenseQuery } from '@suspensive/react-query'
 import { Box, Description } from './uis'
 
 type Props = {
-  queryKey: Readonly<['query' | 'boundary', number]>
+  queryKey: Readonly<[string, number]>
   queryFn: () => Promise<string>
 }
 

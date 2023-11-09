@@ -2,6 +2,7 @@ import type { ComponentProps, ComponentType, ReactNode, SuspenseProps as ReactSu
 import { Suspense as ReactSuspense, createContext, useContext } from 'react'
 import { useIsClient } from './hooks'
 import type { PropsWithoutChildren } from './types'
+import { wrap } from './wrap'
 
 export type SuspenseProps = ReactSuspenseProps
 
@@ -43,37 +44,11 @@ export const Suspense = DefaultSuspense as typeof DefaultSuspense & {
 }
 Suspense.CSROnly = CSROnlySuspense
 
-export function withSuspense<TProps extends ComponentProps<ComponentType> = Record<string, never>>(
-  Component: ComponentType<TProps>,
-  suspenseProps?: PropsWithoutChildren<SuspenseProps>
-) {
-  const Wrapped = (props: TProps) => (
-    <Suspense {...suspenseProps}>
-      <Component {...props} />
-    </Suspense>
-  )
-
-  if (process.env.NODE_ENV !== 'production') {
-    const name = Component.displayName || Component.name || 'Component'
-    Wrapped.displayName = `withSuspense(${name})`
-  }
-
-  return Wrapped
-}
-
-withSuspense.CSROnly = function withSuspenseCSROnly<
-  TProps extends ComponentProps<ComponentType> = Record<string, never>,
->(Component: ComponentType<TProps>, suspenseProps?: PropsWithoutChildren<SuspenseProps>) {
-  const Wrapped = (props: TProps) => (
-    <Suspense.CSROnly {...suspenseProps}>
-      <Component {...props} />
-    </Suspense.CSROnly>
-  )
-
-  if (process.env.NODE_ENV !== 'production') {
-    const name = Component.displayName || Component.name || 'Component'
-    Wrapped.displayName = `withSuspense.CSROnly(${name})`
-  }
-
-  return Wrapped
-}
+export const withSuspense = <TProps extends ComponentProps<ComponentType> = Record<string, never>>(
+  component: ComponentType<TProps>,
+  suspenseProps: PropsWithoutChildren<SuspenseProps> = {}
+) => wrap.Suspense(suspenseProps).on(component)
+withSuspense.CSROnly = <TProps extends ComponentProps<ComponentType> = Record<string, never>>(
+  component: ComponentType<TProps>,
+  suspenseProps: PropsWithoutChildren<SuspenseProps> = {}
+) => wrap.Suspense.CSROnly(suspenseProps).on(component)
