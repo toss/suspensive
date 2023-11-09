@@ -1,5 +1,11 @@
 # @suspensive/react
 
+## 1.19.0
+
+### Minor Changes
+
+- f78ed7d: feat(react): add experimental wrap to remove unnecessary hocs' implementation
+
 ## 1.18.3
 
 ### Patch Changes
