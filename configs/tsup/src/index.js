@@ -1,6 +1,5 @@
-import type { Options } from 'tsup'
-
-export const options: Options = {
+/** @type {import('tsup').Options} */
+export const options = {
   banner: { js: '"use client"' },
   format: ['cjs', 'esm'],
   entry: ['src/*.{ts,tsx}', '!**/*.{spec,test,test-d}.*'],

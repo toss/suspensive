@@ -11,15 +11,12 @@
   },
   "dependencies": {
     "@suspensive/eslint-config-js": "workspace:*",
-    "@typescript-eslint/eslint-plugin": "^5.7.0",
-    "@typescript-eslint/parser": "^5.7.0",
-    "eslint-config-prettier": "^8.3.0",
-    "eslint-import-resolver-typescript": "^2.5.0",
-    "eslint-plugin-import": "^2.25.3",
+    "@typescript-eslint/eslint-plugin": "^6.10.0",
+    "@typescript-eslint/parser": "^6.10.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-import-resolver-typescript": "^3.6.1",
+    "eslint-plugin-import": "^2.29.0",
     "eslint-plugin-jsdoc": "^46.8.2",
-    "eslint-plugin-prettier": "^4.2.1"
-  },
-  "peerDependencies": {
-    "eslint": "^6.0.0 || ^7.0.0 || ^8.0.0"
+    "eslint-plugin-prettier": "^5.0.1"
   }
 }

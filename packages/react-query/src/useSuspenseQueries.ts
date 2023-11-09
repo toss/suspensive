@@ -10,7 +10,7 @@ type UseQueryOptionsForUseSuspenseQueries<
   TQueryFnData = unknown,
   TData = TQueryFnData,
   TQueryKey extends QueryKey = QueryKey,
-  TEnabled extends boolean | undefined = true
+  TEnabled extends boolean | undefined = true,
 > = Omit<UseQueryOptions<TQueryFnData, unknown, TData, TQueryKey>, 'context' | 'suspense'> & {
   enabled?: TEnabled
 }
@@ -62,7 +62,7 @@ type GetOption<T> =
 type SuspenseQueriesOptions<
   T extends unknown[],
   Result extends unknown[] = [],
-  Depth extends ReadonlyArray<number> = []
+  Depth extends ReadonlyArray<number> = [],
 > = Depth['length'] extends MAXIMUM_DEPTH
   ? UseQueryOptionsForUseSuspenseQueries[]
   : T extends []
@@ -120,7 +120,7 @@ type GetResult<T> = T extends { queryFnData: any; data: infer TData }
 export type QueriesResults<
   T extends any[],
   Result extends any[] = [],
-  Depth extends ReadonlyArray<number> = []
+  Depth extends ReadonlyArray<number> = [],
 > = Depth['length'] extends MAXIMUM_DEPTH
   ? UseQueryResult[]
   : T extends []
