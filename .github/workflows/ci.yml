@@ -21,11 +21,11 @@ jobs:
       matrix:
         command: ['lint', 'lint:attw', 'lint:pub', 'test', 'test:tsd', 'type:check', 'build']
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v2
         with:
           version: 8.10.2
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
           cache: 'pnpm'
           cache-dependency-path: 'pnpm-lock.yaml'
