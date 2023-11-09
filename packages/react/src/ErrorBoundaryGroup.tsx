@@ -1,6 +1,6 @@
 import type { ComponentProps, ComponentType, PropsWithChildren } from 'react'
 import { createContext, useContext, useEffect, useMemo } from 'react'
-import { useIsChanged, useKey } from './hooks'
+import { useIsChanged, useRefreshKey } from './hooks'
 import type { PropsWithoutChildren } from './types'
 import { assert } from './utils'
 
@@ -22,7 +22,7 @@ export type ErrorBoundaryGroupProps = PropsWithChildren<{
  * @see {@link https://suspensive.org/docs/react/ErrorBoundaryGroup}
  */
 export const ErrorBoundaryGroup = ({ blockOutside = false, children }: ErrorBoundaryGroupProps) => {
-  const [resetKey, reset] = useKey()
+  const [resetKey, reset] = useRefreshKey()
   const parentGroup = useContext(ErrorBoundaryGroupContext)
   const isParentGroupResetKeyChanged = useIsChanged(parentGroup?.resetKey)
 

@@ -1,10 +1,10 @@
 import { act, renderHook } from '@testing-library/react'
-import { useKey } from '.'
+import { useRefreshKey } from '.'
 
-describe('useKey', () => {
+describe('useRefreshKey', () => {
   describe('refresh function', () => {
     it('should increment the key state by 1', () => {
-      const { result } = renderHook(() => useKey())
+      const { result } = renderHook(() => useRefreshKey())
 
       const initialKey = result.current[0]
       const refresh = result.current[1]
