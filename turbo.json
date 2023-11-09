@@ -2,17 +2,16 @@
   "$schema": "https://turbo.build/schema.json",
   "pipeline": {
     "build": { "dependsOn": ["^build"], "outputs": ["dist/**", ".next/**", "build/**"] },
-    "build:watch": { "outputs": ["dist/**"] },
-    "npm:publish": { "dependsOn": ["^build"] },
+    "build:watch": { "dependsOn": ["^build"], "outputs": ["dist/**"] },
     "lint": {},
-    "lint:attw": { "dependsOn": ["^build"] },
+    "lint:attw": { "dependsOn": ["^prepack"] },
     "lint:pub": {},
     "test": { "dependsOn": ["^prepack"], "outputs": ["coverage/**"] },
     "test:tsd": {},
     "test:watch": { "dependsOn": ["^prepack"], "outputs": ["coverage/**"] },
     "prepack": { "dependsOn": ["^prepack"], "outputs": ["dist/**"] },
     "dev": { "dependsOn": ["^prepack"] },
-    "type:check": { "dependsOn": ["^build"] }
+    "type:check": { "dependsOn": ["^prepack"] }
   },
   "globalEnv": ["NODE_ENV"]
 }

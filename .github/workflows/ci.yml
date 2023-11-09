@@ -31,6 +31,5 @@ jobs:
           cache-dependency-path: 'pnpm-lock.yaml'
           node-version-file: '.nvmrc'
       - run: pnpm install --frozen-lockfile
-      - run: pnpm prepack
       - name: Run commands
         run: pnpm ${{ matrix.command }}
