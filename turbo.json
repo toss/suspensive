@@ -2,17 +2,16 @@
   "$schema": "https://turbo.build/schema.json",
   "pipeline": {
     "build": { "dependsOn": ["^build"], "outputs": ["dist/**", ".next/**", "build/**"] },
-    "build:watch": { "outputs": ["dist/**"] },
-    "npm:publish": { "dependsOn": ["^build"] },
-    "lint": {},
-    "lint:attw": { "dependsOn": ["^build"] },
-    "lint:pub": {},
-    "test": { "dependsOn": ["^prepack"], "outputs": ["coverage/**"] },
-    "test:tsd": {},
-    "test:watch": { "dependsOn": ["^prepack"], "outputs": ["coverage/**"] },
+    "build:watch": { "dependsOn": ["^build"], "outputs": ["dist/**"] },
+    "lint": { "dependsOn": ["prepack"] },
+    "lint:attw": { "dependsOn": ["prepack"] },
+    "lint:pub": { "dependsOn": ["prepack"] },
+    "test": { "dependsOn": ["prepack"], "outputs": ["coverage/**"] },
+    "test:tsd": { "dependsOn": ["prepack"], "outputs": ["coverage/**"] },
+    "test:watch": { "dependsOn": ["prepack"], "outputs": ["coverage/**"] },
     "prepack": { "dependsOn": ["^prepack"], "outputs": ["dist/**"] },
-    "dev": { "dependsOn": ["^prepack"] },
-    "type:check": { "dependsOn": ["^build"] }
+    "dev": { "dependsOn": ["prepack"] },
+    "type:check": { "dependsOn": ["prepack"] }
   },
   "globalEnv": ["NODE_ENV"]
 }
