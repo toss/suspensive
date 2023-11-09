@@ -3,15 +3,15 @@
   "pipeline": {
     "build": { "dependsOn": ["^build"], "outputs": ["dist/**", ".next/**", "build/**"] },
     "build:watch": { "dependsOn": ["^build"], "outputs": ["dist/**"] },
-    "lint": { "dependsOn": ["^prepack"] },
-    "lint:attw": { "dependsOn": ["^prepack"] },
-    "lint:pub": { "dependsOn": ["^prepack"] },
-    "test": { "dependsOn": ["^prepack"], "outputs": ["coverage/**"] },
-    "test:tsd": { "dependsOn": ["^prepack"], "outputs": ["coverage/**"] },
-    "test:watch": { "dependsOn": ["^prepack"], "outputs": ["coverage/**"] },
+    "lint": { "dependsOn": ["prepack"] },
+    "lint:attw": { "dependsOn": ["prepack"] },
+    "lint:pub": { "dependsOn": ["prepack"] },
+    "test": { "dependsOn": ["prepack"], "outputs": ["coverage/**"] },
+    "test:tsd": { "dependsOn": ["prepack"], "outputs": ["coverage/**"] },
+    "test:watch": { "dependsOn": ["prepack"], "outputs": ["coverage/**"] },
     "prepack": { "dependsOn": ["^prepack"], "outputs": ["dist/**"] },
-    "dev": { "dependsOn": ["^prepack"] },
-    "type:check": { "dependsOn": ["^prepack"] }
+    "dev": { "dependsOn": ["prepack"] },
+    "type:check": { "dependsOn": ["prepack"] }
   },
   "globalEnv": ["NODE_ENV"]
 }
