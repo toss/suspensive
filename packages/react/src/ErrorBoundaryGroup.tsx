@@ -3,6 +3,7 @@ import { createContext, useContext, useEffect, useMemo } from 'react'
 import { useIsChanged, useKey } from './hooks'
 import type { PropsWithoutChildren } from './types'
 import { assert } from './utils'
+import { wrap } from './wrap'
 
 export const ErrorBoundaryGroupContext = createContext<{ reset: () => void; resetKey: number } | undefined>(undefined)
 if (process.env.NODE_ENV !== 'production') {
@@ -36,6 +37,9 @@ export const ErrorBoundaryGroup = ({ blockOutside = false, children }: ErrorBoun
 
   return <ErrorBoundaryGroupContext.Provider value={value}>{children}</ErrorBoundaryGroupContext.Provider>
 }
+if (process.env.NODE_ENV !== 'production') {
+  ErrorBoundaryGroup.displayName = 'ErrorBoundaryGroup'
+}
 
 const ErrorBoundaryGroupReset = ({
   trigger: Trigger,
@@ -67,19 +71,6 @@ export const useErrorBoundaryGroup = () => {
 }
 
 export const withErrorBoundaryGroup = <TProps extends ComponentProps<ComponentType> = Record<string, never>>(
-  Component: ComponentType<TProps>,
-  errorBoundaryGroupProps?: PropsWithoutChildren<ErrorBoundaryGroupProps>
-) => {
-  const Wrapped = (props: TProps) => (
-    <ErrorBoundaryGroup {...errorBoundaryGroupProps}>
-      <Component {...props} />
-    </ErrorBoundaryGroup>
-  )
-
-  if (process.env.NODE_ENV !== 'production') {
-    const name = Component.displayName || Component.name || 'Component'
-    Wrapped.displayName = `withErrorBoundaryGroup(${name})`
-  }
-
-  return Wrapped
-}
+  component: ComponentType<TProps>,
+  errorBoundaryGroupProps: PropsWithoutChildren<ErrorBoundaryGroupProps> = {}
+) => wrap.ErrorBoundaryGroup(errorBoundaryGroupProps).on(component)
