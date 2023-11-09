@@ -63,7 +63,6 @@
     "@suspensive/tsup": "workspace:*",
     "@suspensive/vitest": "workspace:*",
     "@tanstack/react-query": "^4.36.1",
-    "@types/node": "^18.18.8",
     "@types/react": "^18.2.34",
     "@types/react-dom": "^18.2.14",
     "react": "^18.2.0",
