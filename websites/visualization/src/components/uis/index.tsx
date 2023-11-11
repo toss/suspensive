@@ -66,14 +66,14 @@ export const BaseBox = styled.div`
   gap: 8px;
   color: black;
   transition: all 200ms;
-  animation: fadein 200ms;
+  animation: fadeIn 200ms;
   font-size: 12px;
 
   :hover {
     opacity: 0.8;
   }
 
-  @keyframes fadein {
+  @keyframes fadeIn {
     from {
       opacity: 0;
     }
