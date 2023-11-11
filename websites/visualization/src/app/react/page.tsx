@@ -1,9 +1,9 @@
 'use client'
 
-import { AsyncBoundary, ErrorBoundary, ErrorBoundaryGroup, Suspense } from '@suspensive/react'
+import { ErrorBoundary, ErrorBoundaryGroup, Suspense } from '@suspensive/react'
 import { useQueryErrorResetBoundary } from '@tanstack/react-query'
 import { RejectedFallback, UseSuspenseQuery } from '~/components'
-import { Area, Button, DescriptionText, Spinner } from '~/components/uis'
+import { Area, Button, Spinner } from '~/components/uis'
 import { api } from '~/utils/api'
 
 export default function Page() {
@@ -36,8 +36,6 @@ export default function Page() {
               </Suspense.CSROnly>
             </Area>
 
-            <DescriptionText>+</DescriptionText>
-
             <Area title="ErrorBoundary (100% Error)">
               <ErrorBoundary onReset={queryErrorResetBoundary.reset} fallback={RejectedFallback}>
                 <Suspense.CSROnly fallback={<Spinner />}>
@@ -45,19 +43,6 @@ export default function Page() {
                   <UseSuspenseQuery queryKey={['boundary', 5]} queryFn={() => api.delay(500, { percentage: 100 })} />
                 </Suspense.CSROnly>
               </ErrorBoundary>
-            </Area>
-
-            <DescriptionText>=</DescriptionText>
-
-            <Area title="AsyncBoundary (50% Success)">
-              <AsyncBoundary.CSROnly
-                onReset={queryErrorResetBoundary.reset}
-                pendingFallback={<Spinner />}
-                rejectedFallback={RejectedFallback}
-              >
-                <UseSuspenseQuery queryKey={['boundary', 6]} queryFn={() => api.delay(500, { percentage: 100 })} />
-                <UseSuspenseQuery queryKey={['boundary', 7]} queryFn={() => api.delay(500, { percentage: 50 })} />
-              </AsyncBoundary.CSROnly>
             </Area>
           </ErrorBoundaryGroup>
         </Area>
@@ -77,8 +62,6 @@ export default function Page() {
               </Suspense.CSROnly>
             </Area>
 
-            <DescriptionText>+</DescriptionText>
-
             <Area title="ErrorBoundary (100% Error)">
               <ErrorBoundary onReset={queryErrorResetBoundary.reset} fallback={RejectedFallback}>
                 <Suspense.CSROnly fallback={<Spinner />}>
@@ -86,18 +69,6 @@ export default function Page() {
                   <UseSuspenseQuery queryKey={['boundary', 5]} queryFn={() => api.delay(500, { percentage: 100 })} />
                 </Suspense.CSROnly>
               </ErrorBoundary>
-            </Area>
-
-            <DescriptionText>=</DescriptionText>
-
-            <Area title="AsyncBoundary (50% Success)">
-              <AsyncBoundary.CSROnly
-                onReset={queryErrorResetBoundary.reset}
-                pendingFallback={<Spinner />}
-                rejectedFallback={RejectedFallback}
-              >
-                <UseSuspenseQuery queryKey={['boundary', 7]} queryFn={() => api.delay(500, { percentage: 50 })} />
-              </AsyncBoundary.CSROnly>
             </Area>
           </ErrorBoundaryGroup>
         </Area>

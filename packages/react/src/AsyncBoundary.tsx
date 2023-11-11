@@ -4,8 +4,10 @@ import { ErrorBoundary } from './ErrorBoundary'
 import type { ErrorBoundaryProps } from './ErrorBoundary'
 import { Suspense } from './Suspense'
 import type { PropsWithoutChildren } from './types'
-import { wrap } from './wrap'
 
+/**
+ * @deprecated Use <Suspense/> and <ErrorBoundary/> as alternatives
+ */
 export type AsyncBoundaryProps = Omit<SuspenseProps, 'fallback'> &
   Omit<ErrorBoundaryProps, 'fallback'> & {
     pendingFallback?: SuspenseProps['fallback']
@@ -34,23 +36,54 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 /**
- * This component is just wrapping Suspense and ErrorBoundary in this library. to use Suspense with ErrorBoundary at once easily.
- * @see {@link https://suspensive.org/docs/react/AsyncBoundary}
+ * @deprecated Use Suspense and ErrorBoundary as alternatives
  */
 export const AsyncBoundary = BaseAsyncBoundary as typeof BaseAsyncBoundary & {
   /**
-   * CSROnly make AsyncBoundary can be used in SSR framework like Next.js with React 17 or under
-   * @see {@link https://suspensive.org/docs/react/AsyncBoundary}
+   * @deprecated Use Suspense and ErrorBoundary as alternatives
    */
   CSROnly: typeof CSROnlyAsyncBoundary
 }
 AsyncBoundary.CSROnly = CSROnlyAsyncBoundary
 
+/**
+ * @deprecated Use wrap.ErrorBoundary().Suspense().on as alternatives
+ */
 export const withAsyncBoundary = <TProps extends ComponentProps<ComponentType> = Record<string, never>>(
-  component: ComponentType<TProps>,
+  Component: ComponentType<TProps>,
   asyncBoundaryProps: PropsWithoutChildren<AsyncBoundaryProps>
-) => wrap.AsyncBoundary(asyncBoundaryProps).on(component)
+) => {
+  const Wrapped = (props: TProps) => (
+    <AsyncBoundary {...asyncBoundaryProps}>
+      <Component {...props} />
+    </AsyncBoundary>
+  )
+
+  if (process.env.NODE_ENV !== 'production') {
+    const name = Component.displayName || Component.name || 'Component'
+    Wrapped.displayName = `withAsyncBoundary(${name})`
+  }
+
+  return Wrapped
+}
+
+/**
+ * @deprecated Use wrap.ErrorBoundary().Suspense.CSROnly().on as alternatives
+ */
 withAsyncBoundary.CSROnly = <TProps extends ComponentProps<ComponentType> = Record<string, never>>(
-  component: ComponentType<TProps>,
+  Component: ComponentType<TProps>,
   asyncBoundaryProps: PropsWithoutChildren<AsyncBoundaryProps>
-) => wrap.AsyncBoundary.CSROnly(asyncBoundaryProps).on(component)
+) => {
+  const Wrapped = (props: TProps) => (
+    <AsyncBoundary.CSROnly {...asyncBoundaryProps}>
+      <Component {...props} />
+    </AsyncBoundary.CSROnly>
+  )
+
+  if (process.env.NODE_ENV !== 'production') {
+    const name = Component.displayName || Component.name || 'Component'
+    Wrapped.displayName = `withAsyncBoundary.CSROnly(${name})`
+  }
+
+  return Wrapped
+}
