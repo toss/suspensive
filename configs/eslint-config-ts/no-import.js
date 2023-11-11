@@ -4,7 +4,7 @@ module.exports = {
   parser: '@typescript-eslint/parser',
   plugins: ['jsdoc', '@typescript-eslint'],
   extends: [
-    '@suspensive/eslint-config-js/noimport',
+    '@suspensive/eslint-config-js/no-import',
     'plugin:jsdoc/recommended-typescript',
     'plugin:@typescript-eslint/recommended',
   ],
