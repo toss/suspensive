@@ -4,5 +4,6 @@
   "ErrorBoundary": { "title": "<ErrorBoundary/>" },
   "ErrorBoundaryGroup": { "title": "<ErrorBoundaryGroup/>" },
   "Delay": { "title": "<Delay/>" },
-  "SuspensiveProvider": { "title": "<SuspensiveProvider/>" }
+  "SuspensiveProvider": { "title": "<SuspensiveProvider/>" },
+  "wrap": { "title": "wrap" }
 }

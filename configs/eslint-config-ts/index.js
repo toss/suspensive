@@ -1,7 +1,7 @@
 /** @type {import('eslint').Linter.Config} */
 module.exports = {
   root: true,
-  extends: ['plugin:import/typescript', './noimport.js'],
+  extends: ['plugin:import/typescript', './no-import.js'],
   plugins: ['import'],
   settings: {
     'import/resolver': {
