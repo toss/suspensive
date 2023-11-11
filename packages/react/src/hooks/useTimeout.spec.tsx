@@ -31,7 +31,7 @@ describe('useTimeout', () => {
     expect(fn).toHaveBeenCalledTimes(1)
   })
 
-  it('should not re-call callback reveived as argument even if component using this hook is rerendered', () => {
+  it('should not re-call callback received as argument even if component using this hook is rerendered', () => {
     const { rerender } = render(<TestComponent />)
 
     expect(screen.getByText('0')).toBeInTheDocument()

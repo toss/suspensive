@@ -5,7 +5,7 @@
   "files": [
     "react-js.js",
     "react-ts.js",
-    "react-ts-noimport.js"
+    "react-ts-no-import.js"
   ],
   "scripts": {
     "lint": "eslint ."
