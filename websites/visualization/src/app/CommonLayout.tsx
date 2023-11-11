@@ -19,7 +19,7 @@ const TopNavigation = () => (
   <Flex.Center as={'nav'} padding={'8px 16px'} fontWeight={500} backgroundColor={'#ffffff20'}>
     <Link href="/">
       <Flex align={'center'}>
-        <Image src="/logo_notcropped.png" width={40} height={40} alt="logo" />
+        <Image src="/logo_not_cropped.png" width={40} height={40} alt="logo" />
         Visualization
       </Flex>
     </Link>

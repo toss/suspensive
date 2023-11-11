@@ -2,9 +2,9 @@
   "name": "@suspensive/eslint-config-ts",
   "version": "0.0.0",
   "private": true,
-  "main": "typescript.js",
+  "main": "index.js",
   "files": [
-    "./noimport.js"
+    "./no-import.js"
   ],
   "scripts": {
     "lint": "eslint ."
