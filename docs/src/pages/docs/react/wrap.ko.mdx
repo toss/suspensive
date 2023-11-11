@@ -44,7 +44,7 @@ const PostItem = wrap
   .on<{ id: string }>(
     // <ErrorBoundary/>, <Suspense/>에 감싸진 <PostItem/> 컴포넌트를 만듭니다.
     (props) => {
-      const post = useSuspenseQuery({
+      const { data: post } = useSuspenseQuery({
         queryKey: ['posts', props.id],
         queryFn: () => fetch(`https://exmaple.com/posts/${props.id}`).then((res) => res.json()),
       })
