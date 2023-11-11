@@ -1,5 +1,5 @@
 ---
-"@suspensive/react": patch
+"@suspensive/react": minor
 ---
 
-fix(react): add re-throw received error with no fallback of ErrorBoundary
+feat(react): re-throw received error with no fallback of ErrorBoundary
