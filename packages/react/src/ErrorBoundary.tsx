@@ -87,7 +87,7 @@ class BaseErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState
     const { children, fallback } = this.props
 
     if (this.state.isError && typeof fallback === 'undefined') {
-      if (process.env.NODE_ENV === 'production') {
+      if (process.env.NODE_ENV !== 'production') {
         console.error('ErrorBoundary of @suspensive/react requires a defined fallback')
       }
       throw this.state.error
