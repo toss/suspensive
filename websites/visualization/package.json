@@ -34,7 +34,7 @@
     "@suspensive/react-await": "workspace:*",
     "@suspensive/react-query": "workspace:*",
     "@tanstack/react-query": "^4.36.1",
-    "@tanstack/react-query-devtools": "^4.36.1",
+    "@tanstack/react-query-devtools": "^5.8.1",
     "axios": "^1.6.0",
     "next": "^14.0.1",
     "react": "^18.2.0",
