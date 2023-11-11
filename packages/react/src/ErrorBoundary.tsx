@@ -42,7 +42,7 @@ export type ErrorBoundaryProps = PropsWithChildren<{
   /**
    * when ErrorBoundary catch error, fallback will be render instead of children
    */
-  fallback: ReactNode | FunctionComponent<ErrorBoundaryFallbackProps>
+  fallback: NonNullable<ReactNode> | FunctionComponent<ErrorBoundaryFallbackProps>
 }>
 
 type ErrorBoundaryState<TError extends Error = Error> =
@@ -86,12 +86,11 @@ class BaseErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState
   render() {
     const { children, fallback } = this.props
 
-    if (process.env.NODE_ENV === 'production') {
-      if (this.state.isError && typeof fallback === 'undefined') {
+    if (this.state.isError && fallback == null) {
+      if (process.env.NODE_ENV === 'production') {
         console.error('ErrorBoundary of @suspensive/react requires a fallback')
-
-        throw this.state.error
       }
+      throw this.state.error
     }
 
     return (

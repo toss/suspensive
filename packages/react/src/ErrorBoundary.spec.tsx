@@ -69,6 +69,20 @@ describe('<ErrorBoundary/>', () => {
     expect(container.textContent).not.toBe(TEXT)
   })
 
+  it('should show children if no error but if error in children and no fallback is set for ErrorBoundary, ErrorBoundary will rethrow error', () => {
+    expect(() =>
+      render(
+        createElement(() => (
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore fallback can still be undefined in JavaScript
+          <ErrorBoundary fallback={undefined}>
+            <ThrowError message={ERROR_MESSAGE} after={0} />
+          </ErrorBoundary>
+        ))
+      )
+    ).toThrow(ERROR_MESSAGE)
+  })
+
   it('should catch it even if thrown null', () => {
     const onError = vi.fn()
     vi.useFakeTimers()
