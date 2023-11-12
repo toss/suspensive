@@ -70,6 +70,9 @@ export const useErrorBoundaryGroup = () => {
   )
 }
 
+/**
+ * @deprecated Use wrap.ErrorBoundaryGroup().on as alternatives
+ */
 export const withErrorBoundaryGroup = <TProps extends ComponentProps<ComponentType> = Record<string, never>>(
   component: ComponentType<TProps>,
   errorBoundaryGroupProps: PropsWithoutChildren<ErrorBoundaryGroupProps> = {}

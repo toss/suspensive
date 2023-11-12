@@ -44,10 +44,16 @@ export const Suspense = DefaultSuspense as typeof DefaultSuspense & {
 }
 Suspense.CSROnly = CSROnlySuspense
 
+/**
+ * @deprecated Use wrap.Suspense().on as alternatives
+ */
 export const withSuspense = <TProps extends ComponentProps<ComponentType> = Record<string, never>>(
   component: ComponentType<TProps>,
   suspenseProps: PropsWithoutChildren<SuspenseProps> = {}
 ) => wrap.Suspense(suspenseProps).on(component)
+/**
+ * @deprecated Use wrap.Suspense.CSROnly().on as alternatives
+ */
 withSuspense.CSROnly = <TProps extends ComponentProps<ComponentType> = Record<string, never>>(
   component: ComponentType<TProps>,
   suspenseProps: PropsWithoutChildren<SuspenseProps> = {}

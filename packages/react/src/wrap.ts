@@ -98,9 +98,6 @@ wrapAsyncBoundary.CSROnly = (...[props]: Parameters<Wrap['AsyncBoundary']['CSROn
   createWrap().AsyncBoundary.CSROnly(props)
 const wrapDelay = (...[props = {}]: Parameters<Wrap['Delay']>) => createWrap().Delay(props)
 
-/**
- * @experimental This is experimental feature.
- */
 export const wrap = {
   Suspense: wrapSuspense,
   ErrorBoundary: wrapErrorBoundary,

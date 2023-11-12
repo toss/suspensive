@@ -21,6 +21,9 @@ if (process.env.NODE_ENV !== 'production') {
 
 export const DelayContext = createContext<PropsWithoutChildren<DelayProps>>({ ms: 0 })
 
+/**
+ * @deprecated Use wrap.Delay().on as alternatives
+ */
 export const withDelay = <TProps extends ComponentProps<ComponentType> = Record<string, never>>(
   component: ComponentType<TProps>,
   delayProps: PropsWithoutChildren<DelayProps> = {}
