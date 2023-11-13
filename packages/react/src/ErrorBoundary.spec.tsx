@@ -69,6 +69,18 @@ describe('<ErrorBoundary/>', () => {
     expect(container.textContent).not.toBe(TEXT)
   })
 
+  it('requires fallback is set, if fallback is undefined, ErrorBoundary will rethrow error', () => {
+    expect(() =>
+      render(
+        createElement(() => (
+          <ErrorBoundary fallback={undefined}>
+            <ThrowError message={ERROR_MESSAGE} after={0} />
+          </ErrorBoundary>
+        ))
+      )
+    ).toThrow(ERROR_MESSAGE)
+  })
+
   it('should catch it even if thrown null', () => {
     const onError = vi.fn()
     vi.useFakeTimers()

@@ -1,6 +1,6 @@
 import type { ComponentProps, ComponentType, PropsWithChildren } from 'react'
-import { createContext, useContext, useEffect, useMemo } from 'react'
-import { useIsChanged, useKey } from './hooks'
+import { createContext, useContext, useEffect, useMemo, useReducer } from 'react'
+import { useIsChanged } from './hooks'
 import type { PropsWithoutChildren } from './types'
 import { assert } from './utils'
 import { wrap } from './wrap'
@@ -18,12 +18,14 @@ export type ErrorBoundaryGroupProps = PropsWithChildren<{
   blockOutside?: boolean
 }>
 
+const increase = (prev: number) => prev + 1
+
 /**
  * ErrorBoundaryGroup is Component to manage multiple ErrorBoundaries
  * @see {@link https://suspensive.org/docs/react/ErrorBoundaryGroup}
  */
 export const ErrorBoundaryGroup = ({ blockOutside = false, children }: ErrorBoundaryGroupProps) => {
-  const [resetKey, reset] = useKey()
+  const [resetKey, reset] = useReducer(increase, 0)
   const parentGroup = useContext(ErrorBoundaryGroupContext)
   const isParentGroupResetKeyChanged = useIsChanged(parentGroup?.resetKey)
 
@@ -31,9 +33,9 @@ export const ErrorBoundaryGroup = ({ blockOutside = false, children }: ErrorBoun
     if (!blockOutside && isParentGroupResetKeyChanged) {
       reset()
     }
-  }, [isParentGroupResetKeyChanged, reset, blockOutside])
+  }, [isParentGroupResetKeyChanged, blockOutside])
 
-  const value = useMemo(() => ({ reset, resetKey }), [reset, resetKey])
+  const value = useMemo(() => ({ reset, resetKey }), [resetKey])
 
   return <ErrorBoundaryGroupContext.Provider value={value}>{children}</ErrorBoundaryGroupContext.Provider>
 }
