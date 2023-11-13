@@ -1,5 +1,15 @@
 # @suspensive/react
 
+## 1.20.0
+
+### Minor Changes
+
+- 3f92ae8: feat(react): re-throw received error with no fallback of ErrorBoundary
+
+### Patch Changes
+
+- 4fe94af: perf(react): reduce ErrorBoundaryGroup size
+
 ## 1.19.0
 
 ### Minor Changes
