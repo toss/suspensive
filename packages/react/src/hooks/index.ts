@@ -1,6 +1,5 @@
 export { useIsChanged } from './useIsChanged'
 export { useIsClient } from './useIsClient'
 export { useIsomorphicLayoutEffect } from './useIsomorphicLayoutEffect'
-export { useRefreshKey } from './useRefreshKey'
 export { usePrevious } from './usePrevious'
 export { useTimeout } from './useTimeout'
