@@ -1,5 +1,11 @@
 # @suspensive/react-await
 
+## 0.0.7
+
+### Patch Changes
+
+- 9f421d3: fix(react-await): update package.json
+
 ## 0.0.6
 
 ### Patch Changes
