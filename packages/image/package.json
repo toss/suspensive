@@ -1,0 +1,79 @@
+{
+  "name": "@suspensive/image",
+  "version": "0.0.0",
+  "description": "Useful image interfaces for React Suspense",
+  "keywords": [
+    "suspensive",
+    "react"
+  ],
+  "homepage": "https://suspensive.org",
+  "bugs": "https://github.com/suspensive/react/issues",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/suspensive/react.git",
+    "directory": "packages/image"
+  },
+  "funding": {
+    "type": "github",
+    "url": "https://github.com/sponsors/manudeli"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Jonghyeon Ko",
+    "email": "manudeli.ko@gmail.com"
+  },
+  "sideEffects": false,
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
+    },
+    "./package.json": "./package.json"
+  },
+  "main": "dist/index.cjs",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "build:watch": "tsup --watch",
+    "clean": "rimraf ./dist && rimraf ./coverage",
+    "lint": "eslint \"**/*.ts*\"",
+    "lint:attw": "attw --pack",
+    "lint:pub": "publint --strict",
+    "prepack": "pnpm build",
+    "test": "vitest run --coverage",
+    "test:watch": "vitest --ui --coverage.enabled=true",
+    "type:check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "use-sync-external-store": "^1.2.0"
+  },
+  "devDependencies": {
+    "@suspensive/react": "workspace:*",
+    "@suspensive/test-utils": "workspace:*",
+    "@suspensive/tsup": "workspace:*",
+    "@suspensive/vitest": "workspace:*",
+    "@types/react": "^18.2.34",
+    "@types/react-dom": "^18.2.14",
+    "@types/use-sync-external-store": "^0.0.6",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "peerDependencies": {
+    "react": "^16.8 || ^17 || ^18"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

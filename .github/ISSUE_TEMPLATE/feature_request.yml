@@ -13,6 +13,7 @@ body:
         - "@suspensive/react"
         - "@suspensive/react-query"
         - "@suspensive/react-await"
+        - "@suspensive/image"
         - etc
     validations:
       required: true
