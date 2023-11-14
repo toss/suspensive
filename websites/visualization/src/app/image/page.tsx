@@ -2,25 +2,18 @@
 
 import { Stack } from '@jsxcss/emotion'
 import { Image } from '@suspensive/image'
-import { ErrorBoundary, Suspense } from '@suspensive/react'
+import { wrap } from '@suspensive/react'
 
-export default function Page() {
-  return (
-    <ErrorBoundary fallback={() => <div>error</div>}>
+export default wrap
+  .ErrorBoundary({ fallback: () => <div>error</div> })
+  .Suspense.CSROnly({ fallback: 'loading...' })
+  .on(function Page() {
+    return (
       <Stack.Vertical>
-        <Suspense.CSROnly fallback={<div>loading...</div>}>
-          <Image src="https://placehold.co/200x100" />
-        </Suspense.CSROnly>
-        <Suspense.CSROnly fallback={<div>loading...</div>}>
-          <Image src="https://placehold.co/200" />
-        </Suspense.CSROnly>
-        <Suspense.CSROnly fallback={<div>loading...</div>}>
-          <Image src="https://placehold.co/200x150/000000/FFFFFF/png" />
-        </Suspense.CSROnly>
-        <Suspense.CSROnly fallback={<div>loading...</div>}>
-          <Image src="https://placehold.co/200x150?text=Hello+World" />
-        </Suspense.CSROnly>
+        <Image src="https://placehold.co/200x100" />
+        <Image src="https://placehold.co/200" />
+        <Image src="https://placehold.co/200x150/000000/FFFFFF/png" />
+        <Image src="https://placehold.co/200x150?text=Hello+World" />
       </Stack.Vertical>
-    </ErrorBoundary>
-  )
-}
+    )
+  })
