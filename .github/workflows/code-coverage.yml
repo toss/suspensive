@@ -27,6 +27,8 @@ jobs:
           cache: 'pnpm'
           cache-dependency-path: 'pnpm-lock.yaml'
           node-version-file: '.nvmrc'
+      - if: matrix.command == 'test'
+        run: pnpx playwright install
       - run: pnpm install --frozen-lockfile
       - run: pnpm test
       - name: Upload coverage reports to Codecov
