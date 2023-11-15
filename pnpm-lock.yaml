@@ -248,7 +248,7 @@ importers:
         specifier: workspace:*
         version: link:../../configs/tsup
       '@types/react':
-        specifier: ^18.2.34
+        specifier: ^18.2.37
         version: 18.2.37
       '@types/react-dom':
         specifier: ^18.2.15
