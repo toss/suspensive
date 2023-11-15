@@ -79,9 +79,6 @@
       "optional": true
     }
   },
-  "bundledDependencies": [
-    "tsd"
-  ],
   "publishConfig": {
     "access": "public"
   },
