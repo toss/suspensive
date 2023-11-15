@@ -1,5 +1,11 @@
 # @suspensive/react
 
+## 1.20.2
+
+### Patch Changes
+
+- e37fbcc: chore(deps-dev): Bump @types/react from 18.2.34 to 18.2.37
+
 ## 1.20.1
 
 ## 1.20.0
