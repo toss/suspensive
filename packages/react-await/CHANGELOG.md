@@ -1,5 +1,11 @@
 # @suspensive/react-await
 
+## 0.0.8
+
+### Patch Changes
+
+- e37fbcc: chore(deps-dev): Bump @types/react from 18.2.34 to 18.2.37
+
 ## 0.0.7
 
 ### Patch Changes
