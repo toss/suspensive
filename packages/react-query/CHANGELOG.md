@@ -1,5 +1,12 @@
 # @suspensive/react-query
 
+## 1.20.1
+
+### Patch Changes
+
+- bfecd12: fix(react-query): remove bundledDependencies
+  - @suspensive/react@1.20.1
+
 ## 1.20.0
 
 ### Patch Changes
