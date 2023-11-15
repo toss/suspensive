@@ -1,5 +1,7 @@
 # @suspensive/react
 
+## 1.20.1
+
 ## 1.20.0
 
 ### Minor Changes
