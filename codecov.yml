@@ -11,7 +11,7 @@ coverage:
       suspensive-react-query:
         target: 100%
         threshold: 30%
-      suspensive-react-await:
+      suspensive-await:
         target: 100%
         threshold: 30%
 
@@ -28,7 +28,7 @@ component_management:
       name: "@suspensive/react-query"
       paths:
         - packages/react-query
-    - component_id: suspensive-react-await
-      name: "@suspensive/react-await"
+    - component_id: suspensive-await
+      name: "@suspensive/await"
       paths:
-        - packages/react-await
+        - packages/await

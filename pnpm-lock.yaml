@@ -139,7 +139,7 @@ importers:
         version: 46.9.0(eslint@8.53.0)
       eslint-plugin-prettier:
         specifier: ^5.0.1
-        version: 5.0.1(eslint-config-prettier@9.0.0)(eslint@8.53.0)(prettier@3.0.3)
+        version: 5.0.1(eslint-config-prettier@9.0.0)(eslint@8.53.0)(prettier@3.1.0)
       eslint-plugin-vitest:
         specifier: 0.3.9
         version: 0.3.9(eslint@8.53.0)(typescript@5.2.2)(vitest@0.34.6)
@@ -169,7 +169,7 @@ importers:
         version: 46.9.0(eslint@8.53.0)
       eslint-plugin-prettier:
         specifier: ^5.0.1
-        version: 5.0.1(eslint-config-prettier@9.0.0)(eslint@8.53.0)(prettier@3.0.3)
+        version: 5.0.1(eslint-config-prettier@9.0.0)(eslint@8.53.0)(prettier@3.1.0)
 
   configs/test-utils:
     devDependencies:
@@ -223,31 +223,7 @@ importers:
         specifier: ^3.3.5
         version: 3.3.5
 
-  packages/react:
-    devDependencies:
-      '@suspensive/test-utils':
-        specifier: workspace:*
-        version: link:../../configs/test-utils
-      '@suspensive/tsup':
-        specifier: workspace:*
-        version: link:../../configs/tsup
-      '@suspensive/vitest':
-        specifier: workspace:*
-        version: link:../../configs/vitest
-      '@types/react':
-        specifier: ^18.2.37
-        version: 18.2.37
-      '@types/react-dom':
-        specifier: ^18.2.15
-        version: 18.2.15
-      react:
-        specifier: ^18.2.0
-        version: 18.2.0
-      react-dom:
-        specifier: ^18.2.0
-        version: 18.2.0(react@18.2.0)
-
-  packages/react-await:
+  packages/await:
     dependencies:
       use-sync-external-store:
         specifier: ^1.2.0
@@ -274,6 +250,30 @@ importers:
       '@types/use-sync-external-store':
         specifier: ^0.0.6
         version: 0.0.6
+      react:
+        specifier: ^18.2.0
+        version: 18.2.0
+      react-dom:
+        specifier: ^18.2.0
+        version: 18.2.0(react@18.2.0)
+
+  packages/react:
+    devDependencies:
+      '@suspensive/test-utils':
+        specifier: workspace:*
+        version: link:../../configs/test-utils
+      '@suspensive/tsup':
+        specifier: workspace:*
+        version: link:../../configs/tsup
+      '@suspensive/vitest':
+        specifier: workspace:*
+        version: link:../../configs/vitest
+      '@types/react':
+        specifier: ^18.2.37
+        version: 18.2.37
+      '@types/react-dom':
+        specifier: ^18.2.15
+        version: 18.2.15
       react:
         specifier: ^18.2.0
         version: 18.2.0
@@ -322,12 +322,12 @@ importers:
       '@jsxcss/emotion':
         specifier: ^1.3.9
         version: 1.3.9(@emotion/react@11.11.1)(react@18.2.0)
+      '@suspensive/await':
+        specifier: workspace:*
+        version: link:../../packages/await
       '@suspensive/react':
         specifier: workspace:*
         version: link:../../packages/react
-      '@suspensive/react-await':
-        specifier: workspace:*
-        version: link:../../packages/react-await
       '@suspensive/react-query':
         specifier: workspace:*
         version: link:../../packages/react-query
@@ -4531,7 +4531,7 @@ packages:
       object.fromentries: 2.0.7
     dev: true
 
-  /eslint-plugin-prettier@5.0.1(eslint-config-prettier@9.0.0)(eslint@8.53.0)(prettier@3.0.3):
+  /eslint-plugin-prettier@5.0.1(eslint-config-prettier@9.0.0)(eslint@8.53.0)(prettier@3.1.0):
     resolution: {integrity: sha512-m3u5RnR56asrwV/lDC4GHorlW75DsFfmUcjfCYylTUs85dBRnB7VM6xG8eCMJdeDRnppzmxZVf1GEPJvl1JmNg==}
     engines: {node: ^14.18.0 || >=16.0.0}
     peerDependencies:
@@ -4547,7 +4547,7 @@ packages:
     dependencies:
       eslint: 8.53.0
       eslint-config-prettier: 9.0.0(eslint@8.53.0)
-      prettier: 3.0.3
+      prettier: 3.1.0
       prettier-linter-helpers: 1.0.0
       synckit: 0.8.5
     dev: false
@@ -8076,17 +8076,10 @@ packages:
     hasBin: true
     dev: true
 
-  /prettier@3.0.3:
-    resolution: {integrity: sha512-L/4pUDMxcNa8R/EthV08Zt42WBO4h1rarVtK0K+QJG0X187OLo7l699jWw0GKuwzkPQ//jMFA/8Xm6Fh3J/DAg==}
-    engines: {node: '>=14'}
-    hasBin: true
-    dev: false
-
   /prettier@3.1.0:
     resolution: {integrity: sha512-TQLvXjq5IAibjh8EpBIkNKxO749UEWABoiIZehEPiY4GNpVdhaFKqSTu+QrlU6D2dPAfubRmtJTi4K4YkQ5eXw==}
     engines: {node: '>=14'}
     hasBin: true
-    dev: true
 
   /pretty-format@27.5.1:
     resolution: {integrity: sha512-Qb1gy5OrP5+zDf2Bvnzdl3jsTf1qXVMazbvCoKhtKqVs4/YK4ozX4gKQJJVyNe+cajNPn0KoC0MC3FUmaHWEmQ==}

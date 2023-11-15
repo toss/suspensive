@@ -14,7 +14,7 @@ Afterwards, when the Promise is fulfilled, the guaranteed awaited data can be us
 Additionally, this data is cached in the received key and can be used immediately without pending when reused.
 
 ```tsx /Await/
-import { Await } from '@suspensive/react-await'
+import { Await } from '@suspensive/await'
 import { Suspense } from '@suspensive/react'
 
 const getPost = (postId: number) => fetch(`/post/${postId}`).then<Post>((res) => res.json())

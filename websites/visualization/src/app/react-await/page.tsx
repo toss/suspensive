@@ -1,8 +1,8 @@
 'use client'
 
 import { Stack } from '@jsxcss/emotion'
+import { Await } from '@suspensive/await'
 import { ErrorBoundary, Suspense } from '@suspensive/react'
-import { Await } from '@suspensive/react-await'
 import { api } from '~/utils'
 
 export default function Page() {

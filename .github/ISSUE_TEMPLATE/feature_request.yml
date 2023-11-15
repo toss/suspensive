@@ -12,7 +12,7 @@ body:
       options:
         - "@suspensive/react"
         - "@suspensive/react-query"
-        - "@suspensive/react-await"
+        - "@suspensive/await"
         - etc
     validations:
       required: true
