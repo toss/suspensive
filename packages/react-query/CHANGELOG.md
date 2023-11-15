@@ -1,5 +1,20 @@
 # @suspensive/react-query
 
+## 1.20.2
+
+### Patch Changes
+
+- e37fbcc: chore(deps-dev): Bump @types/react from 18.2.34 to 18.2.37
+- Updated dependencies [e37fbcc]
+  - @suspensive/react@1.20.2
+
+## 1.20.1
+
+### Patch Changes
+
+- bfecd12: fix(react-query): remove bundledDependencies
+  - @suspensive/react@1.20.1
+
 ## 1.20.0
 
 ### Patch Changes
