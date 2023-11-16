@@ -21,40 +21,43 @@ const DefaultSuspense = (props: SuspenseProps) => {
 if (process.env.NODE_ENV !== 'production') {
   DefaultSuspense.displayName = 'Suspense'
 }
-const CSROnlySuspense = (props: SuspenseProps) => {
+const CSROnly = (props: SuspenseProps) => {
   const isClient = useIsClient()
   const fallback = useFallbackWithContext(props.fallback)
 
   return isClient ? <ReactSuspense {...props} fallback={fallback} /> : <>{fallback}</>
 }
 if (process.env.NODE_ENV !== 'production') {
-  CSROnlySuspense.displayName = 'Suspense.CSROnly'
+  CSROnly.displayName = 'Suspense.CSROnly'
 }
 
 /**
  * This component is just wrapping React's Suspense. to use Suspense easily in Server-side rendering environment like Next.js
  * @see {@link https://suspensive.org/docs/react/Suspense}
  */
-export const Suspense = DefaultSuspense as typeof DefaultSuspense & {
+export const Suspense = Object.assign(DefaultSuspense, {
   /**
    * CSROnly make Suspense can be used in SSR framework like Next.js with React 17 or under
    * @see {@link https://suspensive.org/docs/react/Suspense}
    */
-  CSROnly: typeof CSROnlySuspense
-}
-Suspense.CSROnly = CSROnlySuspense
+  CSROnly,
+})
 
 /**
  * @deprecated Use wrap.Suspense().on as alternatives
  */
-export const withSuspense = <TProps extends ComponentProps<ComponentType> = Record<string, never>>(
-  component: ComponentType<TProps>,
-  suspenseProps: PropsWithoutChildren<SuspenseProps> = {}
-) => wrap.Suspense(suspenseProps).on(component)
-/**
- * @deprecated Use wrap.Suspense.CSROnly().on as alternatives
- */
-withSuspense.CSROnly = <TProps extends ComponentProps<ComponentType> = Record<string, never>>(
-  component: ComponentType<TProps>,
-  suspenseProps: PropsWithoutChildren<SuspenseProps> = {}
-) => wrap.Suspense.CSROnly(suspenseProps).on(component)
+export const withSuspense = Object.assign(
+  <TProps extends ComponentProps<ComponentType> = Record<string, never>>(
+    component: ComponentType<TProps>,
+    suspenseProps: PropsWithoutChildren<SuspenseProps> = {}
+  ) => wrap.Suspense(suspenseProps).on(component),
+  {
+    /**
+     * @deprecated Use wrap.Suspense.CSROnly().on as alternatives
+     */
+    CSROnly: <TProps extends ComponentProps<ComponentType> = Record<string, never>>(
+      component: ComponentType<TProps>,
+      suspenseProps: PropsWithoutChildren<SuspenseProps> = {}
+    ) => wrap.Suspense.CSROnly(suspenseProps).on(component),
+  }
+)
