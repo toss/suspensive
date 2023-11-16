@@ -51,7 +51,7 @@
     "@arethetypeswrong/cli": "^0.13.0",
     "@changesets/cli": "^2.26.2",
     "@commitlint/cli": "^18.4.2",
-    "@commitlint/config-conventional": "^18.4.0",
+    "@commitlint/config-conventional": "^18.4.2",
     "@suspensive/eslint-config": "workspace:*",
     "@suspensive/eslint-config-js": "workspace:*",
     "@suspensive/eslint-config-ts": "workspace:*",
