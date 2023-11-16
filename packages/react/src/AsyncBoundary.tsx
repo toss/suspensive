@@ -22,7 +22,7 @@ const BaseAsyncBoundary = forwardRef<ComponentRef<typeof ErrorBoundary>, AsyncBo
 if (process.env.NODE_ENV !== 'production') {
   BaseAsyncBoundary.displayName = 'AsyncBoundary'
 }
-const CSROnlyAsyncBoundary = forwardRef<ComponentRef<typeof ErrorBoundary>, AsyncBoundaryProps>(
+const CSROnly = forwardRef<ComponentRef<typeof ErrorBoundary>, AsyncBoundaryProps>(
   ({ pendingFallback, rejectedFallback, children, ...errorBoundaryProps }, resetRef) => (
     <ErrorBoundary {...errorBoundaryProps} ref={resetRef} fallback={rejectedFallback}>
       <Suspense.CSROnly fallback={pendingFallback}>{children}</Suspense.CSROnly>
@@ -30,27 +30,30 @@ const CSROnlyAsyncBoundary = forwardRef<ComponentRef<typeof ErrorBoundary>, Asyn
   )
 )
 if (process.env.NODE_ENV !== 'production') {
-  CSROnlyAsyncBoundary.displayName = 'AsyncBoundary.CSROnly'
+  CSROnly.displayName = 'AsyncBoundary.CSROnly'
 }
 
 /**
  * This component is just wrapping Suspense and ErrorBoundary in this library. to use Suspense with ErrorBoundary at once easily.
  * @see {@link https://suspensive.org/docs/react/AsyncBoundary}
  */
-export const AsyncBoundary = BaseAsyncBoundary as typeof BaseAsyncBoundary & {
+export const AsyncBoundary = Object.assign(BaseAsyncBoundary, {
   /**
    * CSROnly make AsyncBoundary can be used in SSR framework like Next.js with React 17 or under
    * @see {@link https://suspensive.org/docs/react/AsyncBoundary}
    */
-  CSROnly: typeof CSROnlyAsyncBoundary
-}
-AsyncBoundary.CSROnly = CSROnlyAsyncBoundary
+  CSROnly,
+})
 
-export const withAsyncBoundary = <TProps extends ComponentProps<ComponentType> = Record<string, never>>(
-  component: ComponentType<TProps>,
-  asyncBoundaryProps: PropsWithoutChildren<AsyncBoundaryProps>
-) => wrap.AsyncBoundary(asyncBoundaryProps).on(component)
-withAsyncBoundary.CSROnly = <TProps extends ComponentProps<ComponentType> = Record<string, never>>(
-  component: ComponentType<TProps>,
-  asyncBoundaryProps: PropsWithoutChildren<AsyncBoundaryProps>
-) => wrap.AsyncBoundary.CSROnly(asyncBoundaryProps).on(component)
+export const withAsyncBoundary = Object.assign(
+  <TProps extends ComponentProps<ComponentType> = Record<string, never>>(
+    component: ComponentType<TProps>,
+    asyncBoundaryProps: PropsWithoutChildren<AsyncBoundaryProps>
+  ) => wrap.AsyncBoundary(asyncBoundaryProps).on(component),
+  {
+    CSROnly: <TProps extends ComponentProps<ComponentType> = Record<string, never>>(
+      component: ComponentType<TProps>,
+      asyncBoundaryProps: PropsWithoutChildren<AsyncBoundaryProps>
+    ) => wrap.AsyncBoundary.CSROnly(asyncBoundaryProps).on(component),
+  }
+)

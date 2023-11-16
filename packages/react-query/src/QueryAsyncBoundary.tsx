@@ -22,7 +22,7 @@ const BaseQueryAsyncBoundary = forwardRef<
 if (process.env.NODE_ENV !== 'production') {
   BaseQueryAsyncBoundary.displayName = 'QueryAsyncBoundary'
 }
-const CSROnlyQueryAsyncBoundary = forwardRef<
+const CSROnly = forwardRef<
   ComponentRef<typeof AsyncBoundary.CSROnly>,
   ComponentPropsWithoutRef<typeof AsyncBoundary.CSROnly>
 >(({ onReset, ...props }, resetRef) => {
@@ -39,7 +39,7 @@ const CSROnlyQueryAsyncBoundary = forwardRef<
   )
 })
 if (process.env.NODE_ENV !== 'production') {
-  CSROnlyQueryAsyncBoundary.displayName = 'QueryAsyncBoundary.CSROnly'
+  CSROnly.displayName = 'QueryAsyncBoundary.CSROnly'
 }
 
 /**
@@ -61,11 +61,10 @@ if (process.env.NODE_ENV !== 'production') {
  * with this component, You don't have to make unnecessary repetitive implementation to combine AsyncBoundary with QueryErrorResetBoundary
  * @see {@link https://suspensive.org/docs/react-query/QueryErrorBoundary}
  */
-export const QueryAsyncBoundary = BaseQueryAsyncBoundary as typeof BaseQueryAsyncBoundary & {
+export const QueryAsyncBoundary = Object.assign(BaseQueryAsyncBoundary, {
   /**
    * CSROnly make QueryAsyncBoundary can be used in SSR framework like Next.js with React 17 or under
    * @see {@link https://suspensive.org/docs/react-query/QueryErrorBoundary}
    */
-  CSROnly: typeof CSROnlyQueryAsyncBoundary
-}
-QueryAsyncBoundary.CSROnly = CSROnlyQueryAsyncBoundary
+  CSROnly,
+})

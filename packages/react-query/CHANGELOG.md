@@ -1,5 +1,13 @@
 # @suspensive/react-query
 
+## 1.20.3
+
+### Patch Changes
+
+- 60f7fcc: refactor(react, react-query): remove unnecessary `as` by `Object.assign`
+- Updated dependencies [60f7fcc]
+  - @suspensive/react@1.20.3
+
 ## 1.20.2
 
 ### Patch Changes
