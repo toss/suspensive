@@ -15,8 +15,8 @@ importers:
         specifier: ^2.26.2
         version: 2.26.2
       '@commitlint/cli':
-        specifier: ^18.4.1
-        version: 18.4.1(typescript@5.2.2)
+        specifier: ^18.4.2
+        version: 18.4.2(typescript@5.2.2)
       '@commitlint/config-conventional':
         specifier: ^18.4.0
         version: 18.4.0
@@ -139,7 +139,7 @@ importers:
         version: 46.9.0(eslint@8.53.0)
       eslint-plugin-prettier:
         specifier: ^5.0.1
-        version: 5.0.1(eslint-config-prettier@9.0.0)(eslint@8.53.0)(prettier@3.0.3)
+        version: 5.0.1(eslint-config-prettier@9.0.0)(eslint@8.53.0)(prettier@3.1.0)
       eslint-plugin-vitest:
         specifier: 0.3.9
         version: 0.3.9(eslint@8.53.0)(typescript@5.2.2)(vitest@0.34.6)
@@ -169,7 +169,7 @@ importers:
         version: 46.9.0(eslint@8.53.0)
       eslint-plugin-prettier:
         specifier: ^5.0.1
-        version: 5.0.1(eslint-config-prettier@9.0.0)(eslint@8.53.0)(prettier@3.0.3)
+        version: 5.0.1(eslint-config-prettier@9.0.0)(eslint@8.53.0)(prettier@3.1.0)
 
   configs/test-utils:
     devDependencies:
@@ -660,14 +660,14 @@ packages:
     dev: true
     optional: true
 
-  /@commitlint/cli@18.4.1(typescript@5.2.2):
-    resolution: {integrity: sha512-4+jljfd29Udw9RDDyigavLO9LvdbmB8O9xjDzVZ0R3lJuG7nCeyHgnKWIVpFaN590isZMV/cMeQK0gH7hRF40A==}
+  /@commitlint/cli@18.4.2(typescript@5.2.2):
+    resolution: {integrity: sha512-dDfb2+wzeQe6ogdHNHOy0J0nraok+La0BoxamNMhBOng9/5GoESPDmKUJ1Lt1oivh5MfIgZh0Vm6f0rxkB8CoA==}
     engines: {node: '>=v18'}
     hasBin: true
     dependencies:
       '@commitlint/format': 18.4.0
-      '@commitlint/lint': 18.4.0
-      '@commitlint/load': 18.4.1(typescript@5.2.2)
+      '@commitlint/lint': 18.4.2
+      '@commitlint/load': 18.4.2(typescript@5.2.2)
       '@commitlint/read': 18.4.0
       '@commitlint/types': 18.4.0
       execa: 5.1.1
@@ -721,19 +721,19 @@ packages:
       chalk: 4.1.2
     dev: true
 
-  /@commitlint/is-ignored@18.4.0:
-    resolution: {integrity: sha512-vyBKBj3Q4N3Xe4ZQcJXW9ef6gVrDL9Fl2HXnnC3F0Qt/F6E4runhJkEuUh5DB3WCXTJUHIJkByKPqrnz4RNrZw==}
+  /@commitlint/is-ignored@18.4.2:
+    resolution: {integrity: sha512-uujjyJlrXsMsQrv0r8HDGigAwJELPAMtA1Vxi2WUB54HbyAWa0Ue6ujMRZNKov2YeA96r6o72gLDnugb6yu8IA==}
     engines: {node: '>=v18'}
     dependencies:
       '@commitlint/types': 18.4.0
       semver: 7.5.4
     dev: true
 
-  /@commitlint/lint@18.4.0:
-    resolution: {integrity: sha512-Wkkf1DPVeLdHYGqtzMBfWoMbUtCojvlzDR89OKVic1rid41iZbb0FzTcwgMYs/1TNWNxoIq9PVVwY7ovLX1aJQ==}
+  /@commitlint/lint@18.4.2:
+    resolution: {integrity: sha512-ljGOIH7w9SnjvZFoKjf30iWFxDnezfRtOc50+rNLdDP0TpLspaYYLPhDO/TeVdmii1/AJiDgBIuBboQlaIy7Bw==}
     engines: {node: '>=v18'}
     dependencies:
-      '@commitlint/is-ignored': 18.4.0
+      '@commitlint/is-ignored': 18.4.2
       '@commitlint/parse': 18.4.0
       '@commitlint/rules': 18.4.0
       '@commitlint/types': 18.4.0
@@ -743,6 +743,27 @@ packages:
     resolution: {integrity: sha512-o/plBiPJQgbSq/4ipDpsq4HCmURjBAEjr1EO/p2falr3VhwV0WGXTvb8NlihgI8xtSyO6lHvtycrE535GMLQbA==}
     engines: {node: '>=v18'}
     requiresBuild: true
+    dependencies:
+      '@commitlint/config-validator': 18.4.0
+      '@commitlint/execute-rule': 18.4.0
+      '@commitlint/resolve-extends': 18.4.0
+      '@commitlint/types': 18.4.0
+      '@types/node': 18.18.9
+      chalk: 4.1.2
+      cosmiconfig: 8.3.6(typescript@5.2.2)
+      cosmiconfig-typescript-loader: 5.0.0(@types/node@18.18.9)(cosmiconfig@8.3.6)(typescript@5.2.2)
+      lodash.isplainobject: 4.0.6
+      lodash.merge: 4.6.2
+      lodash.uniq: 4.5.0
+      resolve-from: 5.0.0
+    transitivePeerDependencies:
+      - typescript
+    dev: true
+    optional: true
+
+  /@commitlint/load@18.4.2(typescript@5.2.2):
+    resolution: {integrity: sha512-CKmzXdF9XwZJoVijAqpUlV9qzZOkyiYni4KuSCtTZVAAVudi9H84cJ4FqZxSwEP9G21vmoJiNrW8G042AsduVg==}
+    engines: {node: '>=v18'}
     dependencies:
       '@commitlint/config-validator': 18.4.0
       '@commitlint/execute-rule': 18.4.0
@@ -4531,7 +4552,7 @@ packages:
       object.fromentries: 2.0.7
     dev: true
 
-  /eslint-plugin-prettier@5.0.1(eslint-config-prettier@9.0.0)(eslint@8.53.0)(prettier@3.0.3):
+  /eslint-plugin-prettier@5.0.1(eslint-config-prettier@9.0.0)(eslint@8.53.0)(prettier@3.1.0):
     resolution: {integrity: sha512-m3u5RnR56asrwV/lDC4GHorlW75DsFfmUcjfCYylTUs85dBRnB7VM6xG8eCMJdeDRnppzmxZVf1GEPJvl1JmNg==}
     engines: {node: ^14.18.0 || >=16.0.0}
     peerDependencies:
@@ -4547,7 +4568,7 @@ packages:
     dependencies:
       eslint: 8.53.0
       eslint-config-prettier: 9.0.0(eslint@8.53.0)
-      prettier: 3.0.3
+      prettier: 3.1.0
       prettier-linter-helpers: 1.0.0
       synckit: 0.8.5
     dev: false
@@ -8076,17 +8097,10 @@ packages:
     hasBin: true
     dev: true
 
-  /prettier@3.0.3:
-    resolution: {integrity: sha512-L/4pUDMxcNa8R/EthV08Zt42WBO4h1rarVtK0K+QJG0X187OLo7l699jWw0GKuwzkPQ//jMFA/8Xm6Fh3J/DAg==}
-    engines: {node: '>=14'}
-    hasBin: true
-    dev: false
-
   /prettier@3.1.0:
     resolution: {integrity: sha512-TQLvXjq5IAibjh8EpBIkNKxO749UEWABoiIZehEPiY4GNpVdhaFKqSTu+QrlU6D2dPAfubRmtJTi4K4YkQ5eXw==}
     engines: {node: '>=14'}
     hasBin: true
-    dev: true
 
   /pretty-format@27.5.1:
     resolution: {integrity: sha512-Qb1gy5OrP5+zDf2Bvnzdl3jsTf1qXVMazbvCoKhtKqVs4/YK4ozX4gKQJJVyNe+cajNPn0KoC0MC3FUmaHWEmQ==}
