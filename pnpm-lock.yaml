@@ -29,6 +29,9 @@ importers:
       '@suspensive/eslint-config-ts':
         specifier: workspace:*
         version: link:configs/eslint-config-ts
+      '@suspensive/package-json-name':
+        specifier: workspace:*
+        version: link:configs/package-json-name
       '@suspensive/tsconfig':
         specifier: workspace:*
         version: link:configs/tsconfig
@@ -171,6 +174,8 @@ importers:
         specifier: ^5.0.1
         version: 5.0.1(eslint-config-prettier@9.0.0)(eslint@8.53.0)(prettier@3.1.0)
 
+  configs/package-json-name: {}
+
   configs/test-utils:
     devDependencies:
       '@types/react':
@@ -183,8 +188,6 @@ importers:
   configs/tsconfig: {}
 
   configs/tsup: {}
-
-  configs/vitest: {}
 
   docs:
     dependencies:
@@ -231,9 +234,6 @@ importers:
       '@suspensive/tsup':
         specifier: workspace:*
         version: link:../../configs/tsup
-      '@suspensive/vitest':
-        specifier: workspace:*
-        version: link:../../configs/vitest
       '@types/react':
         specifier: ^18.2.37
         version: 18.2.37
@@ -262,9 +262,6 @@ importers:
       '@suspensive/tsup':
         specifier: workspace:*
         version: link:../../configs/tsup
-      '@suspensive/vitest':
-        specifier: workspace:*
-        version: link:../../configs/vitest
       '@types/react':
         specifier: ^18.2.37
         version: 18.2.37
@@ -289,9 +286,6 @@ importers:
       '@suspensive/tsup':
         specifier: workspace:*
         version: link:../../configs/tsup
-      '@suspensive/vitest':
-        specifier: workspace:*
-        version: link:../../configs/vitest
       '@tanstack/react-query':
         specifier: ^4.36.1
         version: 4.36.1(react-dom@18.2.0)(react@18.2.0)
