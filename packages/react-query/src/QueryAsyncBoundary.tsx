@@ -22,7 +22,7 @@ const BaseQueryAsyncBoundary = forwardRef<
 if (process.env.NODE_ENV !== 'production') {
   BaseQueryAsyncBoundary.displayName = 'QueryAsyncBoundary'
 }
-const CSROnlyQueryAsyncBoundary = forwardRef<
+const CSROnly = forwardRef<
   ComponentRef<typeof AsyncBoundary.CSROnly>,
   ComponentPropsWithoutRef<typeof AsyncBoundary.CSROnly>
 >(({ onReset, ...props }, resetRef) => {
@@ -39,16 +39,15 @@ const CSROnlyQueryAsyncBoundary = forwardRef<
   )
 })
 if (process.env.NODE_ENV !== 'production') {
-  CSROnlyQueryAsyncBoundary.displayName = 'QueryAsyncBoundary.CSROnly'
+  CSROnly.displayName = 'QueryAsyncBoundary.CSROnly'
 }
 
 /**
  * @deprecated Use QueryErrorBoundary, Suspense at once as alternatives
  */
-export const QueryAsyncBoundary = BaseQueryAsyncBoundary as typeof BaseQueryAsyncBoundary & {
+export const QueryAsyncBoundary = Object.assign(BaseQueryAsyncBoundary, {
   /**
    * @deprecated Use QueryErrorBoundary, Suspense.CSROnly at once as alternatives
    */
-  CSROnly: typeof CSROnlyQueryAsyncBoundary
-}
-QueryAsyncBoundary.CSROnly = CSROnlyQueryAsyncBoundary
+  CSROnly,
+})

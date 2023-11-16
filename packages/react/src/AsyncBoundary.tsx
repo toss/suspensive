@@ -24,7 +24,7 @@ const BaseAsyncBoundary = forwardRef<ComponentRef<typeof ErrorBoundary>, AsyncBo
 if (process.env.NODE_ENV !== 'production') {
   BaseAsyncBoundary.displayName = 'AsyncBoundary'
 }
-const CSROnlyAsyncBoundary = forwardRef<ComponentRef<typeof ErrorBoundary>, AsyncBoundaryProps>(
+const CSROnly = forwardRef<ComponentRef<typeof ErrorBoundary>, AsyncBoundaryProps>(
   ({ pendingFallback, rejectedFallback, children, ...errorBoundaryProps }, resetRef) => (
     <ErrorBoundary {...errorBoundaryProps} ref={resetRef} fallback={rejectedFallback}>
       <Suspense.CSROnly fallback={pendingFallback}>{children}</Suspense.CSROnly>
@@ -32,58 +32,60 @@ const CSROnlyAsyncBoundary = forwardRef<ComponentRef<typeof ErrorBoundary>, Asyn
   )
 )
 if (process.env.NODE_ENV !== 'production') {
-  CSROnlyAsyncBoundary.displayName = 'AsyncBoundary.CSROnly'
+  CSROnly.displayName = 'AsyncBoundary.CSROnly'
 }
 
 /**
  * @deprecated Use Suspense and ErrorBoundary as alternatives
  */
-export const AsyncBoundary = BaseAsyncBoundary as typeof BaseAsyncBoundary & {
+export const AsyncBoundary = Object.assign(BaseAsyncBoundary, {
   /**
    * @deprecated Use Suspense and ErrorBoundary as alternatives
    */
-  CSROnly: typeof CSROnlyAsyncBoundary
-}
-AsyncBoundary.CSROnly = CSROnlyAsyncBoundary
+  CSROnly,
+})
 
 /**
  * @deprecated Use wrap.ErrorBoundary().Suspense().on as alternatives
  */
-export const withAsyncBoundary = <TProps extends ComponentProps<ComponentType> = Record<string, never>>(
-  Component: ComponentType<TProps>,
-  asyncBoundaryProps: PropsWithoutChildren<AsyncBoundaryProps>
-) => {
-  const Wrapped = (props: TProps) => (
-    <AsyncBoundary {...asyncBoundaryProps}>
-      <Component {...props} />
-    </AsyncBoundary>
-  )
+export const withAsyncBoundary = Object.assign(
+  <TProps extends ComponentProps<ComponentType> = Record<string, never>>(
+    Component: ComponentType<TProps>,
+    asyncBoundaryProps: PropsWithoutChildren<AsyncBoundaryProps>
+  ) => {
+    const Wrapped = (props: TProps) => (
+      <AsyncBoundary {...asyncBoundaryProps}>
+        <Component {...props} />
+      </AsyncBoundary>
+    )
 
-  if (process.env.NODE_ENV !== 'production') {
-    const name = Component.displayName || Component.name || 'Component'
-    Wrapped.displayName = `withAsyncBoundary(${name})`
+    if (process.env.NODE_ENV !== 'production') {
+      const name = Component.displayName || Component.name || 'Component'
+      Wrapped.displayName = `withAsyncBoundary(${name})`
+    }
+
+    return Wrapped
+  },
+  {
+    /**
+     * @deprecated Use wrap.ErrorBoundary().Suspense.CSROnly().on as alternatives
+     */
+    CSROnly: <TProps extends ComponentProps<ComponentType> = Record<string, never>>(
+      Component: ComponentType<TProps>,
+      asyncBoundaryProps: PropsWithoutChildren<AsyncBoundaryProps>
+    ) => {
+      const Wrapped = (props: TProps) => (
+        <AsyncBoundary.CSROnly {...asyncBoundaryProps}>
+          <Component {...props} />
+        </AsyncBoundary.CSROnly>
+      )
+
+      if (process.env.NODE_ENV !== 'production') {
+        const name = Component.displayName || Component.name || 'Component'
+        Wrapped.displayName = `withAsyncBoundary.CSROnly(${name})`
+      }
+
+      return Wrapped
+    },
   }
-
-  return Wrapped
-}
-
-/**
- * @deprecated Use wrap.ErrorBoundary().Suspense.CSROnly().on as alternatives
- */
-withAsyncBoundary.CSROnly = <TProps extends ComponentProps<ComponentType> = Record<string, never>>(
-  Component: ComponentType<TProps>,
-  asyncBoundaryProps: PropsWithoutChildren<AsyncBoundaryProps>
-) => {
-  const Wrapped = (props: TProps) => (
-    <AsyncBoundary.CSROnly {...asyncBoundaryProps}>
-      <Component {...props} />
-    </AsyncBoundary.CSROnly>
-  )
-
-  if (process.env.NODE_ENV !== 'production') {
-    const name = Component.displayName || Component.name || 'Component'
-    Wrapped.displayName = `withAsyncBoundary.CSROnly(${name})`
-  }
-
-  return Wrapped
-}
+)
