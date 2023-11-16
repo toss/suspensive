@@ -87,8 +87,8 @@ importers:
         specifier: ^5.0.5
         version: 5.0.5
       sherif:
-        specifier: ^0.4.2
-        version: 0.4.2
+        specifier: ^0.5.0
+        version: 0.5.0
       tsup:
         specifier: ^7.2.0
         version: 7.2.0(typescript@5.2.2)
@@ -139,7 +139,7 @@ importers:
         version: 46.9.0(eslint@8.53.0)
       eslint-plugin-prettier:
         specifier: ^5.0.1
-        version: 5.0.1(eslint-config-prettier@9.0.0)(eslint@8.53.0)(prettier@3.0.3)
+        version: 5.0.1(eslint-config-prettier@9.0.0)(eslint@8.53.0)(prettier@3.1.0)
       eslint-plugin-vitest:
         specifier: 0.3.9
         version: 0.3.9(eslint@8.53.0)(typescript@5.2.2)(vitest@0.34.6)
@@ -169,7 +169,7 @@ importers:
         version: 46.9.0(eslint@8.53.0)
       eslint-plugin-prettier:
         specifier: ^5.0.1
-        version: 5.0.1(eslint-config-prettier@9.0.0)(eslint@8.53.0)(prettier@3.0.3)
+        version: 5.0.1(eslint-config-prettier@9.0.0)(eslint@8.53.0)(prettier@3.1.0)
 
   configs/test-utils:
     devDependencies:
@@ -4531,7 +4531,7 @@ packages:
       object.fromentries: 2.0.7
     dev: true
 
-  /eslint-plugin-prettier@5.0.1(eslint-config-prettier@9.0.0)(eslint@8.53.0)(prettier@3.0.3):
+  /eslint-plugin-prettier@5.0.1(eslint-config-prettier@9.0.0)(eslint@8.53.0)(prettier@3.1.0):
     resolution: {integrity: sha512-m3u5RnR56asrwV/lDC4GHorlW75DsFfmUcjfCYylTUs85dBRnB7VM6xG8eCMJdeDRnppzmxZVf1GEPJvl1JmNg==}
     engines: {node: ^14.18.0 || >=16.0.0}
     peerDependencies:
@@ -4547,7 +4547,7 @@ packages:
     dependencies:
       eslint: 8.53.0
       eslint-config-prettier: 9.0.0(eslint@8.53.0)
-      prettier: 3.0.3
+      prettier: 3.1.0
       prettier-linter-helpers: 1.0.0
       synckit: 0.8.5
     dev: false
@@ -8076,17 +8076,10 @@ packages:
     hasBin: true
     dev: true
 
-  /prettier@3.0.3:
-    resolution: {integrity: sha512-L/4pUDMxcNa8R/EthV08Zt42WBO4h1rarVtK0K+QJG0X187OLo7l699jWw0GKuwzkPQ//jMFA/8Xm6Fh3J/DAg==}
-    engines: {node: '>=14'}
-    hasBin: true
-    dev: false
-
   /prettier@3.1.0:
     resolution: {integrity: sha512-TQLvXjq5IAibjh8EpBIkNKxO749UEWABoiIZehEPiY4GNpVdhaFKqSTu+QrlU6D2dPAfubRmtJTi4K4YkQ5eXw==}
     engines: {node: '>=14'}
     hasBin: true
-    dev: true
 
   /pretty-format@27.5.1:
     resolution: {integrity: sha512-Qb1gy5OrP5+zDf2Bvnzdl3jsTf1qXVMazbvCoKhtKqVs4/YK4ozX4gKQJJVyNe+cajNPn0KoC0MC3FUmaHWEmQ==}
@@ -8624,64 +8617,64 @@ packages:
     resolution: {integrity: sha512-7++dFhtcx3353uBaq8DDR4NuxBetBzC7ZQOhmTQInHEd6bSrXdiEyzCvG07Z44UYdLShWUyXt5M/yhz8ekcb1A==}
     engines: {node: '>=8'}
 
-  /sherif-darwin-arm64@0.4.2:
-    resolution: {integrity: sha512-ClQpR4AIiLSGmJG8OFi5svxo7jcxfXVeOm82sLBZsrzez0pBhr21gAwqzJRIvST19PM3erWEwhgwm9UsohmEDQ==}
+  /sherif-darwin-arm64@0.5.0:
+    resolution: {integrity: sha512-FnuTing71i8l8FPBiKSXRG1FgmA9W0UsCXYz1nua/ImDdf/KfA+r3C+8jETmPY9teHIwi0rA4LdvlL4JxPeMzw==}
     cpu: [arm64]
     os: [darwin]
     requiresBuild: true
     dev: true
     optional: true
 
-  /sherif-darwin-x64@0.4.2:
-    resolution: {integrity: sha512-UGTOeGC4316VT+tPBpyubpi8cWKKxtyNHl8B57cPQ5+vtFOeZOYRD7K4o9VBajPFsvaIdmPB7qaNiVb/Y+GyQA==}
+  /sherif-darwin-x64@0.5.0:
+    resolution: {integrity: sha512-Nmt8YTFNlWYCVabae9iMHZ1HMXDTwPLSOm/UB/SN3pAiN8QFTVinsaeOZIefnRNuPrV4piUQrXSd1o9KSrFtBQ==}
     cpu: [x64]
     os: [darwin]
     requiresBuild: true
     dev: true
     optional: true
 
-  /sherif-linux-arm64@0.4.2:
-    resolution: {integrity: sha512-jxZlUYL9DyKpgZkvw99w2PSoY+aCbAydSKV+LTGhAI0IkrO/G2ZbQei+SfncFHTIcSTs+fnWIIryrLkRAFpTVw==}
+  /sherif-linux-arm64@0.5.0:
+    resolution: {integrity: sha512-erM3X3xcJ54X5p1e5w8/FYMt0Yn53ulL3RDIS4Ffm6Rv2bpA5JpEu5FLRdPIKShYOidCe8PNFhRoCx6yhsqWLA==}
     cpu: [arm64]
     os: [linux]
     requiresBuild: true
     dev: true
     optional: true
 
-  /sherif-linux-x64@0.4.2:
-    resolution: {integrity: sha512-NaP9irmzMH5jnr7hcyF+phY6OIcytJqMTWOSRkYdsEc7JAMDYnrmy7IMsooAScpW8Y1kWs3vziXTGHcn4DiiYQ==}
+  /sherif-linux-x64@0.5.0:
+    resolution: {integrity: sha512-0XW9tv9X3spSdy/q0kb/M6KCCAatuWhnayEQoKB0hhqiIDAXmzRApFCyVGXZQ+xLbP/ZJ+gD0e8bow1kUi2e8w==}
     cpu: [x64]
     os: [linux]
     requiresBuild: true
     dev: true
     optional: true
 
-  /sherif-windows-arm64@0.4.2:
-    resolution: {integrity: sha512-2xEJHPECFEB6FjeTyo77J9Aodzd3nbtCVkFfYq0XZHRl0aZBexgU9r5jWZK1YjlX61one08PpFmNbuA/yyYWIQ==}
+  /sherif-windows-arm64@0.5.0:
+    resolution: {integrity: sha512-mZSa99XyilYwc29OlBkiz8vlL7IvWv3vu3Oe1oSwbw6C+OeZx/B0h/XAAHVzJiLzB3CX0H3kBGEBf2ou/3iaXg==}
     cpu: [arm64]
     os: [win32]
     requiresBuild: true
     dev: true
     optional: true
 
-  /sherif-windows-x64@0.4.2:
-    resolution: {integrity: sha512-fZxUHBG9KK7+/y6dS0aVEaZpGRRWlD5mBP0G4vM2lO9o1Rl0UWojDJ+d5698JHaYVNdktd42WYNXM94nO7K0IA==}
+  /sherif-windows-x64@0.5.0:
+    resolution: {integrity: sha512-rx6b7hRE+fI1siGN107P/69eJ56mrHcznMNfoad5LT+H54SKpw+eTuK1h+vFBMYT4fnrVNW4OLCjdE+0oh3Iwg==}
     cpu: [x64]
     os: [win32]
     requiresBuild: true
     dev: true
     optional: true
 
-  /sherif@0.4.2:
-    resolution: {integrity: sha512-cQzWQUX616ygyxODl6VrYISBZPHTEEZj43Jt3h6zMaOiYGLILtMrxpqDdYwJziUA8KX/3Mse/6wg6gqFoPbFYg==}
+  /sherif@0.5.0:
+    resolution: {integrity: sha512-VjK3nq+GbSbbGTKc0DloWOmzNi8RN5fy27W38sIW1IzocdOKqbNgNNlnHNMBpEmFP7RxTHl7mc4/FM2R9pcErA==}
     hasBin: true
     optionalDependencies:
-      sherif-darwin-arm64: 0.4.2
-      sherif-darwin-x64: 0.4.2
-      sherif-linux-arm64: 0.4.2
-      sherif-linux-x64: 0.4.2
-      sherif-windows-arm64: 0.4.2
-      sherif-windows-x64: 0.4.2
+      sherif-darwin-arm64: 0.5.0
+      sherif-darwin-x64: 0.5.0
+      sherif-linux-arm64: 0.5.0
+      sherif-linux-x64: 0.5.0
+      sherif-windows-arm64: 0.5.0
+      sherif-windows-x64: 0.5.0
     dev: true
 
   /shiki@0.14.5:
