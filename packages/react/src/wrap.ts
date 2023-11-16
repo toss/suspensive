@@ -75,28 +75,30 @@ type Wrap = WrapWithoutCSROnly & {
 
 const createWrap = () => {
   const wrappers: Wrapper[] = []
-  const builder = new WrapWithoutCSROnly(wrappers) as Wrap
-  builder.Suspense.CSROnly = (props: PropsWithoutChildren<ComponentProps<typeof Suspense.CSROnly>> = {}) => {
+  const wrap = new WrapWithoutCSROnly(wrappers) as Wrap
+  wrap.Suspense.CSROnly = (props: PropsWithoutChildren<ComponentProps<typeof Suspense.CSROnly>> = {}) => {
     wrappers.unshift([Suspense.CSROnly, props])
-    return builder
+    return wrap
   }
-  builder.AsyncBoundary.CSROnly = (props: PropsWithoutChildren<ComponentProps<typeof AsyncBoundary.CSROnly>>) => {
+  wrap.AsyncBoundary.CSROnly = (props: PropsWithoutChildren<ComponentProps<typeof AsyncBoundary.CSROnly>>) => {
     wrappers.unshift([AsyncBoundary.CSROnly, props])
-    return builder
+    return wrap
   }
-  return builder
+  return wrap
 }
 
-const wrapSuspense = (...[props = {}]: Parameters<Wrap['Suspense']>) => createWrap().Suspense(props)
-wrapSuspense.CSROnly = (...[props = {}]: Parameters<Wrap['Suspense']['CSROnly']>) =>
+const wrapSuspense = (props: PropsWithoutChildren<ComponentProps<typeof Suspense>> = {}) => createWrap().Suspense(props)
+wrapSuspense.CSROnly = (props: PropsWithoutChildren<ComponentProps<typeof Suspense.CSROnly>> = {}) =>
   createWrap().Suspense.CSROnly(props)
-const wrapErrorBoundary = (...[props]: Parameters<Wrap['ErrorBoundary']>) => createWrap().ErrorBoundary(props)
-const wrapErrorBoundaryGroup = (...[props = {}]: Parameters<Wrap['ErrorBoundaryGroup']>) =>
+const wrapErrorBoundary = (props: PropsWithoutChildren<ComponentProps<typeof ErrorBoundary>>) =>
+  createWrap().ErrorBoundary(props)
+const wrapErrorBoundaryGroup = (props: PropsWithoutChildren<ComponentProps<typeof ErrorBoundaryGroup>>) =>
   createWrap().ErrorBoundaryGroup(props)
-const wrapAsyncBoundary = (...[props]: Parameters<Wrap['AsyncBoundary']>) => createWrap().AsyncBoundary(props)
-wrapAsyncBoundary.CSROnly = (...[props]: Parameters<Wrap['AsyncBoundary']['CSROnly']>) =>
+const wrapAsyncBoundary = (props: PropsWithoutChildren<ComponentProps<typeof AsyncBoundary>>) =>
+  createWrap().AsyncBoundary(props)
+wrapAsyncBoundary.CSROnly = (props: PropsWithoutChildren<ComponentProps<typeof AsyncBoundary.CSROnly>>) =>
   createWrap().AsyncBoundary.CSROnly(props)
-const wrapDelay = (...[props = {}]: Parameters<Wrap['Delay']>) => createWrap().Delay(props)
+const wrapDelay = (props: PropsWithoutChildren<ComponentProps<typeof Delay>> = {}) => createWrap().Delay(props)
 
 /**
  * @experimental This is experimental feature.
