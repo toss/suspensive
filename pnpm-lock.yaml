@@ -18,8 +18,8 @@ importers:
         specifier: ^18.4.2
         version: 18.4.2(typescript@5.2.2)
       '@commitlint/config-conventional':
-        specifier: ^18.4.0
-        version: 18.4.0
+        specifier: ^18.4.2
+        version: 18.4.2
       '@suspensive/eslint-config':
         specifier: workspace:*
         version: link:configs/eslint-config
@@ -679,8 +679,8 @@ packages:
       - typescript
     dev: true
 
-  /@commitlint/config-conventional@18.4.0:
-    resolution: {integrity: sha512-vArwCZopsZs0FnGsh9AR7uUTPZ5oVGk8+qnEZWq2KTsMjrE0k80b+oZ32GSQmXQT2iMKVrDC8pKX5uKNkCe9Sw==}
+  /@commitlint/config-conventional@18.4.2:
+    resolution: {integrity: sha512-qFjIqgKGV89lzUGHxanq2WJDXk5wZIxoZmZvf0I4i4CirL06Xj8qRh1shPsXNyI15d8Rj2HExww6cGJSFU9DdA==}
     engines: {node: '>=v18'}
     dependencies:
       conventional-changelog-conventionalcommits: 7.0.2
@@ -739,31 +739,10 @@ packages:
       '@commitlint/types': 18.4.0
     dev: true
 
-  /@commitlint/load@18.4.1(typescript@5.2.2):
-    resolution: {integrity: sha512-o/plBiPJQgbSq/4ipDpsq4HCmURjBAEjr1EO/p2falr3VhwV0WGXTvb8NlihgI8xtSyO6lHvtycrE535GMLQbA==}
-    engines: {node: '>=v18'}
-    requiresBuild: true
-    dependencies:
-      '@commitlint/config-validator': 18.4.0
-      '@commitlint/execute-rule': 18.4.0
-      '@commitlint/resolve-extends': 18.4.0
-      '@commitlint/types': 18.4.0
-      '@types/node': 18.18.9
-      chalk: 4.1.2
-      cosmiconfig: 8.3.6(typescript@5.2.2)
-      cosmiconfig-typescript-loader: 5.0.0(@types/node@18.18.9)(cosmiconfig@8.3.6)(typescript@5.2.2)
-      lodash.isplainobject: 4.0.6
-      lodash.merge: 4.6.2
-      lodash.uniq: 4.5.0
-      resolve-from: 5.0.0
-    transitivePeerDependencies:
-      - typescript
-    dev: true
-    optional: true
-
   /@commitlint/load@18.4.2(typescript@5.2.2):
     resolution: {integrity: sha512-CKmzXdF9XwZJoVijAqpUlV9qzZOkyiYni4KuSCtTZVAAVudi9H84cJ4FqZxSwEP9G21vmoJiNrW8G042AsduVg==}
     engines: {node: '>=v18'}
+    requiresBuild: true
     dependencies:
       '@commitlint/config-validator': 18.4.0
       '@commitlint/execute-rule': 18.4.0
@@ -3646,7 +3625,7 @@ packages:
       longest: 2.0.1
       word-wrap: 1.2.5
     optionalDependencies:
-      '@commitlint/load': 18.4.1(typescript@5.2.2)
+      '@commitlint/load': 18.4.2(typescript@5.2.2)
     transitivePeerDependencies:
       - typescript
     dev: true
