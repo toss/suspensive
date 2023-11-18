@@ -32,9 +32,18 @@ importers:
       '@suspensive/package-json-name':
         specifier: workspace:*
         version: link:configs/package-json-name
+      '@suspensive/react':
+        specifier: workspace:*
+        version: link:packages/react
+      '@suspensive/test-utils':
+        specifier: workspace:*
+        version: link:configs/test-utils
       '@suspensive/tsconfig':
         specifier: workspace:*
         version: link:configs/tsconfig
+      '@suspensive/tsup':
+        specifier: workspace:*
+        version: link:configs/tsup
       '@testing-library/dom':
         specifier: ^9.0.0
         version: 9.3.3
@@ -238,18 +247,6 @@ importers:
         specifier: ^1.2.0
         version: 1.2.0(react@18.2.0)
     devDependencies:
-      '@suspensive/package-json-name':
-        specifier: workspace:*
-        version: link:../../configs/package-json-name
-      '@suspensive/react':
-        specifier: workspace:*
-        version: link:../react
-      '@suspensive/test-utils':
-        specifier: workspace:*
-        version: link:../../configs/test-utils
-      '@suspensive/tsup':
-        specifier: workspace:*
-        version: link:../../configs/tsup
       '@types/react':
         specifier: ^18.2.37
         version: 18.2.37
