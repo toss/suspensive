@@ -55,6 +55,7 @@
     "@suspensive/eslint-config": "workspace:*",
     "@suspensive/eslint-config-js": "workspace:*",
     "@suspensive/eslint-config-ts": "workspace:*",
+    "@suspensive/package-json-name": "workspace:*",
     "@suspensive/tsconfig": "workspace:*",
     "@testing-library/dom": "^9.0.0",
     "@testing-library/jest-dom": "^5.17.0",

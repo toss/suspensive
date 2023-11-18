@@ -2,9 +2,11 @@
   "name": "@suspensive/package-json-name",
   "version": "0.0.0",
   "private": true,
-  "main": "src/index.js",
-  "types": "src/index.d.ts",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "prepack": "tsc"
   }
 }
