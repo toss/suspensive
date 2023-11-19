@@ -1,5 +1,13 @@
 # @suspensive/react-query
 
+## 1.20.4
+
+### Patch Changes
+
+- acbc787: refactor: extract unnecessary packages to root
+- Updated dependencies [acbc787]
+  - @suspensive/react@1.20.4
+
 ## 1.20.3
 
 ### Patch Changes
