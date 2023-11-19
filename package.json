@@ -55,7 +55,6 @@
     "@suspensive/eslint-config": "workspace:*",
     "@suspensive/eslint-config-js": "workspace:*",
     "@suspensive/eslint-config-ts": "workspace:*",
-    "@suspensive/package-json-name": "workspace:*",
     "@suspensive/test-utils": "workspace:*",
     "@suspensive/tsconfig": "workspace:*",
     "@suspensive/tsup": "workspace:*",
