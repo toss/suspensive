@@ -61,8 +61,6 @@
   },
   "devDependencies": {
     "@suspensive/react": "workspace:*",
-    "@suspensive/test-utils": "workspace:*",
-    "@suspensive/tsup": "workspace:*",
     "@types/react": "^18.2.37",
     "@types/react-dom": "^18.2.15",
     "@types/use-sync-external-store": "^0.0.6",
