@@ -29,9 +29,6 @@ importers:
       '@suspensive/eslint-config-ts':
         specifier: workspace:*
         version: link:configs/eslint-config-ts
-      '@suspensive/package-json-name':
-        specifier: workspace:*
-        version: link:configs/package-json-name
       '@suspensive/test-utils':
         specifier: workspace:*
         version: link:configs/test-utils
@@ -234,6 +231,9 @@ importers:
 
   packages/react:
     devDependencies:
+      '@suspensive/package-json-name':
+        specifier: workspace:*
+        version: link:../../configs/package-json-name
       '@types/react':
         specifier: ^18.2.37
         version: 18.2.37
@@ -253,6 +253,9 @@ importers:
         specifier: ^1.2.0
         version: 1.2.0(react@18.2.0)
     devDependencies:
+      '@suspensive/package-json-name':
+        specifier: workspace:*
+        version: link:../../configs/package-json-name
       '@suspensive/react':
         specifier: workspace:*
         version: link:../react
@@ -274,6 +277,9 @@ importers:
 
   packages/react-query:
     devDependencies:
+      '@suspensive/package-json-name':
+        specifier: workspace:*
+        version: link:../../configs/package-json-name
       '@suspensive/react':
         specifier: workspace:*
         version: link:../react
