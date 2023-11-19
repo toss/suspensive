@@ -1,5 +1,11 @@
 # @suspensive/react
 
+## 1.20.4
+
+### Patch Changes
+
+- acbc787: refactor: extract unnecessary packages to root
+
 ## 1.20.3
 
 ### Patch Changes

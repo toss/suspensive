@@ -32,9 +32,15 @@ importers:
       '@suspensive/package-json-name':
         specifier: workspace:*
         version: link:configs/package-json-name
+      '@suspensive/test-utils':
+        specifier: workspace:*
+        version: link:configs/test-utils
       '@suspensive/tsconfig':
         specifier: workspace:*
         version: link:configs/tsconfig
+      '@suspensive/tsup':
+        specifier: workspace:*
+        version: link:configs/tsup
       '@testing-library/dom':
         specifier: ^9.0.0
         version: 9.3.3
@@ -228,12 +234,6 @@ importers:
 
   packages/react:
     devDependencies:
-      '@suspensive/test-utils':
-        specifier: workspace:*
-        version: link:../../configs/test-utils
-      '@suspensive/tsup':
-        specifier: workspace:*
-        version: link:../../configs/tsup
       '@types/react':
         specifier: ^18.2.37
         version: 18.2.37
@@ -256,12 +256,6 @@ importers:
       '@suspensive/react':
         specifier: workspace:*
         version: link:../react
-      '@suspensive/test-utils':
-        specifier: workspace:*
-        version: link:../../configs/test-utils
-      '@suspensive/tsup':
-        specifier: workspace:*
-        version: link:../../configs/tsup
       '@types/react':
         specifier: ^18.2.37
         version: 18.2.37
@@ -283,9 +277,6 @@ importers:
       '@suspensive/react':
         specifier: workspace:*
         version: link:../react
-      '@suspensive/tsup':
-        specifier: workspace:*
-        version: link:../../configs/tsup
       '@tanstack/react-query':
         specifier: ^4.36.1
         version: 4.36.1(react-dom@18.2.0)(react@18.2.0)
