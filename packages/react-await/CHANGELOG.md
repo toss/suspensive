@@ -1,5 +1,11 @@
 # @suspensive/react-await
 
+## 0.0.9
+
+### Patch Changes
+
+- acbc787: refactor: extract unnecessary packages to root
+
 ## 0.0.8
 
 ### Patch Changes
