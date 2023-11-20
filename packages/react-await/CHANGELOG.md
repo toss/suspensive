@@ -1,5 +1,11 @@
 # @suspensive/react-await
 
+## 0.0.10
+
+### Patch Changes
+
+- 4db65b9: test
+
 ## 0.0.9
 
 ### Patch Changes

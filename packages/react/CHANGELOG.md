@@ -1,5 +1,11 @@
 # @suspensive/react
 
+## 1.20.5
+
+### Patch Changes
+
+- 4db65b9: test
+
 ## 1.20.4
 
 ### Patch Changes
