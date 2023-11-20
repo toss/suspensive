@@ -19,24 +19,12 @@ jobs:
           cache-dependency-path: 'pnpm-lock.yaml'
           node-version-file: '.nvmrc'
       - run: pnpm install --frozen-lockfile
-
-      - name: Set git user
-        run: |
-          git config --global user.email "manudeli.ko@gmail.com"
-          git config --global user.name "Jonghyeon Ko"
-
       - name: Create Changesets Pull Request or Publish to NPM
         id: changesets
         uses: changesets/action@v1
         with:
-          setupGitUser: false
           title: 'chore: version packages'
-          commit: |
-            chore: version packages
-
-            Co-authored-by: Jonghyeon Ko <manudeli.ko@gmail.com>
-            Co-authored-by: Chanhyuk Park <pgg6713@gmail.com>
-            Co-authored-by: Minsoo Kim <zlemzlem5656@naver.com>
+          commit: 'chore: version packages'
           version: pnpm changeset:version
           publish: pnpm changeset:publish
         env:
