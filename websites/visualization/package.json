@@ -3,12 +3,6 @@
   "version": "0.0.7",
   "private": true,
   "description": "Visualization of Suspensive core concepts",
-  "keywords": [
-    "suspensive",
-    "@suspensive/react",
-    "@suspensive/react-query",
-    "@suspensive/react-await"
-  ],
   "homepage": "https://visualization.suspensive.org",
   "bugs": "https://github.com/suspensive/react/issues",
   "funding": {
@@ -32,6 +26,7 @@
     "@jsxcss/emotion": "^1.3.9",
     "@suspensive/react": "workspace:*",
     "@suspensive/react-await": "workspace:*",
+    "@suspensive/react-image": "workspace:*",
     "@suspensive/react-query": "workspace:*",
     "@tanstack/react-query": "^4.36.1",
     "@tanstack/react-query-devtools": "^4.36.1",
