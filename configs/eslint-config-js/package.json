@@ -15,6 +15,6 @@
     "eslint-plugin-import": "^2.29.0",
     "eslint-plugin-jsdoc": "^46.9.0",
     "eslint-plugin-prettier": "^5.0.1",
-    "eslint-plugin-vitest": "0.3.9"
+    "eslint-plugin-vitest": "0.3.10"
   }
 }
