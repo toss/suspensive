@@ -1,5 +1,5 @@
 {
-  "name": "@suspensive/image",
+  "name": "@suspensive/react-image",
   "version": "0.0.0",
   "description": "Useful image interfaces for React Suspense",
   "keywords": [
@@ -11,7 +11,7 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/suspensive/react.git",
-    "directory": "packages/image"
+    "directory": "packages/react-image"
   },
   "funding": {
     "type": "github",

@@ -1,5 +1,5 @@
 ---
-"@suspensive/image": patch
+"@suspensive/react-image": patch
 ---
 
-feat(image): initialize @suspensive/image
+feat(react-image): initialize @suspensive/react-image

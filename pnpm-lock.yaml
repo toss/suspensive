@@ -235,31 +235,6 @@ importers:
         specifier: ^3.3.5
         version: 3.3.5
 
-  packages/image:
-    dependencies:
-      use-sync-external-store:
-        specifier: ^1.2.0
-        version: 1.2.0(react@18.2.0)
-    devDependencies:
-      '@suspensive/package-json-name':
-        specifier: workspace:*
-        version: link:../../configs/package-json-name
-      '@types/react':
-        specifier: ^18.2.38
-        version: 18.2.38
-      '@types/react-dom':
-        specifier: ^18.2.15
-        version: 18.2.15
-      '@types/use-sync-external-store':
-        specifier: ^0.0.6
-        version: 0.0.6
-      react:
-        specifier: ^18.2.0
-        version: 18.2.0
-      react-dom:
-        specifier: ^18.2.0
-        version: 18.2.0(react@18.2.0)
-
   packages/react:
     devDependencies:
       '@suspensive/package-json-name':
@@ -290,6 +265,31 @@ importers:
       '@suspensive/react':
         specifier: workspace:*
         version: link:../react
+      '@types/react':
+        specifier: ^18.2.38
+        version: 18.2.38
+      '@types/react-dom':
+        specifier: ^18.2.15
+        version: 18.2.15
+      '@types/use-sync-external-store':
+        specifier: ^0.0.6
+        version: 0.0.6
+      react:
+        specifier: ^18.2.0
+        version: 18.2.0
+      react-dom:
+        specifier: ^18.2.0
+        version: 18.2.0(react@18.2.0)
+
+  packages/react-image:
+    dependencies:
+      use-sync-external-store:
+        specifier: ^1.2.0
+        version: 1.2.0(react@18.2.0)
+    devDependencies:
+      '@suspensive/package-json-name':
+        specifier: workspace:*
+        version: link:../../configs/package-json-name
       '@types/react':
         specifier: ^18.2.38
         version: 18.2.38
@@ -344,15 +344,15 @@ importers:
       '@jsxcss/emotion':
         specifier: ^1.3.9
         version: 1.3.9(@emotion/react@11.11.1)(react@18.2.0)
-      '@suspensive/image':
-        specifier: workspace:*
-        version: link:../../packages/image
       '@suspensive/react':
         specifier: workspace:*
         version: link:../../packages/react
       '@suspensive/react-await':
         specifier: workspace:*
         version: link:../../packages/react-await
+      '@suspensive/react-image':
+        specifier: workspace:*
+        version: link:../../packages/react-image
       '@suspensive/react-query':
         specifier: workspace:*
         version: link:../../packages/react-query

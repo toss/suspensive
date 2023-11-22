@@ -4,7 +4,7 @@
   "react": "@suspensive/react",
   "react-query": "@suspensive/react-query",
   "react-await": "@suspensive/react-await",
-  "image": "@suspensive/image",
+  "react-image": "@suspensive/react-image",
   "---": {
     "type": "separator"
   },

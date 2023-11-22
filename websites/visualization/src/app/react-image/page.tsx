@@ -1,8 +1,8 @@
 'use client'
 
 import { Stack } from '@jsxcss/emotion'
-import { Image } from '@suspensive/image'
 import { wrap } from '@suspensive/react'
+import { Image } from '@suspensive/react-image'
 
 export default wrap
   .ErrorBoundary({ fallback: () => <div>error</div> })

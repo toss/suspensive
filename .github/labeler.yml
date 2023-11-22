@@ -4,8 +4,8 @@
   - "packages/react-query/**/*"
 "@suspensive/react-await":
   - "packages/react-await/**/*"
-"@suspensive/image":
-  - "packages/image/**/*"
+"@suspensive/react-image":
+  - "packages/react-image/**/*"
 "documentation":
   - "docs/**/*"
 "visualization":

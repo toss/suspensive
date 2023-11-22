@@ -35,7 +35,7 @@ component_management:
       name: "@suspensive/react-await"
       paths:
         - packages/react-await
-    - component_id: suspensive-image
-      name: "@suspensive/image"
+    - component_id: suspensive-react-image
+      name: "@suspensive/react-image"
       paths:
-        - packages/image
+        - packages/react-image
