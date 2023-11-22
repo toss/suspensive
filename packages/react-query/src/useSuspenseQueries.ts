@@ -1,9 +1,10 @@
+// TODO: remove this eslint
+/* eslint-disable @typescript-eslint/naming-convention */
 import type { QueryFunction, QueryKey, UseQueryOptions, UseQueryResult } from '@tanstack/react-query'
 import { useQueries } from '@tanstack/react-query'
 import type { UseSuspenseQueryResultOnLoading, UseSuspenseQueryResultOnSuccess } from './useSuspenseQuery'
 
 // Avoid TS depth-limit error in case of large array literal
-// eslint-disable-next-line @typescript-eslint/naming-convention
 type MAXIMUM_DEPTH = 20
 
 type UseQueryOptionsForUseSuspenseQueries<
@@ -61,16 +62,16 @@ type GetOption<T> =
 
 type SuspenseQueriesOptions<
   T extends unknown[],
-  Result extends unknown[] = [],
-  Depth extends ReadonlyArray<number> = [],
-> = Depth['length'] extends MAXIMUM_DEPTH
+  TResult extends unknown[] = [],
+  TDepth extends ReadonlyArray<number> = [],
+> = TDepth['length'] extends MAXIMUM_DEPTH
   ? UseQueryOptionsForUseSuspenseQueries[]
   : T extends []
     ? []
     : T extends [infer Head]
-      ? [...Result, GetOption<Head>]
+      ? [...TResult, GetOption<Head>]
       : T extends [infer Head, ...infer Tail]
-        ? SuspenseQueriesOptions<[...Tail], [...Result, GetOption<Head>], [...Depth, 1]>
+        ? SuspenseQueriesOptions<[...Tail], [...TResult, GetOption<Head>], [...TDepth, 1]>
         : unknown[] extends T
           ? T
           : T extends UseQueryOptionsForUseSuspenseQueries<infer TQueryFnData, infer TData, infer TQueryKey>[]
@@ -119,16 +120,16 @@ type GetResult<T> = T extends { queryFnData: any; data: infer TData }
 
 export type QueriesResults<
   T extends any[],
-  Result extends any[] = [],
-  Depth extends ReadonlyArray<number> = [],
-> = Depth['length'] extends MAXIMUM_DEPTH
+  TResult extends any[] = [],
+  TDepth extends ReadonlyArray<number> = [],
+> = TDepth['length'] extends MAXIMUM_DEPTH
   ? UseQueryResult[]
   : T extends []
     ? []
     : T extends [infer Head]
-      ? [...Result, GetResult<Head>]
+      ? [...TResult, GetResult<Head>]
       : T extends [infer Head, ...infer Tail]
-        ? QueriesResults<[...Tail], [...Result, GetResult<Head>], [...Depth, 1]>
+        ? QueriesResults<[...Tail], [...TResult, GetResult<Head>], [...TDepth, 1]>
         : T extends UseQueryOptionsForUseSuspenseQueries<infer TQueryFnData, infer TData, QueryKey>[]
           ? UseSuspenseQueryResultOnSuccess<unknown extends TData ? TQueryFnData : TData>[]
           : (UseSuspenseQueryResultOnSuccess<unknown> | UseSuspenseQueryResultOnLoading)[]
