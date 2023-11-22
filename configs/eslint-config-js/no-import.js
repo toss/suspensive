@@ -18,6 +18,7 @@ module.exports = {
     'plugin:@cspell/recommended',
   ],
   rules: {
+    'no-warning-comments': 'warn',
     'jsdoc/require-description': 'warn',
     'jsdoc/require-returns': 'off',
     'jsdoc/require-jsdoc': 'off',
