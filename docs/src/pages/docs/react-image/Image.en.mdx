@@ -1,0 +1,20 @@
+import { Callout } from 'nextra/components'
+
+# Image
+
+<Callout type="warning">
+
+`<Image/>` is experimental feature, this interfaces could be changed
+
+</Callout>
+
+```tsx /Image/
+import { Image } from '@suspensive/react-image'
+import { Suspense } from '@suspensive/react'
+
+const Example = () => (
+  <Suspense fallback="loading...">
+    <Image src="https://placehold.co/200x100" />
+  </Suspense>
+)
+```
