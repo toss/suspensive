@@ -10,6 +10,7 @@ export const CommonLayout = ({ children }: PropsWithChildren) => {
   return (
     <>
       <TopNavigation />
+      <Link href="/react-image">🔗 Go to @suspensive/react-image</Link>
       <Flex.Center flex={1}>{children}</Flex.Center>
     </>
   )
