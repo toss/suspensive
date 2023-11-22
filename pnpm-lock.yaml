@@ -245,7 +245,7 @@ importers:
         specifier: workspace:*
         version: link:../../configs/package-json-name
       '@types/react':
-        specifier: ^18.2.37
+        specifier: ^18.2.38
         version: 18.2.38
       '@types/react-dom':
         specifier: ^18.2.15
