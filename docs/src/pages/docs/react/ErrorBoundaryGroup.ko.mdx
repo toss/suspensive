@@ -26,14 +26,6 @@ const Example = () => (
 )
 ```
 
-<Callout type="info">
-
-`<ErrorBoundaryGroup>`은 `<AsyncBoundary>`도 관리합니다.
-
-[`<AsyncBoundary/>`](./AsyncBoundary)는 `<ErrorBoundary>`를 래핑하므로 `<ErrorBoundaryGroup>`의 영향을 받습니다.
-
-</Callout>
-
 ### props.blockOutside
 
 만약 상위 `<ErrorBoundaryGroup/>`에 의한 하위 `<ErrorBoundaryGroup/>`의 reset을 막고 싶다면 blockOutside을 사용하면 됩니다.
