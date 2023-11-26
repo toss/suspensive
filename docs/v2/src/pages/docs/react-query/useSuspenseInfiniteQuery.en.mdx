@@ -1,0 +1,53 @@
+import { Callout } from 'nextra/components'
+
+# useSuspenseInfiniteQuery
+
+Return type of this hook have no isLoading, isError property. because `<Suspense/>` and `<ErrorBoundary/>` will guarantee this hook's data. In addition, this hook's options have default suspense: true. and you can provide new options to this hook like [useInfiniteQuery](https://tanstack.com/query/v4/docs/react/reference/useInfiniteQuery) of @tanstack/react-query.
+
+```tsx /useSuspenseInfiniteQuery/
+import { useSuspenseInfiniteQuery } from '@suspensive/react-query'
+
+const Example = () => {
+  const query = useSuspenseInfiniteQuery({
+    queryKey,
+    queryFn,
+  }) // suspense:true is default.
+
+  // No need to do type narrowing by isSuccess
+  query.data // InfiniteData<TData>
+}
+```
+
+### Motivation
+
+If you turn suspense on in @tanstack/react-query, You can use [useInfiniteQuery](https://tanstack.com/query/v4/docs/react/reference/useInfiniteQuery) with `<Suspense/>` and `<ErrorBoundary/>`.
+
+```tsx /useInfiniteQuery/
+import { useInfiniteQuery } from '@tanstack/react-query'
+
+const Example = () => {
+  const query = useInfiniteQuery({
+    queryKey,
+    queryFn,
+    suspense: true,
+  })
+
+  query.data // InfiniteData<TData> | undefined
+
+  if (query.isSuccess) {
+    query.data // InfiniteData<TData>
+  }
+}
+```
+
+but useInfiniteQuery's return type:query.data will be always fulfilled because of `<Suspense/>` as parent of this component.
+
+This is why @suspensive/react-query provide **useSuspenseInfiniteQuery**
+
+<Callout>
+
+Concentrate on only Success
+
+Now, we can concentrate component as any fetching will be always success.
+
+</Callout>
