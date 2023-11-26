@@ -26,14 +26,6 @@ const Example = () => (
 )
 ```
 
-<Callout type="info">
-
-`<ErrorBoundaryGroup>` manage `<AsyncBoundary>`s too
-
-[`<AsyncBoundary/>`](./AsyncBoundary) is influenced by `<ErrorBoundaryGroup>` because it wraps `<ErrorBoundary>`.
-
-</Callout >
-
 ### props.blockOutside
 
 If you want to block resetting nested `<ErrorBoundaryGroup/>` by parent `<ErrorBoundaryGroup/>`, Use blockOutside.
@@ -70,30 +62,4 @@ const Example = () => {
 
   return <button onClick={group.reset}>Try again</button>
 }
-```
-
-## withErrorBoundaryGroup
-
-withErrorBoundaryGroup allows you to easily wrap your component in `<ErrorBoundaryGroup/>`.
-If you use withErrorBoundaryGroup as shown below, you don't need to create unnecessary code to wrap it.
-The second argument to withErrorBoundaryGroup is a prop of `<ErrorBoundaryGroup/>` without children.
-
-```tsx /withErrorBoundaryGroup/
-import { withErrorBoundaryGroup, useErrorBoundaryGroup, ErrorBoundary } from '@suspensive/react'
-
-const Example = withErrorBoundaryGroup(
-  function Component() {
-    const group = useErrorBoundaryGroup()
-
-    return (
-      <>
-        <button onClick={group.reset}>Try again</button>
-        <ErrorBoundary fallback={(props) => <>{props.error}</>}>
-          <CanThrowError />
-        </ErrorBoundary>
-      </>
-    )
-  },
-  { blockOutside: true }
-)
 ```

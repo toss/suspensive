@@ -48,31 +48,3 @@ Migration support SSR gradually (`<Suspense.CSROnly/>` -> `<Suspense/>`)
 If you want to use Suspense working in both SSR/CSR, You can change `<Suspense.CSROnly/>` to `<Suspense/>` gradually.
 
 </Callout>
-
-## withSuspense
-
-You can use withSuspense to wrap component by `<Suspense/>` easily.
-we don't need to make unncessary code to wrap it if we use withSuspense like below.
-withSuspense's 2nd parameter is props of `<Suspense/>` without children
-
-```tsx /withSuspense/
-import { withSuspense } from '@suspensive/react'
-
-const Example = withSuspense(
-  function Component() {
-    // code make suspending
-
-    return <>...</>
-  },
-  { fallback: <Spinner /> }
-)
-
-const Example = withSuspense.CSROnly(
-  function Component() {
-    // code make suspending
-
-    return <>...</>
-  },
-  { fallback: <Spinner /> }
-)
-```

@@ -26,14 +26,6 @@ const Example = () => (
 )
 ```
 
-<Callout type="info">
-
-`<ErrorBoundaryGroup>`은 `<AsyncBoundary>`도 관리합니다.
-
-[`<AsyncBoundary/>`](./AsyncBoundary)는 `<ErrorBoundary>`를 래핑하므로 `<ErrorBoundaryGroup>`의 영향을 받습니다.
-
-</Callout>
-
 ### props.blockOutside
 
 만약 상위 `<ErrorBoundaryGroup/>`에 의한 하위 `<ErrorBoundaryGroup/>`의 reset을 막고 싶다면 blockOutside을 사용하면 됩니다.
@@ -70,30 +62,4 @@ const Example = () => {
 
   return <button onClick={group.reset}>Try again</button>
 }
-```
-
-## withErrorBoundaryGroup
-
-withErrorBoundaryGroup를 사용하면 컴포넌트를 `<ErrorBoundaryGroup/>`로 쉽게 래핑할 수 있습니다.
-아래와 같이 withErrorBoundaryGroup를 사용하면 이를 감싸기 위해 불필요한 코드를 만들 필요가 없습니다.
-withErrorBoundaryGroup의 두 번째 인자는 children이 없는 `<ErrorBoundaryGroup/>`의 props입니다.
-
-```tsx /withErrorBoundaryGroup/
-import { withErrorBoundaryGroup, useErrorBoundaryGroup, ErrorBoundary } from '@suspensive/react'
-
-const Example = withErrorBoundaryGroup(
-  function Component() {
-    const group = useErrorBoundaryGroup()
-
-    return (
-      <>
-        <button onClick={group.reset}>Try again</button>
-        <ErrorBoundary fallback={(props) => <>{props.error}</>}>
-          <CanThrowError />
-        </ErrorBoundary>
-      </>
-    )
-  },
-  { blockOutside: true }
-)
 ```
