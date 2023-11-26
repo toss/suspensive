@@ -61,30 +61,3 @@ const Example = () => (
   </AsyncBoundary.CSROnly>
 )
 ```
-
-## withAsyncBoundary
-
-You can use withAsyncBoundary to wrap component by `<AsyncBoundary/>` easily.
-we don't need to make unncessary code to wrap it if we use withAsyncBoundary like below.
-withAsyncBoundary's 2nd parameter is props of `<AsyncBoundary/>` without children
-
-```tsx /withAsyncBoundary/
-import { withAsyncBoundary } from '@suspensive/react'
-
-const Example = withAsyncBoundary(
-  function Component() {
-    return <>...</>
-  },
-  {
-    pendingFallback: <Loading />,
-    rejectedFallback: (props) => (
-      <>
-        <button onClick={props.reset}>Try again</button>
-        {props.error.message}
-      </>
-    ),
-    onReset: () => console.log('reset'),
-    onError: (error) => console.log(error),
-  }
-)
-```
