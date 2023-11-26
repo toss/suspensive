@@ -3,5 +3,5 @@
   "useSuspenseQuery": { "title": "useSuspenseQuery" },
   "useSuspenseQueries": { "title": "useSuspenseQueries" },
   "useSuspenseInfiniteQuery": { "title": "useSuspenseInfiniteQuery" },
-  "QueryErrorBoundary": { "title": "<QueryErrorBoundary/>, <QueryAsyncBoundary/>" }
+  "QueryErrorBoundary": { "title": "<QueryErrorBoundary/>" }
 }
