@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { expectError } from 'tsd'
+import { describe, expectTypeOf } from 'vitest'
 import { useSuspenseQuery } from '../dist'
 
 const queryKey = ['key'] as const
@@ -32,3 +33,19 @@ expectError(useSuspenseQuery(queryKey, queryFn).isPlaceholderData)
 expectError(useSuspenseQuery(queryKey, queryFn, {}).isPlaceholderData)
 expectError(useSuspenseQuery(queryKey, { queryFn }).isPlaceholderData)
 expectError(useSuspenseQuery({ queryKey, queryFn }).isPlaceholderData)
+
+describe('useSuspenseQuery', () => {
+  it("'s data is always defined", () => {
+    expectTypeOf(useSuspenseQuery(queryKey, queryFn).data).toEqualTypeOf<Awaited<ReturnType<typeof queryFn>>>()
+    expectTypeOf(useSuspenseQuery(queryKey, queryFn, {}).data).toEqualTypeOf<Awaited<ReturnType<typeof queryFn>>>()
+    expectTypeOf(useSuspenseQuery(queryKey, { queryFn }).data).toEqualTypeOf<Awaited<ReturnType<typeof queryFn>>>()
+    expectTypeOf(useSuspenseQuery({ queryKey, queryFn }).data).toEqualTypeOf<Awaited<ReturnType<typeof queryFn>>>()
+  })
+
+  it("'s status is always 'success'", () => {
+    expectTypeOf(useSuspenseQuery(queryKey, queryFn).status).toEqualTypeOf<'success'>()
+    expectTypeOf(useSuspenseQuery(queryKey, queryFn, {}).status).toEqualTypeOf<'success'>()
+    expectTypeOf(useSuspenseQuery(queryKey, { queryFn }).status).toEqualTypeOf<'success'>()
+    expectTypeOf(useSuspenseQuery({ queryKey, queryFn }).status).toEqualTypeOf<'success'>()
+  })
+})

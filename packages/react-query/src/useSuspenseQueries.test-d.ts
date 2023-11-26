@@ -1,24 +1,20 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import { expectError, expectType } from 'tsd'
+import { expectError } from 'tsd'
+import { describe, expectTypeOf, it } from 'vitest'
 import { useSuspenseQueries } from '../dist'
 
-const queryKey = ['key'] as const
-const queryFn = async () => 'response' as const
 const select = () => 'selected' as const
 
-const [query, querySelected] = useSuspenseQueries({
-  queries: [
-    { queryKey, queryFn },
-    { queryKey, queryFn, select },
-  ] as const,
+const queryOptions = <TIndex extends number>(index: TIndex) => ({
+  queryKey: ['key', index] as const,
+  queryFn: async () => ({ name: `resolved${index}` }) as const,
 })
-expectType<Awaited<ReturnType<typeof queryFn>>>(query.data)
-expectType<Awaited<ReturnType<typeof select>>>(querySelected.data)
+
 expectError(
   useSuspenseQueries({
     queries: [
-      { queryKey, queryFn, suspense: false },
-      { queryKey, queryFn, select, suspense: true },
+      { ...queryOptions(0), suspense: false },
+      { ...queryOptions(1), select, suspense: true },
     ] as const,
   })
 )
@@ -26,3 +22,28 @@ expectError(
 // noItem
 expectError(useSuspenseQueries({}))
 expectError(useSuspenseQueries())
+
+describe('useSuspenseQueries', () => {
+  it("'s type check", () => {
+    const suspenseQueries = useSuspenseQueries({
+      queries: [
+        { ...queryOptions(0) },
+        { ...queryOptions(1) },
+        { ...queryOptions(2), select: () => ({ name: 'selected' }) as const },
+      ] as const,
+    })
+
+    expectTypeOf(suspenseQueries[0].status).toEqualTypeOf<`success`>()
+    expectTypeOf(suspenseQueries[0].data).toEqualTypeOf<
+      Awaited<ReturnType<ReturnType<typeof queryOptions<0>>['queryFn']>>
+    >()
+
+    expectTypeOf(suspenseQueries[1].status).toEqualTypeOf<`success`>()
+    expectTypeOf(suspenseQueries[1].data).toEqualTypeOf<
+      Awaited<ReturnType<ReturnType<typeof queryOptions<1>>['queryFn']>>
+    >()
+
+    expectTypeOf(suspenseQueries[2].status).toEqualTypeOf<`success`>()
+    expectTypeOf(suspenseQueries[2].data).toEqualTypeOf<{ readonly name: 'selected' }>()
+  })
+})

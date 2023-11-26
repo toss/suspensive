@@ -53,7 +53,7 @@
     "lint:attw": "attw --pack",
     "lint:pub": "publint --strict",
     "prepack": "pnpm build && pnpm test:tsd",
-    "test": "vitest run --coverage",
+    "test": "vitest typecheck run --ui --coverage",
     "test:tsd": "tsd -t ./dist/index.d.ts",
     "test:watch": "vitest --ui --coverage.enabled=true",
     "type:check": "tsc --noEmit"

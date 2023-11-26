@@ -1,5 +1,7 @@
 /* eslint-disable react-hooks/rules-of-hooks */
+import type { InfiniteData } from '@tanstack/react-query'
 import { expectError } from 'tsd'
+import { describe, expectTypeOf, it } from 'vitest'
 import { useSuspenseInfiniteQuery } from '../dist'
 
 const queryKey = ['key'] as const
@@ -31,3 +33,27 @@ expectError(useSuspenseInfiniteQuery(queryKey, queryFn).isPlaceholderData)
 expectError(useSuspenseInfiniteQuery(queryKey, queryFn, {}).isPlaceholderData)
 expectError(useSuspenseInfiniteQuery(queryKey, { queryFn }).isPlaceholderData)
 expectError(useSuspenseInfiniteQuery({ queryKey, queryFn }).isPlaceholderData)
+
+describe('useSuspenseInfiniteQuery', () => {
+  it("'s type check", () => {
+    // data is always defined
+    expectTypeOf(useSuspenseInfiniteQuery(queryKey, queryFn).data).toEqualTypeOf<
+      InfiniteData<Awaited<ReturnType<typeof queryFn>>>
+    >()
+    expectTypeOf(useSuspenseInfiniteQuery(queryKey, queryFn, {}).data).toEqualTypeOf<
+      InfiniteData<Awaited<ReturnType<typeof queryFn>>>
+    >()
+    expectTypeOf(useSuspenseInfiniteQuery(queryKey, { queryFn }).data).toEqualTypeOf<
+      InfiniteData<Awaited<ReturnType<typeof queryFn>>>
+    >()
+    expectTypeOf(useSuspenseInfiniteQuery({ queryKey, queryFn }).data).toEqualTypeOf<
+      InfiniteData<Awaited<ReturnType<typeof queryFn>>>
+    >()
+
+    // status is always 'success'
+    expectTypeOf(useSuspenseInfiniteQuery(queryKey, queryFn).status).toEqualTypeOf<'success'>()
+    expectTypeOf(useSuspenseInfiniteQuery(queryKey, queryFn, {}).status).toEqualTypeOf<'success'>()
+    expectTypeOf(useSuspenseInfiniteQuery(queryKey, { queryFn }).status).toEqualTypeOf<'success'>()
+    expectTypeOf(useSuspenseInfiniteQuery({ queryKey, queryFn }).status).toEqualTypeOf<'success'>()
+  })
+})
