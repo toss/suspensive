@@ -45,12 +45,18 @@ export const AsyncBoundary = Object.assign(BaseAsyncBoundary, {
   CSROnly,
 })
 
+/**
+ * @deprecated Use wrap.AsyncBoundary().on as alternatives
+ */
 export const withAsyncBoundary = Object.assign(
   <TProps extends ComponentProps<ComponentType> = Record<string, never>>(
     component: ComponentType<TProps>,
     asyncBoundaryProps: PropsWithoutChildren<AsyncBoundaryProps>
   ) => wrap.AsyncBoundary(asyncBoundaryProps).on(component),
   {
+    /**
+     * @deprecated Use wrap.AsyncBoundary.CSROnly().on as alternatives
+     */
     CSROnly: <TProps extends ComponentProps<ComponentType> = Record<string, never>>(
       component: ComponentType<TProps>,
       asyncBoundaryProps: PropsWithoutChildren<AsyncBoundaryProps>

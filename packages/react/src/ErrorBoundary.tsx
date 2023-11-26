@@ -132,6 +132,9 @@ if (process.env.NODE_ENV !== 'production') {
   ErrorBoundary.displayName = 'ErrorBoundary'
 }
 
+/**
+ * @deprecated Use wrap.ErrorBoundary().on as alternatives
+ */
 export const withErrorBoundary = <TProps extends ComponentProps<ComponentType> = Record<string, never>>(
   component: ComponentType<TProps>,
   errorBoundaryProps: PropsWithoutChildren<ErrorBoundaryProps>
