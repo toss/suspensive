@@ -43,12 +43,18 @@ export const Suspense = Object.assign(DefaultSuspense, {
   CSROnly,
 })
 
+/**
+ * @deprecated Use wrap.Suspense().on as alternatives
+ */
 export const withSuspense = Object.assign(
   <TProps extends ComponentProps<ComponentType> = Record<string, never>>(
     component: ComponentType<TProps>,
     suspenseProps: PropsWithoutChildren<SuspenseProps> = {}
   ) => wrap.Suspense(suspenseProps).on(component),
   {
+    /**
+     * @deprecated Use wrap.Suspense.CSROnly().on as alternatives
+     */
     CSROnly: <TProps extends ComponentProps<ComponentType> = Record<string, never>>(
       component: ComponentType<TProps>,
       suspenseProps: PropsWithoutChildren<SuspenseProps> = {}
