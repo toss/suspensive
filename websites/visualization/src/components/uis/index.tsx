@@ -28,12 +28,6 @@ export const Description = {
   Success: styled(BaseDescription)``,
 }
 
-export const DescriptionText = styled.div`
-  align-self: center;
-  font-size: 8px;
-  font-weight: 900;
-`
-
 export const Spinner = styled.div`
   height: 15px;
   width: 15px;
