@@ -1,5 +1,14 @@
 # @suspensive/react-query
 
+## 1.20.5
+
+### Patch Changes
+
+- bce7c1d: fix(react): deprecate AsyncBoundary
+- Updated dependencies [b5888b2]
+- Updated dependencies [bce7c1d]
+  - @suspensive/react@1.20.5
+
 ## 1.20.4
 
 ### Patch Changes
