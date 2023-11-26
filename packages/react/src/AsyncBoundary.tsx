@@ -6,7 +6,7 @@ import { Suspense } from './Suspense'
 import type { PropsWithoutChildren } from './types'
 
 /**
- * @deprecated Use <Suspense/> and <ErrorBoundary/> as alternatives
+ * @deprecated Use SuspenseProps and ErrorBoundaryProps as alternatives
  */
 export type AsyncBoundaryProps = Omit<SuspenseProps, 'fallback'> &
   Omit<ErrorBoundaryProps, 'fallback'> & {
@@ -36,11 +36,11 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 /**
- * @deprecated Use Suspense and ErrorBoundary as alternatives
+ * @deprecated Use `<Suspense/>` and `<ErrorBoundary/>` as alternatives
  */
 export const AsyncBoundary = Object.assign(BaseAsyncBoundary, {
   /**
-   * @deprecated Use Suspense and ErrorBoundary as alternatives
+   * @deprecated Use `<Suspense/>` and `<ErrorBoundary/>` as alternatives
    */
   CSROnly,
 })
