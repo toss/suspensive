@@ -29,16 +29,16 @@ component_management:
     - component_id: suspensive-react
       name: '@suspensive/react'
       paths:
-        - packages/react
+        - packages/react/**
     - component_id: suspensive-react-query
       name: '@suspensive/react-query'
       paths:
-        - packages/react-query
+        - packages/react-query/**
     - component_id: suspensive-react-await
       name: '@suspensive/react-await'
       paths:
-        - packages/react-await
+        - packages/react-await/**
     - component_id: suspensive-react-image
       name: '@suspensive/react-image'
       paths:
-        - packages/react-image
+        - packages/react-image/**
