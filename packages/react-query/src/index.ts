@@ -1,17 +1,8 @@
 export { useSuspenseQuery } from './useSuspenseQuery'
-export type {
-  BaseUseSuspenseQueryResult,
-  UseSuspenseQueryOptions,
-  UseSuspenseQueryResultOnLoading,
-  UseSuspenseQueryResultOnSuccess,
-} from './useSuspenseQuery'
+export type { UseSuspenseQueryResult, UseSuspenseQueryOptions } from './useSuspenseQuery'
 export { useSuspenseQueries } from './useSuspenseQueries'
+export type { SuspenseQueriesOptions, SuspenseQueriesResults } from './useSuspenseQueries'
 export { useSuspenseInfiniteQuery } from './useSuspenseInfiniteQuery'
-export type {
-  BaseUseSuspenseInfiniteQueryResult,
-  UseSuspenseInfiniteQueryOptions,
-  UseSuspenseInfiniteQueryResultOnLoading,
-  UseSuspenseInfiniteQueryResultOnSuccess,
-} from './useSuspenseInfiniteQuery'
+export type { UseSuspenseInfiniteQueryResult, UseSuspenseInfiniteQueryOptions } from './useSuspenseInfiniteQuery'
 export { QueryAsyncBoundary } from './QueryAsyncBoundary'
 export { QueryErrorBoundary } from './QueryErrorBoundary'
