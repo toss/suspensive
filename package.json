@@ -83,7 +83,7 @@
     "turbo": "latest",
     "typescript": "^5.2.2",
     "vite": "^5.0.2",
-    "vitest": "^0.34.6"
+    "vitest": "^1.0.0-beta.5"
   },
   "volta": {
     "node": "18.18.2",
