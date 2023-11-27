@@ -1,0 +1,28 @@
+{
+  "why": "Why Suspensive?",
+  "intro": "Getting Started",
+  "--- Packages": {
+    "type": "separator",
+    "title": "Packages"
+  },
+  "react": "@suspensive/react",
+  "react-query": "@suspensive/react-query",
+  "react-await": {
+    "title": "@suspensive/react-await",
+    "theme": {
+      "collapsed": true
+    }
+  },
+  "react-image": {
+    "title": "@suspensive/react-image",
+    "theme": {
+      "collapsed": true
+    }
+  },
+  "--- More": {
+    "type": "separator",
+    "title": "More"
+  },
+  "changelogs": "Changelogs",
+  "links": "Related Links"
+}
