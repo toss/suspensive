@@ -198,7 +198,44 @@ importers:
 
   configs/tsup: {}
 
-  docs:
+  docs/v1:
+    dependencies:
+      next:
+        specifier: 14.0.3
+        version: 14.0.3(@babel/core@7.23.3)(react-dom@18.2.0)(react@18.2.0)
+      nextra:
+        specifier: ^2.13.2
+        version: 2.13.2(next@14.0.3)(react-dom@18.2.0)(react@18.2.0)
+      nextra-theme-docs:
+        specifier: ^2.13.2
+        version: 2.13.2(next@14.0.3)(nextra@2.13.2)(react-dom@18.2.0)(react@18.2.0)
+      react:
+        specifier: ^18.2.0
+        version: 18.2.0
+      react-dom:
+        specifier: ^18.2.0
+        version: 18.2.0(react@18.2.0)
+    devDependencies:
+      '@types/react':
+        specifier: ^18.2.38
+        version: 18.2.38
+      '@types/react-dom':
+        specifier: ^18.2.15
+        version: 18.2.15
+      autoprefixer:
+        specifier: ^10.4.16
+        version: 10.4.16(postcss@8.4.31)
+      eslint-config-next:
+        specifier: 14.0.3
+        version: 14.0.3(eslint@8.54.0)(typescript@5.2.2)
+      postcss:
+        specifier: ^8.4.31
+        version: 8.4.31
+      tailwindcss:
+        specifier: ^3.3.5
+        version: 3.3.5
+
+  docs/v2:
     dependencies:
       next:
         specifier: 14.0.3
