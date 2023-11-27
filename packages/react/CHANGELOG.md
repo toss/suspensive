@@ -1,5 +1,12 @@
 # @suspensive/react
 
+## 1.20.5
+
+### Patch Changes
+
+- b5888b2: fix(react): make wrap as stable and deprecate all withXXXs
+- bce7c1d: fix(react): deprecate AsyncBoundary
+
 ## 1.20.4
 
 ### Patch Changes

@@ -1,0 +1,28 @@
+{
+  "why": "왜 Suspensive 인가?",
+  "intro": "시작하기",
+  "--- Packages": {
+    "type": "separator",
+    "title": "Packages"
+  },
+  "react": "@suspensive/react",
+  "react-query": "@suspensive/react-query",
+  "react-await": {
+    "title": "@suspensive/react-await",
+    "theme": {
+      "collapsed": true
+    }
+  },
+  "react-image": {
+    "title": "@suspensive/react-image",
+    "theme": {
+      "collapsed": true
+    }
+  },
+  "--- More": {
+    "type": "separator",
+    "title": "More"
+  },
+  "changelogs": "Changelogs",
+  "links": "관련 링크"
+}
