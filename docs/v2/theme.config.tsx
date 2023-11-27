@@ -41,7 +41,7 @@ const config: DocsThemeConfig = {
   project: {
     link: 'https://github.com/suspensive/react',
   },
-  docsRepositoryBase: 'https://github.com/suspensive/react/tree/main/docs',
+  docsRepositoryBase: 'https://github.com/suspensive/react/tree/main/docs/v2',
   useNextSeoProps() {
     const { asPath } = useRouter()
     if (asPath !== '/') {
