@@ -145,7 +145,7 @@ const SuspendedComponent = () => {
 
 <br/>
 
-## Docs [![deployment](https://img.shields.io/github/deployments/suspensive/react/Production%20%E2%80%93%20docs?label=vercel&logo=vercel&logoColor=white&color=000&labelColor=000)](https://suspensive.org)
+## Docs [![deployment](https://img.shields.io/github/deployments/suspensive/react/Production%20%E2%80%93%20docs-v1?label=vercel&logo=vercel&logoColor=white&color=000&labelColor=000)](https://suspensive.org)
 
 We provide Official Docs
 
@@ -178,7 +178,7 @@ MIT © Suspensive. See [LICENSE](./LICENSE) for details.
 <div align="center">
   <a title="Suspensive" href="https://github.com/suspensive">
     <div style='display:flex; align-items:center;'>
-      <img alt="Suspensive" src="https://github.com/suspensive/react/blob/main/docs/public/img/logo_dark.png?raw=true" width="24">
+      <img alt="Suspensive" src="https://github.com/suspensive/react/blob/main/assets/logo_dark.png?raw=true" width="24">
       <sup>Suspensive</sup>
     </div>
   </a>
