@@ -87,8 +87,8 @@ importers:
         specifier: ^0.2.4
         version: 0.2.4(typanion@3.14.0)
       playwright:
-        specifier: ^1.39.0
-        version: 1.40.0
+        specifier: ^1.40.1
+        version: 1.40.1
       prettier:
         specifier: ^3.1.0
         version: 3.1.0
@@ -115,7 +115,7 @@ importers:
         version: 5.0.2(@types/node@18.18.13)
       vitest:
         specifier: ^0.34.6
-        version: 0.34.6(@vitest/browser@0.34.6)(@vitest/ui@0.34.6)(jsdom@22.1.0)(playwright@1.40.0)
+        version: 0.34.6(@vitest/browser@0.34.6)(@vitest/ui@0.34.6)(jsdom@22.1.0)(playwright@1.40.1)
 
   configs/eslint-config:
     dependencies:
@@ -2930,7 +2930,7 @@ packages:
       magic-string: 0.30.5
       modern-node-polyfills: 1.0.0(esbuild@0.18.20)
       sirv: 2.0.3
-      vitest: 0.34.6(@vitest/browser@0.34.6)(@vitest/ui@0.34.6)(jsdom@22.1.0)(playwright@1.40.0)
+      vitest: 0.34.6(@vitest/browser@0.34.6)(@vitest/ui@0.34.6)(jsdom@22.1.0)(playwright@1.40.1)
     transitivePeerDependencies:
       - esbuild
       - rollup
@@ -2947,7 +2947,7 @@ packages:
       istanbul-reports: 3.1.6
       picocolors: 1.0.0
       test-exclude: 6.0.0
-      vitest: 0.34.6(@vitest/browser@0.34.6)(@vitest/ui@0.34.6)(jsdom@22.1.0)(playwright@1.40.0)
+      vitest: 0.34.6(@vitest/browser@0.34.6)(@vitest/ui@0.34.6)(jsdom@22.1.0)(playwright@1.40.1)
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -2990,7 +2990,7 @@ packages:
       pathe: 1.1.1
       picocolors: 1.0.0
       sirv: 2.0.3
-      vitest: 0.34.6(@vitest/browser@0.34.6)(@vitest/ui@0.34.6)(jsdom@22.1.0)(playwright@1.40.0)
+      vitest: 0.34.6(@vitest/browser@0.34.6)(@vitest/ui@0.34.6)(jsdom@22.1.0)(playwright@1.40.1)
 
   /@vitest/utils@0.34.6:
     resolution: {integrity: sha512-IG5aDD8S6zlvloDsnzHw0Ut5xczlF+kv2BOTo+iXfPr54Yhi5qbVOgGB1hZaVq4iJ4C/MZ2J0y15IlsV/ZcI0A==}
@@ -5094,7 +5094,7 @@ packages:
     dependencies:
       '@typescript-eslint/utils': 6.11.0(eslint@8.54.0)(typescript@5.2.2)
       eslint: 8.54.0
-      vitest: 0.34.6(@vitest/browser@0.34.6)(@vitest/ui@0.34.6)(jsdom@22.1.0)(playwright@1.40.0)
+      vitest: 0.34.6(@vitest/browser@0.34.6)(@vitest/ui@0.34.6)(jsdom@22.1.0)(playwright@1.40.1)
     transitivePeerDependencies:
       - supports-color
       - typescript
@@ -8518,17 +8518,17 @@ packages:
       mlly: 1.4.2
       pathe: 1.1.1
 
-  /playwright-core@1.40.0:
-    resolution: {integrity: sha512-fvKewVJpGeca8t0ipM56jkVSU6Eo0RmFvQ/MaCQNDYm+sdvKkMBBWTE1FdeMqIdumRaXXjZChWHvIzCGM/tA/Q==}
+  /playwright-core@1.40.1:
+    resolution: {integrity: sha512-+hkOycxPiV534c4HhpfX6yrlawqVUzITRKwHAmYfmsVreltEl6fAZJ3DPfLMOODw0H3s1Itd6MDCWmP1fl/QvQ==}
     engines: {node: '>=16'}
     hasBin: true
 
-  /playwright@1.40.0:
-    resolution: {integrity: sha512-gyHAgQjiDf1m34Xpwzaqb76KgfzYrhK7iih+2IzcOCoZWr/8ZqmdBw+t0RU85ZmfJMgtgAiNtBQ/KS2325INXw==}
+  /playwright@1.40.1:
+    resolution: {integrity: sha512-2eHI7IioIpQ0bS1Ovg/HszsN/XKNwEG1kbzSDDmADpclKc7CyqkHw7Mg2JCz/bbCxg25QUPcjksoMW7JcIFQmw==}
     engines: {node: '>=16'}
     hasBin: true
     dependencies:
-      playwright-core: 1.40.0
+      playwright-core: 1.40.1
     optionalDependencies:
       fsevents: 2.3.2
 
@@ -10421,7 +10421,7 @@ packages:
     optionalDependencies:
       fsevents: 2.3.3
 
-  /vitest@0.34.6(@vitest/browser@0.34.6)(@vitest/ui@0.34.6)(jsdom@22.1.0)(playwright@1.40.0):
+  /vitest@0.34.6(@vitest/browser@0.34.6)(@vitest/ui@0.34.6)(jsdom@22.1.0)(playwright@1.40.1):
     resolution: {integrity: sha512-+5CALsOvbNKnS+ZHMXtuUC7nL8/7F1F2DnHGjSsszX8zCjWSSviphCb/NuS9Nzf4Q03KyyDRBAXhF/8lffME4Q==}
     engines: {node: '>=v14.18.0'}
     hasBin: true
@@ -10472,7 +10472,7 @@ packages:
       magic-string: 0.30.5
       pathe: 1.1.1
       picocolors: 1.0.0
-      playwright: 1.40.0
+      playwright: 1.40.1
       std-env: 3.4.3
       strip-literal: 1.3.0
       tinybench: 2.5.1
