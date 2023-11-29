@@ -21,6 +21,9 @@ coverage:
 comment:
   layout: 'header, reach, diff, flags, components'
 
+ignore:
+  - '**/*.test-d.*'
+
 component_management:
   individual_components:
     - component_id: suspensive-react
