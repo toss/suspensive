@@ -18,7 +18,12 @@ const config: DocsThemeConfig = {
     return (
       <div className="flex items-center gap-1">
         <Image src="/img/logo_dark.png" width={34} height={34} alt="suspensive logo" />
-        <strong>Suspensive</strong>
+        <div className="relative">
+          <strong>Suspensive</strong>
+          <span className="absolute right" style={{ fontSize: 8 }}>
+            v2
+          </span>
+        </div>
       </div>
     )
   },
