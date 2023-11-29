@@ -7,18 +7,22 @@ export const HomePage = ({
   description,
   buttonText,
   items,
+  version,
 }: {
   title: string
   description: string
   buttonText: string
   items: { title: string; desc: string }[]
+  version: number
 }) => {
   return (
     <div className="pb-20">
       <div className="flex flex-col justify-center items-center pt-11 gap-8 text-center">
         <Image src="/img/logo_background_star.png" alt="Suspensive with star" width={400} height={241} />
         <div className="flex flex-col items-center gap-4">
-          <div className="text-5xl font-bold">{title}</div>
+          <div className="relative text-5xl font-bold">
+            <span>{title}</span> <span className="absolute right text-sm">v{version}</span>
+          </div>
           <p className="text-3xl">{description}</p>
         </div>
         <Link href="/docs/why">
