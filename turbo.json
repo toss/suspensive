@@ -2,16 +2,16 @@
   "$schema": "https://turbo.build/schema.json",
   "pipeline": {
     "build": { "dependsOn": ["^build"], "outputs": ["dist/**", ".next/**"] },
-    "build:watch": { "dependsOn": ["^build"], "cache": false, "outputs": ["dist/**"] },
-    "lint": { "dependsOn": ["^build"], "cache": false },
-    "lint:attw": { "dependsOn": ["^build"], "cache": false },
-    "lint:pub": { "dependsOn": ["^build"], "cache": false },
-    "test": { "dependsOn": ["^build"], "cache": false, "outputs": ["coverage/**"] },
-    "test:tsd": { "dependsOn": ["^build"], "cache": false },
-    "test:watch": { "dependsOn": ["^build"], "cache": false, "outputs": ["coverage/**"] },
+    "build:watch": { "dependsOn": ["^build:watch"], "cache": false, "outputs": ["dist/**"] },
+    "lint": { "dependsOn": ["^prepack"], "cache": false },
+    "lint:attw": { "dependsOn": ["^prepack"], "cache": false },
+    "lint:pub": { "dependsOn": ["^prepack"], "cache": false },
+    "test": { "dependsOn": ["^prepack"], "cache": false, "outputs": ["coverage/**"] },
+    "test:tsd": { "dependsOn": ["^prepack"], "cache": false },
+    "test:watch": { "dependsOn": ["^prepack"], "cache": false, "outputs": ["coverage/**"] },
     "prepack": { "dependsOn": ["^prepack"], "outputs": ["dist/**"] },
-    "dev": { "dependsOn": ["^build"], "cache": false },
-    "type:check": { "dependsOn": ["^build"], "cache": false }
+    "dev": { "dependsOn": ["^prepack"], "cache": false },
+    "type:check": { "dependsOn": ["^prepack"], "cache": false }
   },
   "globalEnv": ["NODE_ENV"]
 }
