@@ -1,16 +1,27 @@
 import Image from 'next/image'
+import Link from 'next/link'
 import { useRouter } from 'next/router.js'
 import { type DocsThemeConfig, useConfig } from 'nextra-theme-docs'
+
+const localeBanner = {
+  en: (
+    <span>
+      👀 Check out the changes in Suspensive v2 <Link href="/docs/migrate-to-v2">read more →</Link>
+    </span>
+  ),
+  ko: (
+    <span>
+      👀 Suspensive v2에서의 변경을 확인하세요 <Link href="/docs/migrate-to-v2">더보기 →</Link>
+    </span>
+  ),
+} as const
 
 const config: DocsThemeConfig = {
   banner: {
     key: 'suspensive banner',
     text: function Text() {
-      return (
-        <span>
-          🎉 New Suspensive Documentation is released. <a href="/docs/why">read more →</a>
-        </span>
-      )
+      const { locale } = useRouter()
+      return localeBanner[locale as keyof typeof localeBanner]
     },
     dismissible: true,
   },

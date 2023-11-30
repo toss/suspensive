@@ -19,6 +19,9 @@
   "versions": {
     "type": "menu",
     "title": "v2",
+    "theme": {
+      "collapsed": true
+    },
     "items": {
       "latest": {
         "title": "latest",
@@ -30,7 +33,7 @@
       },
       "v1": {
         "title": "v1",
-        "href": "https://suspensive.org"
+        "href": "https://v1.suspensive.org"
       }
     }
   }

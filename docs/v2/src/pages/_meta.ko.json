@@ -19,18 +19,21 @@
   "versions": {
     "type": "menu",
     "title": "v2",
+    "theme": {
+      "collapsed": true
+    },
     "items": {
       "latest": {
         "title": "latest",
-        "href": "https://suspensive.org"
+        "href": "https://suspensive.org/ko"
       },
       "v2": {
-        "title": "v2 (Work in progress)",
-        "href": "https://v2.suspensive.org"
+        "title": "v2 (작성중)",
+        "href": "https://v2.suspensive.org/ko"
       },
       "v1": {
         "title": "v1",
-        "href": "https://suspensive.org"
+        "href": "https://v1.suspensive.org/ko"
       }
     }
   }
