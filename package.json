@@ -78,7 +78,7 @@
     "prettier": "^3.1.0",
     "publint": "^0.2.5",
     "rimraf": "^5.0.5",
-    "sherif": "^0.5.0",
+    "sherif": "^0.6.1",
     "tsup": "^8.0.1",
     "turbo": "latest",
     "typescript": "^5.2.2",
