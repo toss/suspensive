@@ -3,7 +3,7 @@
   "intro": "시작하기",
   "--- Packages": {
     "type": "separator",
-    "title": "Packages"
+    "title": "패키지"
   },
   "react": "@suspensive/react",
   "react-query": "@suspensive/react-query",
@@ -21,7 +21,7 @@
   },
   "--- More": {
     "type": "separator",
-    "title": "More"
+    "title": "더보기"
   },
   "changelogs": "Changelogs",
   "links": "관련 링크"
