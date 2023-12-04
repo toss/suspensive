@@ -68,7 +68,7 @@
     "@vitest/ui": "^1.0.0-beta.5",
     "commitizen": "^4.3.0",
     "cz-conventional-changelog": "^3.3.0",
-    "eslint": "^8.54.0",
+    "eslint": "^8.55.0",
     "husky": "^8.0.3",
     "jsdom": "^22.1.0",
     "lint-staged": "^15.1.0",
