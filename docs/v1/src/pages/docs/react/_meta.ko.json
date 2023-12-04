@@ -2,6 +2,7 @@
   "installation": { "title": "설치하기" },
   "Suspense": { "title": "<Suspense/>" },
   "ErrorBoundary": { "title": "<ErrorBoundary/>" },
+  "AsyncBoundary": { "title": "<AsyncBoundary/> (deprecated)" },
   "ErrorBoundaryGroup": { "title": "<ErrorBoundaryGroup/>" },
   "Delay": { "title": "<Delay/>" },
   "SuspensiveProvider": { "title": "<SuspensiveProvider/>" },

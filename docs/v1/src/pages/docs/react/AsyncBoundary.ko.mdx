@@ -1,0 +1,112 @@
+import { Callout } from 'nextra/components'
+
+# AsyncBoundary (deprecated)
+
+<Callout type='warning'>
+
+deprecated: Use [`<Suspense/>`](./Suspense) and [`<ErrorBoundary/>`](./ErrorBoundary) directly
+
+</Callout>
+
+`<AsyncBoundary/>`는 @suspensive/react의 [`<Suspense/>`](./Suspense)와 [`<ErrorBoundary/>`](./ErrorBoundary)를 한번에 사용하기 위해 래핑한 컴포넌트입니다.
+
+```tsx /AsyncBoundary/
+import { AsyncBoundary } from '@suspensive/react'
+
+const Example = () => (
+  <AsyncBoundary
+    pendingFallback={<Loading />}
+    rejectedFallback={(props) => (
+      <>
+        <button onClick={props.reset}>Try again</button>
+        {props.error.message}
+      </>
+    )}
+    onReset={() => console.log('reset')}
+    onError={(error) => console.log(error)}
+  >
+    <Children />
+  </AsyncBoundary>
+)
+```
+
+### AsyncBoundaryProps
+
+<Callout type='warning'>
+
+deprecated: SuspenseProps와 ErrorBoundaryProps를 직접 사용하세요
+
+</Callout>
+
+`<AsyncBoundary/>` Props의 타입은 `<Suspense/>`와 `<ErrorBoundary/>`를 조합합니다.
+
+```tsx /AsyncBoundaryProps/
+type AsyncBoundaryProps = Omit<SuspenseProps, 'fallback'> &
+  Omit<ErrorBoundaryProps, 'fallback'> & {
+    pendingFallback?: SuspenseProps['fallback']
+    rejectedFallback: ErrorBoundaryProps['fallback']
+  }
+```
+
+### 서버사이드 렌더링을 피하기 (CSROnly)
+
+<Callout type='warning'>
+
+deprecated: `<Suspense.CSROnly/>`와 `<ErrorBoundary/>`를 직접 사용하세요
+
+</Callout>
+
+`<Suspense.CSROnly/>`를 래핑하기 때문에 동일하게 CSROnly를 제공합니다.
+
+```tsx /AsyncBoundary.CSROnly/
+import { AsyncBoundary } from '@suspensive/react'
+
+const Example = () => (
+  <AsyncBoundary.CSROnly
+    pendingFallback={<Loading />}
+    rejectedFallback={(props) => (
+      <>
+        <button onClick={props.reset}>Try again</button>
+        {props.error.message}
+      </>
+    )}
+    onReset={() => console.log('reset')}
+    onError={(error) => console.log(error)}
+  >
+    <Children />
+  </AsyncBoundary.CSROnly>
+)
+```
+
+## withAsyncBoundary
+
+<Callout type='warning'>
+
+deprecated: [wrap.ErrorBoundary().Suspense().on](./wrap), [wrap.ErrorBoundary().Suspense.CSROnly().on](./wrap)를 대신 사용하세요
+
+</Callout>
+
+withAsyncBoundary를 사용하면 컴포넌트를 `<AsyncBoundary/>`로 쉽게 래핑할 수 있습니다.
+아래와 같이 withAsyncBoundary를 사용하면 이를 감싸기 위해 불필요한 코드를 만들 필요가 없습니다.
+withAsyncBoundary의 두 번째 인자는 children이 없는 `<AsyncBoundary/>`의 props입니다.
+
+```tsx /withAsyncBoundary/
+import { withAsyncBoundary } from '@suspensive/react'
+
+const Example = withAsyncBoundary(
+  function Component() {
+    return <>...</>
+  },
+  {
+    pendingFallback: <Loading />,
+    rejectedFallback: (props) => (
+      <>
+        <button onClick={props.reset}>Try again</button>
+        {props.error.message}
+      </>
+    ),
+    onReset: () => console.log('reset'),
+    onError: (error) => console.log(error),
+  }
+)
+```

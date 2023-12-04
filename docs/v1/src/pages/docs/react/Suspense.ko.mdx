@@ -47,3 +47,37 @@ SSR을 지원하도록 점진적으로 마이그레이션하기 (`<Suspense.CSRO
 React.Suspense를 SSR과 CSR에서 모두 사용하고 싶다면 `<Suspense.CSROnly/>`에서 `<Suspense/>`로 점진적으로 마이그레이션하면 쉽게 적용할 수 있습니다.
 
 </Callout>
+
+## withSuspense
+
+<Callout type='warning'>
+
+deprecated: [wrap.Suspense().on](./wrap), [wrap.Suspense.CSROnly().on](./wrap)를 사용하세요
+
+</Callout>
+
+withSuspense를 사용하면 컴포넌트를 `<Suspense/>`로 쉽게 래핑할 수 있습니다.
+아래와 같이 withSuspense를 사용하면 이를 감싸기 위해 불필요한 코드를 만들 필요가 없습니다.
+withSuspense의 두 번째 인자는 children이 없는 `<Suspense/>`의 props입니다.
+
+```tsx /withSuspense.CSROnly/ /withSuspense/
+import { withSuspense } from '@suspensive/react'
+
+const Example = withSuspense(
+  function Component() {
+    // code make suspending
+
+    return <>...</>
+  },
+  { fallback: <Spinner /> }
+)
+
+const Example = withSuspense.CSROnly(
+  function Component() {
+    // code make suspending
+
+    return <>...</>
+  },
+  { fallback: <Spinner /> }
+)
+```

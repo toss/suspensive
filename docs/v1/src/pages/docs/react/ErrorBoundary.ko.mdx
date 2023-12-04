@@ -206,6 +206,31 @@ const SetErrorAfterFetch = () => {
 }
 ```
 
+## withErrorBoundary
+
+<Callout type='warning'>
+
+deprecated: [wrap.ErrorBoundary().on](./wrap)를 대신 사용하세요
+
+</Callout>
+
+withErrorBoundary를 사용하면 컴포넌트를 `<ErrorBoundary/>`로 쉽게 래핑할 수 있습니다.
+아래와 같이 withErrorBoundary를 사용하면 이를 감싸기 위해 불필요한 코드를 만들 필요가 없습니다.
+withErrorBoundary의 두 번째 인자는 children이 없는 `<ErrorBoundary/>`의 props입니다.
+
+```tsx /withErrorBoundary/
+import { withErrorBoundary, useErrorBoundary } from '@suspensive/react'
+
+const Example = withErrorBoundary(
+  function Component() {
+    const errorBoundary = useErrorBoundary()
+
+    return <>...</>
+  },
+  { fallback: ErrorBoundaryFallback }
+)
+```
+
 <Callout>
 
 다수의 `<ErrorBoundary/>`를 제어하기
