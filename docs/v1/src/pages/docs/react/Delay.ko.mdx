@@ -45,3 +45,26 @@ Default ms
 `<Delay/>`는 `<SuspensiveProvider/>`와 함께 사용할 때 더욱 강력해집니다. `<SuspensiveProvider/>`를 사용하여 여러 `<Delay/>` default ms를 제어합니다. 자세한 내용은 [`<SuspensiveProvider/>` 페이지](./SuspensiveProvider)에 소개되어 있습니다.
 
 </Callout>
+
+## withDelay
+
+<Callout type='error'>
+
+deprecated: 대신 [wrap.Delay().on](./wrap)을 사용하세요
+
+</Callout>
+
+withDelay를 사용하면 컴포넌트를 `<Delay/>`로 쉽게 래핑할 수 있습니다.
+아래와 같이 withDelay를 사용하면 이를 감싸기 위해 불필요한 코드를 만들 필요가 없습니다.
+withDelay의 두 번째 인자는 children이 없는 `<Delay/>`의 props입니다.
+
+```tsx /withDelay/
+import { withDelay } from '@suspensive/react'
+
+const Example = withDelay(
+  function Component() {
+    return <>...</>
+  },
+  { ms: 200 }
+)
+```

@@ -1,0 +1,110 @@
+import { Callout } from 'nextra/components'
+
+# AsyncBoundary (deprecated)
+
+<Callout type='warning'>
+
+deprecated: Use [`<Suspense/>`](./Suspense), [`<ErrorBoundary/>`](./ErrorBoundary) directly
+
+</Callout>
+
+`<AsyncBoundary/>` wraps @suspensive/react's [`<Suspense/>`](./Suspense) and [`<ErrorBoundary/>`](./ErrorBoundary) to use them at once.
+
+```tsx /AsyncBoundary/
+import { AsyncBoundary } from '@suspensive/react'
+
+const Example = () => (
+  <AsyncBoundary
+    pendingFallback={<Loading />}
+    rejectedFallback={(props) => (
+      <>
+        <button onClick={props.reset}>Try again</button>
+        {props.error.message}
+      </>
+    )}
+    onReset={() => console.log('reset')}
+    onError={(error) => console.log(error)}
+  >
+    <Children />
+  </AsyncBoundary>
+)
+```
+
+### AsyncBoundaryProps
+
+<Callout type='warning'>
+
+deprecated: Use SuspenseProps and ErrorBoundaryProps directly
+
+</Callout>
+
+```tsx /AsyncBoundaryProps/
+type AsyncBoundaryProps = Omit<SuspenseProps, 'fallback'> &
+  Omit<ErrorBoundaryProps, 'fallback'> & {
+    pendingFallback?: SuspenseProps['fallback']
+    rejectedFallback: ErrorBoundaryProps['fallback']
+  }
+```
+
+### Avoid Server side rendering (CSROnly)
+
+<Callout type='warning'>
+
+deprecated: Use `<Suspense.CSROnly/>` and `<ErrorBoundary/>` directly
+
+</Callout>
+
+Since it wraps `<Suspense.CSROnly/>`, it provides the same CSROnly.
+
+```tsx /AsyncBoundary.CSROnly/
+import { AsyncBoundary } from '@suspensive/react'
+
+const Example = () => (
+  <AsyncBoundary.CSROnly
+    pendingFallback={<Loading />}
+    rejectedFallback={(props) => (
+      <>
+        <button onClick={props.reset}>Try again</button>
+        {props.error.message}
+      </>
+    )}
+    onReset={() => console.log('reset')}
+    onError={(error) => console.log(error)}
+  >
+    <Children />
+  </AsyncBoundary.CSROnly>
+)
+```
+
+## withAsyncBoundary
+
+<Callout type='warning'>
+
+deprecated: Use [wrap.ErrorBoundary().Suspense().on](./wrap), [wrap.ErrorBoundary().Suspense.CSROnly().on](./wrap) instead
+
+</Callout>
+
+You can use withAsyncBoundary to wrap component by `<AsyncBoundary/>` easily.
+we don't need to make unncessary code to wrap it if we use withAsyncBoundary like below.
+withAsyncBoundary's 2nd parameter is props of `<AsyncBoundary/>` without children
+
+```tsx /withAsyncBoundary/
+import { withAsyncBoundary } from '@suspensive/react'
+
+const Example = withAsyncBoundary(
+  function Component() {
+    return <>...</>
+  },
+  {
+    pendingFallback: <Loading />,
+    rejectedFallback: (props) => (
+      <>
+        <button onClick={props.reset}>Try again</button>
+        {props.error.message}
+      </>
+    ),
+    onReset: () => console.log('reset'),
+    onError: (error) => console.log(error),
+  }
+)
+```
