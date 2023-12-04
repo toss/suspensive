@@ -63,3 +63,35 @@ const Example = () => {
   return <button onClick={group.reset}>Try again</button>
 }
 ```
+
+## withErrorBoundaryGroup
+
+<Callout type='warning'>
+
+deprecated: [wrap.ErrorBoundaryGroup().on](./wrap)을 사용하세요
+
+</Callout>
+
+withErrorBoundaryGroup를 사용하면 컴포넌트를 `<ErrorBoundaryGroup/>`로 쉽게 래핑할 수 있습니다.
+아래와 같이 withErrorBoundaryGroup를 사용하면 이를 감싸기 위해 불필요한 코드를 만들 필요가 없습니다.
+withErrorBoundaryGroup의 두 번째 인자는 children이 없는 `<ErrorBoundaryGroup/>`의 props입니다.
+
+```tsx /withErrorBoundaryGroup/
+import { withErrorBoundaryGroup, useErrorBoundaryGroup, ErrorBoundary } from '@suspensive/react'
+
+const Example = withErrorBoundaryGroup(
+  function Component() {
+    const group = useErrorBoundaryGroup()
+
+    return (
+      <>
+        <button onClick={group.reset}>Try again</button>
+        <ErrorBoundary fallback={(props) => <>{props.error}</>}>
+          <CanThrowError />
+        </ErrorBoundary>
+      </>
+    )
+  },
+  { blockOutside: true }
+)
+```
