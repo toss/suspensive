@@ -214,3 +214,28 @@ Controlling multiple `<ErrorBoundary/>`s
 Details are introduced in [`<ErrorBoundaryGroup/>` page](./ErrorBoundaryGroup).
 
 </Callout>
+
+## withErrorBoundary
+
+<Callout type='warning'>
+
+deprecated: Use [wrap.ErrorBoundary().on](./wrap) instead
+
+</Callout>
+
+We can use withErrorBoundary to wrap component by `<ErrorBoundary/>` easily.
+we don't need to make unncessary code to wrap it if we use withErrorBoundary like below.
+withErrorBoundary's 2nd parameter is props of `<ErrorBoundary/>` without children
+
+```tsx /withErrorBoundary/
+import { withErrorBoundary, useErrorBoundary } from '@suspensive/react'
+
+const Example = withErrorBoundary(
+  function Component() {
+    const errorBoundary = useErrorBoundary()
+
+    return <>...</>
+  },
+  { fallback: ErrorBoundaryFallback }
+)
+```
