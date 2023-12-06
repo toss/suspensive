@@ -10,8 +10,8 @@
     "lint": "eslint ."
   },
   "dependencies": {
-    "@cspell/eslint-plugin": "^8.0.0",
-    "eslint-config-prettier": "^9.0.0",
+    "@cspell/eslint-plugin": "^8.1.2",
+    "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-import": "^2.29.0",
     "eslint-plugin-jsdoc": "^46.9.0",
     "eslint-plugin-prettier": "^5.0.1",
