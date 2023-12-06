@@ -111,8 +111,8 @@ importers:
         specifier: ^5.3.2
         version: 5.3.2
       vite:
-        specifier: ^5.0.4
-        version: 5.0.4(@types/node@18.18.14)
+        specifier: ^5.0.5
+        version: 5.0.5(@types/node@18.18.14)
       vitest:
         specifier: ^1.0.0-beta.5
         version: 1.0.0-beta.6(@types/node@18.18.14)(@vitest/browser@1.0.0-beta.6)(@vitest/ui@1.0.0-beta.6)(jsdom@23.0.1)
@@ -10158,7 +10158,7 @@ packages:
       debug: 4.3.4
       pathe: 1.1.1
       picocolors: 1.0.0
-      vite: 5.0.4(@types/node@18.18.14)
+      vite: 5.0.5(@types/node@18.18.14)
     transitivePeerDependencies:
       - '@types/node'
       - less
@@ -10169,8 +10169,8 @@ packages:
       - supports-color
       - terser
 
-  /vite@5.0.4(@types/node@18.18.14):
-    resolution: {integrity: sha512-RzAr8LSvM8lmhB4tQ5OPcBhpjOZRZjuxv9zO5UcxeoY2bd3kP3Ticd40Qma9/BqZ8JS96Ll/jeBX9u+LJZrhVg==}
+  /vite@5.0.5(@types/node@18.18.14):
+    resolution: {integrity: sha512-OekeWqR9Ls56f3zd4CaxzbbS11gqYkEiBtnWFFgYR2WV8oPJRRKq0mpskYy/XaoCL3L7VINDhqqOMNDiYdGvGg==}
     engines: {node: ^18.0.0 || >=20.0.0}
     hasBin: true
     peerDependencies:
@@ -10251,7 +10251,7 @@ packages:
       strip-literal: 1.3.0
       tinybench: 2.5.1
       tinypool: 0.8.1
-      vite: 5.0.4(@types/node@18.18.14)
+      vite: 5.0.5(@types/node@18.18.14)
       vite-node: 1.0.0-beta.6(@types/node@18.18.14)
       why-is-node-running: 2.2.2
     transitivePeerDependencies:
