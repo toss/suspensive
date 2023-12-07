@@ -62,7 +62,7 @@
   "devDependencies": {
     "@suspensive/package-json-name": "workspace:*",
     "@suspensive/react": "workspace:*",
-    "@types/react": "^18.2.39",
+    "@types/react": "^18.2.42",
     "@types/react-dom": "^18.2.15",
     "@types/use-sync-external-store": "^0.0.6",
     "react": "^18.2.0",
