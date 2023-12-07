@@ -62,7 +62,7 @@
     "@suspensive/package-json-name": "workspace:*",
     "@suspensive/react": "workspace:*",
     "@tanstack/react-query": "^4.36.1",
-    "@types/react": "^18.2.39",
+    "@types/react": "^18.2.42",
     "@types/react-dom": "^18.2.15",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
