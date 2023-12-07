@@ -54,8 +54,8 @@ importers:
         specifier: ^5.14.9
         version: 5.14.9
       '@vitest/browser':
-        specifier: ^1.0.0-beta.5
-        version: 1.0.0-beta.6(playwright@1.40.1)(vitest@1.0.0-beta.6)
+        specifier: ^1.0.2
+        version: 1.0.2(playwright@1.40.1)(vitest@1.0.0-beta.6)
       '@vitest/coverage-istanbul':
         specifier: ^1.0.0-beta.5
         version: 1.0.0-beta.6(vitest@1.0.0-beta.6)
@@ -115,7 +115,7 @@ importers:
         version: 5.0.6(@types/node@18.18.14)
       vitest:
         specifier: ^1.0.0-beta.5
-        version: 1.0.0-beta.6(@types/node@18.18.14)(@vitest/browser@1.0.0-beta.6)(@vitest/ui@1.0.0-beta.6)(jsdom@23.0.1)
+        version: 1.0.0-beta.6(@types/node@18.18.14)(@vitest/browser@1.0.2)(@vitest/ui@1.0.0-beta.6)(jsdom@23.0.1)
 
   configs/eslint-config:
     dependencies:
@@ -2716,12 +2716,12 @@ packages:
   /@ungap/structured-clone@1.2.0:
     resolution: {integrity: sha512-zuVdFrMJiuCDQUMCzQaD6KL28MjnqqN8XnAqiEq9PNm/hCPTSGfrXCOfwj1ow4LFb/tNymJPwsNbVePc1xFqrQ==}
 
-  /@vitest/browser@1.0.0-beta.6(playwright@1.40.1)(vitest@1.0.0-beta.6):
-    resolution: {integrity: sha512-5ZLk3aTg+vuCRHIl9FuPDchLzyRzGQZsUTRr7GWJLvb5BHKAKylAqK+06ihp2DlbGFQH10oo1hKNbMVMJye66A==}
+  /@vitest/browser@1.0.2(playwright@1.40.1)(vitest@1.0.0-beta.6):
+    resolution: {integrity: sha512-CvHdDtwvYc11kshHWnv+1C2URYIBSBOW3Fvxta9yN6BXbDuQDiyjQQVLNM4uk7JEdnQyS3xAVPxteWTwTzScJg==}
     peerDependencies:
       playwright: '*'
       safaridriver: '*'
-      vitest: ^1.0.0-0
+      vitest: ^1.0.0
       webdriverio: '*'
     peerDependenciesMeta:
       playwright:
@@ -2735,7 +2735,7 @@ packages:
       magic-string: 0.30.5
       playwright: 1.40.1
       sirv: 2.0.3
-      vitest: 1.0.0-beta.6(@types/node@18.18.14)(@vitest/browser@1.0.0-beta.6)(@vitest/ui@1.0.0-beta.6)(jsdom@23.0.1)
+      vitest: 1.0.0-beta.6(@types/node@18.18.14)(@vitest/browser@1.0.2)(@vitest/ui@1.0.0-beta.6)(jsdom@23.0.1)
 
   /@vitest/coverage-istanbul@1.0.0-beta.6(vitest@1.0.0-beta.6):
     resolution: {integrity: sha512-fGxwZv/k+wfiFXNChpaXeMrB+BqUPPRnjUTlOvOlwJgYtFzK1UrAyokDYRHCNWU1UkzdCBzAll+lHd/6H9aytA==}
@@ -2750,7 +2750,7 @@ packages:
       magicast: 0.3.2
       picocolors: 1.0.0
       test-exclude: 6.0.0
-      vitest: 1.0.0-beta.6(@types/node@18.18.14)(@vitest/browser@1.0.0-beta.6)(@vitest/ui@1.0.0-beta.6)(jsdom@23.0.1)
+      vitest: 1.0.0-beta.6(@types/node@18.18.14)(@vitest/browser@1.0.2)(@vitest/ui@1.0.0-beta.6)(jsdom@23.0.1)
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -2793,7 +2793,7 @@ packages:
       pathe: 1.1.1
       picocolors: 1.0.0
       sirv: 2.0.3
-      vitest: 1.0.0-beta.6(@types/node@18.18.14)(@vitest/browser@1.0.0-beta.6)(@vitest/ui@1.0.0-beta.6)(jsdom@23.0.1)
+      vitest: 1.0.0-beta.6(@types/node@18.18.14)(@vitest/browser@1.0.2)(@vitest/ui@1.0.0-beta.6)(jsdom@23.0.1)
 
   /@vitest/utils@1.0.0-beta.6:
     resolution: {integrity: sha512-PyUf4dTFRLfq6YAdAab39i32O/qhpeCVM7cUpN1au7BrvYI/e43ZDhhHdwbt8zP14l06PNrXd5nTSZPFQwmsVw==}
@@ -4856,7 +4856,7 @@ packages:
     dependencies:
       '@typescript-eslint/utils': 6.11.0(eslint@8.55.0)(typescript@5.3.2)
       eslint: 8.55.0
-      vitest: 1.0.0-beta.6(@types/node@18.18.14)(@vitest/browser@1.0.0-beta.6)(@vitest/ui@1.0.0-beta.6)(jsdom@23.0.1)
+      vitest: 1.0.0-beta.6(@types/node@18.18.14)(@vitest/browser@1.0.2)(@vitest/ui@1.0.0-beta.6)(jsdom@23.0.1)
     transitivePeerDependencies:
       - supports-color
       - typescript
@@ -10204,7 +10204,7 @@ packages:
     optionalDependencies:
       fsevents: 2.3.3
 
-  /vitest@1.0.0-beta.6(@types/node@18.18.14)(@vitest/browser@1.0.0-beta.6)(@vitest/ui@1.0.0-beta.6)(jsdom@23.0.1):
+  /vitest@1.0.0-beta.6(@types/node@18.18.14)(@vitest/browser@1.0.2)(@vitest/ui@1.0.0-beta.6)(jsdom@23.0.1):
     resolution: {integrity: sha512-yahr45sIcSq8SaY9FUcmWLrsDMAL3mCd/vC890uymiZhrZ5VQrqMmOT0FcB7vtC4kh327p6IXWqHHLr7B0hRug==}
     engines: {node: ^18.0.0 || >=20.0.0}
     hasBin: true
@@ -10230,7 +10230,7 @@ packages:
         optional: true
     dependencies:
       '@types/node': 18.18.14
-      '@vitest/browser': 1.0.0-beta.6(playwright@1.40.1)(vitest@1.0.0-beta.6)
+      '@vitest/browser': 1.0.2(playwright@1.40.1)(vitest@1.0.0-beta.6)
       '@vitest/expect': 1.0.0-beta.6
       '@vitest/runner': 1.0.0-beta.6
       '@vitest/snapshot': 1.0.0-beta.6
