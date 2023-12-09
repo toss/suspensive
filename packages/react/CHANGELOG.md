@@ -1,5 +1,11 @@
 # @suspensive/react
 
+## 1.20.6
+
+### Patch Changes
+
+- 88c1585: refactor(react, react-await, react-image): replace createElement by jsx
+
 ## 1.20.5
 
 ### Patch Changes
