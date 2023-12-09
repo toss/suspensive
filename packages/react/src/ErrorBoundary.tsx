@@ -1,15 +1,5 @@
 import type { ComponentProps, ComponentType, ErrorInfo, FunctionComponent, PropsWithChildren, ReactNode } from 'react'
-import {
-  Component,
-  createContext,
-  createElement,
-  forwardRef,
-  useContext,
-  useImperativeHandle,
-  useMemo,
-  useRef,
-  useState,
-} from 'react'
+import { Component, createContext, forwardRef, useContext, useImperativeHandle, useMemo, useRef, useState } from 'react'
 import { ErrorBoundaryGroupContext } from './ErrorBoundaryGroup'
 import type { PropsWithoutChildren } from './types'
 import { assert, hasResetKeysChanged } from './utils'
@@ -93,21 +83,18 @@ class BaseErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState
       throw this.state.error
     }
 
+    let childrenOrFallback = children
+    if (this.state.isError) {
+      if (typeof fallback === 'function') {
+        const FallbackComponent = fallback
+        childrenOrFallback = <FallbackComponent error={this.state.error} reset={this.reset} />
+      } else {
+        childrenOrFallback = fallback
+      }
+    }
     return (
-      <ErrorBoundaryContext.Provider
-        value={{
-          ...this.state,
-          reset: this.reset,
-        }}
-      >
-        {this.state.isError
-          ? typeof fallback === 'function'
-            ? createElement(fallback, {
-                error: this.state.error,
-                reset: this.reset,
-              })
-            : fallback
-          : children}
+      <ErrorBoundaryContext.Provider value={{ ...this.state, reset: this.reset }}>
+        {childrenOrFallback}
       </ErrorBoundaryContext.Provider>
     )
   }
