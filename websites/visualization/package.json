@@ -1,6 +1,6 @@
 {
   "name": "@suspensive/visualization",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "private": true,
   "description": "Visualization of Suspensive core concepts",
   "homepage": "https://visualization.suspensive.org",
