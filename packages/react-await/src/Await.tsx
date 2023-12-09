@@ -1,5 +1,5 @@
 import type { FunctionComponent } from 'react'
-import { createElement, useMemo } from 'react'
+import { useMemo } from 'react'
 import { useSyncExternalStore } from 'use-sync-external-store/shim'
 import type { Tuple } from './types'
 import { hashKey } from './utils'
@@ -55,8 +55,9 @@ export type AwaitProps<TData, TKey extends Key> = {
 /**
  * @experimental This is experimental feature.
  */
-export const Await = <TData, TKey extends Key>({ children, options }: AwaitProps<TData, TKey>) =>
-  createElement(children, useAwait<TData, TKey>(options))
+export const Await = <TData, TKey extends Key>({ children: Children, options }: AwaitProps<TData, TKey>) => (
+  <Children {...useAwait<TData, TKey>(options)} />
+)
 
 class AwaitClient {
   private cache = new Map<ReturnType<typeof hashKey>, AwaitState>()

@@ -1,4 +1,3 @@
-import { createElement } from 'react'
 import type { ComponentProps, ComponentType } from 'react'
 import type { PropsWithoutChildren } from './types'
 import { Delay, ErrorBoundary, ErrorBoundaryGroup, Suspense } from '.'
@@ -38,21 +37,23 @@ class WrapWithoutCSROnly {
     return this
   }
 
-  on = <TProps extends ComponentProps<ComponentType>>(component: ComponentType<TProps>) => {
-    const wrappedComponent = (props: TProps) =>
+  on = <TProps extends ComponentProps<ComponentType>>(Component: ComponentType<TProps>) => {
+    const WrappedComponent = (props: TProps) =>
       this.wrappers.reduce(
-        (acc, [wrapperComponent, wrapperProps]) => createElement(wrapperComponent as any, wrapperProps as any, acc),
-        createElement(component, props)
+        (acc, [WrapperComponent, wrapperProps]) => (
+          <WrapperComponent {...(wrapperProps as any)}>{acc}</WrapperComponent>
+        ),
+        <Component {...props} />
       )
 
     if (process.env.NODE_ENV !== 'production') {
-      wrappedComponent.displayName = this.wrappers.reduce(
-        (acc, [wrapperComponent]) => `with${wrapperComponent.displayName}(${acc})`,
-        component.displayName || component.name || 'Component'
+      WrappedComponent.displayName = this.wrappers.reduce(
+        (acc, [WrapperComponent]) => `with${WrapperComponent.displayName}(${acc})`,
+        Component.displayName || Component.name || 'Component'
       )
     }
 
-    return wrappedComponent
+    return WrappedComponent
   }
 }
 
