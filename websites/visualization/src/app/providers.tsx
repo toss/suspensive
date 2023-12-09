@@ -1,7 +1,5 @@
-/** @jsxImportSource @emotion/react */
 'use client'
 
-import { MediaQueryProvider } from '@jsxcss/emotion'
 import { Suspensive, SuspensiveProvider } from '@suspensive/react'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
@@ -28,12 +26,10 @@ const suspensive = new Suspensive({
 })
 
 export const Providers = ({ children }: PropsWithChildren) => (
-  <MediaQueryProvider>
-    <SuspensiveProvider value={suspensive}>
-      <QueryClientProvider client={queryClient}>
-        {children}
-        <ReactQueryDevtools initialIsOpen={false} />
-      </QueryClientProvider>
-    </SuspensiveProvider>
-  </MediaQueryProvider>
+  <SuspensiveProvider value={suspensive}>
+    <QueryClientProvider client={queryClient}>
+      {children}
+      <ReactQueryDevtools initialIsOpen={false} />
+    </QueryClientProvider>
+  </SuspensiveProvider>
 )
