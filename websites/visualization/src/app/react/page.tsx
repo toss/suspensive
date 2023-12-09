@@ -2,8 +2,8 @@
 
 import { ErrorBoundary, ErrorBoundaryGroup, Suspense } from '@suspensive/react'
 import { useQueryErrorResetBoundary } from '@tanstack/react-query'
-import { RejectedFallback, UseSuspenseQuery } from '~/components'
-import { Area, Button, Spinner } from '~/components/uis'
+import { UseSuspenseQuery } from '~/components'
+import { Area, Button, RejectedFallback, Spinner } from '~/components/uis'
 import { api } from '~/utils/api'
 
 export default function Page() {
@@ -12,22 +12,14 @@ export default function Page() {
   return (
     <Area title="ErrorBoundaryGroup">
       <ErrorBoundaryGroup>
-        <ErrorBoundaryGroup.Reset
-          trigger={({ reset }) => (
-            <Button style={{ alignSelf: 'end' }} onClick={reset}>
-              ↻
-            </Button>
-          )}
-        />
+        <div className="text-right">
+          <ErrorBoundaryGroup.Reset trigger={(group) => <Button onClick={group.reset}>↻</Button>} />
+        </div>
         <Area title="ErrorBoundaryGroup">
           <ErrorBoundaryGroup>
-            <ErrorBoundaryGroup.Reset
-              trigger={({ reset }) => (
-                <Button style={{ alignSelf: 'end' }} onClick={reset}>
-                  ↻
-                </Button>
-              )}
-            />
+            <div className="text-right">
+              <ErrorBoundaryGroup.Reset trigger={(group) => <Button onClick={group.reset}>↻</Button>} />
+            </div>
             <Area title="Suspense (Continuous 3 fetching)">
               <Suspense.CSROnly fallback={<Spinner />}>
                 <UseSuspenseQuery queryKey={['boundary', 1]} queryFn={() => api.delay(500, { percentage: 100 })} />
@@ -49,13 +41,9 @@ export default function Page() {
 
         <Area title="ErrorBoundaryGroup blockOutside">
           <ErrorBoundaryGroup blockOutside>
-            <ErrorBoundaryGroup.Reset
-              trigger={({ reset }) => (
-                <Button style={{ alignSelf: 'end' }} onClick={reset}>
-                  ↻
-                </Button>
-              )}
-            />
+            <div className="text-right">
+              <ErrorBoundaryGroup.Reset trigger={(group) => <Button onClick={group.reset}>↻</Button>} />
+            </div>
             <Area title="Suspense">
               <Suspense.CSROnly fallback={<Spinner />}>
                 <UseSuspenseQuery queryKey={['boundary', 1]} queryFn={() => api.delay(500, { percentage: 100 })} />

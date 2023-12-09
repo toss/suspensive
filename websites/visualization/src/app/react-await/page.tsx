@@ -1,6 +1,5 @@
 'use client'
 
-import { Stack } from '@jsxcss/emotion'
 import { ErrorBoundary, Suspense } from '@suspensive/react'
 import { Await } from '@suspensive/react-await'
 import { api } from '~/utils'
@@ -8,7 +7,7 @@ import { api } from '~/utils'
 export default function Page() {
   return (
     <ErrorBoundary fallback={() => <div>error</div>}>
-      <Stack.Vertical>
+      <div className="flex flex-col">
         <Suspense.CSROnly fallback={<div>loading...</div>}>
           <Await
             options={{
@@ -40,7 +39,12 @@ export default function Page() {
           </Await>
         </Suspense.CSROnly>
         <Suspense.CSROnly fallback={<div>loading...</div>}>
-          <Await options={{ key: [2000] as const, fn: ({ key: [ms] }) => api.delay(ms, { percentage: 100 }) }}>
+          <Await
+            options={{
+              key: [2000] as const,
+              fn: ({ key: [ms] }) => api.delay(ms, { percentage: 100 }),
+            }}
+          >
             {(awaited) => (
               <div>
                 <button onClick={awaited.reset}>Try again</button>
@@ -64,11 +68,16 @@ export default function Page() {
             )}
           </Await>
         </Suspense.CSROnly>
-      </Stack.Vertical>
+      </div>
 
-      <Stack.Vertical>
+      <div className="flex flex-col">
         <Suspense.CSROnly fallback={<div>loading...</div>}>
-          <Await options={{ key: [3000] as const, fn: ({ key: [ms] }) => api.delay(ms, { percentage: 100 }) }}>
+          <Await
+            options={{
+              key: [3000] as const,
+              fn: ({ key: [ms] }) => api.delay(ms, { percentage: 100 }),
+            }}
+          >
             {(awaited) => (
               <div>
                 <button onClick={awaited.reset}>Try again</button>
@@ -78,7 +87,12 @@ export default function Page() {
           </Await>
         </Suspense.CSROnly>
         <Suspense.CSROnly fallback={<div>loading...</div>}>
-          <Await options={{ key: [4000] as const, fn: ({ key: [ms] }) => api.delay(ms, { percentage: 100 }) }}>
+          <Await
+            options={{
+              key: [4000] as const,
+              fn: ({ key: [ms] }) => api.delay(ms, { percentage: 100 }),
+            }}
+          >
             {(awaited) => (
               <div>
                 <button onClick={awaited.reset}>Try again</button>
@@ -88,7 +102,12 @@ export default function Page() {
           </Await>
         </Suspense.CSROnly>
         <Suspense.CSROnly fallback={<div>loading...</div>}>
-          <Await options={{ key: [4000] as const, fn: ({ key: [ms] }) => api.delay(ms, { percentage: 100 }) }}>
+          <Await
+            options={{
+              key: [4000] as const,
+              fn: ({ key: [ms] }) => api.delay(ms, { percentage: 100 }),
+            }}
+          >
             {(awaited) => (
               <div>
                 <button onClick={awaited.reset}>Try again</button>
@@ -97,7 +116,7 @@ export default function Page() {
             )}
           </Await>
         </Suspense.CSROnly>
-      </Stack.Vertical>
+      </div>
     </ErrorBoundary>
   )
 }

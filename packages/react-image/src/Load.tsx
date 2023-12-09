@@ -1,4 +1,3 @@
-import { createElement } from 'react'
 import type { FunctionComponent } from 'react'
 import { useSyncExternalStore } from 'use-sync-external-store/shim'
 
@@ -98,5 +97,6 @@ type LoadProps<TLoadSrc extends LoadSrc> = {
   src: TLoadSrc
   children: FunctionComponent<LoadState<TLoadSrc>>
 }
-export const Load = <TLoadSrc extends LoadSrc>({ src, children }: LoadProps<TLoadSrc>) =>
-  createElement(children, useLoad({ src }))
+export const Load = <TLoadSrc extends LoadSrc>({ src, children: Children }: LoadProps<TLoadSrc>) => (
+  <Children {...useLoad({ src })} />
+)
