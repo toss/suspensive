@@ -13,13 +13,13 @@
     "url": "https://github.com/suspensive/react.git"
   },
   "license": "MIT",
-  "packageManager": "pnpm@8.10.2",
+  "packageManager": "pnpm@8.12.0",
   "type": "module",
   "workspaces": [
     "configs/*",
+    "docs/*",
     "packages/*",
-    "websites/*",
-    "docs"
+    "websites/*"
   ],
   "scripts": {
     "build": "turbo run build",
@@ -85,9 +85,5 @@
     "typescript": "^5.3.3",
     "vite": "^5.0.6",
     "vitest": "^1.0.0-beta.6"
-  },
-  "volta": {
-    "node": "18.18.2",
-    "pnpm": "8.10.2"
   }
 }
