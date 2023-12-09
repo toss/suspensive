@@ -31,9 +31,7 @@ const config: DocsThemeConfig = {
         <Image src="/img/logo_dark.png" width={34} height={34} alt="suspensive logo" />
         <div className="relative">
           <strong>Suspensive</strong>
-          <span className="absolute right" style={{ fontSize: 8 }}>
-            v1
-          </span>
+          <span className="right absolute text-[8px]">v1</span>
         </div>
       </div>
     )
