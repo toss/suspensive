@@ -29,15 +29,9 @@ importers:
       '@suspensive/eslint-config-ts':
         specifier: workspace:*
         version: link:configs/eslint-config-ts
-      '@suspensive/test-utils':
-        specifier: workspace:*
-        version: link:configs/test-utils
       '@suspensive/tsconfig':
         specifier: workspace:*
         version: link:configs/tsconfig
-      '@suspensive/tsup':
-        specifier: workspace:*
-        version: link:configs/tsup
       '@testing-library/dom':
         specifier: ^9.0.0
         version: 9.3.3
@@ -186,10 +180,17 @@ importers:
         specifier: ^5.0.1
         version: 5.0.1(eslint-config-prettier@9.1.0)(eslint@8.55.0)(prettier@3.1.0)
 
-  configs/package-json-name: {}
+  configs/package-json-name:
+    devDependencies:
+      '@suspensive/tsup':
+        specifier: workspace:*
+        version: link:../tsup
 
   configs/test-utils:
     devDependencies:
+      '@suspensive/tsup':
+        specifier: workspace:*
+        version: link:../tsup
       '@types/react':
         specifier: ^18.2.42
         version: 18.2.42
@@ -204,7 +205,7 @@ importers:
   docs/v1:
     dependencies:
       next:
-        specifier: 14.0.3
+        specifier: ^14.0.3
         version: 14.0.3(@babel/core@7.23.3)(react-dom@18.2.0)(react@18.2.0)
       nextra:
         specifier: ^2.13.2
@@ -220,7 +221,7 @@ importers:
         version: 18.2.0(react@18.2.0)
     devDependencies:
       '@next/eslint-plugin-next':
-        specifier: 14.0.3
+        specifier: ^14.0.3
         version: 14.0.3
       '@types/react':
         specifier: ^18.2.42
@@ -241,7 +242,7 @@ importers:
   docs/v2:
     dependencies:
       next:
-        specifier: 14.0.3
+        specifier: ^14.0.3
         version: 14.0.3(@babel/core@7.23.3)(react-dom@18.2.0)(react@18.2.0)
       nextra:
         specifier: ^2.13.2
@@ -257,7 +258,7 @@ importers:
         version: 18.2.0(react@18.2.0)
     devDependencies:
       '@next/eslint-plugin-next':
-        specifier: 14.0.3
+        specifier: ^14.0.3
         version: 14.0.3
       '@types/react':
         specifier: ^18.2.42
@@ -280,6 +281,12 @@ importers:
       '@suspensive/package-json-name':
         specifier: workspace:*
         version: link:../../configs/package-json-name
+      '@suspensive/test-utils':
+        specifier: workspace:*
+        version: link:../../configs/test-utils
+      '@suspensive/tsup':
+        specifier: workspace:*
+        version: link:../../configs/tsup
       '@types/react':
         specifier: ^18.2.42
         version: 18.2.42
@@ -305,6 +312,12 @@ importers:
       '@suspensive/react':
         specifier: workspace:*
         version: link:../react
+      '@suspensive/test-utils':
+        specifier: workspace:*
+        version: link:../../configs/test-utils
+      '@suspensive/tsup':
+        specifier: workspace:*
+        version: link:../../configs/tsup
       '@types/react':
         specifier: ^18.2.42
         version: 18.2.42
@@ -330,6 +343,12 @@ importers:
       '@suspensive/package-json-name':
         specifier: workspace:*
         version: link:../../configs/package-json-name
+      '@suspensive/test-utils':
+        specifier: workspace:*
+        version: link:../../configs/test-utils
+      '@suspensive/tsup':
+        specifier: workspace:*
+        version: link:../../configs/tsup
       '@types/react':
         specifier: ^18.2.42
         version: 18.2.42
@@ -354,6 +373,12 @@ importers:
       '@suspensive/react':
         specifier: workspace:*
         version: link:../react
+      '@suspensive/test-utils':
+        specifier: workspace:*
+        version: link:../../configs/test-utils
+      '@suspensive/tsup':
+        specifier: workspace:*
+        version: link:../../configs/tsup
       '@tanstack/react-query':
         specifier: ^4.36.1
         version: 4.36.1(react-dom@18.2.0)(react@18.2.0)
@@ -407,7 +432,7 @@ importers:
         version: 18.2.0(react@18.2.0)
     devDependencies:
       '@next/eslint-plugin-next':
-        specifier: 14.0.3
+        specifier: ^14.0.3
         version: 14.0.3
       '@types/react':
         specifier: ^18.2.42
