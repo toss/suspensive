@@ -3,15 +3,15 @@
   "pipeline": {
     "build": { "dependsOn": ["^build"], "outputs": ["dist/**", ".next/**"] },
     "build:watch": { "dependsOn": ["^build:watch"], "cache": false, "outputs": ["dist/**"] },
-    "lint": { "dependsOn": ["prepack"], "cache": false },
-    "lint:attw": { "dependsOn": ["prepack"], "cache": false },
-    "lint:pub": { "dependsOn": ["prepack"], "cache": false },
-    "test": { "dependsOn": ["prepack"], "cache": false, "outputs": ["coverage/**"] },
-    "test:tsd": { "dependsOn": ["prepack"], "cache": false },
+    "lint": { "dependsOn": ["prepack"] },
+    "lint:attw": { "dependsOn": ["prepack"]},
+    "lint:pub": { "dependsOn": ["prepack"] },
+    "test": { "dependsOn": ["prepack"], "outputs": ["coverage/**"] },
+    "test:tsd": { "dependsOn": ["prepack"] },
     "test:watch": { "dependsOn": ["prepack"], "cache": false, "outputs": ["coverage/**"] },
     "prepack": { "dependsOn": ["^prepack"], "outputs": ["dist/**"] },
     "dev": { "dependsOn": ["prepack"], "cache": false },
-    "type:check": { "dependsOn": ["prepack"], "cache": false }
+    "type:check": { "dependsOn": ["prepack"] }
   },
   "globalEnv": ["NODE_ENV"]
 }

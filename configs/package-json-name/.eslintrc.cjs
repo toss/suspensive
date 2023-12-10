@@ -2,5 +2,5 @@
 module.exports = {
   root: true,
   extends: ['@suspensive/eslint-config-ts'],
-  ignorePatterns: ['dist/**/*'],
+  ignorePatterns: ['dist'],
 }
