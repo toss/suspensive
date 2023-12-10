@@ -14,7 +14,7 @@ coverage:
       suspensive-react-await:
         target: 100%
         threshold: 30%
-      suspensive-image:
+      suspensive-react-image:
         target: 100%
         threshold: 30%
 

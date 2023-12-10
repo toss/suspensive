@@ -1,4 +1,4 @@
-import packageJsonName from '@suspensive/package-json-name'
+import { packageJsonName } from '@suspensive/package-json-name'
 import { defineConfig } from 'vitest/config'
 
 export default defineConfig({

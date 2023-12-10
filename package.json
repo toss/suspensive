@@ -13,13 +13,13 @@
     "url": "https://github.com/suspensive/react.git"
   },
   "license": "MIT",
-  "packageManager": "pnpm@8.10.2",
+  "packageManager": "pnpm@8.12.0",
   "type": "module",
   "workspaces": [
     "configs/*",
+    "docs/*",
     "packages/*",
-    "websites/*",
-    "docs"
+    "websites/*"
   ],
   "scripts": {
     "build": "turbo run build",
@@ -55,9 +55,7 @@
     "@suspensive/eslint-config": "workspace:*",
     "@suspensive/eslint-config-js": "workspace:*",
     "@suspensive/eslint-config-ts": "workspace:*",
-    "@suspensive/test-utils": "workspace:*",
     "@suspensive/tsconfig": "workspace:*",
-    "@suspensive/tsup": "workspace:*",
     "@testing-library/dom": "^9.0.0",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
@@ -85,9 +83,5 @@
     "typescript": "^5.3.3",
     "vite": "^5.0.6",
     "vitest": "^1.0.0-beta.6"
-  },
-  "volta": {
-    "node": "18.18.2",
-    "pnpm": "8.10.2"
   }
 }
