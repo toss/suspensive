@@ -18,9 +18,18 @@ var __spreadValues = (a, b) => {
   return a;
 };
 var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
-
-// src/SuspensiveProvider.tsx
-import { useMemo as useMemo3 } from "react";
+var __objRest = (source, exclude) => {
+  var target = {};
+  for (var prop in source)
+    if (__hasOwnProp.call(source, prop) && exclude.indexOf(prop) < 0)
+      target[prop] = source[prop];
+  if (source != null && __getOwnPropSymbols)
+    for (var prop of __getOwnPropSymbols(source)) {
+      if (exclude.indexOf(prop) < 0 && __propIsEnum.call(source, prop))
+        target[prop] = source[prop];
+    }
+  return target;
+};
 
 // src/Delay.tsx
 import { createContext as createContext4, useContext as useContext4, useState as useState3 } from "react";
@@ -67,6 +76,9 @@ var useTimeout = (fn, ms) => {
   }, [ms]);
 };
 
+// src/SuspensiveProvider.tsx
+import { useMemo } from "react";
+
 // src/Suspense.tsx
 import { Suspense as ReactSuspense, createContext, useContext } from "react";
 import { Fragment, jsx } from "react/jsx-runtime";
@@ -107,11 +119,31 @@ var withSuspense = Object.assign(
   }
 );
 
+// src/SuspensiveProvider.tsx
+import { jsx as jsx2 } from "react/jsx-runtime";
+var Suspensive = class {
+  constructor(config = {}) {
+    this.defaultOptions = config.defaultOptions;
+  }
+};
+var SuspensiveProvider = ({ value, children }) => {
+  var _a, _b;
+  const delayValue = useMemo(() => {
+    var _a2;
+    return ((_a2 = value.defaultOptions) == null ? void 0 : _a2.delay) || {};
+  }, [(_a = value.defaultOptions) == null ? void 0 : _a.delay]);
+  const suspenseValue = useMemo(() => {
+    var _a2;
+    return ((_a2 = value.defaultOptions) == null ? void 0 : _a2.suspense) || {};
+  }, [(_b = value.defaultOptions) == null ? void 0 : _b.suspense]);
+  return /* @__PURE__ */ jsx2(DelayContext.Provider, { value: delayValue, children: /* @__PURE__ */ jsx2(SuspenseContext.Provider, { value: suspenseValue, children }) });
+};
+
 // src/ErrorBoundary.tsx
-import { Component, createContext as createContext3, forwardRef, useContext as useContext3, useImperativeHandle, useMemo as useMemo2, useRef as useRef3, useState as useState2 } from "react";
+import { Component, createContext as createContext3, forwardRef, useContext as useContext3, useImperativeHandle, useMemo as useMemo3, useRef as useRef3, useState as useState2 } from "react";
 
 // src/ErrorBoundaryGroup.tsx
-import { createContext as createContext2, useContext as useContext2, useEffect as useEffect4, useMemo, useReducer } from "react";
+import { createContext as createContext2, useContext as useContext2, useEffect as useEffect4, useMemo as useMemo2, useReducer } from "react";
 
 // src/utils/assert.ts
 function assert(condition, message) {
@@ -135,7 +167,7 @@ assert.message = {
 var hasResetKeysChanged = (a = [], b = []) => a.length !== b.length || a.some((item, index) => !Object.is(item, b[index]));
 
 // src/ErrorBoundaryGroup.tsx
-import { jsx as jsx2 } from "react/jsx-runtime";
+import { jsx as jsx3 } from "react/jsx-runtime";
 var ErrorBoundaryGroupContext = createContext2(void 0);
 if (process.env.NODE_ENV !== "production") {
   ErrorBoundaryGroupContext.displayName = "ErrorBoundaryGroupContext";
@@ -150,8 +182,8 @@ var ErrorBoundaryGroup = ({ blockOutside = false, children }) => {
       reset();
     }
   }, [isParentGroupResetKeyChanged, blockOutside]);
-  const value = useMemo(() => ({ reset, resetKey }), [resetKey]);
-  return /* @__PURE__ */ jsx2(ErrorBoundaryGroupContext.Provider, { value, children });
+  const value = useMemo2(() => ({ reset, resetKey }), [resetKey]);
+  return /* @__PURE__ */ jsx3(ErrorBoundaryGroupContext.Provider, { value, children });
 };
 if (process.env.NODE_ENV !== "production") {
   ErrorBoundaryGroup.displayName = "ErrorBoundaryGroup";
@@ -160,13 +192,13 @@ var ErrorBoundaryGroupReset = ({
   trigger: Trigger
 }) => {
   const errorBoundaryGroup = useErrorBoundaryGroup();
-  return /* @__PURE__ */ jsx2(Trigger, { reset: errorBoundaryGroup.reset });
+  return /* @__PURE__ */ jsx3(Trigger, { reset: errorBoundaryGroup.reset });
 };
 ErrorBoundaryGroup.Reset = ErrorBoundaryGroupReset;
 var useErrorBoundaryGroup = () => {
   const group = useContext2(ErrorBoundaryGroupContext);
   assert(group != null, assert.message.useErrorBoundaryGroup.onlyInChildrenOfErrorBoundaryGroup);
-  return useMemo(
+  return useMemo2(
     () => ({
       /**
        * When you want to reset multiple ErrorBoundaries as children of ErrorBoundaryGroup, You can use this reset
@@ -176,9 +208,10 @@ var useErrorBoundaryGroup = () => {
     [group.reset]
   );
 };
+var withErrorBoundaryGroup = (component, errorBoundaryGroupProps = {}) => wrap.ErrorBoundaryGroup(errorBoundaryGroupProps).on(component);
 
 // src/ErrorBoundary.tsx
-import { jsx as jsx3 } from "react/jsx-runtime";
+import { jsx as jsx4 } from "react/jsx-runtime";
 var initialErrorBoundaryState = {
   isError: false,
   error: null
@@ -219,12 +252,12 @@ var BaseErrorBoundary = class extends Component {
     if (this.state.isError) {
       if (typeof fallback === "function") {
         const FallbackComponent = fallback;
-        childrenOrFallback = /* @__PURE__ */ jsx3(FallbackComponent, { error: this.state.error, reset: this.reset });
+        childrenOrFallback = /* @__PURE__ */ jsx4(FallbackComponent, { error: this.state.error, reset: this.reset });
       } else {
         childrenOrFallback = fallback;
       }
     }
-    return /* @__PURE__ */ jsx3(ErrorBoundaryContext.Provider, { value: __spreadProps(__spreadValues({}, this.state), { reset: this.reset }), children: childrenOrFallback });
+    return /* @__PURE__ */ jsx4(ErrorBoundaryContext.Provider, { value: __spreadProps(__spreadValues({}, this.state), { reset: this.reset }), children: childrenOrFallback });
   }
 };
 var ErrorBoundary = forwardRef((props, ref) => {
@@ -238,15 +271,98 @@ var ErrorBoundary = forwardRef((props, ref) => {
       return (_a2 = baseErrorBoundaryRef.current) == null ? void 0 : _a2.reset();
     }
   }));
-  return /* @__PURE__ */ jsx3(BaseErrorBoundary, __spreadProps(__spreadValues({}, props), { resetKeys, ref: baseErrorBoundaryRef }));
+  return /* @__PURE__ */ jsx4(BaseErrorBoundary, __spreadProps(__spreadValues({}, props), { resetKeys, ref: baseErrorBoundaryRef }));
 });
 if (process.env.NODE_ENV !== "production") {
   ErrorBoundary.displayName = "ErrorBoundary";
 }
+var withErrorBoundary = (component, errorBoundaryProps) => wrap.ErrorBoundary(errorBoundaryProps).on(component);
 var ErrorBoundaryContext = createContext3(null);
+var useErrorBoundary = () => {
+  const [state, setState] = useState2({
+    isError: false,
+    error: null
+  });
+  if (state.isError) {
+    throw state.error;
+  }
+  const errorBoundary = useContext3(ErrorBoundaryContext);
+  assert(errorBoundary != null && !errorBoundary.isError, assert.message.useErrorBoundary.onlyInChildrenOfErrorBoundary);
+  return useMemo3(
+    () => ({
+      setError: (error) => setState({ isError: true, error })
+    }),
+    []
+  );
+};
+var useErrorBoundaryFallbackProps = () => {
+  const errorBoundary = useContext3(ErrorBoundaryContext);
+  assert(
+    errorBoundary != null && errorBoundary.isError,
+    assert.message.useErrorBoundaryFallbackProps.onlyInFallbackOfErrorBoundary
+  );
+  return useMemo3(
+    () => ({
+      error: errorBoundary.error,
+      reset: errorBoundary.reset
+    }),
+    [errorBoundary.error, errorBoundary.reset]
+  );
+};
+
+// src/AsyncBoundary.tsx
+import { forwardRef as forwardRef2 } from "react";
+import { jsx as jsx5 } from "react/jsx-runtime";
+var BaseAsyncBoundary = forwardRef2(
+  (_a, resetRef) => {
+    var _b = _a, { pendingFallback, rejectedFallback, children } = _b, errorBoundaryProps = __objRest(_b, ["pendingFallback", "rejectedFallback", "children"]);
+    return /* @__PURE__ */ jsx5(ErrorBoundary, __spreadProps(__spreadValues({}, errorBoundaryProps), { ref: resetRef, fallback: rejectedFallback, children: /* @__PURE__ */ jsx5(Suspense, { fallback: pendingFallback, children }) }));
+  }
+);
+if (process.env.NODE_ENV !== "production") {
+  BaseAsyncBoundary.displayName = "AsyncBoundary";
+}
+var CSROnly2 = forwardRef2(
+  (_a, resetRef) => {
+    var _b = _a, { pendingFallback, rejectedFallback, children } = _b, errorBoundaryProps = __objRest(_b, ["pendingFallback", "rejectedFallback", "children"]);
+    return /* @__PURE__ */ jsx5(ErrorBoundary, __spreadProps(__spreadValues({}, errorBoundaryProps), { ref: resetRef, fallback: rejectedFallback, children: /* @__PURE__ */ jsx5(Suspense.CSROnly, { fallback: pendingFallback, children }) }));
+  }
+);
+if (process.env.NODE_ENV !== "production") {
+  CSROnly2.displayName = "AsyncBoundary.CSROnly";
+}
+var AsyncBoundary = Object.assign(BaseAsyncBoundary, {
+  /**
+   * @deprecated Use `<Suspense/>` and `<ErrorBoundary/>` as alternatives
+   */
+  CSROnly: CSROnly2
+});
+var withAsyncBoundary = Object.assign(
+  (Component2, asyncBoundaryProps) => {
+    const Wrapped = (props) => /* @__PURE__ */ jsx5(AsyncBoundary, __spreadProps(__spreadValues({}, asyncBoundaryProps), { children: /* @__PURE__ */ jsx5(Component2, __spreadValues({}, props)) }));
+    if (process.env.NODE_ENV !== "production") {
+      const name = Component2.displayName || Component2.name || "Component";
+      Wrapped.displayName = "withAsyncBoundary(".concat(name, ")");
+    }
+    return Wrapped;
+  },
+  {
+    /**
+     * @deprecated Use wrap.ErrorBoundary().Suspense.CSROnly().on as alternatives
+     */
+    CSROnly: (Component2, asyncBoundaryProps) => {
+      const Wrapped = (props) => /* @__PURE__ */ jsx5(AsyncBoundary.CSROnly, __spreadProps(__spreadValues({}, asyncBoundaryProps), { children: /* @__PURE__ */ jsx5(Component2, __spreadValues({}, props)) }));
+      if (process.env.NODE_ENV !== "production") {
+        const name = Component2.displayName || Component2.name || "Component";
+        Wrapped.displayName = "withAsyncBoundary.CSROnly(".concat(name, ")");
+      }
+      return Wrapped;
+    }
+  }
+);
 
 // src/wrap.tsx
-import { jsx as jsx4 } from "react/jsx-runtime";
+import { jsx as jsx6 } from "react/jsx-runtime";
 var WrapWithoutCSROnly = class {
   constructor(wrappers) {
     this.wrappers = wrappers;
@@ -268,8 +384,8 @@ var WrapWithoutCSROnly = class {
     };
     this.on = (Component2) => {
       const WrappedComponent = (props) => this.wrappers.reduce(
-        (acc, [WrapperComponent, wrapperProps]) => /* @__PURE__ */ jsx4(WrapperComponent, __spreadProps(__spreadValues({}, wrapperProps), { children: acc })),
-        /* @__PURE__ */ jsx4(Component2, __spreadValues({}, props))
+        (acc, [WrapperComponent, wrapperProps]) => /* @__PURE__ */ jsx6(WrapperComponent, __spreadProps(__spreadValues({}, wrapperProps), { children: acc })),
+        /* @__PURE__ */ jsx6(Component2, __spreadValues({}, props))
       );
       if (process.env.NODE_ENV !== "production") {
         WrappedComponent.displayName = this.wrappers.reduce(
@@ -303,41 +419,40 @@ var wrap = {
 };
 
 // src/Delay.tsx
-import { Fragment as Fragment2, jsx as jsx5 } from "react/jsx-runtime";
+import { Fragment as Fragment2, jsx as jsx7 } from "react/jsx-runtime";
 var Delay = ({ ms, children }) => {
   var _a;
   const delayContextValue = useContext4(DelayContext);
   const delayMs = (_a = ms != null ? ms : delayContextValue.ms) != null ? _a : 0;
   const [isDelayed, setIsDelayed] = useState3(delayMs === 0);
   useTimeout(() => setIsDelayed(true), delayMs);
-  return /* @__PURE__ */ jsx5(Fragment2, { children: isDelayed ? children : null });
+  return /* @__PURE__ */ jsx7(Fragment2, { children: isDelayed ? children : null });
 };
 if (process.env.NODE_ENV !== "production") {
   Delay.displayName = "Delay";
 }
 var DelayContext = createContext4({ ms: 0 });
+var withDelay = (component, delayProps = {}) => wrap.Delay(delayProps).on(component);
 
-// src/SuspensiveProvider.tsx
-import { jsx as jsx6 } from "react/jsx-runtime";
-var Suspensive = class {
-  constructor(config = {}) {
-    this.defaultOptions = config.defaultOptions;
-  }
-};
-var SuspensiveProvider = ({ value, children }) => {
-  var _a, _b;
-  const delayValue = useMemo3(() => {
-    var _a2;
-    return ((_a2 = value.defaultOptions) == null ? void 0 : _a2.delay) || {};
-  }, [(_a = value.defaultOptions) == null ? void 0 : _a.delay]);
-  const suspenseValue = useMemo3(() => {
-    var _a2;
-    return ((_a2 = value.defaultOptions) == null ? void 0 : _a2.suspense) || {};
-  }, [(_b = value.defaultOptions) == null ? void 0 : _b.suspense]);
-  return /* @__PURE__ */ jsx6(DelayContext.Provider, { value: delayValue, children: /* @__PURE__ */ jsx6(SuspenseContext.Provider, { value: suspenseValue, children }) });
-};
 export {
+  Delay,
+  DelayContext,
+  withDelay,
+  SuspenseContext,
+  Suspense,
+  withSuspense,
   Suspensive,
-  SuspensiveProvider
+  SuspensiveProvider,
+  wrap,
+  ErrorBoundaryGroupContext,
+  ErrorBoundaryGroup,
+  useErrorBoundaryGroup,
+  withErrorBoundaryGroup,
+  ErrorBoundary,
+  withErrorBoundary,
+  useErrorBoundary,
+  useErrorBoundaryFallbackProps,
+  AsyncBoundary,
+  withAsyncBoundary
 };
-//# sourceMappingURL=SuspensiveProvider.js.map
+//# sourceMappingURL=chunk-TGD4JITX.js.map

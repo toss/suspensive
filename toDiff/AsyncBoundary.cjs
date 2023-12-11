@@ -209,7 +209,7 @@ var WrapWithoutCSROnly = class {
       );
       if (process.env.NODE_ENV !== "production") {
         WrappedComponent.displayName = this.wrappers.reduce(
-          (acc, [WrapperComponent]) => `with${WrapperComponent.displayName}(${acc})`,
+          (acc, [WrapperComponent]) => "with".concat(WrapperComponent.displayName, "(").concat(acc, ")"),
           Component2.displayName || Component2.name || "Component"
         );
       }
@@ -380,7 +380,7 @@ var withAsyncBoundary = Object.assign(
     const Wrapped = (props) => /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(AsyncBoundary, __spreadProps(__spreadValues({}, asyncBoundaryProps), { children: /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(Component2, __spreadValues({}, props)) }));
     if (process.env.NODE_ENV !== "production") {
       const name = Component2.displayName || Component2.name || "Component";
-      Wrapped.displayName = `withAsyncBoundary(${name})`;
+      Wrapped.displayName = "withAsyncBoundary(".concat(name, ")");
     }
     return Wrapped;
   },
@@ -392,7 +392,7 @@ var withAsyncBoundary = Object.assign(
       const Wrapped = (props) => /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(AsyncBoundary.CSROnly, __spreadProps(__spreadValues({}, asyncBoundaryProps), { children: /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(Component2, __spreadValues({}, props)) }));
       if (process.env.NODE_ENV !== "production") {
         const name = Component2.displayName || Component2.name || "Component";
-        Wrapped.displayName = `withAsyncBoundary.CSROnly(${name})`;
+        Wrapped.displayName = "withAsyncBoundary.CSROnly(".concat(name, ")");
       }
       return Wrapped;
     }

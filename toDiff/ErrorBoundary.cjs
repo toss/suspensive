@@ -196,7 +196,7 @@ var WrapWithoutCSROnly = class {
       );
       if (process.env.NODE_ENV !== "production") {
         WrappedComponent.displayName = this.wrappers.reduce(
-          (acc, [WrapperComponent]) => `with${WrapperComponent.displayName}(${acc})`,
+          (acc, [WrapperComponent]) => "with".concat(WrapperComponent.displayName, "(").concat(acc, ")"),
           Component2.displayName || Component2.name || "Component"
         );
       }
