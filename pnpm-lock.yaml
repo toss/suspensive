@@ -51,8 +51,8 @@ importers:
         specifier: ^1.0.2
         version: 1.0.2(playwright@1.40.1)(vitest@1.0.0-beta.6)
       '@vitest/coverage-istanbul':
-        specifier: ^1.0.0-beta.6
-        version: 1.0.0-beta.6(vitest@1.0.0-beta.6)
+        specifier: ^1.0.4
+        version: 1.0.4(vitest@1.0.0-beta.6)
       '@vitest/ui':
         specifier: ^1.0.0-beta.6
         version: 1.0.0-beta.6(vitest@1.0.0-beta.6)
@@ -574,7 +574,7 @@ packages:
     resolution: {integrity: sha512-0pYVBnDKZO2fnSPCrgM/6WMc7eS20Fbok+0r88fp+YtWVLZrp4CkafFGIp+W0VKw4a22sgebPT99y+FDNMdP4w==}
     engines: {node: '>=6.9.0'}
     dependencies:
-      '@babel/types': 7.23.0
+      '@babel/types': 7.23.3
 
   /@babel/helper-module-transforms@7.23.3(@babel/core@7.23.3):
     resolution: {integrity: sha512-7bBs4ED9OmswdfDzpz4MpWgSrV7FXlc3zIagvLFjS5H+Mk7Snr21vQ6QwrsoCGMfNC4e4LQPdoULEt4ykz0SRQ==}
@@ -668,14 +668,6 @@ packages:
       globals: 11.12.0
     transitivePeerDependencies:
       - supports-color
-
-  /@babel/types@7.23.0:
-    resolution: {integrity: sha512-0oIyUfKoI3mSqMvsxBdclDwxXKXAUA8v/apZbc+iSyARYou1o8ZGDxbUYyLFoW2arqS2jDGqJuZvv1d/io1axg==}
-    engines: {node: '>=6.9.0'}
-    dependencies:
-      '@babel/helper-string-parser': 7.22.5
-      '@babel/helper-validator-identifier': 7.22.20
-      to-fast-properties: 2.0.0
 
   /@babel/types@7.23.3:
     resolution: {integrity: sha512-OZnvoH2l8PK5eUvEcUyCt/sXgr/h+UWpVuBbOljwcrAgUl6lpchoQ++PHGyQy1AtYnVA6CEq3y5xeEI10brpXw==}
@@ -2630,11 +2622,12 @@ packages:
       sirv: 2.0.3
       vitest: 1.0.0-beta.6(@types/node@18.18.14)(@vitest/browser@1.0.2)(@vitest/ui@1.0.0-beta.6)(jsdom@23.0.1)
 
-  /@vitest/coverage-istanbul@1.0.0-beta.6(vitest@1.0.0-beta.6):
-    resolution: {integrity: sha512-fGxwZv/k+wfiFXNChpaXeMrB+BqUPPRnjUTlOvOlwJgYtFzK1UrAyokDYRHCNWU1UkzdCBzAll+lHd/6H9aytA==}
+  /@vitest/coverage-istanbul@1.0.4(vitest@1.0.0-beta.6):
+    resolution: {integrity: sha512-6qoSzTR+sanwY/dREqu6OFJupo/mHzCcboh03rLwqH2V2B39505lDr9FpqaLwU1vQgeUKNA+CdHPkpNpusxkDw==}
     peerDependencies:
-      vitest: ^1.0.0-0
+      vitest: ^1.0.0
     dependencies:
+      debug: 4.3.4
       istanbul-lib-coverage: 3.2.2
       istanbul-lib-instrument: 6.0.1
       istanbul-lib-report: 3.0.1
