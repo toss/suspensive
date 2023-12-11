@@ -192,8 +192,8 @@ importers:
         specifier: workspace:*
         version: link:../tsup
       '@types/react':
-        specifier: ^18.2.42
-        version: 18.2.42
+        specifier: ^18.2.43
+        version: 18.2.43
       react:
         specifier: ^18.2.0
         version: 18.2.0
@@ -224,8 +224,8 @@ importers:
         specifier: ^14.0.3
         version: 14.0.3
       '@types/react':
-        specifier: ^18.2.42
-        version: 18.2.42
+        specifier: ^18.2.43
+        version: 18.2.43
       '@types/react-dom':
         specifier: ^18.2.15
         version: 18.2.15
@@ -261,8 +261,8 @@ importers:
         specifier: ^14.0.3
         version: 14.0.3
       '@types/react':
-        specifier: ^18.2.42
-        version: 18.2.42
+        specifier: ^18.2.43
+        version: 18.2.43
       '@types/react-dom':
         specifier: ^18.2.15
         version: 18.2.15
@@ -288,8 +288,8 @@ importers:
         specifier: workspace:*
         version: link:../../configs/tsup
       '@types/react':
-        specifier: ^18.2.42
-        version: 18.2.42
+        specifier: ^18.2.43
+        version: 18.2.43
       '@types/react-dom':
         specifier: ^18.2.15
         version: 18.2.15
@@ -319,8 +319,8 @@ importers:
         specifier: workspace:*
         version: link:../../configs/tsup
       '@types/react':
-        specifier: ^18.2.42
-        version: 18.2.42
+        specifier: ^18.2.43
+        version: 18.2.43
       '@types/react-dom':
         specifier: ^18.2.15
         version: 18.2.15
@@ -350,8 +350,8 @@ importers:
         specifier: workspace:*
         version: link:../../configs/tsup
       '@types/react':
-        specifier: ^18.2.42
-        version: 18.2.42
+        specifier: ^18.2.43
+        version: 18.2.43
       '@types/react-dom':
         specifier: ^18.2.15
         version: 18.2.15
@@ -383,8 +383,8 @@ importers:
         specifier: ^4.36.1
         version: 4.36.1(react-dom@18.2.0)(react@18.2.0)
       '@types/react':
-        specifier: ^18.2.42
-        version: 18.2.42
+        specifier: ^18.2.43
+        version: 18.2.43
       '@types/react-dom':
         specifier: ^18.2.15
         version: 18.2.15
@@ -435,8 +435,8 @@ importers:
         specifier: ^14.0.3
         version: 14.0.3
       '@types/react':
-        specifier: ^18.2.42
-        version: 18.2.42
+        specifier: ^18.2.43
+        version: 18.2.43
       '@types/react-dom':
         specifier: ^18.2.15
         version: 18.2.15
@@ -1698,7 +1698,7 @@ packages:
       react: '>=16'
     dependencies:
       '@types/mdx': 2.0.9
-      '@types/react': 18.2.42
+      '@types/react': 18.2.43
       react: 18.2.0
     dev: false
 
@@ -2358,11 +2358,11 @@ packages:
   /@types/react-dom@18.2.15:
     resolution: {integrity: sha512-HWMdW+7r7MR5+PZqJF6YFNSCtjz1T0dsvo/f1BV6HkV+6erD/nA7wd9NM00KVG83zf2nJ7uATPO9ttdIPvi3gg==}
     dependencies:
-      '@types/react': 18.2.42
+      '@types/react': 18.2.43
     dev: true
 
-  /@types/react@18.2.42:
-    resolution: {integrity: sha512-c1zEr96MjakLYus/wPnuWDo1/zErfdU9rNsIGmE+NV71nx88FG9Ttgo5dqorXTu/LImX2f63WBP986gJkMPNbA==}
+  /@types/react@18.2.43:
+    resolution: {integrity: sha512-nvOV01ZdBdd/KW6FahSbcNplt2jCJfyWdTos61RYHV+FVv5L/g9AOX1bmbVcWcLFL8+KHQfh1zVIQrud6ihyQA==}
     dependencies:
       '@types/prop-types': 15.7.9
       '@types/scheduler': 0.16.5
