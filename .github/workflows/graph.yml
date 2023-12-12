@@ -19,14 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v2
-        with:
-          version: 8.12.0
-      - uses: actions/setup-node@v4
-        with:
-          cache: 'pnpm'
-          cache-dependency-path: 'pnpm-lock.yaml'
-          node-version-file: '.nvmrc'
+      - uses: ./.github/pnpm/setup-node
       - name: Setup Pages
         uses: actions/configure-pages@v3
       - name: Install dependencies
