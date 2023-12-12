@@ -1,5 +1,13 @@
 # @suspensive/react-query
 
+## 1.20.7
+
+### Patch Changes
+
+- b69d651: fix(tsup): add supported browsers
+- Updated dependencies [b69d651]
+  - @suspensive/react@1.20.7
+
 ## 1.20.6
 
 ### Patch Changes
