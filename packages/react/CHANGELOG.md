@@ -1,5 +1,11 @@
 # @suspensive/react
 
+## 1.20.7
+
+### Patch Changes
+
+- b69d651: fix(tsup): add supported browsers
+
 ## 1.20.6
 
 ### Patch Changes
