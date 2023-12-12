@@ -1,5 +1,11 @@
 # @suspensive/react-await
 
+## 0.0.11
+
+### Patch Changes
+
+- b69d651: fix(tsup): add supported browsers
+
 ## 0.0.10
 
 ### Patch Changes

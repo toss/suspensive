@@ -1,5 +1,11 @@
 # @suspensive/react-image
 
+## 0.0.3
+
+### Patch Changes
+
+- b69d651: fix(tsup): add supported browsers
+
 ## 0.0.2
 
 ### Patch Changes
