@@ -1,7 +1,8 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router.js'
-import { type DocsThemeConfig, useConfig } from 'nextra-theme-docs'
+import type { DocsThemeConfig } from 'nextra-theme-docs'
+import { useConfig } from 'nextra-theme-docs'
 
 const localeBanner = {
   en: (
@@ -24,6 +25,9 @@ const config: DocsThemeConfig = {
       return localeBanner[locale as keyof typeof localeBanner]
     },
     dismissible: true,
+  },
+  chat: {
+    link: 'https://discord.gg/cmz6NfrNCM',
   },
   logo: function Logo() {
     return (
