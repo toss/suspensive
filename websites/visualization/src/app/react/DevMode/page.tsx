@@ -28,18 +28,15 @@ export default function Page() {
           <Box.Default>children</Box.Default>
         </ErrorBoundary>
       </Area>
-      <Area title="<DevMode.ErrorBoundary throw={new Error('<DevMode.ErrorBoundary/> throw this error')} />">
+      <Area title="<DevMode.ErrorBoundary showFallback />">
         <ErrorBoundary fallback={({ error }) => <Box.Error>{error.message}</Box.Error>}>
-          <DevMode.ErrorBoundary throw={new Error('<DevMode.ErrorBoundary/> throw this error')} />
+          <DevMode.ErrorBoundary showFallback />
           <Box.Default>children</Box.Default>
         </ErrorBoundary>
       </Area>
-      <Area title="<DevMode.ErrorBoundary throw={new Error('<DevMode.ErrorBoundary/> throw this error')} after={2000}/>">
+      <Area title="<DevMode.ErrorBoundary showFallback after={2000} />">
         <ErrorBoundary fallback={({ error }) => <Box.Error>{error.message}</Box.Error>}>
-          <DevMode.ErrorBoundary
-            throw={new Error('<DevMode.ErrorBoundary after={2000}/> throw this error')}
-            after={2000}
-          />
+          <DevMode.ErrorBoundary showFallback after={2000} />
           <Box.Default>children</Box.Default>
         </ErrorBoundary>
       </Area>

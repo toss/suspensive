@@ -59,17 +59,29 @@ export const DevMode = Object.assign(
     /**
      * @experimental This is experimental feature.
      */
-    ErrorBoundary: <TError extends Error>({ after = 0, throw: throwError }: { after?: number; throw?: TError }) => {
-      if (process.env.NODE_ENV !== 'production' && devMode.is && throwError) {
-        return <Delay ms={after}>{<UseErrorBoundary error={throwError} />}</Delay>
+    ErrorBoundary: ({
+      showFallback = false,
+      errorMessage = `<DevMode.ErrorBoundary> set Error ErrorBoundary`,
+      after = 0,
+    }: {
+      showFallback?: boolean
+      errorMessage?: string
+      after?: number
+    }) => {
+      if (process.env.NODE_ENV !== 'production' && devMode.is && showFallback) {
+        return (
+          <Delay ms={after}>
+            <SetError errorMessage={errorMessage} />
+          </Delay>
+        )
       }
       return null
     },
   }
 )
-const UseErrorBoundary = <TError extends Error>({ error }: { error: TError }) => {
+const SetError = ({ errorMessage = `<DevMode.ErrorBoundary> set Error ErrorBoundary` }: { errorMessage: string }) => {
   const errorBoundary = useErrorBoundary()
-  errorBoundary.setError(error)
+  errorBoundary.setError(new Error(errorMessage))
   return <></>
 }
 
