@@ -1,5 +1,11 @@
 # @suspensive/react-await
 
+## 0.0.12
+
+### Patch Changes
+
+- 4a3e7eb: fix(tsup): add splitting to reduce bundle size dramatically
+
 ## 0.0.11
 
 ### Patch Changes
