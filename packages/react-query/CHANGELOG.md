@@ -1,5 +1,13 @@
 # @suspensive/react-query
 
+## 1.20.8
+
+### Patch Changes
+
+- 4a3e7eb: fix(tsup): add splitting to reduce bundle size dramatically
+- Updated dependencies [4a3e7eb]
+  - @suspensive/react@1.20.8
+
 ## 1.20.7
 
 ### Patch Changes
