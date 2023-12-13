@@ -23,7 +23,7 @@
   ],
   "scripts": {
     "build": "turbo run build",
-    "build:watch": "turbo run build:watch",
+    "build:watch": "turbo run build:watch --parallel",
     "changeset": "changeset",
     "changeset:publish": "pnpm prepack && changeset publish",
     "changeset:version": "changeset version && pnpm i --lockfile-only",
@@ -44,7 +44,7 @@
     "prepare": "husky install",
     "test": "turbo run test",
     "test:tsd": "turbo run test:tsd",
-    "test:watch": "turbo run test:watch",
+    "test:watch": "turbo run test:watch --parallel",
     "type:check": "turbo run type:check"
   },
   "devDependencies": {

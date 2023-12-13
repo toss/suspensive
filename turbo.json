@@ -2,7 +2,7 @@
   "$schema": "https://turbo.build/schema.json",
   "pipeline": {
     "build": { "dependsOn": ["^build"], "outputs": ["dist/**", ".next/**"] },
-    "build:watch": { "dependsOn": ["^build:watch"], "cache": false, "outputs": ["dist/**"] },
+    "build:watch": { "dependsOn": ["prepack"], "cache": false, "outputs": ["dist/**"] },
     "lint": { "dependsOn": ["prepack"] },
     "lint:attw": { "dependsOn": ["prepack"]},
     "lint:pub": { "dependsOn": ["prepack"] },
