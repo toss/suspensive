@@ -1,6 +1,6 @@
 'use client'
 
-import { Suspensive, SuspensiveProvider } from '@suspensive/react'
+import { DevMode, Suspensive, SuspensiveProvider } from '@suspensive/react'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import type { PropsWithChildren } from 'react'
@@ -31,5 +31,6 @@ export const Providers = ({ children }: PropsWithChildren) => (
       {children}
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
+    <DevMode />
   </SuspensiveProvider>
 )

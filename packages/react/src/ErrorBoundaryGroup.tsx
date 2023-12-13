@@ -2,7 +2,7 @@ import type { ComponentProps, ComponentType, PropsWithChildren } from 'react'
 import { createContext, useContext, useEffect, useMemo, useReducer } from 'react'
 import { useIsChanged } from './hooks'
 import type { PropsWithoutChildren } from './types'
-import { assert } from './utils'
+import { assert, increase } from './utils'
 import { wrap } from './wrap'
 
 export const ErrorBoundaryGroupContext = createContext<{ reset: () => void; resetKey: number } | undefined>(undefined)
@@ -17,8 +17,6 @@ export type ErrorBoundaryGroupProps = PropsWithChildren<{
    */
   blockOutside?: boolean
 }>
-
-const increase = (prev: number) => prev + 1
 
 /**
  * ErrorBoundaryGroup is Component to manage multiple ErrorBoundaries
