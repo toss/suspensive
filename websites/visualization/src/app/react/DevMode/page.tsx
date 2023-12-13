@@ -4,8 +4,7 @@ import type { ErrorBoundaryFallbackProps } from '@suspensive/react'
 import { DevMode, ErrorBoundary, Suspense } from '@suspensive/react'
 import { Area, Box, Button, Spinner } from '~/components/uis'
 
-DevMode.on() // turn DevMode off
-// DevMode.off() // turn DevMode off
+// DevMode.off() // turn DevMode off if want
 
 export default function Page() {
   return (
