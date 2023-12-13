@@ -1,5 +1,6 @@
 'use client'
 
+import type { ErrorBoundaryFallbackProps } from '@suspensive/react'
 import { DevMode, ErrorBoundary, Suspense } from '@suspensive/react'
 import { Area, Box, Button, Spinner } from '~/components/uis'
 
@@ -23,19 +24,19 @@ export default function Page() {
       </Area>
 
       <Area title="<DevMode.ErrorBoundary />">
-        <ErrorBoundary fallback={({ error }) => <Box.Error>{error.message}</Box.Error>}>
+        <ErrorBoundary fallback={ErrorBoundaryFallback}>
           <DevMode.ErrorBoundary />
           <Box.Default>children</Box.Default>
         </ErrorBoundary>
       </Area>
       <Area title="<DevMode.ErrorBoundary showFallback />">
-        <ErrorBoundary fallback={({ error }) => <Box.Error>{error.message}</Box.Error>}>
+        <ErrorBoundary fallback={ErrorBoundaryFallback}>
           <DevMode.ErrorBoundary showFallback />
           <Box.Default>children</Box.Default>
         </ErrorBoundary>
       </Area>
       <Area title="<DevMode.ErrorBoundary showFallback after={2000} />">
-        <ErrorBoundary fallback={({ error }) => <Box.Error>{error.message}</Box.Error>}>
+        <ErrorBoundary fallback={ErrorBoundaryFallback}>
           <DevMode.ErrorBoundary showFallback after={2000} />
           <Box.Default>children</Box.Default>
         </ErrorBoundary>
@@ -53,3 +54,10 @@ export default function Page() {
     </Area>
   )
 }
+
+const ErrorBoundaryFallback = ({ error, reset }: ErrorBoundaryFallbackProps) => (
+  <Box.Error>
+    {error.message}
+    <Button onClick={reset}>↻</Button>
+  </Box.Error>
+)
