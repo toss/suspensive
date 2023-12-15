@@ -12,8 +12,8 @@ importers:
         specifier: ^0.13.3
         version: 0.13.3
       '@changesets/cli':
-        specifier: ^2.27.0
-        version: 2.27.0
+        specifier: ^2.27.1
+        version: 2.27.1
       '@commitlint/cli':
         specifier: ^18.4.3
         version: 18.4.3(typescript@5.3.3)
@@ -716,8 +716,8 @@ packages:
       '@changesets/types': 6.0.0
     dev: true
 
-  /@changesets/cli@2.27.0:
-    resolution: {integrity: sha512-PHIvSMQVghKcAewsE4XRCD/n+KiqC4fuVbUb3LWEs+SsNSUyaxex4RfVwmz8YIXYiB3qwFQrD9gq3ZLG4JYkyA==}
+  /@changesets/cli@2.27.1:
+    resolution: {integrity: sha512-iJ91xlvRnnrJnELTp4eJJEOPjgpF3NOh4qeQehM6Ugiz9gJPRZ2t+TsXun6E3AMN4hScZKjqVXl0TX+C7AB3ZQ==}
     hasBin: true
     dependencies:
       '@babel/runtime': 7.23.2
