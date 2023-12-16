@@ -22,7 +22,7 @@ jobs:
         command: ['lint', 'lint:attw', 'lint:monorepo', 'lint:pub', 'test', 'test:tsd', 'type:check', 'build']
     steps:
       - uses: actions/checkout@v4
-      - uses: ./.github/pnpm/setup-node
+      - uses: ./.github/actions/pnpm-setup-node
       - run: pnpm install --frozen-lockfile
       - if: matrix.command == 'test'
         run: pnpm exec playwright install

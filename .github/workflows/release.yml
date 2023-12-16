@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: ./.github/pnpm/setup-node
+      - uses: ./.github/actions/pnpm-setup-node
       - run: pnpm install --frozen-lockfile
       - name: Create Changesets Pull Request or Publish to NPM
         id: changesets
