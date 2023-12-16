@@ -22,14 +22,7 @@ jobs:
         command: ['lint', 'lint:attw', 'lint:monorepo', 'lint:pub', 'test', 'test:tsd', 'type:check', 'build']
     steps:
       - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v2
-        with:
-          version: 8.12.0
-      - uses: actions/setup-node@v4
-        with:
-          cache: 'pnpm'
-          cache-dependency-path: 'pnpm-lock.yaml'
-          node-version-file: '.nvmrc'
+      - uses: ./.github/actions/pnpm-setup-node
       - run: pnpm install --frozen-lockfile
       - if: matrix.command == 'test'
         run: pnpm exec playwright install
