@@ -1,32 +1,37 @@
-import type { ComponentProps, ComponentType, ReactNode, SuspenseProps as ReactSuspenseProps } from 'react'
+import type { ComponentProps, ComponentType, SuspenseProps as ReactSuspenseProps } from 'react'
 import { Suspense as ReactSuspense, createContext, useContext } from 'react'
-import { useIsClient } from './hooks'
+import type { PropsWithDevMode, PropsWithoutDevMode } from './DevMode'
+import { suspensiveDevMode } from './DevMode'
+import { useDevModeObserve, useIsClient } from './hooks'
 import type { PropsWithoutChildren } from './types'
+import { noop } from './utils'
 import { wrap } from './wrap'
 
-export type SuspenseProps = ReactSuspenseProps
+export type SuspenseProps = PropsWithDevMode<SuspenseDevModeOptions, ReactSuspenseProps>
 
-export const SuspenseContext = createContext<PropsWithoutChildren<SuspenseProps>>({ fallback: undefined })
-const useFallbackWithContext = (fallback: ReactNode) => {
-  const contextFallback = useContext(SuspenseContext).fallback
+export const SuspenseContext = createContext<PropsWithoutChildren<PropsWithoutDevMode<SuspenseProps>>>({
+  fallback: undefined,
+})
 
-  return fallback === null ? null : fallback ?? contextFallback
-}
-
-const DefaultSuspense = (props: SuspenseProps) => {
-  const fallback = useFallbackWithContext(props.fallback)
-
-  return <ReactSuspense {...props} fallback={fallback} />
-}
+const SuspenseContextFallback = () => useContext(SuspenseContext).fallback
+const DefaultSuspense = ({ devMode, children, fallback = <SuspenseContextFallback /> }: SuspenseProps) => (
+  <ReactSuspense fallback={fallback}>
+    {process.env.NODE_ENV !== 'production' && devMode && <SuspenseDevMode {...devMode} />}
+    {children}
+  </ReactSuspense>
+)
 if (process.env.NODE_ENV !== 'production') {
   DefaultSuspense.displayName = 'Suspense'
 }
-const CSROnly = (props: SuspenseProps) => {
-  const isClient = useIsClient()
-  const fallback = useFallbackWithContext(props.fallback)
-
-  return isClient ? <ReactSuspense {...props} fallback={fallback} /> : <>{fallback}</>
-}
+const CSROnly = ({ devMode, children, fallback = <SuspenseContextFallback /> }: SuspenseProps) =>
+  useIsClient() ? (
+    <ReactSuspense fallback={fallback}>
+      {process.env.NODE_ENV !== 'production' && devMode && <SuspenseDevMode {...devMode} />}
+      {children}
+    </ReactSuspense>
+  ) : (
+    <>{fallback}</>
+  )
 if (process.env.NODE_ENV !== 'production') {
   CSROnly.displayName = 'Suspense.CSROnly'
 }
@@ -61,3 +66,12 @@ export const withSuspense = Object.assign(
     ) => wrap.Suspense.CSROnly(suspenseProps).on(component),
   }
 )
+
+type SuspenseDevModeOptions = { showFallback?: boolean }
+const SuspenseDevMode = ({ showFallback = false }: SuspenseDevModeOptions) => {
+  useDevModeObserve()
+  if (suspensiveDevMode.is && showFallback) {
+    throw new Promise(noop)
+  }
+  return null
+}

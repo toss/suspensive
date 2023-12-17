@@ -1,102 +1,93 @@
-import { useEffect, useReducer } from 'react'
-import type { ComponentProps } from 'react'
-import { Delay } from './Delay'
-import { useErrorBoundary } from './ErrorBoundary'
-import { increase, noop } from './utils'
+import { type ComponentProps, type ComponentType, useState } from 'react'
+import { useDevModeObserve } from './hooks'
+import { noop } from './utils'
+
+export type PropsWithoutDevMode<TProps extends ComponentProps<ComponentType>> = Omit<TProps, 'devMode'>
+
+export type PropsWithDevMode<
+  TDevModeProps extends Record<string, any>,
+  TComponentProps extends ComponentProps<ComponentType>,
+> = TComponentProps & {
+  /**
+   * @experimental This is experimental feature.
+   */
+  devMode?: TDevModeProps
+}
 
 type Sync = () => void
 class SuspensiveDevMode {
-  constructor(public is = process.env.NODE_ENV !== 'production') {}
+  constructor(public is = false) {}
   private syncs = new Map<Sync, Sync>()
   on = () => {
-    this.is = true
-    this.syncSubscriber()
+    if (process.env.NODE_ENV !== 'production') {
+      this.is = true
+      this.syncSubscriber()
+    }
   }
   off = () => {
-    this.is = false
-    this.syncSubscriber()
+    if (process.env.NODE_ENV !== 'production') {
+      this.is = false
+      this.syncSubscriber()
+    }
   }
   subscribe = (sync: Sync) => {
-    this.syncs.set(sync, sync)
+    if (process.env.NODE_ENV !== 'production') {
+      this.syncs.set(sync, sync)
+    }
 
     return () => this.unsubscribe(sync)
   }
   unsubscribe = (sync: Sync) => {
-    this.syncs.delete(sync)
+    if (process.env.NODE_ENV !== 'production') {
+      this.syncs.delete(sync)
+    }
   }
   syncSubscriber = () => this.syncs.forEach((sync) => sync())
 }
 
-const devMode = new SuspensiveDevMode()
+export const suspensiveDevMode = new SuspensiveDevMode()
+
 /**
  * @experimental This is experimental feature.
  */
-export const DevMode = Object.assign(
-  ({ position = 'bottomRight' }: Partial<Pick<ComponentProps<typeof ModeSubscriber>, 'position'>>) => {
-    if (process.env.NODE_ENV !== 'production') {
-      return <ModeSubscriber position={position} />
-    }
-    return null
-  },
-  {
-    /**
-     * @experimental This is experimental feature.
-     */
-    on: devMode.on,
-    /**
-     * @experimental This is experimental feature.
-     */
-    off: devMode.off,
-    /**
-     * @experimental This is experimental feature.
-     */
-    Suspense: ({ showFallback = false }: { showFallback?: boolean }) => {
-      if (process.env.NODE_ENV !== 'production' && devMode.is && showFallback) {
-        throw new Promise(noop)
-      }
-      return null
-    },
-    /**
-     * @experimental This is experimental feature.
-     */
-    ErrorBoundary: ({
-      showFallback = false,
-      errorMessage = `<DevMode.ErrorBoundary> set Error ErrorBoundary`,
-      after = 0,
-    }: {
-      showFallback?: boolean
-      errorMessage?: string
-      after?: number
-    }) => {
-      if (process.env.NODE_ENV !== 'production' && devMode.is && showFallback) {
-        return (
-          <Delay ms={after}>
-            <SetError errorMessage={errorMessage} />
-          </Delay>
-        )
-      }
-      return null
-    },
-  }
-)
-const SetError = ({ errorMessage = `<DevMode.ErrorBoundary> set Error ErrorBoundary` }: { errorMessage: string }) => {
-  const errorBoundary = useErrorBoundary()
-  errorBoundary.setError(new Error(errorMessage))
-  return <></>
+export const devMode = {
+  /**
+   * @experimental This is experimental feature.
+   */
+  toggle: () =>
+    process.env.NODE_ENV !== 'production' ? (suspensiveDevMode.is ? devMode.off() : devMode.on()) : noop(),
+  /**
+   * @experimental This is experimental feature.
+   */
+  on: process.env.NODE_ENV !== 'production' ? suspensiveDevMode.on : noop,
+  /**
+   * @experimental This is experimental feature.
+   */
+  off: process.env.NODE_ENV !== 'production' ? suspensiveDevMode.off : noop,
 }
 
+export const DevMode = ({
+  position = 'bottomRight',
+}: Partial<Pick<ComponentProps<typeof ModeSubscriber>, 'position'>>) => {
+  if (process.env.NODE_ENV !== 'production') {
+    return <ModeSubscriber position={position} />
+  }
+  return null
+}
 const Position = {
   bottomLeft: { bottom: 20, left: 20 },
   bottomRight: { bottom: 20, right: 20 },
-  topLeft: { top: 20, right: 20 },
-  topRight: { top: 20, left: 20 },
+  topLeft: { top: 20, left: 20 },
+  topRight: { top: 20, right: 20 },
 } as const
 const ModeSubscriber = ({ position }: { position: keyof typeof Position }) => {
-  const render = useReducer(increase, 0)[1]
-  useEffect(() => devMode.subscribe(render), [render])
+  const [isHover, setIsHover] = useState(false)
+  useDevModeObserve()
   return (
     <div
-      onClick={devMode.is ? devMode.off : devMode.on}
+      onClick={suspensiveDevMode.is ? suspensiveDevMode.off : suspensiveDevMode.on}
+      onMouseEnter={() => setIsHover(true)}
+      onMouseLeave={() => setIsHover(false)}
       style={{
         position: 'fixed',
         border: '1px solid #ffffff60',
@@ -104,12 +95,16 @@ const ModeSubscriber = ({ position }: { position: keyof typeof Position }) => {
         borderRadius: 8,
         fontSize: 8,
         cursor: 'pointer',
-        ...Position[position],
-        backgroundColor: devMode.is ? '#00ff4c' : '#ffffff10',
         color: 'white',
+        fontWeight: 900,
+        transition: 'all 200ms',
+        ...Position[position],
+        backgroundColor: suspensiveDevMode.is ? '#00ff4c' : '#ffffff10',
+        textShadow: `0px 0px 8px ${suspensiveDevMode.is ? '#005018' : '#000'}`,
+        transform: isHover ? 'scale(1.1)' : 'scale(1)',
       }}
     >
-      DevMode: {devMode.is ? 'on' : 'off'}
+      DevMode: {suspensiveDevMode.is ? 'on' : 'off'}
     </div>
   )
 }

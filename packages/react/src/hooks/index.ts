@@ -1,3 +1,4 @@
+export { useDevModeObserve } from './useDevModeObserve'
 export { useIsChanged } from './useIsChanged'
 export { useIsClient } from './useIsClient'
 export { useIsomorphicLayoutEffect } from './useIsomorphicLayoutEffect'
