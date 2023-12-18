@@ -48,8 +48,8 @@ importers:
         specifier: ^5.14.9
         version: 5.14.9
       '@vitest/browser':
-        specifier: ^1.0.2
-        version: 1.0.2(playwright@1.40.1)(vitest@1.0.4)
+        specifier: ^1.0.4
+        version: 1.0.4(playwright@1.40.1)(vitest@1.0.4)
       '@vitest/coverage-istanbul':
         specifier: ^1.0.4
         version: 1.0.4(vitest@1.0.4)
@@ -112,7 +112,7 @@ importers:
         version: 5.0.8(@types/node@18.19.3)
       vitest:
         specifier: ^1.0.4
-        version: 1.0.4(@types/node@18.19.3)(@vitest/browser@1.0.2)(@vitest/ui@1.0.0-beta.6)(jsdom@23.0.1)
+        version: 1.0.4(@types/node@18.19.3)(@vitest/browser@1.0.4)(@vitest/ui@1.0.0-beta.6)(jsdom@23.0.1)
 
   configs/eslint-config:
     dependencies:
@@ -123,8 +123,8 @@ importers:
         specifier: workspace:*
         version: link:../eslint-config-ts
       eslint-plugin-import:
-        specifier: ^2.29.0
-        version: 2.29.0(@typescript-eslint/parser@6.14.0)(eslint-import-resolver-typescript@3.6.1)(eslint@8.55.0)
+        specifier: ^2.29.1
+        version: 2.29.1(@typescript-eslint/parser@6.14.0)(eslint-import-resolver-typescript@3.6.1)(eslint@8.55.0)
       eslint-plugin-react:
         specifier: ^7.33.2
         version: 7.33.2(eslint@8.55.0)
@@ -141,8 +141,8 @@ importers:
         specifier: ^9.1.0
         version: 9.1.0(eslint@8.55.0)
       eslint-plugin-import:
-        specifier: ^2.29.0
-        version: 2.29.0(@typescript-eslint/parser@6.14.0)(eslint-import-resolver-typescript@3.6.1)(eslint@8.55.0)
+        specifier: ^2.29.1
+        version: 2.29.1(@typescript-eslint/parser@6.14.0)(eslint-import-resolver-typescript@3.6.1)(eslint@8.55.0)
       eslint-plugin-jsdoc:
         specifier: ^46.9.1
         version: 46.9.1(eslint@8.55.0)
@@ -169,10 +169,10 @@ importers:
         version: 9.1.0(eslint@8.55.0)
       eslint-import-resolver-typescript:
         specifier: ^3.6.1
-        version: 3.6.1(@typescript-eslint/parser@6.14.0)(eslint-plugin-import@2.29.0)(eslint@8.55.0)
+        version: 3.6.1(@typescript-eslint/parser@6.14.0)(eslint-plugin-import@2.29.1)(eslint@8.55.0)
       eslint-plugin-import:
-        specifier: ^2.29.0
-        version: 2.29.0(@typescript-eslint/parser@6.14.0)(eslint-import-resolver-typescript@3.6.1)(eslint@8.55.0)
+        specifier: ^2.29.1
+        version: 2.29.1(@typescript-eslint/parser@6.14.0)(eslint-import-resolver-typescript@3.6.1)(eslint@8.55.0)
       eslint-plugin-jsdoc:
         specifier: ^46.9.1
         version: 46.9.1(eslint@8.55.0)
@@ -2540,8 +2540,8 @@ packages:
   /@ungap/structured-clone@1.2.0:
     resolution: {integrity: sha512-zuVdFrMJiuCDQUMCzQaD6KL28MjnqqN8XnAqiEq9PNm/hCPTSGfrXCOfwj1ow4LFb/tNymJPwsNbVePc1xFqrQ==}
 
-  /@vitest/browser@1.0.2(playwright@1.40.1)(vitest@1.0.4):
-    resolution: {integrity: sha512-CvHdDtwvYc11kshHWnv+1C2URYIBSBOW3Fvxta9yN6BXbDuQDiyjQQVLNM4uk7JEdnQyS3xAVPxteWTwTzScJg==}
+  /@vitest/browser@1.0.4(playwright@1.40.1)(vitest@1.0.4):
+    resolution: {integrity: sha512-qMT1NhClex73eA2sOwnlwLcSIVCW8B7NFVzIKuXLKxSJD3LsNq8PCKhwOkBxklbSAcZdkOgL/d3/gzQT7k9eng==}
     peerDependencies:
       playwright: '*'
       safaridriver: '*'
@@ -2559,7 +2559,7 @@ packages:
       magic-string: 0.30.5
       playwright: 1.40.1
       sirv: 2.0.3
-      vitest: 1.0.4(@types/node@18.19.3)(@vitest/browser@1.0.2)(@vitest/ui@1.0.0-beta.6)(jsdom@23.0.1)
+      vitest: 1.0.4(@types/node@18.19.3)(@vitest/browser@1.0.4)(@vitest/ui@1.0.0-beta.6)(jsdom@23.0.1)
 
   /@vitest/coverage-istanbul@1.0.4(vitest@1.0.4):
     resolution: {integrity: sha512-6qoSzTR+sanwY/dREqu6OFJupo/mHzCcboh03rLwqH2V2B39505lDr9FpqaLwU1vQgeUKNA+CdHPkpNpusxkDw==}
@@ -2575,7 +2575,7 @@ packages:
       magicast: 0.3.2
       picocolors: 1.0.0
       test-exclude: 6.0.0
-      vitest: 1.0.4(@types/node@18.19.3)(@vitest/browser@1.0.2)(@vitest/ui@1.0.0-beta.6)(jsdom@23.0.1)
+      vitest: 1.0.4(@types/node@18.19.3)(@vitest/browser@1.0.4)(@vitest/ui@1.0.0-beta.6)(jsdom@23.0.1)
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -2618,7 +2618,7 @@ packages:
       pathe: 1.1.1
       picocolors: 1.0.0
       sirv: 2.0.3
-      vitest: 1.0.4(@types/node@18.19.3)(@vitest/browser@1.0.2)(@vitest/ui@1.0.0-beta.6)(jsdom@23.0.1)
+      vitest: 1.0.4(@types/node@18.19.3)(@vitest/browser@1.0.4)(@vitest/ui@1.0.0-beta.6)(jsdom@23.0.1)
 
   /@vitest/utils@1.0.0-beta.6:
     resolution: {integrity: sha512-PyUf4dTFRLfq6YAdAab39i32O/qhpeCVM7cUpN1au7BrvYI/e43ZDhhHdwbt8zP14l06PNrXd5nTSZPFQwmsVw==}
@@ -4442,7 +4442,7 @@ packages:
       - supports-color
     dev: false
 
-  /eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@6.14.0)(eslint-plugin-import@2.29.0)(eslint@8.55.0):
+  /eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@6.14.0)(eslint-plugin-import@2.29.1)(eslint@8.55.0):
     resolution: {integrity: sha512-xgdptdoi5W3niYeuQxKmzVDTATvLYqhpwmykwsh7f6HIOStGWEIL9iqZgQDF9u9OEzrRwR8no5q2VT+bjAujTg==}
     engines: {node: ^14.18.0 || >=16.0.0}
     peerDependencies:
@@ -4453,7 +4453,7 @@ packages:
       enhanced-resolve: 5.15.0
       eslint: 8.55.0
       eslint-module-utils: 2.8.0(@typescript-eslint/parser@6.14.0)(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.1)(eslint@8.55.0)
-      eslint-plugin-import: 2.29.0(@typescript-eslint/parser@6.14.0)(eslint-import-resolver-typescript@3.6.1)(eslint@8.55.0)
+      eslint-plugin-import: 2.29.1(@typescript-eslint/parser@6.14.0)(eslint-import-resolver-typescript@3.6.1)(eslint@8.55.0)
       fast-glob: 3.3.1
       get-tsconfig: 4.7.2
       is-core-module: 2.13.1
@@ -4490,13 +4490,13 @@ packages:
       debug: 3.2.7
       eslint: 8.55.0
       eslint-import-resolver-node: 0.3.9
-      eslint-import-resolver-typescript: 3.6.1(@typescript-eslint/parser@6.14.0)(eslint-plugin-import@2.29.0)(eslint@8.55.0)
+      eslint-import-resolver-typescript: 3.6.1(@typescript-eslint/parser@6.14.0)(eslint-plugin-import@2.29.1)(eslint@8.55.0)
     transitivePeerDependencies:
       - supports-color
     dev: false
 
-  /eslint-plugin-import@2.29.0(@typescript-eslint/parser@6.14.0)(eslint-import-resolver-typescript@3.6.1)(eslint@8.55.0):
-    resolution: {integrity: sha512-QPOO5NO6Odv5lpoTkddtutccQjysJuFxoPS7fAHO+9m9udNHvTCPSAMW9zGAYj8lAIdr40I8yPCdUYrncXtrwg==}
+  /eslint-plugin-import@2.29.1(@typescript-eslint/parser@6.14.0)(eslint-import-resolver-typescript@3.6.1)(eslint@8.55.0):
+    resolution: {integrity: sha512-BbPC0cuExzhiMo4Ff1BTVwHpjjv28C5R+btTOGaCRC7UEz801up0JadwkeSk5Ued6TG34uaczuVuH6qyy5YUxw==}
     engines: {node: '>=4'}
     peerDependencies:
       '@typescript-eslint/parser': '*'
@@ -4523,7 +4523,7 @@ packages:
       object.groupby: 1.0.1
       object.values: 1.1.7
       semver: 6.3.1
-      tsconfig-paths: 3.14.2
+      tsconfig-paths: 3.15.0
     transitivePeerDependencies:
       - eslint-import-resolver-typescript
       - eslint-import-resolver-webpack
@@ -4620,7 +4620,7 @@ packages:
     dependencies:
       '@typescript-eslint/utils': 6.14.0(eslint@8.55.0)(typescript@5.3.3)
       eslint: 8.55.0
-      vitest: 1.0.4(@types/node@18.19.3)(@vitest/browser@1.0.2)(@vitest/ui@1.0.0-beta.6)(jsdom@23.0.1)
+      vitest: 1.0.4(@types/node@18.19.3)(@vitest/browser@1.0.4)(@vitest/ui@1.0.0-beta.6)(jsdom@23.0.1)
     transitivePeerDependencies:
       - supports-color
       - typescript
@@ -9488,8 +9488,8 @@ packages:
     resolution: {integrity: sha512-FZIXf1ksVyLcfr7M317jbB67XFJhOO1YqdTcuGaq9q5jLUoTikukZ+98TPjKiP2jC5CgmYdWWYs0s2nLSU0/1A==}
     dev: true
 
-  /tsconfig-paths@3.14.2:
-    resolution: {integrity: sha512-o/9iXgCYc5L/JxCHPe3Hvh8Q/2xm5Z+p18PESBU6Ff33695QnCHBEjcytY2q19ua7Mbl/DavtBOLq+oG0RCL+g==}
+  /tsconfig-paths@3.15.0:
+    resolution: {integrity: sha512-2Ac2RgzDe/cn48GvOe3M+o82pEFewD3UPbyoUHHdKasHwJKjds4fLXWf/Ux5kATBKN20oaFGu+jbElp1pos0mg==}
     dependencies:
       '@types/json5': 0.0.29
       json5: 1.0.2
@@ -10071,7 +10071,7 @@ packages:
     optionalDependencies:
       fsevents: 2.3.3
 
-  /vitest@1.0.4(@types/node@18.19.3)(@vitest/browser@1.0.2)(@vitest/ui@1.0.0-beta.6)(jsdom@23.0.1):
+  /vitest@1.0.4(@types/node@18.19.3)(@vitest/browser@1.0.4)(@vitest/ui@1.0.0-beta.6)(jsdom@23.0.1):
     resolution: {integrity: sha512-s1GQHp/UOeWEo4+aXDOeFBJwFzL6mjycbQwwKWX2QcYfh/7tIerS59hWQ20mxzupTJluA2SdwiBuWwQHH67ckg==}
     engines: {node: ^18.0.0 || >=20.0.0}
     hasBin: true
@@ -10097,7 +10097,7 @@ packages:
         optional: true
     dependencies:
       '@types/node': 18.19.3
-      '@vitest/browser': 1.0.2(playwright@1.40.1)(vitest@1.0.4)
+      '@vitest/browser': 1.0.4(playwright@1.40.1)(vitest@1.0.4)
       '@vitest/expect': 1.0.4
       '@vitest/runner': 1.0.4
       '@vitest/snapshot': 1.0.4
