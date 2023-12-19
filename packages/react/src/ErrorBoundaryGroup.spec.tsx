@@ -2,7 +2,7 @@ import { ERROR_MESSAGE, TEXT, ThrowError } from '@suspensive/test-utils'
 import { act, render, screen } from '@testing-library/react'
 import ms from 'ms'
 import { createElement } from 'react'
-import { vi } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 import { assert } from './utils'
 import { ErrorBoundary, ErrorBoundaryGroup, useErrorBoundaryGroup, withErrorBoundaryGroup } from '.'
 

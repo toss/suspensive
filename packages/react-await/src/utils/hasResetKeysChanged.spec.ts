@@ -1,3 +1,4 @@
+import { describe, expect, it } from 'vitest'
 import { hasResetKeysChanged } from '.'
 
 const primitive = 0
