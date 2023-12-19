@@ -1,5 +1,5 @@
 {
   "packages": ["packages/**"],
   "sandboxes": ["websites/visualization"],
-  "node": "18.17.1"
+  "node": "18.17.0"
 }
