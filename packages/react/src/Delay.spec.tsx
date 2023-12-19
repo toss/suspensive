@@ -1,7 +1,7 @@
 import { TEXT } from '@suspensive/test-utils'
 import { act, render, screen, waitFor } from '@testing-library/react'
 import ms from 'ms'
-import { vi } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 import { Delay, withDelay } from '.'
 
 describe('<Delay/>', () => {

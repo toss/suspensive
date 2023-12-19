@@ -4,7 +4,7 @@ import ms from 'ms'
 import type { ComponentProps } from 'react'
 import { createElement } from 'react'
 import { createRoot } from 'react-dom/client'
-import { vi } from 'vitest'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { AsyncBoundary, withAsyncBoundary } from '.'
 
 let container = document.createElement('div')
