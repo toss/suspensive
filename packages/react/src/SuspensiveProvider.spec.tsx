@@ -1,7 +1,7 @@
 import { FALLBACK, Suspend, TEXT } from '@suspensive/test-utils'
 import { act, render, screen, waitFor } from '@testing-library/react'
 import ms from 'ms'
-import { vi } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 import { Delay, Suspense, Suspensive, SuspensiveProvider } from '.'
 
 const FALLBACK_GLOBAL = 'FALLBACK_GLOBAL'
