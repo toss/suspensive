@@ -16,12 +16,16 @@ const renderAsyncBoundary = (props: ComponentProps<typeof AsyncBoundary>) =>
 const renderAsyncBoundaryCSROnly = (props: ComponentProps<typeof AsyncBoundary.CSROnly>) =>
   act(() => root.render(<AsyncBoundary.CSROnly {...props} />))
 
-describe('<AsyncBoundary/>', () => {
+const resetBeforeEach = () =>
   beforeEach(() => {
     container = document.createElement('div')
     root = createRoot(container)
     ThrowError.reset()
+    Suspend.reset()
   })
+
+describe('<AsyncBoundary/>', () => {
+  resetBeforeEach()
 
   it('should render the children if nothing to suspend', () => {
     const onError = vi.fn()
@@ -51,7 +55,6 @@ describe('<AsyncBoundary/>', () => {
   })
   it('should render rejectedFallback if error is caught in children', async () => {
     const onError = vi.fn()
-    vi.useFakeTimers()
     renderAsyncBoundary({
       pendingFallback: FALLBACK,
       rejectedFallback: ERROR_MESSAGE,
@@ -66,7 +69,6 @@ describe('<AsyncBoundary/>', () => {
     expect(container.textContent).not.toBe(FALLBACK)
     expect(container.textContent).not.toBe(ERROR_MESSAGE)
     expect(onError).toHaveBeenCalledTimes(0)
-    act(() => vi.advanceTimersByTime(ms('0.1s')))
     await waitFor(() => {
       expect(container.textContent).toBe(ERROR_MESSAGE)
       expect(container.textContent).not.toBe(TEXT)
@@ -77,11 +79,7 @@ describe('<AsyncBoundary/>', () => {
 })
 
 describe('<AsyncBoundary.CSROnly/>', () => {
-  beforeEach(() => {
-    container = document.createElement('div')
-    root = createRoot(container)
-    ThrowError.reset()
-  })
+  resetBeforeEach()
 
   it('should render the children if nothing to suspend', () => {
     const onError = vi.fn()
@@ -102,7 +100,7 @@ describe('<AsyncBoundary.CSROnly/>', () => {
       pendingFallback: FALLBACK,
       rejectedFallback: ERROR_MESSAGE,
       onError,
-      children: <Suspend during={Infinity} toShow={TEXT} />,
+      children: <Suspend during={ms('4s')} toShow={TEXT} />,
     })
     expect(container.textContent).toBe(FALLBACK)
     expect(container.textContent).not.toBe(TEXT)
@@ -111,7 +109,6 @@ describe('<AsyncBoundary.CSROnly/>', () => {
   })
   it('should render rejectedFallback if error is caught in children', async () => {
     const onError = vi.fn()
-    vi.useFakeTimers()
     renderAsyncBoundaryCSROnly({
       pendingFallback: FALLBACK,
       rejectedFallback: ERROR_MESSAGE,
@@ -126,7 +123,6 @@ describe('<AsyncBoundary.CSROnly/>', () => {
     expect(container.textContent).not.toBe(FALLBACK)
     expect(container.textContent).not.toBe(ERROR_MESSAGE)
     expect(onError).toHaveBeenCalledTimes(0)
-    act(() => vi.advanceTimersByTime(ms('0.1s')))
     await waitFor(() => {
       expect(container.textContent).toBe(ERROR_MESSAGE)
       expect(container.textContent).not.toBe(TEXT)
