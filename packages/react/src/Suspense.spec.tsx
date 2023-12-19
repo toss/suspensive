@@ -2,7 +2,7 @@ import { FALLBACK, Suspend, TEXT } from '@suspensive/test-utils'
 import { act, render, screen, waitFor } from '@testing-library/react'
 import ms from 'ms'
 import { createElement } from 'react'
-import { beforeEach, vi } from 'vitest'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { Suspense, devMode, withSuspense } from '.'
 
 describe('<Suspense/>', () => {

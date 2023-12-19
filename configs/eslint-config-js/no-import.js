@@ -35,7 +35,7 @@ module.exports = {
   overrides: [
     {
       files: ['*.spec.ts*', '*.test.ts*'],
-      plugins: ['vitest'],
+      plugins: ['vitest', 'jest-dom'],
       extends: ['plugin:vitest/recommended'],
     },
   ],
