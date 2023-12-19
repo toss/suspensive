@@ -1,5 +1,6 @@
 import type { ComponentProps, ComponentRef, ComponentType, SuspenseProps } from 'react'
 import { forwardRef } from 'react'
+import type { PropsWithoutDevMode } from './DevMode'
 import { ErrorBoundary } from './ErrorBoundary'
 import type { ErrorBoundaryProps } from './ErrorBoundary'
 import { Suspense } from './Suspense'
@@ -8,8 +9,8 @@ import type { PropsWithoutChildren } from './types'
 /**
  * @deprecated Use SuspenseProps and ErrorBoundaryProps as alternatives
  */
-export type AsyncBoundaryProps = Omit<SuspenseProps, 'fallback'> &
-  Omit<ErrorBoundaryProps, 'fallback'> & {
+export type AsyncBoundaryProps = Omit<PropsWithoutDevMode<SuspenseProps>, 'fallback'> &
+  Omit<PropsWithoutDevMode<ErrorBoundaryProps>, 'fallback'> & {
     pendingFallback?: SuspenseProps['fallback']
     rejectedFallback: ErrorBoundaryProps['fallback']
   }

@@ -2,8 +2,8 @@ import { FALLBACK, Suspend, TEXT } from '@suspensive/test-utils'
 import { act, render, screen, waitFor } from '@testing-library/react'
 import ms from 'ms'
 import { createElement } from 'react'
-import { vi } from 'vitest'
-import { Suspense, withSuspense } from '.'
+import { beforeEach, vi } from 'vitest'
+import { Suspense, devMode, withSuspense } from '.'
 
 describe('<Suspense/>', () => {
   beforeEach(Suspend.reset)
@@ -116,5 +116,60 @@ describe('withSuspense.CSROnly', () => {
     TestComponentWithDisplayName.displayName = 'TestDisplayName'
     expect(withSuspense.CSROnly(TestComponentWithDisplayName).displayName).toBe('withSuspense.CSROnly(TestDisplayName)')
     expect(withSuspense.CSROnly(() => <>{TEXT}</>).displayName).toBe('withSuspense.CSROnly(Component)')
+  })
+})
+
+describe('devMode', () => {
+  beforeEach(() => devMode.off())
+
+  it('should make <Suspense devMode={{ showFallback: true }} /> show fallback to develop loading or skeleton easily', async () => {
+    devMode.on()
+    vi.useFakeTimers()
+    render(
+      <Suspense fallback={FALLBACK} devMode={{ showFallback: true }}>
+        {TEXT}
+      </Suspense>
+    )
+    expect(screen.queryByText(FALLBACK)).toBeInTheDocument()
+    expect(screen.queryByText(TEXT)).not.toBeInTheDocument()
+    act(() => vi.advanceTimersByTime(ms('1s')))
+    await waitFor(() => expect(screen.queryByText(FALLBACK)).toBeInTheDocument())
+    await waitFor(() => expect(screen.queryByText(TEXT)).not.toBeInTheDocument())
+
+    act(() => vi.advanceTimersByTime(ms('1s')))
+    await waitFor(() => expect(screen.queryByText(FALLBACK)).toBeInTheDocument())
+
+    act(() => vi.advanceTimersByTime(ms('1s')))
+    await waitFor(() => expect(screen.queryByText(FALLBACK)).toBeInTheDocument())
+    await waitFor(() => expect(screen.queryByText(TEXT)).not.toBeInTheDocument())
+  })
+
+  it(".off should make <Suspense devMode={{ showFallback: true }} />'s devMode off", () => {
+    vi.useFakeTimers()
+    const { rerender } = render(
+      <Suspense fallback={FALLBACK} devMode={{ showFallback: true }}>
+        {TEXT}
+      </Suspense>
+    )
+    expect(screen.queryByText(TEXT)).toBeInTheDocument()
+    expect(screen.queryByText(FALLBACK)).not.toBeInTheDocument()
+
+    devMode.on()
+    rerender(
+      <Suspense fallback={FALLBACK} devMode={{ showFallback: true }}>
+        {TEXT}
+      </Suspense>
+    )
+    expect(screen.queryByText(FALLBACK)).toBeInTheDocument()
+    expect(screen.queryByText(TEXT)).not.toBeInTheDocument()
+
+    devMode.off()
+    rerender(
+      <Suspense fallback={FALLBACK} devMode={{ showFallback: true }}>
+        {TEXT}
+      </Suspense>
+    )
+    expect(screen.queryByText(TEXT)).toBeInTheDocument()
+    expect(screen.queryByText(FALLBACK)).not.toBeInTheDocument()
   })
 })

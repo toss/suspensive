@@ -5,8 +5,6 @@ export { ErrorBoundaryGroup, useErrorBoundaryGroup } from './ErrorBoundaryGroup'
 export { Delay } from './Delay'
 export { wrap } from './wrap'
 
-export { DevMode } from './DevMode'
-
 export type { SuspenseProps } from './Suspense'
 export type { ErrorBoundaryProps, ErrorBoundaryFallbackProps } from './ErrorBoundary'
 export type { ErrorBoundaryGroupProps } from './ErrorBoundaryGroup'
@@ -19,3 +17,6 @@ export { withErrorBoundaryGroup } from './ErrorBoundaryGroup'
 export { withDelay } from './Delay'
 export { AsyncBoundary, withAsyncBoundary } from './AsyncBoundary'
 export type { AsyncBoundaryProps } from './AsyncBoundary'
+
+// experimental
+export { devMode, DevMode } from './DevMode'
