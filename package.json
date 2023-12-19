@@ -58,7 +58,7 @@
     "@suspensive/tsconfig": "workspace:*",
     "@testing-library/dom": "^9.0.0",
     "@testing-library/jest-dom": "^6.1.5",
-    "@testing-library/react": "^13.4.0",
+    "@testing-library/react": "^14.1.2",
     "@types/node": "^18.19.3",
     "@vitest/browser": "^1.0.4",
     "@vitest/coverage-istanbul": "^1.0.4",
