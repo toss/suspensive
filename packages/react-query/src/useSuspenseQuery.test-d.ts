@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { expectError } from 'tsd'
-import { describe, expectTypeOf } from 'vitest'
+import { describe, expectTypeOf, it } from 'vitest'
 import { useSuspenseQuery } from '../dist'
 
 const queryKey = ['key'] as const
