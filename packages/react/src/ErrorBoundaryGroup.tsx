@@ -10,13 +10,13 @@ if (process.env.NODE_ENV !== 'production') {
   ErrorBoundaryGroupContext.displayName = 'ErrorBoundaryGroupContext'
 }
 
-export type ErrorBoundaryGroupProps = PropsWithChildren<{
+export interface ErrorBoundaryGroupProps extends PropsWithChildren {
   /**
    * If you use blockOutside as true, ErrorBoundaryGroup will protect multiple ErrorBoundaries as its children from external ErrorBoundaryGroup's resetKey
    * @default false
    */
   blockOutside?: boolean
-}>
+}
 
 /**
  * ErrorBoundaryGroup is Component to manage multiple ErrorBoundaries

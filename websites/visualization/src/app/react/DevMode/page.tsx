@@ -31,7 +31,7 @@ export default function Page() {
         </div>
       </Area>
 
-      <DevMode position="topRight" />
+      <DevMode />
     </Area>
   )
 }

@@ -18,7 +18,9 @@ export class Suspensive implements Configs {
   }
 }
 
-type SuspensiveProviderProps = PropsWithChildren<{ value: Suspensive }>
+interface SuspensiveProviderProps extends PropsWithChildren {
+  value: Suspensive
+}
 export const SuspensiveProvider = ({ value, children }: SuspensiveProviderProps) => {
   const delayValue = useMemo(() => value.defaultOptions?.delay || {}, [value.defaultOptions?.delay])
   const suspenseValue = useMemo(() => value.defaultOptions?.suspense || {}, [value.defaultOptions?.suspense])

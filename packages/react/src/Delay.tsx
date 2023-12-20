@@ -4,9 +4,9 @@ import { useTimeout } from './hooks'
 import type { PropsWithoutChildren } from './types'
 import { wrap } from './wrap'
 
-export type DelayProps = PropsWithChildren<{
+export interface DelayProps extends PropsWithChildren {
   ms?: number
-}>
+}
 
 export const Delay = ({ ms, children }: DelayProps) => {
   const delayContextValue = useContext(DelayContext)

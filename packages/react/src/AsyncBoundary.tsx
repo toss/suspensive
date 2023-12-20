@@ -9,11 +9,12 @@ import type { PropsWithoutChildren } from './types'
 /**
  * @deprecated Use SuspenseProps and ErrorBoundaryProps as alternatives
  */
-export type AsyncBoundaryProps = Omit<PropsWithoutDevMode<SuspenseProps>, 'fallback'> &
-  Omit<PropsWithoutDevMode<ErrorBoundaryProps>, 'fallback'> & {
-    pendingFallback?: SuspenseProps['fallback']
-    rejectedFallback: ErrorBoundaryProps['fallback']
-  }
+export interface AsyncBoundaryProps
+  extends Omit<PropsWithoutDevMode<SuspenseProps>, 'fallback'>,
+    Omit<PropsWithoutDevMode<ErrorBoundaryProps>, 'fallback'> {
+  pendingFallback?: SuspenseProps['fallback']
+  rejectedFallback: ErrorBoundaryProps['fallback']
+}
 
 const BaseAsyncBoundary = forwardRef<ComponentRef<typeof ErrorBoundary>, AsyncBoundaryProps>(
   ({ pendingFallback, rejectedFallback, children, ...errorBoundaryProps }, resetRef) => (

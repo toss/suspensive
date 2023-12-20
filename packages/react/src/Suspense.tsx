@@ -7,7 +7,7 @@ import type { PropsWithoutChildren } from './types'
 import { noop } from './utils'
 import { wrap } from './wrap'
 
-export type SuspenseProps = PropsWithDevMode<SuspenseDevModeOptions, ReactSuspenseProps>
+export interface SuspenseProps extends PropsWithDevMode<SuspenseDevModeOptions>, ReactSuspenseProps {}
 
 export const SuspenseContext = createContext<PropsWithoutChildren<PropsWithoutDevMode<SuspenseProps>>>({
   fallback: undefined,
@@ -67,7 +67,12 @@ export const withSuspense = Object.assign(
   }
 )
 
-type SuspenseDevModeOptions = { showFallback?: boolean }
+type SuspenseDevModeOptions = {
+  /**
+   * @experimental This is experimental feature.
+   */
+  showFallback?: boolean
+}
 const SuspenseDevMode = ({ showFallback = false }: SuspenseDevModeOptions) => {
   useDevModeObserve()
   if (suspensiveDevMode.is && showFallback) {

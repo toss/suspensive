@@ -8,7 +8,7 @@ import type { PropsWithoutChildren } from './types'
 import { assert, hasResetKeysChanged } from './utils'
 import { wrap } from './wrap'
 
-export type ErrorBoundaryFallbackProps<TError extends Error = Error> = {
+export interface ErrorBoundaryFallbackProps<TError extends Error = Error> {
   /**
    * when ErrorBoundary catch error, you can use this error
    */
@@ -19,27 +19,24 @@ export type ErrorBoundaryFallbackProps<TError extends Error = Error> = {
   reset: () => void
 }
 
-export type ErrorBoundaryProps = PropsWithDevMode<
-  ErrorBoundaryDevModeOptions,
-  PropsWithChildren<{
-    /**
-     * an array of elements for the ErrorBoundary to check each render. If any of those elements change between renders, then the ErrorBoundary will reset the state which will re-render the children
-     */
-    resetKeys?: unknown[]
-    /**
-     * when ErrorBoundary is reset by resetKeys or fallback's props.reset, onReset will be triggered
-     */
-    onReset?(): void
-    /**
-     * when ErrorBoundary catch error, onError will be triggered
-     */
-    onError?(error: Error, info: ErrorInfo): void
-    /**
-     * when ErrorBoundary catch error, fallback will be render instead of children
-     */
-    fallback: ReactNode | FunctionComponent<ErrorBoundaryFallbackProps>
-  }>
->
+export interface ErrorBoundaryProps extends PropsWithChildren, PropsWithDevMode<ErrorBoundaryDevModeOptions> {
+  /**
+   * an array of elements for the ErrorBoundary to check each render. If any of those elements change between renders, then the ErrorBoundary will reset the state which will re-render the children
+   */
+  resetKeys?: unknown[]
+  /**
+   * when ErrorBoundary is reset by resetKeys or fallback's props.reset, onReset will be triggered
+   */
+  onReset?(): void
+  /**
+   * when ErrorBoundary catch error, onError will be triggered
+   */
+  onError?(error: Error, info: ErrorInfo): void
+  /**
+   * when ErrorBoundary catch error, fallback will be render instead of children
+   */
+  fallback: ReactNode | FunctionComponent<ErrorBoundaryFallbackProps>
+}
 
 type ErrorBoundaryState<TError extends Error = Error> =
   | {
@@ -182,8 +179,25 @@ export const useErrorBoundaryFallbackProps = <TError extends Error = Error>(): E
   )
 }
 
+/**
+ * @experimental This is experimental feature.
+ */
 type ErrorBoundaryDevModeOptions = {
-  showFallback?: boolean | { errorMessage?: string; after?: number }
+  /**
+   * @experimental This is experimental feature.
+   */
+  showFallback?:
+    | boolean
+    | {
+        /**
+         * @experimental This is experimental feature.
+         */
+        errorMessage?: string
+        /**
+         * @experimental This is experimental feature.
+         */
+        after?: number
+      }
 }
 const ErrorBoundaryDevMode = ({ showFallback = false }: ErrorBoundaryDevModeOptions) => {
   useDevModeObserve()
