@@ -150,8 +150,8 @@ importers:
         specifier: ^5.1.0
         version: 5.1.0(eslint-config-prettier@9.1.0)(eslint@8.55.0)(prettier@3.1.1)
       eslint-plugin-vitest:
-        specifier: 0.3.17
-        version: 0.3.17(eslint@8.55.0)(typescript@5.3.3)(vitest@1.0.4)
+        specifier: 0.3.18
+        version: 0.3.18(eslint@8.55.0)(typescript@5.3.3)(vitest@1.0.4)
 
   configs/eslint-config-ts:
     dependencies:
@@ -4548,8 +4548,8 @@ packages:
       string.prototype.matchall: 4.0.10
     dev: false
 
-  /eslint-plugin-vitest@0.3.17(eslint@8.55.0)(typescript@5.3.3)(vitest@1.0.4):
-    resolution: {integrity: sha512-JzljEhaJ3YDNJc4n2VTlOdMhElwLsQQprVtgY+eoKQkearKiFP53Vw3515J3jb4ZM8TVnpk7UsIFXM0gbhz+vQ==}
+  /eslint-plugin-vitest@0.3.18(eslint@8.55.0)(typescript@5.3.3)(vitest@1.0.4):
+    resolution: {integrity: sha512-IJzs6BpA//wkNxo5845uPIMOIp4j76MiKiagJ3hD6a2DemrktdpB7mmTjU0EeFuq14NXFoO1wN8Fwrx2VxWBRA==}
     engines: {node: ^18.0.0 || >= 20.0.0}
     peerDependencies:
       '@typescript-eslint/eslint-plugin': '*'
