@@ -16,6 +16,6 @@
     "eslint-plugin-jest-dom": "^5.1.0",
     "eslint-plugin-jsdoc": "^46.9.1",
     "eslint-plugin-prettier": "^5.1.0",
-    "eslint-plugin-vitest": "0.3.17"
+    "eslint-plugin-vitest": "0.3.18"
   }
 }
