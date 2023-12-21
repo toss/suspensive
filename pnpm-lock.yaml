@@ -51,8 +51,8 @@ importers:
         specifier: ^1.1.0
         version: 1.1.0(vitest@1.0.4)
       '@vitest/ui':
-        specifier: ^1.0.0-beta.6
-        version: 1.0.0-beta.6(vitest@1.0.4)
+        specifier: ^1.1.0
+        version: 1.1.0(vitest@1.0.4)
       commitizen:
         specifier: ^4.3.0
         version: 4.3.0(typescript@5.3.3)
@@ -109,7 +109,7 @@ importers:
         version: 5.0.10(@types/node@18.19.3)
       vitest:
         specifier: ^1.0.4
-        version: 1.0.4(@types/node@18.19.3)(@vitest/browser@1.0.4)(@vitest/ui@1.0.0-beta.6)(jsdom@23.0.1)
+        version: 1.0.4(@types/node@18.19.3)(@vitest/browser@1.0.4)(@vitest/ui@1.1.0)(jsdom@23.0.1)
 
   configs/eslint-config:
     dependencies:
@@ -2149,7 +2149,7 @@ packages:
       dom-accessibility-api: 0.5.16
       lodash: 4.17.21
       redent: 3.0.0
-      vitest: 1.0.4(@types/node@18.19.3)(@vitest/browser@1.0.4)(@vitest/ui@1.0.0-beta.6)(jsdom@23.0.1)
+      vitest: 1.0.4(@types/node@18.19.3)(@vitest/browser@1.0.4)(@vitest/ui@1.1.0)(jsdom@23.0.1)
     dev: true
 
   /@testing-library/react@14.1.2(react-dom@18.2.0)(react@18.2.0):
@@ -2496,7 +2496,7 @@ packages:
       magic-string: 0.30.5
       playwright: 1.40.1
       sirv: 2.0.3
-      vitest: 1.0.4(@types/node@18.19.3)(@vitest/browser@1.0.4)(@vitest/ui@1.0.0-beta.6)(jsdom@23.0.1)
+      vitest: 1.0.4(@types/node@18.19.3)(@vitest/browser@1.0.4)(@vitest/ui@1.1.0)(jsdom@23.0.1)
 
   /@vitest/coverage-istanbul@1.1.0(vitest@1.0.4):
     resolution: {integrity: sha512-sjHGQQu7lkJUYSBMOR3f9AyOlK1LBVr0v7LMar/4i167ltabRWlQ2STBDM4P6Wl659NAcHlZ/RXxrAgJPavDMA==}
@@ -2512,7 +2512,7 @@ packages:
       magicast: 0.3.2
       picocolors: 1.0.0
       test-exclude: 6.0.0
-      vitest: 1.0.4(@types/node@18.19.3)(@vitest/browser@1.0.4)(@vitest/ui@1.0.0-beta.6)(jsdom@23.0.1)
+      vitest: 1.0.4(@types/node@18.19.3)(@vitest/browser@1.0.4)(@vitest/ui@1.1.0)(jsdom@23.0.1)
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -2543,29 +2543,29 @@ packages:
     dependencies:
       tinyspy: 2.2.0
 
-  /@vitest/ui@1.0.0-beta.6(vitest@1.0.4):
-    resolution: {integrity: sha512-tnRgw6sJLoGaUuGp0GQaEFHvYkeo1tgGRgcSlZ6JMFkI+ghCon/FLsUbAePV80ULkqagYE6yAhOEnOH7+Ud01w==}
+  /@vitest/ui@1.1.0(vitest@1.0.4):
+    resolution: {integrity: sha512-7yU1QRFBplz0xJqcgt+agcbrNFdBmLo8UUppdKkFmYx+Ih0+yMYQOyr7kOB+YoggJY/p5ZzXxdbiOz7NBX2y+w==}
     peerDependencies:
-      vitest: ^1.0.0-0
+      vitest: ^1.0.0
     dependencies:
-      '@vitest/utils': 1.0.0-beta.6
+      '@vitest/utils': 1.1.0
       fast-glob: 3.3.2
       fflate: 0.8.1
       flatted: 3.2.9
       pathe: 1.1.1
       picocolors: 1.0.0
       sirv: 2.0.3
-      vitest: 1.0.4(@types/node@18.19.3)(@vitest/browser@1.0.4)(@vitest/ui@1.0.0-beta.6)(jsdom@23.0.1)
+      vitest: 1.0.4(@types/node@18.19.3)(@vitest/browser@1.0.4)(@vitest/ui@1.1.0)(jsdom@23.0.1)
 
-  /@vitest/utils@1.0.0-beta.6:
-    resolution: {integrity: sha512-PyUf4dTFRLfq6YAdAab39i32O/qhpeCVM7cUpN1au7BrvYI/e43ZDhhHdwbt8zP14l06PNrXd5nTSZPFQwmsVw==}
+  /@vitest/utils@1.0.4:
+    resolution: {integrity: sha512-gsswWDXxtt0QvtK/y/LWukN7sGMYmnCcv1qv05CsY6cU/Y1zpGX1QuvLs+GO1inczpE6Owixeel3ShkjhYtGfA==}
     dependencies:
       diff-sequences: 29.6.3
       loupe: 2.3.7
       pretty-format: 29.7.0
 
-  /@vitest/utils@1.0.4:
-    resolution: {integrity: sha512-gsswWDXxtt0QvtK/y/LWukN7sGMYmnCcv1qv05CsY6cU/Y1zpGX1QuvLs+GO1inczpE6Owixeel3ShkjhYtGfA==}
+  /@vitest/utils@1.1.0:
+    resolution: {integrity: sha512-z+s510fKmYz4Y41XhNs3vcuFTFhcij2YF7F8VQfMEYAAUfqQh0Zfg7+w9xdgFGhPf3tX3TicAe+8BDITk6ampQ==}
     dependencies:
       diff-sequences: 29.6.3
       loupe: 2.3.7
@@ -4564,7 +4564,7 @@ packages:
     dependencies:
       '@typescript-eslint/utils': 6.14.0(eslint@8.56.0)(typescript@5.3.3)
       eslint: 8.56.0
-      vitest: 1.0.4(@types/node@18.19.3)(@vitest/browser@1.0.4)(@vitest/ui@1.0.0-beta.6)(jsdom@23.0.1)
+      vitest: 1.0.4(@types/node@18.19.3)(@vitest/browser@1.0.4)(@vitest/ui@1.1.0)(jsdom@23.0.1)
     transitivePeerDependencies:
       - supports-color
       - typescript
@@ -9949,7 +9949,7 @@ packages:
     optionalDependencies:
       fsevents: 2.3.3
 
-  /vitest@1.0.4(@types/node@18.19.3)(@vitest/browser@1.0.4)(@vitest/ui@1.0.0-beta.6)(jsdom@23.0.1):
+  /vitest@1.0.4(@types/node@18.19.3)(@vitest/browser@1.0.4)(@vitest/ui@1.1.0)(jsdom@23.0.1):
     resolution: {integrity: sha512-s1GQHp/UOeWEo4+aXDOeFBJwFzL6mjycbQwwKWX2QcYfh/7tIerS59hWQ20mxzupTJluA2SdwiBuWwQHH67ckg==}
     engines: {node: ^18.0.0 || >=20.0.0}
     hasBin: true
@@ -9980,7 +9980,7 @@ packages:
       '@vitest/runner': 1.0.4
       '@vitest/snapshot': 1.0.4
       '@vitest/spy': 1.0.4
-      '@vitest/ui': 1.0.0-beta.6(vitest@1.0.4)
+      '@vitest/ui': 1.1.0(vitest@1.0.4)
       '@vitest/utils': 1.0.4
       acorn-walk: 8.3.0
       cac: 6.7.14
