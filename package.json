@@ -48,7 +48,7 @@
     "type:check": "turbo run type:check"
   },
   "devDependencies": {
-    "@arethetypeswrong/cli": "^0.13.3",
+    "@arethetypeswrong/cli": "^0.13.5",
     "@changesets/cli": "^2.27.1",
     "@commitlint/cli": "^18.4.3",
     "@commitlint/config-conventional": "^18.4.3",
@@ -62,7 +62,7 @@
     "@types/node": "^18.19.3",
     "@vitest/browser": "^1.0.4",
     "@vitest/coverage-istanbul": "^1.1.0",
-    "@vitest/ui": "^1.0.0-beta.6",
+    "@vitest/ui": "^1.1.0",
     "commitizen": "^4.3.0",
     "cz-conventional-changelog": "^3.3.0",
     "eslint": "^8.56.0",
