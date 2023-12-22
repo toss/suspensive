@@ -6,6 +6,7 @@ module.exports = {
   rules: {
     'sort-imports': ['error', { ignoreDeclarationSort: true }],
     'import/no-duplicates': 'error',
+    'import/no-cycle': 'error',
     'import/order': [
       'warn',
       {
