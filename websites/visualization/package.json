@@ -33,7 +33,7 @@
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "@next/eslint-plugin-next": "^14.0.3",
+    "@next/eslint-plugin-next": "^14.0.4",
     "@types/react": "^18.2.45",
     "@types/react-dom": "^18.2.18",
     "autoprefixer": "^10.4.16",
