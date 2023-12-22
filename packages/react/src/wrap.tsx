@@ -1,15 +1,11 @@
 import type { ComponentProps, ComponentType } from 'react'
-import type { AsyncBoundaryProps } from './AsyncBoundary'
 import { AsyncBoundary } from './AsyncBoundary'
-import type { DelayProps } from './Delay'
 import { Delay } from './Delay'
-import type { ErrorBoundaryProps } from './ErrorBoundary'
 import { ErrorBoundary } from './ErrorBoundary'
-import type { ErrorBoundaryGroupProps } from './ErrorBoundaryGroup'
 import { ErrorBoundaryGroup } from './ErrorBoundaryGroup'
 import { Suspense } from './Suspense'
-import type { SuspenseProps } from './Suspense'
 import type { PropsWithoutChildren } from './utility-types'
+import type { AsyncBoundaryProps, DelayProps, ErrorBoundaryGroupProps, ErrorBoundaryProps, SuspenseProps } from '.'
 
 type WrapperItem<
   TWrapperComponent extends
