@@ -1,11 +1,11 @@
-import type { ReactNode, SuspenseProps as ReactSuspenseProps } from 'react'
+import type { SuspenseProps as ReactSuspenseProps } from 'react'
 import { Suspense as ReactSuspense, useContext } from 'react'
 import { SuspenseDefaultOptionsContext } from './contexts'
 import { useIsClient } from './hooks'
 
 export type SuspenseProps = ReactSuspenseProps
 
-const useDefaultFallbackIfNo = (overridingFallback: ReactNode) => {
+const useDefaultFallbackIfNo = (overridingFallback: SuspenseProps['fallback']) => {
   const suspenseDefaultOptions = useContext(SuspenseDefaultOptionsContext)
   return overridingFallback === null ? null : overridingFallback ?? suspenseDefaultOptions.fallback
 }
