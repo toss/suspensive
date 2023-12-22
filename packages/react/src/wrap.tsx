@@ -1,4 +1,6 @@
 import type { ComponentProps, ComponentType } from 'react'
+import type { AsyncBoundaryProps } from './AsyncBoundary'
+import { AsyncBoundary } from './AsyncBoundary'
 import type { DelayProps } from './Delay'
 import { Delay } from './Delay'
 import type { ErrorBoundaryProps } from './ErrorBoundary'
@@ -138,3 +140,48 @@ export const withErrorBoundaryGroup = <TProps extends ComponentProps<ComponentTy
   component: ComponentType<TProps>,
   errorBoundaryGroupProps: PropsWithoutChildren<ErrorBoundaryGroupProps> = {}
 ) => wrap.ErrorBoundaryGroup(errorBoundaryGroupProps).on(component)
+
+/**
+ * @deprecated Use wrap.ErrorBoundary().Suspense().on as alternatives
+ */
+export const withAsyncBoundary = Object.assign(
+  <TProps extends ComponentProps<ComponentType> = Record<string, never>>(
+    Component: ComponentType<TProps>,
+    asyncBoundaryProps: PropsWithoutChildren<AsyncBoundaryProps>
+  ) => {
+    const Wrapped = (props: TProps) => (
+      <AsyncBoundary {...asyncBoundaryProps}>
+        <Component {...props} />
+      </AsyncBoundary>
+    )
+
+    if (process.env.NODE_ENV !== 'production') {
+      const name = Component.displayName || Component.name || 'Component'
+      Wrapped.displayName = `withAsyncBoundary(${name})`
+    }
+
+    return Wrapped
+  },
+  {
+    /**
+     * @deprecated Use wrap.ErrorBoundary().Suspense.CSROnly().on as alternatives
+     */
+    CSROnly: <TProps extends ComponentProps<ComponentType> = Record<string, never>>(
+      Component: ComponentType<TProps>,
+      asyncBoundaryProps: PropsWithoutChildren<AsyncBoundaryProps>
+    ) => {
+      const Wrapped = (props: TProps) => (
+        <AsyncBoundary.CSROnly {...asyncBoundaryProps}>
+          <Component {...props} />
+        </AsyncBoundary.CSROnly>
+      )
+
+      if (process.env.NODE_ENV !== 'production') {
+        const name = Component.displayName || Component.name || 'Component'
+        Wrapped.displayName = `withAsyncBoundary.CSROnly(${name})`
+      }
+
+      return Wrapped
+    },
+  }
+)

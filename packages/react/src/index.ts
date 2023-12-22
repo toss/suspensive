@@ -11,6 +11,6 @@ export type { ErrorBoundaryGroupProps } from './ErrorBoundaryGroup'
 export type { DelayProps } from './Delay'
 
 // deprecated
-export { withSuspense, withDelay, withErrorBoundary, withErrorBoundaryGroup } from './wrap'
-export { AsyncBoundary, withAsyncBoundary } from './AsyncBoundary'
+export { withSuspense, withDelay, withErrorBoundary, withErrorBoundaryGroup, withAsyncBoundary } from './wrap'
+export { AsyncBoundary } from './AsyncBoundary'
 export type { AsyncBoundaryProps } from './AsyncBoundary'
