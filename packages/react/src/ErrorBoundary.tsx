@@ -118,6 +118,9 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 const ErrorBoundaryContext = createContext<({ reset: () => void } & ErrorBoundaryState) | null>(null)
+if (process.env.NODE_ENV !== 'production') {
+  ErrorBoundaryContext.displayName = 'ErrorBoundaryContext'
+}
 
 export const useErrorBoundary = <TError extends Error = Error>() => {
   const [state, setState] = useState<ErrorBoundaryState<TError>>({
