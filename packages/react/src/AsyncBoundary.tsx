@@ -3,7 +3,7 @@ import { forwardRef } from 'react'
 import { ErrorBoundary } from './ErrorBoundary'
 import type { ErrorBoundaryProps } from './ErrorBoundary'
 import { Suspense } from './Suspense'
-import type { PropsWithoutChildren } from './types'
+import type { PropsWithoutChildren } from './utility-types'
 
 /**
  * @deprecated Use SuspenseProps and ErrorBoundaryProps as alternatives

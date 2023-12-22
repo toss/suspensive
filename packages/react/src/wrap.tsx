@@ -1,6 +1,13 @@
 import type { ComponentProps, ComponentType } from 'react'
-import type { PropsWithoutChildren } from './types'
-import { Delay, ErrorBoundary, ErrorBoundaryGroup, Suspense } from '.'
+import type { DelayProps } from './Delay'
+import { Delay } from './Delay'
+import type { ErrorBoundaryProps } from './ErrorBoundary'
+import { ErrorBoundary } from './ErrorBoundary'
+import type { ErrorBoundaryGroupProps } from './ErrorBoundaryGroup'
+import { ErrorBoundaryGroup } from './ErrorBoundaryGroup'
+import { Suspense } from './Suspense'
+import type { SuspenseProps } from './Suspense'
+import type { PropsWithoutChildren } from './utility-types'
 
 type WrapperItem<
   TWrapperComponent extends
@@ -88,3 +95,46 @@ export const wrap = {
   ErrorBoundaryGroup: wrapErrorBoundaryGroup,
   Delay: wrapDelay,
 }
+
+/**
+ * @deprecated Use wrap.Suspense().on as alternatives
+ */
+export const withSuspense = Object.assign(
+  <TProps extends ComponentProps<ComponentType> = Record<string, never>>(
+    component: ComponentType<TProps>,
+    suspenseProps: PropsWithoutChildren<SuspenseProps> = {}
+  ) => wrap.Suspense(suspenseProps).on(component),
+  {
+    /**
+     * @deprecated Use wrap.Suspense.CSROnly().on as alternatives
+     */
+    CSROnly: <TProps extends ComponentProps<ComponentType> = Record<string, never>>(
+      component: ComponentType<TProps>,
+      suspenseProps: PropsWithoutChildren<SuspenseProps> = {}
+    ) => wrap.Suspense.CSROnly(suspenseProps).on(component),
+  }
+)
+
+/**
+ * @deprecated Use wrap.ErrorBoundary().on as alternatives
+ */
+export const withErrorBoundary = <TProps extends ComponentProps<ComponentType> = Record<string, never>>(
+  component: ComponentType<TProps>,
+  errorBoundaryProps: PropsWithoutChildren<ErrorBoundaryProps>
+) => wrap.ErrorBoundary(errorBoundaryProps).on(component)
+
+/**
+ * @deprecated Use wrap.Delay().on as alternatives
+ */
+export const withDelay = <TProps extends ComponentProps<ComponentType> = Record<string, never>>(
+  component: ComponentType<TProps>,
+  delayProps: PropsWithoutChildren<DelayProps> = {}
+) => wrap.Delay(delayProps).on(component)
+
+/**
+ * @deprecated Use wrap.ErrorBoundaryGroup().on as alternatives
+ */
+export const withErrorBoundaryGroup = <TProps extends ComponentProps<ComponentType> = Record<string, never>>(
+  component: ComponentType<TProps>,
+  errorBoundaryGroupProps: PropsWithoutChildren<ErrorBoundaryGroupProps> = {}
+) => wrap.ErrorBoundaryGroup(errorBoundaryGroupProps).on(component)
