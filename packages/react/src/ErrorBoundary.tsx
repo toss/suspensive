@@ -1,8 +1,9 @@
 import type { ErrorInfo, FunctionComponent, PropsWithChildren, ReactNode } from 'react'
 import { Component, createContext, forwardRef, useContext, useImperativeHandle, useMemo, useRef, useState } from 'react'
 import { Delay } from './Delay'
-import { type PropsWithDevMode, suspensiveDevMode, useDevModeObserve } from './DevMode'
 import { ErrorBoundaryGroupContext } from './ErrorBoundaryGroup'
+import type { PropsWithDevMode } from './Suspensive'
+import { useDevModeObserve } from './Suspensive'
 import { assert, hasResetKeysChanged } from './utils'
 
 export interface ErrorBoundaryFallbackProps<TError extends Error = Error> {
@@ -192,8 +193,8 @@ type ErrorBoundaryDevModeOptions = {
       }
 }
 const ErrorBoundaryDevMode = ({ showFallback = false }: ErrorBoundaryDevModeOptions) => {
-  useDevModeObserve()
-  if (suspensiveDevMode.is && showFallback) {
+  const devMode = useDevModeObserve()
+  if (devMode?.is && showFallback) {
     if (showFallback === true) {
       showFallback = devModeDefaultErrorBoundaryShowFallback
     }

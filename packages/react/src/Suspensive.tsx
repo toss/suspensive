@@ -1,5 +1,40 @@
-import { type ComponentProps, type ComponentType, useEffect, useReducer, useState } from 'react'
-import { increase, noop } from './utils'
+import { createContext, useContext, useEffect, useMemo, useReducer, useState } from 'react'
+import type { ComponentProps, ComponentType, ContextType, PropsWithChildren } from 'react'
+import { DelayDefaultOptionsContext, SuspenseDefaultOptionsContext } from './contexts'
+import { increase } from './utils'
+
+export class Suspensive {
+  public defaultOptions?: {
+    suspense?: ContextType<typeof SuspenseDefaultOptionsContext>
+    delay?: ContextType<typeof DelayDefaultOptionsContext>
+  }
+  public devMode = new SuspensiveDevMode()
+
+  constructor(config: { defaultOptions?: Suspensive['defaultOptions'] } = {}) {
+    this.defaultOptions = config.defaultOptions
+  }
+}
+
+interface SuspensiveProviderProps extends PropsWithChildren {
+  value: Suspensive
+}
+export const SuspensiveProvider = ({ value, children }: SuspensiveProviderProps) => {
+  const delayDefaultOptionsValue = useMemo(() => value.defaultOptions?.delay || {}, [value.defaultOptions?.delay])
+  const suspenseDefaultOptionsValue = useMemo(
+    () => value.defaultOptions?.suspense || {},
+    [value.defaultOptions?.suspense]
+  )
+
+  return (
+    <SuspensiveDevModeContext.Provider value={value.devMode}>
+      <DelayDefaultOptionsContext.Provider value={delayDefaultOptionsValue}>
+        <SuspenseDefaultOptionsContext.Provider value={suspenseDefaultOptionsValue}>
+          {children}
+        </SuspenseDefaultOptionsContext.Provider>
+      </DelayDefaultOptionsContext.Provider>
+    </SuspensiveDevModeContext.Provider>
+  )
+}
 
 /**
  * @experimental This is experimental feature.
@@ -47,27 +82,6 @@ class SuspensiveDevMode {
   syncSubscriber = () => this.syncs.forEach((sync) => sync())
 }
 
-export const suspensiveDevMode = new SuspensiveDevMode()
-
-/**
- * @experimental This is experimental feature.
- */
-export const devMode = {
-  /**
-   * @experimental This is experimental feature.
-   */
-  toggle: () =>
-    process.env.NODE_ENV !== 'production' ? (suspensiveDevMode.is ? devMode.off() : devMode.on()) : noop(),
-  /**
-   * @experimental This is experimental feature.
-   */
-  on: process.env.NODE_ENV !== 'production' ? suspensiveDevMode.on : noop,
-  /**
-   * @experimental This is experimental feature.
-   */
-  off: process.env.NODE_ENV !== 'production' ? suspensiveDevMode.off : noop,
-}
-
 const Position = {
   bottomLeft: { bottom: 20, left: 20 },
   bottomRight: { bottom: 20, right: 20 },
@@ -83,18 +97,22 @@ interface DevModeProps {
 /**
  * @experimental This is experimental feature.
  */
-export const DevMode = ({ position = 'bottomRight' }: DevModeProps) => {
+export const SuspensiveDevTools = ({ position = 'bottomRight' }: DevModeProps) => {
   if (process.env.NODE_ENV !== 'production') {
     return <ModeSubscriber position={position} />
   }
   return null
 }
+
 const ModeSubscriber = ({ position }: { position: keyof typeof Position }) => {
   const [isHover, setIsHover] = useState(false)
-  useDevModeObserve()
+  const devMode = useDevModeObserve()
+  if (devMode == null) {
+    return null
+  }
   return (
     <div
-      onClick={suspensiveDevMode.is ? suspensiveDevMode.off : suspensiveDevMode.on}
+      onClick={devMode.is ? devMode.off : devMode.on}
       onMouseEnter={() => setIsHover(true)}
       onMouseLeave={() => setIsHover(false)}
       style={{
@@ -108,17 +126,21 @@ const ModeSubscriber = ({ position }: { position: keyof typeof Position }) => {
         fontWeight: 900,
         transition: 'all 200ms',
         ...Position[position],
-        backgroundColor: suspensiveDevMode.is ? '#00ff4c' : '#ffffff10',
-        textShadow: `0px 0px 8px ${suspensiveDevMode.is ? '#005018' : '#000'}`,
+        backgroundColor: devMode.is ? '#00ff4c' : '#ffffff10',
+        textShadow: `0px 0px 8px ${devMode.is ? '#005018' : '#000'}`,
         transform: isHover ? 'scale(1.1)' : 'scale(1)',
       }}
     >
-      DevMode: {suspensiveDevMode.is ? 'on' : 'off'}
+      Suspensive.DevMode: {devMode.is ? 'on' : 'off'}
     </div>
   )
 }
 
+const SuspensiveDevModeContext = createContext<SuspensiveDevMode | null>(null)
 export const useDevModeObserve = () => {
+  const devMode = useContext(SuspensiveDevModeContext)
   const render = useReducer(increase, 0)[1]
-  useEffect(() => suspensiveDevMode.subscribe(render), [render])
+  useEffect(() => devMode?.subscribe(render), [devMode, render])
+
+  return devMode
 }

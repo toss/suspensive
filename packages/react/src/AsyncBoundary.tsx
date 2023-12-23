@@ -1,9 +1,9 @@
 import type { ComponentRef, SuspenseProps } from 'react'
 import { forwardRef } from 'react'
-import type { PropsWithoutDevMode } from './DevMode'
 import { ErrorBoundary } from './ErrorBoundary'
 import type { ErrorBoundaryProps } from './ErrorBoundary'
 import { Suspense } from './Suspense'
+import type { PropsWithoutDevMode } from './Suspensive'
 
 /**
  * @deprecated Use SuspenseProps and ErrorBoundaryProps as alternatives

@@ -1,9 +1,9 @@
 import type { SuspenseProps as ReactSuspenseProps } from 'react'
 import { Suspense as ReactSuspense, useContext } from 'react'
 import { SuspenseDefaultOptionsContext } from './contexts'
-import type { PropsWithDevMode } from './DevMode'
-import { suspensiveDevMode, useDevModeObserve } from './DevMode'
 import { useIsClient } from './hooks'
+import type { PropsWithDevMode } from './Suspensive'
+import { useDevModeObserve } from './Suspensive'
 import { noop } from './utils'
 
 export interface SuspenseProps extends PropsWithDevMode<SuspenseDevModeOptions>, ReactSuspenseProps {}
@@ -50,8 +50,8 @@ type SuspenseDevModeOptions = {
   showFallback?: boolean
 }
 const SuspenseDevMode = ({ showFallback = false }: SuspenseDevModeOptions) => {
-  useDevModeObserve()
-  if (suspensiveDevMode.is && showFallback) {
+  const devMode = useDevModeObserve()
+  if (devMode?.is && showFallback) {
     throw new Promise(noop)
   }
   return null

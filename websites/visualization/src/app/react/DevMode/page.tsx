@@ -1,7 +1,7 @@
 'use client'
 
 import type { ErrorBoundaryFallbackProps } from '@suspensive/react'
-import { DevMode, ErrorBoundary, Suspense, devMode } from '@suspensive/react'
+import { ErrorBoundary, Suspense } from '@suspensive/react'
 import { Area, Box, Button, Spinner } from '~/components/uis'
 
 export default function Page() {
@@ -23,15 +23,6 @@ export default function Page() {
           <Box.Default>children</Box.Default>
         </ErrorBoundary>
       </Area>
-
-      <Area title="devMode.on/off">
-        <div className="flex gap-1">
-          <Button onClick={devMode.on}>on</Button>
-          <Button onClick={devMode.off}>off</Button>
-        </div>
-      </Area>
-
-      <DevMode />
     </Area>
   )
 }
