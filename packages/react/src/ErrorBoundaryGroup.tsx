@@ -1,4 +1,4 @@
-import type { ComponentType, PropsWithChildren } from 'react'
+import type { PropsWithChildren, ReactNode } from 'react'
 import { createContext, useContext, useEffect, useMemo, useReducer } from 'react'
 import { useIsChanged } from './hooks'
 import { assert, increase } from './utils'
@@ -40,18 +40,13 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 const ErrorBoundaryGroupReset = ({
-  trigger: Trigger,
+  trigger,
 }: {
   /**
    * When you want to reset multiple ErrorBoundaries as children of ErrorBoundaryGroup, You can combine any other components with this trigger's reset
    */
-  trigger: ComponentType<ReturnType<typeof useErrorBoundaryGroup>>
-}) => {
-  const errorBoundaryGroup = useErrorBoundaryGroup()
-
-  return <Trigger reset={errorBoundaryGroup.reset} />
-}
-
+  trigger: (errorBoundaryGroup: ReturnType<typeof useErrorBoundaryGroup>) => ReactNode
+}) => trigger(useErrorBoundaryGroup())
 ErrorBoundaryGroup.Reset = ErrorBoundaryGroupReset
 
 export const useErrorBoundaryGroup = () => {

@@ -1,9 +1,8 @@
 import type { ErrorInfo, FunctionComponent, PropsWithChildren, ReactNode } from 'react'
 import { Component, createContext, forwardRef, useContext, useImperativeHandle, useMemo, useRef, useState } from 'react'
 import { Delay } from './Delay'
-import { type PropsWithDevMode, suspensiveDevMode } from './DevMode'
+import { type PropsWithDevMode, suspensiveDevMode, useDevModeObserve } from './DevMode'
 import { ErrorBoundaryGroupContext } from './ErrorBoundaryGroup'
-import { useDevModeObserve } from './hooks'
 import { assert, hasResetKeysChanged } from './utils'
 
 export interface ErrorBoundaryFallbackProps<TError extends Error = Error> {
@@ -121,8 +120,8 @@ export const ErrorBoundary = forwardRef<{ reset(): void }, ErrorBoundaryProps>(
         resetKeys={[group.resetKey, ...(resetKeys || [])]}
         ref={baseErrorBoundaryRef}
       >
-        {process.env.NODE_ENV !== 'production' && devMode && <ErrorBoundaryDevMode {...devMode} />}
         {children}
+        {process.env.NODE_ENV !== 'production' && devMode && <ErrorBoundaryDevMode {...devMode} />}
       </BaseErrorBoundary>
     )
   }

@@ -1,6 +1,5 @@
-import { type ComponentProps, type ComponentType, useState } from 'react'
-import { useDevModeObserve } from './hooks'
-import { noop } from './utils'
+import { type ComponentProps, type ComponentType, useEffect, useReducer, useState } from 'react'
+import { increase, noop } from './utils'
 
 /**
  * @experimental This is experimental feature.
@@ -117,4 +116,9 @@ const ModeSubscriber = ({ position }: { position: keyof typeof Position }) => {
       DevMode: {suspensiveDevMode.is ? 'on' : 'off'}
     </div>
   )
+}
+
+export const useDevModeObserve = () => {
+  const render = useReducer(increase, 0)[1]
+  useEffect(() => suspensiveDevMode.subscribe(render), [render])
 }
