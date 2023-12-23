@@ -1,5 +1,11 @@
 # @suspensive/react-await
 
+## 0.0.13
+
+### Patch Changes
+
+- 416a85c: fix: treeshake and minify to reduce bundle size
+
 ## 0.0.12
 
 ### Patch Changes

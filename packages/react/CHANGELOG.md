@@ -1,5 +1,11 @@
 # @suspensive/react
 
+## 1.20.10
+
+### Patch Changes
+
+- 416a85c: fix: treeshake and minify to reduce bundle size
+
 ## 1.20.9
 
 ### Patch Changes
