@@ -1,5 +1,13 @@
 # @suspensive/react-query
 
+## 1.20.10
+
+### Patch Changes
+
+- 416a85c: fix: treeshake and minify to reduce bundle size
+- Updated dependencies [416a85c]
+  - @suspensive/react@1.20.10
+
 ## 1.20.9
 
 ### Patch Changes
