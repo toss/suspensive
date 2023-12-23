@@ -1,5 +1,11 @@
 # @suspensive/react
 
+## 1.20.9
+
+### Patch Changes
+
+- 685054a: ci(eslint): add import/no-cycle to prevent memory leak
+
 ## 1.20.8
 
 ### Patch Changes
