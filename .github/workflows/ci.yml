@@ -25,6 +25,6 @@ jobs:
       - uses: ./.github/actions/pnpm-setup-node
       - run: pnpm install --frozen-lockfile
       - if: matrix.command == 'test'
-        run: pnpm exec playwright install
+        run: pnpm playwright install
       - name: Run commands
         run: pnpm ${{ matrix.command }}
