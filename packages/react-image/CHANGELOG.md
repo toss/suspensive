@@ -1,5 +1,11 @@
 # @suspensive/react-image
 
+## 0.0.5
+
+### Patch Changes
+
+- 416a85c: fix: treeshake and minify to reduce bundle size
+
 ## 0.0.4
 
 ### Patch Changes
