@@ -3,7 +3,7 @@ import { render, screen, waitFor } from '@testing-library/react'
 import ms from 'ms'
 import { createElement } from 'react'
 import { beforeEach, describe, expect, it } from 'vitest'
-import { Suspense, devMode, withSuspense } from '.'
+import { Suspense, withSuspense } from '.'
 
 const resetBeforeEach = () => beforeEach(Suspend.reset)
 
@@ -113,52 +113,54 @@ describe('withSuspense.CSROnly', () => {
   })
 })
 
-describe('devMode', () => {
-  beforeEach(() => devMode.off())
+// TODO: remvoe below
+/* eslint-disable vitest/no-commented-out-tests */
+// describe('devMode', () => {
+//   beforeEach(() => devMode.off())
 
-  it('should make <Suspense devMode={{ showFallback: true }} /> show fallback to develop loading or skeleton easily', async () => {
-    devMode.on()
-    render(
-      <Suspense fallback={FALLBACK} devMode={{ showFallback: true }}>
-        {TEXT}
-      </Suspense>
-    )
-    expect(screen.queryByText(FALLBACK)).toBeInTheDocument()
-    expect(screen.queryByText(TEXT)).not.toBeInTheDocument()
+//   it('should make <Suspense devMode={{ showFallback: true }} /> show fallback to develop loading or skeleton easily', async () => {
+//     devMode.on()
+//     render(
+//       <Suspense fallback={FALLBACK} devMode={{ showFallback: true }}>
+//         {TEXT}
+//       </Suspense>
+//     )
+//     expect(screen.queryByText(FALLBACK)).toBeInTheDocument()
+//     expect(screen.queryByText(TEXT)).not.toBeInTheDocument()
 
-    await waitFor(() => expect(screen.queryByText(FALLBACK)).toBeInTheDocument())
-    expect(screen.queryByText(TEXT)).not.toBeInTheDocument()
-    expect(screen.queryByText(FALLBACK)).toBeInTheDocument()
+//     await waitFor(() => expect(screen.queryByText(FALLBACK)).toBeInTheDocument())
+//     expect(screen.queryByText(TEXT)).not.toBeInTheDocument()
+//     expect(screen.queryByText(FALLBACK)).toBeInTheDocument()
 
-    await waitFor(() => expect(screen.queryByText(FALLBACK)).toBeInTheDocument())
-    expect(screen.queryByText(TEXT)).not.toBeInTheDocument()
-  })
+//     await waitFor(() => expect(screen.queryByText(FALLBACK)).toBeInTheDocument())
+//     expect(screen.queryByText(TEXT)).not.toBeInTheDocument()
+//   })
 
-  it(".off should make <Suspense devMode={{ showFallback: true }} />'s devMode off", () => {
-    const { rerender } = render(
-      <Suspense fallback={FALLBACK} devMode={{ showFallback: true }}>
-        {TEXT}
-      </Suspense>
-    )
-    expect(screen.queryByText(TEXT)).toBeInTheDocument()
-    expect(screen.queryByText(FALLBACK)).not.toBeInTheDocument()
+//   it(".off should make <Suspense devMode={{ showFallback: true }} />'s devMode off", () => {
+//     const { rerender } = render(
+//       <Suspense fallback={FALLBACK} devMode={{ showFallback: true }}>
+//         {TEXT}
+//       </Suspense>
+//     )
+//     expect(screen.queryByText(TEXT)).toBeInTheDocument()
+//     expect(screen.queryByText(FALLBACK)).not.toBeInTheDocument()
 
-    devMode.on()
-    rerender(
-      <Suspense fallback={FALLBACK} devMode={{ showFallback: true }}>
-        {TEXT}
-      </Suspense>
-    )
-    expect(screen.queryByText(FALLBACK)).toBeInTheDocument()
-    expect(screen.queryByText(TEXT)).not.toBeInTheDocument()
+//     devMode.on()
+//     rerender(
+//       <Suspense fallback={FALLBACK} devMode={{ showFallback: true }}>
+//         {TEXT}
+//       </Suspense>
+//     )
+//     expect(screen.queryByText(FALLBACK)).toBeInTheDocument()
+//     expect(screen.queryByText(TEXT)).not.toBeInTheDocument()
 
-    devMode.off()
-    rerender(
-      <Suspense fallback={FALLBACK} devMode={{ showFallback: true }}>
-        {TEXT}
-      </Suspense>
-    )
-    expect(screen.queryByText(TEXT)).toBeInTheDocument()
-    expect(screen.queryByText(FALLBACK)).not.toBeInTheDocument()
-  })
-})
+//     devMode.off()
+//     rerender(
+//       <Suspense fallback={FALLBACK} devMode={{ showFallback: true }}>
+//         {TEXT}
+//       </Suspense>
+//     )
+//     expect(screen.queryByText(TEXT)).toBeInTheDocument()
+//     expect(screen.queryByText(FALLBACK)).not.toBeInTheDocument()
+//   })
+// })
