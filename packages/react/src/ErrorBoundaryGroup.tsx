@@ -1,9 +1,7 @@
-import type { ComponentProps, ComponentType, PropsWithChildren } from 'react'
+import type { ComponentType, PropsWithChildren } from 'react'
 import { createContext, useContext, useEffect, useMemo, useReducer } from 'react'
 import { useIsChanged } from './hooks'
-import type { PropsWithoutChildren } from './types'
 import { assert, increase } from './utils'
-import { wrap } from './wrap'
 
 export const ErrorBoundaryGroupContext = createContext<{ reset: () => void; resetKey: number } | undefined>(undefined)
 if (process.env.NODE_ENV !== 'production') {
@@ -69,11 +67,3 @@ export const useErrorBoundaryGroup = () => {
     [group.reset]
   )
 }
-
-/**
- * @deprecated Use wrap.ErrorBoundaryGroup().on as alternatives
- */
-export const withErrorBoundaryGroup = <TProps extends ComponentProps<ComponentType> = Record<string, never>>(
-  component: ComponentType<TProps>,
-  errorBoundaryGroupProps: PropsWithoutChildren<ErrorBoundaryGroupProps> = {}
-) => wrap.ErrorBoundaryGroup(errorBoundaryGroupProps).on(component)

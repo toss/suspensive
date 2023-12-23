@@ -1,12 +1,10 @@
-import type { ContextType, PropsWithChildren } from 'react'
-import { useMemo } from 'react'
-import { DelayContext } from './Delay'
-import { SuspenseContext } from './Suspense'
+import { type ContextType, type PropsWithChildren, useMemo } from 'react'
+import { DelayDefaultOptionsContext, SuspenseDefaultOptionsContext } from './contexts'
 
 interface Configs {
   defaultOptions?: {
-    suspense?: ContextType<typeof SuspenseContext>
-    delay?: ContextType<typeof DelayContext>
+    suspense?: ContextType<typeof SuspenseDefaultOptionsContext>
+    delay?: ContextType<typeof DelayDefaultOptionsContext>
   }
 }
 
@@ -22,12 +20,17 @@ interface SuspensiveProviderProps extends PropsWithChildren {
   value: Suspensive
 }
 export const SuspensiveProvider = ({ value, children }: SuspensiveProviderProps) => {
-  const delayValue = useMemo(() => value.defaultOptions?.delay || {}, [value.defaultOptions?.delay])
-  const suspenseValue = useMemo(() => value.defaultOptions?.suspense || {}, [value.defaultOptions?.suspense])
+  const delayDefaultOptionsValue = useMemo(() => value.defaultOptions?.delay || {}, [value.defaultOptions?.delay])
+  const suspenseDefaultOptionsValue = useMemo(
+    () => value.defaultOptions?.suspense || {},
+    [value.defaultOptions?.suspense]
+  )
 
   return (
-    <DelayContext.Provider value={delayValue}>
-      <SuspenseContext.Provider value={suspenseValue}>{children}</SuspenseContext.Provider>
-    </DelayContext.Provider>
+    <DelayDefaultOptionsContext.Provider value={delayDefaultOptionsValue}>
+      <SuspenseDefaultOptionsContext.Provider value={suspenseDefaultOptionsValue}>
+        {children}
+      </SuspenseDefaultOptionsContext.Provider>
+    </DelayDefaultOptionsContext.Provider>
   )
 }

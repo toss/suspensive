@@ -1,19 +1,14 @@
-import type { ComponentProps, ComponentType, SuspenseProps as ReactSuspenseProps } from 'react'
-import { Suspense as ReactSuspense, createContext, useContext } from 'react'
-import type { PropsWithDevMode, PropsWithoutDevMode } from './DevMode'
+import type { SuspenseProps as ReactSuspenseProps } from 'react'
+import { Suspense as ReactSuspense, useContext } from 'react'
+import { SuspenseDefaultOptionsContext } from './contexts'
+import type { PropsWithDevMode } from './DevMode'
 import { suspensiveDevMode } from './DevMode'
 import { useDevModeObserve, useIsClient } from './hooks'
-import type { PropsWithoutChildren } from './types'
 import { noop } from './utils'
-import { wrap } from './wrap'
 
 export interface SuspenseProps extends PropsWithDevMode<SuspenseDevModeOptions>, ReactSuspenseProps {}
 
-export const SuspenseContext = createContext<PropsWithoutChildren<PropsWithoutDevMode<SuspenseProps>>>({
-  fallback: undefined,
-})
-
-const SuspenseContextFallback = () => useContext(SuspenseContext).fallback
+const SuspenseContextFallback = () => useContext(SuspenseDefaultOptionsContext).fallback
 const DefaultSuspense = ({ devMode, children, fallback = <SuspenseContextFallback /> }: SuspenseProps) => (
   <ReactSuspense fallback={fallback}>
     {process.env.NODE_ENV !== 'production' && devMode && <SuspenseDevMode {...devMode} />}
@@ -32,9 +27,6 @@ const CSROnly = ({ devMode, children, fallback = <SuspenseContextFallback /> }: 
   ) : (
     <>{fallback}</>
   )
-if (process.env.NODE_ENV !== 'production') {
-  CSROnly.displayName = 'Suspense.CSROnly'
-}
 
 /**
  * This component is just wrapping React's Suspense. to use Suspense easily in Server-side rendering environment like Next.js
@@ -47,25 +39,6 @@ export const Suspense = Object.assign(DefaultSuspense, {
    */
   CSROnly,
 })
-
-/**
- * @deprecated Use wrap.Suspense().on as alternatives
- */
-export const withSuspense = Object.assign(
-  <TProps extends ComponentProps<ComponentType> = Record<string, never>>(
-    component: ComponentType<TProps>,
-    suspenseProps: PropsWithoutChildren<SuspenseProps> = {}
-  ) => wrap.Suspense(suspenseProps).on(component),
-  {
-    /**
-     * @deprecated Use wrap.Suspense.CSROnly().on as alternatives
-     */
-    CSROnly: <TProps extends ComponentProps<ComponentType> = Record<string, never>>(
-      component: ComponentType<TProps>,
-      suspenseProps: PropsWithoutChildren<SuspenseProps> = {}
-    ) => wrap.Suspense.CSROnly(suspenseProps).on(component),
-  }
-)
 
 type SuspenseDevModeOptions = {
   /**

@@ -1,12 +1,10 @@
-import type { ComponentProps, ComponentType, ErrorInfo, FunctionComponent, PropsWithChildren, ReactNode } from 'react'
+import type { ErrorInfo, FunctionComponent, PropsWithChildren, ReactNode } from 'react'
 import { Component, createContext, forwardRef, useContext, useImperativeHandle, useMemo, useRef, useState } from 'react'
 import { Delay } from './Delay'
 import { type PropsWithDevMode, suspensiveDevMode } from './DevMode'
 import { ErrorBoundaryGroupContext } from './ErrorBoundaryGroup'
 import { useDevModeObserve } from './hooks'
-import type { PropsWithoutChildren } from './types'
 import { assert, hasResetKeysChanged } from './utils'
-import { wrap } from './wrap'
 
 export interface ErrorBoundaryFallbackProps<TError extends Error = Error> {
   /**
@@ -133,15 +131,10 @@ if (process.env.NODE_ENV !== 'production') {
   ErrorBoundary.displayName = 'ErrorBoundary'
 }
 
-/**
- * @deprecated Use wrap.ErrorBoundary().on as alternatives
- */
-export const withErrorBoundary = <TProps extends ComponentProps<ComponentType> = Record<string, never>>(
-  component: ComponentType<TProps>,
-  errorBoundaryProps: PropsWithoutChildren<ErrorBoundaryProps>
-) => wrap.ErrorBoundary(errorBoundaryProps).on(component)
-
 const ErrorBoundaryContext = createContext<({ reset: () => void } & ErrorBoundaryState) | null>(null)
+if (process.env.NODE_ENV !== 'production') {
+  ErrorBoundaryContext.displayName = 'ErrorBoundaryContext'
+}
 
 export const useErrorBoundary = <TError extends Error = Error>() => {
   const [state, setState] = useState<ErrorBoundaryState<TError>>({
