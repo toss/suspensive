@@ -74,7 +74,7 @@
     "playwright": "^1.40.1",
     "prettier": "^3.1.1",
     "prettier-plugin-tailwindcss": "^0.5.9",
-    "publint": "^0.2.6",
+    "publint": "^0.2.7",
     "rimraf": "^5.0.5",
     "sherif": "^0.7.0",
     "tsup": "^8.0.1",
