@@ -21,6 +21,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               </div>
             </Link>
           </nav>
+          <Link href="/react/DevMode">🔗 Go to @suspensive/react - DevMode</Link>
           <Link href="/react-image">🔗 Go to @suspensive/react-image</Link>
           <div className="flex flex-1 items-center justify-center">{children}</div>
         </Providers>
