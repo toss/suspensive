@@ -19,16 +19,13 @@ interface SuspensiveProviderProps extends PropsWithChildren {
   value: Suspensive
 }
 export const SuspensiveProvider = ({ value, children }: SuspensiveProviderProps) => {
-  const delayDefaultOptionsValue = useMemo(() => value.defaultOptions?.delay || {}, [value.defaultOptions?.delay])
-  const suspenseDefaultOptionsValue = useMemo(
-    () => value.defaultOptions?.suspense || {},
-    [value.defaultOptions?.suspense]
-  )
+  const delayDefaultOptions = useMemo(() => value.defaultOptions?.delay || {}, [value.defaultOptions?.delay])
+  const suspenseDefaultOptions = useMemo(() => value.defaultOptions?.suspense || {}, [value.defaultOptions?.suspense])
 
   return (
     <SuspensiveDevModeContext.Provider value={value.devMode}>
-      <DelayDefaultOptionsContext.Provider value={delayDefaultOptionsValue}>
-        <SuspenseDefaultOptionsContext.Provider value={suspenseDefaultOptionsValue}>
+      <DelayDefaultOptionsContext.Provider value={delayDefaultOptions}>
+        <SuspenseDefaultOptionsContext.Provider value={suspenseDefaultOptions}>
           {children}
         </SuspenseDefaultOptionsContext.Provider>
       </DelayDefaultOptionsContext.Provider>
