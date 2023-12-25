@@ -10,7 +10,7 @@ module.exports = {
   },
   overrides: [
     {
-      files: ['*.test-d.ts*', '*.test-d.ts*'],
+      files: ['*.test-d.ts*'],
       rules: { 'import/no-unresolved': ['error', { ignore: ['tsd'] }] },
     },
   ],
