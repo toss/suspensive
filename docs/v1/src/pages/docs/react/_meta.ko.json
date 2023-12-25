@@ -6,5 +6,6 @@
   "ErrorBoundaryGroup": { "title": "<ErrorBoundaryGroup/>" },
   "Delay": { "title": "<Delay/>" },
   "SuspensiveProvider": { "title": "<SuspensiveProvider/>" },
+  "SuspensiveDevMode": { "title": "<SuspensiveDevMode/>" },
   "wrap": { "title": "wrap" }
 }

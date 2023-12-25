@@ -1,5 +1,3 @@
-import { Callout } from 'nextra/components'
-
 # SuspensiveProvider
 
 This component controls the settings of the components provided by Suspensive (Suspense, Delay, etc.) at once.
@@ -21,82 +19,4 @@ const suspensive = new Suspensive({
 function App() {
   return <SuspensiveProvider value={suspensive}>...</SuspensiveProvider>
 }
-```
-
-## SuspensiveDevMode
-
-<Callout type="warning">
-
-devMode is experimental feature, this interfaces could be changed
-
-</Callout>
-
-### Setup
-
-```jsx
-import { Suspensive, SuspensiveProvider, SuspensiveDevMode } from '@suspensive/react'
-
-const App = () => {
-  const [suspensive] = useState(() => new Suspensive())
-
-  return (
-    // devMode work only with `<SuspensiveProvider/>`
-    <SuspensiveProvider value={suspensive}>
-      {/** children can use devMode now */}
-      <SuspensiveDevMode />
-    </SuspensiveProvider>
-  )
-}
-```
-
-#### `<Suspense/>` devMode
-
-```jsx /devMode/
-import { Suspense } from '@suspensive/react'
-
-const Example = () => (
-  <Suspense
-    fallback={<>loading...</>}
-    devMode={{
-      // devMode prop will work only in development mode
-      showFallback: true,
-    }}
-  >
-    children
-  </Suspense>
-)
-```
-
-#### `<ErrorBoundary/>` devMode
-
-```jsx /devMode/
-import { ErrorBoundary } from '@suspensive/react'
-
-const Example = () => (
-  <ErrorBoundary
-    fallback={({ error }) => <>{error.message}</>}
-    devMode={{
-      // devMode prop will work only in development mode
-      showFallback: true,
-    }}
-  >
-    children
-  </ErrorBoundary>
-)
-```
-
-```jsx /devMode/
-import { ErrorBoundary } from '@suspensive/react'
-
-const Example = () => (
-  <ErrorBoundary
-    fallback={({ error }) => <>{error.message}</>}
-    devMode={{
-      // devMode prop will work only in development mode
-      showFallback: { after: 2000 },
-    }}
-  >
-    children
-  </ErrorBoundary>
-)
 ```
