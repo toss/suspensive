@@ -1,5 +1,4 @@
-import type { PropsWithChildren } from 'react'
-import { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { type PropsWithChildren, useEffect, useLayoutEffect, useRef, useState } from 'react'
 
 export const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect
 

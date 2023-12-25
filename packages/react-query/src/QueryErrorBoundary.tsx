@@ -1,7 +1,6 @@
 import { ErrorBoundary } from '@suspensive/react'
 import { useQueryErrorResetBoundary } from '@tanstack/react-query'
-import type { ComponentPropsWithoutRef, ComponentRef } from 'react'
-import { forwardRef } from 'react'
+import { type ComponentPropsWithoutRef, type ComponentRef, forwardRef } from 'react'
 
 /**
  * This component wrapping QueryErrorResetBoundary of @tanstack/react-query with @suspensive/react's ErrorBoundary.

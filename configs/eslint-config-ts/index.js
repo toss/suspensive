@@ -1,7 +1,7 @@
 /** @type {import('eslint').Linter.Config} */
 module.exports = {
   root: true,
-  extends: ['plugin:import/typescript', './no-import.js'],
+  extends: ['plugin:import/recommended', 'plugin:import/typescript', './no-import.js'],
   plugins: ['import'],
   settings: {
     'import/resolver': {
@@ -10,14 +10,14 @@ module.exports = {
   },
   overrides: [
     {
-      files: ['*.test-d.ts*', '*.test-d.ts*'],
+      files: ['*.test-d.ts*'],
       rules: { 'import/no-unresolved': ['error', { ignore: ['tsd'] }] },
     },
   ],
   rules: {
     'sort-imports': ['error', { ignoreDeclarationSort: true }],
-    'import/no-duplicates': 'error',
     'import/no-cycle': 'error',
+    'import/no-duplicates': ['error', { 'prefer-inline': true }],
     'import/order': [
       'error',
       {

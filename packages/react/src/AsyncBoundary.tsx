@@ -1,17 +1,17 @@
-import type { ComponentRef, SuspenseProps } from 'react'
-import { forwardRef } from 'react'
-import { ErrorBoundary } from './ErrorBoundary'
-import type { ErrorBoundaryProps } from './ErrorBoundary'
+import { type ComponentRef, type SuspenseProps, forwardRef } from 'react'
+import { ErrorBoundary, type ErrorBoundaryProps } from './ErrorBoundary'
 import { Suspense } from './Suspense'
+import type { PropsWithoutDevMode } from './utility-types'
 
 /**
  * @deprecated Use SuspenseProps and ErrorBoundaryProps as alternatives
  */
-export type AsyncBoundaryProps = Omit<SuspenseProps, 'fallback'> &
-  Omit<ErrorBoundaryProps, 'fallback'> & {
-    pendingFallback?: SuspenseProps['fallback']
-    rejectedFallback: ErrorBoundaryProps['fallback']
-  }
+export interface AsyncBoundaryProps
+  extends Omit<PropsWithoutDevMode<SuspenseProps>, 'fallback'>,
+    Omit<PropsWithoutDevMode<ErrorBoundaryProps>, 'fallback'> {
+  pendingFallback?: SuspenseProps['fallback']
+  rejectedFallback: ErrorBoundaryProps['fallback']
+}
 
 const BaseAsyncBoundary = forwardRef<ComponentRef<typeof ErrorBoundary>, AsyncBoundaryProps>(
   ({ pendingFallback, rejectedFallback, children, ...errorBoundaryProps }, resetRef) => (
