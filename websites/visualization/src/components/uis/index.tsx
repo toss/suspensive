@@ -1,6 +1,5 @@
 import type { ErrorBoundaryFallbackProps } from '@suspensive/react'
-import { forwardRef } from 'react'
-import type { ComponentPropsWithoutRef, PropsWithChildren } from 'react'
+import { type ComponentPropsWithoutRef, type PropsWithChildren, forwardRef } from 'react'
 
 export const Button = forwardRef<HTMLButtonElement, ComponentPropsWithoutRef<'button'>>(function Button(props, ref) {
   return (
