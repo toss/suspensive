@@ -9,6 +9,7 @@ import {
 } from 'react'
 import { useIsChanged } from './hooks'
 import { assert, increase } from './utils'
+import { assertMessageUseErrorBoundaryGroupOnlyInChildrenOfErrorBoundaryGroup } from './utils/assert'
 
 export const ErrorBoundaryGroupContext = createContext<{ reset: () => void; resetKey: number } | undefined>(undefined)
 if (process.env.NODE_ENV !== 'production') {
@@ -58,7 +59,7 @@ ErrorBoundaryGroup.Reset = ErrorBoundaryGroupReset
 
 export const useErrorBoundaryGroup = () => {
   const group = useContext(ErrorBoundaryGroupContext)
-  assert(group != null, assert.message.useErrorBoundaryGroup.onlyInChildrenOfErrorBoundaryGroup)
+  assert(group != null, assertMessageUseErrorBoundaryGroupOnlyInChildrenOfErrorBoundaryGroup)
   return useMemo(
     () => ({
       /**
