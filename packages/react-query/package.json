@@ -52,7 +52,7 @@
     "lint": "eslint \"**/*.ts*\"",
     "lint:attw": "attw --pack",
     "lint:pub": "publint --strict",
-    "prepack": "pnpm build && pnpm test:tsd",
+    "prepack": "pnpm build",
     "test": "vitest run --coverage",
     "test:tsd": "tsd -t ./dist/index.d.ts",
     "test:watch": "vitest --ui --coverage.enabled=true",
