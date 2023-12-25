@@ -8,7 +8,7 @@ export class Suspensive {
     suspense?: ContextType<typeof SuspenseDefaultOptionsContext>
     delay?: ContextType<typeof DelayDefaultOptionsContext>
   }
-  public devMode = new SuspensiveDevMode()
+  public devMode = new DevMode()
 
   constructor(config: { defaultOptions?: Suspensive['defaultOptions'] } = {}) {
     this.defaultOptions = config.defaultOptions
@@ -23,13 +23,13 @@ export const SuspensiveProvider = ({ value, children }: SuspensiveProviderProps)
   const suspenseDefaultOptions = useMemo(() => value.defaultOptions?.suspense || {}, [value.defaultOptions?.suspense])
 
   return (
-    <SuspensiveDevModeContext.Provider value={value.devMode}>
+    <DevModeContext.Provider value={value.devMode}>
       <DelayDefaultOptionsContext.Provider value={delayDefaultOptions}>
         <SuspenseDefaultOptionsContext.Provider value={suspenseDefaultOptions}>
           {children}
         </SuspenseDefaultOptionsContext.Provider>
       </DelayDefaultOptionsContext.Provider>
-    </SuspensiveDevModeContext.Provider>
+    </DevModeContext.Provider>
   )
 }
 
@@ -49,7 +49,7 @@ export type PropsWithDevMode<TDevModeProps extends Record<string, any>> = {
 }
 
 type Sync = () => void
-class SuspensiveDevMode {
+class DevMode {
   constructor(public is = false) {}
   private syncs = new Map<Sync, Sync>()
   on = () => {
@@ -85,7 +85,7 @@ const Position = {
   topLeft: { top: 20, left: 20 },
   topRight: { top: 20, right: 20 },
 } as const
-interface DevModeProps {
+interface SuspensiveDevModeProps {
   /**
    * @experimental This is experimental feature.
    */
@@ -94,7 +94,7 @@ interface DevModeProps {
 /**
  * @experimental This is experimental feature.
  */
-export const SuspensiveDevTools = ({ position = 'bottomRight' }: DevModeProps) => {
+export const SuspensiveDevMode = ({ position = 'bottomRight' }: SuspensiveDevModeProps) => {
   if (process.env.NODE_ENV !== 'production') {
     return <ModeSubscriber position={position} />
   }
@@ -133,9 +133,9 @@ const ModeSubscriber = ({ position }: { position: keyof typeof Position }) => {
   )
 }
 
-const SuspensiveDevModeContext = createContext<SuspensiveDevMode | null>(null)
+const DevModeContext = createContext<DevMode | null>(null)
 export const useDevModeObserve = () => {
-  const devMode = useContext(SuspensiveDevModeContext)
+  const devMode = useContext(DevModeContext)
   const render = useReducer(increase, 0)[1]
   useEffect(() => devMode?.subscribe(render), [devMode, render])
 

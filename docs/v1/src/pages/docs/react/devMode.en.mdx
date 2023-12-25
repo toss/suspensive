@@ -1,9 +1,17 @@
-# devMode prop (experimental)
+import { Callout } from 'nextra/components'
 
-## Setup devMode prop
+# devMode
+
+<Callout type="warning">
+
+devMode is experimental feature, this interfaces could be changed
+
+</Callout>
+
+## Setup
 
 ```jsx
-import { Suspensive, SuspensiveProvider, SuspensiveDevTools } from '@suspensive/react'
+import { Suspensive, SuspensiveProvider, SuspensiveDevMode } from '@suspensive/react'
 
 const App = () => {
   const [suspensive] = useState(() => new Suspensive())
@@ -12,13 +20,13 @@ const App = () => {
     // devMode work only with `<SuspensiveProvider/>`
     <SuspensiveProvider value={suspensive}>
       {/** children can use devMode now */}
-      <SuspensiveDevTools />
+      <SuspensiveDevMode />
     </SuspensiveProvider>
   )
 }
 ```
 
-### `<Suspense/>` devMode prop
+### `<Suspense/>` devMode
 
 ```jsx /devMode/
 import { Suspense } from '@suspensive/react'
@@ -36,7 +44,7 @@ const Example = () => (
 )
 ```
 
-### `<ErrorBoundary/>` devMode prop
+### `<ErrorBoundary/>` devMode
 
 ```jsx /devMode/
 import { ErrorBoundary } from '@suspensive/react'

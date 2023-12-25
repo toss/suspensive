@@ -7,5 +7,5 @@
   "Delay": { "title": "<Delay/>" },
   "SuspensiveProvider": { "title": "<SuspensiveProvider/>" },
   "wrap": { "title": "wrap" },
-  "devMode": { "title": "devMode prop" }
+  "devMode": { "title": "devMode" }
 }
