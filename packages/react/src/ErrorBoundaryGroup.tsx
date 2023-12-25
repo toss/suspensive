@@ -1,22 +1,27 @@
-import type { ComponentType, PropsWithChildren } from 'react'
-import { createContext, useContext, useEffect, useMemo, useReducer } from 'react'
+import {
+  type PropsWithChildren,
+  type ReactNode,
+  createContext,
+  useContext,
+  useEffect,
+  useMemo,
+  useReducer,
+} from 'react'
 import { useIsChanged } from './hooks'
-import { assert } from './utils'
+import { assert, increase } from './utils'
 
 export const ErrorBoundaryGroupContext = createContext<{ reset: () => void; resetKey: number } | undefined>(undefined)
 if (process.env.NODE_ENV !== 'production') {
   ErrorBoundaryGroupContext.displayName = 'ErrorBoundaryGroupContext'
 }
 
-export type ErrorBoundaryGroupProps = PropsWithChildren<{
+export interface ErrorBoundaryGroupProps extends PropsWithChildren {
   /**
    * If you use blockOutside as true, ErrorBoundaryGroup will protect multiple ErrorBoundaries as its children from external ErrorBoundaryGroup's resetKey
    * @default false
    */
   blockOutside?: boolean
-}>
-
-const increase = (prev: number) => prev + 1
+}
 
 /**
  * ErrorBoundaryGroup is Component to manage multiple ErrorBoundaries
@@ -42,18 +47,13 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 const ErrorBoundaryGroupReset = ({
-  trigger: Trigger,
+  trigger,
 }: {
   /**
    * When you want to reset multiple ErrorBoundaries as children of ErrorBoundaryGroup, You can combine any other components with this trigger's reset
    */
-  trigger: ComponentType<ReturnType<typeof useErrorBoundaryGroup>>
-}) => {
-  const errorBoundaryGroup = useErrorBoundaryGroup()
-
-  return <Trigger reset={errorBoundaryGroup.reset} />
-}
-
+  trigger: (errorBoundaryGroup: ReturnType<typeof useErrorBoundaryGroup>) => ReactNode
+}) => trigger(useErrorBoundaryGroup())
 ErrorBoundaryGroup.Reset = ErrorBoundaryGroupReset
 
 export const useErrorBoundaryGroup = () => {

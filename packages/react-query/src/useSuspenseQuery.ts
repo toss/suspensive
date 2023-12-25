@@ -1,5 +1,11 @@
-import type { QueryFunction, QueryKey, UseQueryOptions, UseQueryResult } from '@tanstack/react-query'
-import { parseQueryArgs, useQuery } from '@tanstack/react-query'
+import {
+  type QueryFunction,
+  type QueryKey,
+  type UseQueryOptions,
+  type UseQueryResult,
+  parseQueryArgs,
+  useQuery,
+} from '@tanstack/react-query'
 
 export interface UseSuspenseQueryResult<TData = unknown, TError = unknown>
   extends Omit<UseQueryResult<TData, TError>, keyof Pick<UseQueryResult, 'isPlaceholderData'>> {
