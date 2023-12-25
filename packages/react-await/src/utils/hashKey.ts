@@ -1,6 +1,5 @@
 import type { Key } from '../Await'
-import type { PlainObject } from './isPlainObject'
-import { isPlainObject } from './isPlainObject'
+import { type PlainObject, isPlainObject } from './isPlainObject'
 
 export const hashKey = (key: Key) =>
   JSON.stringify(key, (_, val) =>

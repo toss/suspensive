@@ -1,9 +1,7 @@
-import type { SuspenseProps as ReactSuspenseProps } from 'react'
-import { Suspense as ReactSuspense, useContext } from 'react'
-import { SuspenseDefaultOptionsContext } from './contexts'
+import { Suspense as ReactSuspense, type SuspenseProps as ReactSuspenseProps, useContext } from 'react'
+import { SuspenseDefaultOptionsContext, useDevModeObserve } from './contexts'
 import { useIsClient } from './hooks'
-import type { PropsWithDevMode } from './Suspensive'
-import { useDevModeObserve } from './Suspensive'
+import { type PropsWithDevMode } from './utility-types'
 import { noop } from './utils'
 
 export interface SuspenseProps extends PropsWithDevMode<SuspenseDevModeOptions>, ReactSuspenseProps {}

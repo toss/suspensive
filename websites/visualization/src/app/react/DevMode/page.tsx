@@ -1,7 +1,6 @@
 'use client'
 
-import type { ErrorBoundaryFallbackProps } from '@suspensive/react'
-import { ErrorBoundary, Suspense } from '@suspensive/react'
+import { ErrorBoundary, type ErrorBoundaryFallbackProps, Suspense } from '@suspensive/react'
 import { Area, Box, Button, Spinner } from '~/components/uis'
 
 export default function Page() {

@@ -1,5 +1,4 @@
-import type { FunctionComponent } from 'react'
-import { useMemo } from 'react'
+import { type FunctionComponent, useMemo } from 'react'
 import { useSyncExternalStore } from 'use-sync-external-store/shim'
 import type { Tuple } from './utility-types'
 import { hashKey } from './utils'

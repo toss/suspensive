@@ -1,5 +1,4 @@
-import type { PropsWithChildren } from 'react'
-import { useContext, useState } from 'react'
+import { type PropsWithChildren, useContext, useState } from 'react'
 import { DelayDefaultOptionsContext } from './contexts'
 import { useTimeout } from './hooks'
 

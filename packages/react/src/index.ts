@@ -12,7 +12,7 @@ export type { ErrorBoundaryGroupProps } from './ErrorBoundaryGroup'
 export type { DelayProps } from './Delay'
 
 // experimental
-export { SuspensiveDevMode } from './Suspensive'
+export { DevMode } from './DevMode'
 
 // deprecated
 export { withSuspense, withDelay, withErrorBoundary, withErrorBoundaryGroup, withAsyncBoundary } from './wrap'

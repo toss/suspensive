@@ -1,7 +1,13 @@
 // TODO: remove this eslint
 /* eslint-disable @typescript-eslint/naming-convention */
-import type { QueryFunction, QueryKey, UseQueryOptions, UseQueryResult } from '@tanstack/react-query'
-import { useQueries } from '@tanstack/react-query'
+
+import {
+  type QueryFunction,
+  type QueryKey,
+  type UseQueryOptions,
+  type UseQueryResult,
+  useQueries,
+} from '@tanstack/react-query'
 import type { UseSuspenseQueryResultOnLoading, UseSuspenseQueryResultOnSuccess } from './useSuspenseQuery'
 
 // Avoid TS depth-limit error in case of large array literal

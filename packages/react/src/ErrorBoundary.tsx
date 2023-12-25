@@ -1,9 +1,21 @@
-import type { ErrorInfo, FunctionComponent, PropsWithChildren, ReactNode } from 'react'
-import { Component, createContext, forwardRef, useContext, useImperativeHandle, useMemo, useRef, useState } from 'react'
+import {
+  Component,
+  type ErrorInfo,
+  type FunctionComponent,
+  type PropsWithChildren,
+  type ReactNode,
+  createContext,
+  forwardRef,
+  useContext,
+  useImperativeHandle,
+  useMemo,
+  useRef,
+  useState,
+} from 'react'
+import { useDevModeObserve } from './contexts'
 import { Delay } from './Delay'
 import { ErrorBoundaryGroupContext } from './ErrorBoundaryGroup'
-import type { PropsWithDevMode } from './Suspensive'
-import { useDevModeObserve } from './Suspensive'
+import type { PropsWithDevMode } from './utility-types'
 import { assert, hasResetKeysChanged } from './utils'
 
 export interface ErrorBoundaryFallbackProps<TError extends Error = Error> {

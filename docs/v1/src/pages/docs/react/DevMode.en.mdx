@@ -1,19 +1,19 @@
 import { Callout } from 'nextra/components'
 
-## `<SuspensiveDevMode/>`
+## `<DevMode/>`
 
 <Callout type="warning">
 
-SuspensiveDevMode is experimental feature, this interfaces could be changed
+DevMode is experimental feature, this interfaces could be changed
 
 </Callout>
 
 ### Setup
 
-After setup SuspensiveDevMode, We can use devMode prop in each component
+After setup DevMode, We can use devMode prop in each component
 
-```jsx /SuspensiveDevMode/
-import { Suspensive, SuspensiveProvider, SuspensiveDevMode } from '@suspensive/react'
+```jsx /DevMode/
+import { Suspensive, SuspensiveProvider, DevMode } from '@suspensive/react'
 
 const App = () => {
   const [suspensive] = useState(() => new Suspensive())
@@ -21,7 +21,7 @@ const App = () => {
   return (
     <SuspensiveProvider value={suspensive}>
       {/** children can use devMode now */}
-      <SuspensiveDevMode />
+      <DevMode />
     </SuspensiveProvider>
   )
 }
