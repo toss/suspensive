@@ -1,5 +1,15 @@
 # @suspensive/react
 
+## 1.21.0
+
+### Minor Changes
+
+- 45ce93f: feat(react): add DevMode
+
+### Patch Changes
+
+- 6239ebb: fix(react): remove assert.message
+
 ## 1.20.10
 
 ### Patch Changes
