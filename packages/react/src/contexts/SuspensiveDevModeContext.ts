@@ -17,13 +17,13 @@ export class SuspensiveDevMode {
   on = () => {
     if (process.env.NODE_ENV !== 'production') {
       this.is = true
-      this.syncSubscriber()
+      this.syncSubscribers()
     }
   }
   off = () => {
     if (process.env.NODE_ENV !== 'production') {
       this.is = false
-      this.syncSubscriber()
+      this.syncSubscribers()
     }
   }
   subscribe = (sync: Sync) => {
@@ -38,5 +38,5 @@ export class SuspensiveDevMode {
       this.syncs.delete(sync)
     }
   }
-  syncSubscriber = () => this.syncs.forEach((sync) => sync())
+  syncSubscribers = () => this.syncs.forEach((sync) => sync())
 }
