@@ -30,7 +30,7 @@ All declarative components to use suspense on both CSR, SSR.
 
 ### Features
 
-- Suspense Suspense.CSROnly
+- Suspense
 - ErrorBoundary, useErrorBoundary, useErrorBoundaryFallbackProps
 - ErrorBoundaryGroup, useErrorBoundaryGroup
 - Delay

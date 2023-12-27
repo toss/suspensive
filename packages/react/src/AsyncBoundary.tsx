@@ -4,7 +4,7 @@ import { Suspense } from './Suspense'
 import type { PropsWithoutDevMode } from './utility-types'
 
 /**
- * @deprecated Use SuspenseProps and ErrorBoundaryProps as alternatives
+ * @deprecated Use SuspenseProps and ErrorBoundaryProps instead
  */
 export interface AsyncBoundaryProps
   extends Omit<PropsWithoutDevMode<SuspenseProps>, 'fallback'>,
@@ -35,11 +35,11 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 /**
- * @deprecated Use `<Suspense/>` and `<ErrorBoundary/>` as alternatives
+ * @deprecated Use `<Suspense/>` and `<ErrorBoundary/>` instead
  */
 export const AsyncBoundary = Object.assign(BaseAsyncBoundary, {
   /**
-   * @deprecated Use `<Suspense/>` and `<ErrorBoundary/>` as alternatives
+   * @deprecated Use `<Suspense csrOnly />` and `<ErrorBoundary/>` instead
    */
   CSROnly,
 })

@@ -64,6 +64,9 @@ class WrapWithoutCSROnly {
 
 type Wrap = WrapWithoutCSROnly & {
   Suspense: WrapWithoutCSROnly['Suspense'] & {
+    /**
+     * @deprecated Use wrap.Suspense({ csrOnly: true }).on instead
+     */
     CSROnly: (props?: PropsWithoutChildren<ComponentProps<typeof Suspense.CSROnly>>) => Wrap
   }
 }
@@ -95,7 +98,7 @@ export const wrap = {
 }
 
 /**
- * @deprecated Use wrap.Suspense().on as alternatives
+ * @deprecated Use wrap.Suspense().on instead
  */
 export const withSuspense = Object.assign(
   <TProps extends ComponentProps<ComponentType> = Record<string, never>>(
@@ -104,7 +107,7 @@ export const withSuspense = Object.assign(
   ) => wrap.Suspense(suspenseProps).on(component),
   {
     /**
-     * @deprecated Use wrap.Suspense.CSROnly().on as alternatives
+     * @deprecated Use wrap.Suspense({ csrOnly: true }).on instead
      */
     CSROnly: <TProps extends ComponentProps<ComponentType> = Record<string, never>>(
       component: ComponentType<TProps>,
@@ -114,7 +117,7 @@ export const withSuspense = Object.assign(
 )
 
 /**
- * @deprecated Use wrap.ErrorBoundary().on as alternatives
+ * @deprecated Use wrap.ErrorBoundary().on instead
  */
 export const withErrorBoundary = <TProps extends ComponentProps<ComponentType> = Record<string, never>>(
   component: ComponentType<TProps>,
@@ -122,7 +125,7 @@ export const withErrorBoundary = <TProps extends ComponentProps<ComponentType> =
 ) => wrap.ErrorBoundary(errorBoundaryProps).on(component)
 
 /**
- * @deprecated Use wrap.Delay().on as alternatives
+ * @deprecated Use wrap.Delay().on instead
  */
 export const withDelay = <TProps extends ComponentProps<ComponentType> = Record<string, never>>(
   component: ComponentType<TProps>,
@@ -130,7 +133,7 @@ export const withDelay = <TProps extends ComponentProps<ComponentType> = Record<
 ) => wrap.Delay(delayProps).on(component)
 
 /**
- * @deprecated Use wrap.ErrorBoundaryGroup().on as alternatives
+ * @deprecated Use wrap.ErrorBoundaryGroup().on instead
  */
 export const withErrorBoundaryGroup = <TProps extends ComponentProps<ComponentType> = Record<string, never>>(
   component: ComponentType<TProps>,
@@ -138,7 +141,7 @@ export const withErrorBoundaryGroup = <TProps extends ComponentProps<ComponentTy
 ) => wrap.ErrorBoundaryGroup(errorBoundaryGroupProps).on(component)
 
 /**
- * @deprecated Use wrap.ErrorBoundary().Suspense().on as alternatives
+ * @deprecated Use wrap.ErrorBoundary().Suspense().on instead
  */
 export const withAsyncBoundary = Object.assign(
   <TProps extends ComponentProps<ComponentType> = Record<string, never>>(
@@ -160,7 +163,7 @@ export const withAsyncBoundary = Object.assign(
   },
   {
     /**
-     * @deprecated Use wrap.ErrorBoundary().Suspense.CSROnly().on as alternatives
+     * @deprecated Use wrap.ErrorBoundary().Suspense({ csrOnly: true }).on instead
      */
     CSROnly: <TProps extends ComponentProps<ComponentType> = Record<string, never>>(
       Component: ComponentType<TProps>,

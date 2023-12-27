@@ -42,11 +42,11 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 /**
- * @deprecated Use `<QueryErrorBoundary/>`, `<Suspense/>` at once as alternatives
+ * @deprecated Use `<QueryErrorBoundary/>`, `<Suspense/>` at once instead
  */
 export const QueryAsyncBoundary = Object.assign(BaseQueryAsyncBoundary, {
   /**
-   * @deprecated Use `<QueryErrorBoundary/>`, `<Suspense.CSROnly/>` at once as alternatives
+   * @deprecated Use `<QueryErrorBoundary/>`, `<Suspense csrOnly/>` at once instead
    */
   CSROnly,
 })
