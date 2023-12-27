@@ -45,8 +45,8 @@ importers:
         specifier: ^18.19.3
         version: 18.19.3
       '@vitest/browser':
-        specifier: ^1.0.4
-        version: 1.0.4(playwright@1.40.1)(vitest@1.1.0)
+        specifier: ^1.1.0
+        version: 1.1.0(playwright@1.40.1)(vitest@1.1.0)
       '@vitest/coverage-istanbul':
         specifier: ^1.1.0
         version: 1.1.0(vitest@1.1.0)
@@ -109,7 +109,7 @@ importers:
         version: 5.0.10(@types/node@18.19.3)
       vitest:
         specifier: ^1.1.0
-        version: 1.1.0(@types/node@18.19.3)(@vitest/browser@1.0.4)(@vitest/ui@1.1.0)(jsdom@23.0.1)
+        version: 1.1.0(@types/node@18.19.3)(@vitest/browser@1.1.0)(@vitest/ui@1.1.0)(jsdom@23.0.1)
 
   configs/eslint-config:
     dependencies:
@@ -2149,7 +2149,7 @@ packages:
       dom-accessibility-api: 0.5.16
       lodash: 4.17.21
       redent: 3.0.0
-      vitest: 1.1.0(@types/node@18.19.3)(@vitest/browser@1.0.4)(@vitest/ui@1.1.0)(jsdom@23.0.1)
+      vitest: 1.1.0(@types/node@18.19.3)(@vitest/browser@1.1.0)(@vitest/ui@1.1.0)(jsdom@23.0.1)
     dev: true
 
   /@testing-library/react@14.1.2(react-dom@18.2.0)(react@18.2.0):
@@ -2520,8 +2520,8 @@ packages:
   /@ungap/structured-clone@1.2.0:
     resolution: {integrity: sha512-zuVdFrMJiuCDQUMCzQaD6KL28MjnqqN8XnAqiEq9PNm/hCPTSGfrXCOfwj1ow4LFb/tNymJPwsNbVePc1xFqrQ==}
 
-  /@vitest/browser@1.0.4(playwright@1.40.1)(vitest@1.1.0):
-    resolution: {integrity: sha512-qMT1NhClex73eA2sOwnlwLcSIVCW8B7NFVzIKuXLKxSJD3LsNq8PCKhwOkBxklbSAcZdkOgL/d3/gzQT7k9eng==}
+  /@vitest/browser@1.1.0(playwright@1.40.1)(vitest@1.1.0):
+    resolution: {integrity: sha512-59Uwoiw/zAQPmqgIKrzev8HNfeNlD8Q/nDyP9Xqg1D3kaM0tcOT/wk5RnZFW5f0JdguK0c1+vSeOPUSrOja1hQ==}
     peerDependencies:
       playwright: '*'
       safaridriver: '*'
@@ -2539,7 +2539,7 @@ packages:
       magic-string: 0.30.5
       playwright: 1.40.1
       sirv: 2.0.3
-      vitest: 1.1.0(@types/node@18.19.3)(@vitest/browser@1.0.4)(@vitest/ui@1.1.0)(jsdom@23.0.1)
+      vitest: 1.1.0(@types/node@18.19.3)(@vitest/browser@1.1.0)(@vitest/ui@1.1.0)(jsdom@23.0.1)
 
   /@vitest/coverage-istanbul@1.1.0(vitest@1.1.0):
     resolution: {integrity: sha512-sjHGQQu7lkJUYSBMOR3f9AyOlK1LBVr0v7LMar/4i167ltabRWlQ2STBDM4P6Wl659NAcHlZ/RXxrAgJPavDMA==}
@@ -2555,7 +2555,7 @@ packages:
       magicast: 0.3.2
       picocolors: 1.0.0
       test-exclude: 6.0.0
-      vitest: 1.1.0(@types/node@18.19.3)(@vitest/browser@1.0.4)(@vitest/ui@1.1.0)(jsdom@23.0.1)
+      vitest: 1.1.0(@types/node@18.19.3)(@vitest/browser@1.1.0)(@vitest/ui@1.1.0)(jsdom@23.0.1)
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -2598,7 +2598,7 @@ packages:
       pathe: 1.1.1
       picocolors: 1.0.0
       sirv: 2.0.3
-      vitest: 1.1.0(@types/node@18.19.3)(@vitest/browser@1.0.4)(@vitest/ui@1.1.0)(jsdom@23.0.1)
+      vitest: 1.1.0(@types/node@18.19.3)(@vitest/browser@1.1.0)(@vitest/ui@1.1.0)(jsdom@23.0.1)
 
   /@vitest/utils@1.1.0:
     resolution: {integrity: sha512-z+s510fKmYz4Y41XhNs3vcuFTFhcij2YF7F8VQfMEYAAUfqQh0Zfg7+w9xdgFGhPf3tX3TicAe+8BDITk6ampQ==}
@@ -4599,7 +4599,7 @@ packages:
     dependencies:
       '@typescript-eslint/utils': 6.15.0(eslint@8.56.0)(typescript@5.3.3)
       eslint: 8.56.0
-      vitest: 1.1.0(@types/node@18.19.3)(@vitest/browser@1.0.4)(@vitest/ui@1.1.0)(jsdom@23.0.1)
+      vitest: 1.1.0(@types/node@18.19.3)(@vitest/browser@1.1.0)(@vitest/ui@1.1.0)(jsdom@23.0.1)
     transitivePeerDependencies:
       - supports-color
       - typescript
@@ -9983,7 +9983,7 @@ packages:
     optionalDependencies:
       fsevents: 2.3.3
 
-  /vitest@1.1.0(@types/node@18.19.3)(@vitest/browser@1.0.4)(@vitest/ui@1.1.0)(jsdom@23.0.1):
+  /vitest@1.1.0(@types/node@18.19.3)(@vitest/browser@1.1.0)(@vitest/ui@1.1.0)(jsdom@23.0.1):
     resolution: {integrity: sha512-oDFiCrw7dd3Jf06HoMtSRARivvyjHJaTxikFxuqJjO76U436PqlVw1uLn7a8OSPrhSfMGVaRakKpA2lePdw79A==}
     engines: {node: ^18.0.0 || >=20.0.0}
     hasBin: true
@@ -10009,7 +10009,7 @@ packages:
         optional: true
     dependencies:
       '@types/node': 18.19.3
-      '@vitest/browser': 1.0.4(playwright@1.40.1)(vitest@1.1.0)
+      '@vitest/browser': 1.1.0(playwright@1.40.1)(vitest@1.1.0)
       '@vitest/expect': 1.1.0
       '@vitest/runner': 1.1.0
       '@vitest/snapshot': 1.1.0
