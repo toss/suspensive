@@ -7,7 +7,7 @@
     "./no-import.js"
   ],
   "scripts": {
-    "lint": "eslint ."
+    "lint": "eslint \"**/*.{js,jsx,cjs,mjs,ts,tsx,cts,mts}\""
   },
   "dependencies": {
     "@suspensive/eslint-config-js": "workspace:*",
