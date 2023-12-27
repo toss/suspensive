@@ -5,7 +5,10 @@ import { type ComponentProps, type ComponentRef, createElement, createRef } from
 import { createRoot } from 'react-dom/client'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { useTimeout } from './hooks'
-import { assert } from './utils'
+import {
+  assertMessageUseErrorBoundaryFallbackPropsOnlyInFallbackOfErrorBoundary,
+  assertMessageUseErrorBoundaryOnlyInChildrenOfErrorBoundary,
+} from './utils/assert'
 import { ErrorBoundary, useErrorBoundary, useErrorBoundaryFallbackProps, withErrorBoundary } from '.'
 
 let container = document.createElement('div')
@@ -310,7 +313,7 @@ describe('useErrorBoundary', () => {
           <ThrowError message={ERROR_MESSAGE} after={0} />
         </ErrorBoundary>
       )
-    ).toThrow(assert.message.useErrorBoundary.onlyInChildrenOfErrorBoundary)
+    ).toThrow(assertMessageUseErrorBoundaryOnlyInChildrenOfErrorBoundary)
   })
 })
 
@@ -364,7 +367,7 @@ describe('useErrorBoundaryFallbackProps', () => {
             return <>{TEXT}</>
           })}
         </ErrorBoundary>
-      ).getByText(assert.message.useErrorBoundaryFallbackProps.onlyInFallbackOfErrorBoundary)
+      ).getByText(assertMessageUseErrorBoundaryFallbackPropsOnlyInFallbackOfErrorBoundary)
     ).toBeInTheDocument()
   })
 
@@ -376,7 +379,7 @@ describe('useErrorBoundaryFallbackProps', () => {
           return <>{TEXT}</>
         })
       )
-    ).toThrow(assert.message.useErrorBoundaryFallbackProps.onlyInFallbackOfErrorBoundary)
+    ).toThrow(assertMessageUseErrorBoundaryFallbackPropsOnlyInFallbackOfErrorBoundary)
   })
 
   it('should be prevented to be called in children of ErrorBoundary', () => {
@@ -388,7 +391,7 @@ describe('useErrorBoundaryFallbackProps', () => {
             return <>{TEXT}</>
           })}
         </ErrorBoundary>
-      ).getByText(assert.message.useErrorBoundaryFallbackProps.onlyInFallbackOfErrorBoundary)
+      ).getByText(assertMessageUseErrorBoundaryFallbackPropsOnlyInFallbackOfErrorBoundary)
     ).toBeInTheDocument()
   })
 })
