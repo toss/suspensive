@@ -24,7 +24,7 @@
     "build": "tsup",
     "build:watch": "tsup --watch",
     "clean": "rimraf ./dist && rimraf ./coverage",
-    "lint": "eslint \"**/*.ts*\"",
+    "lint": "eslint \"**/*.{js,jsx,cjs,mjs,ts,tsx,cts,mts}\"",
     "lint:attw": "attw --pack",
     "lint:pub": "publint --strict",
     "prepack": "pnpm build",

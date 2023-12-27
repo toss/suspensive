@@ -1,7 +1,7 @@
 /** @type {import('eslint').Linter.Config} */
 module.exports = {
   root: true,
-  extends: ['plugin:import/recommended', 'plugin:import/recommended', './no-import.js'],
+  extends: ['plugin:import/recommended', './no-import.js'],
   plugins: ['import'],
   rules: {
     'sort-imports': ['error', { ignoreDeclarationSort: true }],
