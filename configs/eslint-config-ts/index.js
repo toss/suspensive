@@ -4,8 +4,12 @@ module.exports = {
   extends: ['plugin:import/recommended', 'plugin:import/typescript', './no-import.js'],
   plugins: ['import'],
   settings: {
+    'import/parsers': {
+      '@typescript-eslint/parser': ['.ts', '.tsx'],
+    },
     'import/resolver': {
-      typescript: {},
+      typescript: true,
+      node: true,
     },
   },
   overrides: [
@@ -18,6 +22,7 @@ module.exports = {
     'sort-imports': ['error', { ignoreDeclarationSort: true }],
     'import/no-cycle': 'error',
     'import/no-duplicates': ['error', { 'prefer-inline': true }],
+    'import/no-unresolved': 'off',
     'import/order': [
       'error',
       {
