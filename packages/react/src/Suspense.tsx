@@ -36,7 +36,7 @@ export const Suspense = Object.assign(
   })(),
   {
     /**
-     * @deprecated Use <Suspense csrOnly /> instead
+     * @deprecated Use `<Suspense csrOnly/>` instead
      */
     CSROnly: (() => {
       const CSROnly = ({

@@ -27,24 +27,24 @@ Control multiple `<Suspense/>`s default fallback with `<SuspensiveProvider/>`. D
 
 </Callout>
 
-### Avoid Server side rendering (CSROnly)
+### Avoid Server side rendering (csrOnly)
 
-`<Suspense.CSROnly/>` will return fallback in server. After mount(in client) return children. Since mount only happens on the client, server-side rendering can be avoided.
+`<Suspense csrOnly/>` will return fallback in server. After mount(in client) return children. Since mount only happens on the client, server-side rendering can be avoided.
 
-```tsx /Suspense.CSROnly/
+```tsx /csrOnly/
 import { Suspense } from '@suspensive/react'
 
 const Example = () => (
-  <Suspense.CSROnly fallback={<Loading />}>
+  <Suspense csrOnly fallback={<Loading />}>
     <Children />
-  </Suspense.CSROnly>
+  </Suspense>
 )
 ```
 
 <Callout type='info'>
 
-Migration support SSR gradually (`<Suspense.CSROnly/>` -> `<Suspense/>`)
+Migration support SSR gradually (`<Suspense csrOnly/>` -> `<Suspense/>`)
 
-If you want to use Suspense working in both SSR/CSR, You can change `<Suspense.CSROnly/>` to `<Suspense/>` gradually.
+If you want to use Suspense working in both SSR/CSR, You can change `<Suspense csrOnly/>` to `<Suspense/>` gradually.
 
 </Callout>

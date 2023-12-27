@@ -170,9 +170,9 @@ export const withAsyncBoundary = Object.assign(
       asyncBoundaryProps: PropsWithoutChildren<AsyncBoundaryProps>
     ) => {
       const Wrapped = (props: TProps) => (
-        <AsyncBoundary.CSROnly {...asyncBoundaryProps}>
+        <AsyncBoundary {...asyncBoundaryProps} csrOnly>
           <Component {...props} />
-        </AsyncBoundary.CSROnly>
+        </AsyncBoundary>
       )
 
       if (process.env.NODE_ENV !== 'production') {

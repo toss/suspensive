@@ -13,33 +13,45 @@ export interface AsyncBoundaryProps
   rejectedFallback: ErrorBoundaryProps['fallback']
 }
 
-const BaseAsyncBoundary = forwardRef<ComponentRef<typeof ErrorBoundary>, AsyncBoundaryProps>(
-  ({ pendingFallback, rejectedFallback, children, ...errorBoundaryProps }, resetRef) => (
-    <ErrorBoundary {...errorBoundaryProps} ref={resetRef} fallback={rejectedFallback}>
-      <Suspense fallback={pendingFallback}>{children}</Suspense>
-    </ErrorBoundary>
-  )
-)
-if (process.env.NODE_ENV !== 'production') {
-  BaseAsyncBoundary.displayName = 'AsyncBoundary'
-}
-const CSROnly = forwardRef<ComponentRef<typeof ErrorBoundary>, Omit<AsyncBoundaryProps, 'csrOnly'>>(
-  ({ pendingFallback, rejectedFallback, children, ...errorBoundaryProps }, resetRef) => (
-    <ErrorBoundary {...errorBoundaryProps} ref={resetRef} fallback={rejectedFallback}>
-      <Suspense.CSROnly fallback={pendingFallback}>{children}</Suspense.CSROnly>
-    </ErrorBoundary>
-  )
-)
-if (process.env.NODE_ENV !== 'production') {
-  CSROnly.displayName = 'AsyncBoundary.CSROnly'
-}
-
 /**
  * @deprecated Use `<Suspense/>` and `<ErrorBoundary/>` instead
  */
-export const AsyncBoundary = Object.assign(BaseAsyncBoundary, {
-  /**
-   * @deprecated Use `<Suspense csrOnly />` and `<ErrorBoundary/>` instead
-   */
-  CSROnly,
-})
+export const AsyncBoundary = Object.assign(
+  (() => {
+    const BaseAsyncBoundary = forwardRef<ComponentRef<typeof ErrorBoundary>, AsyncBoundaryProps>(
+      ({ csrOnly, pendingFallback, rejectedFallback, children, ...errorBoundaryProps }, resetRef) => (
+        <ErrorBoundary {...errorBoundaryProps} ref={resetRef} fallback={rejectedFallback}>
+          <Suspense csrOnly={csrOnly} fallback={pendingFallback}>
+            {children}
+          </Suspense>
+        </ErrorBoundary>
+      )
+    )
+    if (process.env.NODE_ENV !== 'production') {
+      BaseAsyncBoundary.displayName = 'AsyncBoundary'
+    }
+
+    return BaseAsyncBoundary
+  })(),
+  {
+    /**
+     * @deprecated Use `<Suspense csrOnly />` and `<ErrorBoundary/>` instead
+     */
+    CSROnly: (() => {
+      const CSROnly = forwardRef<ComponentRef<typeof ErrorBoundary>, Omit<AsyncBoundaryProps, 'csrOnly'>>(
+        ({ pendingFallback, rejectedFallback, children, ...errorBoundaryProps }, resetRef) => (
+          <ErrorBoundary {...errorBoundaryProps} ref={resetRef} fallback={rejectedFallback}>
+            <Suspense csrOnly fallback={pendingFallback}>
+              {children}
+            </Suspense>
+          </ErrorBoundary>
+        )
+      )
+      if (process.env.NODE_ENV !== 'production') {
+        CSROnly.displayName = 'AsyncBoundary.CSROnly'
+      }
+
+      return CSROnly
+    })(),
+  }
+)
