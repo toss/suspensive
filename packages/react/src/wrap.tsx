@@ -65,7 +65,7 @@ class WrapWithoutCSROnly {
 type Wrap = WrapWithoutCSROnly & {
   Suspense: WrapWithoutCSROnly['Suspense'] & {
     /**
-     * @deprecated Use wrap.Suspense({ csrOnly: true }).on instead
+     * @deprecated Use wrap.Suspense({ clientOnly: true }).on instead
      */
     CSROnly: (props?: PropsWithoutChildren<ComponentProps<typeof Suspense.CSROnly>>) => Wrap
   }
@@ -107,7 +107,7 @@ export const withSuspense = Object.assign(
   ) => wrap.Suspense(suspenseProps).on(component),
   {
     /**
-     * @deprecated Use wrap.Suspense({ csrOnly: true }).on instead
+     * @deprecated Use wrap.Suspense({ clientOnly: true }).on instead
      */
     CSROnly: <TProps extends ComponentProps<ComponentType> = Record<string, never>>(
       component: ComponentType<TProps>,
@@ -163,14 +163,14 @@ export const withAsyncBoundary = Object.assign(
   },
   {
     /**
-     * @deprecated Use wrap.ErrorBoundary().Suspense({ csrOnly: true }).on instead
+     * @deprecated Use wrap.ErrorBoundary().Suspense({ clientOnly: true }).on instead
      */
     CSROnly: <TProps extends ComponentProps<ComponentType> = Record<string, never>>(
       Component: ComponentType<TProps>,
-      asyncBoundaryProps: PropsWithoutChildren<AsyncBoundaryProps>
+      asyncBoundaryProps: PropsWithoutChildren<Omit<AsyncBoundaryProps, keyof Pick<SuspenseProps, 'clientOnly'>>>
     ) => {
       const Wrapped = (props: TProps) => (
-        <AsyncBoundary {...asyncBoundaryProps} csrOnly>
+        <AsyncBoundary {...asyncBoundaryProps} clientOnly>
           <Component {...props} />
         </AsyncBoundary>
       )

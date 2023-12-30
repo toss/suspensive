@@ -27,15 +27,15 @@ Control multiple `<Suspense/>`s default fallback with `<SuspensiveProvider/>`. D
 
 </Callout>
 
-### Avoid Server side rendering (csrOnly)
+### Avoid Server side rendering (clientOnly)
 
-`<Suspense csrOnly/>` will return fallback in server. After mount(in client) return children. Since mount only happens on the client, server-side rendering can be avoided.
+`<Suspense clientOnly/>` will return fallback in server. After mount(in client) return children. Since mount only happens on the client, server-side rendering can be avoided.
 
-```tsx /csrOnly/
+```tsx /clientOnly/
 import { Suspense } from '@suspensive/react'
 
 const Example = () => (
-  <Suspense csrOnly fallback={<Loading />}>
+  <Suspense clientOnly fallback={<Loading />}>
     <Children />
   </Suspense>
 )
@@ -43,9 +43,9 @@ const Example = () => (
 
 <Callout type='info'>
 
-Migration support SSR gradually (`<Suspense csrOnly/>` -> `<Suspense/>`)
+Migration support SSR gradually (`<Suspense clientOnly/>` -> `<Suspense/>`)
 
-If you want to use Suspense working in both SSR/CSR, You can change `<Suspense csrOnly/>` to `<Suspense/>` gradually.
+If you want to use Suspense working in both SSR/CSR, You can change `<Suspense clientOnly/>` to `<Suspense/>` gradually.
 
 </Callout>
 
@@ -61,19 +61,10 @@ You can use withSuspense to wrap component by `<Suspense/>` easily.
 we don't need to make unncessary code to wrap it if we use withSuspense like below.
 withSuspense's 2nd parameter is props of `<Suspense/>` without children
 
-```tsx /withSuspense.CSROnly/ /withSuspense/
+```jsx /withSuspense/
 import { withSuspense } from '@suspensive/react'
 
 const Example = withSuspense(
-  function Component() {
-    // code make suspending
-
-    return <>...</>
-  },
-  { fallback: <Spinner /> }
-)
-
-const Example = withSuspense.CSROnly(
   function Component() {
     // code make suspending
 

@@ -5,7 +5,7 @@ import { Image } from '@suspensive/react-image'
 
 export default wrap
   .ErrorBoundary({ fallback: () => <div>error</div> })
-  .Suspense({ csrOnly: true, fallback: 'loading...' })
+  .Suspense({ clientOnly: true, fallback: 'loading...' })
   .on(function Page() {
     return (
       <div className="flex flex-col">

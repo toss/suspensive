@@ -46,7 +46,7 @@ if (process.env.NODE_ENV !== 'production') {
  */
 export const QueryAsyncBoundary = Object.assign(BaseQueryAsyncBoundary, {
   /**
-   * @deprecated Use `<QueryErrorBoundary/>`, `<Suspense csrOnly/>` at once instead
+   * @deprecated Use `<QueryErrorBoundary/>`, `<Suspense clientOnly/>` at once instead
    */
   CSROnly,
 })

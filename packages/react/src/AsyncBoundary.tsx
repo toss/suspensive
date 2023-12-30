@@ -19,9 +19,9 @@ export interface AsyncBoundaryProps
 export const AsyncBoundary = Object.assign(
   (() => {
     const BaseAsyncBoundary = forwardRef<ComponentRef<typeof ErrorBoundary>, AsyncBoundaryProps>(
-      ({ csrOnly, pendingFallback, rejectedFallback, children, ...errorBoundaryProps }, resetRef) => (
+      ({ clientOnly, pendingFallback, rejectedFallback, children, ...errorBoundaryProps }, resetRef) => (
         <ErrorBoundary {...errorBoundaryProps} ref={resetRef} fallback={rejectedFallback}>
-          <Suspense csrOnly={csrOnly} fallback={pendingFallback}>
+          <Suspense clientOnly={clientOnly} fallback={pendingFallback}>
             {children}
           </Suspense>
         </ErrorBoundary>
@@ -35,18 +35,19 @@ export const AsyncBoundary = Object.assign(
   })(),
   {
     /**
-     * @deprecated Use `<Suspense csrOnly />` and `<ErrorBoundary/>` instead
+     * @deprecated Use `<Suspense clientOnly />` and `<ErrorBoundary/>` instead
      */
     CSROnly: (() => {
-      const CSROnly = forwardRef<ComponentRef<typeof ErrorBoundary>, Omit<AsyncBoundaryProps, 'csrOnly'>>(
-        ({ pendingFallback, rejectedFallback, children, ...errorBoundaryProps }, resetRef) => (
-          <ErrorBoundary {...errorBoundaryProps} ref={resetRef} fallback={rejectedFallback}>
-            <Suspense csrOnly fallback={pendingFallback}>
-              {children}
-            </Suspense>
-          </ErrorBoundary>
-        )
-      )
+      const CSROnly = forwardRef<
+        ComponentRef<typeof ErrorBoundary>,
+        Omit<AsyncBoundaryProps, keyof Pick<SuspenseProps, 'clientOnly'>>
+      >(({ pendingFallback, rejectedFallback, children, ...errorBoundaryProps }, resetRef) => (
+        <ErrorBoundary {...errorBoundaryProps} ref={resetRef} fallback={rejectedFallback}>
+          <Suspense clientOnly fallback={pendingFallback}>
+            {children}
+          </Suspense>
+        </ErrorBoundary>
+      ))
       if (process.env.NODE_ENV !== 'production') {
         CSROnly.displayName = 'AsyncBoundary.CSROnly'
       }

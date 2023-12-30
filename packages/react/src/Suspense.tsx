@@ -5,7 +5,7 @@ import { type PropsWithDevMode } from './utility-types'
 import { noop } from './utils'
 
 export interface SuspenseProps extends PropsWithDevMode<SuspenseDevModeOptions>, ReactSuspenseProps {
-  csrOnly?: boolean
+  clientOnly?: boolean
 }
 
 const SuspenseContextFallback = () => useContext(SuspenseDefaultOptionsContext).fallback
@@ -16,11 +16,11 @@ const SuspenseContextFallback = () => useContext(SuspenseDefaultOptionsContext).
  */
 export const Suspense = Object.assign(
   (() => {
-    const SuspenseCSROnly = (props: ReactSuspenseProps) =>
+    const SuspenseClientOnly = (props: ReactSuspenseProps) =>
       useIsClient() ? <ReactSuspense {...props} /> : <>{props.fallback}</>
 
-    const Suspense = ({ csrOnly, devMode, children, fallback = <SuspenseContextFallback /> }: SuspenseProps) => {
-      const DefinedSuspense = csrOnly ? SuspenseCSROnly : ReactSuspense
+    const Suspense = ({ clientOnly, devMode, children, fallback = <SuspenseContextFallback /> }: SuspenseProps) => {
+      const DefinedSuspense = clientOnly ? SuspenseClientOnly : ReactSuspense
       return (
         <DefinedSuspense fallback={fallback}>
           {children}
@@ -36,14 +36,14 @@ export const Suspense = Object.assign(
   })(),
   {
     /**
-     * @deprecated Use `<Suspense csrOnly/>` instead
+     * @deprecated Use `<Suspense clientOnly/>` instead
      */
     CSROnly: (() => {
       const CSROnly = ({
         devMode,
         children,
         fallback = <SuspenseContextFallback />,
-      }: Omit<SuspenseProps, 'csrOnly'>) =>
+      }: Omit<SuspenseProps, keyof Pick<SuspenseProps, 'clientOnly'>>) =>
         useIsClient() ? (
           <ReactSuspense fallback={fallback}>
             {children}

@@ -17,7 +17,7 @@ export default wrap.ErrorBoundaryGroup({}).on(function Page() {
       </div>
       <Area title="QueryErrorResetBoundary + ErrorBoundary + Suspense">
         <ErrorBoundary onReset={queryErrorResetBoundary.reset} fallback={RejectedFallback}>
-          <Suspense csrOnly fallback={<Spinner />}>
+          <Suspense clientOnly fallback={<Spinner />}>
             <UseSuspenseQuery queryKey={['query', 1] as const} queryFn={() => api.delay(500, { percentage: 40 })} />
             <UseSuspenseQuery queryKey={['query', 2] as const} queryFn={() => api.delay(500, { percentage: 40 })} />
           </Suspense>
@@ -26,7 +26,7 @@ export default wrap.ErrorBoundaryGroup({}).on(function Page() {
 
       <Area title="QueryErrorBoundary + Suspense">
         <QueryErrorBoundary fallback={RejectedFallback}>
-          <Suspense csrOnly fallback={<Spinner />}>
+          <Suspense clientOnly fallback={<Spinner />}>
             <UseSuspenseQuery queryKey={['query', 3] as const} queryFn={() => api.delay(500, { percentage: 40 })} />
             <UseSuspenseQuery queryKey={['query', 4] as const} queryFn={() => api.delay(500, { percentage: 40 })} />
           </Suspense>

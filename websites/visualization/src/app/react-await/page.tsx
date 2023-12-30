@@ -8,7 +8,7 @@ export default function Page() {
   return (
     <ErrorBoundary fallback={() => <div>error</div>}>
       <div className="flex flex-col">
-        <Suspense csrOnly fallback={<div>loading...</div>}>
+        <Suspense clientOnly fallback={<div>loading...</div>}>
           <Await
             options={{
               key: [2000] as const,
@@ -23,7 +23,7 @@ export default function Page() {
             )}
           </Await>
         </Suspense>
-        <Suspense csrOnly fallback={<div>loading...</div>}>
+        <Suspense clientOnly fallback={<div>loading...</div>}>
           <Await
             options={{
               key: [2000] as const,
@@ -38,7 +38,7 @@ export default function Page() {
             )}
           </Await>
         </Suspense>
-        <Suspense csrOnly fallback={<div>loading...</div>}>
+        <Suspense clientOnly fallback={<div>loading...</div>}>
           <Await
             options={{
               key: [2000] as const,
@@ -53,7 +53,7 @@ export default function Page() {
             )}
           </Await>
         </Suspense>
-        <Suspense csrOnly fallback={<div>loading...</div>}>
+        <Suspense clientOnly fallback={<div>loading...</div>}>
           <Await
             options={{
               key: [2000] as const,
@@ -71,7 +71,7 @@ export default function Page() {
       </div>
 
       <div className="flex flex-col">
-        <Suspense csrOnly fallback={<div>loading...</div>}>
+        <Suspense clientOnly fallback={<div>loading...</div>}>
           <Await
             options={{
               key: [3000] as const,
@@ -86,7 +86,7 @@ export default function Page() {
             )}
           </Await>
         </Suspense>
-        <Suspense csrOnly fallback={<div>loading...</div>}>
+        <Suspense clientOnly fallback={<div>loading...</div>}>
           <Await
             options={{
               key: [4000] as const,
@@ -101,7 +101,7 @@ export default function Page() {
             )}
           </Await>
         </Suspense>
-        <Suspense csrOnly fallback={<div>loading...</div>}>
+        <Suspense clientOnly fallback={<div>loading...</div>}>
           <Await
             options={{
               key: [4000] as const,
