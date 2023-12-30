@@ -29,7 +29,7 @@ Control multiple `<Suspense/>`s default fallback with `<SuspensiveProvider/>`. D
 
 ### Avoid Server side rendering (clientOnly)
 
-`<Suspense clientOnly/>` will return fallback in server. After mount(in client) return children. Since mount only happens on the client, server-side rendering can be avoided.
+If you use clientOnly prop, `<Suspense/>` will return fallback in server. After mount(in client) return children. Since mount only happens on the client, server-side rendering can be avoided.
 
 ```tsx /clientOnly/
 import { Suspense } from '@suspensive/react'
