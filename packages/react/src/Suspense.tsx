@@ -5,6 +5,10 @@ import { type PropsWithDevMode } from './utility-types'
 import { noop } from './utils'
 
 export interface SuspenseProps extends PropsWithDevMode<SuspenseDevModeOptions>, ReactSuspenseProps {
+  /**
+   * `<Suspense/>` will return fallback in server. After mount(in client) return children. Since mount only happens on the client, server-side rendering can be avoided.
+   * @see https://suspensive.org/docs/react/Suspense#avoid-server-side-rendering-clientonly
+   */
   clientOnly?: boolean
 }
 
