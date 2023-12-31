@@ -1,18 +1,19 @@
 import { Suspense as ReactSuspense, type SuspenseProps as ReactSuspenseProps, useContext } from 'react'
-import { SuspenseDefaultOptionsContext, useDevModeObserve } from './contexts'
+import { SuspenseDefaultPropsContext, useDevModeObserve } from './contexts'
 import { useIsClient } from './hooks'
 import { type PropsWithDevMode } from './utility-types'
 import { noop } from './utils'
 
+const SuspenseClientOnly = (props: ReactSuspenseProps) =>
+  useIsClient() ? <ReactSuspense {...props} /> : <>{props.fallback}</>
+
 export interface SuspenseProps extends PropsWithDevMode<SuspenseDevModeOptions>, ReactSuspenseProps {
   /**
-   * `<Suspense/>` will return fallback in server. After mount(in client) return children. Since mount only happens on the client, server-side rendering can be avoided.
+   * With clientOnly prop, `<Suspense/>` will return fallback in server but after mount return children in client. Since mount only happens on the client, `<Suspense/>` can be avoid server-side rendering.
    * @see https://suspensive.org/docs/react/Suspense#avoid-server-side-rendering-clientonly
    */
   clientOnly?: boolean
 }
-
-const SuspenseContextFallback = () => useContext(SuspenseDefaultOptionsContext).fallback
 
 /**
  * This component is just wrapping React's Suspense. to use Suspense easily in Server-side rendering environment like Next.js
@@ -20,13 +21,11 @@ const SuspenseContextFallback = () => useContext(SuspenseDefaultOptionsContext).
  */
 export const Suspense = Object.assign(
   (() => {
-    const SuspenseClientOnly = (props: ReactSuspenseProps) =>
-      useIsClient() ? <ReactSuspense {...props} /> : <>{props.fallback}</>
-
-    const Suspense = ({ clientOnly, devMode, children, fallback = <SuspenseContextFallback /> }: SuspenseProps) => {
-      const DefinedSuspense = clientOnly ? SuspenseClientOnly : ReactSuspense
+    const Suspense = ({ clientOnly, devMode, children, fallback }: SuspenseProps) => {
+      const defaultProps = useContext(SuspenseDefaultPropsContext)
+      const DefinedSuspense = defaultProps.clientOnly ?? clientOnly ? SuspenseClientOnly : ReactSuspense
       return (
-        <DefinedSuspense fallback={fallback}>
+        <DefinedSuspense fallback={typeof fallback === 'undefined' ? defaultProps.fallback : fallback}>
           {children}
           {process.env.NODE_ENV !== 'production' && devMode && <SuspenseDevMode {...devMode} />}
         </DefinedSuspense>
@@ -35,7 +34,6 @@ export const Suspense = Object.assign(
     if (process.env.NODE_ENV !== 'production') {
       Suspense.displayName = 'Suspense'
     }
-
     return Suspense
   })(),
   {
@@ -43,23 +41,23 @@ export const Suspense = Object.assign(
      * @deprecated Use `<Suspense clientOnly/>` instead
      */
     CSROnly: (() => {
-      const CSROnly = ({
+      const Suspense = ({
         devMode,
         children,
-        fallback = <SuspenseContextFallback />,
-      }: Omit<SuspenseProps, keyof Pick<SuspenseProps, 'clientOnly'>>) =>
-        useIsClient() ? (
-          <ReactSuspense fallback={fallback}>
+        fallback,
+      }: Omit<SuspenseProps, keyof Pick<SuspenseProps, 'clientOnly'>>) => {
+        const defaultProps = useContext(SuspenseDefaultPropsContext)
+        return (
+          <SuspenseClientOnly fallback={typeof fallback === 'undefined' ? defaultProps.fallback : fallback}>
             {children}
             {process.env.NODE_ENV !== 'production' && devMode && <SuspenseDevMode {...devMode} />}
-          </ReactSuspense>
-        ) : (
-          <>{fallback}</>
+          </SuspenseClientOnly>
         )
-      if (process.env.NODE_ENV !== 'production') {
-        CSROnly.displayName = 'Suspense.CSROnly'
       }
-      return CSROnly
+      if (process.env.NODE_ENV !== 'production') {
+        Suspense.displayName = 'Suspense.CSROnly'
+      }
+      return Suspense
     })(),
   }
 )
