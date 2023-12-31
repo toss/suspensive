@@ -27,25 +27,25 @@ Control multiple `<Suspense/>`s default fallback with `<SuspensiveProvider/>`. D
 
 </Callout>
 
-### Avoid Server side rendering (CSROnly)
+### Avoid Server side rendering (clientOnly)
 
-`<Suspense.CSROnly/>` will return fallback in server. After mount(in client) return children. Since mount only happens on the client, server-side rendering can be avoided.
+If you use clientOnly prop, `<Suspense/>` will return fallback in server. After mount(in client) return children. Since mount only happens on the client, server-side rendering can be avoided.
 
-```tsx /Suspense.CSROnly/
+```tsx /clientOnly/
 import { Suspense } from '@suspensive/react'
 
 const Example = () => (
-  <Suspense.CSROnly fallback={<Loading />}>
+  <Suspense clientOnly fallback={<Loading />}>
     <Children />
-  </Suspense.CSROnly>
+  </Suspense>
 )
 ```
 
 <Callout type='info'>
 
-Migration support SSR gradually (`<Suspense.CSROnly/>` -> `<Suspense/>`)
+Migration support SSR gradually (`<Suspense clientOnly/>` -> `<Suspense/>`)
 
-If you want to use Suspense working in both SSR/CSR, You can change `<Suspense.CSROnly/>` to `<Suspense/>` gradually.
+If you want to use Suspense working in both SSR/CSR, You can change `<Suspense clientOnly/>` to `<Suspense/>` gradually.
 
 </Callout>
 
@@ -53,7 +53,7 @@ If you want to use Suspense working in both SSR/CSR, You can change `<Suspense.C
 
 <Callout type='warning'>
 
-deprecated: Use [wrap.Suspense().on](./wrap), [wrap.Suspense.CSROnly().on](./wrap) instead
+deprecated: Use [wrap.Suspense().on](./wrap) instead
 
 </Callout>
 
@@ -61,19 +61,10 @@ You can use withSuspense to wrap component by `<Suspense/>` easily.
 we don't need to make unncessary code to wrap it if we use withSuspense like below.
 withSuspense's 2nd parameter is props of `<Suspense/>` without children
 
-```tsx /withSuspense.CSROnly/ /withSuspense/
+```jsx /withSuspense/
 import { withSuspense } from '@suspensive/react'
 
 const Example = withSuspense(
-  function Component() {
-    // code make suspending
-
-    return <>...</>
-  },
-  { fallback: <Spinner /> }
-)
-
-const Example = withSuspense.CSROnly(
   function Component() {
     // code make suspending
 

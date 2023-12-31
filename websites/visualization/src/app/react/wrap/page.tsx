@@ -7,7 +7,7 @@ const logError = (error: Error) => console.error(error)
 const Page = wrap
   .ErrorBoundaryGroup({ blockOutside: false })
   .ErrorBoundary({ fallback: (props) => <div>{props.error.message}</div>, onError: logError })
-  .Suspense.CSROnly({ fallback: 'loading...' })
+  .Suspense({ clientOnly: true, fallback: 'loading...' })
   .on(function Page({ text }: { text: string }) {
     const errorBoundary = useErrorBoundary()
 

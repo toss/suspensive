@@ -1,8 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router.js'
-import type { DocsThemeConfig } from 'nextra-theme-docs'
-import { useConfig } from 'nextra-theme-docs'
+import { type DocsThemeConfig, useConfig } from 'nextra-theme-docs'
 
 const localeBanner = {
   en: (
