@@ -8,7 +8,7 @@ export default function Page() {
   return (
     <ErrorBoundary fallback={() => <div>error</div>}>
       <div className="flex flex-col">
-        <Suspense.CSROnly fallback={<div>loading...</div>}>
+        <Suspense clientOnly fallback={<div>loading...</div>}>
           <Await
             options={{
               key: [2000] as const,
@@ -22,8 +22,8 @@ export default function Page() {
               </div>
             )}
           </Await>
-        </Suspense.CSROnly>
-        <Suspense.CSROnly fallback={<div>loading...</div>}>
+        </Suspense>
+        <Suspense clientOnly fallback={<div>loading...</div>}>
           <Await
             options={{
               key: [2000] as const,
@@ -37,8 +37,8 @@ export default function Page() {
               </div>
             )}
           </Await>
-        </Suspense.CSROnly>
-        <Suspense.CSROnly fallback={<div>loading...</div>}>
+        </Suspense>
+        <Suspense clientOnly fallback={<div>loading...</div>}>
           <Await
             options={{
               key: [2000] as const,
@@ -52,8 +52,8 @@ export default function Page() {
               </div>
             )}
           </Await>
-        </Suspense.CSROnly>
-        <Suspense.CSROnly fallback={<div>loading...</div>}>
+        </Suspense>
+        <Suspense clientOnly fallback={<div>loading...</div>}>
           <Await
             options={{
               key: [2000] as const,
@@ -67,11 +67,11 @@ export default function Page() {
               </div>
             )}
           </Await>
-        </Suspense.CSROnly>
+        </Suspense>
       </div>
 
       <div className="flex flex-col">
-        <Suspense.CSROnly fallback={<div>loading...</div>}>
+        <Suspense clientOnly fallback={<div>loading...</div>}>
           <Await
             options={{
               key: [3000] as const,
@@ -85,8 +85,8 @@ export default function Page() {
               </div>
             )}
           </Await>
-        </Suspense.CSROnly>
-        <Suspense.CSROnly fallback={<div>loading...</div>}>
+        </Suspense>
+        <Suspense clientOnly fallback={<div>loading...</div>}>
           <Await
             options={{
               key: [4000] as const,
@@ -100,8 +100,8 @@ export default function Page() {
               </div>
             )}
           </Await>
-        </Suspense.CSROnly>
-        <Suspense.CSROnly fallback={<div>loading...</div>}>
+        </Suspense>
+        <Suspense clientOnly fallback={<div>loading...</div>}>
           <Await
             options={{
               key: [4000] as const,
@@ -115,7 +115,7 @@ export default function Page() {
               </div>
             )}
           </Await>
-        </Suspense.CSROnly>
+        </Suspense>
       </div>
     </ErrorBoundary>
   )

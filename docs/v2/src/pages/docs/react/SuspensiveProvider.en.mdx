@@ -1,10 +1,8 @@
-import { Callout } from 'nextra/components'
-
 # SuspensiveProvider
 
 This component controls the settings of the components provided by Suspensive (Suspense, Delay, etc.) at once.
 
-```tsx /SuspensiveProvider/ /Suspensive/
+```jsx /SuspensiveProvider/ /Suspensive/
 import { Suspensive, SuspensiveProvider } from '@suspensive/react'
 
 const suspensive = new Suspensive({
@@ -14,6 +12,7 @@ const suspensive = new Suspensive({
     },
     suspense: {
       fallback: <Spinner />,
+      clientOnly: false,
     },
   },
 })
