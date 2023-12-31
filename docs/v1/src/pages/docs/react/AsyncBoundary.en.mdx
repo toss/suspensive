@@ -46,41 +46,11 @@ type AsyncBoundaryProps = Omit<SuspenseProps, 'fallback'> &
   }
 ```
 
-### Avoid Server side rendering (CSROnly)
-
-<Callout type='warning'>
-
-deprecated: Use `<Suspense.CSROnly/>` and `<ErrorBoundary/>` directly
-
-</Callout>
-
-Since it wraps `<Suspense.CSROnly/>`, it provides the same CSROnly.
-
-```tsx /AsyncBoundary.CSROnly/
-import { AsyncBoundary } from '@suspensive/react'
-
-const Example = () => (
-  <AsyncBoundary.CSROnly
-    pendingFallback={<Loading />}
-    rejectedFallback={(props) => (
-      <>
-        <button onClick={props.reset}>Try again</button>
-        {props.error.message}
-      </>
-    )}
-    onReset={() => console.log('reset')}
-    onError={(error) => console.log(error)}
-  >
-    <Children />
-  </AsyncBoundary.CSROnly>
-)
-```
-
 ## withAsyncBoundary
 
 <Callout type='warning'>
 
-deprecated: Use [wrap.ErrorBoundary().Suspense().on](./wrap), [wrap.ErrorBoundary().Suspense.CSROnly().on](./wrap) instead
+deprecated: Use [wrap.ErrorBoundary().Suspense().on](./wrap) instead
 
 </Callout>
 

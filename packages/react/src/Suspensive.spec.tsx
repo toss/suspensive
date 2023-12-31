@@ -1,8 +1,10 @@
 import { FALLBACK, Suspend, TEXT } from '@suspensive/test-utils'
 import { render, screen, waitFor } from '@testing-library/react'
 import ms from 'ms'
+import { createElement, useContext } from 'react'
 import { describe, expect, it } from 'vitest'
-import { Delay, Suspense, Suspensive, SuspensiveProvider } from '.'
+import { SuspenseDefaultPropsContext } from './contexts'
+import { Delay, Suspense, type SuspenseProps, Suspensive, SuspensiveProvider } from '.'
 
 const FALLBACK_GLOBAL = 'FALLBACK_GLOBAL'
 
@@ -71,5 +73,40 @@ describe('<SuspensiveProvider/>', () => {
       </SuspensiveProvider>
     )
     expect(screen.queryByText(FALLBACK_GLOBAL)).not.toBeInTheDocument()
+  })
+
+  it('should accept defaultOptions.suspense.clientOnly to setup default clientOnly prop of Suspense. If Suspense accept no clientOnly, Suspense should use default fallback', () => {
+    let clientOnly1: SuspenseProps['clientOnly'] = undefined
+    render(
+      <SuspensiveProvider value={new Suspensive({ defaultOptions: { suspense: { clientOnly: true } } })}>
+        {createElement(() => {
+          clientOnly1 = useContext(SuspenseDefaultPropsContext).clientOnly
+          return <></>
+        })}
+      </SuspensiveProvider>
+    )
+    expect(clientOnly1).toBe(true)
+
+    let clientOnly2: SuspenseProps['clientOnly'] = undefined
+    render(
+      <SuspensiveProvider value={new Suspensive({ defaultOptions: { suspense: { clientOnly: false } } })}>
+        {createElement(() => {
+          clientOnly2 = useContext(SuspenseDefaultPropsContext).clientOnly
+          return <></>
+        })}
+      </SuspensiveProvider>
+    )
+    expect(clientOnly2).toBe(false)
+
+    const clientOnly3: SuspenseProps['clientOnly'] = undefined
+    render(
+      <SuspensiveProvider value={new Suspensive({ defaultOptions: { suspense: {} } })}>
+        {createElement(() => {
+          clientOnly2 = useContext(SuspenseDefaultPropsContext).clientOnly
+          return <></>
+        })}
+      </SuspensiveProvider>
+    )
+    expect(clientOnly3).toBeUndefined()
   })
 })
