@@ -1,5 +1,16 @@
 # @suspensive/react-query
 
+## 1.22.0
+
+### Minor Changes
+
+- d1d7d1a: feat(react): add Suspense clientOnly prop to deprecate Suspense.CSROnly, wrap.Suspense.CSROnly
+
+### Patch Changes
+
+- Updated dependencies [d1d7d1a]
+  - @suspensive/react@1.22.0
+
 ## 1.21.0
 
 ### Patch Changes
