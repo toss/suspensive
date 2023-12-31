@@ -26,25 +26,25 @@ Default fallback
 
 </Callout>
 
-### 서버사이드 렌더링을 피하기 (CSROnly)
+### 서버사이드 렌더링을 피하기 (clientOnly)
 
-`<Suspense.CSROnly/>`는 서버에서는 fallback을 반환합니다. mount 후(클라이언트에서는) children을 반환합니다. mount는 클라이언트에서만 일어나기 때문에 서버사이드 렌더링을 피할 수 있습니다.
+clientOnly prop을 사용하면 `<Suspense/>`는 서버에서는 fallback을 반환합니다. mount 후(클라이언트에서는) children을 반환합니다. mount는 클라이언트에서만 일어나기 때문에 서버사이드 렌더링을 피할 수 있습니다.
 
-```tsx /Suspense.CSROnly/
+```tsx /clientOnly/
 import { Suspense } from '@suspensive/react'
 
 const Example = () => (
-  <Suspense.CSROnly fallback={<Loading />}>
+  <Suspense clientOnly fallback={<Loading />}>
     <Children />
-  </Suspense.CSROnly>
+  </Suspense>
 )
 ```
 
 <Callout type='info'>
 
-SSR을 지원하도록 점진적으로 마이그레이션하기 (`<Suspense.CSROnly/>` -> `<Suspense/>`)
+SSR을 지원하도록 점진적으로 마이그레이션하기 (`<Suspense clientOnly/>` -> `<Suspense/>`)
 
-React.Suspense를 SSR과 CSR에서 모두 사용하고 싶다면 `<Suspense.CSROnly/>`에서 `<Suspense/>`로 점진적으로 마이그레이션하면 쉽게 적용할 수 있습니다.
+React.Suspense를 SSR과 CSR에서 모두 사용하고 싶다면 `<Suspense clientOnly/>`에서 `<Suspense/>`로 점진적으로 마이그레이션하면 쉽게 적용할 수 있습니다.
 
 </Callout>
 
@@ -52,7 +52,7 @@ React.Suspense를 SSR과 CSR에서 모두 사용하고 싶다면 `<Suspense.CSRO
 
 <Callout type='warning'>
 
-deprecated: [wrap.Suspense().on](./wrap), [wrap.Suspense.CSROnly().on](./wrap)을 사용하세요
+deprecated: [wrap.Suspense().on](./wrap)을 사용하세요
 
 </Callout>
 
@@ -60,19 +60,10 @@ withSuspense를 사용하면 컴포넌트를 `<Suspense/>`로 쉽게 래핑할 �
 아래와 같이 withSuspense를 사용하면 이를 감싸기 위해 불필요한 코드를 만들 필요가 없습니다.
 withSuspense의 두 번째 인자는 children이 없는 `<Suspense/>`의 props입니다.
 
-```tsx /withSuspense.CSROnly/ /withSuspense/
+```jsx /withSuspense/
 import { withSuspense } from '@suspensive/react'
 
 const Example = withSuspense(
-  function Component() {
-    // code make suspending
-
-    return <>...</>
-  },
-  { fallback: <Spinner /> }
-)
-
-const Example = withSuspense.CSROnly(
   function Component() {
     // code make suspending
 
