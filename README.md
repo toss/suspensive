@@ -35,6 +35,7 @@ All declarative components to use suspense on both CSR, SSR.
 - ErrorBoundaryGroup, useErrorBoundaryGroup
 - Delay
 - SuspensiveProvider, Suspensive
+- DevMode
 
 ### Installation
 
