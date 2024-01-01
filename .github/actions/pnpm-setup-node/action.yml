@@ -1,11 +1,11 @@
-name: setup pnpm & node 
+name: setup pnpm & node
 description: setup pnpm & node
 runs:
   using: composite
   steps:
     - uses: pnpm/action-setup@v2
       with:
-        version: 8.12.1
+        version: 8.13.1
     - uses: actions/setup-node@v4
       with:
         cache: "pnpm"
