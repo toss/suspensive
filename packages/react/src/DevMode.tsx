@@ -29,6 +29,7 @@ const ModeSubscriber = ({ position }: { position: keyof typeof Position }) => {
   if (process.env.NODE_ENV !== 'production' && devMode != null) {
     return (
       <svg
+        role={`Suspensive.DevMode-${devMode.is ? 'on' : 'off'}`}
         onClick={devMode.is ? devMode.off : devMode.on}
         onMouseEnter={() => setIsHover(true)}
         onMouseLeave={() => setIsHover(false)}

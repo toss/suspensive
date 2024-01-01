@@ -8,11 +8,11 @@ import { Suspensive, SuspensiveProvider } from './Suspensive'
 describe('<DevMode/>', () => {
   it('should show nothing if without SuspensiveProvider', () => {
     const renderResult = render(<DevMode />)
-    expect(renderResult.queryByText('Suspensive.DevMode: off')).not.toBeInTheDocument()
-    expect(renderResult.queryByText('Suspensive.DevMode: on')).not.toBeInTheDocument()
+    expect(renderResult.queryByRole('Suspensive.DevMode-off')).not.toBeInTheDocument()
+    expect(renderResult.queryByRole('Suspensive.DevMode-on')).not.toBeInTheDocument()
   })
 
-  it('should show `Suspensive.DevMode: off` in SuspensiveProvider', () => {
+  it('should show DevMode with role `Suspensive.DevMode: off` in SuspensiveProvider', () => {
     const suspensive = new Suspensive()
     const renderResult = render(
       <SuspensiveProvider value={suspensive}>
@@ -20,7 +20,7 @@ describe('<DevMode/>', () => {
       </SuspensiveProvider>
     )
 
-    expect(renderResult.getByText('Suspensive.DevMode: off')).toBeInTheDocument()
+    expect(renderResult.getByRole('Suspensive.DevMode-off')).toBeInTheDocument()
   })
 
   it('should show nothing on production mode in SuspensiveProvider', () => {
@@ -32,7 +32,7 @@ describe('<DevMode/>', () => {
       </SuspensiveProvider>
     )
 
-    expect(renderResult.queryByText('Suspensive.DevMode: off')).not.toBeInTheDocument()
+    expect(renderResult.queryByText('Suspensive.DevMode-off')).not.toBeInTheDocument()
     process.env.NODE_ENV = undefined
   })
 
@@ -44,16 +44,16 @@ describe('<DevMode/>', () => {
       </SuspensiveProvider>
     )
 
-    const devMode = renderResult.getByText('Suspensive.DevMode: off')
+    const devMode = renderResult.getByRole('Suspensive.DevMode-off')
     expect(devMode).toBeInTheDocument()
-    expect(devMode?.style.transform).toBe('scale(1)')
+    expect(devMode.style.transform).toBe('scale(1)')
     fireEvent.mouseEnter(devMode)
-    expect(devMode?.style.transform).toBe('scale(1.1)')
+    expect(devMode.style.transform).toBe('scale(1.1)')
     fireEvent.mouseLeave(devMode)
-    expect(devMode?.style.transform).toBe('scale(1)')
+    expect(devMode.style.transform).toBe('scale(1)')
   })
 
-  it('should show `Suspensive.DevMode: on` if clicked', () => {
+  it('should show Suspensive logo with opacity 100% if clicked', () => {
     const suspensive = new Suspensive()
     const renderResult = render(
       <SuspensiveProvider value={suspensive}>
@@ -61,47 +61,50 @@ describe('<DevMode/>', () => {
       </SuspensiveProvider>
     )
 
-    const devMode = renderResult.getByText('Suspensive.DevMode: off')
+    const devMode = renderResult.getByRole('Suspensive.DevMode-off')
     expect(devMode).toBeInTheDocument()
     fireEvent.click(devMode)
-    expect(renderResult.getByText('Suspensive.DevMode: on')).toBeInTheDocument()
+    expect(devMode.style.opacity).toBe('1')
   })
 
-  it('should make Suspense.CSROnly show fallback if DevMode is clicked once', () => {
+  it('should make Suspense with clientOnly prop show fallback if DevMode is clicked once', () => {
     const suspensive = new Suspensive()
     const renderResult = render(
       <SuspensiveProvider value={suspensive}>
-        <Suspense.CSROnly
+        <Suspense
+          clientOnly
           fallback="loading..."
           devMode={{
             showFallback: true,
           }}
         >
           children
-        </Suspense.CSROnly>
+        </Suspense>
         <DevMode />
       </SuspensiveProvider>
     )
-    expect(renderResult.getByText('Suspensive.DevMode: off')).toBeInTheDocument()
-    expect(renderResult.getByText('children')).toBeInTheDocument()
-    fireEvent.click(renderResult.getByText('Suspensive.DevMode: off'))
-    expect(renderResult.getByText('Suspensive.DevMode: on')).toBeInTheDocument()
+
+    const devMode = renderResult.getByRole('Suspensive.DevMode-off')
+    expect(devMode).toBeInTheDocument()
+    fireEvent.click(devMode)
+    expect(devMode.style.opacity).toBe('1')
     expect(renderResult.getByText('loading...')).toBeInTheDocument()
   })
-  it('should make Suspense.CSROnly as no devMode if devMode prop is just object', () => {
+  it('should make Suspense with clientOnly prop as no devMode if devMode prop is just object', () => {
     const suspensive = new Suspensive()
     const renderResult = render(
       <SuspensiveProvider value={suspensive}>
-        <Suspense.CSROnly fallback="loading..." devMode={{}}>
+        <Suspense clientOnly fallback="loading..." devMode={{}}>
           children
-        </Suspense.CSROnly>
+        </Suspense>
         <DevMode />
       </SuspensiveProvider>
     )
-    expect(renderResult.getByText('Suspensive.DevMode: off')).toBeInTheDocument()
-    expect(renderResult.getByText('children')).toBeInTheDocument()
-    fireEvent.click(renderResult.getByText('Suspensive.DevMode: off'))
-    expect(renderResult.getByText('Suspensive.DevMode: on')).toBeInTheDocument()
+
+    const devMode = renderResult.getByRole('Suspensive.DevMode-off')
+    expect(devMode).toBeInTheDocument()
+    fireEvent.click(devMode)
+    expect(devMode.style.opacity).toBe('1')
     expect(renderResult.getByText('children')).toBeInTheDocument()
   })
   it('should make Suspense show fallback if DevMode is clicked once', () => {
@@ -119,10 +122,11 @@ describe('<DevMode/>', () => {
         <DevMode />
       </SuspensiveProvider>
     )
-    expect(renderResult.getByText('Suspensive.DevMode: off')).toBeInTheDocument()
-    expect(renderResult.getByText('children')).toBeInTheDocument()
-    fireEvent.click(renderResult.getByText('Suspensive.DevMode: off'))
-    expect(renderResult.getByText('Suspensive.DevMode: on')).toBeInTheDocument()
+
+    const devMode = renderResult.getByRole('Suspensive.DevMode-off')
+    expect(devMode).toBeInTheDocument()
+    fireEvent.click(devMode)
+    expect(devMode.style.opacity).toBe('1')
     expect(renderResult.getByText('loading...')).toBeInTheDocument()
   })
   it('should make Suspense as no devMode if devMode prop is just object', () => {
@@ -135,10 +139,11 @@ describe('<DevMode/>', () => {
         <DevMode />
       </SuspensiveProvider>
     )
-    expect(renderResult.getByText('Suspensive.DevMode: off')).toBeInTheDocument()
-    expect(renderResult.getByText('children')).toBeInTheDocument()
-    fireEvent.click(renderResult.getByText('Suspensive.DevMode: off'))
-    expect(renderResult.getByText('Suspensive.DevMode: on')).toBeInTheDocument()
+
+    const devMode = renderResult.getByRole('Suspensive.DevMode-off')
+    expect(devMode).toBeInTheDocument()
+    fireEvent.click(devMode)
+    expect(devMode.style.opacity).toBe('1')
     expect(renderResult.getByText('children')).toBeInTheDocument()
   })
 
@@ -157,10 +162,11 @@ describe('<DevMode/>', () => {
         <DevMode />
       </SuspensiveProvider>
     )
-    expect(renderResult.getByText('Suspensive.DevMode: off')).toBeInTheDocument()
-    expect(renderResult.getByText('children')).toBeInTheDocument()
-    fireEvent.click(renderResult.getByText('Suspensive.DevMode: off'))
-    expect(renderResult.getByText('Suspensive.DevMode: on')).toBeInTheDocument()
+
+    const devMode = renderResult.getByRole('Suspensive.DevMode-off')
+    expect(devMode).toBeInTheDocument()
+    fireEvent.click(devMode)
+    expect(devMode.style.opacity).toBe('1')
     expect(renderResult.getByText('errorBoundary fallback')).toBeInTheDocument()
   })
   it('should make ErrorBoundary as no devMode if devMode prop is just object', () => {
@@ -173,10 +179,11 @@ describe('<DevMode/>', () => {
         <DevMode />
       </SuspensiveProvider>
     )
-    expect(renderResult.getByText('Suspensive.DevMode: off')).toBeInTheDocument()
-    expect(renderResult.getByText('children')).toBeInTheDocument()
-    fireEvent.click(renderResult.getByText('Suspensive.DevMode: off'))
-    expect(renderResult.getByText('Suspensive.DevMode: on')).toBeInTheDocument()
+
+    const devMode = renderResult.getByRole('Suspensive.DevMode-off')
+    expect(devMode).toBeInTheDocument()
+    fireEvent.click(devMode)
+    expect(devMode.style.opacity).toBe('1')
     expect(renderResult.getByText('children')).toBeInTheDocument()
   })
 })
