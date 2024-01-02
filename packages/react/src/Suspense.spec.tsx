@@ -5,17 +5,17 @@ import { createElement } from 'react'
 import { beforeEach, describe, expect, it } from 'vitest'
 import { Suspense, withSuspense } from '.'
 
-const resetBeforeEach = () => beforeEach(Suspend.reset)
+const resetBeforeEach = () => beforeEach(() => Suspend.reset())
 
 describe('<Suspense/>', () => {
   resetBeforeEach()
 
-  it('should render the children if nothing to suspend', async () => {
+  it('should render the children if nothing to suspend', () => {
     render(<Suspense fallback={FALLBACK}>{TEXT}</Suspense>)
     expect(screen.queryByText(TEXT)).toBeInTheDocument()
     expect(screen.queryByText(FALLBACK)).not.toBeInTheDocument()
   })
-  it('should render the fallback if something to suspend in children', async () => {
+  it('should render the fallback if something to suspend in children', () => {
     render(
       <Suspense fallback={FALLBACK}>
         <Suspend during={Infinity} toShow={TEXT} />
@@ -55,7 +55,7 @@ describe('<Suspense.CSROnly/>', () => {
     await waitFor(() => expect(screen.queryByText(TEXT)).toBeInTheDocument())
     expect(screen.queryByText(FALLBACK)).not.toBeInTheDocument()
   })
-  it('should render the children if nothing to suspend in children', async () => {
+  it('should render the children if nothing to suspend in children', () => {
     render(<Suspense.CSROnly fallback={FALLBACK}>{TEXT}</Suspense.CSROnly>)
     expect(screen.queryByText(FALLBACK)).not.toBeInTheDocument()
     expect(screen.queryByText(TEXT)).toBeInTheDocument()
