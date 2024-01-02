@@ -48,8 +48,8 @@ importers:
         specifier: ^1.1.1
         version: 1.1.1(playwright@1.40.1)(vitest@1.1.1)
       '@vitest/coverage-istanbul':
-        specifier: ^1.1.0
-        version: 1.1.0(vitest@1.1.1)
+        specifier: ^1.1.1
+        version: 1.1.1(vitest@1.1.1)
       '@vitest/ui':
         specifier: ^1.1.0
         version: 1.1.0(vitest@1.1.1)
@@ -2565,8 +2565,8 @@ packages:
       sirv: 2.0.3
       vitest: 1.1.1(@types/node@18.19.3)(@vitest/browser@1.1.1)(@vitest/ui@1.1.0)(jsdom@23.0.1)
 
-  /@vitest/coverage-istanbul@1.1.0(vitest@1.1.1):
-    resolution: {integrity: sha512-sjHGQQu7lkJUYSBMOR3f9AyOlK1LBVr0v7LMar/4i167ltabRWlQ2STBDM4P6Wl659NAcHlZ/RXxrAgJPavDMA==}
+  /@vitest/coverage-istanbul@1.1.1(vitest@1.1.1):
+    resolution: {integrity: sha512-Ikq6k2/KJ3MqEnGJCZBctcgxW1JRPzyVetVz1AYqLxrHNiG/epGFPZ74kIc3AK0HGaf0RsqZkc8riCTmxfH/dQ==}
     peerDependencies:
       vitest: ^1.0.0
     dependencies:
