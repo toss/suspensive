@@ -61,7 +61,7 @@
     "@testing-library/react": "^14.1.2",
     "@types/node": "^18.19.3",
     "@vitest/browser": "^1.1.1",
-    "@vitest/coverage-istanbul": "^1.1.0",
+    "@vitest/coverage-istanbul": "^1.1.1",
     "@vitest/ui": "^1.1.0",
     "commitizen": "^4.3.0",
     "cz-conventional-changelog": "^3.3.0",
