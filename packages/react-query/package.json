@@ -68,7 +68,7 @@
     "@types/react-dom": "^18.2.18",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "tsd": "^0.29.0"
+    "tsd": "^0.30.1"
   },
   "peerDependencies": {
     "@suspensive/react": "workspace:^1.22.0",
