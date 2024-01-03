@@ -1,6 +1,5 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import type { InfiniteData } from '@tanstack/react-query'
-import { expectError } from 'tsd'
 import { describe, expectTypeOf, it } from 'vitest'
 import { useSuspenseInfiniteQuery } from '../dist'
 
@@ -8,31 +7,45 @@ const queryKey = ['key'] as const
 const queryFn = () => 'response' as const
 const boolean = Math.random() > 0.5
 
-// no arg
-expectError(useSuspenseInfiniteQuery())
-// no suspense
-expectError(useSuspenseInfiniteQuery({ queryKey, queryFn, suspense: boolean }))
-expectError(useSuspenseInfiniteQuery(queryKey, { queryFn, suspense: boolean }))
-expectError(useSuspenseInfiniteQuery(queryKey, queryFn, { suspense: boolean }))
-// no useErrorBoundary
-expectError(useSuspenseInfiniteQuery({ queryKey, queryFn, useErrorBoundary: boolean }))
-expectError(useSuspenseInfiniteQuery(queryKey, { queryFn, useErrorBoundary: boolean }))
-expectError(useSuspenseInfiniteQuery(queryKey, queryFn, { useErrorBoundary: boolean }))
-// no enabled
-expectError(useSuspenseInfiniteQuery({ queryKey, queryFn, enabled: boolean }))
-expectError(useSuspenseInfiniteQuery(queryKey, { queryFn, enabled: boolean }))
-expectError(useSuspenseInfiniteQuery(queryKey, queryFn, { enabled: boolean }))
-// no placeholderData
-expectError(useSuspenseInfiniteQuery({ queryKey, queryFn, placeholderData: boolean }))
-expectError(useSuspenseInfiniteQuery(queryKey, { queryFn, placeholderData: boolean }))
-expectError(useSuspenseInfiniteQuery(queryKey, queryFn, { placeholderData: boolean }))
+// @ts-expect-error no arg
+useSuspenseInfiniteQuery()
 
-// Result
-// no isPlaceholderData
-expectError(useSuspenseInfiniteQuery(queryKey, queryFn).isPlaceholderData)
-expectError(useSuspenseInfiniteQuery(queryKey, queryFn, {}).isPlaceholderData)
-expectError(useSuspenseInfiniteQuery(queryKey, { queryFn }).isPlaceholderData)
-expectError(useSuspenseInfiniteQuery({ queryKey, queryFn }).isPlaceholderData)
+// @ts-expect-error no suspense
+useSuspenseInfiniteQuery({ queryKey, queryFn, suspense: boolean })
+// @ts-expect-error no suspense
+useSuspenseInfiniteQuery(queryKey, { queryFn, suspense: boolean })
+// @ts-expect-error no suspense
+useSuspenseInfiniteQuery(queryKey, queryFn, { suspense: boolean })
+
+// @ts-expect-error no useErrorBoundary
+useSuspenseInfiniteQuery({ queryKey, queryFn, useErrorBoundary: boolean })
+// @ts-expect-error no useErrorBoundary
+useSuspenseInfiniteQuery(queryKey, { queryFn, useErrorBoundary: boolean })
+// @ts-expect-error no useErrorBoundary
+useSuspenseInfiniteQuery(queryKey, queryFn, { useErrorBoundary: boolean })
+
+// @ts-expect-error no enabled
+useSuspenseInfiniteQuery({ queryKey, queryFn, enabled: boolean })
+// @ts-expect-error no enabled
+useSuspenseInfiniteQuery(queryKey, { queryFn, enabled: boolean })
+// @ts-expect-error no enabled
+useSuspenseInfiniteQuery(queryKey, queryFn, { enabled: boolean })
+
+// @ts-expect-error no placeholderData
+useSuspenseInfiniteQuery({ queryKey, queryFn, placeholderData: boolean })
+// @ts-expect-error no placeholderData
+useSuspenseInfiniteQuery(queryKey, { queryFn, placeholderData: boolean })
+// @ts-expect-error no placeholderData
+useSuspenseInfiniteQuery(queryKey, queryFn, { placeholderData: boolean })
+
+// @ts-expect-error no isPlaceholderData
+useSuspenseInfiniteQuery(queryKey, queryFn).isPlaceholderData
+// @ts-expect-error no isPlaceholderData
+useSuspenseInfiniteQuery(queryKey, queryFn, {}).isPlaceholderData
+// @ts-expect-error no isPlaceholderData
+useSuspenseInfiniteQuery(queryKey, { queryFn }).isPlaceholderData
+// @ts-expect-error no isPlaceholderData
+useSuspenseInfiniteQuery({ queryKey, queryFn }).isPlaceholderData
 
 describe('useSuspenseInfiniteQuery', () => {
   it("'s type check", () => {

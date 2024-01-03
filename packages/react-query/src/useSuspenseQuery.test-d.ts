@@ -1,5 +1,4 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import { expectError } from 'tsd'
 import { describe, expectTypeOf, it } from 'vitest'
 import { useSuspenseQuery } from '../dist'
 
@@ -7,32 +6,45 @@ const queryKey = ['key'] as const
 const queryFn = () => 'response' as const
 const boolean = Math.random() > 0.5
 
-// Options
-// no arg
-expectError(useSuspenseQuery())
-// no suspense
-expectError(useSuspenseQuery({ queryKey, queryFn, suspense: boolean }))
-expectError(useSuspenseQuery(queryKey, { queryFn, suspense: boolean }))
-expectError(useSuspenseQuery(queryKey, queryFn, { suspense: boolean }))
-// no useErrorBoundary
-expectError(useSuspenseQuery({ queryKey, queryFn, useErrorBoundary: boolean }))
-expectError(useSuspenseQuery(queryKey, { queryFn, useErrorBoundary: boolean }))
-expectError(useSuspenseQuery(queryKey, queryFn, { useErrorBoundary: boolean }))
-// no enabled
-expectError(useSuspenseQuery({ queryKey, queryFn, enabled: boolean }))
-expectError(useSuspenseQuery(queryKey, { queryFn, enabled: boolean }))
-expectError(useSuspenseQuery(queryKey, queryFn, { enabled: boolean }))
-// no placeholderData
-expectError(useSuspenseQuery({ queryKey, queryFn, placeholderData: boolean }))
-expectError(useSuspenseQuery(queryKey, { queryFn, placeholderData: boolean }))
-expectError(useSuspenseQuery(queryKey, queryFn, { placeholderData: boolean }))
+//@ts-expect-error no arg
+useSuspenseQuery()
 
-// Result
-// no isPlaceholderData
-expectError(useSuspenseQuery(queryKey, queryFn).isPlaceholderData)
-expectError(useSuspenseQuery(queryKey, queryFn, {}).isPlaceholderData)
-expectError(useSuspenseQuery(queryKey, { queryFn }).isPlaceholderData)
-expectError(useSuspenseQuery({ queryKey, queryFn }).isPlaceholderData)
+//@ts-expect-error no suspense
+useSuspenseQuery({ queryKey, queryFn, suspense: boolean })
+//@ts-expect-error no suspense
+useSuspenseQuery(queryKey, { queryFn, suspense: boolean })
+//@ts-expect-error no suspense
+useSuspenseQuery(queryKey, queryFn, { suspense: boolean })
+
+//@ts-expect-error no useErrorBoundary
+useSuspenseQuery({ queryKey, queryFn, useErrorBoundary: boolean })
+//@ts-expect-error no useErrorBoundary
+useSuspenseQuery(queryKey, { queryFn, useErrorBoundary: boolean })
+//@ts-expect-error no useErrorBoundary
+useSuspenseQuery(queryKey, queryFn, { useErrorBoundary: boolean })
+
+//@ts-expect-error no enabled
+useSuspenseQuery({ queryKey, queryFn, enabled: boolean })
+//@ts-expect-error no enabled
+useSuspenseQuery(queryKey, { queryFn, enabled: boolean })
+//@ts-expect-error no enabled
+useSuspenseQuery(queryKey, queryFn, { enabled: boolean })
+
+//@ts-expect-error no placeholderData
+useSuspenseQuery({ queryKey, queryFn, placeholderData: boolean })
+//@ts-expect-error no placeholderData
+useSuspenseQuery(queryKey, { queryFn, placeholderData: boolean })
+//@ts-expect-error no placeholderData
+useSuspenseQuery(queryKey, queryFn, { placeholderData: boolean })
+
+//@ts-expect-error no isPlaceholderData
+useSuspenseQuery(queryKey, queryFn).isPlaceholderData
+//@ts-expect-error no isPlaceholderData
+useSuspenseQuery(queryKey, queryFn, {}).isPlaceholderData
+//@ts-expect-error no isPlaceholderData
+useSuspenseQuery(queryKey, { queryFn }).isPlaceholderData
+//@ts-expect-error no isPlaceholderData
+useSuspenseQuery({ queryKey, queryFn }).isPlaceholderData
 
 describe('useSuspenseQuery', () => {
   it("'s data is always defined", () => {

@@ -43,7 +43,6 @@
     "prepack": "turbo run prepack",
     "prepare": "husky install",
     "test": "turbo run test",
-    "test:tsd": "turbo run test:tsd",
     "test:watch": "turbo run test:watch --parallel",
     "type:check": "turbo run type:check"
   },

@@ -1,5 +1,4 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import { expectError } from 'tsd'
 import { describe, expectTypeOf, it } from 'vitest'
 import { useSuspenseQueries } from '../dist'
 
@@ -10,18 +9,19 @@ const queryOptions = <TIndex extends number>(index: TIndex) => ({
   queryFn: () => ({ name: `resolved${index}` }) as const,
 })
 
-expectError(
-  useSuspenseQueries({
-    queries: [
-      { ...queryOptions(0), suspense: false },
-      { ...queryOptions(1), select, suspense: true },
-    ] as const,
-  })
-)
+useSuspenseQueries({
+  queries: [
+    // @ts-expect-error no suspense
+    { ...queryOptions(0), suspense: false },
+    // @ts-expect-error no suspense
+    { ...queryOptions(1), select, suspense: true },
+  ] as const,
+})
 
-// noItem
-expectError(useSuspenseQueries({}))
-expectError(useSuspenseQueries())
+// @ts-expect-error if no items
+useSuspenseQueries({})
+// @ts-expect-error if no items
+useSuspenseQueries()
 
 describe('useSuspenseQueries', () => {
   it("'s type check", () => {
