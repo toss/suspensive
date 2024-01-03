@@ -21,13 +21,11 @@ interface ToInferWithSelectOptions<TQueryFnData, TData, TQueryKey extends QueryK
   select: (data: unknown) => TData
 }
 
-type GetSuspenseOptions<T> =
-  // enabled: false
-  T extends ToInferWithSelectOptions<infer TQueryFnData, infer TData, infer TQueryKey>
-    ? UseSuspenseQueryOptions<TQueryFnData, unknown, TData, TQueryKey>
-    : T extends ToInferOptions<infer TQueryFnData, infer TQueryKey>
-      ? UseSuspenseQueryOptions<TQueryFnData, unknown, TQueryFnData, TQueryKey>
-      : UseSuspenseQueryOptions
+type GetSuspenseOptions<T> = T extends ToInferWithSelectOptions<infer TQueryFnData, infer TData, infer TQueryKey>
+  ? UseSuspenseQueryOptions<TQueryFnData, unknown, TData, TQueryKey>
+  : T extends ToInferOptions<infer TQueryFnData, infer TQueryKey>
+    ? UseSuspenseQueryOptions<TQueryFnData, unknown, TQueryFnData, TQueryKey>
+    : UseSuspenseQueryOptions
 
 export type SuspenseQueriesOptions<
   T extends unknown[],
@@ -64,7 +62,7 @@ type GetSuspenseResult<T> = T extends { queryFnData: any; data: infer TData }
               ? UseSuspenseQueryResult<TData>
               : T extends ToInferOptions<infer TQueryFnData, QueryKey>
                 ? UseSuspenseQueryResult<TQueryFnData>
-                : UseSuspenseQueryResult<unknown>
+                : UseSuspenseQueryResult
 
 export type SuspenseQueriesResults<
   T extends any[],
@@ -78,9 +76,9 @@ export type SuspenseQueriesResults<
       ? [...TResult, GetSuspenseResult<Head>]
       : T extends [infer Head, ...infer Tail]
         ? SuspenseQueriesResults<[...Tail], [...TResult, GetSuspenseResult<Head>], [...TDepth, 1]>
-        : T extends UseSuspenseQueryOptions<infer TQueryFnData, unknown, infer TData, QueryKey>[]
+        : T extends UseSuspenseQueryOptions<infer TQueryFnData, unknown, infer TData>[]
           ? UseSuspenseQueryResult<unknown extends TData ? TQueryFnData : TData>[]
-          : UseSuspenseQueryResult<unknown>[]
+          : UseSuspenseQueryResult[]
 
 type UseSuspenseQueries = <T extends any[]>(arg: {
   queries: readonly [...SuspenseQueriesOptions<T>]
@@ -94,6 +92,6 @@ export const useSuspenseQueries: UseSuspenseQueries = <T extends any[]>({
   context?: UseQueryOptions['context']
 }) =>
   useQueries({
-    queries: queries.map((query) => ({ ...query, suspense: true })),
+    queries: queries.map((query: typeof queries) => ({ ...query, suspense: true })),
     context,
   }) as SuspenseQueriesResults<T>

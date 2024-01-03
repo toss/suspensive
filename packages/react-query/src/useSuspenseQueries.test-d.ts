@@ -7,7 +7,7 @@ const select = () => 'selected' as const
 
 const queryOptions = <TIndex extends number>(index: TIndex) => ({
   queryKey: ['key', index] as const,
-  queryFn: async () => ({ name: `resolved${index}` }) as const,
+  queryFn: () => ({ name: `resolved${index}` }) as const,
 })
 
 expectError(

@@ -5,7 +5,7 @@ import { describe, expectTypeOf, it } from 'vitest'
 import { useSuspenseInfiniteQuery } from '../dist'
 
 const queryKey = ['key'] as const
-const queryFn = async () => 'response' as const
+const queryFn = () => 'response' as const
 const boolean = Math.random() > 0.5
 
 // no arg
