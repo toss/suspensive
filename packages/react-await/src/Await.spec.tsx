@@ -105,9 +105,7 @@ describe('useAwait', () => {
   })
 })
 
-const asyncErrorFn = async () => {
-  throw ERROR_MESSAGE
-}
+const asyncErrorFn = () => new Promise((_, reject) => reject(ERROR_MESSAGE))
 describe('awaitClient', () => {
   beforeEach(() => awaitClient.reset())
 

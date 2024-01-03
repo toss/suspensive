@@ -46,9 +46,9 @@ type GetOption<T> =
       ? UseQueryOptionsForUseSuspenseQueries<TQueryFnData, TQueryFnData, TQueryKey, false>
       : // enabled: true
         T extends ToInferWithSelectEnabledOption<infer TQueryFnData, infer TData, infer TQueryKey, true>
-        ? UseQueryOptionsForUseSuspenseQueries<TQueryFnData, TData, TQueryKey, true>
+        ? UseQueryOptionsForUseSuspenseQueries<TQueryFnData, TData, TQueryKey>
         : T extends ToInferWithEnabledOption<infer TQueryFnData, infer TQueryKey, true>
-          ? UseQueryOptionsForUseSuspenseQueries<TQueryFnData, TQueryFnData, TQueryKey, true>
+          ? UseQueryOptionsForUseSuspenseQueries<TQueryFnData, TQueryFnData, TQueryKey>
           : // enabled: boolean
             T extends ToInferWithSelectEnabledOption<infer TQueryFnData, infer TData, infer TQueryKey, boolean>
             ? UseQueryOptionsForUseSuspenseQueries<TQueryFnData, TData, TQueryKey, boolean>
@@ -56,14 +56,14 @@ type GetOption<T> =
               ? UseQueryOptionsForUseSuspenseQueries<TQueryFnData, TQueryFnData, TQueryKey, boolean>
               : // enabled: undefined
                 T extends ToInferWithSelectEnabledOption<infer TQueryFnData, infer TData, infer TQueryKey, undefined>
-                ? UseQueryOptionsForUseSuspenseQueries<TQueryFnData, TData, TQueryKey, true>
+                ? UseQueryOptionsForUseSuspenseQueries<TQueryFnData, TData, TQueryKey>
                 : T extends ToInferWithEnabledOption<infer TQueryFnData, infer TQueryKey, undefined>
-                  ? UseQueryOptionsForUseSuspenseQueries<TQueryFnData, TQueryFnData, TQueryKey, true>
+                  ? UseQueryOptionsForUseSuspenseQueries<TQueryFnData, TQueryFnData, TQueryKey>
                   : // no enabled
                     T extends ToInferWithSelectOption<infer TQueryFnData, infer TData, infer TQueryKey>
-                    ? UseQueryOptionsForUseSuspenseQueries<TQueryFnData, TData, TQueryKey, true>
+                    ? UseQueryOptionsForUseSuspenseQueries<TQueryFnData, TData, TQueryKey>
                     : T extends ToInferOption<infer TQueryFnData, infer TQueryKey>
-                      ? UseQueryOptionsForUseSuspenseQueries<TQueryFnData, TQueryFnData, TQueryKey, true>
+                      ? UseQueryOptionsForUseSuspenseQueries<TQueryFnData, TQueryFnData, TQueryKey>
                       : UseQueryOptionsForUseSuspenseQueries
 
 type SuspenseQueriesOptions<
@@ -136,7 +136,7 @@ export type QueriesResults<
       ? [...TResult, GetResult<Head>]
       : T extends [infer Head, ...infer Tail]
         ? QueriesResults<[...Tail], [...TResult, GetResult<Head>], [...TDepth, 1]>
-        : T extends UseQueryOptionsForUseSuspenseQueries<infer TQueryFnData, infer TData, QueryKey>[]
+        : T extends UseQueryOptionsForUseSuspenseQueries<infer TQueryFnData, infer TData>[]
           ? UseSuspenseQueryResultOnSuccess<unknown extends TData ? TQueryFnData : TData>[]
           : (UseSuspenseQueryResultOnSuccess<unknown> | UseSuspenseQueryResultOnLoading)[]
 
@@ -152,6 +152,6 @@ export const useSuspenseQueries: UseSuspenseQueries = <T extends any[]>({
   context?: UseQueryOptions['context']
 }) =>
   useQueries({
-    queries: queries.map((query) => ({ ...query, suspense: true })),
+    queries: queries.map((query: typeof queries) => ({ ...query, suspense: true })),
     context,
   }) as QueriesResults<T>

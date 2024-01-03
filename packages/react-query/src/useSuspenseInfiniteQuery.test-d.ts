@@ -4,7 +4,7 @@ import { expectError, expectType } from 'tsd'
 import { useSuspenseInfiniteQuery } from '../dist'
 
 const queryKey = ['key'] as const
-const queryFn = async () => 'response' as const
+const queryFn = () => 'response' as const
 const boolean = Math.random() > 0.5
 
 type AwaitedQueryFnReturn = Awaited<ReturnType<typeof queryFn>>

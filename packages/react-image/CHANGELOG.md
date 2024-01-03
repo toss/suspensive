@@ -1,5 +1,11 @@
 # @suspensive/react-image
 
+## 0.0.6
+
+### Patch Changes
+
+- 3782ae8: ci(eslint): add plugin:@typescript-eslint/strict-type-checked
+
 ## 0.0.5
 
 ### Patch Changes
