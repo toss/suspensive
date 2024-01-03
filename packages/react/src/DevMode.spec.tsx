@@ -46,11 +46,11 @@ describe('<DevMode/>', () => {
 
     const devMode = renderResult.getByText('Suspensive.DevMode: off')
     expect(devMode).toBeInTheDocument()
-    expect(devMode?.style.transform).toBe('scale(1)')
+    expect(devMode.style.transform).toBe('scale(1)')
     fireEvent.mouseEnter(devMode)
-    expect(devMode?.style.transform).toBe('scale(1.1)')
+    expect(devMode.style.transform).toBe('scale(1.1)')
     fireEvent.mouseLeave(devMode)
-    expect(devMode?.style.transform).toBe('scale(1)')
+    expect(devMode.style.transform).toBe('scale(1)')
   })
 
   it('should show `Suspensive.DevMode: on` if clicked', () => {
