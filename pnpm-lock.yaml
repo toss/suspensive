@@ -144,8 +144,8 @@ importers:
         specifier: ^5.1.0
         version: 5.1.0(@testing-library/dom@9.3.3)(eslint@8.56.0)
       eslint-plugin-jsdoc:
-        specifier: ^46.9.1
-        version: 46.9.1(eslint@8.56.0)
+        specifier: ^48.0.2
+        version: 48.0.2(eslint@8.56.0)
       eslint-plugin-prettier:
         specifier: ^5.1.2
         version: 5.1.2(eslint-config-prettier@9.1.0)(eslint@8.56.0)(prettier@3.1.1)
@@ -174,8 +174,8 @@ importers:
         specifier: ^2.29.1
         version: 2.29.1(@typescript-eslint/parser@6.16.0)(eslint-import-resolver-typescript@3.6.1)(eslint@8.56.0)
       eslint-plugin-jsdoc:
-        specifier: ^46.9.1
-        version: 46.9.1(eslint@8.56.0)
+        specifier: ^48.0.2
+        version: 48.0.2(eslint@8.56.0)
       eslint-plugin-prettier:
         specifier: ^5.1.2
         version: 5.1.2(eslint-config-prettier@9.1.0)(eslint@8.56.0)(prettier@3.1.1)
@@ -4533,11 +4533,11 @@ packages:
       requireindex: 1.2.0
     dev: false
 
-  /eslint-plugin-jsdoc@46.9.1(eslint@8.56.0):
-    resolution: {integrity: sha512-11Ox5LCl2wY7gGkp9UOyew70o9qvii1daAH+h/MFobRVRNcy7sVlH+jm0HQdgcvcru6285GvpjpUyoa051j03Q==}
-    engines: {node: '>=16'}
+  /eslint-plugin-jsdoc@48.0.2(eslint@8.56.0):
+    resolution: {integrity: sha512-CBFl5Jc7+jlV36RwDm+PQ8Uw5r28pn2/uW/OaB+Gw5bFwn4Py/1eYMZ3hGf9S4meUFZ/sRvS+hVif2mRAp6WqQ==}
+    engines: {node: '>=18'}
     peerDependencies:
-      eslint: ^7.0.0 || ^8.0.0
+      eslint: ^7.0.0 || ^8.0.0 || ^9.0.0
     dependencies:
       '@es-joy/jsdoccomment': 0.41.0
       are-docs-informative: 0.0.2
