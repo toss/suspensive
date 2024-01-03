@@ -1,5 +1,15 @@
 # @suspensive/visualization
 
+## 0.0.15
+
+### Patch Changes
+
+- Updated dependencies [3782ae8]
+  - @suspensive/react-await@0.0.14
+  - @suspensive/react-image@0.0.6
+  - @suspensive/react-query@1.22.1
+  - @suspensive/react@1.22.1
+
 ## 0.0.14
 
 ### Patch Changes
