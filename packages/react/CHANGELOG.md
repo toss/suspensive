@@ -1,5 +1,11 @@
 # @suspensive/react
 
+## 1.22.1
+
+### Patch Changes
+
+- 3782ae8: ci(eslint): add plugin:@typescript-eslint/strict-type-checked
+
 ## 1.22.0
 
 ### Minor Changes

@@ -7,6 +7,7 @@ module.exports = {
     '@suspensive/eslint-config-js/no-import',
     'plugin:jsdoc/recommended-typescript',
     'plugin:@typescript-eslint/recommended',
+    'plugin:@typescript-eslint/strict-type-checked',
   ],
   rules: {
     '@typescript-eslint/no-unused-vars': 'error',
@@ -30,5 +31,13 @@ module.exports = {
     'jsdoc/check-param-names': 'error',
     'jsdoc/check-tag-names': 'off',
     'jsdoc/no-types': 'off',
+
+    // @typescript-eslint/strict-type-checked
+    '@typescript-eslint/no-unsafe-assignment': 'warn',
+    '@typescript-eslint/no-unsafe-member-access': 'warn',
+    '@typescript-eslint/no-floating-promises': 'warn',
+    '@typescript-eslint/no-unsafe-call': 'warn',
+    '@typescript-eslint/no-throw-literal': 'warn',
+    '@typescript-eslint/no-confusing-void-expression': 'off',
   },
 }

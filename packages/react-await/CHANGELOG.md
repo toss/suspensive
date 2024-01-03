@@ -1,5 +1,11 @@
 # @suspensive/react-await
 
+## 0.0.14
+
+### Patch Changes
+
+- 3782ae8: ci(eslint): add plugin:@typescript-eslint/strict-type-checked
+
 ## 0.0.13
 
 ### Patch Changes

@@ -43,7 +43,7 @@ describe('<SuspensiveProvider/>', () => {
     expect(screen.queryByText(TEXT)).toBeInTheDocument()
   })
 
-  it('should accept defaultOptions.suspense.fallback to setup default fallback of Suspense. If Suspense accepted no fallback, Suspense should use default fallback', async () => {
+  it('should accept defaultOptions.suspense.fallback to setup default fallback of Suspense. If Suspense accepted no fallback, Suspense should use default fallback', () => {
     render(
       <SuspensiveProvider value={new Suspensive({ defaultOptions: { suspense: { fallback: FALLBACK_GLOBAL } } })}>
         <Suspense>
@@ -53,7 +53,7 @@ describe('<SuspensiveProvider/>', () => {
     )
     expect(screen.queryByText(FALLBACK_GLOBAL)).toBeInTheDocument()
   })
-  it('should accept defaultOptions.suspense.fallback to setup default fallback of Suspense. If Suspense accepted local fallback, Suspense should ignore default fallback and show it', async () => {
+  it('should accept defaultOptions.suspense.fallback to setup default fallback of Suspense. If Suspense accepted local fallback, Suspense should ignore default fallback and show it', () => {
     render(
       <SuspensiveProvider value={new Suspensive({ defaultOptions: { suspense: { fallback: FALLBACK_GLOBAL } } })}>
         <Suspense fallback={FALLBACK}>
@@ -64,7 +64,7 @@ describe('<SuspensiveProvider/>', () => {
     expect(screen.queryByText(FALLBACK_GLOBAL)).not.toBeInTheDocument()
     expect(screen.queryByText(FALLBACK)).toBeInTheDocument()
   })
-  it('should accept defaultOptions.suspense.fallback to setup default fallback of Suspense. If Suspense accepted local fallback as null, Suspense should ignore default fallback. even though local fallback is nullish', async () => {
+  it('should accept defaultOptions.suspense.fallback to setup default fallback of Suspense. If Suspense accepted local fallback as null, Suspense should ignore default fallback. even though local fallback is nullish', () => {
     render(
       <SuspensiveProvider value={new Suspensive({ defaultOptions: { suspense: { fallback: FALLBACK_GLOBAL } } })}>
         <Suspense fallback={null}>
