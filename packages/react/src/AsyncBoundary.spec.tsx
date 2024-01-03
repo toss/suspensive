@@ -39,7 +39,7 @@ describe('<AsyncBoundary/>', () => {
     expect(container.textContent).not.toBe(ERROR_MESSAGE)
     expect(onError).toHaveBeenCalledTimes(0)
   })
-  it('should render the pendingFallback if something to suspend in children', async () => {
+  it('should render the pendingFallback if something to suspend in children', () => {
     const onError = vi.fn()
     renderAsyncBoundary({
       pendingFallback: FALLBACK,
@@ -93,7 +93,7 @@ describe('<AsyncBoundary.CSROnly/>', () => {
     expect(container.textContent).not.toBe(ERROR_MESSAGE)
     expect(onError).toHaveBeenCalledTimes(0)
   })
-  it('should render the pendingFallback if something to suspend in children', async () => {
+  it('should render the pendingFallback if something to suspend in children', () => {
     const onError = vi.fn()
     renderAsyncBoundaryCSROnly({
       pendingFallback: FALLBACK,

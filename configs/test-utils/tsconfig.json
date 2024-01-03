@@ -1,6 +1,7 @@
 {
   "extends": "@suspensive/tsconfig/react-library.json",
-  "include": ["."],
+  "include": [".", "./.eslintrc.cjs"],
+  "exclude": ["dist", "node_modules"],
   "compilerOptions": {
     "types": ["@testing-library/jest-dom/vitest"]
   }

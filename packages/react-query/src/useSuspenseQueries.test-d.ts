@@ -3,7 +3,7 @@ import { expectError, expectType } from 'tsd'
 import { useSuspenseQueries } from '../dist'
 
 const queryKey = ['key'] as const
-const queryFn = async () => 'response' as const
+const queryFn = () => 'response' as const
 const boolean = Math.random() > 0.5
 const select = () => 'selected' as const
 
