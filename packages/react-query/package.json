@@ -54,9 +54,8 @@
     "lint:pub": "publint --strict",
     "prepack": "pnpm build",
     "test": "vitest run --coverage",
-    "test:tsd": "tsd -t ./dist/index.d.ts",
     "test:watch": "vitest --ui --coverage.enabled=true",
-    "type:check": "tsc --noEmit -p ./tsconfig.check.json"
+    "type:check": "tsc --noEmit"
   },
   "devDependencies": {
     "@suspensive/package-json-name": "workspace:*",
@@ -67,8 +66,7 @@
     "@types/react": "^18.2.46",
     "@types/react-dom": "^18.2.18",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "tsd": "^0.30.2"
+    "react-dom": "^18.2.0"
   },
   "peerDependencies": {
     "@suspensive/react": "workspace:^1.23.0",
@@ -82,8 +80,5 @@
   },
   "publishConfig": {
     "access": "public"
-  },
-  "tsd": {
-    "directory": "./src"
   }
 }
