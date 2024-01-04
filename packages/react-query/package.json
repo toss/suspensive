@@ -55,7 +55,7 @@
     "prepack": "pnpm build",
     "test": "vitest run --typecheck --coverage",
     "test:watch": "vitest --ui --coverage.enabled=true",
-    "type:check": "tsc --noEmit -p ./tsconfig.check.json"
+    "type:check": "tsc --noEmit"
   },
   "devDependencies": {
     "@suspensive/package-json-name": "workspace:*",
