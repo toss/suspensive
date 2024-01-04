@@ -1,5 +1,12 @@
 # @suspensive/visualization
 
+## 0.0.18
+
+### Patch Changes
+
+- Updated dependencies [05a3534]
+  - @suspensive/react-image@0.0.7
+
 ## 0.0.17
 
 ### Patch Changes

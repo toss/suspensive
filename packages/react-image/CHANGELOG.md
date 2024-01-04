@@ -1,5 +1,11 @@
 # @suspensive/react-image
 
+## 0.0.7
+
+### Patch Changes
+
+- 05a3534: refactor(react-image): rename Image -> SuspenseImage
+
 ## 0.0.6
 
 ### Patch Changes
