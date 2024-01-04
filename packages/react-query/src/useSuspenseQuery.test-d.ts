@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import { expectError, expectType } from 'tsd'
+import { expectTypeOf } from 'vitest'
 import { useSuspenseQuery } from '../dist'
 
 const queryKey = ['key'] as const
@@ -9,64 +9,64 @@ const boolean = Math.random() > 0.5
 type AwaitedQueryFnReturn = Awaited<ReturnType<typeof queryFn>>
 
 // arg1:queryKey, arg2: queryFn, arg3: options
-expectType<AwaitedQueryFnReturn>(
+expectTypeOf(
   useSuspenseQuery(queryKey, queryFn, {
     enabled: true,
   }).data
-)
-expectType<AwaitedQueryFnReturn | undefined>(
+).toEqualTypeOf<AwaitedQueryFnReturn>()
+expectTypeOf(
   useSuspenseQuery(queryKey, queryFn, {
     enabled: boolean,
   }).data
-)
-expectType<undefined>(
+).toEqualTypeOf<AwaitedQueryFnReturn | undefined>()
+expectTypeOf(
   useSuspenseQuery(queryKey, queryFn, {
     enabled: false,
   }).data
-)
+).toEqualTypeOf<undefined>()
 
 // arg1:queryKey, arg2: options
-expectType<AwaitedQueryFnReturn>(
+expectTypeOf(
   useSuspenseQuery(queryKey, {
     queryFn,
     enabled: true,
   }).data
-)
-expectType<AwaitedQueryFnReturn | undefined>(
+).toEqualTypeOf<AwaitedQueryFnReturn>()
+expectTypeOf(
   useSuspenseQuery(queryKey, {
     queryFn,
     enabled: boolean,
   }).data
-)
-expectType<undefined>(
+).toEqualTypeOf<AwaitedQueryFnReturn | undefined>()
+expectTypeOf(
   useSuspenseQuery(queryKey, {
     queryFn,
     enabled: false,
   }).data
-)
+).toEqualTypeOf<undefined>()
 
 // arg1: options
-expectType<AwaitedQueryFnReturn>(
+expectTypeOf(
   useSuspenseQuery({
     queryKey,
     queryFn,
     enabled: true,
   }).data
-)
-expectType<AwaitedQueryFnReturn | undefined>(
+).toEqualTypeOf<AwaitedQueryFnReturn>()
+expectTypeOf(
   useSuspenseQuery({
     queryKey,
     queryFn,
     enabled: boolean,
   }).data
-)
-expectType<undefined>(
+).toEqualTypeOf<AwaitedQueryFnReturn | undefined>()
+expectTypeOf(
   useSuspenseQuery({
     queryKey,
     queryFn,
     enabled: false,
   }).data
-)
+).toEqualTypeOf<undefined>()
 
-// no arg
-expectError(useSuspenseQuery())
+// @ts-expect-error no arg
+useSuspenseQuery()
