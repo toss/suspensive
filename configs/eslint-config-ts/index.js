@@ -12,12 +12,6 @@ module.exports = {
       node: true,
     },
   },
-  overrides: [
-    {
-      files: ['*.test-d.ts*'],
-      rules: { 'import/no-unresolved': ['error', { ignore: ['tsd'] }] },
-    },
-  ],
   rules: {
     'sort-imports': ['error', { ignoreDeclarationSort: true }],
     'import/no-cycle': 'error',
