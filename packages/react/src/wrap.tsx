@@ -4,7 +4,7 @@ import { Delay } from './Delay'
 import { ErrorBoundary } from './ErrorBoundary'
 import { ErrorBoundaryGroup } from './ErrorBoundaryGroup'
 import { Suspense } from './Suspense'
-import type { PropsWithoutChildren } from './utility-types'
+import type { OmitKeyOf } from './utility-types'
 import type { AsyncBoundaryProps, DelayProps, ErrorBoundaryGroupProps, ErrorBoundaryProps, SuspenseProps } from '.'
 
 type WrapperItem<
@@ -14,7 +14,7 @@ type WrapperItem<
     | typeof ErrorBoundary
     | typeof ErrorBoundaryGroup
     | typeof Delay,
-> = [TWrapperComponent, PropsWithoutChildren<ComponentProps<TWrapperComponent>>]
+> = [TWrapperComponent, OmitKeyOf<ComponentProps<TWrapperComponent>, 'children'>]
 
 type Wrapper =
   | WrapperItem<typeof Suspense>
@@ -25,19 +25,19 @@ type Wrapper =
 
 class WrapWithoutCSROnly {
   constructor(private wrappers: Wrapper[]) {}
-  Suspense = (props: PropsWithoutChildren<ComponentProps<typeof Suspense>> = {}) => {
+  Suspense = (props: OmitKeyOf<ComponentProps<typeof Suspense>, 'children'> = {}) => {
     this.wrappers.unshift([Suspense, props])
     return this
   }
-  ErrorBoundary = (props: PropsWithoutChildren<ComponentProps<typeof ErrorBoundary>>) => {
+  ErrorBoundary = (props: OmitKeyOf<ComponentProps<typeof ErrorBoundary>, 'children'>) => {
     this.wrappers.unshift([ErrorBoundary, props])
     return this
   }
-  ErrorBoundaryGroup = (props: PropsWithoutChildren<ComponentProps<typeof ErrorBoundaryGroup>> = {}) => {
+  ErrorBoundaryGroup = (props: OmitKeyOf<ComponentProps<typeof ErrorBoundaryGroup>, 'children'> = {}) => {
     this.wrappers.unshift([ErrorBoundaryGroup, props])
     return this
   }
-  Delay = (props: PropsWithoutChildren<ComponentProps<typeof Delay>> = {}) => {
+  Delay = (props: OmitKeyOf<ComponentProps<typeof Delay>, 'children'> = {}) => {
     this.wrappers.unshift([Delay, props])
     return this
   }
@@ -67,28 +67,29 @@ type Wrap = WrapWithoutCSROnly & {
     /**
      * @deprecated Use wrap.Suspense({ clientOnly: true }).on instead
      */
-    CSROnly: (props?: PropsWithoutChildren<ComponentProps<typeof Suspense.CSROnly>>) => Wrap
+    CSROnly: (props?: OmitKeyOf<ComponentProps<typeof Suspense.CSROnly>, 'children'>) => Wrap
   }
 }
 
 const createWrap = () => {
   const wrappers: Wrapper[] = []
   const wrap = new WrapWithoutCSROnly(wrappers) as Wrap
-  wrap.Suspense.CSROnly = (props: PropsWithoutChildren<ComponentProps<typeof Suspense.CSROnly>> = {}) => {
+  wrap.Suspense.CSROnly = (props: OmitKeyOf<ComponentProps<typeof Suspense.CSROnly>, 'children'> = {}) => {
     wrappers.unshift([Suspense.CSROnly, props])
     return wrap
   }
   return wrap
 }
 
-const wrapSuspense = (props: PropsWithoutChildren<ComponentProps<typeof Suspense>> = {}) => createWrap().Suspense(props)
-wrapSuspense.CSROnly = (props: PropsWithoutChildren<ComponentProps<typeof Suspense.CSROnly>> = {}) =>
+const wrapSuspense = (props: OmitKeyOf<ComponentProps<typeof Suspense>, 'children'> = {}) =>
+  createWrap().Suspense(props)
+wrapSuspense.CSROnly = (props: OmitKeyOf<ComponentProps<typeof Suspense.CSROnly>, 'children'> = {}) =>
   createWrap().Suspense.CSROnly(props)
-const wrapErrorBoundary = (props: PropsWithoutChildren<ComponentProps<typeof ErrorBoundary>>) =>
+const wrapErrorBoundary = (props: OmitKeyOf<ComponentProps<typeof ErrorBoundary>, 'children'>) =>
   createWrap().ErrorBoundary(props)
-const wrapErrorBoundaryGroup = (props: PropsWithoutChildren<ComponentProps<typeof ErrorBoundaryGroup>>) =>
+const wrapErrorBoundaryGroup = (props: OmitKeyOf<ComponentProps<typeof ErrorBoundaryGroup>, 'children'>) =>
   createWrap().ErrorBoundaryGroup(props)
-const wrapDelay = (props: PropsWithoutChildren<ComponentProps<typeof Delay>> = {}) => createWrap().Delay(props)
+const wrapDelay = (props: OmitKeyOf<ComponentProps<typeof Delay>, 'children'> = {}) => createWrap().Delay(props)
 
 export const wrap = {
   Suspense: wrapSuspense,
@@ -103,7 +104,7 @@ export const wrap = {
 export const withSuspense = Object.assign(
   <TProps extends ComponentProps<ComponentType> = Record<string, never>>(
     component: ComponentType<TProps>,
-    suspenseProps: PropsWithoutChildren<SuspenseProps> = {}
+    suspenseProps: OmitKeyOf<SuspenseProps, 'children'> = {}
   ) => wrap.Suspense(suspenseProps).on(component),
   {
     /**
@@ -111,7 +112,7 @@ export const withSuspense = Object.assign(
      */
     CSROnly: <TProps extends ComponentProps<ComponentType> = Record<string, never>>(
       component: ComponentType<TProps>,
-      suspenseProps: PropsWithoutChildren<SuspenseProps> = {}
+      suspenseProps: OmitKeyOf<SuspenseProps, 'children'> = {}
     ) => wrap.Suspense.CSROnly(suspenseProps).on(component),
   }
 )
@@ -121,7 +122,7 @@ export const withSuspense = Object.assign(
  */
 export const withErrorBoundary = <TProps extends ComponentProps<ComponentType> = Record<string, never>>(
   component: ComponentType<TProps>,
-  errorBoundaryProps: PropsWithoutChildren<ErrorBoundaryProps>
+  errorBoundaryProps: OmitKeyOf<ErrorBoundaryProps, 'children'>
 ) => wrap.ErrorBoundary(errorBoundaryProps).on(component)
 
 /**
@@ -129,7 +130,7 @@ export const withErrorBoundary = <TProps extends ComponentProps<ComponentType> =
  */
 export const withDelay = <TProps extends ComponentProps<ComponentType> = Record<string, never>>(
   component: ComponentType<TProps>,
-  delayProps: PropsWithoutChildren<DelayProps> = {}
+  delayProps: OmitKeyOf<DelayProps, 'children'> = {}
 ) => wrap.Delay(delayProps).on(component)
 
 /**
@@ -137,7 +138,7 @@ export const withDelay = <TProps extends ComponentProps<ComponentType> = Record<
  */
 export const withErrorBoundaryGroup = <TProps extends ComponentProps<ComponentType> = Record<string, never>>(
   component: ComponentType<TProps>,
-  errorBoundaryGroupProps: PropsWithoutChildren<ErrorBoundaryGroupProps> = {}
+  errorBoundaryGroupProps: OmitKeyOf<ErrorBoundaryGroupProps, 'children'> = {}
 ) => wrap.ErrorBoundaryGroup(errorBoundaryGroupProps).on(component)
 
 /**
@@ -146,7 +147,7 @@ export const withErrorBoundaryGroup = <TProps extends ComponentProps<ComponentTy
 export const withAsyncBoundary = Object.assign(
   <TProps extends ComponentProps<ComponentType> = Record<string, never>>(
     Component: ComponentType<TProps>,
-    asyncBoundaryProps: PropsWithoutChildren<AsyncBoundaryProps>
+    asyncBoundaryProps: OmitKeyOf<AsyncBoundaryProps, 'children'>
   ) => {
     const Wrapped = (props: TProps) => (
       <AsyncBoundary {...asyncBoundaryProps}>
@@ -167,7 +168,7 @@ export const withAsyncBoundary = Object.assign(
      */
     CSROnly: <TProps extends ComponentProps<ComponentType> = Record<string, never>>(
       Component: ComponentType<TProps>,
-      asyncBoundaryProps: PropsWithoutChildren<Omit<AsyncBoundaryProps, keyof Pick<SuspenseProps, 'clientOnly'>>>
+      asyncBoundaryProps: OmitKeyOf<AsyncBoundaryProps, 'clientOnly' | 'children'>
     ) => {
       const Wrapped = (props: TProps) => (
         <AsyncBoundary {...asyncBoundaryProps} clientOnly>
