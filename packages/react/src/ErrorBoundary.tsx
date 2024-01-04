@@ -33,7 +33,7 @@ export interface ErrorBoundaryFallbackProps<TError extends Error = Error> {
   reset: () => void
 }
 
-export interface ErrorBoundaryProps extends PropsWithChildren, PropsWithDevMode<ErrorBoundaryDevModeOptions> {
+export interface ErrorBoundaryProps extends PropsWithDevMode<PropsWithChildren, ErrorBoundaryDevModeOptions> {
   /**
    * an array of elements for the ErrorBoundary to check each render. If any of those elements change between renders, then the ErrorBoundary will reset the state which will re-render the children
    */
