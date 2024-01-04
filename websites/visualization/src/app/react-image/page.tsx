@@ -1,7 +1,7 @@
 'use client'
 
 import { wrap } from '@suspensive/react'
-import { Image } from '@suspensive/react-image'
+import { SuspenseImage } from '@suspensive/react-image'
 
 export default wrap
   .ErrorBoundary({ fallback: () => <div>error</div> })
@@ -9,10 +9,10 @@ export default wrap
   .on(function Page() {
     return (
       <div className="flex flex-col">
-        <Image src="https://placehold.co/200x100" />
-        <Image src="https://placehold.co/200" />
-        <Image src="https://placehold.co/200x150/000000/FFFFFF/png" />
-        <Image src="https://placehold.co/200x150?text=Hello+World" />
+        <SuspenseImage src="https://placehold.co/200x100" />
+        <SuspenseImage src="https://placehold.co/200" />
+        <SuspenseImage src="https://placehold.co/200x150/000000/FFFFFF/png" />
+        <SuspenseImage src="https://placehold.co/200x150?text=Hello+World" />
       </div>
     )
   })

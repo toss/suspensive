@@ -1,1 +1,1 @@
-export { Image } from './Image'
+export { SuspenseImage } from './SuspenseImage'
