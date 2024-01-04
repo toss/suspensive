@@ -34,6 +34,7 @@ const ModeSubscriber = ({ position }: { position: keyof typeof Position }) => {
         onMouseEnter={() => setIsHover(true)}
         onMouseLeave={() => setIsHover(false)}
         style={{
+          backgroundColor: 'black',
           position: 'fixed',
           border: '1px solid #ffffff60',
           borderRadius: '50%',
