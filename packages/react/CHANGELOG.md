@@ -1,5 +1,11 @@
 # @suspensive/react
 
+## 1.23.0
+
+### Minor Changes
+
+- e776d52: feat(react): add svg logo for `<DevMode/>`
+
 ## 1.22.2
 
 ### Patch Changes
