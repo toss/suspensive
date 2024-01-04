@@ -1,5 +1,11 @@
 # @suspensive/react
 
+## 1.22.2
+
+### Patch Changes
+
+- f56c40e: fix(react): add OmitKeyOf to remove PropsWithoutChildren, PropsWithoutDevMode
+
 ## 1.22.1
 
 ### Patch Changes
