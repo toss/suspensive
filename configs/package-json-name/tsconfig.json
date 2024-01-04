@@ -3,8 +3,8 @@
   "include": [".", "./.eslintrc.cjs"],
   "exclude": ["dist", "node_modules"],
   "compilerOptions": {
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
     "outDir": "dist"
   }
 }

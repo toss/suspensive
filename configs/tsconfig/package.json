@@ -2,6 +2,7 @@
   "name": "@suspensive/tsconfig",
   "version": "0.0.0-development",
   "private": true,
+  "type": "module",
   "files": [
     "base.json",
     "nextjs.json",
