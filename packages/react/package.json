@@ -52,8 +52,8 @@
     "lint:attw": "attw --pack",
     "lint:pub": "publint --strict",
     "prepack": "pnpm build",
-    "test": "vitest run --coverage",
-    "test:watch": "vitest --ui --coverage.enabled=true",
+    "test": "vitest run --coverage --typecheck",
+    "test:watch": "vitest --ui --coverage --typecheck",
     "type:check": "tsc --noEmit"
   },
   "devDependencies": {
