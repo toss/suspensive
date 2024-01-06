@@ -4,6 +4,9 @@ import { useTimeout } from './hooks'
 
 export interface DelayProps extends PropsWithChildren {
   ms?: number
+  /**
+   * @experimental This is experimental feature.
+   */
   fallback?: ReactNode
 }
 
