@@ -40,7 +40,7 @@ export const AsyncBoundary = Object.assign(
     CSROnly: (() => {
       const CSROnly = forwardRef<ComponentRef<typeof ErrorBoundary>, OmitKeyOf<AsyncBoundaryProps, 'clientOnly'>>(
         ({ pendingFallback, rejectedFallback, children, ...errorBoundaryProps }, resetRef) => (
-          <ErrorBoundary {...(errorBoundaryProps as ErrorBoundaryProps)} ref={resetRef} fallback={rejectedFallback}>
+          <ErrorBoundary {...errorBoundaryProps} ref={resetRef} fallback={rejectedFallback}>
             <Suspense clientOnly fallback={pendingFallback}>
               {children}
             </Suspense>
