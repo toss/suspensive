@@ -22,8 +22,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </Link>
           </nav>
           <Link href="/react/DevMode">🔗 @suspensive/react - DevMode</Link>
-          <Link href="/react/ErrorBoundary/catchOn">🔗 @suspensive/react - ErrorBoundary catchOn</Link>
-          <Link href="/react/ErrorBoundary/throwOn">🔗 @suspensive/react - ErrorBoundary throwOn</Link>
+          <Link href="/react/ErrorBoundary/enabled">🔗 @suspensive/react - ErrorBoundary enabled</Link>
           <Link href="/react-image">🔗 @suspensive/react-image</Link>
           <div className="flex flex-1 items-center justify-center">{children}</div>
         </Providers>

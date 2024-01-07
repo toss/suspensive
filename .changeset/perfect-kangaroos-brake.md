@@ -1,5 +1,5 @@
 ---
-"@suspensive/react": minor
+'@suspensive/react': minor
 ---
 
-feat(react): add catchOn throwOn prop on ErrorBoundary
+feat(react): add enabled prop of ErrorBoundary
