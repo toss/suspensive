@@ -33,34 +33,57 @@ export interface ErrorBoundaryFallbackProps<TError extends Error = Error> {
   reset: () => void
 }
 
-export interface ErrorBoundaryProps extends PropsWithDevMode<PropsWithChildren, ErrorBoundaryDevModeOptions> {
-  /**
-   * an array of elements for the ErrorBoundary to check each render. If any of those elements change between renders, then the ErrorBoundary will reset the state which will re-render the children
-   */
-  resetKeys?: unknown[]
-  /**
-   * when ErrorBoundary is reset by resetKeys or fallback's props.reset, onReset will be triggered
-   */
-  onReset?(): void
-  /**
-   * when ErrorBoundary catch error, onError will be triggered
-   */
-  onError?(error: Error, info: ErrorInfo): void
-  /**
-   * when ErrorBoundary catch error, fallback will be render instead of children
-   */
-  fallback: ReactNode | FunctionComponent<ErrorBoundaryFallbackProps>
-}
+type Condition = (error: Error) => boolean
+type ConstructorType<TClass> = new (...args: any[]) => TClass
+
+export type ErrorBoundaryProps = PropsWithDevMode<
+  PropsWithChildren<
+    {
+      /**
+       * an array of elements for the ErrorBoundary to check each render. If any of those elements change between renders, then the ErrorBoundary will reset the state which will re-render the children
+       */
+      resetKeys?: unknown[]
+      /**
+       * when ErrorBoundary is reset by resetKeys or fallback's props.reset, onReset will be triggered
+       */
+      onReset?(): void
+      /**
+       * when ErrorBoundary catch error, onError will be triggered
+       */
+      onError?(error: Error, info: ErrorInfo): void
+      /**
+       * when ErrorBoundary catch error, fallback will be render instead of children
+       */
+      fallback: ReactNode | FunctionComponent<ErrorBoundaryFallbackProps>
+    } & (
+      | {
+          /**
+           * @experimental This is experimental feature.
+           */
+          throwOn?: [ConstructorType<Error> | Condition, ...(ConstructorType<Error> | Condition)[]]
+          /**
+           * @experimental This is experimental feature.
+           */
+          catchOn?: undefined
+        }
+      | {
+          /**
+           * @experimental This is experimental feature.
+           */
+          throwOn?: undefined
+          /**
+           * @experimental This is experimental feature.
+           */
+          catchOn?: [ConstructorType<Error> | Condition, ...(ConstructorType<Error> | Condition)[]]
+        }
+    )
+  >,
+  ErrorBoundaryDevModeOptions
+>
 
 type ErrorBoundaryState<TError extends Error = Error> =
-  | {
-      isError: true
-      error: TError
-    }
-  | {
-      isError: false
-      error: null
-    }
+  | { isError: true; error: TError }
+  | { isError: false; error: null }
 
 const initialErrorBoundaryState: ErrorBoundaryState = {
   isError: false,
@@ -91,7 +114,7 @@ class BaseErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState
   }
 
   render() {
-    const { children, fallback } = this.props
+    const { children, fallback, catchOn, throwOn } = this.props
 
     if (this.state.isError && typeof fallback === 'undefined') {
       if (process.env.NODE_ENV !== 'production') {
@@ -101,14 +124,56 @@ class BaseErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState
     }
 
     let childrenOrFallback = children
+
     if (this.state.isError) {
+      let isReThrow = false
+      if (throwOn) {
+        for (let i = 0; i < throwOn.length; i++) {
+          const error = throwOn[i],
+            condition = throwOn[i]
+          if (error.prototype instanceof Error) {
+            if (this.state.error instanceof error) {
+              isReThrow = true
+              break
+            }
+          } else if (typeof condition === 'function') {
+            if ((condition as Condition)(this.state.error)) {
+              isReThrow = true
+              break
+            }
+          }
+        }
+      }
+      if (catchOn) {
+        for (let i = 0; i < catchOn.length; i++) {
+          const error = catchOn[i],
+            condition = catchOn[i]
+          if (error.prototype instanceof Error) {
+            if (this.state.error instanceof error) {
+              isReThrow = false
+              break
+            }
+          } else if (typeof condition === 'function') {
+            if ((condition as Condition)(this.state.error)) {
+              isReThrow = false
+              break
+            }
+          }
+        }
+      }
+      if (isReThrow) {
+        throw this.state.error
+      }
+
       if (typeof fallback === 'function') {
         const FallbackComponent = fallback
+
         childrenOrFallback = <FallbackComponent error={this.state.error} reset={this.reset} />
       } else {
         childrenOrFallback = fallback
       }
     }
+
     return (
       <ErrorBoundaryContext.Provider value={{ ...this.state, reset: this.reset }}>
         {childrenOrFallback}
@@ -122,7 +187,7 @@ class BaseErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState
  * @see {@link https://suspensive.org/docs/react/ErrorBoundary}
  */
 export const ErrorBoundary = forwardRef<{ reset(): void }, ErrorBoundaryProps>(
-  ({ devMode, fallback, children, onError, onReset, resetKeys }, ref) => {
+  ({ devMode, fallback, children, onError, onReset, resetKeys, ...props }, ref) => {
     const group = useContext(ErrorBoundaryGroupContext) ?? { resetKey: 0 }
     const baseErrorBoundaryRef = useRef<BaseErrorBoundary>(null)
     useImperativeHandle(ref, () => ({
@@ -131,6 +196,7 @@ export const ErrorBoundary = forwardRef<{ reset(): void }, ErrorBoundaryProps>(
 
     return (
       <BaseErrorBoundary
+        {...props}
         fallback={fallback}
         onError={onError}
         onReset={onReset}
