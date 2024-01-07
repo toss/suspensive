@@ -1,5 +1,139 @@
 # @suspensive/react-query
 
+## 1.23.0
+
+### Patch Changes
+
+- Updated dependencies [e776d52]
+  - @suspensive/react@1.23.0
+
+## 1.22.2
+
+### Patch Changes
+
+- Updated dependencies [f56c40e]
+  - @suspensive/react@1.22.2
+
+## 1.22.1
+
+### Patch Changes
+
+- 3782ae8: ci(eslint): add plugin:@typescript-eslint/strict-type-checked
+- Updated dependencies [3782ae8]
+  - @suspensive/react@1.22.1
+
+## 1.22.0
+
+### Minor Changes
+
+- d1d7d1a: feat(react): add Suspense clientOnly prop to deprecate Suspense.CSROnly, wrap.Suspense.CSROnly
+
+### Patch Changes
+
+- Updated dependencies [d1d7d1a]
+  - @suspensive/react@1.22.0
+
+## 1.21.0
+
+### Patch Changes
+
+- Updated dependencies [6239ebb]
+- Updated dependencies [45ce93f]
+  - @suspensive/react@1.21.0
+
+## 1.20.10
+
+### Patch Changes
+
+- 416a85c: fix: treeshake and minify to reduce bundle size
+- Updated dependencies [416a85c]
+  - @suspensive/react@1.20.10
+
+## 1.20.9
+
+### Patch Changes
+
+- Updated dependencies [685054a]
+  - @suspensive/react@1.20.9
+
+## 1.20.8
+
+### Patch Changes
+
+- 4a3e7eb: fix(tsup): add splitting to reduce bundle size dramatically
+- Updated dependencies [4a3e7eb]
+  - @suspensive/react@1.20.8
+
+## 1.20.7
+
+### Patch Changes
+
+- b69d651: fix(tsup): add supported browsers
+- Updated dependencies [b69d651]
+  - @suspensive/react@1.20.7
+
+## 1.20.6
+
+### Patch Changes
+
+- Updated dependencies [88c1585]
+  - @suspensive/react@1.20.6
+
+## 1.20.5
+
+### Patch Changes
+
+- bce7c1d: fix(react): deprecate AsyncBoundary
+- Updated dependencies [b5888b2]
+- Updated dependencies [bce7c1d]
+  - @suspensive/react@1.20.5
+
+## 1.20.4
+
+### Patch Changes
+
+- acbc787: refactor: extract unnecessary packages to root
+- Updated dependencies [acbc787]
+  - @suspensive/react@1.20.4
+
+## 1.20.3
+
+### Patch Changes
+
+- 60f7fcc: refactor(react, react-query): remove unnecessary `as` by `Object.assign`
+- Updated dependencies [60f7fcc]
+  - @suspensive/react@1.20.3
+
+## 1.20.2
+
+### Patch Changes
+
+- e37fbcc: chore(deps-dev): Bump @types/react from 18.2.34 to 18.2.37
+- Updated dependencies [e37fbcc]
+  - @suspensive/react@1.20.2
+
+## 1.20.1
+
+### Patch Changes
+
+- bfecd12: fix(react-query): remove bundledDependencies
+  - @suspensive/react@1.20.1
+
+## 1.20.0
+
+### Patch Changes
+
+- Updated dependencies [3f92ae8]
+- Updated dependencies [4fe94af]
+  - @suspensive/react@1.20.0
+
+## 1.19.0
+
+### Patch Changes
+
+- Updated dependencies [f78ed7d]
+  - @suspensive/react@1.19.0
+
 ## 1.18.3
 
 ### Patch Changes

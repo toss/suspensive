@@ -1,10 +1,10 @@
 'use client'
 
 import { useSuspenseQuery } from '@suspensive/react-query'
-import { Box, Description } from './uis'
+import { Box } from './uis'
 
 type Props = {
-  queryKey: Readonly<['query' | 'boundary', number]>
+  queryKey: Readonly<[string, number]>
   queryFn: () => Promise<string>
 }
 
@@ -16,7 +16,7 @@ export const UseSuspenseQuery = ({ queryKey, queryFn }: Props) => {
 
   return (
     <Box.Success>
-      <Description.Success>{query.data}</Description.Success>
+      <div>{query.data}</div>
     </Box.Success>
   )
 }

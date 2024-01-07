@@ -2,5 +2,9 @@
 module.exports = {
   root: true,
   extends: ['@suspensive/eslint-config/react-ts'],
-  ignorePatterns: ['*.js*', 'dist', 'coverage'],
+  ignorePatterns: ['dist', 'coverage'],
+  parserOptions: {
+    tsconfigRootDir: __dirname,
+    project: 'tsconfig.json',
+  },
 }

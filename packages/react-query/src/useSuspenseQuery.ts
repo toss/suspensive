@@ -1,5 +1,11 @@
-import type { QueryFunction, QueryKey, UseQueryOptions, UseQueryResult } from '@tanstack/react-query'
-import { parseQueryArgs, useQuery } from '@tanstack/react-query'
+import {
+  type QueryFunction,
+  type QueryKey,
+  type UseQueryOptions,
+  type UseQueryResult,
+  parseQueryArgs,
+  useQuery,
+} from '@tanstack/react-query'
 
 export interface BaseUseSuspenseQueryResult<TData = unknown>
   extends Omit<UseQueryResult<TData>, 'error' | 'isError' | 'isFetching'> {
@@ -119,14 +125,6 @@ export function useSuspenseQuery<
 ): UseSuspenseQueryResultOnSuccess<TData> | UseSuspenseQueryResultOnLoading
 
 // arg1: options
-export function useSuspenseQuery<
-  TQueryFnData = unknown,
-  TError = unknown,
-  TData = TQueryFnData,
-  TQueryKey extends QueryKey = QueryKey,
->(
-  options: Omit<UseSuspenseQueryOptions<TQueryFnData, TError, TData, TQueryKey>, 'enabled'>
-): UseSuspenseQueryResultOnSuccess<TData>
 export function useSuspenseQuery<
   TQueryFnData = unknown,
   TError = unknown,

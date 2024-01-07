@@ -10,33 +10,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v2
-        with:
-          version: 8.10.2
-      - uses: actions/setup-node@v4
-        with:
-          cache: 'pnpm'
-          cache-dependency-path: 'pnpm-lock.yaml'
-          node-version-file: '.nvmrc'
+      - uses: ./.github/actions/pnpm-setup-node
       - run: pnpm install --frozen-lockfile
-
-      - name: Set git user
-        run: |
-          git config --global user.email "manudeli.ko@gmail.com"
-          git config --global user.name "Jonghyeon Ko"
-
       - name: Create Changesets Pull Request or Publish to NPM
         id: changesets
         uses: changesets/action@v1
         with:
-          setupGitUser: false
           title: 'chore: version packages'
-          commit: |
-            chore: version packages
-
-            Co-authored-by: Jonghyeon Ko <manudeli.ko@gmail.com>
-            Co-authored-by: Chanhyuk Park <pgg6713@gmail.com>
-            Co-authored-by: Minsoo Kim <zlemzlem5656@naver.com>
+          commit: 'chore: version packages'
           version: pnpm changeset:version
           publish: pnpm changeset:publish
         env:

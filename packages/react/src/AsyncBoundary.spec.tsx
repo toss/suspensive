@@ -1,10 +1,9 @@
 import { ERROR_MESSAGE, FALLBACK, Suspend, TEXT, ThrowError } from '@suspensive/test-utils'
 import { act, render, waitFor } from '@testing-library/react'
 import ms from 'ms'
-import type { ComponentProps } from 'react'
-import { createElement } from 'react'
+import { type ComponentProps, createElement } from 'react'
 import { createRoot } from 'react-dom/client'
-import { vi } from 'vitest'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { AsyncBoundary, withAsyncBoundary } from '.'
 
 let container = document.createElement('div')
@@ -16,12 +15,16 @@ const renderAsyncBoundary = (props: ComponentProps<typeof AsyncBoundary>) =>
 const renderAsyncBoundaryCSROnly = (props: ComponentProps<typeof AsyncBoundary.CSROnly>) =>
   act(() => root.render(<AsyncBoundary.CSROnly {...props} />))
 
-describe('<AsyncBoundary/>', () => {
+const resetBeforeEach = () =>
   beforeEach(() => {
     container = document.createElement('div')
     root = createRoot(container)
     ThrowError.reset()
+    Suspend.reset()
   })
+
+describe('<AsyncBoundary/>', () => {
+  resetBeforeEach()
 
   it('should render the children if nothing to suspend', () => {
     const onError = vi.fn()
@@ -36,7 +39,7 @@ describe('<AsyncBoundary/>', () => {
     expect(container.textContent).not.toBe(ERROR_MESSAGE)
     expect(onError).toHaveBeenCalledTimes(0)
   })
-  it('should render the pendingFallback if something to suspend in children', async () => {
+  it('should render the pendingFallback if something to suspend in children', () => {
     const onError = vi.fn()
     renderAsyncBoundary({
       pendingFallback: FALLBACK,
@@ -51,7 +54,6 @@ describe('<AsyncBoundary/>', () => {
   })
   it('should render rejectedFallback if error is caught in children', async () => {
     const onError = vi.fn()
-    vi.useFakeTimers()
     renderAsyncBoundary({
       pendingFallback: FALLBACK,
       rejectedFallback: ERROR_MESSAGE,
@@ -66,7 +68,6 @@ describe('<AsyncBoundary/>', () => {
     expect(container.textContent).not.toBe(FALLBACK)
     expect(container.textContent).not.toBe(ERROR_MESSAGE)
     expect(onError).toHaveBeenCalledTimes(0)
-    act(() => vi.advanceTimersByTime(ms('0.1s')))
     await waitFor(() => {
       expect(container.textContent).toBe(ERROR_MESSAGE)
       expect(container.textContent).not.toBe(TEXT)
@@ -77,11 +78,7 @@ describe('<AsyncBoundary/>', () => {
 })
 
 describe('<AsyncBoundary.CSROnly/>', () => {
-  beforeEach(() => {
-    container = document.createElement('div')
-    root = createRoot(container)
-    ThrowError.reset()
-  })
+  resetBeforeEach()
 
   it('should render the children if nothing to suspend', () => {
     const onError = vi.fn()
@@ -96,13 +93,13 @@ describe('<AsyncBoundary.CSROnly/>', () => {
     expect(container.textContent).not.toBe(ERROR_MESSAGE)
     expect(onError).toHaveBeenCalledTimes(0)
   })
-  it('should render the pendingFallback if something to suspend in children', async () => {
+  it('should render the pendingFallback if something to suspend in children', () => {
     const onError = vi.fn()
     renderAsyncBoundaryCSROnly({
       pendingFallback: FALLBACK,
       rejectedFallback: ERROR_MESSAGE,
       onError,
-      children: <Suspend during={Infinity} toShow={TEXT} />,
+      children: <Suspend during={ms('4s')} toShow={TEXT} />,
     })
     expect(container.textContent).toBe(FALLBACK)
     expect(container.textContent).not.toBe(TEXT)
@@ -111,7 +108,6 @@ describe('<AsyncBoundary.CSROnly/>', () => {
   })
   it('should render rejectedFallback if error is caught in children', async () => {
     const onError = vi.fn()
-    vi.useFakeTimers()
     renderAsyncBoundaryCSROnly({
       pendingFallback: FALLBACK,
       rejectedFallback: ERROR_MESSAGE,
@@ -126,7 +122,6 @@ describe('<AsyncBoundary.CSROnly/>', () => {
     expect(container.textContent).not.toBe(FALLBACK)
     expect(container.textContent).not.toBe(ERROR_MESSAGE)
     expect(onError).toHaveBeenCalledTimes(0)
-    act(() => vi.advanceTimersByTime(ms('0.1s')))
     await waitFor(() => {
       expect(container.textContent).toBe(ERROR_MESSAGE)
       expect(container.textContent).not.toBe(TEXT)

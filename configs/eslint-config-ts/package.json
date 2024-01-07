@@ -2,21 +2,21 @@
   "name": "@suspensive/eslint-config-ts",
   "version": "0.0.0",
   "private": true,
-  "main": "typescript.js",
+  "main": "index.js",
   "files": [
-    "./noimport.js"
+    "./no-import.js"
   ],
   "scripts": {
-    "lint": "eslint ."
+    "lint": "eslint \"**/*.{js,jsx,cjs,mjs,ts,tsx,cts,mts}\""
   },
   "dependencies": {
     "@suspensive/eslint-config-js": "workspace:*",
-    "@typescript-eslint/eslint-plugin": "^6.10.0",
-    "@typescript-eslint/parser": "^6.10.0",
-    "eslint-config-prettier": "^9.0.0",
+    "@typescript-eslint/eslint-plugin": "^6.17.0",
+    "@typescript-eslint/parser": "^6.17.0",
+    "eslint-config-prettier": "^9.1.0",
     "eslint-import-resolver-typescript": "^3.6.1",
-    "eslint-plugin-import": "^2.29.0",
-    "eslint-plugin-jsdoc": "^46.8.2",
-    "eslint-plugin-prettier": "^5.0.1"
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-jsdoc": "^48.0.2",
+    "eslint-plugin-prettier": "^5.1.2"
   }
 }

@@ -1,0 +1,10 @@
+{
+  "extends": "@suspensive/tsconfig/base.json",
+  "include": [".", "./.eslintrc.cjs"],
+  "exclude": ["dist", "node_modules"],
+  "compilerOptions": {
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "outDir": "dist"
+  }
+}

@@ -1,12 +1,14 @@
 import { ERROR_MESSAGE, FALLBACK, TEXT, ThrowError, ThrowNull } from '@suspensive/test-utils'
 import { act, render } from '@testing-library/react'
 import ms from 'ms'
-import type { ComponentProps, ComponentRef } from 'react'
-import { createElement, createRef } from 'react'
+import { type ComponentProps, type ComponentRef, createElement, createRef } from 'react'
 import { createRoot } from 'react-dom/client'
-import { vi } from 'vitest'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { useTimeout } from './hooks'
-import { assert } from './utils'
+import {
+  assertMessageUseErrorBoundaryFallbackPropsOnlyInFallbackOfErrorBoundary,
+  assertMessageUseErrorBoundaryOnlyInChildrenOfErrorBoundary,
+} from './utils/assert'
 import { ErrorBoundary, useErrorBoundary, useErrorBoundaryFallbackProps, withErrorBoundary } from '.'
 
 let container = document.createElement('div')
@@ -67,6 +69,18 @@ describe('<ErrorBoundary/>', () => {
     act(() => vi.advanceTimersByTime(ms('0.1s')))
     expect(container.textContent).toBe(ERROR_MESSAGE)
     expect(container.textContent).not.toBe(TEXT)
+  })
+
+  it('requires fallback is set, if fallback is undefined, ErrorBoundary will rethrow error', () => {
+    expect(() =>
+      render(
+        createElement(() => (
+          <ErrorBoundary fallback={undefined}>
+            <ThrowError message={ERROR_MESSAGE} after={0} />
+          </ErrorBoundary>
+        ))
+      )
+    ).toThrow(ERROR_MESSAGE)
   })
 
   it('should catch it even if thrown null', () => {
@@ -299,7 +313,7 @@ describe('useErrorBoundary', () => {
           <ThrowError message={ERROR_MESSAGE} after={0} />
         </ErrorBoundary>
       )
-    ).toThrow(assert.message.useErrorBoundary.onlyInChildrenOfErrorBoundary)
+    ).toThrow(assertMessageUseErrorBoundaryOnlyInChildrenOfErrorBoundary)
   })
 })
 
@@ -353,7 +367,7 @@ describe('useErrorBoundaryFallbackProps', () => {
             return <>{TEXT}</>
           })}
         </ErrorBoundary>
-      ).getByText(assert.message.useErrorBoundaryFallbackProps.onlyInFallbackOfErrorBoundary)
+      ).getByText(assertMessageUseErrorBoundaryFallbackPropsOnlyInFallbackOfErrorBoundary)
     ).toBeInTheDocument()
   })
 
@@ -365,7 +379,7 @@ describe('useErrorBoundaryFallbackProps', () => {
           return <>{TEXT}</>
         })
       )
-    ).toThrow(assert.message.useErrorBoundaryFallbackProps.onlyInFallbackOfErrorBoundary)
+    ).toThrow(assertMessageUseErrorBoundaryFallbackPropsOnlyInFallbackOfErrorBoundary)
   })
 
   it('should be prevented to be called in children of ErrorBoundary', () => {
@@ -377,7 +391,7 @@ describe('useErrorBoundaryFallbackProps', () => {
             return <>{TEXT}</>
           })}
         </ErrorBoundary>
-      ).getByText(assert.message.useErrorBoundaryFallbackProps.onlyInFallbackOfErrorBoundary)
+      ).getByText(assertMessageUseErrorBoundaryFallbackPropsOnlyInFallbackOfErrorBoundary)
     ).toBeInTheDocument()
   })
 })

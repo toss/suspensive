@@ -19,18 +19,12 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        command: ['lint', 'lint:attw', 'lint:pub', 'test', 'test:tsd', 'type:check', 'build']
+        command: ['lint', 'lint:attw', 'lint:monorepo', 'lint:pub', 'test', 'type:check', 'build']
     steps:
       - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v2
-        with:
-          version: 8.10.2
-      - uses: actions/setup-node@v4
-        with:
-          cache: 'pnpm'
-          cache-dependency-path: 'pnpm-lock.yaml'
-          node-version-file: '.nvmrc'
+      - uses: ./.github/actions/pnpm-setup-node
       - run: pnpm install --frozen-lockfile
-      - run: pnpm prepack
+      - if: matrix.command == 'test'
+        run: pnpm playwright install
       - name: Run commands
         run: pnpm ${{ matrix.command }}

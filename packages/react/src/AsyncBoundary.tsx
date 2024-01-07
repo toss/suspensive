@@ -1,81 +1,57 @@
-import type { ComponentProps, ComponentRef, ComponentType, SuspenseProps } from 'react'
-import { forwardRef } from 'react'
-import { ErrorBoundary } from './ErrorBoundary'
-import type { ErrorBoundaryProps } from './ErrorBoundary'
-import { Suspense } from './Suspense'
-import type { PropsWithoutChildren } from './types'
+import { type ComponentRef, forwardRef } from 'react'
+import { ErrorBoundary, type ErrorBoundaryProps } from './ErrorBoundary'
+import { Suspense, type SuspenseProps } from './Suspense'
+import type { OmitKeyOf } from './utility-types'
 
-export type AsyncBoundaryProps = Omit<SuspenseProps, 'fallback'> &
-  Omit<ErrorBoundaryProps, 'fallback'> & {
-    pendingFallback?: SuspenseProps['fallback']
-    rejectedFallback: ErrorBoundaryProps['fallback']
-  }
-
-const BaseAsyncBoundary = forwardRef<ComponentRef<typeof ErrorBoundary>, AsyncBoundaryProps>(
-  ({ pendingFallback, rejectedFallback, children, ...errorBoundaryProps }, resetRef) => (
-    <ErrorBoundary {...errorBoundaryProps} ref={resetRef} fallback={rejectedFallback}>
-      <Suspense fallback={pendingFallback}>{children}</Suspense>
-    </ErrorBoundary>
-  )
-)
-if (process.env.NODE_ENV !== 'production') {
-  BaseAsyncBoundary.displayName = 'AsyncBoundary'
-}
-const CSROnlyAsyncBoundary = forwardRef<ComponentRef<typeof ErrorBoundary>, AsyncBoundaryProps>(
-  ({ pendingFallback, rejectedFallback, children, ...errorBoundaryProps }, resetRef) => (
-    <ErrorBoundary {...errorBoundaryProps} ref={resetRef} fallback={rejectedFallback}>
-      <Suspense.CSROnly fallback={pendingFallback}>{children}</Suspense.CSROnly>
-    </ErrorBoundary>
-  )
-)
-if (process.env.NODE_ENV !== 'production') {
-  CSROnlyAsyncBoundary.displayName = 'AsyncBoundary.CSROnly'
+/**
+ * @deprecated Use SuspenseProps and ErrorBoundaryProps instead
+ */
+export interface AsyncBoundaryProps
+  extends OmitKeyOf<SuspenseProps, 'fallback' | 'devMode'>,
+    OmitKeyOf<ErrorBoundaryProps, 'fallback' | 'devMode'> {
+  pendingFallback?: SuspenseProps['fallback']
+  rejectedFallback: ErrorBoundaryProps['fallback']
 }
 
 /**
- * This component is just wrapping Suspense and ErrorBoundary in this library. to use Suspense with ErrorBoundary at once easily.
- * @see {@link https://suspensive.org/docs/react/AsyncBoundary}
+ * @deprecated Use `<Suspense/>` and `<ErrorBoundary/>` instead
  */
-export const AsyncBoundary = BaseAsyncBoundary as typeof BaseAsyncBoundary & {
-  /**
-   * CSROnly make AsyncBoundary can be used in SSR framework like Next.js with React 17 or under
-   * @see {@link https://suspensive.org/docs/react/AsyncBoundary}
-   */
-  CSROnly: typeof CSROnlyAsyncBoundary
-}
-AsyncBoundary.CSROnly = CSROnlyAsyncBoundary
+export const AsyncBoundary = Object.assign(
+  (() => {
+    const BaseAsyncBoundary = forwardRef<ComponentRef<typeof ErrorBoundary>, AsyncBoundaryProps>(
+      ({ clientOnly, pendingFallback, rejectedFallback, children, ...errorBoundaryProps }, resetRef) => (
+        <ErrorBoundary {...errorBoundaryProps} ref={resetRef} fallback={rejectedFallback}>
+          <Suspense clientOnly={clientOnly} fallback={pendingFallback}>
+            {children}
+          </Suspense>
+        </ErrorBoundary>
+      )
+    )
+    if (process.env.NODE_ENV !== 'production') {
+      BaseAsyncBoundary.displayName = 'AsyncBoundary'
+    }
 
-export const withAsyncBoundary = <TProps extends ComponentProps<ComponentType> = Record<string, never>>(
-  Component: ComponentType<TProps>,
-  asyncBoundaryProps: PropsWithoutChildren<AsyncBoundaryProps>
-) => {
-  const Wrapped = (props: TProps) => (
-    <AsyncBoundary {...asyncBoundaryProps}>
-      <Component {...props} />
-    </AsyncBoundary>
-  )
+    return BaseAsyncBoundary
+  })(),
+  {
+    /**
+     * @deprecated Use `<Suspense clientOnly />` and `<ErrorBoundary/>` instead
+     */
+    CSROnly: (() => {
+      const CSROnly = forwardRef<ComponentRef<typeof ErrorBoundary>, OmitKeyOf<AsyncBoundaryProps, 'clientOnly'>>(
+        ({ pendingFallback, rejectedFallback, children, ...errorBoundaryProps }, resetRef) => (
+          <ErrorBoundary {...errorBoundaryProps} ref={resetRef} fallback={rejectedFallback}>
+            <Suspense clientOnly fallback={pendingFallback}>
+              {children}
+            </Suspense>
+          </ErrorBoundary>
+        )
+      )
+      if (process.env.NODE_ENV !== 'production') {
+        CSROnly.displayName = 'AsyncBoundary.CSROnly'
+      }
 
-  if (process.env.NODE_ENV !== 'production') {
-    const name = Component.displayName || Component.name || 'Component'
-    Wrapped.displayName = `withAsyncBoundary(${name})`
+      return CSROnly
+    })(),
   }
-
-  return Wrapped
-}
-withAsyncBoundary.CSROnly = <TProps extends ComponentProps<ComponentType> = Record<string, never>>(
-  Component: ComponentType<TProps>,
-  asyncBoundaryProps: PropsWithoutChildren<AsyncBoundaryProps>
-) => {
-  const Wrapped = (props: TProps) => (
-    <AsyncBoundary.CSROnly {...asyncBoundaryProps}>
-      <Component {...props} />
-    </AsyncBoundary.CSROnly>
-  )
-
-  if (process.env.NODE_ENV !== 'production') {
-    const name = Component.displayName || Component.name || 'Component'
-    Wrapped.displayName = `withAsyncBoundary.CSROnly(${name})`
-  }
-
-  return Wrapped
-}
+)

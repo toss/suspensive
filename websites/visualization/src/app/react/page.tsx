@@ -1,9 +1,9 @@
 'use client'
 
-import { AsyncBoundary, ErrorBoundary, ErrorBoundaryGroup, Suspense } from '@suspensive/react'
+import { ErrorBoundary, ErrorBoundaryGroup, Suspense } from '@suspensive/react'
 import { useQueryErrorResetBoundary } from '@tanstack/react-query'
-import { RejectedFallback, UseSuspenseQuery } from '~/components'
-import { Area, Button, DescriptionText, Spinner } from '~/components/uis'
+import { UseSuspenseQuery } from '~/components'
+import { Area, Button, RejectedFallback, Spinner } from '~/components/uis'
 import { api } from '~/utils/api'
 
 export default function Page() {
@@ -12,102 +12,61 @@ export default function Page() {
   return (
     <Area title="ErrorBoundaryGroup">
       <ErrorBoundaryGroup>
-        <ErrorBoundaryGroup.Reset
-          trigger={({ reset }) => (
-            <Button style={{ alignSelf: 'end' }} onClick={reset}>
-              ↻
-            </Button>
-          )}
-        />
+        <div className="text-right">
+          <ErrorBoundaryGroup.Reset trigger={(group) => <Button onClick={group.reset}>↻</Button>} />
+        </div>
         <Area title="ErrorBoundaryGroup">
           <ErrorBoundaryGroup>
-            <ErrorBoundaryGroup.Reset
-              trigger={({ reset }) => (
-                <Button style={{ alignSelf: 'end' }} onClick={reset}>
-                  ↻
-                </Button>
-              )}
-            />
+            <div className="text-right">
+              <ErrorBoundaryGroup.Reset trigger={(group) => <Button onClick={group.reset}>↻</Button>} />
+            </div>
             <Area title="Suspense (Continuous 3 fetching)">
-              <Suspense.CSROnly fallback={<Spinner />}>
+              <Suspense clientOnly fallback={<Spinner />}>
                 <UseSuspenseQuery queryKey={['boundary', 1]} queryFn={() => api.delay(500, { percentage: 100 })} />
                 <UseSuspenseQuery queryKey={['boundary', 2]} queryFn={() => api.delay(1000, { percentage: 100 })} />
                 <UseSuspenseQuery queryKey={['boundary', 3]} queryFn={() => api.delay(1500, { percentage: 100 })} />
-              </Suspense.CSROnly>
+              </Suspense>
             </Area>
-
-            <DescriptionText>+</DescriptionText>
 
             <Area title="ErrorBoundary (100% Error)">
               <ErrorBoundary onReset={queryErrorResetBoundary.reset} fallback={RejectedFallback}>
-                <Suspense.CSROnly fallback={<Spinner />}>
+                <Suspense clientOnly fallback={<Spinner />}>
                   <UseSuspenseQuery queryKey={['boundary', 4]} queryFn={() => api.delay(500, { percentage: 0 })} />
                   <UseSuspenseQuery queryKey={['boundary', 5]} queryFn={() => api.delay(500, { percentage: 100 })} />
-                </Suspense.CSROnly>
+                </Suspense>
               </ErrorBoundary>
-            </Area>
-
-            <DescriptionText>=</DescriptionText>
-
-            <Area title="AsyncBoundary (50% Success)">
-              <AsyncBoundary.CSROnly
-                onReset={queryErrorResetBoundary.reset}
-                pendingFallback={<Spinner />}
-                rejectedFallback={RejectedFallback}
-              >
-                <UseSuspenseQuery queryKey={['boundary', 6]} queryFn={() => api.delay(500, { percentage: 100 })} />
-                <UseSuspenseQuery queryKey={['boundary', 7]} queryFn={() => api.delay(500, { percentage: 50 })} />
-              </AsyncBoundary.CSROnly>
             </Area>
           </ErrorBoundaryGroup>
         </Area>
 
         <Area title="ErrorBoundaryGroup blockOutside">
           <ErrorBoundaryGroup blockOutside>
-            <ErrorBoundaryGroup.Reset
-              trigger={({ reset }) => (
-                <Button style={{ alignSelf: 'end' }} onClick={reset}>
-                  ↻
-                </Button>
-              )}
-            />
+            <div className="text-right">
+              <ErrorBoundaryGroup.Reset trigger={(group) => <Button onClick={group.reset}>↻</Button>} />
+            </div>
             <Area title="Suspense">
-              <Suspense.CSROnly fallback={<Spinner />}>
+              <Suspense clientOnly fallback={<Spinner />}>
                 <UseSuspenseQuery queryKey={['boundary', 1]} queryFn={() => api.delay(500, { percentage: 100 })} />
-              </Suspense.CSROnly>
+              </Suspense>
             </Area>
-
-            <DescriptionText>+</DescriptionText>
 
             <Area title="ErrorBoundary (100% Error)">
               <ErrorBoundary onReset={queryErrorResetBoundary.reset} fallback={RejectedFallback}>
-                <Suspense.CSROnly fallback={<Spinner />}>
+                <Suspense clientOnly fallback={<Spinner />}>
                   <UseSuspenseQuery queryKey={['boundary', 4]} queryFn={() => api.delay(500, { percentage: 0 })} />
                   <UseSuspenseQuery queryKey={['boundary', 5]} queryFn={() => api.delay(500, { percentage: 100 })} />
-                </Suspense.CSROnly>
+                </Suspense>
               </ErrorBoundary>
-            </Area>
-
-            <DescriptionText>=</DescriptionText>
-
-            <Area title="AsyncBoundary (50% Success)">
-              <AsyncBoundary.CSROnly
-                onReset={queryErrorResetBoundary.reset}
-                pendingFallback={<Spinner />}
-                rejectedFallback={RejectedFallback}
-              >
-                <UseSuspenseQuery queryKey={['boundary', 7]} queryFn={() => api.delay(500, { percentage: 50 })} />
-              </AsyncBoundary.CSROnly>
             </Area>
           </ErrorBoundaryGroup>
         </Area>
 
         <Area title="ErrorBoundary (100% Error)">
           <ErrorBoundary onReset={queryErrorResetBoundary.reset} fallback={RejectedFallback}>
-            <Suspense.CSROnly fallback={<Spinner />}>
+            <Suspense clientOnly fallback={<Spinner />}>
               <UseSuspenseQuery queryKey={['boundary', 4]} queryFn={() => api.delay(500, { percentage: 0 })} />
               <UseSuspenseQuery queryKey={['boundary', 5]} queryFn={() => api.delay(500, { percentage: 100 })} />
-            </Suspense.CSROnly>
+            </Suspense>
           </ErrorBoundary>
         </Area>
       </ErrorBoundaryGroup>

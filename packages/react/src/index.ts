@@ -1,12 +1,20 @@
-export { SuspensiveProvider, Suspensive } from './SuspensiveProvider'
-export { Suspense, withSuspense } from './Suspense'
-export { ErrorBoundary, withErrorBoundary, useErrorBoundary, useErrorBoundaryFallbackProps } from './ErrorBoundary'
-export { ErrorBoundaryGroup, withErrorBoundaryGroup, useErrorBoundaryGroup } from './ErrorBoundaryGroup'
-export { AsyncBoundary, withAsyncBoundary } from './AsyncBoundary'
-export { Delay, withDelay } from './Delay'
+export { SuspensiveProvider, Suspensive } from './Suspensive'
+export { Suspense } from './Suspense'
+export { ErrorBoundary, useErrorBoundary, useErrorBoundaryFallbackProps } from './ErrorBoundary'
+export { ErrorBoundaryGroup, useErrorBoundaryGroup } from './ErrorBoundaryGroup'
+export { Delay } from './Delay'
+export { wrap } from './wrap'
 
+// type
 export type { SuspenseProps } from './Suspense'
 export type { ErrorBoundaryProps, ErrorBoundaryFallbackProps } from './ErrorBoundary'
 export type { ErrorBoundaryGroupProps } from './ErrorBoundaryGroup'
-export type { AsyncBoundaryProps } from './AsyncBoundary'
 export type { DelayProps } from './Delay'
+
+// experimental
+export { DevMode } from './DevMode'
+
+// deprecated
+export { withSuspense, withDelay, withErrorBoundary, withErrorBoundaryGroup, withAsyncBoundary } from './wrap'
+export { AsyncBoundary } from './AsyncBoundary'
+export type { AsyncBoundaryProps } from './AsyncBoundary'

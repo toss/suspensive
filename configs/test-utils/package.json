@@ -2,24 +2,37 @@
   "name": "@suspensive/test-utils",
   "version": "0.0.0",
   "private": true,
-  "funding": {
-    "type": "github",
-    "url": "https://github.com/sponsors/manudeli"
-  },
-  "license": "MIT",
-  "author": {
-    "name": "Jonghyeon Ko",
-    "email": "manudeli.ko@gmail.com"
-  },
   "sideEffects": false,
   "type": "module",
-  "main": "src/index.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
+    },
+    "./package.json": "./package.json"
+  },
+  "main": "dist/index.cjs",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
-    "lint": "eslint \"**/*.ts*\"",
+    "build": "tsup",
+    "build:watch": "tsup --watch",
+    "clean": "rimraf ./dist && rimraf ./coverage",
+    "lint": "eslint \"**/*.{js,jsx,cjs,mjs,ts,tsx,cts,mts}\"",
+    "lint:attw": "attw --pack",
+    "lint:pub": "publint --strict",
+    "prepack": "pnpm build",
     "type:check": "tsc --noEmit"
   },
   "devDependencies": {
-    "@types/react": "^18.2.34",
+    "@suspensive/tsup": "workspace:*",
+    "@types/react": "^18.2.46",
     "react": "^18.2.0"
   },
   "peerDependencies": {

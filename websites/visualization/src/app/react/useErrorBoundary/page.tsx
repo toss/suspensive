@@ -1,8 +1,7 @@
 'use client'
 
 import { ErrorBoundary, useErrorBoundary, useErrorBoundaryFallbackProps } from '@suspensive/react'
-import type { PropsWithChildren } from 'react'
-import { createElement, useEffect, useState } from 'react'
+import { type PropsWithChildren, createElement, useEffect, useState } from 'react'
 
 export default function Page() {
   return (

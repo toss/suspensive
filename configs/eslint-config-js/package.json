@@ -2,19 +2,20 @@
   "name": "@suspensive/eslint-config-js",
   "version": "0.0.0",
   "private": true,
-  "main": "javascript.js",
+  "main": "index.js",
   "files": [
-    "noimport.js"
+    "no-import.js"
   ],
   "scripts": {
-    "lint": "eslint ."
+    "lint": "eslint \"**/*.{js,jsx,cjs,mjs,ts,tsx,cts,mts}\""
   },
   "dependencies": {
-    "@cspell/eslint-plugin": "^8.0.0",
-    "eslint-config-prettier": "^9.0.0",
-    "eslint-plugin-import": "^2.29.0",
-    "eslint-plugin-jsdoc": "^46.8.2",
-    "eslint-plugin-prettier": "^5.0.1",
-    "eslint-plugin-vitest": "0.3.9"
+    "@cspell/eslint-plugin": "^8.3.2",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-jest-dom": "^5.1.0",
+    "eslint-plugin-jsdoc": "^48.0.2",
+    "eslint-plugin-prettier": "^5.1.2",
+    "eslint-plugin-vitest": "0.3.20"
   }
 }

@@ -4,8 +4,12 @@
   - "packages/react-query/**/*"
 "@suspensive/react-await":
   - "packages/react-await/**/*"
-"documentation":
-  - "docs/**/*"
+"@suspensive/react-image":
+  - "packages/react-image/**/*"
+"docs/v1":
+  - "docs/v1**/*"
+"docs/v2":
+  - "docs/v2**/*"
 "visualization":
   - "websites/visualization/**/*"
 "eslint":

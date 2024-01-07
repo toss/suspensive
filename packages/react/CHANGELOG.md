@@ -1,5 +1,112 @@
 # @suspensive/react
 
+## 1.23.0
+
+### Minor Changes
+
+- e776d52: feat(react): add svg logo for `<DevMode/>`
+
+## 1.22.2
+
+### Patch Changes
+
+- f56c40e: fix(react): add OmitKeyOf to remove PropsWithoutChildren, PropsWithoutDevMode
+
+## 1.22.1
+
+### Patch Changes
+
+- 3782ae8: ci(eslint): add plugin:@typescript-eslint/strict-type-checked
+
+## 1.22.0
+
+### Minor Changes
+
+- d1d7d1a: feat(react): add Suspense clientOnly prop to deprecate Suspense.CSROnly, wrap.Suspense.CSROnly
+
+## 1.21.0
+
+### Minor Changes
+
+- 45ce93f: feat(react): add DevMode
+
+### Patch Changes
+
+- 6239ebb: fix(react): remove assert.message
+
+## 1.20.10
+
+### Patch Changes
+
+- 416a85c: fix: treeshake and minify to reduce bundle size
+
+## 1.20.9
+
+### Patch Changes
+
+- 685054a: ci(eslint): add import/no-cycle to prevent memory leak
+
+## 1.20.8
+
+### Patch Changes
+
+- 4a3e7eb: fix(tsup): add splitting to reduce bundle size dramatically
+
+## 1.20.7
+
+### Patch Changes
+
+- b69d651: fix(tsup): add supported browsers
+
+## 1.20.6
+
+### Patch Changes
+
+- 88c1585: refactor(react, react-await, react-image): replace createElement by jsx
+
+## 1.20.5
+
+### Patch Changes
+
+- b5888b2: fix(react): make wrap as stable and deprecate all withXXXs
+- bce7c1d: fix(react): deprecate AsyncBoundary
+
+## 1.20.4
+
+### Patch Changes
+
+- acbc787: refactor: extract unnecessary packages to root
+
+## 1.20.3
+
+### Patch Changes
+
+- 60f7fcc: refactor(react, react-query): remove unnecessary `as` by `Object.assign`
+
+## 1.20.2
+
+### Patch Changes
+
+- e37fbcc: chore(deps-dev): Bump @types/react from 18.2.34 to 18.2.37
+
+## 1.20.1
+
+## 1.20.0
+
+### Minor Changes
+
+- 3f92ae8: feat(react): re-throw received error with no fallback of ErrorBoundary
+
+### Patch Changes
+
+- 4fe94af: perf(react): reduce ErrorBoundaryGroup size
+
+## 1.19.0
+
+### Minor Changes
+
+- f78ed7d: feat(react): add experimental wrap to remove unnecessary hocs' implementation
+
 ## 1.18.3
 
 ### Patch Changes

@@ -1,7 +1,0 @@
-{
-  "installation": { "title": "설치하기" },
-  "useSuspenseQuery": { "title": "useSuspenseQuery" },
-  "useSuspenseQueries": { "title": "useSuspenseQueries" },
-  "useSuspenseInfiniteQuery": { "title": "useSuspenseInfiniteQuery" },
-  "QueryErrorBoundary": { "title": "<QueryErrorBoundary/>, <QueryAsyncBoundary/>" }
-}

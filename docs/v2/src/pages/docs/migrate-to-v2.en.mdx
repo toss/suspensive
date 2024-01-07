@@ -1,0 +1,92 @@
+import { Callout, Steps } from 'nextra/components'
+
+# Migrating to Suspensive v2 (Work in progress)
+
+Suspensive V2, we focused on increasing `compatibility` and `improving DX`.
+To accomplish this, we had to introduce some dramatic changes, which resulted in the removal of some previously deprecated features.
+
+## Upgrade steps
+
+Here is a list of steps to migrate your project to v2.
+
+<Steps>
+
+### Update our package version
+
+```sh
+yarn up '@suspensive/*'
+#or
+pnpm up "@suspensive/*"
+```
+
+Make sure you update all `@suspensive` packages you use to `@suspensive/<package-name>@2.0.0` and your react dependencies to at least v18
+
+### Check React version with v18
+
+<Callout>
+
+🚨 Suspensive v2 is not backwards compatible with React v17 and lower. Make sure to upgrade to React v18.
+
+</Callout>
+
+Here is how your dependencies could look like:
+
+```json
+{
+  "dependencies": {
+    "@suspensive/react": "^2.0.0",
+    "@suspensive/react-query": "^2.0.0",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.0"
+  }
+}
+```
+
+</Steps>
+
+## Overview Changes
+
+### `new` DevMode
+
+This is our new feature for DX using suspensive
+
+> some of describes here ...
+
+### `new` wrap
+
+This is our new feature hoc
+
+> some of describes here ...
+
+## Handling BREAKING CHANGES
+
+### @suspensive/react
+
+#### `removed` AsyncBoundary
+
+We removed AsyncBoundary in v2 [#295](https://github.com/suspensive/react/issues/295)
+
+AsyncBoundary's feature is just wrap two component(Suspense, Errorboundry) by one.
+So, you can split by two like this.
+
+```diff
+- <AsyncBoundary pendingFallback={<Loading />} rejectedFallback={<Error />} onError={onError} onReset={onReset}>
++ <Errorboundry fallback={<Error />} onError={onError} onReset={onReset}>
++   <Suspense fallback={<Loading />}>
+    <Children />
+- </AsyncBoundary>
++   </Suspense>
++ </Errorboundry>
+```
+
+## Deprecated features
+
+### withSuspense, withDelay, withErrorboundry, withErrorBoundaryGroup
+
+This hocs are deprecated by new hoc `wrap`
+
+### @suspensive/react

@@ -5,15 +5,15 @@
   "files": [
     "react-js.js",
     "react-ts.js",
-    "react-ts-noimport.js"
+    "react-ts-no-import.js"
   ],
   "scripts": {
-    "lint": "eslint ."
+    "lint": "eslint \"**/*.{js,jsx,cjs,mjs,ts,tsx,cts,mts}\""
   },
   "dependencies": {
     "@suspensive/eslint-config-js": "workspace:*",
     "@suspensive/eslint-config-ts": "workspace:*",
-    "eslint-plugin-import": "^2.29.0",
+    "eslint-plugin-import": "^2.29.1",
     "eslint-plugin-react": "^7.33.2",
     "eslint-plugin-react-hooks": "^4.6.0"
   }

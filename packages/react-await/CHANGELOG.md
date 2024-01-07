@@ -1,5 +1,53 @@
 # @suspensive/react-await
 
+## 0.0.14
+
+### Patch Changes
+
+- 3782ae8: ci(eslint): add plugin:@typescript-eslint/strict-type-checked
+
+## 0.0.13
+
+### Patch Changes
+
+- 416a85c: fix: treeshake and minify to reduce bundle size
+
+## 0.0.12
+
+### Patch Changes
+
+- 4a3e7eb: fix(tsup): add splitting to reduce bundle size dramatically
+
+## 0.0.11
+
+### Patch Changes
+
+- b69d651: fix(tsup): add supported browsers
+
+## 0.0.10
+
+### Patch Changes
+
+- 88c1585: refactor(react, react-await, react-image): replace createElement by jsx
+
+## 0.0.9
+
+### Patch Changes
+
+- acbc787: refactor: extract unnecessary packages to root
+
+## 0.0.8
+
+### Patch Changes
+
+- e37fbcc: chore(deps-dev): Bump @types/react from 18.2.34 to 18.2.37
+
+## 0.0.7
+
+### Patch Changes
+
+- 9f421d3: fix(react-await): update package.json
+
 ## 0.0.6
 
 ### Patch Changes
