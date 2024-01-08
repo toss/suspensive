@@ -16,7 +16,10 @@ export const Delay = (props: DelayProps) => {
 
   const ms = props.ms ?? defaultProps.ms ?? 0
   if (process.env.NODE_ENV !== 'production') {
-    assert(ms >= 0, 'Delay: ms prop should be greater than or equal to 0')
+    assert(
+      [props.ms, defaultProps.ms].every((item = 0) => item >= 0),
+      'Delay: ms prop should be greater than or equal to 0'
+    )
   }
 
   const [isDelaying, setIsDelaying] = useState(ms > 0)
