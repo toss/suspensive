@@ -6,117 +6,121 @@ import { api } from '~/utils'
 
 export default function Page() {
   return (
-    <ErrorBoundary fallback={() => <div>error</div>}>
-      <div className="flex flex-col">
-        <Suspense clientOnly fallback={<div>loading...</div>}>
-          <Await
-            options={{
-              key: [2000] as const,
-              fn: ({ key: [ms] }) => api.delay(ms, { percentage: 100 }),
-            }}
-          >
-            {(awaited) => (
-              <div>
-                <button onClick={awaited.reset}>Try again</button>
-                <div>{awaited.data}</div>
-              </div>
-            )}
-          </Await>
-        </Suspense>
-        <Suspense clientOnly fallback={<div>loading...</div>}>
-          <Await
-            options={{
-              key: [2000] as const,
-              fn: ({ key: [ms] }) => api.delay(ms, { percentage: 100 }),
-            }}
-          >
-            {(awaited) => (
-              <div>
-                <button onClick={awaited.reset}>Try again</button>
-                <div>{awaited.data}</div>
-              </div>
-            )}
-          </Await>
-        </Suspense>
-        <Suspense clientOnly fallback={<div>loading...</div>}>
-          <Await
-            options={{
-              key: [2000] as const,
-              fn: ({ key: [ms] }) => api.delay(ms, { percentage: 100 }),
-            }}
-          >
-            {(awaited) => (
-              <div>
-                <button onClick={awaited.reset}>Try again</button>
-                <div>{awaited.data}</div>
-              </div>
-            )}
-          </Await>
-        </Suspense>
-        <Suspense clientOnly fallback={<div>loading...</div>}>
-          <Await
-            options={{
-              key: [2000] as const,
-              fn: ({ key: [ms] }) => api.delay(ms, { percentage: 100 }),
-            }}
-          >
-            {(awaited) => (
-              <div>
-                <button onClick={awaited.reset}>Try again</button>
-                <div>{awaited.data}</div>
-              </div>
-            )}
-          </Await>
-        </Suspense>
-      </div>
+    <>
+      <ErrorBoundary fallback={() => <div>error</div>}>
+        <div className="flex flex-col">
+          <Suspense clientOnly fallback={<div>loading...</div>}>
+            <Await
+              options={{
+                key: [2000] as const,
+                fn: ({ key: [ms] }) => api.delay(ms, { percentage: 100 }),
+                gcTime: 2000,
+              }}
+            >
+              {(awaitState) => (
+                <div>
+                  <button onClick={awaitState.reset}>Try again</button>
+                  <div>{awaitState.data}</div>
+                </div>
+              )}
+            </Await>
+          </Suspense>
 
-      <div className="flex flex-col">
-        <Suspense clientOnly fallback={<div>loading...</div>}>
-          <Await
-            options={{
-              key: [3000] as const,
-              fn: ({ key: [ms] }) => api.delay(ms, { percentage: 100 }),
-            }}
-          >
-            {(awaited) => (
-              <div>
-                <button onClick={awaited.reset}>Try again</button>
-                <div>{awaited.data}</div>
-              </div>
-            )}
-          </Await>
-        </Suspense>
-        <Suspense clientOnly fallback={<div>loading...</div>}>
-          <Await
-            options={{
-              key: [4000] as const,
-              fn: ({ key: [ms] }) => api.delay(ms, { percentage: 100 }),
-            }}
-          >
-            {(awaited) => (
-              <div>
-                <button onClick={awaited.reset}>Try again</button>
-                <div>{awaited.data}</div>
-              </div>
-            )}
-          </Await>
-        </Suspense>
-        <Suspense clientOnly fallback={<div>loading...</div>}>
-          <Await
-            options={{
-              key: [4000] as const,
-              fn: ({ key: [ms] }) => api.delay(ms, { percentage: 100 }),
-            }}
-          >
-            {(awaited) => (
-              <div>
-                <button onClick={awaited.reset}>Try again</button>
-                <div>{awaited.data}</div>
-              </div>
-            )}
-          </Await>
-        </Suspense>
-      </div>
-    </ErrorBoundary>
+          {/* <Suspense clientOnly fallback={<div>loading...</div>}>
+        <Await
+          options={{
+            key: [2000] as const,
+            fn: ({ key: [ms] }) => api.delay(ms, { percentage: 100 }),
+          }}
+        >
+          {(awaited) => (
+            <div>
+              <button onClick={awaited.reset}>Try again</button>
+              <div>{awaited.data}</div>
+            </div>
+          )}
+        </Await>
+      </Suspense>
+      <Suspense clientOnly fallback={<div>loading...</div>}>
+        <Await
+          options={{
+            key: [2000] as const,
+            fn: ({ key: [ms] }) => api.delay(ms, { percentage: 100 }),
+          }}
+        >
+          {(awaited) => (
+            <div>
+              <button onClick={awaited.reset}>Try again</button>
+              <div>{awaited.data}</div>
+            </div>
+          )}
+        </Await>
+      </Suspense>
+      <Suspense clientOnly fallback={<div>loading...</div>}>
+        <Await
+          options={{
+            key: [2000] as const,
+            fn: ({ key: [ms] }) => api.delay(ms, { percentage: 100 }),
+          }}
+        >
+          {(awaited) => (
+            <div>
+              <button onClick={awaited.reset}>Try again</button>
+              <div>{awaited.data}</div>
+            </div>
+          )}
+        </Await>
+      </Suspense>
+    </div>
+
+    <div className="flex flex-col">
+      <Suspense clientOnly fallback={<div>loading...</div>}>
+        <Await
+          options={{
+            key: [3000] as const,
+            fn: ({ key: [ms] }) => api.delay(ms, { percentage: 100 }),
+          }}
+        >
+          {(awaited) => (
+            <div>
+              <button onClick={awaited.reset}>Try again</button>
+              <div>{awaited.data}</div>
+            </div>
+          )}
+        </Await>
+      </Suspense>
+      <Suspense clientOnly fallback={<div>loading...</div>}>
+        <Await
+          options={{
+            key: [4000] as const,
+            fn: ({ key: [ms] }) => api.delay(ms, { percentage: 100 }),
+          }}
+        >
+          {(awaited) => (
+            <div>
+              <button onClick={awaited.reset}>Try again</button>
+              <div>{awaited.data}</div>
+            </div>
+          )}
+        </Await>
+      </Suspense>
+      <Suspense clientOnly fallback={<div>loading...</div>}>
+        <Await
+          options={{
+            key: [4000] as const,
+            fn: ({ key: [ms] }) => api.delay(ms, { percentage: 100 }),
+          }}
+        >
+          {(awaited) => (
+            <div>
+              <button onClick={awaited.reset}>Try again</button>
+              <div>{awaited.data}</div>
+            </div>
+          )}
+        </Await>
+      </Suspense> */}
+        </div>
+      </ErrorBoundary>
+    </>
   )
 }

@@ -7,7 +7,7 @@ export const GET = (req: Request) => {
 
   return delay(waitMs).then(() =>
     Math.random() * 100 < percentage
-      ? NextResponse.json(`Success after ${waitMs}ms`)
+      ? NextResponse.json(`Success after ${waitMs}ms ${new Date().toISOString()}`)
       : NextResponse.json('Server Error', { status: 500 })
   )
 }

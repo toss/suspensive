@@ -6,7 +6,7 @@ export abstract class GarbageCollectable {
   gcTime!: number
   gcTimeout?: ReturnType<typeof setTimeout>
 
-  destroy(): void {
+  protected destroy(): void {
     this.clearGcTimeout()
   }
 
@@ -15,7 +15,7 @@ export abstract class GarbageCollectable {
 
     if (isValidTimeout(this.gcTime)) {
       this.gcTimeout = setTimeout(() => {
-        this.optionalRemove()
+        this.gc()
       }, this.gcTime)
     }
   }
@@ -32,5 +32,5 @@ export abstract class GarbageCollectable {
     }
   }
 
-  protected abstract optionalRemove(): void
+  protected abstract gc(): void
 }

@@ -1,6 +1,7 @@
 'use client'
 
 import { DevMode, Suspensive, SuspensiveProvider } from '@suspensive/react'
+import { AwaitClient, AwaitClientProvider } from '@suspensive/react-await'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { type PropsWithChildren, useState } from 'react'
@@ -17,6 +18,9 @@ export const Providers = ({ children }: PropsWithChildren) => {
         },
       })
   )[0]
+
+  const awaitClient = useState(() => new AwaitClient())[0]
+
   const suspensive = useState(
     () =>
       new Suspensive({
@@ -33,10 +37,12 @@ export const Providers = ({ children }: PropsWithChildren) => {
 
   return (
     <SuspensiveProvider value={suspensive}>
-      <QueryClientProvider client={queryClient}>
-        {children}
-        <ReactQueryDevtools initialIsOpen={false} />
-      </QueryClientProvider>
+      <AwaitClientProvider client={awaitClient}>
+        <QueryClientProvider client={queryClient}>
+          {children}
+          <ReactQueryDevtools initialIsOpen={false} />
+        </QueryClientProvider>
+      </AwaitClientProvider>
       <DevMode />
     </SuspensiveProvider>
   )
