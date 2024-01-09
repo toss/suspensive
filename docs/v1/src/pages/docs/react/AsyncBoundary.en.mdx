@@ -1,8 +1,8 @@
-import { Callout } from 'nextra/components'
+import { Callout } from '@/components'
 
 # AsyncBoundary (deprecated)
 
-<Callout type='warning'>
+<Callout type='deprecated'>
 
 deprecated: Use [`<Suspense/>`](./Suspense), [`<ErrorBoundary/>`](./ErrorBoundary) directly
 
@@ -32,7 +32,7 @@ const Example = () => (
 
 ### AsyncBoundaryProps
 
-<Callout type='warning'>
+<Callout type='deprecated'>
 
 deprecated: Use SuspenseProps and ErrorBoundaryProps directly
 
@@ -48,7 +48,7 @@ type AsyncBoundaryProps = Omit<SuspenseProps, 'fallback'> &
 
 ## withAsyncBoundary
 
-<Callout type='warning'>
+<Callout type='deprecated'>
 
 deprecated: Use [wrap.ErrorBoundary().Suspense().on](./wrap) instead
 
