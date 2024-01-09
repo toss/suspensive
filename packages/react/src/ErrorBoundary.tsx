@@ -18,8 +18,8 @@ import { ErrorBoundaryGroupContext } from './ErrorBoundaryGroup'
 import type { PropsWithDevMode } from './utility-types'
 import { assert, hasResetKeysChanged } from './utils'
 import {
-  assertMessageUseErrorBoundaryFallbackPropsOnlyInFallbackOfErrorBoundary,
-  assertMessageUseErrorBoundaryOnlyInChildrenOfErrorBoundary,
+  useErrorBoundaryFallbackPropsOnlyInFallbackOfErrorBoundary,
+  useErrorBoundaryOnlyInChildrenOfErrorBoundary,
 } from './utils/assert'
 
 export interface ErrorBoundaryFallbackProps<TError extends Error = Error> {
@@ -162,7 +162,7 @@ export const useErrorBoundary = <TError extends Error = Error>() => {
   }
 
   const errorBoundary = useContext(ErrorBoundaryContext)
-  assert(errorBoundary != null && !errorBoundary.isError, assertMessageUseErrorBoundaryOnlyInChildrenOfErrorBoundary)
+  assert(errorBoundary != null && !errorBoundary.isError, useErrorBoundaryOnlyInChildrenOfErrorBoundary)
 
   return useMemo(
     () => ({
@@ -174,10 +174,7 @@ export const useErrorBoundary = <TError extends Error = Error>() => {
 
 export const useErrorBoundaryFallbackProps = <TError extends Error = Error>(): ErrorBoundaryFallbackProps<TError> => {
   const errorBoundary = useContext(ErrorBoundaryContext)
-  assert(
-    errorBoundary != null && errorBoundary.isError,
-    assertMessageUseErrorBoundaryFallbackPropsOnlyInFallbackOfErrorBoundary
-  )
+  assert(errorBoundary != null && errorBoundary.isError, useErrorBoundaryFallbackPropsOnlyInFallbackOfErrorBoundary)
 
   return useMemo(
     () => ({

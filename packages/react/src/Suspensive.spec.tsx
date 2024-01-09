@@ -3,8 +3,9 @@ import { render, screen, waitFor } from '@testing-library/react'
 import ms from 'ms'
 import { createElement, useContext } from 'react'
 import { describe, expect, it } from 'vitest'
-import { SuspenseDefaultPropsContext } from './contexts'
-import { Delay, Suspense, type SuspenseProps, Suspensive, SuspensiveProvider } from '.'
+import { DelayDefaultPropsContext, SuspenseDefaultPropsContext } from './contexts'
+import { SuspensiveConfigDefaultOptionsDelayMsShouldBeGreaterThan0 } from './utils/assert'
+import { Delay, type DelayProps, Suspense, type SuspenseProps, Suspensive, SuspensiveProvider } from '.'
 
 const FALLBACK_GLOBAL = 'FALLBACK_GLOBAL'
 
@@ -108,5 +109,26 @@ describe('<SuspensiveProvider/>', () => {
       </SuspensiveProvider>
     )
     expect(clientOnly3).toBeUndefined()
+  })
+
+  it('should accept defaultOptions.delay.ms only positive number', () => {
+    expect(() => new Suspensive({ defaultOptions: { delay: { ms: 0 } } })).toThrow(
+      SuspensiveConfigDefaultOptionsDelayMsShouldBeGreaterThan0
+    )
+    expect(() => new Suspensive({ defaultOptions: { delay: { ms: -1 } } })).toThrow(
+      SuspensiveConfigDefaultOptionsDelayMsShouldBeGreaterThan0
+    )
+
+    const defaultPropsMs = 100
+    let ms: DelayProps['ms'] = undefined
+    render(
+      <SuspensiveProvider value={new Suspensive({ defaultOptions: { delay: { ms: defaultPropsMs } } })}>
+        {createElement(() => {
+          ms = useContext(DelayDefaultPropsContext).ms
+          return <></>
+        })}
+      </SuspensiveProvider>
+    )
+    expect(ms).toBe(defaultPropsMs)
   })
 })

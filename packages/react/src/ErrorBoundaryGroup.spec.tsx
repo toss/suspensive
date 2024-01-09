@@ -3,7 +3,7 @@ import { act, render, screen } from '@testing-library/react'
 import ms from 'ms'
 import { createElement } from 'react'
 import { describe, expect, it, vi } from 'vitest'
-import { assertMessageUseErrorBoundaryGroupOnlyInChildrenOfErrorBoundaryGroup } from './utils/assert'
+import { useErrorBoundaryGroupOnlyInChildrenOfErrorBoundaryGroup } from './utils/assert'
 import { ErrorBoundary, ErrorBoundaryGroup, useErrorBoundaryGroup, withErrorBoundaryGroup } from '.'
 
 const innerErrorBoundaryCount = 3
@@ -76,7 +76,7 @@ const UsingUseErrorBoundaryGroup = () => {
 describe('useErrorBoundaryGroup', () => {
   it('should throw error without ErrorBoundaryGroup in parent', () => {
     expect(() => render(<UsingUseErrorBoundaryGroup />)).toThrow(
-      assertMessageUseErrorBoundaryGroupOnlyInChildrenOfErrorBoundaryGroup
+      useErrorBoundaryGroupOnlyInChildrenOfErrorBoundaryGroup
     )
   })
 })

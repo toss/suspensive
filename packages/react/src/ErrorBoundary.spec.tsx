@@ -6,8 +6,8 @@ import { createRoot } from 'react-dom/client'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { useTimeout } from './hooks'
 import {
-  assertMessageUseErrorBoundaryFallbackPropsOnlyInFallbackOfErrorBoundary,
-  assertMessageUseErrorBoundaryOnlyInChildrenOfErrorBoundary,
+  useErrorBoundaryFallbackPropsOnlyInFallbackOfErrorBoundary,
+  useErrorBoundaryOnlyInChildrenOfErrorBoundary,
 } from './utils/assert'
 import { ErrorBoundary, useErrorBoundary, useErrorBoundaryFallbackProps, withErrorBoundary } from '.'
 
@@ -74,11 +74,9 @@ describe('<ErrorBoundary/>', () => {
   it('requires fallback is set, if fallback is undefined, ErrorBoundary will rethrow error', () => {
     expect(() =>
       render(
-        createElement(() => (
-          <ErrorBoundary fallback={undefined}>
-            <ThrowError message={ERROR_MESSAGE} after={0} />
-          </ErrorBoundary>
-        ))
+        <ErrorBoundary fallback={undefined}>
+          <ThrowError message={ERROR_MESSAGE} after={0} />
+        </ErrorBoundary>
       )
     ).toThrow(ERROR_MESSAGE)
   })
@@ -313,7 +311,7 @@ describe('useErrorBoundary', () => {
           <ThrowError message={ERROR_MESSAGE} after={0} />
         </ErrorBoundary>
       )
-    ).toThrow(assertMessageUseErrorBoundaryOnlyInChildrenOfErrorBoundary)
+    ).toThrow(useErrorBoundaryOnlyInChildrenOfErrorBoundary)
   })
 })
 
@@ -367,7 +365,7 @@ describe('useErrorBoundaryFallbackProps', () => {
             return <>{TEXT}</>
           })}
         </ErrorBoundary>
-      ).getByText(assertMessageUseErrorBoundaryFallbackPropsOnlyInFallbackOfErrorBoundary)
+      ).getByText(useErrorBoundaryFallbackPropsOnlyInFallbackOfErrorBoundary)
     ).toBeInTheDocument()
   })
 
@@ -379,7 +377,7 @@ describe('useErrorBoundaryFallbackProps', () => {
           return <>{TEXT}</>
         })
       )
-    ).toThrow(assertMessageUseErrorBoundaryFallbackPropsOnlyInFallbackOfErrorBoundary)
+    ).toThrow(useErrorBoundaryFallbackPropsOnlyInFallbackOfErrorBoundary)
   })
 
   it('should be prevented to be called in children of ErrorBoundary', () => {
@@ -391,7 +389,7 @@ describe('useErrorBoundaryFallbackProps', () => {
             return <>{TEXT}</>
           })}
         </ErrorBoundary>
-      ).getByText(assertMessageUseErrorBoundaryFallbackPropsOnlyInFallbackOfErrorBoundary)
+      ).getByText(useErrorBoundaryFallbackPropsOnlyInFallbackOfErrorBoundary)
     ).toBeInTheDocument()
   })
 })
