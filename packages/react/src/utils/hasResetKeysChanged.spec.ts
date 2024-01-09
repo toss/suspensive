@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { hasResetKeysChanged } from '.'
+import { hasResetKeysChanged } from './hasResetKeysChanged'
 
 const primitive = 0
 const reference1 = { test: 0 }
