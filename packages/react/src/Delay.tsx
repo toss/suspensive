@@ -14,7 +14,7 @@ export interface DelayProps extends PropsWithChildren {
 export const Delay = (props: DelayProps) => {
   if (process.env.NODE_ENV !== 'production') {
     if (typeof props.ms === 'number') {
-      assert(props.ms > 0, 'Delay: ms prop should be greater than 0')
+      assert(props.ms > 0, 'Delay: ms prop should be greater than or equal to 0')
     }
   }
   const defaultProps = useContext(DelayDefaultPropsContext)
