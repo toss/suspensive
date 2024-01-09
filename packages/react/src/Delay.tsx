@@ -12,18 +12,18 @@ export interface DelayProps extends PropsWithChildren {
 }
 
 export const Delay = (props: DelayProps) => {
-  const defaultProps = useContext(DelayDefaultPropsContext)
-
-  const ms = props.ms ?? defaultProps.ms ?? 0
   if (process.env.NODE_ENV !== 'production') {
-    assert(ms > 0, 'Delay: ms prop should be greater than 0')
+    if (typeof props.ms === 'number') {
+      assert(props.ms > 0, 'Delay: ms prop should be greater than 0')
+    }
   }
+  const defaultProps = useContext(DelayDefaultPropsContext)
+  const ms = props.ms ?? defaultProps.ms ?? 0
 
   const [isDelaying, setIsDelaying] = useState(ms > 0)
   useTimeout(() => setIsDelaying(false), ms)
 
   const fallback = typeof props.fallback === 'undefined' ? defaultProps.fallback : props.fallback
-
   return isDelaying ? fallback : props.children
 }
 if (process.env.NODE_ENV !== 'production') {
