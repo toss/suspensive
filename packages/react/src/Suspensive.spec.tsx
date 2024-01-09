@@ -4,8 +4,10 @@ import ms from 'ms'
 import { createElement, useContext } from 'react'
 import { describe, expect, it } from 'vitest'
 import { DelayDefaultPropsContext, SuspenseDefaultPropsContext } from './contexts'
+import { Delay, type DelayProps } from './Delay'
+import { Suspense, type SuspenseProps } from './Suspense'
+import { Suspensive, SuspensiveProvider } from './Suspensive'
 import { SuspensiveConfigDefaultOptionsDelayMsShouldBeGreaterThan0 } from './utils/assert'
-import { Delay, type DelayProps, Suspense, type SuspenseProps, Suspensive, SuspensiveProvider } from '.'
 
 const FALLBACK_GLOBAL = 'FALLBACK_GLOBAL'
 
