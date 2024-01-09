@@ -1,5 +1,5 @@
 import { describe, expect, expectTypeOf, it } from 'vitest'
-import { assert } from '.'
+import { assert } from './assert'
 
 function get(type: 'foo' | 'bar') {
   switch (type) {
