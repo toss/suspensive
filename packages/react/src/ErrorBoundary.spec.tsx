@@ -3,8 +3,12 @@ import { act, render, screen, waitFor } from '@testing-library/react'
 import ms from 'ms'
 import { type ComponentRef, createElement, createRef } from 'react'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
-import type { ErrorBoundaryFallbackProps } from '../dist'
-import { ErrorBoundary, useErrorBoundary, useErrorBoundaryFallbackProps } from './ErrorBoundary'
+import {
+  ErrorBoundary,
+  type ErrorBoundaryFallbackProps,
+  useErrorBoundary,
+  useErrorBoundaryFallbackProps,
+} from './ErrorBoundary'
 import { useTimeout } from './hooks'
 import {
   useErrorBoundaryFallbackProps_this_hook_should_be_called_in_ErrorBoundary_props_fallback,

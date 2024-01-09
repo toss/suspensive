@@ -4,7 +4,7 @@ import ms from 'ms'
 import { createElement } from 'react'
 import { beforeEach, describe, expect, it } from 'vitest'
 import { useErrorBoundaryGroup } from './ErrorBoundaryGroup'
-import { withDelay, withErrorBoundary, withErrorBoundaryGroup, withSuspense } from './wrap'
+import { withAsyncBoundary, withDelay, withErrorBoundary, withErrorBoundaryGroup, withSuspense } from './wrap'
 
 describe('withSuspense', () => {
   beforeEach(() => Suspend.reset())
@@ -93,6 +93,53 @@ describe('withErrorBoundary', () => {
     Component.displayName = 'Custom'
     expect(withErrorBoundary(Component, { fallback: () => <></> }).displayName).toBe('withErrorBoundary(Custom)')
     expect(withErrorBoundary(() => <></>, { fallback: () => <></> }).displayName).toBe('withErrorBoundary(Component)')
+  })
+})
+
+describe('withAsyncBoundary', () => {
+  it('should wrap component by AsyncBoundary', () => {
+    const rendered = render(
+      createElement(
+        withAsyncBoundary(() => <>{TEXT}</>, {
+          rejectedFallback: ERROR_MESSAGE,
+        })
+      )
+    )
+    expect(rendered.queryByText(TEXT)).toBeInTheDocument()
+  })
+
+  it('should set displayName based on Component.displayName', () => {
+    const TestComponentWithDisplayName = () => <>{TEXT}</>
+    TestComponentWithDisplayName.displayName = 'TestDisplayName'
+    expect(withAsyncBoundary(TestComponentWithDisplayName, { rejectedFallback: () => <></> }).displayName).toBe(
+      'withAsyncBoundary(TestDisplayName)'
+    )
+    expect(withAsyncBoundary(() => <>{TEXT}</>, { rejectedFallback: () => <></> }).displayName).toBe(
+      'withAsyncBoundary(Component)'
+    )
+  })
+})
+describe('withAsyncBoundary.CSROnly', () => {
+  it('should wrap component by AsyncBoundary.CSROnly', () => {
+    const rendered = render(
+      createElement(
+        withAsyncBoundary.CSROnly(() => <>{TEXT}</>, {
+          rejectedFallback: ERROR_MESSAGE,
+        })
+      )
+    )
+    expect(rendered.queryByText(TEXT)).toBeInTheDocument()
+  })
+
+  it('should set displayName based on Component.displayName', () => {
+    const TestComponentWithDisplayName = () => <>{TEXT}</>
+    TestComponentWithDisplayName.displayName = 'TestDisplayName'
+    expect(withAsyncBoundary.CSROnly(TestComponentWithDisplayName, { rejectedFallback: () => <></> }).displayName).toBe(
+      'withAsyncBoundary.CSROnly(TestDisplayName)'
+    )
+    expect(withAsyncBoundary.CSROnly(() => <>{TEXT}</>, { rejectedFallback: () => <></> }).displayName).toBe(
+      'withAsyncBoundary.CSROnly(Component)'
+    )
   })
 })
 

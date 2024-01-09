@@ -2,7 +2,7 @@ import { TEXT } from '@suspensive/test-utils'
 import { render, screen, waitFor } from '@testing-library/react'
 import ms from 'ms'
 import { describe, expect, it } from 'vitest'
-import { Delay } from '.'
+import { Delay } from './Delay'
 
 describe('<Delay/>', () => {
   it('should render the children after the delay', async () => {

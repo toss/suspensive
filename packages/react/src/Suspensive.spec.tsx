@@ -4,7 +4,9 @@ import ms from 'ms'
 import { createElement, useContext } from 'react'
 import { describe, expect, it } from 'vitest'
 import { SuspenseDefaultPropsContext } from './contexts'
-import { Delay, Suspense, type SuspenseProps, Suspensive, SuspensiveProvider } from '.'
+import { Delay } from './Delay'
+import { Suspense, type SuspenseProps } from './Suspense'
+import { Suspensive, SuspensiveProvider } from './Suspensive'
 
 const FALLBACK_GLOBAL = 'FALLBACK_GLOBAL'
 
