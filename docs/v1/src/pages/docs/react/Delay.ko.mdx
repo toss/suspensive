@@ -1,4 +1,4 @@
-import { Callout } from 'nextra/components'
+import { Callout } from '@/components'
 
 # Delay
 
@@ -16,11 +16,11 @@ const Example = () => (
 )
 ```
 
-<Callout type="info">
+<Callout type='info'>
 
 로딩 UI가 지연되어 노출되는 것이 때에 따라 더 좋은 사용성을 제공합니다.
 
-```tsx /Delay/
+```jsx /Delay/
 import { Delay, Suspense } from '@suspensive/react'
 
 const Example = () => (
@@ -48,7 +48,7 @@ Default ms
 
 ## withDelay
 
-<Callout type='error'>
+<Callout type='deprecated'>
 
 deprecated: 대신 [wrap.Delay().on](./wrap)을 사용하세요
 
@@ -58,7 +58,7 @@ withDelay를 사용하면 컴포넌트를 `<Delay/>`로 쉽게 래핑할 수 있
 아래와 같이 withDelay를 사용하면 이를 감싸기 위해 불필요한 코드를 만들 필요가 없습니다.
 withDelay의 두 번째 인자는 children이 없는 `<Delay/>`의 props입니다.
 
-```tsx /withDelay/
+```jsx /withDelay/
 import { withDelay } from '@suspensive/react'
 
 const Example = withDelay(
