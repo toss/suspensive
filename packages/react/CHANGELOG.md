@@ -1,5 +1,11 @@
 # @suspensive/react
 
+## 1.23.1
+
+### Patch Changes
+
+- c526ad3: fix(react): assert message correctly, test code simply
+
 ## 1.23.0
 
 ### Minor Changes
