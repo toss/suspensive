@@ -7,6 +7,4 @@ export const options: Options = {
   entry: ['src/*.{ts,tsx}', '!**/*.{spec,test,test-d}.*'],
   sourcemap: true,
   dts: true,
-  minify: true,
-  treeshake: true,
 }
