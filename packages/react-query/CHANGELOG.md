@@ -1,5 +1,13 @@
 # @suspensive/react-query
 
+## 1.23.2
+
+### Patch Changes
+
+- 9bced99: fix(tsup): remove treeshaking, minification
+- Updated dependencies [9bced99]
+  - @suspensive/react@1.23.2
+
 ## 1.23.1
 
 ### Patch Changes
