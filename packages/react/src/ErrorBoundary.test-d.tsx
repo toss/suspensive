@@ -5,18 +5,22 @@ import { ErrorBoundary } from './ErrorBoundary'
 import type { ConstructorType } from './utility-types'
 
 describe('<ErrorBoundary/>', () => {
-  it('should pass only boolean or ErrorConstructor or EnabledCallback or Enabled[]', () => {
-    type EnabledCallback = (error: Error) => boolean
-    type Enabled = ConstructorType<Error> | EnabledCallback
-    expectTypeOf<ComponentProps<typeof ErrorBoundary>['enabled']>().toEqualTypeOf<
-      undefined | boolean | Enabled | [Enabled, ...Enabled[]]
+  it('should pass only boolean or ErrorConstructor or ShouldCatchCallback or ShouldCatch[]', () => {
+    type ShouldCatchCallback = (error: Error) => boolean
+    type ShouldCatch = ConstructorType<Error> | ShouldCatchCallback
+    expectTypeOf<ComponentProps<typeof ErrorBoundary>['shouldCatch']>().toEqualTypeOf<
+      undefined | boolean | ShouldCatch | [ShouldCatch, ...ShouldCatch[]]
     >()
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const Example = () => (
       <ErrorBoundary
-        // @ts-expect-error CustomNotError should be new (...args) => Error
-        enabled={[CustomNotError, CustomError, (error) => error instanceof CustomError]}
+        shouldCatch={[
+          // @ts-expect-error CustomNotError should be new (...args) => Error
+          CustomNotError,
+          CustomError,
+          (error) => error instanceof CustomError,
+        ]}
         fallback={({ error }) => <>{error.message} of Child</>}
       ></ErrorBoundary>
     )

@@ -168,14 +168,14 @@ describe('<ErrorBoundary/>', () => {
     expect(onReset).toHaveBeenCalledTimes(1)
   })
 
-  it('should be enabled by many criteria', async () => {
+  it('should catch Error by many criteria', async () => {
     const onErrorParent = vi.fn()
     const onErrorChild = vi.fn()
 
     render(
       <ErrorBoundary fallback={({ error }) => <>{error.message} of Parent</>} onError={onErrorParent}>
         <ErrorBoundary
-          enabled={[CustomError, (error) => error instanceof CustomError]}
+          shouldCatch={[CustomError, (error) => error instanceof CustomError]}
           fallback={({ error }) => <>{error.message} of Child</>}
           onError={onErrorChild}
         >
@@ -191,14 +191,14 @@ describe('<ErrorBoundary/>', () => {
     await waitFor(() => expect(screen.queryByText(`${ERROR_MESSAGE} of Parent`)).toBeInTheDocument())
   })
 
-  it('should be enabled by one criteria(ErrorConstructor)', async () => {
+  it('should catch Error by one criteria(ErrorConstructor)', async () => {
     const onErrorParent = vi.fn()
     const onErrorChild = vi.fn()
 
     render(
       <ErrorBoundary fallback={({ error }) => <>{error.message} of Parent</>} onError={onErrorParent}>
         <ErrorBoundary
-          enabled={CustomError}
+          shouldCatch={CustomError}
           fallback={({ error }) => <>{error.message} of Child</>}
           onError={onErrorChild}
         >
@@ -214,14 +214,14 @@ describe('<ErrorBoundary/>', () => {
     await waitFor(() => expect(screen.queryByText(`${ERROR_MESSAGE} of Parent`)).toBeInTheDocument())
   })
 
-  it('should be enabled by one criteria(EnabledCallback)', async () => {
+  it('should catch Error by one criteria(ShouldCatchCallback)', async () => {
     const onErrorParent = vi.fn()
     const onErrorChild = vi.fn()
 
     render(
       <ErrorBoundary fallback={({ error }) => <>{error.message} of Parent</>} onError={onErrorParent}>
         <ErrorBoundary
-          enabled={(error) => error instanceof CustomError}
+          shouldCatch={(error) => error instanceof CustomError}
           fallback={({ error }) => <>{error.message} of Child</>}
           onError={onErrorChild}
         >
@@ -237,13 +237,17 @@ describe('<ErrorBoundary/>', () => {
     await waitFor(() => expect(screen.queryByText(`${ERROR_MESSAGE} of Parent`)).toBeInTheDocument())
   })
 
-  it('should be enabled by one criteria(boolean)', async () => {
+  it('should catch Error by one criteria(boolean)', async () => {
     const onErrorParent = vi.fn()
     const onErrorChild = vi.fn()
 
     render(
       <ErrorBoundary fallback={({ error }) => <>{error.message} of Parent</>} onError={onErrorParent}>
-        <ErrorBoundary enabled={false} fallback={({ error }) => <>{error.message} of Child</>} onError={onErrorChild}>
+        <ErrorBoundary
+          shouldCatch={false}
+          fallback={({ error }) => <>{error.message} of Child</>}
+          onError={onErrorChild}
+        >
           {createElement(() => {
             throw new Error(ERROR_MESSAGE)
           })}
