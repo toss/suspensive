@@ -1,5 +1,11 @@
 # @suspensive/react
 
+## 1.23.2
+
+### Patch Changes
+
+- 9bced99: fix(tsup): remove treeshaking, minification
+
 ## 1.23.1
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @suspensive/react-image
 
+## 0.0.8
+
+### Patch Changes
+
+- 9bced99: fix(tsup): remove treeshaking, minification
+
 ## 0.0.7
 
 ### Patch Changes
