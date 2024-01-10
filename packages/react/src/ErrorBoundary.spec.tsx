@@ -1,4 +1,4 @@
-import { ERROR_MESSAGE, FALLBACK, TEXT, ThrowError, ThrowNull } from '@suspensive/test-utils'
+import { CustomError, ERROR_MESSAGE, FALLBACK, TEXT, ThrowError, ThrowNull } from '@suspensive/test-utils'
 import { act, render, screen, waitFor } from '@testing-library/react'
 import ms from 'ms'
 import { type ComponentRef, createElement, createRef } from 'react'
@@ -166,6 +166,94 @@ describe('<ErrorBoundary/>', () => {
     expect(screen.queryByText(TEXT)).toBeInTheDocument()
     expect(screen.queryByText(ERROR_MESSAGE)).not.toBeInTheDocument()
     expect(onReset).toHaveBeenCalledTimes(1)
+  })
+
+  it('should be enabled by many criteria', async () => {
+    const onErrorParent = vi.fn()
+    const onErrorChild = vi.fn()
+
+    render(
+      <ErrorBoundary fallback={({ error }) => <>{error.message} of Parent</>} onError={onErrorParent}>
+        <ErrorBoundary
+          enabled={[CustomError, (error) => error instanceof CustomError]}
+          fallback={({ error }) => <>{error.message} of Child</>}
+          onError={onErrorChild}
+        >
+          {createElement(() => {
+            throw new Error(ERROR_MESSAGE)
+          })}
+        </ErrorBoundary>
+      </ErrorBoundary>
+    )
+
+    expect(onErrorChild).toBeCalledTimes(0)
+    expect(onErrorParent).toBeCalledTimes(1)
+    await waitFor(() => expect(screen.queryByText(`${ERROR_MESSAGE} of Parent`)).toBeInTheDocument())
+  })
+
+  it('should be enabled by one criteria(ErrorConstructor)', async () => {
+    const onErrorParent = vi.fn()
+    const onErrorChild = vi.fn()
+
+    render(
+      <ErrorBoundary fallback={({ error }) => <>{error.message} of Parent</>} onError={onErrorParent}>
+        <ErrorBoundary
+          enabled={CustomError}
+          fallback={({ error }) => <>{error.message} of Child</>}
+          onError={onErrorChild}
+        >
+          {createElement(() => {
+            throw new Error(ERROR_MESSAGE)
+          })}
+        </ErrorBoundary>
+      </ErrorBoundary>
+    )
+
+    expect(onErrorChild).toBeCalledTimes(0)
+    expect(onErrorParent).toBeCalledTimes(1)
+    await waitFor(() => expect(screen.queryByText(`${ERROR_MESSAGE} of Parent`)).toBeInTheDocument())
+  })
+
+  it('should be enabled by one criteria(EnabledCallback)', async () => {
+    const onErrorParent = vi.fn()
+    const onErrorChild = vi.fn()
+
+    render(
+      <ErrorBoundary fallback={({ error }) => <>{error.message} of Parent</>} onError={onErrorParent}>
+        <ErrorBoundary
+          enabled={(error) => error instanceof CustomError}
+          fallback={({ error }) => <>{error.message} of Child</>}
+          onError={onErrorChild}
+        >
+          {createElement(() => {
+            throw new Error(ERROR_MESSAGE)
+          })}
+        </ErrorBoundary>
+      </ErrorBoundary>
+    )
+
+    expect(onErrorChild).toBeCalledTimes(0)
+    expect(onErrorParent).toBeCalledTimes(1)
+    await waitFor(() => expect(screen.queryByText(`${ERROR_MESSAGE} of Parent`)).toBeInTheDocument())
+  })
+
+  it('should be enabled by one criteria(boolean)', async () => {
+    const onErrorParent = vi.fn()
+    const onErrorChild = vi.fn()
+
+    render(
+      <ErrorBoundary fallback={({ error }) => <>{error.message} of Parent</>} onError={onErrorParent}>
+        <ErrorBoundary enabled={false} fallback={({ error }) => <>{error.message} of Child</>} onError={onErrorChild}>
+          {createElement(() => {
+            throw new Error(ERROR_MESSAGE)
+          })}
+        </ErrorBoundary>
+      </ErrorBoundary>
+    )
+
+    expect(onErrorChild).toBeCalledTimes(0)
+    expect(onErrorParent).toBeCalledTimes(1)
+    await waitFor(() => expect(screen.queryByText(`${ERROR_MESSAGE} of Parent`)).toBeInTheDocument())
   })
 })
 

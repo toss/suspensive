@@ -36,8 +36,7 @@ export interface ErrorBoundaryFallbackProps<TError extends Error = Error> {
 type EnabledCallback = (error: Error) => boolean
 type Enabled = ConstructorType<Error> | EnabledCallback
 const shouldCatch = (error: Error, enabled: Enabled) =>
-  (enabled.prototype instanceof Error && error instanceof enabled) ||
-  (typeof enabled === 'function' && (enabled as EnabledCallback)(error))
+  enabled.prototype instanceof Error ? error instanceof enabled : (enabled as EnabledCallback)(error)
 
 export type ErrorBoundaryProps = PropsWithDevMode<
   PropsWithChildren<{
@@ -110,12 +109,12 @@ class BaseErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState
 
     let childrenOrFallback = children
     if (this.state.isError) {
-      const boundaryShouldCatch = Array.isArray(enabled)
+      const catchEnabled = Array.isArray(enabled)
         ? enabled.some((enabledItem) => this.state.isError && shouldCatch(this.state.error, enabledItem))
         : typeof enabled === 'boolean'
           ? enabled
           : shouldCatch(this.state.error, enabled)
-      if (!boundaryShouldCatch) {
+      if (!catchEnabled) {
         throw this.state.error
       }
 
