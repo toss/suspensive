@@ -1,5 +1,11 @@
 # @suspensive/react-await
 
+## 0.0.15
+
+### Patch Changes
+
+- 9bced99: fix(tsup): remove treeshaking, minification
+
 ## 0.0.14
 
 ### Patch Changes
