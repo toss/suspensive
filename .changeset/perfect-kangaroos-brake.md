@@ -2,4 +2,4 @@
 '@suspensive/react': minor
 ---
 
-feat(react): add enabled prop of ErrorBoundary
+feat(react): add shouldCatch prop of ErrorBoundary
