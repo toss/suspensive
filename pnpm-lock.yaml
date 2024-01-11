@@ -33,8 +33,8 @@ importers:
         specifier: workspace:*
         version: link:configs/tsconfig
       '@testing-library/dom':
-        specifier: ^9.0.0
-        version: 9.3.3
+        specifier: ^9.3.4
+        version: 9.3.4
       '@testing-library/jest-dom':
         specifier: ^6.2.0
         version: 6.2.0(vitest@1.1.3)
@@ -142,7 +142,7 @@ importers:
         version: 2.29.1(@typescript-eslint/parser@6.18.1)(eslint-import-resolver-typescript@3.6.1)(eslint@8.56.0)
       eslint-plugin-jest-dom:
         specifier: ^5.1.0
-        version: 5.1.0(@testing-library/dom@9.3.3)(eslint@8.56.0)
+        version: 5.1.0(@testing-library/dom@9.3.4)(eslint@8.56.0)
       eslint-plugin-jsdoc:
         specifier: ^48.0.2
         version: 48.0.2(eslint@8.56.0)
@@ -2113,8 +2113,8 @@ packages:
       react-dom: 18.2.0(react@18.2.0)
       use-sync-external-store: 1.2.0(react@18.2.0)
 
-  /@testing-library/dom@9.3.3:
-    resolution: {integrity: sha512-fB0R+fa3AUqbLHWyxXa2kGVtf1Fe1ZZFr0Zp6AIbIAzXb2mKbEXl+PCQNUOaq5lbTab5tfctfXRNsWXxa2f7Aw==}
+  /@testing-library/dom@9.3.4:
+    resolution: {integrity: sha512-FlS4ZWlp97iiNWig0Muq8p+3rVDjRiYE+YKGbAqXOu9nwJFFOdL00kFpz42M+4huzYi86vAK1sOOfyOG45muIQ==}
     engines: {node: '>=14'}
     dependencies:
       '@babel/code-frame': 7.22.13
@@ -2163,7 +2163,7 @@ packages:
       react-dom: ^18.0.0
     dependencies:
       '@babel/runtime': 7.23.2
-      '@testing-library/dom': 9.3.3
+      '@testing-library/dom': 9.3.4
       '@types/react-dom': 18.2.18
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
@@ -4505,7 +4505,7 @@ packages:
       - supports-color
     dev: false
 
-  /eslint-plugin-jest-dom@5.1.0(@testing-library/dom@9.3.3)(eslint@8.56.0):
+  /eslint-plugin-jest-dom@5.1.0(@testing-library/dom@9.3.4)(eslint@8.56.0):
     resolution: {integrity: sha512-JIXZp+E/h/aGlP/rQc4tuOejiHlZXg65qw8JAJMIJA5VsdjOkss/SYcRSqBrQuEOytEM8JvngUjcz31d1RrCrA==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0, npm: '>=6', yarn: '>=1'}
     peerDependencies:
@@ -4516,7 +4516,7 @@ packages:
         optional: true
     dependencies:
       '@babel/runtime': 7.23.2
-      '@testing-library/dom': 9.3.3
+      '@testing-library/dom': 9.3.4
       eslint: 8.56.0
       requireindex: 1.2.0
     dev: false

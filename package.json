@@ -55,7 +55,7 @@
     "@suspensive/eslint-config-js": "workspace:*",
     "@suspensive/eslint-config-ts": "workspace:*",
     "@suspensive/tsconfig": "workspace:*",
-    "@testing-library/dom": "^9.0.0",
+    "@testing-library/dom": "^9.3.4",
     "@testing-library/jest-dom": "^6.2.0",
     "@testing-library/react": "^14.1.2",
     "@types/node": "^18.19.5",
