@@ -34,9 +34,13 @@ export interface ErrorBoundaryFallbackProps<TError extends Error = Error> {
 }
 
 type ShouldCatchCallback = (error: Error) => boolean
-type ShouldCatch = ConstructorType<Error> | ShouldCatchCallback
+type ShouldCatch = ConstructorType<Error> | ShouldCatchCallback | boolean
 const checkErrorBoundary = (shouldCatch: ShouldCatch, error: Error) =>
-  shouldCatch.prototype instanceof Error ? error instanceof shouldCatch : (shouldCatch as ShouldCatchCallback)(error)
+  typeof shouldCatch === 'boolean'
+    ? shouldCatch
+    : shouldCatch.prototype instanceof Error
+      ? error instanceof shouldCatch
+      : (shouldCatch as ShouldCatchCallback)(error)
 
 export type ErrorBoundaryProps = PropsWithDevMode<
   PropsWithChildren<{
@@ -60,7 +64,7 @@ export type ErrorBoundaryProps = PropsWithDevMode<
      * @experimental This is experimental feature.
      * @default true
      */
-    shouldCatch?: ShouldCatch | [ShouldCatch, ...ShouldCatch[]] | boolean
+    shouldCatch?: ShouldCatch | [ShouldCatch, ...ShouldCatch[]]
   }>,
   ErrorBoundaryDevModeOptions
 >
@@ -106,9 +110,7 @@ class BaseErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState
     if (isError) {
       const isCatch = Array.isArray(shouldCatch)
         ? shouldCatch.some((shouldCatch) => checkErrorBoundary(shouldCatch, error))
-        : typeof shouldCatch === 'boolean'
-          ? shouldCatch
-          : checkErrorBoundary(shouldCatch, error)
+        : checkErrorBoundary(shouldCatch, error)
       if (!isCatch) {
         throw error
       }
