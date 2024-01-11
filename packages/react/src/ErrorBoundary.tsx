@@ -33,11 +33,14 @@ export interface ErrorBoundaryFallbackProps<TError extends Error = Error> {
   reset: () => void
 }
 
-type EnabledCallback = (error: Error) => boolean
-type Enabled = ConstructorType<Error> | EnabledCallback
-const shouldCatch = (error: Error, enabled: Enabled) =>
-  (enabled.prototype instanceof Error && error instanceof enabled) ||
-  (typeof enabled === 'function' && (enabled as EnabledCallback)(error))
+type ShouldCatchCallback = (error: Error) => boolean
+type ShouldCatch = ConstructorType<Error> | ShouldCatchCallback | boolean
+const checkErrorBoundary = (shouldCatch: ShouldCatch, error: Error) =>
+  typeof shouldCatch === 'boolean'
+    ? shouldCatch
+    : shouldCatch.prototype instanceof Error
+      ? error instanceof shouldCatch
+      : (shouldCatch as ShouldCatchCallback)(error)
 
 export type ErrorBoundaryProps = PropsWithDevMode<
   PropsWithChildren<{
@@ -61,7 +64,7 @@ export type ErrorBoundaryProps = PropsWithDevMode<
      * @experimental This is experimental feature.
      * @default true
      */
-    enabled?: Enabled | [Enabled, ...Enabled[]] | boolean
+    shouldCatch?: ShouldCatch | [ShouldCatch, ...ShouldCatch[]]
   }>,
   ErrorBoundaryDevModeOptions
 >
@@ -99,29 +102,28 @@ class BaseErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState
   }
 
   render() {
-    const { children, fallback, enabled = true } = this.props
-
-    if (this.state.isError && typeof fallback === 'undefined') {
-      if (process.env.NODE_ENV !== 'production') {
-        console.error('ErrorBoundary of @suspensive/react requires a defined fallback')
-      }
-      throw this.state.error
-    }
+    const { children, fallback, shouldCatch = true } = this.props
+    const { isError, error } = this.state
 
     let childrenOrFallback = children
-    if (this.state.isError) {
-      const boundaryShouldCatch = Array.isArray(enabled)
-        ? enabled.some((enabledItem) => this.state.isError && shouldCatch(this.state.error, enabledItem))
-        : typeof enabled === 'boolean'
-          ? enabled
-          : shouldCatch(this.state.error, enabled)
-      if (!boundaryShouldCatch) {
-        throw this.state.error
+
+    if (isError) {
+      const isCatch = Array.isArray(shouldCatch)
+        ? shouldCatch.some((shouldCatch) => checkErrorBoundary(shouldCatch, error))
+        : checkErrorBoundary(shouldCatch, error)
+      if (!isCatch) {
+        throw error
+      }
+      if (typeof fallback === 'undefined') {
+        if (process.env.NODE_ENV !== 'production') {
+          console.error('ErrorBoundary of @suspensive/react requires a defined fallback')
+        }
+        throw error
       }
 
       if (typeof fallback === 'function') {
         const FallbackComponent = fallback
-        childrenOrFallback = <FallbackComponent error={this.state.error} reset={this.reset} />
+        childrenOrFallback = <FallbackComponent error={error} reset={this.reset} />
       } else {
         childrenOrFallback = fallback
       }

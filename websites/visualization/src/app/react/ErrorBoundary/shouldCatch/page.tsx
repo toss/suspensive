@@ -22,7 +22,7 @@ export default function Page() {
     >
       <Area title="Page" className="h-96">
         <ErrorBoundary
-          enabled={AxiosError} // enabled only AxiosError
+          shouldCatch={AxiosError} // shouldCatch only AxiosError
           onReset={queryError.reset}
           fallback={({ error, reset }) => (
             <Box.Error>
@@ -33,7 +33,7 @@ export default function Page() {
         >
           <Area title="Section">
             <ErrorBoundary
-              enabled={(error) => !isAxiosError(error)} // enabled if not AxiosError
+              shouldCatch={(error) => !isAxiosError(error)} // shouldCatch if not AxiosError
               onReset={queryError.reset}
               fallback={({ error, reset }) => (
                 <Box.Error>
@@ -59,7 +59,7 @@ const AxiosErrorOrJustErrorMaker = () => {
   }
 
   useSuspenseQuery({
-    queryKey: ['ErrorBoundary', 'enabled'],
+    queryKey: ['ErrorBoundary', 'shouldCatch'],
     queryFn: () => api.delay(1000, { percentage: 0 }),
   })
 
