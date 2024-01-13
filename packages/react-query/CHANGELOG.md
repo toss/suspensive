@@ -1,5 +1,12 @@
 # @suspensive/react-query
 
+## 1.24.0
+
+### Patch Changes
+
+- Updated dependencies [89c3283]
+  - @suspensive/react@1.24.0
+
 ## 1.23.2
 
 ### Patch Changes

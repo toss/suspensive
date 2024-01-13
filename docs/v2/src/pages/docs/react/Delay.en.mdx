@@ -6,7 +6,7 @@ import { Callout } from '@/components'
 
 This component delays the exposure of children by ms. In the code below, exposure of children is delayed by 200ms.
 
-```tsx /Delay/
+```tsx /ms/
 import { Delay } from '@suspensive/react'
 
 const Example = () => (
@@ -45,3 +45,23 @@ Default ms
 `<Delay/>` are more powerful when used with `<SuspensiveProvider/>`. Control multiple `<Delay/>`s default ms with `<SuspensiveProvider/>`. Details are introduced in [`<SuspensiveProvider/>` page](./SuspensiveProvider).
 
 </Callout>
+
+### props.fallback
+
+<Callout type='warning'>
+
+fallback of `<Delay/>` is experimental feature, this interfaces could be changed
+
+</Callout>
+
+fallback will be shown before the delayed exposure of children.
+
+```jsx /fallback/
+import { Delay } from '@suspensive/react'
+
+const Example = () => (
+  <Delay ms={200} fallback={<>Fallback Text</>}>
+    200ms delayed Text
+  </Delay>
+)
+```

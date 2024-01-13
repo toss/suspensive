@@ -1,5 +1,11 @@
 # @suspensive/react
 
+## 1.24.0
+
+### Minor Changes
+
+- 89c3283: feat(react): add fallback prop of Delay
+
 ## 1.23.2
 
 ### Patch Changes
