@@ -1,5 +1,5 @@
 import type { FunctionComponent } from 'react'
-import { useSyncExternalStore } from 'use-sync-external-store/shim'
+import { useSyncExternalStore } from 'use-sync-external-store/shim/index.js'
 
 /**
  * Loads an image from the given source URL.

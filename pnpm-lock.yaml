@@ -277,6 +277,10 @@ importers:
         version: 3.4.1
 
   packages/react:
+    dependencies:
+      use-sync-external-store:
+        specifier: ^1.2.0
+        version: 1.2.0(react@18.2.0)
     devDependencies:
       '@suspensive/package-json-name':
         specifier: workspace:*
@@ -293,6 +297,9 @@ importers:
       '@types/react-dom':
         specifier: ^18.2.18
         version: 18.2.18
+      '@types/use-sync-external-store':
+        specifier: ^0.0.6
+        version: 0.0.6
       react:
         specifier: ^18.2.0
         version: 18.2.0

@@ -1,33 +1,18 @@
 import { renderHook } from '@testing-library/react'
+import { useContext } from 'react'
 import { describe, expect, it } from 'vitest'
 import { Suspensive, SuspensiveProvider } from '../Suspensive'
-import { SuspensiveDevMode, useDevModeObserve } from './SuspensiveDevModeContext'
-
-describe('useDevModeObserve', () => {
-  it('should return null if no SuspensiveProvider in parent', () => {
-    const { result } = renderHook(useDevModeObserve)
-
-    expect(result.current).toBeNull()
-  })
-
-  it('should return null if SuspensiveProvider in parent', () => {
-    const suspensive = new Suspensive()
-    const { result } = renderHook(useDevModeObserve, {
-      wrapper: (props) => <SuspensiveProvider {...props} value={suspensive} />,
-    })
-    expect(result.current).toBeInstanceOf(SuspensiveDevMode)
-  })
-})
+import { DevModeContext, SuspensiveDevMode } from './SuspensiveDevModeContext'
 
 describe('SuspensiveDevMode', () => {
   it('should have field `is` that can be changed by on off', () => {
-    const suspensiveDevMode = new SuspensiveDevMode()
+    const devMode = new SuspensiveDevMode()
 
-    expect(suspensiveDevMode.is).toBe(false)
-    suspensiveDevMode.on()
-    expect(suspensiveDevMode.is).toBe(true)
-    suspensiveDevMode.off()
-    expect(suspensiveDevMode.is).toBe(false)
+    expect(devMode.is).toBe(false)
+    devMode.on()
+    expect(devMode.is).toBe(true)
+    devMode.off()
+    expect(devMode.is).toBe(false)
   })
 
   it('should notify that devMode have changed to subscribers', () => {
@@ -47,5 +32,17 @@ describe('SuspensiveDevMode', () => {
     expect(subscriber.notifiedCount).toBe(1)
     suspensiveDevMode.off()
     expect(subscriber.notifiedCount).toBe(2)
+  })
+
+  it("shouldn't be get by useSuspensiveDevModeContext if no SuspensiveProvider in parent", () => {
+    const { result } = renderHook(() => useContext(DevModeContext))
+    expect(result.current).toBeNull()
+  })
+
+  it('should be get by useSuspensiveDevModeContext if SuspensiveProvider in parent', () => {
+    const { result } = renderHook(() => useContext(DevModeContext), {
+      wrapper: (props) => <SuspensiveProvider {...props} value={new Suspensive()} />,
+    })
+    expect(result.current).toBeInstanceOf(SuspensiveDevMode)
   })
 })

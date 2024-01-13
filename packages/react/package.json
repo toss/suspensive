@@ -56,12 +56,16 @@
     "test:watch": "vitest --ui --coverage --typecheck",
     "type:check": "tsc --noEmit"
   },
+  "dependencies": {
+    "use-sync-external-store": "^1.2.0"
+  },
   "devDependencies": {
     "@suspensive/package-json-name": "workspace:*",
     "@suspensive/test-utils": "workspace:*",
     "@suspensive/tsup": "workspace:*",
     "@types/react": "^18.2.47",
     "@types/react-dom": "^18.2.18",
+    "@types/use-sync-external-store": "^0.0.6",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
