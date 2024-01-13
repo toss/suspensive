@@ -1,17 +1,31 @@
-import { type PropsWithChildren, useContext, useState } from 'react'
+import { type PropsWithChildren, type ReactNode, useContext, useState } from 'react'
 import { DelayDefaultPropsContext } from './contexts'
 import { useTimeout } from './hooks'
+import { assert } from './utils'
+import { DelayMsPropShouldBeGreaterThanOrEqualTo0 } from './utils/assert'
 
 export interface DelayProps extends PropsWithChildren {
   ms?: number
+  /**
+   * @experimental This is experimental feature.
+   */
+  fallback?: ReactNode
 }
 
-export const Delay = ({ ms, children }: DelayProps) => {
+export const Delay = (props: DelayProps) => {
+  if (process.env.NODE_ENV !== 'production') {
+    if (typeof props.ms === 'number') {
+      assert(props.ms >= 0, DelayMsPropShouldBeGreaterThanOrEqualTo0)
+    }
+  }
   const defaultProps = useContext(DelayDefaultPropsContext)
-  const delayMs = ms ?? defaultProps.ms ?? 0
-  const [isDelayed, setIsDelayed] = useState(delayMs === 0)
-  useTimeout(() => setIsDelayed(true), delayMs)
-  return <>{isDelayed ? children : null}</>
+  const ms = props.ms ?? defaultProps.ms ?? 0
+
+  const [isDelaying, setIsDelaying] = useState(ms > 0)
+  useTimeout(() => setIsDelaying(false), ms)
+
+  const fallback = typeof props.fallback === 'undefined' ? defaultProps.fallback : props.fallback
+  return isDelaying ? fallback : props.children
 }
 if (process.env.NODE_ENV !== 'production') {
   Delay.displayName = 'Delay'
