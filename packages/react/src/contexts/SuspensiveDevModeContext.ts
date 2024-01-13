@@ -1,4 +1,6 @@
 import { type ComponentProps, type ComponentType, createContext, createElement, useContext } from 'react'
+// https://github.com/suspensive/react/pull/203
+// https://github.com/TanStack/query/blob/v4/packages/react-query/src/useSyncExternalStore.ts
 import { useSyncExternalStore } from 'use-sync-external-store/shim/index.js'
 import { Subscribable } from '../models/Subscribable'
 import { noop } from '../utils/noop'
