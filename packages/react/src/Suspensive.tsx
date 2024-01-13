@@ -5,6 +5,8 @@ import {
   SuspensiveDevMode,
   SuspensiveDevModeContext,
 } from './contexts'
+import { assert } from './utils'
+import { SuspensiveConfigDefaultOptionsDelayMsShouldBeGreaterThan0 } from './utils/assert'
 
 export class Suspensive {
   public defaultOptions?: {
@@ -14,6 +16,11 @@ export class Suspensive {
   public devMode = new SuspensiveDevMode()
 
   constructor(config: { defaultOptions?: Suspensive['defaultOptions'] } = {}) {
+    if (process.env.NODE_ENV !== 'production') {
+      if (typeof config.defaultOptions?.delay?.ms === 'number') {
+        assert(config.defaultOptions.delay.ms > 0, SuspensiveConfigDefaultOptionsDelayMsShouldBeGreaterThan0)
+      }
+    }
     this.defaultOptions = config.defaultOptions
   }
 }
