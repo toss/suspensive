@@ -1,5 +1,11 @@
 # @suspensive/react
 
+## 1.25.0
+
+### Minor Changes
+
+- caed129: feat(react): add `shouldCatch` prop of ErrorBoundary
+
 ## 1.24.0
 
 ### Minor Changes
