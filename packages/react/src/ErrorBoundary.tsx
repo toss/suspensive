@@ -35,12 +35,15 @@ export interface ErrorBoundaryFallbackProps<TError extends Error = Error> {
 
 type ShouldCatchCallback = (error: Error) => boolean
 type ShouldCatch = ConstructorType<Error> | ShouldCatchCallback | boolean
-const checkErrorBoundary = (shouldCatch: ShouldCatch, error: Error) =>
-  typeof shouldCatch === 'boolean'
-    ? shouldCatch
-    : shouldCatch.prototype instanceof Error
-      ? error instanceof shouldCatch
-      : (shouldCatch as ShouldCatchCallback)(error)
+const checkErrorBoundary = (shouldCatch: ShouldCatch, error: Error) => {
+  if (typeof shouldCatch === 'boolean') {
+    return shouldCatch
+  }
+  if (shouldCatch.prototype instanceof Error) {
+    return error instanceof shouldCatch
+  }
+  return (shouldCatch as ShouldCatchCallback)(error)
+}
 
 export type ErrorBoundaryProps = PropsWithDevMode<
   PropsWithChildren<{
