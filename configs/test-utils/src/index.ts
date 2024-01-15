@@ -1,3 +1,5 @@
+export { CustomError } from './CustomError'
+export { CustomNotError } from './CustomNotError'
 export { Suspend } from './Suspend'
 export { ThrowError, ThrowNull } from './ThrowError'
 export { sleep } from './sleep'
