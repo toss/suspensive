@@ -1,4 +1,5 @@
 import type { ErrorBoundaryFallbackProps } from '@suspensive/react'
+import { clsx } from 'clsx'
 import { type ComponentPropsWithoutRef, type PropsWithChildren, forwardRef } from 'react'
 
 export const Button = forwardRef<HTMLButtonElement, ComponentPropsWithoutRef<'button'>>(function Button(props, ref) {
@@ -38,7 +39,7 @@ export const Box = {
   Success: forwardRef<HTMLDivElement, ComponentPropsWithoutRef<'div'>>(function Success(props, ref) {
     return (
       <div
-        className="box-border flex items-center justify-between gap-8 rounded-lg bg-lime-500 px-4 py-2 text-xs text-black duration-100 ease-in hover:opacity-90"
+        className="box-border flex flex-1 items-center justify-between gap-8 rounded-lg bg-lime-500 px-4 py-2 text-xs text-black duration-100 ease-in hover:opacity-90"
         {...props}
         ref={ref}
       />
@@ -47,7 +48,7 @@ export const Box = {
   Error: forwardRef<HTMLDivElement, ComponentPropsWithoutRef<'div'>>(function Error(props, ref) {
     return (
       <div
-        className="box-border flex items-center justify-between gap-8 rounded-lg bg-red-500 px-4 py-2 text-xs text-black duration-100 ease-in hover:opacity-90"
+        className="box-border flex flex-1 items-center justify-between gap-8 rounded-lg bg-red-500 px-4 py-2 text-xs text-black duration-100 ease-in hover:opacity-90"
         {...props}
         ref={ref}
       />
@@ -56,7 +57,7 @@ export const Box = {
   Default: forwardRef<HTMLDivElement, ComponentPropsWithoutRef<'div'>>(function Default(props, ref) {
     return (
       <div
-        className="box-border flex items-center justify-between gap-8 rounded-lg bg-white px-4 py-2 text-xs text-black duration-100 ease-in hover:opacity-90"
+        className="box-border flex flex-1 items-center justify-between gap-8 rounded-lg bg-white px-4 py-2 text-xs text-black duration-100 ease-in hover:opacity-90"
         {...props}
         ref={ref}
       />
@@ -64,13 +65,16 @@ export const Box = {
   }),
 }
 
-export const Area = ({ title, children }: PropsWithChildren<{ title: string }>) => (
-  <div className="max-w-xl flex-1">
-    <div className="mb-0.5 ml-2 text-sm">{title}</div>
-    <div className="flex flex-col justify-center gap-2 rounded-2xl border-2 border-white p-2">{children}</div>
-  </div>
-)
-
+export const Area = ({ title, children, className }: PropsWithChildren<{ title: string; className?: string }>) => {
+  return (
+    <div className="max-w-xl flex-1">
+      <div className="mb-0.5 ml-2 text-sm">{title}</div>
+      <div className={clsx('flex flex-col justify-center gap-2 rounded-2xl border-2 border-white p-2', className)}>
+        {children}
+      </div>
+    </div>
+  )
+}
 export const RejectedFallback = (props: ErrorBoundaryFallbackProps) => (
   <Box.Error>
     <div>Error: {props.error.message}</div>
