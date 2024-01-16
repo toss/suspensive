@@ -21,11 +21,12 @@ interface ToInferWithSelectOptions<TQueryFnData, TData, TQueryKey extends QueryK
   select: (data: unknown) => TData
 }
 
-type GetSuspenseOptions<T> = T extends ToInferWithSelectOptions<infer TQueryFnData, infer TData, infer TQueryKey>
-  ? UseSuspenseQueryOptions<TQueryFnData, unknown, TData, TQueryKey>
-  : T extends ToInferOptions<infer TQueryFnData, infer TQueryKey>
-    ? UseSuspenseQueryOptions<TQueryFnData, unknown, TQueryFnData, TQueryKey>
-    : UseSuspenseQueryOptions
+type GetSuspenseOptions<T> =
+  T extends ToInferWithSelectOptions<infer TQueryFnData, infer TData, infer TQueryKey>
+    ? UseSuspenseQueryOptions<TQueryFnData, unknown, TData, TQueryKey>
+    : T extends ToInferOptions<infer TQueryFnData, infer TQueryKey>
+      ? UseSuspenseQueryOptions<TQueryFnData, unknown, TQueryFnData, TQueryKey>
+      : UseSuspenseQueryOptions
 
 export type SuspenseQueriesOptions<
   T extends unknown[],
