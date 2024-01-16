@@ -1,5 +1,11 @@
 # @suspensive/react-image
 
+## 0.0.9
+
+### Patch Changes
+
+- 794e07f: fix(react-image): throw Error on error during image loading
+
 ## 0.0.8
 
 ### Patch Changes
