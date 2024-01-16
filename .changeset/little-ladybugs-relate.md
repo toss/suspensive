@@ -2,4 +2,4 @@
 "@suspensive/react": patch
 ---
 
-feat(react): add ErrorBoundary.Consumer/ConsumerFallbackProps, ErrorBoundaryGroup.Consumer
+feat(react): add ErrorBoundary.Consumer, ErrorBoundaryGroup.Consumer
