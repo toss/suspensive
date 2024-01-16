@@ -144,32 +144,47 @@ class BaseErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState
  * This component provide a simple and reusable wrapper that you can use to wrap around your components. Any rendering errors in your components hierarchy can then be gracefully handled.
  * @see {@link https://suspensive.org/docs/react/ErrorBoundary}
  */
-export const ErrorBoundary = forwardRef<{ reset(): void }, ErrorBoundaryProps>(
-  ({ devMode, fallback, children, onError, onReset, resetKeys, ...props }, ref) => {
-    const group = useContext(ErrorBoundaryGroupContext) ?? { resetKey: 0 }
-    const baseErrorBoundaryRef = useRef<BaseErrorBoundary>(null)
-    useImperativeHandle(ref, () => ({
-      reset: () => baseErrorBoundaryRef.current?.reset(),
-    }))
+export const ErrorBoundary = Object.assign(
+  (() => {
+    const ErrorBoundary = forwardRef<{ reset(): void }, ErrorBoundaryProps>(
+      ({ devMode, fallback, children, onError, onReset, resetKeys, ...props }, ref) => {
+        const group = useContext(ErrorBoundaryGroupContext) ?? { resetKey: 0 }
+        const baseErrorBoundaryRef = useRef<BaseErrorBoundary>(null)
+        useImperativeHandle(ref, () => ({
+          reset: () => baseErrorBoundaryRef.current?.reset(),
+        }))
 
-    return (
-      <BaseErrorBoundary
-        {...props}
-        fallback={fallback}
-        onError={onError}
-        onReset={onReset}
-        resetKeys={[group.resetKey, ...(resetKeys || [])]}
-        ref={baseErrorBoundaryRef}
-      >
-        {children}
-        {process.env.NODE_ENV !== 'production' && devMode && <ErrorBoundaryDevMode {...devMode} />}
-      </BaseErrorBoundary>
+        return (
+          <BaseErrorBoundary
+            {...props}
+            fallback={fallback}
+            onError={onError}
+            onReset={onReset}
+            resetKeys={[group.resetKey, ...(resetKeys || [])]}
+            ref={baseErrorBoundaryRef}
+          >
+            {children}
+            {process.env.NODE_ENV !== 'production' && devMode && <ErrorBoundaryDevMode {...devMode} />}
+          </BaseErrorBoundary>
+        )
+      }
     )
+    if (process.env.NODE_ENV !== 'production') {
+      ErrorBoundary.displayName = 'ErrorBoundary'
+    }
+
+    return ErrorBoundary
+  })(),
+  {
+    Consumer: ({ children }: { children: (errorBoundary: ReturnType<typeof useErrorBoundary>) => ReactNode }) =>
+      children(useErrorBoundary()),
+    ConsumerFallbackProps: ({
+      children,
+    }: {
+      children: (errorBoundaryFallbackProps: ReturnType<typeof useErrorBoundaryFallbackProps>) => ReactNode
+    }) => children(useErrorBoundaryFallbackProps()),
   }
 )
-if (process.env.NODE_ENV !== 'production') {
-  ErrorBoundary.displayName = 'ErrorBoundary'
-}
 
 const ErrorBoundaryContext = createContext<({ reset: () => void } & ErrorBoundaryState) | null>(null)
 if (process.env.NODE_ENV !== 'production') {
