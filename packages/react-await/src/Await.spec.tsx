@@ -105,6 +105,7 @@ describe('useAwait', () => {
   })
 })
 
+// eslint-disable-next-line @typescript-eslint/prefer-promise-reject-errors
 const asyncErrorFn = () => new Promise((_, reject) => reject(ERROR_MESSAGE))
 describe('awaitClient', () => {
   beforeEach(() => awaitClient.reset())
