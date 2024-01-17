@@ -70,7 +70,7 @@
     "lint-staged": "^15.2.0",
     "ms": "^3.0.0-canary.1",
     "packlint": "^0.2.4",
-    "playwright": "^1.40.1",
+    "playwright": "^1.41.0",
     "prettier": "^3.2.2",
     "prettier-plugin-tailwindcss": "^0.5.11",
     "publint": "^0.2.7",
