@@ -34,15 +34,19 @@ describe('SuspensiveDevMode', () => {
     expect(subscriber.notifiedCount).toBe(2)
   })
 
-  it("shouldn't be get by useSuspensiveDevModeContext if no SuspensiveProvider in parent", () => {
-    const { result } = renderHook(() => useContext(DevModeContext))
-    expect(result.current).toBeNull()
-  })
-
-  it('should be get by useSuspensiveDevModeContext if SuspensiveProvider in parent', () => {
-    const { result } = renderHook(() => useContext(DevModeContext), {
-      wrapper: (props) => <SuspensiveProvider {...props} value={new Suspensive()} />,
+  describe("DevModeContext", () => {
+    it("returns null when no SuspensiveProvider is present", () => {
+      const { result } = renderHook(() => useContext(DevModeContext))
+      expect(result.current).toBeNull()
     })
-    expect(result.current).toBeInstanceOf(SuspensiveDevMode)
+
+    it("returns an instance of SuspensiveDevMode when wrapped with SuspensiveProvider", () => {
+      const { result } = renderHook(() => useContext(DevModeContext), {
+        wrapper: (props) => (
+          <SuspensiveProvider {...props} value={new Suspensive()} />
+        ),
+      })
+      expect(result.current).toBeInstanceOf(SuspensiveDevMode)
+    })
   })
 })
