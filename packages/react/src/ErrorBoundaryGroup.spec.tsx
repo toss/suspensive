@@ -1,8 +1,9 @@
-import { ERROR_MESSAGE, TEXT, ThrowError } from '@suspensive/test-utils'
+import { CustomError, ERROR_MESSAGE, TEXT, ThrowError } from '@suspensive/test-utils'
 import { fireEvent, render, screen, waitFor } from '@testing-library/react'
 import ms from 'ms'
 import { createElement } from 'react'
 import { describe, expect, it } from 'vitest'
+import { AssertionError } from './AssertionError'
 import { ErrorBoundary } from './ErrorBoundary'
 import { ErrorBoundaryGroup, useErrorBoundaryGroup } from './ErrorBoundaryGroup'
 import { useErrorBoundaryGroup_this_hook_should_be_called_in_ErrorBoundary_props_children } from './utils/assert'
@@ -70,5 +71,17 @@ describe('useErrorBoundaryGroup', () => {
         })
       )
     ).toThrow(useErrorBoundaryGroup_this_hook_should_be_called_in_ErrorBoundary_props_children)
+    try {
+      render(
+        createElement(() => {
+          useErrorBoundaryGroup()
+          return <></>
+        })
+      )
+    } catch (error) {
+      expect(error).toBeInstanceOf(AssertionError)
+      expect(error).toBeInstanceOf(Error)
+      expect(error).not.toBeInstanceOf(CustomError)
+    }
   })
 })

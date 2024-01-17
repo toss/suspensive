@@ -1,8 +1,9 @@
-import { FALLBACK, Suspend, TEXT } from '@suspensive/test-utils'
+import { CustomError, FALLBACK, Suspend, TEXT } from '@suspensive/test-utils'
 import { render, screen, waitFor } from '@testing-library/react'
 import ms from 'ms'
 import { createElement, useContext } from 'react'
 import { describe, expect, it } from 'vitest'
+import { AssertionError } from './AssertionError'
 import { DelayDefaultPropsContext, SuspenseDefaultPropsContext } from './contexts'
 import { Delay, type DelayProps } from './Delay'
 import { Suspense, type SuspenseProps } from './Suspense'
@@ -117,9 +118,24 @@ describe('<SuspensiveProvider/>', () => {
     expect(() => new Suspensive({ defaultOptions: { delay: { ms: 0 } } })).toThrow(
       SuspensiveConfigDefaultOptionsDelayMsShouldBeGreaterThan0
     )
+    try {
+      new Suspensive({ defaultOptions: { delay: { ms: 0 } } })
+    } catch (error) {
+      expect(error).toBeInstanceOf(AssertionError)
+      expect(error).toBeInstanceOf(Error)
+      expect(error).not.toBeInstanceOf(CustomError)
+    }
+
     expect(() => new Suspensive({ defaultOptions: { delay: { ms: -1 } } })).toThrow(
       SuspensiveConfigDefaultOptionsDelayMsShouldBeGreaterThan0
     )
+    try {
+      new Suspensive({ defaultOptions: { delay: { ms: -1 } } })
+    } catch (error) {
+      expect(error).toBeInstanceOf(AssertionError)
+      expect(error).toBeInstanceOf(Error)
+      expect(error).not.toBeInstanceOf(CustomError)
+    }
 
     const defaultPropsMs = 100
     let ms: DelayProps['ms'] = undefined

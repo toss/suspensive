@@ -1,7 +1,7 @@
 import { type PropsWithChildren, type ReactNode, useContext, useState } from 'react'
+import { AssertionError } from './AssertionError'
 import { DelayDefaultPropsContext } from './contexts'
 import { useTimeout } from './hooks'
-import { assert } from './utils'
 import { DelayMsPropShouldBeGreaterThanOrEqualTo0 } from './utils/assert'
 
 export interface DelayProps extends PropsWithChildren {
@@ -15,7 +15,7 @@ export interface DelayProps extends PropsWithChildren {
 export const Delay = (props: DelayProps) => {
   if (process.env.NODE_ENV !== 'production') {
     if (typeof props.ms === 'number') {
-      assert(props.ms >= 0, DelayMsPropShouldBeGreaterThanOrEqualTo0)
+      AssertionError.assert(props.ms >= 0, DelayMsPropShouldBeGreaterThanOrEqualTo0)
     }
   }
   const defaultProps = useContext(DelayDefaultPropsContext)

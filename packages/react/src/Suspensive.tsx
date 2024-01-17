@@ -1,11 +1,11 @@
 import { type ContextType, type PropsWithChildren, useMemo } from 'react'
+import { AssertionError } from './AssertionError'
 import {
   DelayDefaultPropsContext,
   SuspenseDefaultPropsContext,
   SuspensiveDevMode,
   SuspensiveDevModeContext,
 } from './contexts'
-import { assert } from './utils'
 import { SuspensiveConfigDefaultOptionsDelayMsShouldBeGreaterThan0 } from './utils/assert'
 
 export class Suspensive {
@@ -16,10 +16,11 @@ export class Suspensive {
   public devMode = new SuspensiveDevMode()
 
   constructor(config: { defaultOptions?: Suspensive['defaultOptions'] } = {}) {
-    if (process.env.NODE_ENV !== 'production') {
-      if (typeof config.defaultOptions?.delay?.ms === 'number') {
-        assert(config.defaultOptions.delay.ms > 0, SuspensiveConfigDefaultOptionsDelayMsShouldBeGreaterThan0)
-      }
+    if (process.env.NODE_ENV !== 'production' && typeof config.defaultOptions?.delay?.ms === 'number') {
+      AssertionError.assert(
+        config.defaultOptions.delay.ms > 0,
+        SuspensiveConfigDefaultOptionsDelayMsShouldBeGreaterThan0
+      )
     }
     this.defaultOptions = config.defaultOptions
   }

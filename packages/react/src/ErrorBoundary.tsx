@@ -12,11 +12,12 @@ import {
   useRef,
   useState,
 } from 'react'
+import { AssertionError } from './AssertionError'
 import { useDevModeObserve } from './contexts'
 import { Delay } from './Delay'
 import { ErrorBoundaryGroupContext } from './ErrorBoundaryGroup'
 import type { ConstructorType, PropsWithDevMode } from './utility-types'
-import { assert, hasResetKeysChanged } from './utils'
+import { hasResetKeysChanged } from './utils'
 import {
   useErrorBoundaryFallbackProps_this_hook_should_be_called_in_ErrorBoundary_props_fallback,
   useErrorBoundary_this_hook_should_be_called_in_ErrorBoundary_props_children,
@@ -186,7 +187,7 @@ export const useErrorBoundary = <TError extends Error = Error>() => {
   }
 
   const errorBoundary = useContext(ErrorBoundaryContext)
-  assert(
+  AssertionError.assert(
     errorBoundary != null && !errorBoundary.isError,
     useErrorBoundary_this_hook_should_be_called_in_ErrorBoundary_props_children
   )
@@ -201,7 +202,7 @@ export const useErrorBoundary = <TError extends Error = Error>() => {
 
 export const useErrorBoundaryFallbackProps = <TError extends Error = Error>(): ErrorBoundaryFallbackProps<TError> => {
   const errorBoundary = useContext(ErrorBoundaryContext)
-  assert(
+  AssertionError.assert(
     errorBoundary != null && errorBoundary.isError,
     useErrorBoundaryFallbackProps_this_hook_should_be_called_in_ErrorBoundary_props_fallback
   )
