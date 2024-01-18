@@ -45,8 +45,8 @@ importers:
         specifier: ^18.19.8
         version: 18.19.8
       '@vitest/browser':
-        specifier: ^1.2.0
-        version: 1.2.0(playwright@1.41.0)(vitest@1.2.0)
+        specifier: ^1.2.1
+        version: 1.2.1(playwright@1.41.0)(vitest@1.2.0)
       '@vitest/coverage-istanbul':
         specifier: ^1.2.0
         version: 1.2.0(vitest@1.2.0)
@@ -109,7 +109,7 @@ importers:
         version: 5.0.11(@types/node@18.19.8)
       vitest:
         specifier: ^1.2.0
-        version: 1.2.0(@types/node@18.19.8)(@vitest/browser@1.2.0)(@vitest/ui@1.2.0)(jsdom@23.2.0)
+        version: 1.2.0(@types/node@18.19.8)(@vitest/browser@1.2.1)(@vitest/ui@1.2.0)(jsdom@23.2.0)
 
   configs/eslint-config:
     dependencies:
@@ -2149,7 +2149,7 @@ packages:
       dom-accessibility-api: 0.6.3
       lodash: 4.17.21
       redent: 3.0.0
-      vitest: 1.2.0(@types/node@18.19.8)(@vitest/browser@1.2.0)(@vitest/ui@1.2.0)(jsdom@23.2.0)
+      vitest: 1.2.0(@types/node@18.19.8)(@vitest/browser@1.2.1)(@vitest/ui@1.2.0)(jsdom@23.2.0)
     dev: true
 
   /@testing-library/react@14.1.2(react-dom@18.2.0)(react@18.2.0):
@@ -2528,8 +2528,8 @@ packages:
   /@ungap/structured-clone@1.2.0:
     resolution: {integrity: sha512-zuVdFrMJiuCDQUMCzQaD6KL28MjnqqN8XnAqiEq9PNm/hCPTSGfrXCOfwj1ow4LFb/tNymJPwsNbVePc1xFqrQ==}
 
-  /@vitest/browser@1.2.0(playwright@1.41.0)(vitest@1.2.0):
-    resolution: {integrity: sha512-egA2juStgiDDiHSjw5dloOj9pG+Au1azleKBxEs8E8dafkfQbr5FxswhsAryXdT29kb8EU479wET0KQz3NUSsQ==}
+  /@vitest/browser@1.2.1(playwright@1.41.0)(vitest@1.2.0):
+    resolution: {integrity: sha512-jhaQ15zWYAwz8anXgmLW0yAVLCXdT8RFv7LeW9bg7sMlvGJaTCTIHaHWFvCdADF/i62+22tnrzgiiqSnApjXtA==}
     peerDependencies:
       playwright: '*'
       safaridriver: '*'
@@ -2543,11 +2543,11 @@ packages:
       webdriverio:
         optional: true
     dependencies:
-      '@vitest/utils': 1.2.0
+      '@vitest/utils': 1.2.1
       magic-string: 0.30.5
       playwright: 1.41.0
       sirv: 2.0.4
-      vitest: 1.2.0(@types/node@18.19.8)(@vitest/browser@1.2.0)(@vitest/ui@1.2.0)(jsdom@23.2.0)
+      vitest: 1.2.0(@types/node@18.19.8)(@vitest/browser@1.2.1)(@vitest/ui@1.2.0)(jsdom@23.2.0)
 
   /@vitest/coverage-istanbul@1.2.0(vitest@1.2.0):
     resolution: {integrity: sha512-hNN/pUR5la6P/L78+YcRl05Lpf6APXlH9ujkmCxxjVWtVG6WuKuqUMhHgYQBYfiOORBwDZ1MBgSUGCMPh4kpmQ==}
@@ -2563,7 +2563,7 @@ packages:
       magicast: 0.3.2
       picocolors: 1.0.0
       test-exclude: 6.0.0
-      vitest: 1.2.0(@types/node@18.19.8)(@vitest/browser@1.2.0)(@vitest/ui@1.2.0)(jsdom@23.2.0)
+      vitest: 1.2.0(@types/node@18.19.8)(@vitest/browser@1.2.1)(@vitest/ui@1.2.0)(jsdom@23.2.0)
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -2606,10 +2606,18 @@ packages:
       pathe: 1.1.1
       picocolors: 1.0.0
       sirv: 2.0.4
-      vitest: 1.2.0(@types/node@18.19.8)(@vitest/browser@1.2.0)(@vitest/ui@1.2.0)(jsdom@23.2.0)
+      vitest: 1.2.0(@types/node@18.19.8)(@vitest/browser@1.2.1)(@vitest/ui@1.2.0)(jsdom@23.2.0)
 
   /@vitest/utils@1.2.0:
     resolution: {integrity: sha512-FyD5bpugsXlwVpTcGLDf3wSPYy8g541fQt14qtzo8mJ4LdEpDKZ9mQy2+qdJm2TZRpjY5JLXihXCgIxiRJgi5g==}
+    dependencies:
+      diff-sequences: 29.6.3
+      estree-walker: 3.0.3
+      loupe: 2.3.7
+      pretty-format: 29.7.0
+
+  /@vitest/utils@1.2.1:
+    resolution: {integrity: sha512-bsH6WVZYe/J2v3+81M5LDU8kW76xWObKIURpPrOXm2pjBniBu2MERI/XP60GpS4PHU3jyK50LUutOwrx4CyHUg==}
     dependencies:
       diff-sequences: 29.6.3
       estree-walker: 3.0.3
@@ -4575,7 +4583,7 @@ packages:
     dependencies:
       '@typescript-eslint/utils': 6.15.0(eslint@8.56.0)(typescript@5.3.3)
       eslint: 8.56.0
-      vitest: 1.2.0(@types/node@18.19.8)(@vitest/browser@1.2.0)(@vitest/ui@1.2.0)(jsdom@23.2.0)
+      vitest: 1.2.0(@types/node@18.19.8)(@vitest/browser@1.2.1)(@vitest/ui@1.2.0)(jsdom@23.2.0)
     transitivePeerDependencies:
       - supports-color
       - typescript
@@ -9812,7 +9820,7 @@ packages:
     optionalDependencies:
       fsevents: 2.3.3
 
-  /vitest@1.2.0(@types/node@18.19.8)(@vitest/browser@1.2.0)(@vitest/ui@1.2.0)(jsdom@23.2.0):
+  /vitest@1.2.0(@types/node@18.19.8)(@vitest/browser@1.2.1)(@vitest/ui@1.2.0)(jsdom@23.2.0):
     resolution: {integrity: sha512-Ixs5m7BjqvLHXcibkzKRQUvD/XLw0E3rvqaCMlrm/0LMsA0309ZqYvTlPzkhh81VlEyVZXFlwWnkhb6/UMtcaQ==}
     engines: {node: ^18.0.0 || >=20.0.0}
     hasBin: true
@@ -9838,7 +9846,7 @@ packages:
         optional: true
     dependencies:
       '@types/node': 18.19.8
-      '@vitest/browser': 1.2.0(playwright@1.41.0)(vitest@1.2.0)
+      '@vitest/browser': 1.2.1(playwright@1.41.0)(vitest@1.2.0)
       '@vitest/expect': 1.2.0
       '@vitest/runner': 1.2.0
       '@vitest/snapshot': 1.2.0
