@@ -27,6 +27,7 @@
     "changeset": "changeset",
     "changeset:publish": "pnpm prepack && changeset publish",
     "changeset:version": "changeset version && pnpm i --lockfile-only",
+    "ci:all": "pnpm lint && pnpm lint:attw && pnpm lint:monorepo && pnpm lint:pub && pnpm test && pnpm type:check && pnpm build",
     "clean": "pnpm --filter \"./packages/**\" run clean",
     "commit": "cz",
     "dev": "turbo run dev",
@@ -80,6 +81,6 @@
     "turbo": "latest",
     "typescript": "^5.3.3",
     "vite": "^5.0.11",
-    "vitest": "^1.2.0"
+    "vitest": "^1.2.1"
   }
 }
