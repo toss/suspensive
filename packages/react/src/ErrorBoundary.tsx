@@ -118,7 +118,7 @@ class BaseErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState
         throw error
       }
       if (typeof fallback === 'undefined') {
-        if (process.env.NODE_ENV !== 'production') {
+        if (process.env.NODE_ENV === 'development') {
           console.error('ErrorBoundary of @suspensive/react requires a defined fallback')
         }
         throw error
@@ -167,12 +167,12 @@ export const ErrorBoundary = forwardRef<{ reset(): void }, ErrorBoundaryProps>(
     )
   }
 )
-if (process.env.NODE_ENV !== 'production') {
+if (process.env.NODE_ENV === 'development') {
   ErrorBoundary.displayName = 'ErrorBoundary'
 }
 
 const ErrorBoundaryContext = createContext<({ reset: () => void } & ErrorBoundaryState) | null>(null)
-if (process.env.NODE_ENV !== 'production') {
+if (process.env.NODE_ENV === 'development') {
   ErrorBoundaryContext.displayName = 'ErrorBoundaryContext'
 }
 

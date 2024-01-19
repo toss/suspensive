@@ -54,6 +54,8 @@
     "prepack": "pnpm build",
     "test": "vitest run --coverage --typecheck",
     "test:watch": "vitest --ui --coverage --typecheck",
+    "test:production": "vitest run --config ./vitest-production.config.ts",
+    "test:production:watch": "vitest --config ./vitest-production.config.ts --ui",
     "type:check": "tsc --noEmit"
   },
   "dependencies": {

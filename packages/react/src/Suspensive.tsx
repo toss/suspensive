@@ -11,7 +11,7 @@ export class Suspensive {
   public devMode = new SuspensiveDevMode()
 
   constructor(config: { defaultOptions?: Suspensive['defaultOptions'] } = {}) {
-    if (process.env.NODE_ENV !== 'production') {
+    if (process.env.NODE_ENV === 'development') {
       if (typeof config.defaultOptions?.delay?.ms === 'number') {
         assert(config.defaultOptions.delay.ms > 0, SuspensiveConfigDefaultOptionsDelayMsShouldBeGreaterThan0)
       }

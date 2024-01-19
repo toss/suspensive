@@ -18,7 +18,7 @@ const BaseQueryAsyncBoundary = forwardRef<
     />
   )
 })
-if (process.env.NODE_ENV !== 'production') {
+if (process.env.NODE_ENV === 'development') {
   BaseQueryAsyncBoundary.displayName = 'QueryAsyncBoundary'
 }
 const CSROnly = forwardRef<
@@ -37,7 +37,7 @@ const CSROnly = forwardRef<
     />
   )
 })
-if (process.env.NODE_ENV !== 'production') {
+if (process.env.NODE_ENV === 'development') {
   CSROnly.displayName = 'QueryAsyncBoundary.CSROnly'
 }
 

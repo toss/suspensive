@@ -27,7 +27,7 @@ export const AsyncBoundary = Object.assign(
         </ErrorBoundary>
       )
     )
-    if (process.env.NODE_ENV !== 'production') {
+    if (process.env.NODE_ENV === 'development') {
       BaseAsyncBoundary.displayName = 'AsyncBoundary'
     }
 
@@ -47,7 +47,7 @@ export const AsyncBoundary = Object.assign(
           </ErrorBoundary>
         )
       )
-      if (process.env.NODE_ENV !== 'production') {
+      if (process.env.NODE_ENV === 'development') {
         CSROnly.displayName = 'AsyncBoundary.CSROnly'
       }
 

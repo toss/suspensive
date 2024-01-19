@@ -7,20 +7,32 @@ import { noop } from '../utils/noop'
 
 export const DevModeContext = createContext<SuspensiveDevMode | null>(null)
 
-export const syncDevMode = <TProps extends ComponentProps<ComponentType>>(
+type SyncDevMode = <TProps extends ComponentProps<ComponentType>>(
   Component: ComponentType<TProps & { devMode: SuspensiveDevMode }>
-) => {
-  const SyncDevMode = (props: TProps & { devMode: SuspensiveDevMode }) => {
-    useSyncExternalStore(props.devMode.subscribe, () => props.devMode.is)
-    return createElement(Component, props)
+) => (props: TProps) => React.FunctionComponentElement<
+  TProps & {
+    devMode: SuspensiveDevMode
   }
-  return process.env.NODE_ENV !== 'production'
-    ? (props: TProps) => {
-        const devMode = useContext(DevModeContext)
-        return devMode ? createElement(SyncDevMode, { ...props, devMode }) : null
+> | null
+
+export const syncDevMode: SyncDevMode =
+  process.env.NODE_ENV === 'development'
+    ? <TProps extends ComponentProps<ComponentType>>(
+        Component: ComponentType<TProps & { devMode: SuspensiveDevMode }>
+      ) => {
+        const Wrapped = (props: TProps & { devMode: SuspensiveDevMode }) => {
+          useSyncExternalStore(props.devMode.subscribe, () => props.devMode.is)
+          return createElement(Component, props)
+        }
+        const WrappedWrapped = (props: TProps) => {
+          const devMode = useContext(DevModeContext)
+          return devMode ? createElement(Wrapped, { ...props, devMode }) : null
+        }
+        return WrappedWrapped
       }
-    : () => null
-}
+    : () => () => null
+
+export const SuspensiveDevModeOnInfoText = '[Suspensive] DevMode is now working'
 
 export class SuspensiveDevMode extends Subscribable {
   promise = new Promise(noop)
@@ -30,7 +42,7 @@ export class SuspensiveDevMode extends Subscribable {
     this.promise = new Promise<void>((resolve) => {
       const timeout = setInterval(() => {
         if (this.is) {
-          return console.info('[Suspensive] DevMode is now working', new Date())
+          return console.info(SuspensiveDevModeOnInfoText, new Date())
         }
         resolve()
         clearInterval(timeout)

@@ -30,7 +30,7 @@ export const Suspense = Object.assign(
         </DefinedSuspense>
       )
     }
-    if (process.env.NODE_ENV !== 'production') {
+    if (process.env.NODE_ENV === 'development') {
       Suspense.displayName = 'Suspense'
     }
     return Suspense
@@ -49,7 +49,7 @@ export const Suspense = Object.assign(
           </SuspenseClientOnly>
         )
       }
-      if (process.env.NODE_ENV !== 'production') {
+      if (process.env.NODE_ENV === 'development') {
         Suspense.displayName = 'Suspense.CSROnly'
       }
       return Suspense

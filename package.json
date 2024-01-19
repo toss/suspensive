@@ -27,7 +27,7 @@
     "changeset": "changeset",
     "changeset:publish": "pnpm prepack && changeset publish",
     "changeset:version": "changeset version && pnpm i --lockfile-only",
-    "ci:all": "pnpm lint && pnpm lint:attw && pnpm lint:monorepo && pnpm lint:pub && pnpm test && pnpm type:check && pnpm build",
+    "ci:all": "pnpm lint && pnpm lint:attw && pnpm lint:monorepo && pnpm lint:pub && pnpm test && pnpm test:production && pnpm type:check && pnpm build",
     "clean": "pnpm --filter \"./packages/**\" run clean",
     "commit": "cz",
     "dev": "turbo run dev",
@@ -45,6 +45,8 @@
     "prepare": "husky install",
     "test": "turbo run test",
     "test:watch": "turbo run test:watch --parallel",
+    "test:production": "turbo run test:production",
+    "test:production:watch": "turbo run test:production:watch --parallel",
     "type:check": "turbo run type:check"
   },
   "devDependencies": {
@@ -59,6 +61,7 @@
     "@testing-library/dom": "^9.3.4",
     "@testing-library/jest-dom": "^6.2.0",
     "@testing-library/react": "^14.1.2",
+    "@testing-library/user-event": "^14.5.2",
     "@types/node": "^18.19.8",
     "@vitest/browser": "^1.2.1",
     "@vitest/coverage-istanbul": "^1.2.1",
