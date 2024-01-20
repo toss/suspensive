@@ -29,14 +29,14 @@ describe('wrap.Suspense().on', () => {
   it('should set displayName based on Component.displayName', () => {
     const Component = () => <></>
     Component.displayName = 'Custom'
-    expect(wrap.Suspense().on(Component).displayName).toBe('withSuspense(Custom)')
-    expect(wrap.Suspense().on(() => <></>).displayName).toBe('withSuspense(Component)')
+    expect(wrap.Suspense().on(Component).displayName).toBe('wrap.Suspense.on(Custom)')
+    expect(wrap.Suspense().on(() => <></>).displayName).toBe('wrap.Suspense.on(Component)')
   })
 })
 describe('wrap.Suspense({ clientOnly: true }).on', () => {
   beforeEach(() => Suspend.reset())
 
-  it('should wrap component by Suspense.CSROnly', async () => {
+  it('should wrap component by Suspense clientOnly', async () => {
     render(
       createElement(
         wrap
@@ -63,14 +63,14 @@ describe('wrap.Suspense({ clientOnly: true }).on', () => {
           clientOnly: true,
         })
         .on(Component).displayName
-    ).toBe('withSuspense.CSROnly(Custom)')
+    ).toBe('wrap.Suspense.on(Custom)')
     expect(
       wrap
         .Suspense({
           clientOnly: true,
         })
         .on(() => <></>).displayName
-    ).toBe('withSuspense.CSROnly(Component)')
+    ).toBe('wrap.Suspense.on(Component)')
   })
 })
 
@@ -117,14 +117,14 @@ describe('wrap.ErrorBoundary().on', () => {
           fallback: () => <></>,
         })
         .on(Component).displayName
-    ).toBe('withErrorBoundary(Custom)')
+    ).toBe('wrap.ErrorBoundary.on(Custom)')
     expect(
       wrap
         .ErrorBoundary({
           fallback: () => <></>,
         })
         .on(() => <></>).displayName
-    ).toBe('withErrorBoundary(Component)')
+    ).toBe('wrap.ErrorBoundary.on(Component)')
   })
 })
 
@@ -144,8 +144,8 @@ describe('warp.ErrorBoundaryGroup().on', () => {
   it('should set displayName based on Component.displayName', () => {
     const Component = () => <></>
     Component.displayName = 'Custom'
-    expect(wrap.ErrorBoundaryGroup({}).on(Component).displayName).toBe('withErrorBoundaryGroup(Custom)')
-    expect(wrap.ErrorBoundaryGroup({}).on(() => <></>).displayName).toBe('withErrorBoundaryGroup(Component)')
+    expect(wrap.ErrorBoundaryGroup({}).on(Component).displayName).toBe('wrap.ErrorBoundaryGroup.on(Custom)')
+    expect(wrap.ErrorBoundaryGroup({}).on(() => <></>).displayName).toBe('wrap.ErrorBoundaryGroup.on(Component)')
   })
 })
 
@@ -167,7 +167,7 @@ describe('wrap.Delay().on', () => {
   it('should set displayName based on Component.displayName', () => {
     const Component = () => <></>
     Component.displayName = 'Custom'
-    expect(wrap.Delay({}).on(Component).displayName).toBe('withDelay(Custom)')
-    expect(wrap.Delay({}).on(() => <></>).displayName).toBe('withDelay(Component)')
+    expect(wrap.Delay({}).on(Component).displayName).toBe('wrap.Delay.on(Custom)')
+    expect(wrap.Delay({}).on(() => <></>).displayName).toBe('wrap.Delay.on(Component)')
   })
 })
