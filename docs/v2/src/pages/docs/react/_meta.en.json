@@ -1,9 +1,0 @@
-{
-  "installation": { "title": "Installation" },
-  "Suspense": { "title": "<Suspense/>" },
-  "ErrorBoundary": { "title": "<ErrorBoundary/>" },
-  "ErrorBoundaryGroup": { "title": "<ErrorBoundaryGroup/>" },
-  "Delay": { "title": "<Delay/>" },
-  "SuspensiveProvider": { "title": "<SuspensiveProvider/>" },
-  "wrap": { "title": "wrap" }
-}
