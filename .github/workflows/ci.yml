@@ -2,8 +2,7 @@ name: CI
 
 on:
   push:
-    branches:
-      - main
+    branches: [main, beta, v1, v2]
   pull_request:
     types: [opened, synchronize, reopened]
 env:
