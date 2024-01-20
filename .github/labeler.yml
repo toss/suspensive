@@ -6,10 +6,8 @@
   - "packages/react-await/**/*"
 "@suspensive/react-image":
   - "packages/react-image/**/*"
-"docs/v1":
-  - "docs/v1**/*"
-"docs/v2":
-  - "docs/v2**/*"
+"suspensive.org":
+  - "docs/suspensive.org/**/*"
 "visualization":
   - "websites/visualization/**/*"
 "eslint":
