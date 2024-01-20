@@ -4,17 +4,19 @@ import ms from 'ms'
 import { createElement } from 'react'
 import { beforeEach, describe, expect, it } from 'vitest'
 import { useErrorBoundaryGroup } from './ErrorBoundaryGroup'
-import { withAsyncBoundary, withDelay, withErrorBoundary, withErrorBoundaryGroup, withSuspense } from './wrap'
+import { wrap } from './wrap'
 
-describe('withSuspense', () => {
+describe('wrap.Suspense().on', () => {
   beforeEach(() => Suspend.reset())
 
   it('should wrap component by Suspense', async () => {
     render(
       createElement(
-        withSuspense(() => <Suspend during={ms('0.1s')} toShow={TEXT} />, {
-          fallback: FALLBACK,
-        })
+        wrap
+          .Suspense({
+            fallback: FALLBACK,
+          })
+          .on(() => <Suspend during={ms('0.1s')} toShow={TEXT} />)
       )
     )
     expect(screen.queryByText(FALLBACK)).toBeInTheDocument()
@@ -27,19 +29,22 @@ describe('withSuspense', () => {
   it('should set displayName based on Component.displayName', () => {
     const Component = () => <></>
     Component.displayName = 'Custom'
-    expect(withSuspense(Component).displayName).toBe('withSuspense(Custom)')
-    expect(withSuspense(() => <></>).displayName).toBe('withSuspense(Component)')
+    expect(wrap.Suspense().on(Component).displayName).toBe('withSuspense(Custom)')
+    expect(wrap.Suspense().on(() => <></>).displayName).toBe('withSuspense(Component)')
   })
 })
-describe('withSuspense.CSROnly', () => {
+describe('wrap.Suspense({ clientOnly: true }).on', () => {
   beforeEach(() => Suspend.reset())
 
   it('should wrap component by Suspense.CSROnly', async () => {
     render(
       createElement(
-        withSuspense.CSROnly(() => <Suspend during={ms('0.1s')} toShow={TEXT} />, {
-          fallback: FALLBACK,
-        })
+        wrap
+          .Suspense({
+            clientOnly: true,
+            fallback: FALLBACK,
+          })
+          .on(() => <Suspend during={ms('0.1s')} toShow={TEXT} />)
       )
     )
     expect(screen.queryByText(FALLBACK)).toBeInTheDocument()
@@ -52,20 +57,34 @@ describe('withSuspense.CSROnly', () => {
   it('should set displayName based on Component.displayName', () => {
     const Component = () => <></>
     Component.displayName = 'Custom'
-    expect(withSuspense.CSROnly(Component).displayName).toBe('withSuspense.CSROnly(Custom)')
-    expect(withSuspense.CSROnly(() => <></>).displayName).toBe('withSuspense.CSROnly(Component)')
+    expect(
+      wrap
+        .Suspense({
+          clientOnly: true,
+        })
+        .on(Component).displayName
+    ).toBe('withSuspense.CSROnly(Custom)')
+    expect(
+      wrap
+        .Suspense({
+          clientOnly: true,
+        })
+        .on(() => <></>).displayName
+    ).toBe('withSuspense.CSROnly(Component)')
   })
 })
 
-describe('withErrorBoundary', () => {
+describe('wrap.ErrorBoundary().on', () => {
   beforeEach(() => ThrowError.reset())
 
   it("should render the wrapped component when there's no error", () => {
     render(
       createElement(
-        withErrorBoundary(() => <>{TEXT}</>, {
-          fallback: (props) => <>{props.error.message}</>,
-        })
+        wrap
+          .ErrorBoundary({
+            fallback: (props) => <>{props.error.message}</>,
+          })
+          .on(() => <>{TEXT}</>)
       )
     )
     expect(screen.queryByText(TEXT)).toBeInTheDocument()
@@ -74,14 +93,15 @@ describe('withErrorBoundary', () => {
   it('should render the fallback when there`s an error in the wrapped component', async () => {
     render(
       createElement(
-        withErrorBoundary(
-          () => (
+        wrap
+          .ErrorBoundary({
+            fallback: (props) => <>{props.error.message}</>,
+          })
+          .on(() => (
             <ThrowError message={ERROR_MESSAGE} after={ms('0.1s')}>
               {TEXT}
             </ThrowError>
-          ),
-          { fallback: (props) => <>{props.error.message}</> }
-        )
+          ))
       )
     )
     expect(screen.queryByText(TEXT)).toBeInTheDocument()
@@ -91,63 +111,28 @@ describe('withErrorBoundary', () => {
   it('should set displayName based on Component.displayName', () => {
     const Component = () => <></>
     Component.displayName = 'Custom'
-    expect(withErrorBoundary(Component, { fallback: () => <></> }).displayName).toBe('withErrorBoundary(Custom)')
-    expect(withErrorBoundary(() => <></>, { fallback: () => <></> }).displayName).toBe('withErrorBoundary(Component)')
-  })
-})
-
-describe('withAsyncBoundary', () => {
-  it('should wrap component by AsyncBoundary', () => {
-    const rendered = render(
-      createElement(
-        withAsyncBoundary(() => <>{TEXT}</>, {
-          rejectedFallback: ERROR_MESSAGE,
+    expect(
+      wrap
+        .ErrorBoundary({
+          fallback: () => <></>,
         })
-      )
-    )
-    expect(rendered.queryByText(TEXT)).toBeInTheDocument()
-  })
-
-  it('should set displayName based on Component.displayName', () => {
-    const TestComponentWithDisplayName = () => <>{TEXT}</>
-    TestComponentWithDisplayName.displayName = 'TestDisplayName'
-    expect(withAsyncBoundary(TestComponentWithDisplayName, { rejectedFallback: () => <></> }).displayName).toBe(
-      'withAsyncBoundary(TestDisplayName)'
-    )
-    expect(withAsyncBoundary(() => <>{TEXT}</>, { rejectedFallback: () => <></> }).displayName).toBe(
-      'withAsyncBoundary(Component)'
-    )
-  })
-})
-describe('withAsyncBoundary.CSROnly', () => {
-  it('should wrap component by AsyncBoundary.CSROnly', () => {
-    const rendered = render(
-      createElement(
-        withAsyncBoundary.CSROnly(() => <>{TEXT}</>, {
-          rejectedFallback: ERROR_MESSAGE,
+        .on(Component).displayName
+    ).toBe('withErrorBoundary(Custom)')
+    expect(
+      wrap
+        .ErrorBoundary({
+          fallback: () => <></>,
         })
-      )
-    )
-    expect(rendered.queryByText(TEXT)).toBeInTheDocument()
-  })
-
-  it('should set displayName based on Component.displayName', () => {
-    const TestComponentWithDisplayName = () => <>{TEXT}</>
-    TestComponentWithDisplayName.displayName = 'TestDisplayName'
-    expect(withAsyncBoundary.CSROnly(TestComponentWithDisplayName, { rejectedFallback: () => <></> }).displayName).toBe(
-      'withAsyncBoundary.CSROnly(TestDisplayName)'
-    )
-    expect(withAsyncBoundary.CSROnly(() => <>{TEXT}</>, { rejectedFallback: () => <></> }).displayName).toBe(
-      'withAsyncBoundary.CSROnly(Component)'
-    )
+        .on(() => <></>).displayName
+    ).toBe('withErrorBoundary(Component)')
   })
 })
 
-describe('withErrorBoundaryGroup', () => {
+describe('warp.ErrorBoundaryGroup().on', () => {
   it('should wrap component. we can check by useErrorBoundaryGroup', () => {
     const rendered = render(
       createElement(
-        withErrorBoundaryGroup(() => {
+        wrap.ErrorBoundaryGroup({}).on(() => {
           useErrorBoundaryGroup()
           return <>{TEXT}</>
         })
@@ -159,14 +144,22 @@ describe('withErrorBoundaryGroup', () => {
   it('should set displayName based on Component.displayName', () => {
     const Component = () => <></>
     Component.displayName = 'Custom'
-    expect(withErrorBoundaryGroup(Component).displayName).toBe('withErrorBoundaryGroup(Custom)')
-    expect(withErrorBoundaryGroup(() => <></>).displayName).toBe('withErrorBoundaryGroup(Component)')
+    expect(wrap.ErrorBoundaryGroup({}).on(Component).displayName).toBe('withErrorBoundaryGroup(Custom)')
+    expect(wrap.ErrorBoundaryGroup({}).on(() => <></>).displayName).toBe('withErrorBoundaryGroup(Component)')
   })
 })
 
-describe('withDelay', () => {
+describe('wrap.Delay().on', () => {
   it('renders the children after the delay with component', async () => {
-    render(createElement(withDelay(() => <>{TEXT}</>, { ms: ms('0.1s') })))
+    render(
+      createElement(
+        wrap
+          .Delay({
+            ms: ms('0.1s'),
+          })
+          .on(() => <>{TEXT}</>)
+      )
+    )
     expect(screen.queryByText(TEXT)).not.toBeInTheDocument()
     await waitFor(() => expect(screen.queryByText(TEXT)).toBeInTheDocument())
   })
@@ -174,7 +167,7 @@ describe('withDelay', () => {
   it('should set displayName based on Component.displayName', () => {
     const Component = () => <></>
     Component.displayName = 'Custom'
-    expect(withDelay(Component).displayName).toBe('withDelay(Custom)')
-    expect(withDelay(() => <></>).displayName).toBe('withDelay(Component)')
+    expect(wrap.Delay({}).on(Component).displayName).toBe('withDelay(Custom)')
+    expect(wrap.Delay({}).on(() => <></>).displayName).toBe('withDelay(Component)')
   })
 })
