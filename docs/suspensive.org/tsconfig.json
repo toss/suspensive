@@ -16,11 +16,22 @@
     "module": "esnext",
     "resolveJsonModule": true,
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["src/*"],
     },
     "plugins": [{ "name": "next" }],
-    "strictNullChecks": true
+    "strictNullChecks": true,
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "./.eslintrc.cjs", "next.config.js"],
-  "exclude": ["node_modules"]
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "./.eslintrc.cjs",
+    "next.config.js",
+    "postcss.config.js",
+    "tailwind.config.js",
+    "prettier.config.mjs",
+    "theme.config.tsx",
+  ],
+  "exclude": ["node_modules"],
 }
