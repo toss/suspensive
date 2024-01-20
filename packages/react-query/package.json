@@ -71,7 +71,7 @@
   "peerDependencies": {
     "@suspensive/react": "workspace:^1.25.0",
     "@tanstack/react-query": "^4",
-    "react": "^16.8 || ^17 || ^18"
+    "react": "^18"
   },
   "peerDependenciesMeta": {
     "@suspensive/react": {
