@@ -6,12 +6,12 @@ import { type DocsThemeConfig, useConfig } from 'nextra-theme-docs'
 const localeBanner = {
   en: (
     <span>
-      ✍️ We are working to prepare Suspensive v2 <Link href="https://v2.suspensive.org">read more →</Link>
+      ✍️ We are working to prepare Suspensive v2 <Link href="https://beta.suspensive.org">read more →</Link>
     </span>
   ),
   ko: (
     <span>
-      ✍️ 저희는 Suspensive v2를 준비하고 있습니다. <Link href="https://v2.suspensive.org/ko">더보기 →</Link>
+      ✍️ 저희는 Suspensive v2를 준비하고 있습니다. <Link href="https://beta.suspensive.org/ko">더보기 →</Link>
     </span>
   ),
 } as const
