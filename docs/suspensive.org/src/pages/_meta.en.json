@@ -8,11 +8,11 @@
   },
   "docs": {
     "type": "page",
-    "title": "문서보기"
+    "title": "Documentation"
   },
   "visualization": {
     "type": "page",
-    "title": "시각화 자료",
+    "title": "Visualization",
     "href": "https://visualization.suspensive.org",
     "newWindow": true
   },
@@ -25,15 +25,15 @@
     "items": {
       "latest": {
         "title": "latest",
-        "href": "https://suspensive.org/ko"
+        "href": "https://suspensive.org"
       },
       "v2": {
-        "title": "v2 (작성중)",
-        "href": "https://v2.suspensive.org/ko"
+        "title": "v2 (beta)",
+        "href": "https://beta.suspensive.org"
       },
       "v1": {
         "title": "v1",
-        "href": "https://v1.suspensive.org/ko"
+        "href": "https://v1.suspensive.org"
       }
     }
   }
