@@ -1,5 +1,4 @@
-import type { FunctionComponent } from 'react'
-import { useSyncExternalStore } from 'use-sync-external-store/shim'
+import { type FunctionComponent, useSyncExternalStore } from 'react'
 
 /**
  * Loads an image from the given source URL.
