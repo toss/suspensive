@@ -6,12 +6,12 @@ import { type DocsThemeConfig, useConfig } from 'nextra-theme-docs'
 const localeBanner = {
   en: (
     <span>
-      ✍️ We are working to prepare Suspensive v2 <Link href="https://v2.suspensive.org">read more →</Link>
+      👀 Check out the changes in Suspensive v2 <Link href="/docs/migrate-to-v2">read more →</Link>
     </span>
   ),
   ko: (
     <span>
-      ✍️ 저희는 Suspensive v2를 준비하고 있습니다. <Link href="https://v2.suspensive.org/ko">더보기 →</Link>
+      👀 Suspensive v2에서의 변경을 확인하세요 <Link href="/docs/migrate-to-v2">더보기 →</Link>
     </span>
   ),
 } as const
@@ -34,7 +34,7 @@ const config: DocsThemeConfig = {
         <Image src="/img/logo_dark.png" width={34} height={34} alt="suspensive logo" />
         <div className="relative">
           <strong>Suspensive</strong>
-          <span className="right absolute text-[8px]">v1</span>
+          <span className="right absolute text-[8px]">v2</span>
         </div>
       </div>
     )
@@ -58,7 +58,7 @@ const config: DocsThemeConfig = {
   project: {
     link: 'https://github.com/suspensive/react',
   },
-  docsRepositoryBase: 'https://github.com/suspensive/react/tree/main/docs/v1',
+  docsRepositoryBase: 'https://github.com/suspensive/react/tree/beta/docs/suspensive.org',
   useNextSeoProps() {
     const { asPath } = useRouter()
     if (asPath !== '/') {
