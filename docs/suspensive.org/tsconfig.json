@@ -31,6 +31,7 @@
     "postcss.config.js",
     "prettier.config.mjs",
     "tailwind.config.js",
+    "theme.config.tsx",
   ],
   "exclude": ["node_modules"],
 }
