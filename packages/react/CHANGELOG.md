@@ -1,5 +1,13 @@
 # @suspensive/react
 
+## 2.0.0-beta.0
+
+### Major Changes
+
+- ea1c4ed: feat(react): rename Suspensive defaultOptions -> defaultProps
+- 78f5bd4: feat(react, react-query): remove deprecated apis
+- 837ed18: feat(\*): remove target react v16, v17
+
 ## 1.25.0
 
 ### Minor Changes
