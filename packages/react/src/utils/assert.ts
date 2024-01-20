@@ -17,5 +17,5 @@ export const useErrorBoundaryGroup_this_hook_should_be_called_in_ErrorBoundary_p
 export const DelayMsPropShouldBeGreaterThanOrEqualTo0 = 'Delay: ms prop should be greater than or equal to 0'
 
 // Suspensive
-export const SuspensiveConfigDefaultOptionsDelayMsShouldBeGreaterThan0 =
-  'Suspensive: config.defaultOptions.delay.ms should be greater than 0'
+export const SuspensiveConfigDefaultPropsDelayMsShouldBeGreaterThan0 =
+  'Suspensive: config.defaultProps.delay.ms should be greater than 0'
