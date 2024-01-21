@@ -1,5 +1,7 @@
 # @suspensive/react
 
+## 2.0.0-beta.1
+
 ## 2.0.0-beta.0
 
 ### Major Changes

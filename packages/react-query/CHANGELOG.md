@@ -1,5 +1,15 @@
 # @suspensive/react-query
 
+## 2.0.0-beta.1
+
+### Major Changes
+
+- d06e883: fix(react-query): @suspensive/react-query v2's all naming convention correctly like @tanstack/react-query v5
+
+### Patch Changes
+
+- @suspensive/react@2.0.0-beta.1
+
 ## 2.0.0-beta.0
 
 ### Major Changes
