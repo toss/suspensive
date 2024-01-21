@@ -1,196 +1,49 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import { expectTypeOf } from 'vitest'
+import { describe, expectTypeOf, it } from 'vitest'
 import { useSuspenseQueries } from '../dist'
 
-const queryKey = ['key'] as const
-const queryFn = () => 'response' as const
-const boolean = Math.random() > 0.5
 const select = () => 'selected' as const
 
-type AwaitedQueryFnReturn = Awaited<ReturnType<typeof queryFn>>
-type SelectReturn = Awaited<ReturnType<typeof select>>
-
-// enabled: no
-const [noEnabled, noEnabledSelect] = useSuspenseQueries({
-  queries: [
-    { queryKey, queryFn },
-    { queryKey, queryFn, select },
-  ] as const,
+const queryOptions = <TIndex extends number>(index: TIndex) => ({
+  queryKey: ['key', index] as const,
+  queryFn: () => ({ name: `resolved${index}` }) as const,
 })
-expectTypeOf(noEnabled.data).toEqualTypeOf<AwaitedQueryFnReturn>()
-expectTypeOf(noEnabledSelect.data).toEqualTypeOf<SelectReturn>()
-expectTypeOf(noEnabled.isLoading).toEqualTypeOf<false>()
-expectTypeOf(noEnabledSelect.isLoading).toEqualTypeOf<false>()
-expectTypeOf(noEnabled.isSuccess).toEqualTypeOf<true>()
-expectTypeOf(noEnabledSelect.isSuccess).toEqualTypeOf<true>()
-expectTypeOf(noEnabled.status).toEqualTypeOf<'success'>()
-expectTypeOf(noEnabledSelect.status).toEqualTypeOf<'success'>()
-// @ts-expect-error no isFetching
-noEnabled.isFetching
-// @ts-expect-error no isFetching
-noEnabledSelect.isFetching
-// @ts-expect-error no error
-noEnabled.error
-// @ts-expect-error no error
-noEnabledSelect.error
-// @ts-expect-error no isError
-noEnabled.isError
-// @ts-expect-error no isError
-noEnabledSelect.isError
+
 useSuspenseQueries({
   queries: [
     // @ts-expect-error no suspense
-    { queryKey, queryFn, suspense: false },
+    { ...queryOptions(0), suspense: false },
     // @ts-expect-error no suspense
-    { queryKey, queryFn, select, suspense: true },
+    { ...queryOptions(1), select, suspense: true },
   ] as const,
 })
 
-// enabled: undefined
-const [undefinedEnabled, undefinedEnabledSelect] = useSuspenseQueries({
-  queries: [
-    { enabled: undefined, queryKey, queryFn },
-    { enabled: undefined, queryKey, queryFn, select },
-  ],
-})
-expectTypeOf(undefinedEnabled.data).toEqualTypeOf<AwaitedQueryFnReturn>()
-expectTypeOf(undefinedEnabledSelect.data).toEqualTypeOf<SelectReturn>()
-expectTypeOf(undefinedEnabled.isLoading).toEqualTypeOf<false>()
-expectTypeOf(undefinedEnabledSelect.isLoading).toEqualTypeOf<false>()
-expectTypeOf(undefinedEnabled.isSuccess).toEqualTypeOf<true>()
-expectTypeOf(undefinedEnabledSelect.isSuccess).toEqualTypeOf<true>()
-expectTypeOf(undefinedEnabled.status).toEqualTypeOf<'success'>()
-expectTypeOf(undefinedEnabledSelect.status).toEqualTypeOf<'success'>()
-// @ts-expect-error no isFetching
-undefinedEnabled.isFetching
-// @ts-expect-error no isFetching
-undefinedEnabledSelect.isFetching
-// @ts-expect-error no error
-undefinedEnabled.error
-// @ts-expect-error no error
-undefinedEnabledSelect.error
-// @ts-expect-error no isError
-undefinedEnabled.isError
-// @ts-expect-error no isError
-undefinedEnabledSelect.isError
-useSuspenseQueries({
-  queries: [
-    // @ts-expect-error no suspense
-    { enabled: undefined, queryKey, queryFn, suspense: false },
-    // @ts-expect-error no suspense
-    { enabled: undefined, queryKey, queryFn, select, suspense: true },
-  ] as const,
-})
-
-// enabled: true
-const [trueEnabled, trueEnabledSelect] = useSuspenseQueries({
-  queries: [
-    { enabled: true, queryKey, queryFn },
-    { enabled: true, queryKey, queryFn, select },
-  ] as const,
-})
-expectTypeOf(trueEnabled.data).toEqualTypeOf<AwaitedQueryFnReturn>()
-expectTypeOf(trueEnabledSelect.data).toEqualTypeOf<SelectReturn>()
-expectTypeOf(trueEnabled.isLoading).toEqualTypeOf<false>()
-expectTypeOf(trueEnabledSelect.isLoading).toEqualTypeOf<false>()
-expectTypeOf(trueEnabled.isSuccess).toEqualTypeOf<true>()
-expectTypeOf(trueEnabledSelect.isSuccess).toEqualTypeOf<true>()
-expectTypeOf(trueEnabled.status).toEqualTypeOf<'success'>()
-expectTypeOf(trueEnabledSelect.status).toEqualTypeOf<'success'>()
-// @ts-expect-error no isFetching
-trueEnabled.isFetching
-// @ts-expect-error no isFetching
-trueEnabledSelect.isFetching
-// @ts-expect-error no error
-trueEnabled.error
-// @ts-expect-error no error
-trueEnabledSelect.error
-// @ts-expect-error no isError
-trueEnabled.isError
-// @ts-expect-error no isError
-trueEnabledSelect.isError
-useSuspenseQueries({
-  queries: [
-    // @ts-expect-error no suspense
-    { enabled: true, queryKey, queryFn, suspense: false },
-    // @ts-expect-error no suspense
-    { enabled: true, queryKey, queryFn, select, suspense: true },
-  ] as const,
-})
-
-// enabled: false
-const [falseEnabled, falseEnabledSelect] = useSuspenseQueries({
-  queries: [
-    { enabled: false, queryKey, queryFn },
-    { enabled: false, queryKey, queryFn, select },
-  ] as const,
-})
-expectTypeOf(falseEnabled.data).toEqualTypeOf<undefined>()
-expectTypeOf(falseEnabledSelect.data).toEqualTypeOf<undefined>()
-expectTypeOf(falseEnabled.isLoading).toEqualTypeOf<true>()
-expectTypeOf(falseEnabledSelect.isLoading).toEqualTypeOf<true>()
-expectTypeOf(falseEnabled.isSuccess).toEqualTypeOf<false>()
-expectTypeOf(falseEnabledSelect.isSuccess).toEqualTypeOf<false>()
-expectTypeOf(falseEnabled.status).toEqualTypeOf<'loading'>()
-expectTypeOf(falseEnabledSelect.status).toEqualTypeOf<'loading'>()
-// @ts-expect-error no isFetching
-falseEnabled.isFetching
-// @ts-expect-error no isFetching
-falseEnabledSelect.isFetching
-// @ts-expect-error no error
-falseEnabled.error
-// @ts-expect-error no error
-falseEnabledSelect.error
-// @ts-expect-error no isError
-falseEnabled.isError
-// @ts-expect-error no isError
-falseEnabledSelect.isError
-useSuspenseQueries({
-  queries: [
-    // @ts-expect-error no suspense
-    { enabled: false, queryKey, queryFn, suspense: false },
-    // @ts-expect-error no suspense
-    { enabled: false, queryKey, queryFn, select, suspense: true },
-  ] as const,
-})
-
-// enabled: boolean
-const [booleanEnabled, booleanEnabledSelect] = useSuspenseQueries({
-  queries: [
-    { enabled: boolean, queryKey, queryFn },
-    { enabled: boolean, queryKey, queryFn, select },
-  ],
-})
-expectTypeOf(booleanEnabled.data).toEqualTypeOf<AwaitedQueryFnReturn | undefined>()
-expectTypeOf(booleanEnabledSelect.data).toEqualTypeOf<SelectReturn | undefined>()
-expectTypeOf(booleanEnabled.isLoading).toEqualTypeOf<boolean>()
-expectTypeOf(booleanEnabledSelect.isLoading).toEqualTypeOf<boolean>()
-expectTypeOf(booleanEnabled.isSuccess).toEqualTypeOf<boolean>()
-expectTypeOf(booleanEnabledSelect.isSuccess).toEqualTypeOf<boolean>()
-expectTypeOf(booleanEnabled.status).toEqualTypeOf<'success' | 'loading'>()
-expectTypeOf(booleanEnabledSelect.status).toEqualTypeOf<'success' | 'loading'>()
-// @ts-expect-error no isFetching
-booleanEnabled.isFetching
-// @ts-expect-error no isFetching
-booleanEnabledSelect.isFetching
-// @ts-expect-error no error
-booleanEnabled.error
-// @ts-expect-error no error
-booleanEnabledSelect.error
-// @ts-expect-error no isError
-booleanEnabled.isError
-// @ts-expect-error no isError
-booleanEnabledSelect.isError
-useSuspenseQueries({
-  queries: [
-    // @ts-expect-error no suspense
-    { enabled: boolean, queryKey, queryFn, suspense: false },
-    // @ts-expect-error no suspense
-    { enabled: boolean, queryKey, queryFn, select, suspense: true },
-  ] as const,
-})
-
-// @ts-expect-error noItem
+// @ts-expect-error if no items
 useSuspenseQueries({})
-// @ts-expect-error noItem
+// @ts-expect-error if no items
 useSuspenseQueries()
+
+describe('useSuspenseQueries', () => {
+  it("'s type check", () => {
+    const suspenseQueries = useSuspenseQueries({
+      queries: [
+        { ...queryOptions(0) },
+        { ...queryOptions(1) },
+        { ...queryOptions(2), select: () => ({ name: 'selected' }) as const },
+      ] as const,
+    })
+
+    expectTypeOf(suspenseQueries[0].status).toEqualTypeOf<`success`>()
+    expectTypeOf(suspenseQueries[0].data).toEqualTypeOf<
+      Awaited<ReturnType<ReturnType<typeof queryOptions<0>>['queryFn']>>
+    >()
+
+    expectTypeOf(suspenseQueries[1].status).toEqualTypeOf<`success`>()
+    expectTypeOf(suspenseQueries[1].data).toEqualTypeOf<
+      Awaited<ReturnType<ReturnType<typeof queryOptions<1>>['queryFn']>>
+    >()
+
+    expectTypeOf(suspenseQueries[2].status).toEqualTypeOf<`success`>()
+    expectTypeOf(suspenseQueries[2].data).toEqualTypeOf<{ readonly name: 'selected' }>()
+  })
+})

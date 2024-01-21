@@ -7,33 +7,24 @@ import {
   useQuery,
 } from '@tanstack/react-query'
 
-export interface BaseUseSuspenseQueryResult<TData = unknown>
-  extends Omit<UseQueryResult<TData>, 'error' | 'isError' | 'isFetching'> {
-  status: 'success' | 'loading'
-}
-
-export interface UseSuspenseQueryResultOnSuccess<TData> extends BaseUseSuspenseQueryResult<TData> {
+export interface UseSuspenseQueryResult<TData = unknown, TError = unknown>
+  extends Omit<UseQueryResult<TData, TError>, keyof Pick<UseQueryResult, 'isPlaceholderData'>> {
   data: TData
-  isLoading: false
-  isSuccess: true
   status: 'success'
 }
-export interface UseSuspenseQueryResultOnLoading extends BaseUseSuspenseQueryResult {
-  data: undefined
-  isLoading: true
-  isSuccess: false
-  status: 'loading'
-}
 
-export type UseSuspenseQueryOptions<
+export interface UseSuspenseQueryOptions<
   TQueryFnData = unknown,
   TError = unknown,
   TData = TQueryFnData,
   TQueryKey extends QueryKey = QueryKey,
-> = Omit<UseQueryOptions<TQueryFnData, TError, TData, TQueryKey>, 'suspense'>
+> extends Omit<
+    UseQueryOptions<TQueryFnData, TError, TData, TQueryKey>,
+    'suspense' | 'useErrorBoundary' | 'enabled' | 'placeholderData'
+  > {}
 
 /**
- * This hook wrapping useQuery of @tanstack/react-query with default suspense option. with this hook, you don't have to make unnecessary type narrowing
+ * This hook is wrapping useQuery of `@tanstack/react-query` v4 with default suspense option.
  * @see {@link https://suspensive.org/docs/react-query/useSuspenseQuery}
  */
 // arg1: queryKey, arg2: queryFn, arg3: options
@@ -45,43 +36,8 @@ export function useSuspenseQuery<
 >(
   queryKey: TQueryKey,
   queryFn: QueryFunction<TQueryFnData, TQueryKey>,
-  options?: Omit<UseSuspenseQueryOptions<TQueryFnData, TError, TData, TQueryKey>, 'enabled' | 'queryKey' | 'queryFn'>
-): UseSuspenseQueryResultOnSuccess<TData>
-export function useSuspenseQuery<
-  TQueryFnData = unknown,
-  TError = unknown,
-  TData = TQueryFnData,
-  TQueryKey extends QueryKey = QueryKey,
->(
-  queryKey: TQueryKey,
-  queryFn: QueryFunction<TQueryFnData, TQueryKey>,
-  options: Omit<UseSuspenseQueryOptions<TQueryFnData, TError, TData, TQueryKey>, 'enabled' | 'queryKey' | 'queryFn'> & {
-    enabled?: true
-  }
-): UseSuspenseQueryResultOnSuccess<TData>
-export function useSuspenseQuery<
-  TQueryFnData = unknown,
-  TError = unknown,
-  TData = TQueryFnData,
-  TQueryKey extends QueryKey = QueryKey,
->(
-  queryKey: TQueryKey,
-  queryFn: QueryFunction<TQueryFnData, TQueryKey>,
-  options: Omit<UseSuspenseQueryOptions<TQueryFnData, TError, TData, TQueryKey>, 'enabled' | 'queryKey' | 'queryFn'> & {
-    enabled: false
-  }
-): UseSuspenseQueryResultOnLoading
-export function useSuspenseQuery<
-  TQueryFnData = unknown,
-  TError = unknown,
-  TData = TQueryFnData,
-  TQueryKey extends QueryKey = QueryKey,
->(
-  queryKey: TQueryKey,
-  queryFn: QueryFunction<TQueryFnData, TQueryKey>,
-  options: Omit<UseSuspenseQueryOptions<TQueryFnData, TError, TData, TQueryKey>, 'queryKey' | 'queryFn'>
-): UseSuspenseQueryResultOnSuccess<TData> | UseSuspenseQueryResultOnLoading
-
+  options?: Omit<UseSuspenseQueryOptions<TQueryFnData, TError, TData, TQueryKey>, 'queryKey' | 'queryFn'>
+): UseSuspenseQueryResult<TData, TError>
 // arg1: queryKey, arg2: options
 export function useSuspenseQuery<
   TQueryFnData = unknown,
@@ -90,71 +46,15 @@ export function useSuspenseQuery<
   TQueryKey extends QueryKey = QueryKey,
 >(
   queryKey: TQueryKey,
-  options?: Omit<UseSuspenseQueryOptions<TQueryFnData, TError, TData, TQueryKey>, 'enabled' | 'queryKey'>
-): UseSuspenseQueryResultOnSuccess<TData>
-export function useSuspenseQuery<
-  TQueryFnData = unknown,
-  TError = unknown,
-  TData = TQueryFnData,
-  TQueryKey extends QueryKey = QueryKey,
->(
-  queryKey: TQueryKey,
-  options: Omit<UseSuspenseQueryOptions<TQueryFnData, TError, TData, TQueryKey>, 'enabled' | 'queryKey'> & {
-    enabled?: true
-  }
-): UseSuspenseQueryResultOnSuccess<TData>
-export function useSuspenseQuery<
-  TQueryFnData = unknown,
-  TError = unknown,
-  TData = TQueryFnData,
-  TQueryKey extends QueryKey = QueryKey,
->(
-  queryKey: TQueryKey,
-  options: Omit<UseSuspenseQueryOptions<TQueryFnData, TError, TData, TQueryKey>, 'enabled' | 'queryKey'> & {
-    enabled: false
-  }
-): UseSuspenseQueryResultOnLoading
-export function useSuspenseQuery<
-  TQueryFnData = unknown,
-  TError = unknown,
-  TData = TQueryFnData,
-  TQueryKey extends QueryKey = QueryKey,
->(
-  queryKey: TQueryKey,
-  options: Omit<UseSuspenseQueryOptions<TQueryFnData, TError, TData, TQueryKey>, 'queryKey'>
-): UseSuspenseQueryResultOnSuccess<TData> | UseSuspenseQueryResultOnLoading
-
+  options?: Omit<UseSuspenseQueryOptions<TQueryFnData, TError, TData, TQueryKey>, 'queryKey'>
+): UseSuspenseQueryResult<TData, TError>
 // arg1: options
 export function useSuspenseQuery<
   TQueryFnData = unknown,
   TError = unknown,
   TData = TQueryFnData,
   TQueryKey extends QueryKey = QueryKey,
->(
-  options: Omit<UseSuspenseQueryOptions<TQueryFnData, TError, TData, TQueryKey>, 'enabled'> & {
-    enabled?: true
-  }
-): UseSuspenseQueryResultOnSuccess<TData>
-export function useSuspenseQuery<
-  TQueryFnData = unknown,
-  TError = unknown,
-  TData = TQueryFnData,
-  TQueryKey extends QueryKey = QueryKey,
->(
-  options: Omit<UseSuspenseQueryOptions<TQueryFnData, TError, TData, TQueryKey>, 'enabled'> & {
-    enabled: false
-  }
-): UseSuspenseQueryResultOnLoading
-export function useSuspenseQuery<
-  TQueryFnData = unknown,
-  TError = unknown,
-  TData = TQueryFnData,
-  TQueryKey extends QueryKey = QueryKey,
->(
-  options: UseSuspenseQueryOptions<TQueryFnData, TError, TData, TQueryKey>
-): UseSuspenseQueryResultOnSuccess<TData> | UseSuspenseQueryResultOnLoading
-
-// base useSuspenseQuery
+>(options: UseSuspenseQueryOptions<TQueryFnData, TError, TData, TQueryKey>): UseSuspenseQueryResult<TData, TError>
 export function useSuspenseQuery<
   TQueryFnData = unknown,
   TError = unknown,
@@ -167,8 +67,10 @@ export function useSuspenseQuery<
     | Omit<UseSuspenseQueryOptions<TQueryFnData, TError, TData, TQueryKey>, 'queryKey'>,
   arg3?: Omit<UseSuspenseQueryOptions<TQueryFnData, TError, TData, TQueryKey>, 'queryKey' | 'queryFn'>
 ) {
-  return useQuery({
+  return useQuery<TQueryFnData, TError, TData, TQueryKey>({
     ...parseQueryArgs(arg1, arg2, arg3),
+    enabled: true,
+    useErrorBoundary: true,
     suspense: true,
-  }) as BaseUseSuspenseQueryResult<TData>
+  }) as UseSuspenseQueryResult<TData, TError>
 }

@@ -1,6 +1,5 @@
 // TODO: remove this eslint
 /* eslint-disable @typescript-eslint/naming-convention */
-
 import {
   type QueryFunction,
   type QueryKey,
@@ -8,123 +7,65 @@ import {
   type UseQueryResult,
   useQueries,
 } from '@tanstack/react-query'
-import type { UseSuspenseQueryResultOnLoading, UseSuspenseQueryResultOnSuccess } from './useSuspenseQuery'
+import type { UseSuspenseQueryOptions, UseSuspenseQueryResult } from './useSuspenseQuery'
 
 // Avoid TS depth-limit error in case of large array literal
 type MAXIMUM_DEPTH = 20
 
-type UseQueryOptionsForUseSuspenseQueries<
-  TQueryFnData = unknown,
-  TData = TQueryFnData,
-  TQueryKey extends QueryKey = QueryKey,
-  TEnabled extends boolean | undefined = true,
-> = Omit<UseQueryOptions<TQueryFnData, unknown, TData, TQueryKey>, 'context' | 'suspense'> & {
-  enabled?: TEnabled
-}
-
-interface ToInferOption<TQueryFnData, TQueryKey extends QueryKey> {
+interface ToInferOptions<TQueryFnData, TQueryKey extends QueryKey> {
   queryFn?: QueryFunction<TQueryFnData, TQueryKey>
 }
-interface ToInferWithEnabledOption<TQueryFnData, TQueryKey extends QueryKey, TEnabled>
-  extends ToInferOption<TQueryFnData, TQueryKey> {
-  enabled: TEnabled
-}
-interface ToInferWithSelectOption<TQueryFnData, TData, TQueryKey extends QueryKey>
-  extends ToInferOption<TQueryFnData, TQueryKey> {
-  select: (data: unknown) => TData
-}
-interface ToInferWithSelectEnabledOption<TQueryFnData, TData, TQueryKey extends QueryKey, TEnabled>
-  extends ToInferWithEnabledOption<TQueryFnData, TQueryKey, TEnabled> {
+
+interface ToInferWithSelectOptions<TQueryFnData, TData, TQueryKey extends QueryKey>
+  extends ToInferOptions<TQueryFnData, TQueryKey> {
   select: (data: unknown) => TData
 }
 
-type GetOption<T> =
-  // enabled: false
-  T extends ToInferWithSelectEnabledOption<infer TQueryFnData, infer TData, infer TQueryKey, false>
-    ? UseQueryOptionsForUseSuspenseQueries<TQueryFnData, TData, TQueryKey, false>
-    : T extends ToInferWithEnabledOption<infer TQueryFnData, infer TQueryKey, false>
-      ? UseQueryOptionsForUseSuspenseQueries<TQueryFnData, TQueryFnData, TQueryKey, false>
-      : // enabled: true
-        T extends ToInferWithSelectEnabledOption<infer TQueryFnData, infer TData, infer TQueryKey, true>
-        ? UseQueryOptionsForUseSuspenseQueries<TQueryFnData, TData, TQueryKey>
-        : T extends ToInferWithEnabledOption<infer TQueryFnData, infer TQueryKey, true>
-          ? UseQueryOptionsForUseSuspenseQueries<TQueryFnData, TQueryFnData, TQueryKey>
-          : // enabled: boolean
-            T extends ToInferWithSelectEnabledOption<infer TQueryFnData, infer TData, infer TQueryKey, boolean>
-            ? UseQueryOptionsForUseSuspenseQueries<TQueryFnData, TData, TQueryKey, boolean>
-            : T extends ToInferWithEnabledOption<infer TQueryFnData, infer TQueryKey, boolean>
-              ? UseQueryOptionsForUseSuspenseQueries<TQueryFnData, TQueryFnData, TQueryKey, boolean>
-              : // enabled: undefined
-                T extends ToInferWithSelectEnabledOption<infer TQueryFnData, infer TData, infer TQueryKey, undefined>
-                ? UseQueryOptionsForUseSuspenseQueries<TQueryFnData, TData, TQueryKey>
-                : T extends ToInferWithEnabledOption<infer TQueryFnData, infer TQueryKey, undefined>
-                  ? UseQueryOptionsForUseSuspenseQueries<TQueryFnData, TQueryFnData, TQueryKey>
-                  : // no enabled
-                    T extends ToInferWithSelectOption<infer TQueryFnData, infer TData, infer TQueryKey>
-                    ? UseQueryOptionsForUseSuspenseQueries<TQueryFnData, TData, TQueryKey>
-                    : T extends ToInferOption<infer TQueryFnData, infer TQueryKey>
-                      ? UseQueryOptionsForUseSuspenseQueries<TQueryFnData, TQueryFnData, TQueryKey>
-                      : UseQueryOptionsForUseSuspenseQueries
+type GetSuspenseOptions<T> =
+  T extends ToInferWithSelectOptions<infer TQueryFnData, infer TData, infer TQueryKey>
+    ? UseSuspenseQueryOptions<TQueryFnData, unknown, TData, TQueryKey>
+    : T extends ToInferOptions<infer TQueryFnData, infer TQueryKey>
+      ? UseSuspenseQueryOptions<TQueryFnData, unknown, TQueryFnData, TQueryKey>
+      : UseSuspenseQueryOptions
 
-type SuspenseQueriesOptions<
+export type SuspenseQueriesOptions<
   T extends unknown[],
   TResult extends unknown[] = [],
   TDepth extends ReadonlyArray<number> = [],
 > = TDepth['length'] extends MAXIMUM_DEPTH
-  ? UseQueryOptionsForUseSuspenseQueries[]
+  ? UseSuspenseQueryOptions[]
   : T extends []
     ? []
     : T extends [infer Head]
-      ? [...TResult, GetOption<Head>]
+      ? [...TResult, GetSuspenseOptions<Head>]
       : T extends [infer Head, ...infer Tail]
-        ? SuspenseQueriesOptions<[...Tail], [...TResult, GetOption<Head>], [...TDepth, 1]>
+        ? SuspenseQueriesOptions<[...Tail], [...TResult, GetSuspenseOptions<Head>], [...TDepth, 1]>
         : unknown[] extends T
           ? T
-          : T extends UseQueryOptionsForUseSuspenseQueries<infer TQueryFnData, infer TData, infer TQueryKey>[]
-            ? UseQueryOptionsForUseSuspenseQueries<TQueryFnData, TData, TQueryKey>[]
-            : UseQueryOptionsForUseSuspenseQueries[]
+          : T extends UseSuspenseQueryOptions<infer TQueryFnData, unknown, infer TData, infer TQueryKey>[]
+            ? UseSuspenseQueryOptions<TQueryFnData, unknown, TData, TQueryKey>[]
+            : UseSuspenseQueryOptions[]
 
 // results
-type GetResult<T> = T extends { queryFnData: any; data: infer TData }
-  ? UseSuspenseQueryResultOnSuccess<TData>
+type GetSuspenseResult<T> = T extends { queryFnData: any; data: infer TData }
+  ? UseSuspenseQueryResult<TData>
   : T extends { queryFnData: infer TQueryFnData }
-    ? UseSuspenseQueryResultOnSuccess<TQueryFnData>
+    ? UseSuspenseQueryResult<TQueryFnData>
     : T extends { data: infer TData }
-      ? UseSuspenseQueryResultOnSuccess<TData>
+      ? UseSuspenseQueryResult<TData>
       : T extends [any, infer TData]
-        ? UseSuspenseQueryResultOnSuccess<TData>
+        ? UseSuspenseQueryResult<TData>
         : T extends [infer TQueryFnData]
-          ? UseSuspenseQueryResultOnSuccess<TQueryFnData>
+          ? UseSuspenseQueryResult<TQueryFnData>
           : T extends [infer TQueryFnData]
-            ? UseSuspenseQueryResultOnSuccess<TQueryFnData>
-            : // enabled: false
-              T extends ToInferWithSelectEnabledOption<unknown, unknown, QueryKey, false>
-              ? UseSuspenseQueryResultOnLoading
-              : T extends ToInferWithEnabledOption<unknown, QueryKey, false>
-                ? UseSuspenseQueryResultOnLoading
-                : // enabled: true
-                  T extends ToInferWithSelectEnabledOption<unknown, infer TData, QueryKey, true>
-                  ? UseSuspenseQueryResultOnSuccess<TData>
-                  : T extends ToInferWithEnabledOption<infer TQueryFnData, QueryKey, true>
-                    ? UseSuspenseQueryResultOnSuccess<TQueryFnData>
-                    : // enabled: boolean
-                      T extends ToInferWithSelectEnabledOption<unknown, infer TData, QueryKey, boolean>
-                      ? UseSuspenseQueryResultOnSuccess<TData> | UseSuspenseQueryResultOnLoading
-                      : T extends ToInferWithEnabledOption<infer TQueryFnData, QueryKey, boolean>
-                        ? UseSuspenseQueryResultOnSuccess<TQueryFnData> | UseSuspenseQueryResultOnLoading
-                        : // no enabled
-                          T extends ToInferWithSelectOption<unknown, infer TData, QueryKey>
-                          ? UseSuspenseQueryResultOnSuccess<TData>
-                          : T extends ToInferOption<infer TQueryFnData, QueryKey>
-                            ? UseSuspenseQueryResultOnSuccess<TQueryFnData>
-                            : // enabled: undefined
-                              T extends ToInferWithSelectEnabledOption<unknown, infer TData, QueryKey, undefined>
-                              ? UseSuspenseQueryResultOnSuccess<TData>
-                              : T extends ToInferWithEnabledOption<infer TQueryFnData, QueryKey, undefined>
-                                ? UseSuspenseQueryResultOnSuccess<TQueryFnData>
-                                : UseSuspenseQueryResultOnSuccess<unknown>
+            ? UseSuspenseQueryResult<TQueryFnData>
+            : T extends ToInferWithSelectOptions<unknown, infer TData, QueryKey>
+              ? UseSuspenseQueryResult<TData>
+              : T extends ToInferOptions<infer TQueryFnData, QueryKey>
+                ? UseSuspenseQueryResult<TQueryFnData>
+                : UseSuspenseQueryResult
 
-export type QueriesResults<
+export type SuspenseQueriesResults<
   T extends any[],
   TResult extends any[] = [],
   TDepth extends ReadonlyArray<number> = [],
@@ -133,17 +74,17 @@ export type QueriesResults<
   : T extends []
     ? []
     : T extends [infer Head]
-      ? [...TResult, GetResult<Head>]
+      ? [...TResult, GetSuspenseResult<Head>]
       : T extends [infer Head, ...infer Tail]
-        ? QueriesResults<[...Tail], [...TResult, GetResult<Head>], [...TDepth, 1]>
-        : T extends UseQueryOptionsForUseSuspenseQueries<infer TQueryFnData, infer TData>[]
-          ? UseSuspenseQueryResultOnSuccess<unknown extends TData ? TQueryFnData : TData>[]
-          : (UseSuspenseQueryResultOnSuccess<unknown> | UseSuspenseQueryResultOnLoading)[]
+        ? SuspenseQueriesResults<[...Tail], [...TResult, GetSuspenseResult<Head>], [...TDepth, 1]>
+        : T extends UseSuspenseQueryOptions<infer TQueryFnData, unknown, infer TData>[]
+          ? UseSuspenseQueryResult<unknown extends TData ? TQueryFnData : TData>[]
+          : UseSuspenseQueryResult[]
 
 type UseSuspenseQueries = <T extends any[]>(arg: {
   queries: readonly [...SuspenseQueriesOptions<T>]
   context?: UseQueryOptions['context']
-}) => QueriesResults<T>
+}) => SuspenseQueriesResults<T>
 export const useSuspenseQueries: UseSuspenseQueries = <T extends any[]>({
   queries,
   context,
@@ -154,4 +95,4 @@ export const useSuspenseQueries: UseSuspenseQueries = <T extends any[]>({
   useQueries({
     queries: queries.map((query: typeof queries) => ({ ...query, suspense: true })),
     context,
-  }) as QueriesResults<T>
+  }) as SuspenseQueriesResults<T>
