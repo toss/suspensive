@@ -1,8 +1,8 @@
 export { useSuspenseQuery } from './useSuspenseQuery'
-export type { UseSuspenseQueryResult, UseSuspenseQueryOptions } from './useSuspenseQuery'
+export type { UseSuspenseQueryOptions, UseSuspenseQueryResult } from './useSuspenseQuery'
 export { useSuspenseQueries } from './useSuspenseQueries'
 export type { SuspenseQueriesOptions, SuspenseQueriesResults } from './useSuspenseQueries'
 export { useSuspenseInfiniteQuery } from './useSuspenseInfiniteQuery'
-export type { UseSuspenseInfiniteQueryResult, UseSuspenseInfiniteQueryOptions } from './useSuspenseInfiniteQuery'
-export { QueryAsyncBoundary } from './QueryAsyncBoundary'
+export type { UseSuspenseInfiniteQueryOptions, UseSuspenseInfiniteQueryResult } from './useSuspenseInfiniteQuery'
+
 export { QueryErrorBoundary } from './QueryErrorBoundary'

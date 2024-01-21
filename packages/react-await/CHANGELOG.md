@@ -1,5 +1,11 @@
 # @suspensive/react-await
 
+## 0.0.16-beta.0
+
+### Patch Changes
+
+- 837ed18: feat(\*): remove target react v16, v17
+
 ## 0.0.15
 
 ### Patch Changes

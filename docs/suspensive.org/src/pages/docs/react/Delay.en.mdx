@@ -65,26 +65,3 @@ const Example = () => (
   </Delay>
 )
 ```
-
-## withDelay
-
-<Callout type='deprecated'>
-
-deprecated: Use [wrap.Delay().on](./wrap) instead
-
-</Callout>
-
-We can use withDelay to wrap component by `<Delay/>` easily.
-we don't need to make unncessary code to wrap it if we use withDelay like below.
-withDelay's 2nd parameter is props of `<Delay/>` without children
-
-```tsx /withDelay/
-import { withDelay } from '@suspensive/react'
-
-const Example = withDelay(
-  function Component() {
-    return <>...</>
-  },
-  { ms: 200 }
-)
-```

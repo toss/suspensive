@@ -1,5 +1,11 @@
 # @suspensive/react-image
 
+## 0.0.10-beta.0
+
+### Patch Changes
+
+- 837ed18: feat(\*): remove target react v16, v17
+
 ## 0.0.9
 
 ### Patch Changes

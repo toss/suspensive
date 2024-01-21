@@ -1,0 +1,26 @@
+{
+  "mode": "pre",
+  "tag": "beta",
+  "initialVersions": {
+    "@suspensive/eslint-config": "0.0.0",
+    "@suspensive/eslint-config-js": "0.0.0",
+    "@suspensive/eslint-config-ts": "0.0.0",
+    "@suspensive/package-json-name": "0.0.0",
+    "@suspensive/test-utils": "0.0.0",
+    "@suspensive/tsconfig": "0.0.0-development",
+    "@suspensive/tsup": "0.0.0",
+    "@suspensive/docs-v1": "0.0.0-development",
+    "@suspensive/docs-v2": "0.0.0-development",
+    "@suspensive/react": "1.25.0",
+    "@suspensive/react-await": "0.0.15",
+    "@suspensive/react-image": "0.0.9",
+    "@suspensive/react-query": "1.25.0",
+    "@suspensive/visualization": "0.0.23",
+    "@suspensive/suspensive.org": "0.0.0-development"
+  },
+  "changesets": [
+    "brown-tips-shout",
+    "clean-singers-know",
+    "swift-moons-help"
+  ]
+}

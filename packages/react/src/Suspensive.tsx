@@ -6,22 +6,22 @@ import {
   SuspensiveDevModeContext,
 } from './contexts'
 import { assert } from './utils'
-import { SuspensiveConfigDefaultOptionsDelayMsShouldBeGreaterThan0 } from './utils/assert'
+import { SuspensiveConfigDefaultPropsDelayMsShouldBeGreaterThan0 } from './utils/assert'
 
 export class Suspensive {
-  public defaultOptions?: {
+  public defaultProps?: {
     suspense?: ContextType<typeof SuspenseDefaultPropsContext>
     delay?: ContextType<typeof DelayDefaultPropsContext>
   }
   public devMode = new SuspensiveDevMode()
 
-  constructor(config: { defaultOptions?: Suspensive['defaultOptions'] } = {}) {
+  constructor(config: { defaultProps?: Suspensive['defaultProps'] } = {}) {
     if (process.env.NODE_ENV !== 'production') {
-      if (typeof config.defaultOptions?.delay?.ms === 'number') {
-        assert(config.defaultOptions.delay.ms > 0, SuspensiveConfigDefaultOptionsDelayMsShouldBeGreaterThan0)
+      if (typeof config.defaultProps?.delay?.ms === 'number') {
+        assert(config.defaultProps.delay.ms > 0, SuspensiveConfigDefaultPropsDelayMsShouldBeGreaterThan0)
       }
     }
-    this.defaultOptions = config.defaultOptions
+    this.defaultProps = config.defaultProps
   }
 }
 
@@ -29,13 +29,13 @@ interface SuspensiveProviderProps extends PropsWithChildren {
   value: Suspensive
 }
 export const SuspensiveProvider = ({ value, children }: SuspensiveProviderProps) => {
-  const delayDefaultOptions = useMemo(() => value.defaultOptions?.delay || {}, [value.defaultOptions?.delay])
-  const suspenseDefaultOptions = useMemo(() => value.defaultOptions?.suspense || {}, [value.defaultOptions?.suspense])
+  const delayDefaultProps = useMemo(() => value.defaultProps?.delay || {}, [value.defaultProps?.delay])
+  const suspenseDefaultProps = useMemo(() => value.defaultProps?.suspense || {}, [value.defaultProps?.suspense])
 
   return (
     <SuspensiveDevModeContext.Provider value={value.devMode}>
-      <DelayDefaultPropsContext.Provider value={delayDefaultOptions}>
-        <SuspenseDefaultPropsContext.Provider value={suspenseDefaultOptions}>
+      <DelayDefaultPropsContext.Provider value={delayDefaultProps}>
+        <SuspenseDefaultPropsContext.Provider value={suspenseDefaultProps}>
           {children}
         </SuspenseDefaultPropsContext.Provider>
       </DelayDefaultPropsContext.Provider>

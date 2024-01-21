@@ -21,7 +21,7 @@
   "type": "commonjs",
   "scripts": {
     "build": "next build",
-    "dev": "next dev -p 4001",
+    "dev": "next dev -p 4002",
     "lint": "next lint",
     "start": "next start"
   },
