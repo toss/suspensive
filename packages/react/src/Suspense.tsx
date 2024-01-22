@@ -1,13 +1,12 @@
 import { Suspense as ReactSuspense, type SuspenseProps as ReactSuspenseProps, useContext } from 'react'
-import { SuspenseDefaultPropsContext, useDevModeObserve } from './contexts'
+import { SuspenseDefaultPropsContext, syncDevMode } from './contexts'
 import { useIsClient } from './hooks'
 import type { OmitKeyOf, PropsWithDevMode } from './utility-types'
-import { noop } from './utils'
 
 const SuspenseClientOnly = (props: ReactSuspenseProps) =>
   useIsClient() ? <ReactSuspense {...props} /> : <>{props.fallback}</>
 
-export interface SuspenseProps extends PropsWithDevMode<ReactSuspenseProps, SuspenseDevModeOptions> {
+export interface SuspenseProps extends PropsWithDevMode<ReactSuspenseProps, SuspenseDevModeProp> {
   /**
    * With clientOnly prop, `<Suspense/>` will return fallback in server but after mount return children in client. Since mount only happens on the client, `<Suspense/>` can be avoid server-side rendering.
    * @see https://suspensive.org/docs/react/Suspense#avoid-server-side-rendering-clientonly
@@ -27,11 +26,11 @@ export const Suspense = Object.assign(
       return (
         <DefinedSuspense fallback={typeof fallback === 'undefined' ? defaultProps.fallback : fallback}>
           {children}
-          {process.env.NODE_ENV !== 'production' && devMode && <SuspenseDevMode {...devMode} />}
+          <SuspenseDevMode {...devMode} />
         </DefinedSuspense>
       )
     }
-    if (process.env.NODE_ENV !== 'production') {
+    if (process.env.NODE_ENV === 'development') {
       Suspense.displayName = 'Suspense'
     }
     return Suspense
@@ -46,11 +45,11 @@ export const Suspense = Object.assign(
         return (
           <SuspenseClientOnly fallback={typeof fallback === 'undefined' ? defaultProps.fallback : fallback}>
             {children}
-            {process.env.NODE_ENV !== 'production' && devMode && <SuspenseDevMode {...devMode} />}
+            <SuspenseDevMode {...devMode} />
           </SuspenseClientOnly>
         )
       }
-      if (process.env.NODE_ENV !== 'production') {
+      if (process.env.NODE_ENV === 'development') {
         Suspense.displayName = 'Suspense.CSROnly'
       }
       return Suspense
@@ -58,16 +57,15 @@ export const Suspense = Object.assign(
   }
 )
 
-type SuspenseDevModeOptions = {
+type SuspenseDevModeProp = {
   /**
    * @experimental This is experimental feature.
    */
   showFallback?: boolean
 }
-const SuspenseDevMode = ({ showFallback = false }: SuspenseDevModeOptions) => {
-  const devMode = useDevModeObserve()
-  if (devMode?.is && showFallback) {
-    throw new Promise(noop)
+const SuspenseDevMode = syncDevMode<SuspenseDevModeProp>(({ devMode, showFallback }) => {
+  if (devMode.is && showFallback) {
+    throw devMode.promise
   }
   return null
-}
+})
