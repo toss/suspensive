@@ -13,12 +13,16 @@ export default function Page() {
     <Area title="ErrorBoundaryGroup">
       <ErrorBoundaryGroup>
         <div className="text-right">
-          <ErrorBoundaryGroup.Reset trigger={(group) => <Button onClick={group.reset}>↻</Button>} />
+          <ErrorBoundaryGroup.Consumer>
+            {(group) => <Button onClick={group.reset}>↻</Button>}
+          </ErrorBoundaryGroup.Consumer>
         </div>
         <Area title="ErrorBoundaryGroup">
           <ErrorBoundaryGroup>
             <div className="text-right">
-              <ErrorBoundaryGroup.Reset trigger={(group) => <Button onClick={group.reset}>↻</Button>} />
+              <ErrorBoundaryGroup.Consumer>
+                {(group) => <Button onClick={group.reset}>↻</Button>}
+              </ErrorBoundaryGroup.Consumer>
             </div>
             <Area title="Suspense (Continuous 3 fetching)">
               <Suspense clientOnly fallback={<Spinner />}>
@@ -42,7 +46,9 @@ export default function Page() {
         <Area title="ErrorBoundaryGroup blockOutside">
           <ErrorBoundaryGroup blockOutside>
             <div className="text-right">
-              <ErrorBoundaryGroup.Reset trigger={(group) => <Button onClick={group.reset}>↻</Button>} />
+              <ErrorBoundaryGroup.Consumer>
+                {(group) => <Button onClick={group.reset}>↻</Button>}
+              </ErrorBoundaryGroup.Consumer>
             </div>
             <Area title="Suspense">
               <Suspense clientOnly fallback={<Spinner />}>
