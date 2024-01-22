@@ -4,20 +4,24 @@ import { Callout } from '@/components'
 
 이 컴포넌트로 children인 `<ErrorBoundary/>`들을 쉽게 관리할 수 있습니다.
 
-중첩된 `<ErrorBoundaryGroup/>`의 children인 `<ErrorBoundary/>`들도 상위 `<ErrorBoundaryGroup.Reset/>`으로도 reset됩니다.
+중첩된 `<ErrorBoundaryGroup/>`의 children인 `<ErrorBoundary/>`들도 상위 `<ErrorBoundaryGroup.Consumer/>`으로도 reset됩니다.
 
-```tsx /ErrorBoundaryGroup/
+```jsx /ErrorBoundaryGroup/
 import { ErrorBoundaryGroup, ErrorBoundary } from '@suspensive/react'
 
 const Example = () => (
   <ErrorBoundaryGroup>
     {/* ErrorBoundaryGroup의 children인 ErrorBoundary를 모두 reset합니다. 중첩된 ErrorBoundaryGroup내의 ErrorBoundary도 모두 reset합니다. */}
-    <ErrorBoundaryGroup.Reset trigger={(group) => <button onClick={group.reset}>Try again</button>} />
+    <ErrorBoundaryGroup.Consumer>
+      {(group) => <button onClick={group.reset}>Try again</button>}
+    </ErrorBoundaryGroup.Consumer>
     <ErrorBoundary fallback={(props) => <>{props.error}</>}>
       <CanThrowError />
     </ErrorBoundary>
     <ErrorBoundaryGroup>
-      <ErrorBoundaryGroup.Reset trigger={(group) => <button onClick={group.reset}>Try again</button>} />
+      <ErrorBoundaryGroup.Consumer>
+        {(group) => <button onClick={group.reset}>Try again</button>}
+      </ErrorBoundaryGroup.Consumer>
       <ErrorBoundary fallback={(props) => <>{props.error}</>}>
         <CanThrowError />
       </ErrorBoundary>
@@ -30,18 +34,22 @@ const Example = () => (
 
 만약 상위 `<ErrorBoundaryGroup/>`에 의한 하위 `<ErrorBoundaryGroup/>`의 reset을 막고 싶다면 blockOutside을 사용하면 됩니다.
 
-```tsx /blockOutside/
+```jsx /blockOutside/
 import { ErrorBoundaryGroup, ErrorBoundary } from '@suspensive/react'
 
 const Example = () => (
   <ErrorBoundaryGroup>
-    <ErrorBoundaryGroup.Reset trigger={(group) => <button onClick={group.reset}>Try again</button>} />
+    <ErrorBoundaryGroup.Consumer>
+      {(group) => <button onClick={group.reset}>Try again</button>}
+    </ErrorBoundaryGroup.Consumer>
     <ErrorBoundary fallback={(props) => <>{props.error}</>}>
       <CanThrowError />
     </ErrorBoundary>
     {/* blockOutside prop으로 상위 ErrorBoundaryGroup에 의한 reset을 막습니다 */}
     <ErrorBoundaryGroup blockOutside>
-      <ErrorBoundaryGroup.Reset trigger={(group) => <button onClick={group.reset}>Try again</button>} />
+      <ErrorBoundaryGroup.Consumer>
+        {(group) => <button onClick={group.reset}>Try again</button>}
+      </ErrorBoundaryGroup.Consumer>
       <ErrorBoundary fallback={(props) => <>{props.error}</>}>
         <CanThrowError />
       </ErrorBoundary>

@@ -2,8 +2,8 @@
 
 wrap was created to wrap components with Suspense, ErrorBoudnary, ErrorBoundaryGroup, etc. provided by @suspensive/react.
 
-```tsx /wrap/
-import { wrap } from '@suspensive/react'
+```jsx /wrap/
+import { wrap, ErrorBoundaryGroup } from '@suspensive/react'
 import { useSuspenseQuery } from '@suspensive/react-query'
 
 export const Page = wrap
@@ -13,7 +13,6 @@ export const Page = wrap
   .on(
     // will make <Page/> component wrapped in <ErrorBoundaryGroup/>, <ErrorBoundary/> and <Suspense/>
     () => {
-      const errorBoundaryGroup = useErrorBoundaryGroup()
       const { data: postList } = useSuspenseQuery({
         queryKey: ['posts'],
         queryFn: () => fetch(`https://exmaple.com/posts`).then((res) => res.json()),
@@ -21,7 +20,9 @@ export const Page = wrap
 
       return (
         <>
-          <button onClick={errorBoundaryGroup.reset}>Reset all posts</button>
+          <ErrorBoundaryGroup.Consumer>
+            {(group) => <button onClick={group.reset}>Reset all posts</button>}
+          </ErrorBoundaryGroup.Consumer>
           {postList.map((post) => (
             <PostItem id={post.id} />
           ))}
@@ -30,18 +31,16 @@ export const Page = wrap
     }
   )
 
-const PostItem = wrap
-  .ErrorBoundary({ fallback: ({ error }) => <>{error.message}</> })
-  .Suspense({ fallback: <PostSkeleton /> })
-  .on<{ id: string }>(
-    // will make <Post/> component have PostProps wrapped in <ErrorBoundary/> and <Suspense/>
-    (props) => {
-      const { data: post } = useSuspenseQuery({
-        queryKey: ['posts', props.id],
-        queryFn: () => fetch(`https://exmaple.com/posts/${props.id}`).then((res) => res.json()),
-      })
+const PostItem =
+  wrap.ErrorBoundary({ fallback: ({ error }) => <>{error.message}</> }).Suspense({ fallback: <PostSkeleton /> }).on <
+  { id: string } >
+  // will make <Post/> component have PostProps wrapped in <ErrorBoundary/> and <Suspense/>
+  ((props) => {
+    const { data: post } = useSuspenseQuery({
+      queryKey: ['posts', props.id],
+      queryFn: () => fetch(`https://exmaple.com/posts/${props.id}`).then((res) => res.json()),
+    })
 
-      return <>{post.title}</>
-    }
-  )
+    return <>{post.title}</>
+  })
 ```
