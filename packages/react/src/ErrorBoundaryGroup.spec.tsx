@@ -15,7 +15,9 @@ describe('<ErrorBoundaryGroup/>', () => {
   it('should reset all ErrorBoundaries in children', async () => {
     render(
       <ErrorBoundaryGroup>
-        <ErrorBoundaryGroup.Reset trigger={(group) => <button onClick={group.reset}>{resetButtonText}</button>} />
+        <ErrorBoundaryGroup.Consumer>
+          {(group) => <button onClick={group.reset}>{resetButtonText}</button>}
+        </ErrorBoundaryGroup.Consumer>
         {Array.from({ length: innerErrorBoundaryCount }).map((_, key) => (
           <ErrorBoundary key={key} fallback={(props) => <div>{props.error.message}</div>}>
             <ThrowError message={ERROR_MESSAGE} after={ms('0.1s')}>
@@ -38,7 +40,9 @@ describe('<ErrorBoundaryGroup/>', () => {
   it('should reset all ErrorBoundaries in children even if it is nested, but if use blockOutside, can block reset by outside', async () => {
     render(
       <ErrorBoundaryGroup>
-        <ErrorBoundaryGroup.Reset trigger={(group) => <button onClick={group.reset}>{resetButtonText}</button>} />
+        <ErrorBoundaryGroup.Consumer>
+          {(group) => <button onClick={group.reset}>{resetButtonText}</button>}
+        </ErrorBoundaryGroup.Consumer>
         {Array.from({ length: innerErrorBoundaryCount }).map((_, index) => (
           <ErrorBoundaryGroup key={index} blockOutside={index === innerErrorBoundaryCount - 1}>
             <ErrorBoundary fallback={(props) => <div>{props.error.message}</div>}>

@@ -29,34 +29,48 @@ export interface ErrorBoundaryGroupProps extends PropsWithChildren {
  * ErrorBoundaryGroup is Component to manage multiple ErrorBoundaries
  * @see {@link https://suspensive.org/docs/react/ErrorBoundaryGroup}
  */
-export const ErrorBoundaryGroup = ({ blockOutside = false, children }: ErrorBoundaryGroupProps) => {
-  const [resetKey, reset] = useReducer(increase, 0)
-  const parentGroup = useContext(ErrorBoundaryGroupContext)
-  const isParentGroupResetKeyChanged = useIsChanged(parentGroup?.resetKey)
+export const ErrorBoundaryGroup = Object.assign(
+  (() => {
+    const ErrorBoundaryGroup = ({ blockOutside = false, children }: ErrorBoundaryGroupProps) => {
+      const [resetKey, reset] = useReducer(increase, 0)
+      const parentGroup = useContext(ErrorBoundaryGroupContext)
+      const isParentGroupResetKeyChanged = useIsChanged(parentGroup?.resetKey)
 
-  useEffect(() => {
-    if (!blockOutside && isParentGroupResetKeyChanged) {
-      reset()
+      useEffect(() => {
+        if (!blockOutside && isParentGroupResetKeyChanged) {
+          reset()
+        }
+      }, [isParentGroupResetKeyChanged, blockOutside])
+
+      const value = useMemo(() => ({ reset, resetKey }), [resetKey])
+
+      return <ErrorBoundaryGroupContext.Provider value={value}>{children}</ErrorBoundaryGroupContext.Provider>
     }
-  }, [isParentGroupResetKeyChanged, blockOutside])
+    if (process.env.NODE_ENV !== 'production') {
+      ErrorBoundaryGroup.displayName = 'ErrorBoundaryGroup'
+    }
 
-  const value = useMemo(() => ({ reset, resetKey }), [resetKey])
-
-  return <ErrorBoundaryGroupContext.Provider value={value}>{children}</ErrorBoundaryGroupContext.Provider>
-}
-if (process.env.NODE_ENV !== 'production') {
-  ErrorBoundaryGroup.displayName = 'ErrorBoundaryGroup'
-}
-
-const ErrorBoundaryGroupReset = ({
-  trigger,
-}: {
-  /**
-   * When you want to reset multiple ErrorBoundaries as children of ErrorBoundaryGroup, You can combine any other components with this trigger's reset
-   */
-  trigger: (errorBoundaryGroup: ReturnType<typeof useErrorBoundaryGroup>) => ReactNode
-}) => trigger(useErrorBoundaryGroup())
-ErrorBoundaryGroup.Reset = ErrorBoundaryGroupReset
+    return ErrorBoundaryGroup
+  })(),
+  {
+    /**
+     * @deprecated Use ErrorBoundaryGroup.Consumer
+     */
+    Reset: ({
+      trigger,
+    }: {
+      /**
+       * When you want to reset multiple ErrorBoundaries as children of ErrorBoundaryGroup, You can combine any other components with this trigger's reset
+       */
+      trigger: (errorBoundaryGroup: ReturnType<typeof useErrorBoundaryGroup>) => ReactNode
+    }) => trigger(useErrorBoundaryGroup()),
+    Consumer: ({
+      children,
+    }: {
+      children: (errorBoundaryGroup: ReturnType<typeof useErrorBoundaryGroup>) => ReactNode
+    }) => children(useErrorBoundaryGroup()),
+  }
+)
 
 export const useErrorBoundaryGroup = () => {
   const group = useContext(ErrorBoundaryGroupContext)
