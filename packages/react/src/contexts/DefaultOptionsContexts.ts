@@ -5,7 +5,7 @@ import type { OmitKeyOf } from '../utility-types'
 export const DelayDefaultPropsContext = createContext<OmitKeyOf<DelayProps, 'children'>>({
   ms: undefined,
 })
-if (process.env.NODE_ENV !== 'production') {
+if (process.env.NODE_ENV === 'development') {
   DelayDefaultPropsContext.displayName = 'DelayDefaultPropsContext'
 }
 
@@ -13,6 +13,6 @@ export const SuspenseDefaultPropsContext = createContext<OmitKeyOf<SuspenseProps
   fallback: undefined,
   clientOnly: undefined,
 })
-if (process.env.NODE_ENV !== 'production') {
+if (process.env.NODE_ENV === 'development') {
   SuspenseDefaultPropsContext.displayName = 'SuspenseDefaultPropsContext'
 }

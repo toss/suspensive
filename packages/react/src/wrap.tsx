@@ -51,7 +51,7 @@ class WrapWithoutCSROnly {
         <Component {...props} />
       )
 
-    if (process.env.NODE_ENV !== 'production') {
+    if (process.env.NODE_ENV === 'development') {
       WrappedComponent.displayName = this.wrappers.reduce(
         (acc, [WrapperComponent]) => `with${WrapperComponent.displayName}(${acc})`,
         Component.displayName || Component.name || 'Component'
@@ -155,7 +155,7 @@ export const withAsyncBoundary = Object.assign(
       </AsyncBoundary>
     )
 
-    if (process.env.NODE_ENV !== 'production') {
+    if (process.env.NODE_ENV === 'development') {
       const name = Component.displayName || Component.name || 'Component'
       Wrapped.displayName = `withAsyncBoundary(${name})`
     }
@@ -176,7 +176,7 @@ export const withAsyncBoundary = Object.assign(
         </AsyncBoundary>
       )
 
-      if (process.env.NODE_ENV !== 'production') {
+      if (process.env.NODE_ENV === 'development') {
         const name = Component.displayName || Component.name || 'Component'
         Wrapped.displayName = `withAsyncBoundary.CSROnly(${name})`
       }

@@ -5,10 +5,10 @@ export default defineConfig({
   test: {
     name: packageJsonName(),
     dir: './src',
-    exclude: ['**/*.production.*'],
+    include: ['**/*.production.*'],
     environment: 'jsdom',
     globals: true,
-    setupFiles: './vitest.setup.ts',
+    setupFiles: './vitest-production.setup.ts',
     coverage: {
       provider: 'istanbul',
     },
