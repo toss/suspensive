@@ -13,7 +13,7 @@ export default wrap.ErrorBoundaryGroup({}).on(function Page() {
   return (
     <Area title="ErrorBoundaryGroup">
       <div className="text-right">
-        <ErrorBoundaryGroup.Reset trigger={(group) => <Button onClick={group.reset}>↻</Button>} />
+        <ErrorBoundaryGroup.Consumer>{(group) => <Button onClick={group.reset}>↻</Button>}</ErrorBoundaryGroup.Consumer>
       </div>
       <Area title="QueryErrorResetBoundary + ErrorBoundary + Suspense">
         <ErrorBoundary onReset={queryErrorResetBoundary.reset} fallback={RejectedFallback}>

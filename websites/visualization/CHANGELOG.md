@@ -21,6 +21,15 @@
   - @suspensive/react-await@0.0.16-beta.0
   - @suspensive/react-image@0.0.10-beta.0
 
+## 0.0.24
+
+### Patch Changes
+
+- Updated dependencies [37f5465]
+  - @suspensive/react@1.25.1
+  - @suspensive/react-await@0.0.15
+  - @suspensive/react-query@1.25.1
+
 ## 0.0.23
 
 ### Patch Changes

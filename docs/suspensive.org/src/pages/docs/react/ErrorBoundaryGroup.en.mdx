@@ -4,20 +4,24 @@ import { Callout } from '@/components'
 
 This is a component for managing multiple `<ErrorBoundary/>`s easily.
 
-`<ErrorBoundary/>`s as children of nested `<ErrorBoundaryGroup/>` will also be reset by parent `<ErrorBoundaryGroup.Reset/>`.
+`<ErrorBoundary/>`s as children of nested `<ErrorBoundaryGroup/>` will also be reset by parent `<ErrorBoundaryGroup.Consumer/>`.
 
-```tsx /ErrorBoundaryGroup/
+```jsx /ErrorBoundaryGroup/
 import { ErrorBoundaryGroup, ErrorBoundary } from '@suspensive/react'
 
 const Example = () => (
   <ErrorBoundaryGroup>
     {/* Resets all ErrorBoundaries that are children of ErrorBoundaryGroup. All ErrorBoundaries within nested ErrorBoundaryGroups are also reset. */}
-    <ErrorBoundaryGroup.Reset trigger={(group) => <button onClick={group.reset}>Try again</button>} />
+    <ErrorBoundaryGroup.Consumer>
+      {(group) => <button onClick={group.reset}>Try again</button>}
+    </ErrorBoundaryGroup.Consumer>
     <ErrorBoundary fallback={(props) => <>{props.error}</>}>
       <CanThrowError />
     </ErrorBoundary>
     <ErrorBoundaryGroup>
-      <ErrorBoundaryGroup.Reset trigger={(group) => <button onClick={group.reset}>Try again</button>} />
+      <ErrorBoundaryGroup.Consumer>
+        {(group) => <button onClick={group.reset}>Try again</button>}
+      </ErrorBoundaryGroup.Consumer>
       <ErrorBoundary fallback={(props) => <>{props.error}</>}>
         <CanThrowError />
       </ErrorBoundary>
@@ -30,18 +34,22 @@ const Example = () => (
 
 If you want to block resetting nested `<ErrorBoundaryGroup/>` by parent `<ErrorBoundaryGroup/>`, Use blockOutside.
 
-```tsx /blockOutside/
+```jsx /blockOutside/
 import { ErrorBoundaryGroup, ErrorBoundary } from '@suspensive/react'
 
 const Example = () => (
   <ErrorBoundaryGroup>
-    <ErrorBoundaryGroup.Reset trigger={(group) => <button onClick={group.reset}>Try again</button>} />
+    <ErrorBoundaryGroup.Consumer>
+      {(group) => <button onClick={group.reset}>Try again</button>}
+    </ErrorBoundaryGroup.Consumer>
     <ErrorBoundary fallback={(props) => <>{props.error}</>}>
       <CanThrowError />
     </ErrorBoundary>
     {/* blockOutside prop prevents reset by the parent ErrorBoundaryGroup*/}
     <ErrorBoundaryGroup blockOutside>
-      <ErrorBoundaryGroup.Reset trigger={(group) => <button onClick={group.reset}>Try again</button>} />
+      <ErrorBoundaryGroup.Consumer>
+        {(group) => <button onClick={group.reset}>Try again</button>}
+      </ErrorBoundaryGroup.Consumer>
       <ErrorBoundary fallback={(props) => <>{props.error}</>}>
         <CanThrowError />
       </ErrorBoundary>
