@@ -1,5 +1,11 @@
 # @suspensive/react-await
 
+## 0.0.16
+
+### Patch Changes
+
+- a6d279e: fix(\*): add use-sync-external-store
+
 ## 0.0.15
 
 ### Patch Changes
