@@ -13,7 +13,7 @@ export interface DelayProps extends PropsWithChildren {
 }
 
 export const Delay = (props: DelayProps) => {
-  if (process.env.NODE_ENV !== 'production') {
+  if (process.env.NODE_ENV === 'development') {
     if (typeof props.ms === 'number') {
       AssertionError.assert(props.ms >= 0, DelayMsPropShouldBeGreaterThanOrEqualTo0)
     }
@@ -27,6 +27,6 @@ export const Delay = (props: DelayProps) => {
   const fallback = typeof props.fallback === 'undefined' ? defaultProps.fallback : props.fallback
   return isDelaying ? fallback : props.children
 }
-if (process.env.NODE_ENV !== 'production') {
+if (process.env.NODE_ENV === 'development') {
   Delay.displayName = 'Delay'
 }

@@ -13,7 +13,7 @@ import { increase } from './utils'
 import { useErrorBoundaryGroup_this_hook_should_be_called_in_ErrorBoundary_props_children } from './utils/assert'
 
 export const ErrorBoundaryGroupContext = createContext<{ reset: () => void; resetKey: number } | undefined>(undefined)
-if (process.env.NODE_ENV !== 'production') {
+if (process.env.NODE_ENV === 'development') {
   ErrorBoundaryGroupContext.displayName = 'ErrorBoundaryGroupContext'
 }
 
@@ -46,7 +46,7 @@ export const ErrorBoundaryGroup = Object.assign(
 
       return <ErrorBoundaryGroupContext.Provider value={value}>{children}</ErrorBoundaryGroupContext.Provider>
     }
-    if (process.env.NODE_ENV !== 'production') {
+    if (process.env.NODE_ENV === 'development') {
       ErrorBoundaryGroup.displayName = 'ErrorBoundaryGroup'
     }
 
