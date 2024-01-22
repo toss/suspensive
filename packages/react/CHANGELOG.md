@@ -1,5 +1,11 @@
 # @suspensive/react
 
+## 2.0.0-beta.2
+
+### Major Changes
+
+- 6a3f6f4: feat(react): remove ErrorBoundaryGroup.Reset
+
 ## 2.0.0-beta.1
 
 ## 2.0.0-beta.0

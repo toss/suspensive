@@ -1,5 +1,12 @@
 # @suspensive/react-query
 
+## 2.0.0-beta.2
+
+### Patch Changes
+
+- Updated dependencies [6a3f6f4]
+  - @suspensive/react@2.0.0-beta.2
+
 ## 2.0.0-beta.1
 
 ### Major Changes
