@@ -1,5 +1,11 @@
 # @suspensive/react
 
+## 1.25.1
+
+### Patch Changes
+
+- 37f5465: feat(react): add ErrorBoundary.Consumer, ErrorBoundaryGroup.Consumer
+
 ## 1.25.0
 
 ### Minor Changes
