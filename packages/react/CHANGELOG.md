@@ -1,5 +1,11 @@
 # @suspensive/react
 
+## 1.25.2
+
+### Patch Changes
+
+- a6d279e: fix(\*): add use-sync-external-store
+
 ## 1.25.1
 
 ### Patch Changes

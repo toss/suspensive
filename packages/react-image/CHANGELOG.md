@@ -1,5 +1,11 @@
 # @suspensive/react-image
 
+## 0.0.10
+
+### Patch Changes
+
+- a6d279e: fix(\*): add use-sync-external-store
+
 ## 0.0.9
 
 ### Patch Changes
