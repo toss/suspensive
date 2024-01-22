@@ -24,6 +24,13 @@
 - Updated dependencies [837ed18]
   - @suspensive/react@2.0.0-beta.0
 
+## 1.25.2
+
+### Patch Changes
+
+- Updated dependencies [a6d279e]
+  - @suspensive/react@1.25.2
+
 ## 1.25.1
 
 ### Patch Changes

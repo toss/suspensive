@@ -1,10 +1,5 @@
 import { type ContextType, type PropsWithChildren, useMemo } from 'react'
-import {
-  DelayDefaultPropsContext,
-  SuspenseDefaultPropsContext,
-  SuspensiveDevMode,
-  SuspensiveDevModeContext,
-} from './contexts'
+import { DelayDefaultPropsContext, DevModeContext, SuspenseDefaultPropsContext, SuspensiveDevMode } from './contexts'
 import { assert } from './utils'
 import { SuspensiveConfigDefaultPropsDelayMsShouldBeGreaterThan0 } from './utils/assert'
 
@@ -33,12 +28,12 @@ export const SuspensiveProvider = ({ value, children }: SuspensiveProviderProps)
   const suspenseDefaultProps = useMemo(() => value.defaultProps?.suspense || {}, [value.defaultProps?.suspense])
 
   return (
-    <SuspensiveDevModeContext.Provider value={value.devMode}>
+    <DevModeContext.Provider value={value.devMode}>
       <DelayDefaultPropsContext.Provider value={delayDefaultProps}>
         <SuspenseDefaultPropsContext.Provider value={suspenseDefaultProps}>
           {children}
         </SuspenseDefaultPropsContext.Provider>
       </DelayDefaultPropsContext.Provider>
-    </SuspensiveDevModeContext.Provider>
+    </DevModeContext.Provider>
   )
 }

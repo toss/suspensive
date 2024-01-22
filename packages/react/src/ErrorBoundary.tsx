@@ -12,7 +12,7 @@ import {
   useRef,
   useState,
 } from 'react'
-import { useDevModeObserve } from './contexts'
+import { syncDevMode } from './contexts'
 import { Delay } from './Delay'
 import { ErrorBoundaryGroupContext } from './ErrorBoundaryGroup'
 import type { ConstructorType, PropsWithDevMode } from './utility-types'
@@ -69,7 +69,7 @@ export type ErrorBoundaryProps = PropsWithDevMode<
      */
     shouldCatch?: ShouldCatch | [ShouldCatch, ...ShouldCatch[]]
   }>,
-  ErrorBoundaryDevModeOptions
+  ErrorBoundaryDevModeProp
 >
 
 type ErrorBoundaryState<TError extends Error = Error> =
@@ -118,7 +118,7 @@ class BaseErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState
         throw error
       }
       if (typeof fallback === 'undefined') {
-        if (process.env.NODE_ENV !== 'production') {
+        if (process.env.NODE_ENV === 'development') {
           console.error('ErrorBoundary of @suspensive/react requires a defined fallback')
         }
         throw error
@@ -164,12 +164,13 @@ export const ErrorBoundary = Object.assign(
             ref={baseErrorBoundaryRef}
           >
             {children}
-            {process.env.NODE_ENV !== 'production' && devMode && <ErrorBoundaryDevMode {...devMode} />}
+            <ErrorBoundaryDevMode {...devMode} />
           </BaseErrorBoundary>
         )
       }
     )
-    if (process.env.NODE_ENV !== 'production') {
+
+    if (process.env.NODE_ENV === 'development') {
       ErrorBoundary.displayName = 'ErrorBoundary'
     }
 
@@ -182,7 +183,7 @@ export const ErrorBoundary = Object.assign(
 )
 
 const ErrorBoundaryContext = createContext<({ reset: () => void } & ErrorBoundaryState) | null>(null)
-if (process.env.NODE_ENV !== 'production') {
+if (process.env.NODE_ENV === 'development') {
   ErrorBoundaryContext.displayName = 'ErrorBoundaryContext'
 }
 
@@ -228,7 +229,7 @@ export const useErrorBoundaryFallbackProps = <TError extends Error = Error>(): E
 /**
  * @experimental This is experimental feature.
  */
-type ErrorBoundaryDevModeOptions = {
+type ErrorBoundaryDevModeProp = {
   /**
    * @experimental This is experimental feature.
    */
@@ -245,13 +246,11 @@ type ErrorBoundaryDevModeOptions = {
         after?: number
       }
 }
-const ErrorBoundaryDevMode = ({ showFallback = false }: ErrorBoundaryDevModeOptions) => {
-  const devMode = useDevModeObserve()
-  if (devMode?.is && showFallback) {
+const ErrorBoundaryDevMode = syncDevMode<ErrorBoundaryDevModeProp>(({ devMode, showFallback = false }) => {
+  if (devMode.is && showFallback) {
     if (showFallback === true) {
       showFallback = devModeDefaultErrorBoundaryShowFallback
     }
-
     return (
       <Delay ms={showFallback.after ?? devModeDefaultErrorBoundaryShowFallback.after}>
         <SetError errorMessage={showFallback.errorMessage ?? devModeDefaultErrorBoundaryShowFallback.errorMessage} />
@@ -259,8 +258,7 @@ const ErrorBoundaryDevMode = ({ showFallback = false }: ErrorBoundaryDevModeOpti
     )
   }
   return null
-}
-
+})
 const devModeDefaultErrorBoundaryShowFallback = {
   errorMessage: `<DevMode.ErrorBoundary> set Error ErrorBoundary`,
   after: 0,

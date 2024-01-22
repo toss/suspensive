@@ -10,6 +10,12 @@
 - 78f5bd4: feat(react, react-query): remove deprecated apis
 - 837ed18: feat(\*): remove target react v16, v17
 
+## 1.25.2
+
+### Patch Changes
+
+- a6d279e: fix(\*): add use-sync-external-store
+
 ## 1.25.1
 
 ### Patch Changes

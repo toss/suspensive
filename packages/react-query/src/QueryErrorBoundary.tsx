@@ -37,6 +37,6 @@ export const QueryErrorBoundary = forwardRef<
     />
   )
 })
-if (process.env.NODE_ENV !== 'production') {
+if (process.env.NODE_ENV === 'development') {
   QueryErrorBoundary.displayName = 'QueryErrorBoundary'
 }

@@ -45,7 +45,7 @@ class Wrap {
         <Component {...props} />
       )
 
-    if (process.env.NODE_ENV !== 'production') {
+    if (process.env.NODE_ENV === 'development') {
       WrappedComponent.displayName = `wrap.${[...this.wrappers]
         .reverse()
         .map(([WrapperComponent]) => WrapperComponent.displayName)
