@@ -52,17 +52,6 @@ export const ErrorBoundaryGroup = Object.assign(
     return ErrorBoundaryGroup
   })(),
   {
-    /**
-     * @deprecated Use ErrorBoundaryGroup.Consumer
-     */
-    Reset: ({
-      trigger,
-    }: {
-      /**
-       * When you want to reset multiple ErrorBoundaries as children of ErrorBoundaryGroup, You can combine any other components with this trigger's reset
-       */
-      trigger: (errorBoundaryGroup: ReturnType<typeof useErrorBoundaryGroup>) => ReactNode
-    }) => trigger(useErrorBoundaryGroup()),
     Consumer: ({
       children,
     }: {
