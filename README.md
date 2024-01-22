@@ -58,7 +58,9 @@ import { Suspense, ErrorBoundary, ErrorBoundaryGroup, Delay } from '@suspensive/
 
 const Example = () => (
   <ErrorBoundaryGroup>
-    <ErrorBoundaryGroup.Reset trigger={(group) => <button onClick={group.reset}>Reset All</button>} />
+    <ErrorBoundaryGroup.Consumer>
+      {(group) => <Button onClick={group.reset}>Reset All</Button>}
+    </ErrorBoundaryGroup.Consumer>
     <ErrorBoundary
       fallback={(props) => (
         <>
