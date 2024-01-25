@@ -1,5 +1,5 @@
 {
   "packages": ["packages/**"],
-  "sandboxes": ["websites/visualization"],
+  "sandboxes": ["websites/visualization", "examples/next-streaming-react-query"],
   "node": "18"
 }

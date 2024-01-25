@@ -15,12 +15,6 @@
   "license": "MIT",
   "packageManager": "pnpm@8.13.1",
   "type": "module",
-  "workspaces": [
-    "configs/*",
-    "docs/*",
-    "packages/*",
-    "websites/*"
-  ],
   "scripts": {
     "build": "turbo run build",
     "build:watch": "turbo run build:watch --parallel",
@@ -36,16 +30,16 @@
     "graph": "rimraf ./graph && mkdir graph && turbo run build --graph=graph/index.html",
     "lint": "turbo run lint",
     "lint:attw": "turbo run lint:attw",
-    "lint:monorepo": "sherif",
+    "lint:monorepo": "sherif --ignore-package \"./examples/*\"",
     "lint:pack": "packlint sort -R",
     "lint:pub": "turbo run lint:pub",
     "preinstall": "corepack enable",
     "prepack": "turbo run prepack",
     "prepare": "husky install",
     "test": "turbo run test",
-    "test:watch": "turbo run test:watch --parallel",
     "test:production": "turbo run test:production",
     "test:production:watch": "turbo run test:production:watch --parallel",
+    "test:watch": "turbo run test:watch --parallel",
     "type:check": "turbo run type:check"
   },
   "devDependencies": {
