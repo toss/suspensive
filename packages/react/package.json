@@ -1,6 +1,6 @@
 {
   "name": "@suspensive/react",
-  "version": "1.25.2",
+  "version": "1.25.3",
   "description": "Useful interfaces for React Suspense",
   "keywords": [
     "suspensive",
@@ -53,9 +53,9 @@
     "lint:pub": "publint --strict",
     "prepack": "pnpm build",
     "test": "vitest run --coverage --typecheck",
-    "test:watch": "vitest --ui --coverage --typecheck",
     "test:production": "vitest run --config ./vitest-production.config.ts",
     "test:production:watch": "vitest --config ./vitest-production.config.ts --ui",
+    "test:watch": "vitest --ui --coverage --typecheck",
     "type:check": "tsc --noEmit"
   },
   "dependencies": {
