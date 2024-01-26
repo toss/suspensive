@@ -241,9 +241,6 @@ importers:
       '@suspensive/react':
         specifier: workspace:*
         version: link:../../packages/react
-      '@tanstack/query-core':
-        specifier: ^5.17.19
-        version: 5.17.19
       '@tanstack/react-query':
         specifier: ^5.17.19
         version: 5.17.19(react@18.2.0)
