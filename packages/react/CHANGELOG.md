@@ -16,6 +16,12 @@
 - 78f5bd4: feat(react, react-query): remove deprecated apis
 - 837ed18: feat(\*): remove target react v16, v17
 
+## 1.25.3
+
+### Patch Changes
+
+- af96ce0: fix(react): add getServerSnapshot in for syncDevMode in SSR environment
+
 ## 1.25.2
 
 ### Patch Changes

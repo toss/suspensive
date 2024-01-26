@@ -21,7 +21,11 @@ export const syncDevMode: SyncDevMode =
         Component: ComponentType<TProps & { devMode: SuspensiveDevMode }>
       ) => {
         const Wrapped = (props: TProps & { devMode: SuspensiveDevMode }) => {
-          useSyncExternalStore(props.devMode.subscribe, () => props.devMode.is)
+          useSyncExternalStore(
+            props.devMode.subscribe,
+            () => props.devMode.is,
+            () => props.devMode.is
+          )
           return createElement(Component, props)
         }
         const WrappedWrapped = (props: TProps) => {
