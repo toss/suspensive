@@ -10,7 +10,6 @@
   },
   "dependencies": {
     "@suspensive/react": "workspace:*",
-    "@tanstack/query-core": "^5.17.19",
     "@tanstack/react-query": "^5.17.19",
     "@tanstack/react-query-devtools": "^5.17.19",
     "@tanstack/react-query-next-experimental": "^5.17.19",
