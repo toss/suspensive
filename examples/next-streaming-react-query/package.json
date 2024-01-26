@@ -15,7 +15,7 @@
     "@tanstack/react-query-devtools": "^5.17.19",
     "@tanstack/react-query-next-experimental": "^5.17.19",
     "axios": "^1.6.5",
-    "next": "14.0.3",
+    "next": "^14.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "tailwindcss": "^3.4.1"

@@ -3,6 +3,7 @@
 import { useQueryClient } from '@tanstack/react-query'
 import React, { Suspense } from 'react'
 import { Text } from './components/Text'
+import { Text2 } from './components/Text2'
 import { query } from '~/query'
 import { SuspenseQuery } from '~/react-query'
 
@@ -83,13 +84,13 @@ export const PageClientComponent = () => {
       {/* Need to proposal */}
       <ul>
         <Suspense fallback="loading...">
-          <SuspenseQuery {...query.text(1100)}>{({ data }) => <li>{data}</li>}</SuspenseQuery>
+          <SuspenseQuery {...query.text(1100)}>{({ data }) => <Text2>{data}</Text2>}</SuspenseQuery>
         </Suspense>
         <Suspense fallback="loading...">
-          <SuspenseQuery {...query.text(1200)}>{({ data }) => <li>{data}</li>}</SuspenseQuery>
+          <SuspenseQuery {...query.text(1200)}>{({ data }) => <Text2>{data}</Text2>}</SuspenseQuery>
         </Suspense>
         <Suspense fallback="loading...">
-          <SuspenseQuery {...query.text(1300)}>{({ data }) => <li>{data}</li>}</SuspenseQuery>
+          <SuspenseQuery {...query.text(1300)}>{({ data }) => <Text2>{data}</Text2>}</SuspenseQuery>
         </Suspense>
       </ul>
     </>

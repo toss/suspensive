@@ -1,5 +1,4 @@
 import { queryOptions } from '@tanstack/react-query'
-import axios from 'axios'
 
 const baseURL = (() => {
   if (typeof window !== 'undefined') return ''
@@ -7,15 +6,16 @@ const baseURL = (() => {
   return 'http://localhost:4100'
 })()
 
-const http = axios.create({ baseURL })
-
 export const query = {
   text: <TMs extends number>(ms: TMs) =>
     queryOptions({
       queryKey: ['query.text', ms],
       queryFn: () =>
-        http
-          .get<`${ReturnType<Date['toISOString']>} success to get text waited after ${TMs}ms`>(`/api/text?wait=${ms}`)
-          .then(({ data }) => data),
+        fetch(`${baseURL}/api/text?wait=${ms}`, {
+          cache: 'no-store',
+        }).then(
+          (res) =>
+            res.json() as unknown as `${ReturnType<Date['toISOString']>} success to get text waited after ${TMs}ms`
+        ),
     }),
 }
