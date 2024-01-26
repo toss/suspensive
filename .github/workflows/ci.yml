@@ -9,6 +9,7 @@ on:
 env:
   TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
   TURBO_TEAM: ${{ vars.TURBO_TEAM }}
+  NEXT_PUBLIC_STREAMING_HTML_URL: ${{ vars.NEXT_PUBLIC_STREAMING_HTML_URL }}
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
