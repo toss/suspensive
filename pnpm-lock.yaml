@@ -239,7 +239,7 @@ importers:
   examples/next-streaming-react-query:
     dependencies:
       '@suspensive/react':
-        specifier: 1.25.2
+        specifier: workspace:*
         version: link:../../packages/react
       '@tanstack/react-query':
         specifier: ^5.17.19
