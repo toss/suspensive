@@ -1,5 +1,6 @@
 'use client'
 
+import { Suspensive, SuspensiveProvider } from '@suspensive/react'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { ReactQueryStreamedHydration } from '@tanstack/react-query-next-experimental'
@@ -16,11 +17,21 @@ export function Providers(props: { children: ReactNode }) {
         },
       })
   )
+  const [suspensive] = useState(
+    () =>
+      new Suspensive({
+        defaultOptions: {
+          suspense: { fallback: <div>loading...</div> },
+        },
+      })
+  )
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <ReactQueryStreamedHydration>{props.children}</ReactQueryStreamedHydration>
-      <ReactQueryDevtools initialIsOpen={false} />
-    </QueryClientProvider>
+    <SuspensiveProvider value={suspensive}>
+      <QueryClientProvider client={queryClient}>
+        <ReactQueryStreamedHydration>{props.children}</ReactQueryStreamedHydration>
+        <ReactQueryDevtools initialIsOpen={false} />
+      </QueryClientProvider>
+    </SuspensiveProvider>
   )
 }
