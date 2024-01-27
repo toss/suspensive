@@ -1,5 +1,11 @@
 # @suspensive/react
 
+## 2.0.0-beta.3
+
+### Major Changes
+
+- [#629](https://github.com/suspensive/react/pull/629) [`73c0cc7`](https://github.com/suspensive/react/commit/73c0cc714aa4f1fe611bfb118050114dc6648926) Thanks [@manudeli](https://github.com/manudeli)! - fix(react): add getServerSnapShot in syncDevMode
+
 ## 2.0.0-beta.2
 
 ### Major Changes
