@@ -20,7 +20,7 @@ export function Providers(props: { children: ReactNode }) {
   const [suspensive] = useState(
     () =>
       new Suspensive({
-        defaultOptions: {
+        defaultProps: {
           suspense: { fallback: <div>loading...</div> },
         },
       })
