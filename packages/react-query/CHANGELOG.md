@@ -1,5 +1,12 @@
 # @suspensive/react-query
 
+## 2.0.0-beta.3
+
+### Patch Changes
+
+- Updated dependencies [[`73c0cc7`](https://github.com/suspensive/react/commit/73c0cc714aa4f1fe611bfb118050114dc6648926)]:
+  - @suspensive/react@2.0.0-beta.3
+
 ## 2.0.0-beta.2
 
 ### Patch Changes
