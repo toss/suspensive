@@ -1,8 +1,9 @@
 {
   "$schema": "https://unpkg.com/@changesets/config@2.3.0/schema.json",
-  "changelog": "@changesets/cli/changelog",
+  "changelog": ["@changesets/changelog-github", { "repo": "suspensive/react" }],
   "commit": false,
   "fixed": [["@suspensive/react", "@suspensive/react-query"]],
+  "ignore": ["@suspensive/next-streaming-react-query", "@suspensive/visualization"],
   "linked": [],
   "access": "restricted",
   "baseBranch": "main",
