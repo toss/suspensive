@@ -23,18 +23,6 @@ importers:
       '@commitlint/config-conventional':
         specifier: ^18.5.0
         version: 18.5.0
-      '@suspensive/eslint-config':
-        specifier: workspace:*
-        version: link:configs/eslint-config
-      '@suspensive/eslint-config-js':
-        specifier: workspace:*
-        version: link:configs/eslint-config-js
-      '@suspensive/eslint-config-ts':
-        specifier: workspace:*
-        version: link:configs/eslint-config-ts
-      '@suspensive/tsconfig':
-        specifier: workspace:*
-        version: link:configs/tsconfig
       '@testing-library/dom':
         specifier: ^9.3.4
         version: 9.3.4
@@ -182,6 +170,12 @@ importers:
 
   configs/test-utils:
     devDependencies:
+      '@suspensive/eslint-config':
+        specifier: workspace:*
+        version: link:../eslint-config
+      '@suspensive/tsconfig':
+        specifier: workspace:*
+        version: link:../tsconfig
       '@suspensive/tsup':
         specifier: workspace:*
         version: link:../tsup
@@ -194,7 +188,14 @@ importers:
 
   configs/tsconfig: {}
 
-  configs/tsup: {}
+  configs/tsup:
+    devDependencies:
+      '@suspensive/eslint-config-ts':
+        specifier: workspace:*
+        version: link:../eslint-config-ts
+      '@suspensive/tsconfig':
+        specifier: workspace:*
+        version: link:../tsconfig
 
   docs/suspensive.org:
     dependencies:
@@ -217,6 +218,12 @@ importers:
       '@next/eslint-plugin-next':
         specifier: ^14.1.0
         version: 14.1.0
+      '@suspensive/eslint-config':
+        specifier: workspace:*
+        version: link:../../configs/eslint-config
+      '@suspensive/tsconfig':
+        specifier: workspace:*
+        version: link:../../configs/tsconfig
       '@types/react':
         specifier: ^18.2.48
         version: 18.2.48
@@ -266,6 +273,12 @@ importers:
       '@next/eslint-plugin-next':
         specifier: ^14.1.0
         version: 14.1.0
+      '@suspensive/eslint-config':
+        specifier: workspace:*
+        version: link:../../configs/eslint-config
+      '@suspensive/tsconfig':
+        specifier: workspace:*
+        version: link:../../configs/tsconfig
       '@types/react':
         specifier: ^18.2.48
         version: 18.2.48
@@ -285,9 +298,15 @@ importers:
         specifier: ^1.2.0
         version: 1.2.0(react@18.2.0)
     devDependencies:
+      '@suspensive/eslint-config':
+        specifier: workspace:*
+        version: link:../../configs/eslint-config
       '@suspensive/test-utils':
         specifier: workspace:*
         version: link:../../configs/test-utils
+      '@suspensive/tsconfig':
+        specifier: workspace:*
+        version: link:../../configs/tsconfig
       '@suspensive/tsup':
         specifier: workspace:*
         version: link:../../configs/tsup
@@ -309,12 +328,18 @@ importers:
 
   packages/react-await:
     devDependencies:
+      '@suspensive/eslint-config':
+        specifier: workspace:*
+        version: link:../../configs/eslint-config
       '@suspensive/react':
         specifier: workspace:*
         version: link:../react
       '@suspensive/test-utils':
         specifier: workspace:*
         version: link:../../configs/test-utils
+      '@suspensive/tsconfig':
+        specifier: workspace:*
+        version: link:../../configs/tsconfig
       '@suspensive/tsup':
         specifier: workspace:*
         version: link:../../configs/tsup
@@ -333,9 +358,15 @@ importers:
 
   packages/react-image:
     devDependencies:
+      '@suspensive/eslint-config':
+        specifier: workspace:*
+        version: link:../../configs/eslint-config
       '@suspensive/test-utils':
         specifier: workspace:*
         version: link:../../configs/test-utils
+      '@suspensive/tsconfig':
+        specifier: workspace:*
+        version: link:../../configs/tsconfig
       '@suspensive/tsup':
         specifier: workspace:*
         version: link:../../configs/tsup
@@ -354,12 +385,18 @@ importers:
 
   packages/react-query:
     devDependencies:
+      '@suspensive/eslint-config':
+        specifier: workspace:*
+        version: link:../../configs/eslint-config
       '@suspensive/react':
         specifier: workspace:*
         version: link:../react
       '@suspensive/test-utils':
         specifier: workspace:*
         version: link:../../configs/test-utils
+      '@suspensive/tsconfig':
+        specifier: workspace:*
+        version: link:../../configs/tsconfig
       '@suspensive/tsup':
         specifier: workspace:*
         version: link:../../configs/tsup
@@ -418,6 +455,12 @@ importers:
       '@next/eslint-plugin-next':
         specifier: ^14.1.0
         version: 14.1.0
+      '@suspensive/eslint-config':
+        specifier: workspace:*
+        version: link:../../configs/eslint-config
+      '@suspensive/tsconfig':
+        specifier: workspace:*
+        version: link:../../configs/tsconfig
       '@types/react':
         specifier: ^18.2.48
         version: 18.2.48
