@@ -16,13 +16,15 @@
     "@suspensive/react-image": "0.0.9",
     "@suspensive/react-query": "1.25.0",
     "@suspensive/visualization": "0.0.23",
-    "@suspensive/suspensive.org": "0.0.0-development"
+    "@suspensive/suspensive.org": "0.0.0-development",
+    "@suspensive/next-streaming-react-query": "0.0.0"
   },
   "changesets": [
     "brown-tips-shout",
     "clean-singers-know",
     "eight-peas-hear",
     "four-kings-dream",
+    "serious-islands-teach",
     "swift-moons-help"
   ]
 }
