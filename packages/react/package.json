@@ -62,7 +62,6 @@
     "use-sync-external-store": "^1.2.0"
   },
   "devDependencies": {
-    "@suspensive/package-json-name": "workspace:*",
     "@suspensive/test-utils": "workspace:*",
     "@suspensive/tsup": "workspace:*",
     "@types/react": "^18.2.48",
