@@ -1,9 +1,9 @@
-import { packageJsonName } from '@suspensive/package-json-name'
 import { defineConfig } from 'vitest/config'
+import packageJson from './package.json'
 
 export default defineConfig({
   test: {
-    name: packageJsonName(),
+    name: packageJson.name,
     dir: './src',
     include: ['**/*.production.*'],
     environment: 'jsdom',
