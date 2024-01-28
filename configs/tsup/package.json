@@ -29,5 +29,9 @@
     "lint:pub": "publint --strict",
     "prepack": "pnpm build",
     "type:check": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@suspensive/eslint-config-ts": "workspace:*",
+    "@suspensive/tsconfig": "workspace:*"
   }
 }
