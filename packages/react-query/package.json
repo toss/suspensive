@@ -58,6 +58,8 @@
     "type:check": "tsc --noEmit"
   },
   "devDependencies": {
+    "@suspensive/eslint-config": "workspace:*",
+    "@suspensive/tsconfig": "workspace:*",
     "@suspensive/react": "workspace:*",
     "@suspensive/test-utils": "workspace:*",
     "@suspensive/tsup": "workspace:*",
