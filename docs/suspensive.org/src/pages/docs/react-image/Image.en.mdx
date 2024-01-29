@@ -9,12 +9,12 @@ import { Callout } from '@/components'
 </Callout>
 
 ```tsx /Image/
-import { Image } from '@suspensive/react-image'
+import { SuspenseImage } from '@suspensive/react-image'
 import { Suspense } from '@suspensive/react'
 
 const Example = () => (
   <Suspense fallback="loading...">
-    <Image src="https://placehold.co/200x100" />
+    <SuspenseImage src="https://placehold.co/200x100" />
   </Suspense>
 )
 ```
