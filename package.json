@@ -43,7 +43,7 @@
     "type:check": "turbo run type:check"
   },
   "devDependencies": {
-    "@arethetypeswrong/cli": "^0.13.5",
+    "@arethetypeswrong/cli": "^0.13.6",
     "@changesets/changelog-github": "^0.5.0",
     "@changesets/cli": "^2.27.1",
     "@commitlint/cli": "^18.5.0",
