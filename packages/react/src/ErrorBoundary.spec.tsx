@@ -9,7 +9,7 @@ import {
   useErrorBoundary,
   useErrorBoundaryFallbackProps,
 } from './ErrorBoundary'
-import { useTimeout } from './hooks/useTimeout'
+import { useTimeout } from './hooks'
 import {
   useErrorBoundaryFallbackProps_this_hook_should_be_called_in_ErrorBoundary_props_fallback,
   useErrorBoundary_this_hook_should_be_called_in_ErrorBoundary_props_children,
