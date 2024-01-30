@@ -31,20 +31,20 @@ describe('AssertionError.assert', () => {
     }
   })
 
-  type Params = { id?: string }
+  type Params = { id: string }
   const useParams = <TParams extends Record<string, string>>(resultParam?: Record<string, string>) =>
     ({
       ...resultParam,
-    }) as TParams
+    }) as Partial<TParams>
   it('should assert condition in TypeScript, JavaScript (assertion blocked case)', () => {
     render(
       <ErrorBoundary shouldCatch={AssertionError} fallback={({ error }) => <>{error.message}</>}>
         {createElement(() => {
-          const { id } = useParams<{ id?: string }>()
-          expectTypeOf(id).toEqualTypeOf<Params['id']>()
+          const { id } = useParams<Params>()
+          expectTypeOf(id).toEqualTypeOf<Partial<Params>['id']>()
           AssertionError.assert(typeof id === 'string', 'params.id must be string')
           expect(typeof id).toBe('string')
-          expectTypeOf(id).toEqualTypeOf<Required<Params>['id']>()
+          expectTypeOf(id).toEqualTypeOf<Params['id']>()
           return <>Try reaching: {id}</>
         })}
       </ErrorBoundary>
@@ -57,11 +57,11 @@ describe('AssertionError.assert', () => {
     render(
       <ErrorBoundary shouldCatch={AssertionError} fallback={({ error }) => <>{error.message}</>}>
         {createElement(() => {
-          const { id } = useParams<{ id?: string }>({ id: virtualId })
-          expectTypeOf(id).toEqualTypeOf<Params['id']>()
+          const { id } = useParams<Params>({ id: virtualId })
+          expectTypeOf(id).toEqualTypeOf<Partial<Params>['id']>()
           AssertionError.assert(typeof id === 'string', 'params.id must be string')
           expect(typeof id).toBe('string')
-          expectTypeOf(id).toEqualTypeOf<Required<Params>['id']>()
+          expectTypeOf(id).toEqualTypeOf<Params['id']>()
           return <>Try reaching: {id}</>
         })}
       </ErrorBoundary>
