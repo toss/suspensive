@@ -57,7 +57,7 @@
     "@vitest/coverage-istanbul": "^1.2.2",
     "@vitest/ui": "^1.2.2",
     "eslint": "^8.56.0",
-    "husky": "^9.0.6",
+    "husky": "^9.0.7",
     "jsdom": "^24.0.0",
     "lint-staged": "^15.2.0",
     "ms": "3.0.0-canary.1",
