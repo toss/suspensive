@@ -31,21 +31,21 @@ describe('AssertionError.assert', () => {
     }
   })
 
-  type Params = { id: string }
-  const useParams = <TParams extends Record<string, string>>(resultParam?: Record<string, string>) =>
+  type ParamKey = 'paramKey1' | 'paramKey2'
+  const useParams = <TParamKey extends string>(resultParam?: Partial<Record<TParamKey, string>>) =>
     ({
       ...resultParam,
-    }) as Partial<TParams>
+    }) as Record<TParamKey, string | null>
   it('should assert condition in TypeScript, JavaScript (assertion blocked case)', () => {
     render(
       <ErrorBoundary shouldCatch={AssertionError} fallback={({ error }) => <>{error.message}</>}>
         {createElement(() => {
-          const { id } = useParams<Params>()
-          expectTypeOf(id).toEqualTypeOf<Partial<Params>['id']>()
-          AssertionError.assert(typeof id === 'string', 'params.id must be string')
-          expect(typeof id).toBe('string')
-          expectTypeOf(id).toEqualTypeOf<Params['id']>()
-          return <>Try reaching: {id}</>
+          const params = useParams<ParamKey>()
+          expectTypeOf(params.paramKey1).toEqualTypeOf<string | null>()
+          AssertionError.assert(typeof params.paramKey1 === 'string', 'params.id must be string')
+          expect(typeof params.paramKey1).toBe('string')
+          expectTypeOf(params.paramKey1).toEqualTypeOf<string>()
+          return <>Try reaching: {params.paramKey1}</>
         })}
       </ErrorBoundary>
     )
@@ -57,12 +57,12 @@ describe('AssertionError.assert', () => {
     render(
       <ErrorBoundary shouldCatch={AssertionError} fallback={({ error }) => <>{error.message}</>}>
         {createElement(() => {
-          const { id } = useParams<Params>({ id: virtualId })
-          expectTypeOf(id).toEqualTypeOf<Partial<Params>['id']>()
-          AssertionError.assert(typeof id === 'string', 'params.id must be string')
-          expect(typeof id).toBe('string')
-          expectTypeOf(id).toEqualTypeOf<Params['id']>()
-          return <>Try reaching: {id}</>
+          const params = useParams<ParamKey>({ paramKey1: virtualId })
+          expectTypeOf(params.paramKey1).toEqualTypeOf<string | null>()
+          AssertionError.assert(typeof params.paramKey1 === 'string', 'params.id must be string')
+          expect(typeof params.paramKey1).toBe('string')
+          expectTypeOf(params.paramKey1).toEqualTypeOf<string>()
+          return <>Try reaching: {params.paramKey1}</>
         })}
       </ErrorBoundary>
     )
