@@ -24,7 +24,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <Link href="/react/DevMode">🔗 @suspensive/react - DevMode</Link>
           <Link href="/react/Delay">🔗 @suspensive/react - Delay</Link>
           <Link href="/react/ErrorBoundary/shouldCatch">🔗 @suspensive/react - ErrorBoundary shouldCatch</Link>
-          <Link href="/react/AssertionError">🔗 @suspensive/react - AssertionError</Link>
           <Link href="/react-image/SuspenseImage">🔗 @suspensive/react-image - SuspenseImage</Link>
           <Link href="/react-await/Await">🔗 @suspensive/react-await - Await</Link>
           <div className="flex flex-1 items-center justify-center">{children}</div>

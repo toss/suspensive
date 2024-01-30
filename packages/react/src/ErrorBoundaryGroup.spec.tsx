@@ -3,10 +3,12 @@ import { fireEvent, render, screen, waitFor } from '@testing-library/react'
 import ms from 'ms'
 import { createElement } from 'react'
 import { describe, expect, it } from 'vitest'
-import { AssertionError } from './AssertionError'
 import { ErrorBoundary } from './ErrorBoundary'
 import { ErrorBoundaryGroup, useErrorBoundaryGroup } from './ErrorBoundaryGroup'
-import { useErrorBoundaryGroup_this_hook_should_be_called_in_ErrorBoundary_props_children } from './utils/assert'
+import {
+  AssertionError,
+  useErrorBoundaryGroup_this_hook_should_be_called_in_ErrorBoundary_props_children,
+} from './models/AssertionError'
 
 const innerErrorBoundaryCount = 3
 const resetButtonText = 'reset button'

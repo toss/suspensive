@@ -1,3 +1,12 @@
+/** @experimental This is experimental feature. */
+export class AssertionError extends Error {
+  static assert(condition: boolean, message: string): asserts condition {
+    if (!condition) {
+      throw new AssertionError(message)
+    }
+  }
+}
+
 export const useErrorBoundary_this_hook_should_be_called_in_ErrorBoundary_props_children =
   'useErrorBoundary: this hook should be called in ErrorBoundary.props.children'
 
@@ -7,9 +16,7 @@ export const useErrorBoundaryFallbackProps_this_hook_should_be_called_in_ErrorBo
 export const useErrorBoundaryGroup_this_hook_should_be_called_in_ErrorBoundary_props_children =
   'useErrorBoundaryGroup: this hook should be called in ErrorBoundary.props.children'
 
-// Delay
-export const DelayMsPropShouldBeGreaterThanOrEqualTo0 = 'Delay: ms prop should be greater than or equal to 0'
+export const Delay_ms_prop_should_be_greater_than_or_equal_to_0 = 'Delay: ms prop should be greater than or equal to 0'
 
-// Suspensive
-export const SuspensiveConfigDefaultOptionsDelayMsShouldBeGreaterThan0 =
+export const Suspensive_config_defaultOptions_delay_ms_should_be_greater_than_0 =
   'Suspensive: config.defaultOptions.delay.ms should be greater than 0'

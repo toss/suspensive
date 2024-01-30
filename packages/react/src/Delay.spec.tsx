@@ -2,9 +2,8 @@ import { CustomError, TEXT } from '@suspensive/test-utils'
 import { render, screen, waitFor } from '@testing-library/react'
 import ms from 'ms'
 import { describe, expect, it } from 'vitest'
-import { AssertionError } from './AssertionError'
 import { Delay } from './Delay'
-import { DelayMsPropShouldBeGreaterThanOrEqualTo0 } from './utils/assert'
+import { AssertionError, Delay_ms_prop_should_be_greater_than_or_equal_to_0 } from './models/AssertionError'
 
 describe('<Delay/>', () => {
   it('should render the children after the delay', async () => {
@@ -22,7 +21,7 @@ describe('<Delay/>', () => {
     await waitFor(() => expect(screen.queryByText(TEXT)).toBeInTheDocument(), { timeout: 1000 })
   })
   it('should throw AssertionError if negative number is passed as ms prop', () => {
-    expect(() => render(<Delay ms={-1}>{TEXT}</Delay>)).toThrow(DelayMsPropShouldBeGreaterThanOrEqualTo0)
+    expect(() => render(<Delay ms={-1}>{TEXT}</Delay>)).toThrow(Delay_ms_prop_should_be_greater_than_or_equal_to_0)
     try {
       render(<Delay ms={-1}>{TEXT}</Delay>)
     } catch (error) {

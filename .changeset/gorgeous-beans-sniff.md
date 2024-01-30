@@ -1,5 +1,5 @@
 ---
-"@suspensive/react": minor
+'@suspensive/react': patch
 ---
 
-feat(react): add AssertionError
+fix(react): add AssertionError for useErrorBoundary, useErrorBoundaryFallbackProps, useErrorBoundaryGroup internally

@@ -9,11 +9,11 @@ import {
   useErrorBoundary,
   useErrorBoundaryFallbackProps,
 } from './ErrorBoundary'
-import { useTimeout } from './hooks'
+import { useTimeout } from './hooks/useTimeout'
 import {
   useErrorBoundaryFallbackProps_this_hook_should_be_called_in_ErrorBoundary_props_fallback,
   useErrorBoundary_this_hook_should_be_called_in_ErrorBoundary_props_children,
-} from './utils/assert'
+} from './models/AssertionError'
 
 describe('<ErrorBoundary/>', () => {
   beforeEach(() => ThrowError.reset())

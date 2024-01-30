@@ -7,10 +7,12 @@ import {
   useMemo,
   useReducer,
 } from 'react'
-import { AssertionError } from './AssertionError'
 import { useIsChanged } from './hooks'
+import {
+  AssertionError,
+  useErrorBoundaryGroup_this_hook_should_be_called_in_ErrorBoundary_props_children,
+} from './models/AssertionError'
 import { increase } from './utils'
-import { useErrorBoundaryGroup_this_hook_should_be_called_in_ErrorBoundary_props_children } from './utils/assert'
 
 export const ErrorBoundaryGroupContext = createContext<{ reset: () => void; resetKey: number } | undefined>(undefined)
 if (process.env.NODE_ENV === 'development') {

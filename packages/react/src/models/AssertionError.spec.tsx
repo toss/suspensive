@@ -1,8 +1,8 @@
 import { render, screen } from '@testing-library/react'
 import { createElement } from 'react'
 import { describe, expect, expectTypeOf, it } from 'vitest'
-import { AssertionError } from './AssertionError'
-import { ErrorBoundary } from '.'
+import { ErrorBoundary } from '../ErrorBoundary'
+import { AssertionError } from '../models/AssertionError'
 
 describe('AssertionError.assert', () => {
   it('should make assertion if condition is boolean', () => {

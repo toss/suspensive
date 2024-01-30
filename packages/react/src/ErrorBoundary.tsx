@@ -12,16 +12,16 @@ import {
   useRef,
   useState,
 } from 'react'
-import { AssertionError } from './AssertionError'
 import { syncDevMode } from './contexts'
 import { Delay } from './Delay'
 import { ErrorBoundaryGroupContext } from './ErrorBoundaryGroup'
-import type { ConstructorType, PropsWithDevMode } from './utility-types'
-import { hasResetKeysChanged } from './utils'
 import {
+  AssertionError,
   useErrorBoundaryFallbackProps_this_hook_should_be_called_in_ErrorBoundary_props_fallback,
   useErrorBoundary_this_hook_should_be_called_in_ErrorBoundary_props_children,
-} from './utils/assert'
+} from './models/AssertionError'
+import type { ConstructorType, PropsWithDevMode } from './utility-types'
+import { hasResetKeysChanged } from './utils'
 
 export interface ErrorBoundaryFallbackProps<TError extends Error = Error> {
   /**

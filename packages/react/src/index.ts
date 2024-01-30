@@ -13,7 +13,6 @@ export type { DelayProps } from './Delay'
 
 // experimental
 export { DevMode } from './DevMode'
-export { AssertionError } from './AssertionError'
 
 // deprecated
 export { withSuspense, withDelay, withErrorBoundary, withErrorBoundaryGroup, withAsyncBoundary } from './wrap'
