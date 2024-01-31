@@ -52,7 +52,7 @@
     "@testing-library/jest-dom": "^6.4.0",
     "@testing-library/react": "^14.1.2",
     "@testing-library/user-event": "^14.5.2",
-    "@types/node": "^18.19.10",
+    "@types/node": "^18.19.11",
     "@vitest/browser": "^1.2.2",
     "@vitest/coverage-istanbul": "^1.2.2",
     "@vitest/ui": "^1.2.2",
