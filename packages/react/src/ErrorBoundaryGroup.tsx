@@ -9,9 +9,9 @@ import {
 } from 'react'
 import { useIsChanged } from './hooks'
 import {
-  AssertionError,
+  SuspensiveError,
   useErrorBoundaryGroup_this_hook_should_be_called_in_ErrorBoundary_props_children,
-} from './models/AssertionError'
+} from './models/SuspensiveError'
 import { increase } from './utils'
 
 export const ErrorBoundaryGroupContext = createContext<{ reset: () => void; resetKey: number } | undefined>(undefined)
@@ -76,7 +76,10 @@ export const ErrorBoundaryGroup = Object.assign(
 
 export const useErrorBoundaryGroup = () => {
   const group = useContext(ErrorBoundaryGroupContext)
-  AssertionError.assert(group != null, useErrorBoundaryGroup_this_hook_should_be_called_in_ErrorBoundary_props_children)
+  SuspensiveError.assert(
+    group != null,
+    useErrorBoundaryGroup_this_hook_should_be_called_in_ErrorBoundary_props_children
+  )
   return useMemo(
     () => ({
       /**

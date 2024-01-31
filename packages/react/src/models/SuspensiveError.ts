@@ -1,8 +1,7 @@
-/** @experimental This is experimental feature. */
-export class AssertionError extends Error {
+export class SuspensiveError extends Error {
   static assert(condition: boolean, message: string): asserts condition {
     if (!condition) {
-      throw new AssertionError(message)
+      throw new SuspensiveError(message)
     }
   }
 }

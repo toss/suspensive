@@ -10,10 +10,7 @@ import {
   useErrorBoundaryFallbackProps,
 } from './ErrorBoundary'
 import { useTimeout } from './hooks'
-import {
-  useErrorBoundaryFallbackProps_this_hook_should_be_called_in_ErrorBoundary_props_fallback,
-  useErrorBoundary_this_hook_should_be_called_in_ErrorBoundary_props_children,
-} from './models/AssertionError'
+import { SuspensiveError } from './models/SuspensiveError'
 
 describe('<ErrorBoundary/>', () => {
   beforeEach(() => ThrowError.reset())
@@ -314,7 +311,7 @@ describe('useErrorBoundary', () => {
           <ThrowError message={ERROR_MESSAGE} after={0} />
         </ErrorBoundary>
       )
-    ).toThrow(useErrorBoundary_this_hook_should_be_called_in_ErrorBoundary_props_children)
+    ).toThrow(SuspensiveError)
   })
 })
 
@@ -352,7 +349,7 @@ describe('useErrorBoundaryFallbackProps', () => {
   })
 
   it('should guarantee hook calling position is in fallback of ErrorBoundary', () => {
-    expect(
+    expect(() =>
       render(
         <ErrorBoundary fallback={(props) => <>{props.error.message}</>}>
           {createElement(() => {
@@ -360,8 +357,8 @@ describe('useErrorBoundaryFallbackProps', () => {
             return <></>
           })}
         </ErrorBoundary>
-      ).getByText(useErrorBoundaryFallbackProps_this_hook_should_be_called_in_ErrorBoundary_props_fallback)
-    ).toBeInTheDocument()
+      )
+    ).toThrow(SuspensiveError)
   })
   it('should be prevented to be called outside fallback of ErrorBoundary', () => {
     expect(() =>
@@ -371,10 +368,10 @@ describe('useErrorBoundaryFallbackProps', () => {
           return <></>
         })
       )
-    ).toThrow(useErrorBoundaryFallbackProps_this_hook_should_be_called_in_ErrorBoundary_props_fallback)
+    ).toThrow(SuspensiveError)
   })
-  it('should be prevented to be called in children of ErrorBoundary', () => {
-    expect(
+  it("should be prevented to be called in children of ErrorBoundary (ErrorBoundary shouldn't catch SuspensiveError)", () => {
+    expect(() =>
       render(
         <ErrorBoundary fallback={(props) => <>{props.error.message}</>}>
           {createElement(() => {
@@ -382,7 +379,7 @@ describe('useErrorBoundaryFallbackProps', () => {
             return <></>
           })}
         </ErrorBoundary>
-      ).getByText(useErrorBoundaryFallbackProps_this_hook_should_be_called_in_ErrorBoundary_props_fallback)
-    ).toBeInTheDocument()
+      )
+    ).toThrow(SuspensiveError)
   })
 })

@@ -6,9 +6,9 @@ import { describe, expect, it } from 'vitest'
 import { ErrorBoundary } from './ErrorBoundary'
 import { ErrorBoundaryGroup, useErrorBoundaryGroup } from './ErrorBoundaryGroup'
 import {
-  AssertionError,
+  SuspensiveError,
   useErrorBoundaryGroup_this_hook_should_be_called_in_ErrorBoundary_props_children,
-} from './models/AssertionError'
+} from './models/SuspensiveError'
 
 const innerErrorBoundaryCount = 3
 const resetButtonText = 'reset button'
@@ -85,7 +85,7 @@ describe('useErrorBoundaryGroup', () => {
         })
       )
     } catch (error) {
-      expect(error).toBeInstanceOf(AssertionError)
+      expect(error).toBeInstanceOf(SuspensiveError)
       expect(error).toBeInstanceOf(Error)
       expect(error).not.toBeInstanceOf(CustomError)
     }

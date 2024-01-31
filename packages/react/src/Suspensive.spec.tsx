@@ -6,9 +6,9 @@ import { describe, expect, it } from 'vitest'
 import { DelayDefaultPropsContext, SuspenseDefaultPropsContext } from './contexts'
 import { Delay, type DelayProps } from './Delay'
 import {
-  AssertionError,
+  SuspensiveError,
   Suspensive_config_defaultOptions_delay_ms_should_be_greater_than_0,
-} from './models/AssertionError'
+} from './models/SuspensiveError'
 import { Suspense, type SuspenseProps } from './Suspense'
 import { Suspensive, SuspensiveProvider } from './Suspensive'
 
@@ -123,7 +123,7 @@ describe('<SuspensiveProvider/>', () => {
     try {
       new Suspensive({ defaultOptions: { delay: { ms: 0 } } })
     } catch (error) {
-      expect(error).toBeInstanceOf(AssertionError)
+      expect(error).toBeInstanceOf(SuspensiveError)
       expect(error).toBeInstanceOf(Error)
       expect(error).not.toBeInstanceOf(CustomError)
     }
@@ -134,7 +134,7 @@ describe('<SuspensiveProvider/>', () => {
     try {
       new Suspensive({ defaultOptions: { delay: { ms: -1 } } })
     } catch (error) {
-      expect(error).toBeInstanceOf(AssertionError)
+      expect(error).toBeInstanceOf(SuspensiveError)
       expect(error).toBeInstanceOf(Error)
       expect(error).not.toBeInstanceOf(CustomError)
     }
