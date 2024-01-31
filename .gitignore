@@ -34,5 +34,3 @@ esm
 
 # graph
 graph/
-
-tsconfig.vitest-temp.json
