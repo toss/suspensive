@@ -1,9 +1,10 @@
 'use client'
 
-import { wrap } from '@suspensive/react'
+import { type ErrorBoundaryFallbackProps, wrap } from '@suspensive/react'
 import { useSuspenseQuery } from '@suspensive/react-query'
 import { useSearchParams } from 'next/navigation'
 import { ZodError, z } from 'zod'
+import { Spinner } from '~/components/uis'
 import { delay } from '~/utils'
 
 const searchParamsSchema = z.object({
@@ -15,27 +16,23 @@ const searchParamsSchema = z.object({
     .int('searchParam: id type should be integer')
     .min(1, 'searchParam: id type should be number bigger than 1'),
 })
-
 export default wrap
   .ErrorBoundary({
     shouldCatch: ZodError,
-    fallback: ({ error }) => {
+    fallback: ({ error }: ErrorBoundaryFallbackProps<ZodError | Error>) => {
       if (error instanceof ZodError) {
         return (
           <div>
             zod error:
             {error.errors.map((error) => (
-              <div key={error.code}>{error.message}</div>
+              <p key={error.code}>{error.message}</p>
             ))}
           </div>
         )
       }
-      throw new Error('ErrorBoundary should catch but cannot catch error of children')
     },
   })
-  .Suspense({
-    fallback: 'loading...',
-  })
+  .Suspense({ fallback: <Spinner /> })
   .on(() => {
     const searchParams = useSearchParams()
     const { id } = searchParamsSchema.parse(Object.fromEntries(searchParams.entries()))
