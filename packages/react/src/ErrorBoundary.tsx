@@ -15,12 +15,13 @@ import {
 import { syncDevMode } from './contexts'
 import { Delay } from './Delay'
 import { ErrorBoundaryGroupContext } from './ErrorBoundaryGroup'
-import type { ConstructorType, PropsWithDevMode } from './utility-types'
-import { assert, hasResetKeysChanged } from './utils'
 import {
+  SuspensiveError,
   useErrorBoundaryFallbackProps_this_hook_should_be_called_in_ErrorBoundary_props_fallback,
   useErrorBoundary_this_hook_should_be_called_in_ErrorBoundary_props_children,
-} from './utils/assert'
+} from './models/SuspensiveError'
+import type { ConstructorType, PropsWithDevMode } from './utility-types'
+import { hasResetKeysChanged } from './utils'
 
 export interface ErrorBoundaryFallbackProps<TError extends Error = Error> {
   /**
@@ -96,6 +97,16 @@ class BaseErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState
   }
 
   componentDidCatch(error: Error, info: ErrorInfo) {
+    if (error instanceof SuspensiveError) {
+      throw error
+    }
+    const { shouldCatch = true } = this.props
+    const isCatch = Array.isArray(shouldCatch)
+      ? shouldCatch.some((shouldCatch) => checkErrorBoundary(shouldCatch, error))
+      : checkErrorBoundary(shouldCatch, error)
+    if (!isCatch) {
+      throw error
+    }
     this.props.onError?.(error, info)
   }
 
@@ -105,18 +116,12 @@ class BaseErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState
   }
 
   render() {
-    const { children, fallback, shouldCatch = true } = this.props
+    const { children, fallback } = this.props
     const { isError, error } = this.state
 
     let childrenOrFallback = children
 
     if (isError) {
-      const isCatch = Array.isArray(shouldCatch)
-        ? shouldCatch.some((shouldCatch) => checkErrorBoundary(shouldCatch, error))
-        : checkErrorBoundary(shouldCatch, error)
-      if (!isCatch) {
-        throw error
-      }
       if (typeof fallback === 'undefined') {
         if (process.env.NODE_ENV === 'development') {
           console.error('ErrorBoundary of @suspensive/react requires a defined fallback')
@@ -197,7 +202,7 @@ export const useErrorBoundary = <TError extends Error = Error>() => {
   }
 
   const errorBoundary = useContext(ErrorBoundaryContext)
-  assert(
+  SuspensiveError.assert(
     errorBoundary != null && !errorBoundary.isError,
     useErrorBoundary_this_hook_should_be_called_in_ErrorBoundary_props_children
   )
@@ -212,7 +217,7 @@ export const useErrorBoundary = <TError extends Error = Error>() => {
 
 export const useErrorBoundaryFallbackProps = <TError extends Error = Error>(): ErrorBoundaryFallbackProps<TError> => {
   const errorBoundary = useContext(ErrorBoundaryContext)
-  assert(
+  SuspensiveError.assert(
     errorBoundary != null && errorBoundary.isError,
     useErrorBoundaryFallbackProps_this_hook_should_be_called_in_ErrorBoundary_props_fallback
   )
