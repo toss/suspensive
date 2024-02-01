@@ -1,6 +1,6 @@
 {
   "name": "@suspensive/react",
-  "version": "1.25.3",
+  "version": "1.26.0",
   "description": "Useful interfaces for React Suspense",
   "keywords": [
     "suspensive",
@@ -66,7 +66,7 @@
     "@suspensive/tsconfig": "workspace:*",
     "@suspensive/test-utils": "workspace:*",
     "@suspensive/tsup": "workspace:*",
-    "@types/react": "^18.2.48",
+    "@types/react": "^18.2.50",
     "@types/react-dom": "^18.2.18",
     "@types/use-sync-external-store": "^0.0.6",
     "react": "^18.2.0",

@@ -1,5 +1,11 @@
 # @suspensive/react
 
+## 1.26.0
+
+### Minor Changes
+
+- [#615](https://github.com/suspensive/react/pull/615) [`43bd74e`](https://github.com/suspensive/react/commit/43bd74e080fe7487fc43f75688c65af594099ef8) Thanks [@manudeli](https://github.com/manudeli)! - feat(react): add SuspensiveError for useErrorBoundary, useErrorBoundaryFallbackProps, useErrorBoundaryGroup internally
+
 ## 1.25.3
 
 ### Patch Changes

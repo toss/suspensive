@@ -1,8 +1,7 @@
 import { type PropsWithChildren, type ReactNode, useContext, useState } from 'react'
 import { DelayDefaultPropsContext } from './contexts'
 import { useTimeout } from './hooks'
-import { assert } from './utils'
-import { DelayMsPropShouldBeGreaterThanOrEqualTo0 } from './utils/assert'
+import { Delay_ms_prop_should_be_greater_than_or_equal_to_0, SuspensiveError } from './models/SuspensiveError'
 
 export interface DelayProps extends PropsWithChildren {
   ms?: number
@@ -15,7 +14,7 @@ export interface DelayProps extends PropsWithChildren {
 export const Delay = (props: DelayProps) => {
   if (process.env.NODE_ENV === 'development') {
     if (typeof props.ms === 'number') {
-      assert(props.ms >= 0, DelayMsPropShouldBeGreaterThanOrEqualTo0)
+      SuspensiveError.assert(props.ms >= 0, Delay_ms_prop_should_be_greater_than_or_equal_to_0)
     }
   }
   const defaultProps = useContext(DelayDefaultPropsContext)
