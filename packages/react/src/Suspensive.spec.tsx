@@ -1,13 +1,16 @@
-import { FALLBACK, Suspend, TEXT } from '@suspensive/test-utils'
+import { CustomError, FALLBACK, Suspend, TEXT } from '@suspensive/test-utils'
 import { render, screen, waitFor } from '@testing-library/react'
 import ms from 'ms'
 import { createElement, useContext } from 'react'
 import { describe, expect, it } from 'vitest'
 import { DelayDefaultPropsContext, SuspenseDefaultPropsContext } from './contexts'
 import { Delay, type DelayProps } from './Delay'
+import {
+  SuspensiveError,
+  Suspensive_config_defaultProps_delay_ms_should_be_greater_than_0,
+} from './models/SuspensiveError'
 import { Suspense, type SuspenseProps } from './Suspense'
 import { Suspensive, SuspensiveProvider } from './Suspensive'
-import { SuspensiveConfigDefaultPropsDelayMsShouldBeGreaterThan0 } from './utils/assert'
 
 const FALLBACK_GLOBAL = 'FALLBACK_GLOBAL'
 
@@ -113,13 +116,28 @@ describe('<SuspensiveProvider/>', () => {
     expect(clientOnly3).toBeUndefined()
   })
 
-  it('should accept defaultProps.delay.ms only positive number', () => {
+  it('should accept defaultOptions.delay.ms only positive number', () => {
     expect(() => new Suspensive({ defaultProps: { delay: { ms: 0 } } })).toThrow(
-      SuspensiveConfigDefaultPropsDelayMsShouldBeGreaterThan0
+      Suspensive_config_defaultProps_delay_ms_should_be_greater_than_0
     )
+    try {
+      new Suspensive({ defaultProps: { delay: { ms: 0 } } })
+    } catch (error) {
+      expect(error).toBeInstanceOf(SuspensiveError)
+      expect(error).toBeInstanceOf(Error)
+      expect(error).not.toBeInstanceOf(CustomError)
+    }
+
     expect(() => new Suspensive({ defaultProps: { delay: { ms: -1 } } })).toThrow(
-      SuspensiveConfigDefaultPropsDelayMsShouldBeGreaterThan0
+      Suspensive_config_defaultProps_delay_ms_should_be_greater_than_0
     )
+    try {
+      new Suspensive({ defaultProps: { delay: { ms: -1 } } })
+    } catch (error) {
+      expect(error).toBeInstanceOf(SuspensiveError)
+      expect(error).toBeInstanceOf(Error)
+      expect(error).not.toBeInstanceOf(CustomError)
+    }
 
     const defaultPropsMs = 100
     let ms: DelayProps['ms'] = undefined
