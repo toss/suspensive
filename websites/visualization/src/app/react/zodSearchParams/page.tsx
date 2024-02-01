@@ -21,6 +21,9 @@ export default wrap
       throw new Error('ErrorBoundary should catch but cannot catch error of children')
     },
   })
+  .Suspense({
+    fallback: 'loading...',
+  })
   .on(() => {
     const searchParamsId = useSearchParams().get('id')
     const id = z.coerce
