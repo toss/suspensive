@@ -1,6 +1,6 @@
 'use client'
 
-import { type ErrorBoundaryFallbackProps, wrap } from '@suspensive/react'
+import { wrap } from '@suspensive/react'
 import { useSuspenseQuery } from '@suspensive/react-query'
 import { useSearchParams } from 'next/navigation'
 import { ZodError, z } from 'zod'
@@ -19,7 +19,7 @@ const searchParamsSchema = z.object({
 export default wrap
   .ErrorBoundary({
     shouldCatch: ZodError,
-    fallback: ({ error }: ErrorBoundaryFallbackProps<ZodError | Error>) => {
+    fallback: ({ error }) => {
       if (error instanceof ZodError) {
         return (
           <div>
