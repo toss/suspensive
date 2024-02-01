@@ -8,8 +8,11 @@ import {
   useReducer,
 } from 'react'
 import { useIsChanged } from './hooks'
-import { assert, increase } from './utils'
-import { useErrorBoundaryGroup_this_hook_should_be_called_in_ErrorBoundary_props_children } from './utils/assert'
+import {
+  SuspensiveError,
+  useErrorBoundaryGroup_this_hook_should_be_called_in_ErrorBoundary_props_children,
+} from './models/SuspensiveError'
+import { increase } from './utils'
 
 export const ErrorBoundaryGroupContext = createContext<{ reset: () => void; resetKey: number } | undefined>(undefined)
 if (process.env.NODE_ENV === 'development') {
@@ -62,7 +65,10 @@ export const ErrorBoundaryGroup = Object.assign(
 
 export const useErrorBoundaryGroup = () => {
   const group = useContext(ErrorBoundaryGroupContext)
-  assert(group != null, useErrorBoundaryGroup_this_hook_should_be_called_in_ErrorBoundary_props_children)
+  SuspensiveError.assert(
+    group != null,
+    useErrorBoundaryGroup_this_hook_should_be_called_in_ErrorBoundary_props_children
+  )
   return useMemo(
     () => ({
       /**
