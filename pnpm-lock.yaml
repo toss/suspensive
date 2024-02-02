@@ -40,7 +40,7 @@ importers:
         version: 18.19.13
       '@vitest/browser':
         specifier: ^1.2.2
-        version: 1.2.2(playwright@1.41.1)(vitest@1.2.2)
+        version: 1.2.2(playwright@1.41.2)(vitest@1.2.2)
       '@vitest/coverage-istanbul':
         specifier: ^1.2.2
         version: 1.2.2(vitest@1.2.2)
@@ -66,8 +66,8 @@ importers:
         specifier: ^0.2.4
         version: 0.2.4(typanion@3.14.0)
       playwright:
-        specifier: ^1.41.1
-        version: 1.41.1
+        specifier: ^1.41.2
+        version: 1.41.2
       prettier:
         specifier: ^3.2.4
         version: 3.2.4
@@ -2600,7 +2600,7 @@ packages:
   /@ungap/structured-clone@1.2.0:
     resolution: {integrity: sha512-zuVdFrMJiuCDQUMCzQaD6KL28MjnqqN8XnAqiEq9PNm/hCPTSGfrXCOfwj1ow4LFb/tNymJPwsNbVePc1xFqrQ==}
 
-  /@vitest/browser@1.2.2(playwright@1.41.1)(vitest@1.2.2):
+  /@vitest/browser@1.2.2(playwright@1.41.2)(vitest@1.2.2):
     resolution: {integrity: sha512-N8myxNVLbS9AbZ7B2cK33HTGYVzUTDArbMh3hLojOxaj7s7ZrBYYmzs0Q5J2wyDrOgs51p6OUrrzAIb1Z+Ck3A==}
     peerDependencies:
       playwright: '*'
@@ -2617,7 +2617,7 @@ packages:
     dependencies:
       '@vitest/utils': 1.2.2
       magic-string: 0.30.6
-      playwright: 1.41.1
+      playwright: 1.41.2
       sirv: 2.0.4
       vitest: 1.2.2(@types/node@18.19.13)(@vitest/browser@1.2.2)(@vitest/ui@1.2.2)(jsdom@24.0.0)
 
@@ -7702,17 +7702,17 @@ packages:
       mlly: 1.5.0
       pathe: 1.1.2
 
-  /playwright-core@1.41.1:
-    resolution: {integrity: sha512-/KPO5DzXSMlxSX77wy+HihKGOunh3hqndhqeo/nMxfigiKzogn8kfL0ZBDu0L1RKgan5XHCPmn6zXd2NUJgjhg==}
+  /playwright-core@1.41.2:
+    resolution: {integrity: sha512-VaTvwCA4Y8kxEe+kfm2+uUUw5Lubf38RxF7FpBxLPmGe5sdNkSg5e3ChEigaGrX7qdqT3pt2m/98LiyvU2x6CA==}
     engines: {node: '>=16'}
     hasBin: true
 
-  /playwright@1.41.1:
-    resolution: {integrity: sha512-gdZAWG97oUnbBdRL3GuBvX3nDDmUOuqzV/D24dytqlKt+eI5KbwusluZRGljx1YoJKZ2NRPaeWiFTeGZO7SosQ==}
+  /playwright@1.41.2:
+    resolution: {integrity: sha512-v0bOa6H2GJChDL8pAeLa/LZC4feoAMbSQm1/jF/ySsWWoaNItvrMP7GEkvEEFyCTUYKMxjQKaTSg5up7nR6/8A==}
     engines: {node: '>=16'}
     hasBin: true
     dependencies:
-      playwright-core: 1.41.1
+      playwright-core: 1.41.2
     optionalDependencies:
       fsevents: 2.3.2
 
@@ -9677,7 +9677,7 @@ packages:
         optional: true
     dependencies:
       '@types/node': 18.19.13
-      '@vitest/browser': 1.2.2(playwright@1.41.1)(vitest@1.2.2)
+      '@vitest/browser': 1.2.2(playwright@1.41.2)(vitest@1.2.2)
       '@vitest/expect': 1.2.2
       '@vitest/runner': 1.2.2
       '@vitest/snapshot': 1.2.2
