@@ -5,6 +5,18 @@ coverage:
       default:
         target: 100%
         threshold: 30%
+      '@suspensive/react':
+        flags:
+          - 'react'
+      '@suspensive/react-query':
+        flags:
+          - 'react-query'
+      '@suspensive/react-await':
+        flags:
+          - 'react-await'
+      '@suspensive/react-image':
+        flags:
+          - 'react-image'
 
 comment:
   layout: 'header, reach, diff, flags, components'
@@ -13,15 +25,15 @@ ignore:
   - '**/*.test-d.*'
 
 flags:
-  suspensive-react:
+  react:
     paths:
       - packages/react/**
-  suspensive-react-query:
+  react-query:
     paths:
       - packages/react-query/**
-  suspensive-react-await:
+  react-await:
     paths:
       - packages/react-await/**
-  suspensive-react-image:
+  react-image:
     paths:
       - packages/react-image/**
