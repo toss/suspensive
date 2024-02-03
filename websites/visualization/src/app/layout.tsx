@@ -25,7 +25,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <Link href="/react/Delay">🔗 @suspensive/react - Delay</Link>
           <Link href="/react/ErrorBoundary/shouldCatch">🔗 @suspensive/react - ErrorBoundary shouldCatch</Link>
           <Link href="/react/SuspensiveError">🔗 @suspensive/react - SuspensiveError</Link>
+          <Link href="/react/zodSearchParams">🔗 @suspensive/react - with zod: no param</Link>
+          <Link href="/react/zodSearchParams?id=1">🔗 @suspensive/react - with zod: id=1</Link>
+          <Link href="/react/zodSearchParams?id=0.1">🔗 @suspensive/react - with zod: id=0.1</Link>
+          <Link href="/react/zodSearchParams?id=-1">🔗 @suspensive/react - with zod: id=-1</Link>
+
           <Link href="/react-image/SuspenseImage">🔗 @suspensive/react-image - SuspenseImage</Link>
+
           <Link href="/react-await/Await">🔗 @suspensive/react-await - Await</Link>
           <div className="flex flex-1 items-center justify-center">{children}</div>
         </Providers>
