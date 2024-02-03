@@ -1,44 +1,25 @@
-coverage:
-  status:
-    patch: off
-    project:
-      default:
-        target: 100%
-        threshold: 30%
-      suspensive-react:
-        target: 100%
-        threshold: 30%
-      suspensive-react-query:
-        target: 100%
-        threshold: 30%
-      suspensive-react-await:
-        target: 100%
-        threshold: 30%
-      suspensive-react-image:
-        target: 100%
-        threshold: 30%
-
-comment:
-  layout: 'header, reach, diff, flags, components'
+flag_management:
+  default_rules:
+    carryforward: true
+    statuses:
+      - type: project
+        target: auto
+        threshold: 1%
+      - type: patch
+        target: 90%
+  individual_components:
+    - name: '@suspensive/react'
+      paths:
+        - packages/react
+    - name: '@suspensive/react-await'
+      paths:
+        - packages/react-await
+    - name: '@suspensive/react-image'
+      paths:
+        - packages/react-image
+    - name: '@suspensive/react-query'
+      paths:
+        - packages/react-query
 
 ignore:
   - '**/*.test-d.*'
-
-component_management:
-  individual_components:
-    - component_id: suspensive-react
-      name: '@suspensive/react'
-      paths:
-        - packages/react/**
-    - component_id: suspensive-react-query
-      name: '@suspensive/react-query'
-      paths:
-        - packages/react-query/**
-    - component_id: suspensive-react-await
-      name: '@suspensive/react-await'
-      paths:
-        - packages/react-await/**
-    - component_id: suspensive-react-image
-      name: '@suspensive/react-image'
-      paths:
-        - packages/react-image/**
