@@ -41,6 +41,10 @@
       "dependsOn": ["^prepack"],
       "outputs": ["dist/**"]
     },
+    "start": {
+      "dependsOn": ["build"],
+      "cache": false
+    },
     "dev": {
       "dependsOn": ["prepack"],
       "cache": false

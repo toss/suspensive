@@ -59,9 +59,9 @@
   },
   "devDependencies": {
     "@suspensive/eslint-config": "workspace:*",
-    "@suspensive/tsconfig": "workspace:*",
     "@suspensive/react": "workspace:*",
     "@suspensive/test-utils": "workspace:*",
+    "@suspensive/tsconfig": "workspace:*",
     "@suspensive/tsup": "workspace:*",
     "@tanstack/react-query": "^4.36.1",
     "@types/react": "^18.2.50",
