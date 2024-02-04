@@ -23,7 +23,7 @@
     "build": "next build",
     "dev": "next dev -p 4001",
     "lint": "next lint",
-    "start": "next start"
+    "start": "next start -p 4001"
   },
   "dependencies": {
     "next": "^14.1.0",
@@ -33,9 +33,9 @@
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
+    "@next/eslint-plugin-next": "^14.1.0",
     "@suspensive/eslint-config": "workspace:*",
     "@suspensive/tsconfig": "workspace:*",
-    "@next/eslint-plugin-next": "^14.1.0",
     "@types/react": "^18.2.50",
     "@types/react-dom": "^18.2.18",
     "autoprefixer": "^10.4.17",
