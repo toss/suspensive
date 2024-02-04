@@ -19,7 +19,18 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        command: ['lint', 'lint:attw', 'lint:monorepo', 'lint:pub', 'test', 'test:production', 'type:check', 'build']
+        command:
+          [
+            'lint',
+            'lint:attw',
+            'lint:monorepo',
+            'lint:pub',
+            'test',
+            'test:production',
+            'type:check',
+            'build',
+            'ci:lighthouse',
+          ]
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/pnpm-setup-node
@@ -27,11 +38,9 @@ jobs:
       - if: matrix.command == 'test'
         run: pnpm playwright install
       - run: pnpm ${{ matrix.command }}
+        env:
+          LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
       - if: matrix.command == 'test'
         uses: codecov/codecov-action@v4
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-      - if: matrix.command == 'build'
-        run: pnpm ci:lighthouse
-        env:
-          LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
