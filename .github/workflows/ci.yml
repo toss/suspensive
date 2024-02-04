@@ -26,10 +26,12 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - if: matrix.command == 'test'
         run: pnpm playwright install
-      - name: Run commands
-        run: pnpm ${{ matrix.command }}
+      - run: pnpm ${{ matrix.command }}
       - if: matrix.command == 'test'
-        name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v4
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+      - if: matrix.command == 'build'
+        run: pnpm ci:lighthouse
+        env:
+          LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}

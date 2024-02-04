@@ -34,3 +34,6 @@ esm
 
 # graph
 graph/
+
+# lighthouse
+.lighthouseci/
