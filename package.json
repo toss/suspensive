@@ -37,7 +37,7 @@
     "preinstall": "corepack enable",
     "prepack": "turbo run prepack",
     "prepare": "husky install",
-    "start": "turbo run start --parallel",
+    "start": "turbo run start",
     "test": "turbo run test",
     "test:production": "turbo run test:production",
     "test:production:watch": "turbo run test:production:watch --parallel",
