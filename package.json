@@ -70,7 +70,7 @@
     "prettier-plugin-tailwindcss": "^0.5.11",
     "publint": "^0.2.7",
     "rimraf": "^5.0.5",
-    "sherif": "^0.7.0",
+    "sherif": "^0.8.1",
     "tsup": "^8.0.1",
     "turbo": "latest",
     "typescript": "^5.3.3",
