@@ -58,10 +58,10 @@
   },
   "devDependencies": {
     "@suspensive/eslint-config": "workspace:*",
-    "@suspensive/tsconfig": "workspace:*",
     "@suspensive/test-utils": "workspace:*",
+    "@suspensive/tsconfig": "workspace:*",
     "@suspensive/tsup": "workspace:*",
-    "@types/react": "^18.2.50",
+    "@types/react": "^18.2.53",
     "@types/react-dom": "^18.2.18",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"

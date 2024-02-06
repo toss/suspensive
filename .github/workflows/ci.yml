@@ -19,17 +19,28 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        command: ['lint', 'lint:attw', 'lint:monorepo', 'lint:pub', 'test', 'test:production', 'type:check', 'build']
+        command:
+          [
+            'lint',
+            'lint:attw',
+            'lint:monorepo',
+            'lint:pub',
+            'test',
+            'test:production',
+            'type:check',
+            'build',
+            'ci:lighthouse',
+          ]
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/pnpm-setup-node
       - run: pnpm install --frozen-lockfile
       - if: matrix.command == 'test'
         run: pnpm playwright install
-      - name: Run commands
-        run: pnpm ${{ matrix.command }}
+      - run: pnpm ${{ matrix.command }}
+        env:
+          LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
       - if: matrix.command == 'test'
-        name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v4
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
