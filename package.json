@@ -31,7 +31,7 @@
     "graph": "rimraf ./graph && mkdir graph && turbo run build --graph=graph/index.html",
     "lint": "turbo run lint",
     "lint:attw": "turbo run lint:attw",
-    "lint:monorepo": "sherif --ignore-package \"./examples/*\" --ignore-package \"./websites/*\"",
+    "lint:monorepo": "sherif --ignore-package \"./examples/*\" --ignore-package \"./websites/*\" --ignore-package \"./docs/*\"",
     "lint:pack": "packlint sort -R",
     "lint:pub": "turbo run lint:pub",
     "preinstall": "corepack enable",
