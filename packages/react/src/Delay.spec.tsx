@@ -24,7 +24,7 @@ describe('<Delay/>', () => {
     render(<Delay>{TEXT}</Delay>)
     expect(screen.queryByText(TEXT)).toBeInTheDocument()
   })
-  it('should accept 0 for ms prop', async () => {
+  it('should accept 0 for ms prop', () => {
     render(<Delay ms={0}>{TEXT}</Delay>)
 
     expect(screen.queryByText(TEXT)).toBeInTheDocument()
