@@ -130,7 +130,7 @@ export const withErrorBoundary = <TProps extends ComponentProps<ComponentType> =
  */
 export const withDelay = <TProps extends ComponentProps<ComponentType> = Record<string, never>>(
   component: ComponentType<TProps>,
-  delayProps: OmitKeyOf<DelayProps, 'children'> = {}
+  delayProps: DelayProps = {}
 ) => wrap.Delay(delayProps).on(component)
 
 /**

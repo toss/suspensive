@@ -3,7 +3,7 @@ import { DelayDefaultPropsContext } from './contexts'
 import { useTimeout } from './hooks'
 import { Delay_ms_prop_should_be_greater_than_or_equal_to_0, SuspensiveError } from './models/SuspensiveError'
 
-export interface DelayProps extends PropsWithChildren {
+export interface DelayProps {
   ms?: number
   /**
    * @experimental This is experimental feature.
@@ -11,7 +11,7 @@ export interface DelayProps extends PropsWithChildren {
   fallback?: ReactNode
 }
 
-export const Delay = (props: DelayProps) => {
+export const Delay = (props: PropsWithChildren<DelayProps>) => {
   if (process.env.NODE_ENV === 'development') {
     if (typeof props.ms === 'number') {
       SuspensiveError.assert(props.ms >= 0, Delay_ms_prop_should_be_greater_than_or_equal_to_0)
