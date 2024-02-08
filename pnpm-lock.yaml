@@ -231,8 +231,8 @@ importers:
         specifier: ^18.2.55
         version: 18.2.55
       '@types/react-dom':
-        specifier: ^18.2.18
-        version: 18.2.18
+        specifier: ^18.2.19
+        version: 18.2.19
       autoprefixer:
         specifier: ^10.4.17
         version: 10.4.17(postcss@8.4.34)
@@ -286,8 +286,8 @@ importers:
         specifier: ^18.2.55
         version: 18.2.55
       '@types/react-dom':
-        specifier: ^18.2.18
-        version: 18.2.18
+        specifier: ^18.2.19
+        version: 18.2.19
       autoprefixer:
         specifier: ^10.4.17
         version: 10.4.17(postcss@8.4.34)
@@ -317,8 +317,8 @@ importers:
         specifier: ^18.2.55
         version: 18.2.55
       '@types/react-dom':
-        specifier: ^18.2.18
-        version: 18.2.18
+        specifier: ^18.2.19
+        version: 18.2.19
       '@types/use-sync-external-store':
         specifier: ^0.0.6
         version: 0.0.6
@@ -354,8 +354,8 @@ importers:
         specifier: ^18.2.55
         version: 18.2.55
       '@types/react-dom':
-        specifier: ^18.2.18
-        version: 18.2.18
+        specifier: ^18.2.19
+        version: 18.2.19
       '@types/use-sync-external-store':
         specifier: ^0.0.6
         version: 0.0.6
@@ -388,8 +388,8 @@ importers:
         specifier: ^18.2.55
         version: 18.2.55
       '@types/react-dom':
-        specifier: ^18.2.18
-        version: 18.2.18
+        specifier: ^18.2.19
+        version: 18.2.19
       '@types/use-sync-external-store':
         specifier: ^0.0.6
         version: 0.0.6
@@ -424,8 +424,8 @@ importers:
         specifier: ^18.2.55
         version: 18.2.55
       '@types/react-dom':
-        specifier: ^18.2.18
-        version: 18.2.18
+        specifier: ^18.2.19
+        version: 18.2.19
       react:
         specifier: ^18.2.0
         version: 18.2.0
@@ -485,8 +485,8 @@ importers:
         specifier: ^18.2.55
         version: 18.2.55
       '@types/react-dom':
-        specifier: ^18.2.18
-        version: 18.2.18
+        specifier: ^18.2.19
+        version: 18.2.19
       autoprefixer:
         specifier: ^10.4.17
         version: 10.4.17(postcss@8.4.34)
@@ -2591,12 +2591,6 @@ packages:
     resolution: {integrity: sha512-HrQNqQAGcITpn9HAJFamDxm7iZeeXiP/95pN5OMbNniDjzCCeOHbBKNGmUy8NRi0fhYS+/cXeo91MFC+06gbow==}
     dependencies:
       ts-toolbelt: 6.15.5
-    dev: true
-
-  /@types/react-dom@18.2.18:
-    resolution: {integrity: sha512-TJxDm6OfAX2KJWJdMEVTwWke5Sc/E/RlnPGvGfS0W7+6ocy2xhDVQVh/KvC2Uf7kACs+gDytdusDSdWfWkaNzw==}
-    dependencies:
-      '@types/react': 18.2.55
     dev: true
 
   /@types/react-dom@18.2.19:
