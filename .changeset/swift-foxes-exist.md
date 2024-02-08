@@ -2,4 +2,4 @@
 "@suspensive/react": patch
 ---
 
-test(react): add test code for Delay fallback
+fix(react): define default prop of each components
