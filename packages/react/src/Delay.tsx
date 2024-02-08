@@ -3,7 +3,7 @@ import { DelayDefaultPropsContext } from './contexts'
 import { useTimeout } from './hooks'
 import { Delay_ms_prop_should_be_greater_than_or_equal_to_0, SuspensiveError } from './models/SuspensiveError'
 
-export interface DelayProps {
+export interface DelayProps extends PropsWithChildren {
   ms?: number
   /**
    * @experimental This is experimental feature.
