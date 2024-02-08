@@ -1,15 +1,16 @@
 import { CustomError, TEXT } from '@suspensive/test-utils'
 import { render, screen, waitFor } from '@testing-library/react'
 import ms from 'ms'
-import { afterAll, beforeAll, describe, expect, it, vi } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { Delay } from './Delay'
 import { Delay_ms_prop_should_be_greater_than_or_equal_to_0, SuspensiveError } from './models/SuspensiveError'
 
-beforeAll(() => {
+beforeEach(() => {
   vi.useFakeTimers({ shouldAdvanceTime: true })
 })
 
-afterAll(() => {
+afterEach(() => {
+  vi.runOnlyPendingTimers()
   vi.useRealTimers()
 })
 
@@ -35,12 +36,9 @@ describe('<Delay/>', () => {
         {TEXT}
       </Delay>
     )
-
-    vi.advanceTimersByTime(ms('0.5s'))
-
     expect(screen.queryByRole('paragraph')).toBeInTheDocument()
 
-    vi.advanceTimersByTime(ms('0.5s'))
+    vi.advanceTimersByTime(ms('1s'))
 
     await waitFor(() => expect(screen.queryByText(TEXT)).toBeInTheDocument())
   })
