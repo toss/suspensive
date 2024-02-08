@@ -11,7 +11,7 @@ export interface DelayProps extends PropsWithChildren {
   fallback?: ReactNode
 }
 
-export const Delay = (props: PropsWithChildren<DelayProps>) => {
+export const Delay = (props: DelayProps) => {
   if (process.env.NODE_ENV === 'development') {
     if (typeof props.ms === 'number') {
       SuspensiveError.assert(props.ms >= 0, Delay_ms_prop_should_be_greater_than_or_equal_to_0)
