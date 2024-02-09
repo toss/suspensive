@@ -22,6 +22,14 @@
 - 78f5bd4: feat(react, react-query): remove deprecated apis
 - 837ed18: feat(\*): remove target react v16, v17
 
+## 1.26.1
+
+### Patch Changes
+
+- [#709](https://github.com/suspensive/react/pull/709) [`d3b7c15`](https://github.com/suspensive/react/commit/d3b7c1526dfe900e1dd1a559a406ccdf70456737) Thanks [@ssi02014](https://github.com/ssi02014)! - fix(react): define default prop of each components
+
+- [#709](https://github.com/suspensive/react/pull/709) [`d3b7c15`](https://github.com/suspensive/react/commit/d3b7c1526dfe900e1dd1a559a406ccdf70456737) Thanks [@ssi02014](https://github.com/ssi02014)! - test(react): add test case for fallback prop of Delay
+
 ## 1.26.0
 
 ### Minor Changes

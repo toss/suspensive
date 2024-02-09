@@ -38,6 +38,13 @@
 - Updated dependencies [837ed18]
   - @suspensive/react@2.0.0-beta.0
 
+## 1.26.1
+
+### Patch Changes
+
+- Updated dependencies [[`d3b7c15`](https://github.com/suspensive/react/commit/d3b7c1526dfe900e1dd1a559a406ccdf70456737), [`d3b7c15`](https://github.com/suspensive/react/commit/d3b7c1526dfe900e1dd1a559a406ccdf70456737)]:
+  - @suspensive/react@1.26.1
+
 ## 1.26.0
 
 ### Patch Changes
