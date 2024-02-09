@@ -4,6 +4,7 @@ import type { OmitKeyOf } from '../utility-types'
 
 export const DelayDefaultPropsContext = createContext<OmitKeyOf<DelayProps, 'children'>>({
   ms: undefined,
+  fallback: undefined,
 })
 if (process.env.NODE_ENV === 'development') {
   DelayDefaultPropsContext.displayName = 'DelayDefaultPropsContext'
