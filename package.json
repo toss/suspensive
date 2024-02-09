@@ -45,7 +45,7 @@
     "type:check": "turbo run type:check"
   },
   "devDependencies": {
-    "@arethetypeswrong/cli": "^0.13.6",
+    "@arethetypeswrong/cli": "^0.13.8",
     "@changesets/changelog-github": "^0.5.0",
     "@changesets/cli": "^2.27.1",
     "@commitlint/cli": "^18.6.0",
@@ -55,7 +55,7 @@
     "@testing-library/jest-dom": "^6.4.2",
     "@testing-library/react": "^14.2.1",
     "@testing-library/user-event": "^14.5.2",
-    "@types/node": "^18.19.14",
+    "@types/node": "^18.19.15",
     "@vitest/browser": "^1.2.2",
     "@vitest/coverage-istanbul": "^1.2.2",
     "@vitest/ui": "^1.2.2",
@@ -74,7 +74,7 @@
     "tsup": "^8.0.1",
     "turbo": "latest",
     "typescript": "^5.3.3",
-    "vite": "^5.0.12",
+    "vite": "^5.1.0",
     "vitest": "^1.2.2"
   }
 }
