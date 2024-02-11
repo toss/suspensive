@@ -16,8 +16,8 @@
     "build": "next build",
     "ci:eslint": "next lint",
     "ci:type": "tsc --noEmit",
-    "dev": "next dev -p 4000",
-    "start": "next start -p 4000"
+    "dev": "next dev -p 4001",
+    "start": "next start -p 4001"
   },
   "dependencies": {
     "@suspensive/react": "workspace:*",
