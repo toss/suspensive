@@ -10,13 +10,16 @@
       "cache": false,
       "outputs": ["dist/**"]
     },
-    "lint": {
+    "ci:attw": {
       "dependsOn": ["prepack"]
     },
-    "lint:attw": {
+    "ci:eslint": {
       "dependsOn": ["prepack"]
     },
-    "lint:pub": {
+    "ci:publint": {
+      "dependsOn": ["prepack"]
+    },
+    "ci:type": {
       "dependsOn": ["prepack"]
     },
     "test": {
@@ -48,9 +51,6 @@
     "dev": {
       "dependsOn": ["prepack"],
       "cache": false
-    },
-    "type:check": {
-      "dependsOn": ["prepack"]
     }
   },
   "globalEnv": ["NODE_ENV"]
