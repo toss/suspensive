@@ -47,14 +47,14 @@
   "scripts": {
     "build": "tsup",
     "build:watch": "tsup --watch",
+    "ci:attw": "attw --pack",
+    "ci:eslint": "eslint \"**/*.{js,jsx,cjs,mjs,ts,tsx,cts,mts}\"",
+    "ci:publint": "publint --strict",
+    "ci:type": "tsc --noEmit",
     "clean": "rimraf ./dist && rimraf ./coverage",
-    "lint": "eslint \"**/*.{js,jsx,cjs,mjs,ts,tsx,cts,mts}\"",
-    "lint:attw": "attw --pack",
-    "lint:pub": "publint --strict",
     "prepack": "pnpm build",
     "test": "vitest run --coverage --typecheck",
-    "test:watch": "vitest --ui --coverage --typecheck",
-    "type:check": "tsc --noEmit"
+    "test:watch": "vitest --ui --coverage --typecheck"
   },
   "dependencies": {
     "use-sync-external-store": "^1.2.0"
