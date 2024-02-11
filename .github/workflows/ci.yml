@@ -22,15 +22,15 @@ jobs:
       matrix:
         command:
           [
-            'lint',
-            'lint:attw',
-            'lint:monorepo',
-            'lint:pub',
+            'ci:attw',
+            'ci:eslint',
+            'ci:lighthouse',
+            'ci:publint',
+            'ci:sherif',
+            'ci:type',
             'test',
             'test:production',
-            'type:check',
             'build',
-            'ci:lighthouse',
           ]
     steps:
       - uses: actions/checkout@v4
