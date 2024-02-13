@@ -1,14 +1,12 @@
 /* eslint-disable react-hooks/rules-of-hooks */
+import { sleep } from '@suspensive/test-utils'
 import { expectTypeOf } from 'vitest'
 import { useSuspenseQueries } from '../dist'
 
 const queryKey = ['key'] as const
-const queryFn = () => ({ text: 'response' }) as const
+const queryFn = () => sleep(10).then(() => ({ text: 'response' }) as const)
 const boolean = Math.random() > 0.5
-const select = (arg: ReturnType<typeof queryFn>) => arg.text
-
-type AwaitedQueryFnReturn = Awaited<ReturnType<typeof queryFn>>
-type SelectReturn = Awaited<ReturnType<typeof select>>
+const select = (data: Awaited<ReturnType<typeof queryFn>>) => data.text
 
 // enabled: no
 const [noEnabled, noEnabledSelect] = useSuspenseQueries({
@@ -17,8 +15,8 @@ const [noEnabled, noEnabledSelect] = useSuspenseQueries({
     { queryKey, queryFn, select },
   ] as const,
 })
-expectTypeOf(noEnabled.data).toEqualTypeOf<AwaitedQueryFnReturn>()
-expectTypeOf(noEnabledSelect.data).toEqualTypeOf<SelectReturn>()
+expectTypeOf(noEnabled.data).toEqualTypeOf<Awaited<ReturnType<typeof queryFn>>>()
+expectTypeOf(noEnabledSelect.data).toEqualTypeOf<ReturnType<typeof select>>()
 expectTypeOf(noEnabled.isLoading).toEqualTypeOf<false>()
 expectTypeOf(noEnabledSelect.isLoading).toEqualTypeOf<false>()
 expectTypeOf(noEnabled.isSuccess).toEqualTypeOf<true>()
@@ -53,8 +51,8 @@ const [undefinedEnabled, undefinedEnabledSelect] = useSuspenseQueries({
     { enabled: undefined, queryKey, queryFn, select },
   ],
 })
-expectTypeOf(undefinedEnabled.data).toEqualTypeOf<AwaitedQueryFnReturn>()
-expectTypeOf(undefinedEnabledSelect.data).toEqualTypeOf<SelectReturn>()
+expectTypeOf(undefinedEnabled.data).toEqualTypeOf<Awaited<ReturnType<typeof queryFn>>>()
+expectTypeOf(undefinedEnabledSelect.data).toEqualTypeOf<ReturnType<typeof select>>()
 expectTypeOf(undefinedEnabled.isLoading).toEqualTypeOf<false>()
 expectTypeOf(undefinedEnabledSelect.isLoading).toEqualTypeOf<false>()
 expectTypeOf(undefinedEnabled.isSuccess).toEqualTypeOf<true>()
@@ -89,8 +87,8 @@ const [trueEnabled, trueEnabledSelect] = useSuspenseQueries({
     { enabled: true, queryKey, queryFn, select },
   ] as const,
 })
-expectTypeOf(trueEnabled.data).toEqualTypeOf<AwaitedQueryFnReturn>()
-expectTypeOf(trueEnabledSelect.data).toEqualTypeOf<SelectReturn>()
+expectTypeOf(trueEnabled.data).toEqualTypeOf<Awaited<ReturnType<typeof queryFn>>>()
+expectTypeOf(trueEnabledSelect.data).toEqualTypeOf<ReturnType<typeof select>>()
 expectTypeOf(trueEnabled.isLoading).toEqualTypeOf<false>()
 expectTypeOf(trueEnabledSelect.isLoading).toEqualTypeOf<false>()
 expectTypeOf(trueEnabled.isSuccess).toEqualTypeOf<true>()
@@ -161,8 +159,8 @@ const [booleanEnabled, booleanEnabledSelect] = useSuspenseQueries({
     { enabled: boolean, queryKey, queryFn, select },
   ],
 })
-expectTypeOf(booleanEnabled.data).toEqualTypeOf<AwaitedQueryFnReturn | undefined>()
-expectTypeOf(booleanEnabledSelect.data).toEqualTypeOf<SelectReturn | undefined>()
+expectTypeOf(booleanEnabled.data).toEqualTypeOf<Awaited<ReturnType<typeof queryFn>> | undefined>()
+expectTypeOf(booleanEnabledSelect.data).toEqualTypeOf<ReturnType<typeof select> | undefined>()
 expectTypeOf(booleanEnabled.isLoading).toEqualTypeOf<boolean>()
 expectTypeOf(booleanEnabledSelect.isLoading).toEqualTypeOf<boolean>()
 expectTypeOf(booleanEnabled.isSuccess).toEqualTypeOf<boolean>()
