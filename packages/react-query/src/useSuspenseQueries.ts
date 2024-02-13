@@ -18,7 +18,7 @@ interface ToInferOptions<TQueryFnData, TQueryKey extends QueryKey> {
 
 interface ToInferWithSelectOptions<TQueryFnData, TData, TQueryKey extends QueryKey>
   extends ToInferOptions<TQueryFnData, TQueryKey> {
-  select: (data: unknown) => TData
+  select: (data: any) => TData
 }
 
 type GetSuspenseOptions<T> =
