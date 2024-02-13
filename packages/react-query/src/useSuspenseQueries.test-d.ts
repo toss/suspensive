@@ -2,11 +2,12 @@
 import { describe, expectTypeOf, it } from 'vitest'
 import { useSuspenseQueries } from '../dist'
 
-const select = () => 'selected' as const
+const queryFn = () => ({ text: 'response' }) as const
+const select = (data: Awaited<ReturnType<typeof queryFn>>) => data.text
 
 const queryOptions = <TIndex extends number>(index: TIndex) => ({
   queryKey: ['key', index] as const,
-  queryFn: () => ({ name: `resolved${index}` }) as const,
+  queryFn,
 })
 
 useSuspenseQueries({
@@ -26,11 +27,7 @@ useSuspenseQueries()
 describe('useSuspenseQueries', () => {
   it("'s type check", () => {
     const suspenseQueries = useSuspenseQueries({
-      queries: [
-        { ...queryOptions(0) },
-        { ...queryOptions(1) },
-        { ...queryOptions(2), select: () => ({ name: 'selected' }) as const },
-      ] as const,
+      queries: [{ ...queryOptions(0) }, { ...queryOptions(1) }, { ...queryOptions(2), select }] as const,
     })
 
     expectTypeOf(suspenseQueries[0].status).toEqualTypeOf<`success`>()
@@ -44,6 +41,6 @@ describe('useSuspenseQueries', () => {
     >()
 
     expectTypeOf(suspenseQueries[2].status).toEqualTypeOf<`success`>()
-    expectTypeOf(suspenseQueries[2].data).toEqualTypeOf<{ readonly name: 'selected' }>()
+    expectTypeOf(suspenseQueries[2].data).toEqualTypeOf<ReturnType<typeof select>>()
   })
 })
