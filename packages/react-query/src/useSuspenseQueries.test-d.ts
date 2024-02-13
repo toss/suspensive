@@ -5,7 +5,7 @@ import { useSuspenseQueries } from '../dist'
 const queryKey = ['key'] as const
 const queryFn = () => ({ text: 'response' }) as const
 const boolean = Math.random() > 0.5
-const select = (arg: ReturnType<typeof queryFn>) => arg.text
+const select = (data: Awaited<ReturnType<typeof queryFn>>) => data.text
 
 type AwaitedQueryFnReturn = Awaited<ReturnType<typeof queryFn>>
 type SelectReturn = Awaited<ReturnType<typeof select>>
