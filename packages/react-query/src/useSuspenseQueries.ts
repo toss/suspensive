@@ -31,11 +31,11 @@ interface ToInferWithEnabledOption<TQueryFnData, TQueryKey extends QueryKey, TEn
 }
 interface ToInferWithSelectOption<TQueryFnData, TData, TQueryKey extends QueryKey>
   extends ToInferOption<TQueryFnData, TQueryKey> {
-  select: (data: unknown) => TData
+  select: (data: any) => TData
 }
 interface ToInferWithSelectEnabledOption<TQueryFnData, TData, TQueryKey extends QueryKey, TEnabled>
   extends ToInferWithEnabledOption<TQueryFnData, TQueryKey, TEnabled> {
-  select: (data: unknown) => TData
+  select: (data: any) => TData
 }
 
 type GetOption<T> =
