@@ -13,7 +13,7 @@
     "@suspensive/react": "workspace:*",
     "@tanstack/react-query": "^5.18.1",
     "@tanstack/react-query-devtools": "^5.18.1",
-    "@tanstack/react-query-next-experimental": "^5.20.1",
+    "@tanstack/react-query-next-experimental": "^5.20.2",
     "axios": "^1.6.5",
     "next": "^14.1.0",
     "react": "^18.2.0",
