@@ -9,8 +9,8 @@ importers:
   .:
     devDependencies:
       '@arethetypeswrong/cli':
-        specifier: ^0.13.9
-        version: 0.13.9
+        specifier: ^0.13.10
+        version: 0.13.10
       '@changesets/changelog-github':
         specifier: ^0.5.0
         version: 0.5.0
@@ -522,8 +522,8 @@ packages:
     resolution: {integrity: sha512-Jh15/qVmrLGhkKJBdXlK1+9tY4lZruYjsgkDFj08ZmDiWVBLJcqkok7Z0/R0In+i1rScBpJlSvrTS2Lm41Pbnw==}
     dev: true
 
-  /@arethetypeswrong/cli@0.13.9:
-    resolution: {integrity: sha512-U4/0rpBy7/Y2DxcNtVbHH//dXcX1hek3IE0yeW++bWrArU8R9ZZbfdTjEj4FBLkEu+qYnDQUKDvl05S2uye/IQ==}
+  /@arethetypeswrong/cli@0.13.10:
+    resolution: {integrity: sha512-UV5Vk2ZaERQb0jS82rVWviKQieVpodiWKTOE/l8QN5fvG83AdhpI4QG8I5F1qSU/xq3K5RK44Bbgn6/JqwlT/A==}
     engines: {node: '>=18'}
     hasBin: true
     dependencies:
