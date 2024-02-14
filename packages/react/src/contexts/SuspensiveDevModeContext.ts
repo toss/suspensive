@@ -3,17 +3,20 @@ import { type ComponentProps, type ComponentType, createContext, createElement, 
 // https://github.com/TanStack/query/blob/v4/packages/react-query/src/useSyncExternalStore.ts
 import { useSyncExternalStore } from 'use-sync-external-store/shim/index.js'
 import { Subscribable } from '../models/Subscribable'
+import type { Nullable } from '../utility-types'
 import { noop } from '../utils/noop'
 
-export const DevModeContext = createContext<SuspensiveDevMode | null>(null)
+export const DevModeContext = createContext<Nullable<SuspensiveDevMode>>(null)
 
 type SyncDevMode = <TProps extends ComponentProps<ComponentType>>(
   Component: ComponentType<TProps & { devMode: SuspensiveDevMode }>
-) => (props: TProps) => React.FunctionComponentElement<
-  TProps & {
-    devMode: SuspensiveDevMode
-  }
-> | null
+) => (props: TProps) => Nullable<
+  React.FunctionComponentElement<
+    TProps & {
+      devMode: SuspensiveDevMode
+    }
+  >
+>
 
 export const syncDevMode: SyncDevMode =
   process.env.NODE_ENV === 'development'
