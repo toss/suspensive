@@ -1,5 +1,14 @@
 # @suspensive/react-query
 
+## 2.0.0-beta.4
+
+### Patch Changes
+
+- [#711](https://github.com/suspensive/react/pull/711) [`30f43c2`](https://github.com/suspensive/react/commit/30f43c2a08798be739f3892483103289fba4fe78) Thanks [@Kanary159357](https://github.com/Kanary159357)! - fix(react-query): useSuspenseQueries type error with select option
+
+- Updated dependencies []:
+  - @suspensive/react@2.0.0-beta.4
+
 ## 2.0.0-beta.3
 
 ### Patch Changes
