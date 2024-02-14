@@ -1,10 +1,11 @@
 /* eslint-disable react-hooks/rules-of-hooks */
+import { sleep } from '@suspensive/test-utils'
 import type { InfiniteData } from '@tanstack/react-query'
 import { describe, expectTypeOf, it } from 'vitest'
 import { useSuspenseInfiniteQuery } from '../dist'
 
 const queryKey = ['key'] as const
-const queryFn = () => 'response' as const
+const queryFn = () => sleep(10).then(() => ({ text: 'response' }) as const)
 const boolean = Math.random() > 0.5
 
 // @ts-expect-error no arg

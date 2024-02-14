@@ -13,7 +13,7 @@
     "url": "https://github.com/suspensive/react.git"
   },
   "license": "MIT",
-  "packageManager": "pnpm@8.13.1",
+  "packageManager": "pnpm@8.15.2",
   "type": "module",
   "scripts": {
     "build": "turbo run build",
@@ -45,11 +45,11 @@
     "test:watch": "turbo run test:watch --parallel"
   },
   "devDependencies": {
-    "@arethetypeswrong/cli": "^0.13.9",
+    "@arethetypeswrong/cli": "^0.13.10",
     "@changesets/changelog-github": "^0.5.0",
     "@changesets/cli": "^2.27.1",
-    "@commitlint/cli": "^18.6.0",
-    "@commitlint/config-conventional": "^18.6.0",
+    "@commitlint/cli": "^18.6.1",
+    "@commitlint/config-conventional": "^18.6.2",
     "@lhci/cli": "^0.13.0",
     "@testing-library/dom": "^9.3.4",
     "@testing-library/jest-dom": "^6.4.2",
@@ -60,7 +60,7 @@
     "@vitest/coverage-istanbul": "^1.2.2",
     "@vitest/ui": "^1.2.2",
     "eslint": "^8.56.0",
-    "husky": "^9.0.10",
+    "husky": "^9.0.11",
     "jsdom": "^24.0.0",
     "lint-staged": "^15.2.2",
     "ms": "3.0.0-canary.1",
@@ -74,7 +74,7 @@
     "tsup": "^8.0.2",
     "turbo": "latest",
     "typescript": "^5.3.3",
-    "vite": "^5.1.1",
+    "vite": "^5.1.2",
     "vitest": "^1.2.2"
   }
 }
