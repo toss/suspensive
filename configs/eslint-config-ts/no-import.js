@@ -18,9 +18,10 @@ module.exports = {
       {
         selector: 'typeParameter',
         format: ['PascalCase'],
-        leadingUnderscore: 'allow',
+        leadingUnderscore: 'forbid',
+        trailingUnderscore: 'forbid',
         custom: {
-          regex: '^(T|\\$)[A-Z][a-zA-Z]+[0-9]*$',
+          regex: '^(T|T[A-Z][A-Za-z]+)$',
           match: true,
         },
       },
