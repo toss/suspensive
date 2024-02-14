@@ -2,10 +2,6 @@
 
 ## 2.0.0-beta.5
 
-### Patch Changes
-
-- [#731](https://github.com/suspensive/react/pull/731) [`df78d21`](https://github.com/suspensive/react/commit/df78d21faef478930fb6fb26d6f2eccfc148da9d) Thanks [@ssi02014](https://github.com/ssi02014)! - feat(react): add Nullable as utility type
-
 ## 2.0.0-beta.4
 
 ## 2.0.0-beta.3
@@ -29,6 +25,12 @@
 - ea1c4ed: feat(react): rename Suspensive defaultOptions -> defaultProps
 - 78f5bd4: feat(react, react-query): remove deprecated apis
 - 837ed18: feat(\*): remove target react v16, v17
+
+## 1.26.3
+
+### Patch Changes
+
+- [#731](https://github.com/suspensive/react/pull/731) [`df78d21`](https://github.com/suspensive/react/commit/df78d21faef478930fb6fb26d6f2eccfc148da9d) Thanks [@ssi02014](https://github.com/ssi02014)! - feat(react): add Nullable as utility type
 
 ## 1.26.2
 
