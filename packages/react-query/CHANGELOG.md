@@ -1,5 +1,16 @@
 # @suspensive/react-query
 
+## 1.26.2
+
+### Patch Changes
+
+- [#723](https://github.com/suspensive/react/pull/723) [`53120da`](https://github.com/suspensive/react/commit/53120daa0c9c3f3064d9a1d0dbbe37eae6092697) Thanks [@manudeli](https://github.com/manudeli)! - test(react-query): add test cases for hooks with select
+
+- [#711](https://github.com/suspensive/react/pull/711) [`30f43c2`](https://github.com/suspensive/react/commit/30f43c2a08798be739f3892483103289fba4fe78) Thanks [@Kanary159357](https://github.com/Kanary159357)! - fix(react-query): useSuspenseQueries type error with select option
+
+- Updated dependencies []:
+  - @suspensive/react@1.26.2
+
 ## 1.26.1
 
 ### Patch Changes
