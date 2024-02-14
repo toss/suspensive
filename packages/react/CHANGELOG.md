@@ -1,5 +1,11 @@
 # @suspensive/react
 
+## 1.26.3
+
+### Patch Changes
+
+- [#731](https://github.com/suspensive/react/pull/731) [`df78d21`](https://github.com/suspensive/react/commit/df78d21faef478930fb6fb26d6f2eccfc148da9d) Thanks [@ssi02014](https://github.com/ssi02014)! - feat(react): add Nullable as utility type
+
 ## 1.26.2
 
 ## 1.26.1
