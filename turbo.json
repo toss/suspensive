@@ -5,11 +5,6 @@
       "dependsOn": ["^build"],
       "outputs": ["dist/**", ".next/**"]
     },
-    "build:watch": {
-      "dependsOn": ["prepack"],
-      "cache": false,
-      "outputs": ["dist/**"]
-    },
     "ci:attw": {
       "dependsOn": ["prepack"]
     },
@@ -21,6 +16,9 @@
     },
     "ci:type": {
       "dependsOn": ["prepack"]
+    },
+    "clean": {
+      "cache": false
     },
     "test": {
       "dependsOn": ["prepack"],
@@ -50,7 +48,9 @@
     },
     "dev": {
       "dependsOn": ["prepack"],
-      "cache": false
+      "outputs": ["dist/**"],
+      "cache": false,
+      "persistent": true
     }
   },
   "globalEnv": ["NODE_ENV"]
