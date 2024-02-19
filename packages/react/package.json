@@ -54,8 +54,6 @@
     "dev": "tsup --watch",
     "prepack": "pnpm build",
     "test": "vitest run --coverage --typecheck",
-    "test:production": "vitest run --config ./vitest-production.config.ts",
-    "test:production:watch": "vitest --config ./vitest-production.config.ts --ui",
     "test:watch": "vitest --ui --coverage --typecheck"
   },
   "dependencies": {
