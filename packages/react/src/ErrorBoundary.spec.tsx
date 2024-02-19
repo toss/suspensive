@@ -1,5 +1,6 @@
 import { CustomError, ERROR_MESSAGE, FALLBACK, TEXT, ThrowError, ThrowNull } from '@suspensive/test-utils'
 import { act, render, screen, waitFor } from '@testing-library/react'
+import { userEvent } from '@testing-library/user-event'
 import ms from 'ms'
 import { type ComponentRef, createElement, createRef } from 'react'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
@@ -255,6 +256,23 @@ describe('<ErrorBoundary/>', () => {
     expect(onErrorChild).toBeCalledTimes(0)
     expect(onErrorParent).toBeCalledTimes(1)
     await waitFor(() => expect(screen.queryByText(`${ERROR_MESSAGE} of Parent`)).toBeInTheDocument())
+  })
+})
+
+describe('<ErrorBoundary.Consumer/>', () => {
+  it('should consume ErrorBoundaryContext like useErrorBoundary', async () => {
+    const user = userEvent.setup()
+    render(
+      <ErrorBoundary fallback={({ error }) => <div>{error.message}</div>}>
+        <ErrorBoundary.Consumer>
+          {(errorBoundary) => (
+            <button onClick={() => errorBoundary.setError(new Error(ERROR_MESSAGE))}>error maker</button>
+          )}
+        </ErrorBoundary.Consumer>
+      </ErrorBoundary>
+    )
+    user.click(screen.getByRole('button'))
+    await waitFor(() => expect(screen.getByText(ERROR_MESSAGE)).toBeInTheDocument())
   })
 })
 

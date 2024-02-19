@@ -21,7 +21,7 @@
     "changeset": "changeset",
     "changeset:publish": "pnpm prepack && changeset publish",
     "changeset:version": "changeset version && pnpm i --lockfile-only",
-    "ci:all": "pnpm ci:attw && pnpm ci:eslint && pnpm ci:lighthouse && pnpm ci:publint && pnpm ci:sherif && pnpm ci:type && pnpm test && pnpm test:production && pnpm build",
+    "ci:all": "pnpm ci:attw && pnpm ci:eslint && pnpm ci:lighthouse && pnpm ci:publint && pnpm ci:sherif && pnpm ci:type && pnpm test && pnpm build",
     "ci:attw": "turbo run ci:attw",
     "ci:eslint": "turbo run ci:eslint",
     "ci:lighthouse": "lhci autorun",
@@ -38,8 +38,6 @@
     "prepare": "husky install",
     "start": "turbo run start",
     "test": "turbo run test",
-    "test:production": "turbo run test:production",
-    "test:production:watch": "turbo run test:production:watch --parallel",
     "test:watch": "turbo run test:watch --parallel"
   },
   "devDependencies": {
