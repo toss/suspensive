@@ -1,5 +1,11 @@
 # @suspensive/react
 
+## 1.26.4
+
+### Patch Changes
+
+- [#744](https://github.com/suspensive/react/pull/744) [`2bfe301`](https://github.com/suspensive/react/commit/2bfe301fd97e8cc9467245dde71ea052dbba409e) Thanks [@manudeli](https://github.com/manudeli)! - test(react): add test cases for devMode in production mode
+
 ## 1.26.3
 
 ### Patch Changes
