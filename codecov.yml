@@ -11,7 +11,6 @@ comment:
 
 ignore:
   - '**/*.test-d.*'
-  - '**/*.setup.*'
 
 component_management:
   individual_components:

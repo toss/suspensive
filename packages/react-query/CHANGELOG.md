@@ -1,5 +1,12 @@
 # @suspensive/react-query
 
+## 2.0.0-beta.6
+
+### Patch Changes
+
+- Updated dependencies [[`2bfe301`](https://github.com/suspensive/react/commit/2bfe301fd97e8cc9467245dde71ea052dbba409e)]:
+  - @suspensive/react@2.0.0-beta.6
+
 ## 2.0.0-beta.5
 
 ### Patch Changes
@@ -47,13 +54,9 @@
 - 78f5bd4: feat(react, react-query): remove deprecated apis
 - 837ed18: feat(\*): remove target react v16, v17
 
-### Patch Changes
+## 1.26.4
 
-- Updated dependencies [ea1c4ed]
-- Updated dependencies [78f5bd4]
-- Updated dependencies [837ed18]
-  - @suspensive/react@2.0.0-beta.0
-  - @suspensive/react@1.26.3
+- @suspensive/react@1.26.4
 
 ## 1.26.3
 

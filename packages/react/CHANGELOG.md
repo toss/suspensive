@@ -1,5 +1,11 @@
 # @suspensive/react
 
+## 2.0.0-beta.6
+
+### Patch Changes
+
+- [#744](https://github.com/suspensive/react/pull/744) [`2bfe301`](https://github.com/suspensive/react/commit/2bfe301fd97e8cc9467245dde71ea052dbba409e) Thanks [@manudeli](https://github.com/manudeli)! - test(react): add test cases for devMode in production mode
+
 ## 2.0.0-beta.5
 
 ## 2.0.0-beta.4
@@ -25,6 +31,8 @@
 - ea1c4ed: feat(react): rename Suspensive defaultOptions -> defaultProps
 - 78f5bd4: feat(react, react-query): remove deprecated apis
 - 837ed18: feat(\*): remove target react v16, v17
+
+## 1.26.4
 
 ## 1.26.3
 
