@@ -27,7 +27,6 @@ describe('syncDevMode (process.env.NODE_ENV: development)', () => {
         ),
       }
     )
-    // expect(screen.queryByText(TEXT)).toBeInTheDocument()
     expect(logSpy.mock.calls[0][0]).toBe(false)
     user.click(screen.getByRole('Suspensive.DevMode-off'))
     await waitFor(() => expect(logSpy.mock.calls[1][0]).toBe(true))

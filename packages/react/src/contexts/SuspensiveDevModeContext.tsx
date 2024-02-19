@@ -4,8 +4,9 @@ import { type ComponentProps, type ComponentType, createContext, useCallback, us
 import { useSyncExternalStore } from 'use-sync-external-store/shim/index.js'
 import { Subscribable } from '../models/Subscribable'
 import type { Nullable } from '../utility-types'
-import { getNull } from '../utils/getNull'
-import { noop } from '../utils/noop'
+import { noop } from '../utils'
+
+const getNull = () => null
 
 export const DevModeContext = createContext<Nullable<SuspensiveDevMode>>(null)
 if (process.env.NODE_ENV === 'development') {
