@@ -1,93 +1,300 @@
 import { Steps } from 'nextra/components'
 import { Callout } from '@/components'
 
-# Migrating to Suspensive v2 (Work in progress)
+# Migrating to Suspensive v2
 
-Suspensive V2, we focused on increasing `compatibility` and `improving DX`.
-To accomplish this, we had to introduce some dramatic changes, which resulted in the removal of some previously deprecated features.
+Suspensive v2, **we focused on increasing compatibility and improving DX**.
+To accomplish this, we had to introduce some dramatic changes. As a result, we removed some previously deprecated features and added some new interfaces.
 
-## Upgrade steps
+### The minimum required React version is now 18.0
 
-Here is a list of steps to migrate your project to v2.
+**Suspensive v2 requires React 18.0 or later.** This is because we are using the new useSyncExternalStore, useId hook, which is only available in React 18.0 and later. Previously, we have been using the shim provided by React.
 
-<Steps>
+## @suspensive/react
 
-### Update our package version
+### New [`<DevMode/>`](./react/DevMode) component
 
-```sh
-yarn up '@suspensive/*'
-#or
-pnpm up "@suspensive/*"
-```
+This is our new feature for DX with new `devMode` prop of `<Suspense/>`, `<ErrorBoundary/>`
 
-Make sure you update all `@suspensive` packages you use to `@suspensive/<package-name>@2.0.0` and your react dependencies to at least v18
+We have seen many people use way such as forcing a fallback into each component to test the fallback directly or reloading the page to re-fetch. so We added the `devMode` prop to each `<Suspense/>` and `<ErrorBoundary/>` to easily test the fallback of them.
 
-### Check React version with v18
+![devMode example](/devMode.gif)
 
-<Callout>
+```jsx
+import { useState } from 'react'
+import { DevMode, Suspensive, SuspensiveProvider, Suspense, ErrorBoundary } from '@suspensive/react'
 
-🚨 Suspensive v2 is not backwards compatible with React v17 and lower. Make sure to upgrade to React v18.
+const Example = () => {
+  const [suspensive] = useState(new Suspensive())
 
-</Callout>
-
-Here is how your dependencies could look like:
-
-```json
-{
-  "dependencies": {
-    "@suspensive/react": "^2.0.0",
-    "@suspensive/react-query": "^2.0.0",
-    "react": "^18.0.0",
-    "react-dom": "^18.0.0"
-  },
-  "devDependencies": {
-    "@types/react": "^18.0.0",
-    "@types/react-dom": "^18.0.0"
-  }
+  return (
+    <SuspensiveProvider value={suspensive}>
+      {/* This devMode prop will work only in development mode */}
+      <Suspense fallback={<>loading...</>} devMode={{ showFallback: true }}>
+        {/* children */}
+      </Suspense>
+      <ErrorBoundary fallback={<>error</>} devMode={{ showFallback: true }}>
+        {/* children */}
+      </ErrorBoundary>
+      {/* This <DevMode/> component will appear only in development mode */}
+      {/* If developer click <DevMode/>, devMode prop of <Suspense/> <ErrorBoundary/> will be activated */}
+      <DevMode />
+    </SuspensiveProvider>
+  )
 }
 ```
 
-</Steps>
+### New [`wrap`](./react/wrap) builder
 
-## Overview Changes
+A new feature that wraps a component in `<Suspense/>`, `<ErrorBoundary/>`, and `<ErrorBoundaryGroup/>` all at once.
 
-### `new` DevMode
+For `<Suspense/>`, `<ErrorBoundary/>`, `<ErrorBoundaryGroup/>`, etc. many people use hoc to wrap these around a component. This is because these components require some processing on their children. So, in order to not unnecessarily divide components and create depth, we use the hocs for each interface, withErrorBoundary, withErrorBoundaryGroup, and withSuspense, but as we often use each hoc in combination, we also need to improve readability. To improve this, we decided to provide wrap.
 
-This is our new feature for DX using suspensive
+```jsx
+import { wrap } from '@suspensive/react'
+import { useSuspenseQuery } from '@suspensive/react-query'
 
-> some of describes here ...
+const Example = wrap
+  .ErrorBoundaryGroup({ blockOutside: false })
+  .ErrorBoundary({ fallback: ({ error }) => <>{error.message}</>, onError: logger.log })
+  .Suspense({ fallback: <>loading...</>, clientOnly: true })
+  .on(() => {
+    const query = useSuspenseQuery({
+      queryKey: ['key'],
+      queryFn: () => api.text(),
+    })
+    return <>{query.data.text}</>
+  })
+```
 
-### `new` wrap
+### New [`ErrorBoundary.Consumer`](./react/ErrorBoundary), [`ErrorBoundaryGroup.Consumer`](./react/ErrorBoundaryGroup)
 
-This is our new feature hoc
+These components can be used to use `useErrorBoundary`, `useErrorBoundaryGroup` in jsx inlinely
 
-> some of describes here ...
+```jsx
+import { ErrorBoundary, ErrorBoundaryGroup } from '@suspensive/react'
 
-## Handling BREAKING CHANGES
+const Example = () => {
+  return (
+    <ErrorBoundaryGroup>
+      <ErrorBoundaryGroup.Consumer>
+        {({ reset }) => <button onClick={reset}>reset all</button>}
+      </ErrorBoundaryGroup.Consumer>
+      <ErrorBoundary fallback={({ error }) => <>{error.message}</>}>
+        <ErrorBoundary.Consumer>
+          {({ setError }) => <button onClick={() => setError(new Error('error message'))}>setError</button>}
+        </ErrorBoundary.Consumer>
+      </ErrorBoundary>
+    </ErrorBoundaryGroup>
+  )
+}
+```
 
-### @suspensive/react
+### Handling BREAKING CHANGES
 
-#### `removed` AsyncBoundary
+#### Removed `<AsyncBoundary/>`
 
-We removed AsyncBoundary in v2 [#295](https://github.com/suspensive/react/issues/295)
+We removed `<AsyncBoundary/>` in v2 [#295](https://github.com/suspensive/react/issues/295)
 
-AsyncBoundary's feature is just wrap two component(Suspense, Errorboundry) by one.
+Because `<AsyncBoundary/>` uses `<ErrorBoundary/>` internally, it can be used with `useErrorBoundary` and is affected by `<ErrorBoundaryGroup/>`. We decided to remove this component from v2, believing that it would be better for maintainability and interface unification for library users.
+
+`<AsyncBoundary/>`'s feature is just wrap two component(`<Suspense/>`, `<Errorboundry/>`) by one.
 So, you can split by two like this.
 
 ```diff
-- <AsyncBoundary pendingFallback={<Loading />} rejectedFallback={<Error />} onError={onError} onReset={onReset}>
++ import { Suspense, Errorboundry } from '@suspensive/react'
+- import { AsyncBoundary } from '@suspensive/react'
+
 + <Errorboundry fallback={<Error />} onError={onError} onReset={onReset}>
 +   <Suspense fallback={<Loading />}>
-    <Children />
-- </AsyncBoundary>
++     <Children />
 +   </Suspense>
 + </Errorboundry>
+- <AsyncBoundary pendingFallback={<Loading />} rejectedFallback={<Error />} onError={onError} onReset={onReset}>
+-   <Children />
+- </AsyncBoundary>
 ```
 
-## Deprecated features
+#### Removed `withSuspense`, `withDelay`, `withErrorboundry`, `withErrorBoundaryGroup`
 
-### withSuspense, withDelay, withErrorboundry, withErrorBoundaryGroup
+These all hocs can be replaced beautifully by new hoc builder [`wrap`](./react/wrap) in v2
 
-This hocs are deprecated by new hoc `wrap`
+```diff
++ import { wrap } from '@suspensive/react'
+- import { withSuspense, withErrorBoundary, withErrorBoundaryGroup } from '@suspensive/react'
 
-### @suspensive/react
++ const Example = wrap
++   .ErrorBoundaryGroup({ blockOutside: false })
++   .ErrorBoundary({ fallback: ({ error }) => <>{error.message}</>, onError: logger.log })
++   .Suspense({ fallback: <>loading...</>, clientOnly: true })
++   .on(() => {
++     const query = useSuspenseQuery({
++       queryKey: ['key'],
++       queryFn: () => api.text(),
++     })
++     return <>{query.data.text}</>
++   })
+- const Example = withErrorBoundaryGroup(
+-   withErrorBoundary(
+-     withSuspense(
+-       () => {
+-         const query = useSuspenseQuery({
+-           queryKey: ['key'],
+-           queryFn: () => api.text(),
+-         })
+-         return <>{query.data.text}</>
+-       },
+-       { fallback: <>loading...</>, clientOnly: true }
+-     ),
+-     { fallback: ({ error }) => <>{error.message}</>, onError: logger.log }
+-   ),
+-   { blockOutside: false }
+- )
+```
+
+```diff
++ import { wrap } from '@suspensive/react'
+- import { withSuspense } from '@suspensive/react'
+
++ const Example = wrap
++   .Suspense({
++     fallback: <>loading...</>,
++     clientOnly: true,
++   })
++   .on(() => {
++     const query = useSuspenseQuery({
++       queryKey: ['key'],
++       queryFn: () => api.text(),
++     })
++     return <>{query.data.text}</>
++   })
+- const Example = withSuspense(
+-   () => {
+-     const query = useSuspenseQuery({
+-       queryKey: ['key'],
+-       queryFn: () => api.text(),
+-     })
+-     return <>{query.data.text}</>
+-   },
+-   {
+-     fallback: <>loading...</>,
+-     clientOnly: true,
+-   }
+- )
+```
+
+#### Removed `<ErrorBoundaryGroup.Reset/>`
+
+`<ErrorBoundaryGroup.Reset/>` just use `useErrorBoundaryGroup` internally. so We thought that changing it to something like Context.Consumer would make the component's behavior easier to understand for React developers. We changed the name to `<ErrorBoundaryGroup.Consumer/>` and kept the interface the same.
+
+```diff
+import { ErrorBoundaryGroup } from '@suspensive/react'
+
+const Exmample = () => {
+  return (
+    <ErrorBoundaryGroup>
+-     <ErrorBoundaryGroup.Reset trigger={(group) => <button onClick={group.reset}>reset all</button>} />
++     <ErrorBoundaryGroup.Consumer>
++       {(group) => <button onClick={group.reset}>reset all</button>}
++     </ErrorBoundaryGroup.Consumer>
+    </ErrorBoundaryGroup>
+  )
+}
+```
+
+#### Rename `defaultOptions` → `defaultProps` of `Suspensive`
+
+```diff
+import { ErrorBoundaryGroup } from '@suspensive/react'
+
+const suspensive = new Suspensive({
+- defaultOptions: {
++ defaultProps: {
+    suspense: {
+      fallback: 'default loading...',
+    },
+  },
+})
+```
+
+#### Rename `<Suspense.CSROnly/>` → `<Suspense clientOnly/>` as prop
+
+```diff
+import { Suspense } from '@suspensive/react'
+
+const Example = () => {
+  return (
+-   <Suspense.CSROnly fallback={<>loading...</>}>
++   <Suspense clientOnly fallback={<>loading...</>}>
+      <>children</>
+    </Suspense.CSROnly>
+  )
+}
+```
+
+## @suspensive/react-query
+
+@suspensive/react-query v1 was initially one of the community resources for TanStack Query v4 and was a library that provided previews of `useSuspenseQuery`, `useSuspenseQueries`, and `useSuspenseInfiniteQuery` in @tanstack/react-query v4 not officially.
+
+However, @tanstack/react-query v5 officially added `useSuspenseQuery`, `useSuspenseQueries`, and `useSuspenseInfiniteQuery` as hooks for Suspense. So, **we want to make @suspensive/react-query v2 a library by making the interface as similar to the original as possible to make it easier for developers to migrate to @tanstack/react-query v5**.
+
+And @tanstack/react-query v4 is still useful in teams that have difficulty introducing the latest version due to the high browser specifications required by @tanstack/react-query v5.
+
+Even in such cases, we want to make this library useful if you want to use hooks for suspense.
+
+### Handling BREAKING CHANGES
+
+#### Removed `enabled`, `placeholderData` option of `useSuspenseQuery`
+
+```diff
+import { useSuspenseQuery } from '@suspensive/react-query'
+
+const Example = () => {
+  const query = useSuspenseQuery({
+    queryKey: ['key'],
+    queryFn: () => api.text()
+-   enabled: Math.random() > 0.5,
+-   placeholderData: 'placeholder'
+  })
+}
+```
+
+#### Removed `enabled`, `placeholderData` option of `useSuspenseInfiniteQuery`
+
+```diff
+import { useSuspenseInfiniteQuery } from '@suspensive/react-query'
+
+const Example = () => {
+  const infiniteQuery = useSuspenseInfiniteQuery({
+    queryKey: ['key'],
+    queryFn: () => api.text()
+-   enabled: Math.random() > 0.5,
+-   placeholderData: 'placeholder'
+  })
+}
+```
+
+#### Unified interface naming for options and return type of `useSuspenseQuery` same with @tanstack/react-query v5's useSuspenseQuery
+
+```diff filename="index.ts of @suspensive/react-query"
+export { useSuspenseQuery } from './useSuspenseQuery'
+export type {
+- BaseUseSuspenseQueryResult,
+  UseSuspenseQueryOptions,
+- UseSuspenseQueryResultOnLoading,
+- UseSuspenseQueryResultOnSuccess,
++ UseSuspenseQueryResult
+} from './useSuspenseQuery'
+export { useSuspenseQueries } from './useSuspenseQueries'
++ export type { SuspenseQueriesOptions, SuspenseQueriesResults } from './useSuspenseQueries'
+export { useSuspenseInfiniteQuery } from './useSuspenseInfiniteQuery'
+export type {
+- BaseUseSuspenseInfiniteQueryResult,
+  UseSuspenseInfiniteQueryOptions,
+- UseSuspenseInfiniteQueryResultOnLoading,
+- UseSuspenseInfiniteQueryResultOnSuccess,
++ UseSuspenseInfiniteQueryResult
+} from './useSuspenseInfiniteQuery'
+- export { QueryAsyncBoundary } from './QueryAsyncBoundary'
+export { QueryErrorBoundary } from './QueryErrorBoundary'
+```

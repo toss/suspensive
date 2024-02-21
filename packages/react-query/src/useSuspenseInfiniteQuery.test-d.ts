@@ -33,11 +33,11 @@ useSuspenseInfiniteQuery(queryKey, { queryFn, enabled: boolean })
 useSuspenseInfiniteQuery(queryKey, queryFn, { enabled: boolean })
 
 // @ts-expect-error no placeholderData
-useSuspenseInfiniteQuery({ queryKey, queryFn, placeholderData: boolean })
+useSuspenseInfiniteQuery({ queryKey, queryFn, placeholderData: 'placeholder' })
 // @ts-expect-error no placeholderData
-useSuspenseInfiniteQuery(queryKey, { queryFn, placeholderData: boolean })
+useSuspenseInfiniteQuery(queryKey, { queryFn, placeholderData: 'placeholder' })
 // @ts-expect-error no placeholderData
-useSuspenseInfiniteQuery(queryKey, queryFn, { placeholderData: boolean })
+useSuspenseInfiniteQuery(queryKey, queryFn, { placeholderData: 'placeholder' })
 
 // @ts-expect-error no isPlaceholderData
 useSuspenseInfiniteQuery(queryKey, queryFn).isPlaceholderData
