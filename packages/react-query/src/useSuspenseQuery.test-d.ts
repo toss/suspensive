@@ -33,11 +33,11 @@ useSuspenseQuery(queryKey, { queryFn, enabled: boolean })
 useSuspenseQuery(queryKey, queryFn, { enabled: boolean })
 
 //@ts-expect-error no placeholderData
-useSuspenseQuery({ queryKey, queryFn, placeholderData: boolean })
+useSuspenseQuery({ queryKey, queryFn, placeholderData: 'placeholder' })
 //@ts-expect-error no placeholderData
-useSuspenseQuery(queryKey, { queryFn, placeholderData: boolean })
+useSuspenseQuery(queryKey, { queryFn, placeholderData: 'placeholder' })
 //@ts-expect-error no placeholderData
-useSuspenseQuery(queryKey, queryFn, { placeholderData: boolean })
+useSuspenseQuery(queryKey, queryFn, { placeholderData: 'placeholder' })
 
 //@ts-expect-error no isPlaceholderData
 useSuspenseQuery(queryKey, queryFn).isPlaceholderData

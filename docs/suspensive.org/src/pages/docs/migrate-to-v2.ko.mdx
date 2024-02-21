@@ -1,5 +1,300 @@
-# Suspensive v2로 마이그레이션하기 (작성중)
+import { Steps } from 'nextra/components'
+import { Callout } from '@/components'
+
+# Suspensive v2로 마이그레이션하기
+
+Suspensive v2, **호환성을 높이고 DX를 개선하는 데 중점을 두었습니다**.
+이를 달성하기 위해 우리는 몇 가지 극적인 변화를 도입해야 했고, 그 결과 이전에 deprecated되었던 일부 기능을 제거하고 새 인터페이스를 몇가지 추가하게 되었습니다.
+
+### 최소 필수 React 버전은 18.0입니다.
+
+**Suspensive v2에는 React 18.0 이상이 필요합니다.** 이는 React 18.0 이상에서만 사용할 수 있는 새로운 useSyncExternalStore, useId를 사용하기 때문입니다. 이전에는 React에서 제공하는 shim을 사용해 왔습니다.
 
 ## @suspensive/react
 
+### 새로운 [`<DevMode/>`](./react/DevMode) 컴포넌트
+
+이것은 DX를 위해 `<Suspense/>`, `<ErrorBoundary/>`의 새로운 `devMode` prop과 함께 사용하는 새로운 기능입니다.
+
+우리는 많은 사람들이 각 컴포넌트의 fallback을 강제로 적용하여 fallback을 직접 테스트하거나 페이지를 다시 로드하여 다시 fetch하는 등의 방법을 사용하는 것을 보았습니다. 그래서 우리는 각각의 `<Suspense/>` 및 `<ErrorBoundary/>`에 `devMode` prop을 추가하여 이들의 폴백을 쉽게 테스트할 수 있게 했습니다.
+
+![devMode example](/devMode.gif)
+
+```jsx
+import { useState } from 'react'
+import { DevMode, Suspensive, SuspensiveProvider, Suspense, ErrorBoundary } from '@suspensive/react'
+
+const Example = () => {
+  const [suspensive] = useState(new Suspensive())
+
+  return (
+    <SuspensiveProvider value={suspensive}>
+      {/* This devMode prop will work only in development mode */}
+      <Suspense fallback={<>loading...</>} devMode={{ showFallback: true }}>
+        {/* children */}
+      </Suspense>
+      <ErrorBoundary fallback={<>error</>} devMode={{ showFallback: true }}>
+        {/* children */}
+      </ErrorBoundary>
+      {/* This <DevMode/> component will appear only in development mode */}
+      {/* If developer click <DevMode/>, devMode prop of <Suspense/> <ErrorBoundary/> will be activated */}
+      <DevMode />
+    </SuspensiveProvider>
+  )
+}
+```
+
+### 새로운 [`wrap`](./react/wrap) 빌더
+
+컴포넌트를 `<Suspense/>`, `<ErrorBoundary/>`, `<ErrorBoundaryGroup/>`으로 한번에 래핑하는 새로운 기능입니다.
+
+`<Suspense/>`, `<ErrorBoundary/>`, `<ErrorBoundaryGroup/>` 등의 경우 많은 사람들이 hoc를 사용하여 이러한 구성 요소를 구성 요소 주위에 래핑합니다. 이 컴포넌트들은 children에 어떤 처리를 요하기 때문입니다. 그래서 컴포넌트를 불필요하게 나누지 않고 depth를 만들지 않기 위해 각 interface를 위한 hoc인 withErrorBoundary, withErrorBoundaryGroup, withSuspense를 사용하지만 각 hoc를 조합해서 사용하는 경우도 자주 발생하면서 가독성 또한 개선할 필요가 있었습니다. 이를 개선하기 위해 wrap을 제공하기로 했습니다.
+
+```jsx
+import { wrap } from '@suspensive/react'
+import { useSuspenseQuery } from '@suspensive/react-query'
+
+const Example = wrap
+  .ErrorBoundaryGroup({ blockOutside: false })
+  .ErrorBoundary({ fallback: ({ error }) => <>{error.message}</>, onError: logger.log })
+  .Suspense({ fallback: <>loading...</>, clientOnly: true })
+  .on(() => {
+    const query = useSuspenseQuery({
+      queryKey: ['key'],
+      queryFn: () => api.text(),
+    })
+    return <>{query.data.text}</>
+  })
+```
+
+### 새로운 [`ErrorBoundary.Consumer`](./react/ErrorBoundary), [`ErrorBoundaryGroup.Consumer`](./react/ErrorBoundaryGroup) 컴포넌트
+
+이 컴포넌트는 jsx에서 `useErrorBoundary`, `useErrorBoundaryGroup`을 인라인으로 사용할 수 있습니다.
+
+```jsx
+import { ErrorBoundary, ErrorBoundaryGroup } from '@suspensive/react'
+
+const Example = () => {
+  return (
+    <ErrorBoundaryGroup>
+      <ErrorBoundaryGroup.Consumer>
+        {({ reset }) => <button onClick={reset}>reset all</button>}
+      </ErrorBoundaryGroup.Consumer>
+      <ErrorBoundary fallback={({ error }) => <>{error.message}</>}>
+        <ErrorBoundary.Consumer>
+          {({ setError }) => <button onClick={() => setError(new Error('error message'))}>setError</button>}
+        </ErrorBoundary.Consumer>
+      </ErrorBoundary>
+    </ErrorBoundaryGroup>
+  )
+}
+```
+
+### BREAKING CHANGES 처리하기
+
+#### `<AsyncBoundary/>` 제거
+
+v2에서는 `<AsyncBoundary/>`를 제거했습니다[#295](https://github.com/suspensive/react/issues/295).
+
+`<AsyncBoundary/>`는 내부적으로 `<ErrorBoundary/>`를 사용하기 때문에 `useErrorBoundary`와 함께 사용할 수 있으며 `<ErrorBoundaryGroup/>`의 영향을 받습니다. 우리는 라이브러리 사용자를 위한 유지 관리 및 인터페이스 통합에 더 좋을 것이라고 믿고 이 구성 요소를 v2에서 제거하기로 결정했습니다.
+
+`<AsyncBoundary/>`의 기능은 두 컴포넌트(`<Suspense/>`, `<Errorboundry/>`)를 하나씩 래핑하는 것입니다.
+그러면 이렇게 2개로 나눌 수 있습니다.
+
+```diff
++ import { Suspense, Errorboundry } from '@suspensive/react'
+- import { AsyncBoundary } from '@suspensive/react'
+
++ <Errorboundry fallback={<Error />} onError={onError} onReset={onReset}>
++   <Suspense fallback={<Loading />}>
++     <Children />
++   </Suspense>
++ </Errorboundry>
+- <AsyncBoundary pendingFallback={<Loading />} rejectedFallback={<Error />} onError={onError} onReset={onReset}>
+-   <Children />
+- </AsyncBoundary>
+```
+
+#### `withSuspense`, `withDelay`, `withErrorboundry`, `withErrorBoundaryGroup` 제거
+
+이러한 모든 hoc는 v2의 새로운 hoc 빌더 `wrap`으로 아름답게 대체될 수 있습니다.
+
+```diff
++ import { wrap } from '@suspensive/react'
+- import { withSuspense, withErrorBoundary, withErrorBoundaryGroup } from '@suspensive/react'
+
++ const Example = wrap
++   .ErrorBoundaryGroup({ blockOutside: false })
++   .ErrorBoundary({ fallback: ({ error }) => <>{error.message}</>, onError: logger.log })
++   .Suspense({ fallback: <>loading...</>, clientOnly: true })
++   .on(() => {
++     const query = useSuspenseQuery({
++       queryKey: ['key'],
++       queryFn: () => api.text(),
++     })
++     return <>{query.data.text}</>
++   })
+- const Example = withErrorBoundaryGroup(
+-   withErrorBoundary(
+-     withSuspense(
+-       () => {
+-         const query = useSuspenseQuery({
+-           queryKey: ['key'],
+-           queryFn: () => api.text(),
+-         })
+-         return <>{query.data.text}</>
+-       },
+-       { fallback: <>loading...</>, clientOnly: true }
+-     ),
+-     { fallback: ({ error }) => <>{error.message}</>, onError: logger.log }
+-   ),
+-   { blockOutside: false }
+- )
+```
+
+```diff
++ import { wrap } from '@suspensive/react'
+- import { withSuspense } from '@suspensive/react'
+
++ const Example = wrap
++   .Suspense({
++     fallback: <>loading...</>,
++     clientOnly: true,
++   })
++   .on(() => {
++     const query = useSuspenseQuery({
++       queryKey: ['key'],
++       queryFn: () => api.text(),
++     })
++     return <>{query.data.text}</>
++   })
+- const Example = withSuspense(
+-   () => {
+-     const query = useSuspenseQuery({
+-       queryKey: ['key'],
+-       queryFn: () => api.text(),
+-     })
+-     return <>{query.data.text}</>
+-   },
+-   {
+-     fallback: <>loading...</>,
+-     clientOnly: true,
+-   }
+- )
+```
+
+#### `<ErrorBoundaryGroup.Reset/>` 제거
+
+`<ErrorBoundaryGroup.Reset/>`은 내부적으로 `useErrorBoundaryGroup`을 사용합니다. 그래서 우리는 이를 Context.Consumer와 같은 것으로 변경하면 React 개발자가 이 컴포넌트의 동작을 더 쉽게 이해할 수 있을 것이라고 생각했습니다. 이름을 `<ErrorBoundaryGroup.Consumer/>`로 변경하고 인터페이스를 Context.Consumer와 동일하게 유지했습니다.
+
+```diff
+import { ErrorBoundaryGroup } from '@suspensive/react'
+
+const Exmample = () => {
+  return (
+    <ErrorBoundaryGroup>
+-     <ErrorBoundaryGroup.Reset trigger={(group) => <button onClick={group.reset}>reset all</button>} />
++     <ErrorBoundaryGroup.Consumer>
++       {(group) => <button onClick={group.reset}>reset all</button>}
++     </ErrorBoundaryGroup.Consumer>
+    </ErrorBoundaryGroup>
+  )
+}
+```
+
+#### `defaultOptions` → `Suspensive`의 `defaultProps`로 이름 변경
+
+```diff
+import { ErrorBoundaryGroup } from '@suspensive/react'
+
+const suspensive = new Suspensive({
+- defaultOptions: {
++ defaultProps: {
+    suspense: {
+      fallback: 'default loading...',
+    },
+  },
+})
+```
+
+#### `<Suspense.CSROnly/>` → `<Suspense clientOnly/>`를 이름 변경(prop으로)
+
+```diff
+import { Suspense } from '@suspensive/react'
+
+const Example = () => {
+  return (
+-   <Suspense.CSROnly fallback={<>loading...</>}>
++   <Suspense clientOnly fallback={<>loading...</>}>
+      <>children</>
+    </Suspense.CSROnly>
+  )
+}
+```
+
 ## @suspensive/react-query
+
+@suspensive/react-query v1은 처음에는 TanStack Query v4의 커뮤니티 리소스 중 하나였으며 공식적으로는 아니지만 @tanstack/react-query v4의 `useSuspenseQuery`, `useSuspenseQueries` 및 `useSuspenseInfiniteQuery` 미리보기를 제공하는 라이브러리였습니다.
+
+그러나 @tanstack/react-query v5는 공식적으로 'useSuspenseQuery', 'useSuspenseQueries' 및 'useSuspenseInfiniteQuery'를 Suspense용 후크로 추가했습니다. 따라서 **우리는 개발자가 @tanstack/react-query v5로 더 쉽게 마이그레이션할 수 있도록 인터페이스를 원본과 최대한 유사하게 만들어 @suspensive/react-query v2를 라이브러리로 만들고 싶습니다**.
+
+그리고 @tanstack/react-query v4는 @tanstack/react-query v5에서 요구하는 높은 브라우저 사양으로 인해 최신 버전을 도입하는 데 어려움을 겪는 팀에게 여전히 유용합니다.
+
+그러한 경우에도 서스펜스에 대한 후크를 사용하려는 경우 이 라이브러리를 유용하게 만들고 싶습니다.
+
+### BREAKING CHANGES 처리하기
+
+#### `useSuspenseQuery`의 `enabled`, `placeholderData` 옵션을 제거했습니다.
+
+```diff
+import { useSuspenseQuery } from '@suspensive/react-query'
+
+const Example = () => {
+  const query = useSuspenseQuery({
+    queryKey: ['key'],
+    queryFn: () => api.text()
+-   enabled: Math.random() > 0.5,
+-   placeholderData: 'placeholder'
+  })
+}
+```
+
+#### `useSuspenseInfiniteQuery`의 `enabled`, `placeholderData` 옵션을 제거했습니다.
+
+```diff
+import { useSuspenseInfiniteQuery } from '@suspensive/react-query'
+
+const Example = () => {
+  const infiniteQuery = useSuspenseInfiniteQuery({
+    queryKey: ['key'],
+    queryFn: () => api.text()
+-   enabled: Math.random() > 0.5,
+-   placeholderData: 'placeholder'
+  })
+}
+```
+
+#### @tanstack/react-query v5의 useSuspenseQuery와 동일한 'useSuspenseQuery' options, return type에 대한 동일한 인터페이스 이름으로 변경
+
+```diff filename="index.ts of @suspensive/react-query"
+export { useSuspenseQuery } from './useSuspenseQuery'
+export type {
+- BaseUseSuspenseQueryResult,
+  UseSuspenseQueryOptions,
+- UseSuspenseQueryResultOnLoading,
+- UseSuspenseQueryResultOnSuccess,
++ UseSuspenseQueryResult
+} from './useSuspenseQuery'
+export { useSuspenseQueries } from './useSuspenseQueries'
++ export type { SuspenseQueriesOptions, SuspenseQueriesResults } from './useSuspenseQueries'
+export { useSuspenseInfiniteQuery } from './useSuspenseInfiniteQuery'
+export type {
+- BaseUseSuspenseInfiniteQueryResult,
+  UseSuspenseInfiniteQueryOptions,
+- UseSuspenseInfiniteQueryResultOnLoading,
+- UseSuspenseInfiniteQueryResultOnSuccess,
++ UseSuspenseInfiniteQueryResult
+} from './useSuspenseInfiniteQuery'
+- export { QueryAsyncBoundary } from './QueryAsyncBoundary'
+export { QueryErrorBoundary } from './QueryErrorBoundary'
+```
