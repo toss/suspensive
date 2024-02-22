@@ -3,12 +3,13 @@ import { Callout } from '@/components'
 
 # Suspensive v2로 마이그레이션하기
 
-Suspensive v2, **호환성을 높이고 DX를 개선하는 데 중점을 두었습니다**.
-이를 달성하기 위해 우리는 몇 가지 극적인 변화를 도입해야 했고, 그 결과 이전에 deprecated되었던 일부 기능을 제거하고 새 인터페이스를 몇가지 추가하게 되었습니다.
+Suspensive v2에서 **호환성을 높이고 DX를 개선하는 데 중점을 두었습니다**.
+이를 달성하기 위해 우리는 극적인 변화를 도입해야 했고, 그 결과 이전에 deprecated 했던 일부 기능을 제거하고 몇 가지 새 인터페이스를 추가하게 되었습니다.
 
 ### 최소 필수 React 버전은 18.0입니다.
 
-**Suspensive v2에는 React 18.0 이상이 필요합니다.** 이는 React 18.0 이상에서만 사용할 수 있는 새로운 useSyncExternalStore, useId를 사용하기 때문입니다. 이전에는 React에서 제공하는 shim을 사용해 왔습니다.
+**Suspensive v2에는 React 18.0 이상을 요구합니다.** 이는 React 18.0 이상에서만 사용할 수 있는 새로운 useSyncExternalStore, useId를 사용하기 때문입니다. 이전에는 React에서 제공하는 shim을 사용해 왔습니다.
+또한 React 18에서는 [Suspense관련 기능추가](https://legacy.reactjs.org/blog/2022/03/29/react-v18.html)가 되면서 앞으로의 Suspensive 라이브러리의 방향을 Legacy React를 대응하기 보다는 React 18 이상의 기능에 집중할 필요가 있다고 판단했습니다.
 
 ## @suspensive/react
 
@@ -16,7 +17,7 @@ Suspensive v2, **호환성을 높이고 DX를 개선하는 데 중점을 두었�
 
 이것은 DX를 위해 `<Suspense/>`, `<ErrorBoundary/>`의 새로운 `devMode` prop과 함께 사용하는 새로운 기능입니다.
 
-우리는 많은 사람들이 각 컴포넌트의 fallback을 강제로 적용하여 fallback을 직접 테스트하거나 페이지를 다시 로드하여 다시 fetch하는 등의 방법을 사용하는 것을 보았습니다. 그래서 우리는 각각의 `<Suspense/>` 및 `<ErrorBoundary/>`에 `devMode` prop을 추가하여 이들의 폴백을 쉽게 테스트할 수 있게 했습니다.
+우리는 많은 사람들이 각 컴포넌트의 fallback을 강제로 적용하여 fallback을 직접 테스트하거나 페이지를 다시 로드하여 다시 fetch하는 등의 방법을 사용하는 것을 보았습니다. 그래서 우리는 각각의 `<Suspense/>` 및 `<ErrorBoundary/>`에 `devMode` prop을 추가하여 fallback을 쉽게 테스트할 수 있게 했습니다.
 
 ![devMode example](/devMode.gif)
 
@@ -67,7 +68,80 @@ const Example = wrap
   })
 ```
 
-### 새로운 [`ErrorBoundary.Consumer`](./react/ErrorBoundary), [`ErrorBoundaryGroup.Consumer`](./react/ErrorBoundaryGroup) 컴포넌트
+### 새로운 `<ErrorBoundary/>`의 `shouldCatch` prop
+
+Suspensive의 `<ErrorBoundary/>`는 children에서 발생된 모든 thrown error를 잡아낼 수 있습니다. 하지만 모든 thrown error를 잡아내기 때문에 `<ErrorBoundary/>`를 사용할 때 더 좁은 위치에 `<ErrorBoundary/>`를 놓는 것을 고민하게 되었습니다.
+이 때문에 어떤 Error를 잡아내야 할지 설정할 수 있는 shouldCatch라는 새 prop을 ErrorBoundary에 추가하게 되었습니다.
+
+![ErrorBoundary shouldCatch example](/ErrorBoundary-shouldCatch.png)
+
+1. `shouldCatch`: ErrorConstructor
+
+```jsx
+import { ErrorBoundary } from '@suspensive/react'
+
+class CustomError extends Error {}
+
+const Example = () => {
+  return (
+    <ErrorBoundary fallback={({ error }) => <>RestError: {error.message}</>}>
+      <ErrorBoundary
+        shouldCatch={CustomError}
+        onError={logOnCustomError}
+        fallback={({ error }) => <>CustomError: {error.message}</>}
+      >
+        <ThrowErrorComponent />
+      </ErrorBoundary>
+    </ErrorBoundary>
+  )
+}
+```
+
+2. `shouldCatch`: callback
+
+```jsx
+import { ErrorBoundary } from '@suspensive/react'
+
+class CustomError extends Error {}
+
+const Example = () => {
+  return (
+    <ErrorBoundary fallback={({ error }) => <>RestError: {error.message}</>}>
+      <ErrorBoundary
+        shouldCatch={(error) => error instanceof CustomError}
+        onError={logOnCustomError}
+        fallback={({ error }) => <>CustomError: {error.message}</>}
+      >
+        <ThrowErrorComponent />
+      </ErrorBoundary>
+    </ErrorBoundary>
+  )
+}
+```
+
+3. `shouldCatch`: boolean
+
+```jsx
+import { ErrorBoundary } from '@suspensive/react'
+
+class CustomError extends Error {}
+
+const Example = () => {
+  return (
+    <ErrorBoundary fallback={({ error }) => <>RestError: {error.message}</>}>
+      <ErrorBoundary
+        shouldCatch={new Date().toISOString() > '2024-01-01T00:00:00.000Z'}
+        onError={logOnErrorAfter2024}
+        fallback={({ error }) => <>ErrorAfter2024: {error.message}</>}
+      >
+        <ThrowErrorComponent />
+      </ErrorBoundary>
+    </ErrorBoundary>
+  )
+}
+```
+
+### 새로운 [`<ErrorBoundary.Consumer/>`](./react/ErrorBoundary), [`<ErrorBoundaryGroup.Consumer/>`](./react/ErrorBoundaryGroup) 컴포넌트
 
 이 컴포넌트는 jsx에서 `useErrorBoundary`, `useErrorBoundaryGroup`을 인라인으로 사용할 수 있습니다.
 
