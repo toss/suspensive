@@ -13,7 +13,7 @@ Suspensive v2에서 **호환성을 높이고 DX를 개선하는 데 중점을 �
 
 ## @suspensive/react
 
-### 새로운 [`<DevMode/>`](./react/DevMode) 컴포넌트
+### 새로운 [`<DevMode/>`](./react/DevMode) 컴포넌트 [#470](https://github.com/suspensive/react/pull/470)
 
 이것은 DX를 위해 `<Suspense/>`, `<ErrorBoundary/>`의 새로운 `devMode` prop과 함께 사용하는 새로운 기능입니다.
 
@@ -45,7 +45,7 @@ const Example = () => {
 }
 ```
 
-### 새로운 [`wrap`](./react/wrap) 빌더
+### 새로운 [`wrap`](./react/wrap) 빌더 [#270](https://github.com/suspensive/react/pull/270)
 
 컴포넌트를 `<Suspense/>`, `<ErrorBoundary/>`, `<ErrorBoundaryGroup/>`으로 한번에 래핑하는 새로운 기능입니다.
 
@@ -68,7 +68,7 @@ const Example = wrap
   })
 ```
 
-### 새로운 `<ErrorBoundary/>`의 `shouldCatch` prop
+### 새로운 `<ErrorBoundary/>`의 `shouldCatch` prop [#569](https://github.com/suspensive/react/pull/569)
 
 Suspensive의 `<ErrorBoundary/>`는 children에서 발생된 모든 thrown error를 잡아낼 수 있습니다. 하지만 모든 thrown error를 잡아내기 때문에 `<ErrorBoundary/>`를 사용할 때 더 좁은 위치에 `<ErrorBoundary/>`를 놓는 것을 고민하게 되었습니다.
 이 때문에 어떤 Error를 잡아내야 할지 설정할 수 있는 shouldCatch라는 새 prop을 ErrorBoundary에 추가하게 되었습니다.
@@ -141,7 +141,7 @@ const Example = () => {
 }
 ```
 
-### 새로운 [`<ErrorBoundary.Consumer/>`](./react/ErrorBoundary), [`<ErrorBoundaryGroup.Consumer/>`](./react/ErrorBoundaryGroup) 컴포넌트
+### 새로운 [`<ErrorBoundary.Consumer/>`](./react/ErrorBoundary), [`<ErrorBoundaryGroup.Consumer/>`](./react/ErrorBoundaryGroup) 컴포넌트 [#610](https://github.com/suspensive/react/pull/610)
 
 이 컴포넌트는 jsx에서 `useErrorBoundary`, `useErrorBoundaryGroup`을 인라인으로 사용할 수 있습니다.
 
@@ -372,3 +372,9 @@ export type {
 - export { QueryAsyncBoundary } from './QueryAsyncBoundary'
 export { QueryErrorBoundary } from './QueryErrorBoundary'
 ```
+
+## 모든 Suspensive 기여자분들께 감사를 전합니다
+
+Suspensive의 기여자가 있어서 이렇게 v2를 출시할 수 있었던 것 같습니다. 더 나은 라이브러리로 만들기 위해 함께 노력해주신 모든 분들 감사하고 앞으로도 잘 부탁드립니다.
+
+[![contributors](https://contrib.rocks/image?repo=suspensive/react)](https://github.com/suspensive/react/graphs/contributors)
