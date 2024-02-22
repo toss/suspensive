@@ -37,7 +37,7 @@ export const Providers = ({ children }: PropsWithChildren) => {
         {children}
         <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>
-      <DevMode />
+      <DevMode position="bottomRight" />
     </SuspensiveProvider>
   )
 }
