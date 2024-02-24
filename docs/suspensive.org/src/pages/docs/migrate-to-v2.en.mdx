@@ -13,7 +13,7 @@ In addition, in React 18, [Suspense-related features were added](https://legacy.
 
 ## @suspensive/react
 
-### New [`<DevMode/>`](./react/DevMode) component
+### New [`<DevMode/>`](./react/DevMode) component [#470](https://github.com/suspensive/react/pull/470)
 
 This is our new feature for DX with new `devMode` prop of `<Suspense/>`, `<ErrorBoundary/>`
 
@@ -45,7 +45,7 @@ const Example = () => {
 }
 ```
 
-### New [`wrap`](./react/wrap) builder
+### New [`wrap`](./react/wrap) builder [#270](https://github.com/suspensive/react/pull/270)
 
 A new feature that wraps a component in `<Suspense/>`, `<ErrorBoundary/>`, and `<ErrorBoundaryGroup/>` all at once.
 
@@ -68,7 +68,7 @@ const Example = wrap
   })
 ```
 
-### New `shouldCatch` prop of `<ErrorBoundary/>`
+### New `shouldCatch` prop of `<ErrorBoundary/>` [#569](https://github.com/suspensive/react/pull/569)
 
 Suspensive's `<ErrorBoundary/>` can catch all thrown errors that occur in children. However, because it catches all thrown errors, when using `<ErrorBoundary/>`, I thought about placing `<ErrorBoundary/>` in a narrower position.
 For this reason, we added a new prop called shouldCatch to ErrorBoundary, which allows you to set which Error should be caught.
@@ -141,7 +141,7 @@ const Example = () => {
 }
 ```
 
-### New [`<ErrorBoundary.Consumer/>`](./react/ErrorBoundary), [`<ErrorBoundaryGroup.Consumer/>`](./react/ErrorBoundaryGroup)
+### New [`<ErrorBoundary.Consumer/>`](./react/ErrorBoundary), [`<ErrorBoundaryGroup.Consumer/>`](./react/ErrorBoundaryGroup) [#610](https://github.com/suspensive/react/pull/610)
 
 These components can be used to use `useErrorBoundary`, `useErrorBoundaryGroup` in jsx inlinely
 
@@ -372,3 +372,9 @@ export type {
 - export { QueryAsyncBoundary } from './QueryAsyncBoundary'
 export { QueryErrorBoundary } from './QueryErrorBoundary'
 ```
+
+## Thanks to all Suspensive contributors
+
+We were able to release v2 because of Suspensive's contributors. Thank you to everyone who worked together to make it a better library, and we look forward to your continued support.
+
+[![contributors](https://contrib.rocks/image?repo=suspensive/react)](https://github.com/suspensive/react/graphs/contributors)
