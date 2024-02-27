@@ -21,18 +21,53 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               </div>
             </Link>
           </nav>
-          <Link href="/react/DevMode">🔗 @suspensive/react - DevMode</Link>
-          <Link href="/react/Delay">🔗 @suspensive/react - Delay</Link>
-          <Link href="/react/ErrorBoundary/shouldCatch">🔗 @suspensive/react - ErrorBoundary shouldCatch</Link>
-          <Link href="/react/SuspensiveError">🔗 @suspensive/react - SuspensiveError</Link>
-          <Link href="/react/zodSearchParams">🔗 @suspensive/react - with zod: no param</Link>
-          <Link href="/react/zodSearchParams?id=1">🔗 @suspensive/react - with zod: id=1</Link>
-          <Link href="/react/zodSearchParams?id=0.1">🔗 @suspensive/react - with zod: id=0.1</Link>
-          <Link href="/react/zodSearchParams?id=-1">🔗 @suspensive/react - with zod: id=-1</Link>
-
-          <Link href="/react-image/SuspenseImage">🔗 @suspensive/react-image - SuspenseImage</Link>
-
-          <Link href="/react-await/Await">🔗 @suspensive/react-await - Await</Link>
+          <ul>
+            <li>
+              <details>
+                <summary>@suspensive/react</summary>
+                <li>
+                  <Link href="/react/DevMode">{`<DevMode/>`}</Link>
+                </li>
+                <li>
+                  <Link href="/react/Delay">{`<Delay/>`}</Link>
+                </li>
+                <li>
+                  <Link href="/react/ErrorBoundary/shouldCatch">{`<ErrorBoundary/>`} shouldCatch prop</Link>
+                </li>
+                <li>
+                  <Link href="/react/SuspensiveError">SuspensiveError (internal api)</Link>
+                </li>
+                <li>
+                  <Link href="/react/zodSearchParams">zod: no param</Link>
+                </li>
+                <li>
+                  <Link href="/react/zodSearchParams?id=1">zod: id=1</Link>
+                </li>
+                <li>
+                  <Link href="/react/zodSearchParams?id=0.1">zod: id=0.1</Link>
+                </li>
+                <li>
+                  <Link href="/react/zodSearchParams?id=-1">zod: id=-1</Link>
+                </li>
+              </details>
+            </li>
+            <li>
+              <details>
+                <summary>@suspensive/react-image</summary>
+                <li>
+                  <Link href="/react-image/SuspenseImage">{`<SuspenseImage/>`}</Link>
+                </li>
+              </details>
+            </li>
+            <li>
+              <details>
+                <summary>@suspensive/react-await</summary>
+                <li>
+                  <Link href="/react-await/Await">{`<Await/>`}</Link>
+                </li>
+              </details>
+            </li>
+          </ul>
           <div className="flex flex-1 items-center justify-center">{children}</div>
         </Providers>
       </body>
