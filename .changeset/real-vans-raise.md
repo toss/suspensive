@@ -1,5 +1,4 @@
 ---
-"@suspensive/suspensive.org": patch
 "@suspensive/react": patch
 ---
 
