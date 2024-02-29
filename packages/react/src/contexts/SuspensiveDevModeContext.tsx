@@ -65,9 +65,6 @@ const devModePosition = {
   topRight: { top: 8, right: 8 },
 } as const
 interface DevModeProps {
-  /**
-   * @experimental This is experimental feature.
-   */
   position?: keyof typeof devModePosition
 }
 export const DevelopmentDevMode = syncDevMode<DevModeProps>(({ devMode, position = 'bottomRight' }) => {
