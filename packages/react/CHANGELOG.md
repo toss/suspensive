@@ -1,5 +1,11 @@
 # @suspensive/react
 
+## 1.26.5
+
+### Patch Changes
+
+- [#764](https://github.com/suspensive/react/pull/764) [`df6e6d8`](https://github.com/suspensive/react/commit/df6e6d874343ca5c3ee2a872dd2ea5484b9e36c5) Thanks [@manudeli](https://github.com/manudeli)! - fix(react): add aside, button tag, high z-index of `<DevMode/>`
+
 ## 1.26.4
 
 ### Patch Changes
