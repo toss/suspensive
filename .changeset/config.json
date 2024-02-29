@@ -3,7 +3,7 @@
   "changelog": ["@changesets/changelog-github", { "repo": "suspensive/react" }],
   "commit": false,
   "fixed": [["@suspensive/react", "@suspensive/react-query"]],
-  "ignore": ["@suspensive/next-streaming-react-query", "@suspensive/visualization"],
+  "ignore": ["@suspensive/next-streaming-react-query", "@suspensive/visualization", "@suspensive/suspensive.org"],
   "linked": [],
   "access": "restricted",
   "baseBranch": "main",
