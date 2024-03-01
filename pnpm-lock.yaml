@@ -9,8 +9,8 @@ importers:
   .:
     devDependencies:
       '@arethetypeswrong/cli':
-        specifier: ^0.14.1
-        version: 0.14.1
+        specifier: ^0.15.0
+        version: 0.15.0
       '@changesets/changelog-github':
         specifier: ^0.5.0
         version: 0.5.0
@@ -522,12 +522,12 @@ packages:
     resolution: {integrity: sha512-Jh15/qVmrLGhkKJBdXlK1+9tY4lZruYjsgkDFj08ZmDiWVBLJcqkok7Z0/R0In+i1rScBpJlSvrTS2Lm41Pbnw==}
     dev: true
 
-  /@arethetypeswrong/cli@0.14.1:
-    resolution: {integrity: sha512-JB9jHVrrlF45NPJjjVYvmxz8011Nvwl74tVKr3muD/vVIcb9cn2ibdSbYjThjG5h1BHTHMwzCBoxjIue+NDQ1g==}
+  /@arethetypeswrong/cli@0.15.0:
+    resolution: {integrity: sha512-83v4IKvebLKTQqb+EoiHA2kngXHGUDgXSL1766MgwrzMSiuQty48rfxLdEgv3jmSHY/fIAGwBjAtBR93Ony8bA==}
     engines: {node: '>=18'}
     hasBin: true
     dependencies:
-      '@arethetypeswrong/core': 0.14.1
+      '@arethetypeswrong/core': 0.15.0
       chalk: 4.1.2
       cli-table3: 0.6.3
       commander: 10.0.1
@@ -536,8 +536,8 @@ packages:
       semver: 7.6.0
     dev: true
 
-  /@arethetypeswrong/core@0.14.1:
-    resolution: {integrity: sha512-B5cjaC9BQLhdSNQmG9dbcam8UFcXprgvY1YMxAfw/utCpUgPlKXK3wR3WphNr9CFlgcBaZL7NTuH/I7T17Kstw==}
+  /@arethetypeswrong/core@0.15.0:
+    resolution: {integrity: sha512-YEsguGAnYVD3JT8HxOgmDQRO44SNCQu9vvsyKnJEeHUKHOP/DUyZUvTWCNYNm5oyn8kbOkDHFnuiLvzDenoAQQ==}
     engines: {node: '>=18'}
     dependencies:
       '@andrewbranch/untar.js': 1.0.3
