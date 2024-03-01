@@ -1,12 +1,7 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import { sleep } from '@suspensive/test-utils'
+import { queryFn, queryKey } from '@suspensive/test-utils'
 import { describe, expectTypeOf, it } from 'vitest'
 import { useSuspenseQuery } from '../dist'
-
-const queryKey = ['key'] as const
-const queryFn = () => sleep(10).then(() => ({ text: 'response' }) as const)
-const boolean = Math.random() > 0.5
-const select = (data: Awaited<ReturnType<typeof queryFn>>) => data.text
 
 //@ts-expect-error no arg
 useSuspenseQuery()
@@ -56,9 +51,9 @@ describe('useSuspenseQuery', () => {
     expectTypeOf(useSuspenseQuery({ queryKey, queryFn }).data).toEqualTypeOf<Awaited<ReturnType<typeof queryFn>>>()
 
     // with select
-    expectTypeOf(useSuspenseQuery(queryKey, queryFn, { select }).data).toEqualTypeOf<ReturnType<typeof select>>()
-    expectTypeOf(useSuspenseQuery(queryKey, { queryFn, select }).data).toEqualTypeOf<ReturnType<typeof select>>()
-    expectTypeOf(useSuspenseQuery({ queryKey, queryFn, select }).data).toEqualTypeOf<ReturnType<typeof select>>()
+    expectTypeOf(useSuspenseQuery(queryKey, queryFn, { select: (data) => data.text }).data).toEqualTypeOf<string>()
+    expectTypeOf(useSuspenseQuery(queryKey, { queryFn, select: (data) => data.text }).data).toEqualTypeOf<string>()
+    expectTypeOf(useSuspenseQuery({ queryKey, queryFn, select: (data) => data.text }).data).toEqualTypeOf<string>()
   })
 
   it("'s status is always 'success'", () => {
@@ -68,8 +63,8 @@ describe('useSuspenseQuery', () => {
     expectTypeOf(useSuspenseQuery({ queryKey, queryFn }).status).toEqualTypeOf<'success'>()
 
     // with select
-    expectTypeOf(useSuspenseQuery(queryKey, queryFn, { select }).status).toEqualTypeOf<'success'>()
-    expectTypeOf(useSuspenseQuery(queryKey, { queryFn, select }).status).toEqualTypeOf<'success'>()
-    expectTypeOf(useSuspenseQuery({ queryKey, queryFn, select }).status).toEqualTypeOf<'success'>()
+    expectTypeOf(useSuspenseQuery(queryKey, queryFn, { select: (data) => data.text }).status).toEqualTypeOf<'success'>()
+    expectTypeOf(useSuspenseQuery(queryKey, { queryFn, select: (data) => data.text }).status).toEqualTypeOf<'success'>()
+    expectTypeOf(useSuspenseQuery({ queryKey, queryFn, select: (data) => data.text }).status).toEqualTypeOf<'success'>()
   })
 })

@@ -1,43 +1,59 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import { sleep } from '@suspensive/test-utils'
+import { queryFn, queryKey, select } from '@suspensive/test-utils'
 import { describe, expectTypeOf, it } from 'vitest'
-import { useSuspenseQueries } from '../dist'
-
-const queryFn = () => sleep(10).then(() => ({ text: 'response' }) as const)
-const select = (data: Awaited<ReturnType<typeof queryFn>>) => data.text
-
-const queryOptions = <TIndex extends number>(index: TIndex) => ({
-  queryKey: ['key', index] as const,
-  queryFn,
-})
-
-useSuspenseQueries({
-  queries: [
-    // @ts-expect-error no suspense
-    { ...queryOptions(3), suspense: false },
-    // @ts-expect-error no suspense with select
-    { ...queryOptions(4), select, suspense: true },
-    // @ts-expect-error no enabled
-    { ...queryOptions(5), enabled: true },
-    // @ts-expect-error no enabled with select
-    { ...queryOptions(6), select, enabled: true },
-  ] as const,
-})
-// @ts-expect-error if no items
-useSuspenseQueries({})
-// @ts-expect-error if no items
-useSuspenseQueries()
+import { type UseSuspenseQueryResult, useSuspenseQueries } from '../dist'
 
 describe('useSuspenseQueries', () => {
-  it("'s type check", () => {
-    const [queryWithoutSelect, queryWithSelect] = useSuspenseQueries({
-      queries: [queryOptions(0), { ...queryOptions(1), select }] as const,
+  it('type error', () => {
+    useSuspenseQueries({
+      queries: [
+        {
+          queryKey: [...queryKey, 1] as const,
+          queryFn,
+          // @ts-expect-error no suspense
+          suspense: false,
+        },
+        {
+          queryKey: [...queryKey, 2] as const,
+          queryFn,
+          select,
+          // @ts-expect-error no suspense
+          suspense: true,
+        },
+        {
+          queryKey: [...queryKey, 3] as const,
+          queryFn,
+          // @ts-expect-error no enabled
+          enabled: true,
+        },
+        {
+          queryKey: [...queryKey, 4] as const,
+          enabled: true,
+          // @ts-expect-error no enabled with select
+          select,
+        },
+      ] as const,
+    })
+    // @ts-expect-error if no items
+    useSuspenseQueries({})
+    // @ts-expect-error if no items
+    useSuspenseQueries()
+  })
+
+  it('type check', () => {
+    const [query, selectedQuery] = useSuspenseQueries({
+      queries: [
+        { queryKey: [...queryKey, 5] as const, queryFn },
+        { queryKey: [...queryKey, 6] as const, queryFn, select },
+      ] as const,
     })
 
-    expectTypeOf(queryWithoutSelect.status).toEqualTypeOf<`success`>()
-    expectTypeOf(queryWithoutSelect.data).toEqualTypeOf<Awaited<ReturnType<typeof queryFn>>>()
+    expectTypeOf(query).toEqualTypeOf<UseSuspenseQueryResult<{ text: string }>>()
+    expectTypeOf(query.status).toEqualTypeOf<`success`>()
+    expectTypeOf(query.data).toEqualTypeOf<{ text: string }>()
 
-    expectTypeOf(queryWithSelect.status).toEqualTypeOf<`success`>()
-    expectTypeOf(queryWithSelect.data).toEqualTypeOf<ReturnType<typeof select>>()
+    expectTypeOf(selectedQuery).toEqualTypeOf<UseSuspenseQueryResult<string>>()
+    expectTypeOf(selectedQuery.status).toEqualTypeOf<`success`>()
+    expectTypeOf(selectedQuery.data).toEqualTypeOf<string>()
   })
 })
