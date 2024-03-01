@@ -29,15 +29,6 @@
       "cache": false,
       "outputs": ["coverage/**"]
     },
-    "test:production": {
-      "dependsOn": ["prepack"],
-      "outputs": ["coverage/**"]
-    },
-    "test:production:watch": {
-      "dependsOn": ["prepack"],
-      "cache": false,
-      "outputs": ["coverage/**"]
-    },
     "prepack": {
       "dependsOn": ["^prepack"],
       "outputs": ["dist/**"]

@@ -1,6 +1,6 @@
 {
   "name": "@suspensive/react",
-  "version": "1.26.3",
+  "version": "1.26.5",
   "description": "Useful interfaces for React Suspense",
   "keywords": [
     "suspensive",
@@ -54,8 +54,6 @@
     "dev": "tsup --watch",
     "prepack": "pnpm build",
     "test": "vitest run --coverage --typecheck",
-    "test:production": "vitest run --config ./vitest-production.config.ts",
-    "test:production:watch": "vitest --config ./vitest-production.config.ts --ui",
     "test:watch": "vitest --ui --coverage --typecheck"
   },
   "dependencies": {
@@ -66,7 +64,7 @@
     "@suspensive/test-utils": "workspace:*",
     "@suspensive/tsconfig": "workspace:*",
     "@suspensive/tsup": "workspace:*",
-    "@types/react": "^18.2.55",
+    "@types/react": "^18.2.61",
     "@types/react-dom": "^18.2.19",
     "@types/use-sync-external-store": "^0.0.6",
     "react": "^18.2.0",
