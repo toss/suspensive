@@ -1,5 +1,5 @@
 ---
-"@suspensive/react-query": patch
+"@suspensive/react-query": minor
 ---
 
 feat(react-query): add SuspenseQuery, SuspenseInfiniteQuery
