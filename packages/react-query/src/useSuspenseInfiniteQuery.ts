@@ -1,10 +1,8 @@
 import {
   type InfiniteData,
-  type QueryFunction,
   type QueryKey,
   type UseInfiniteQueryOptions,
   type UseInfiniteQueryResult,
-  parseQueryArgs,
   useInfiniteQuery,
 } from '@tanstack/react-query'
 
@@ -31,28 +29,6 @@ export interface UseSuspenseInfiniteQueryOptions<
  * This hook is wrapping useInfiniteQuery of @tanstack/react-query v4 with default suspense option.
  * @see {@link https://suspensive.org/docs/react-query/useSuspenseInfiniteQuery}
  */
-// arg1: queryKey, arg2: queryFn, arg3: options
-export function useSuspenseInfiniteQuery<
-  TQueryFnData = unknown,
-  TError = unknown,
-  TData = TQueryFnData,
-  TQueryKey extends QueryKey = QueryKey,
->(
-  queryKey: TQueryKey,
-  queryFn: QueryFunction<TQueryFnData, TQueryKey>,
-  options?: Omit<UseSuspenseInfiniteQueryOptions<TQueryFnData, TError, TData, TQueryKey>, 'queryKey' | 'queryFn'>
-): UseSuspenseInfiniteQueryResult<TData, TError>
-// arg1: queryKey, arg2: options
-export function useSuspenseInfiniteQuery<
-  TQueryFnData = unknown,
-  TError = unknown,
-  TData = TQueryFnData,
-  TQueryKey extends QueryKey = QueryKey,
->(
-  queryKey: TQueryKey,
-  options: Omit<UseSuspenseInfiniteQueryOptions<TQueryFnData, TError, TData, TQueryKey>, 'queryKey'>
-): UseSuspenseInfiniteQueryResult<TData, TError>
-// arg1: options
 export function useSuspenseInfiniteQuery<
   TQueryFnData = unknown,
   TError = unknown,
@@ -60,21 +36,9 @@ export function useSuspenseInfiniteQuery<
   TQueryKey extends QueryKey = QueryKey,
 >(
   options: UseSuspenseInfiniteQueryOptions<TQueryFnData, TError, TData, TQueryKey>
-): UseSuspenseInfiniteQueryResult<TData, TError>
-export function useSuspenseInfiniteQuery<
-  TQueryFnData = unknown,
-  TError = unknown,
-  TData = TQueryFnData,
-  TQueryKey extends QueryKey = QueryKey,
->(
-  arg1: TQueryKey | UseSuspenseInfiniteQueryOptions<TQueryFnData, TError, TData, TQueryKey>,
-  arg2?:
-    | QueryFunction<TQueryFnData, TQueryKey>
-    | Omit<UseSuspenseInfiniteQueryOptions<TQueryFnData, TError, TData, TQueryKey>, 'queryKey'>,
-  arg3?: Omit<UseSuspenseInfiniteQueryOptions<TQueryFnData, TError, TData, TQueryKey>, 'queryKey' | 'queryFn'>
 ): UseSuspenseInfiniteQueryResult<TData, TError> {
   return useInfiniteQuery({
-    ...parseQueryArgs(arg1, arg2, arg3),
+    ...options,
     enabled: true,
     suspense: true,
     useErrorBoundary: true,
