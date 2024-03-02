@@ -1,0 +1,66 @@
+# Migrating to v2
+
+@suspensive/react-query v1 was initially one of the community resources for TanStack Query v4 and was a library that provided previews of `useSuspenseQuery`, `useSuspenseQueries`, and `useSuspenseInfiniteQuery` in @tanstack/react-query v4 not officially.
+
+However, @tanstack/react-query v5 officially added `useSuspenseQuery`, `useSuspenseQueries`, and `useSuspenseInfiniteQuery` as hooks for Suspense. So, **we want to make @suspensive/react-query v2 a library by making the interface as similar to the original as possible to make it easier for developers to migrate to @tanstack/react-query v5**.
+
+And @tanstack/react-query v4 is still useful in teams that have difficulty introducing the latest version due to the high browser specifications required by @tanstack/react-query v5.
+
+Even in such cases, we want to make this library useful if you want to use hooks for suspense.
+
+## Handling BREAKING CHANGES
+
+### Removed `enabled`, `placeholderData` option of `useSuspenseQuery`
+
+```diff
+import { useSuspenseQuery } from '@suspensive/react-query'
+
+const Example = () => {
+  const query = useSuspenseQuery({
+    queryKey: ['key'],
+    queryFn: () => api.text()
+-   enabled: Math.random() > 0.5,
+-   placeholderData: 'placeholder'
+  })
+}
+```
+
+### Removed `enabled`, `placeholderData` option of `useSuspenseInfiniteQuery`
+
+```diff
+import { useSuspenseInfiniteQuery } from '@suspensive/react-query'
+
+const Example = () => {
+  const infiniteQuery = useSuspenseInfiniteQuery({
+    queryKey: ['key'],
+    queryFn: () => api.text()
+-   enabled: Math.random() > 0.5,
+-   placeholderData: 'placeholder'
+  })
+}
+```
+
+### Unified interface naming for options and return type of `useSuspenseQuery` same with @tanstack/react-query v5's useSuspenseQuery
+
+```diff filename="index.ts of @suspensive/react-query"
+export { useSuspenseQuery } from './useSuspenseQuery'
+export type {
+- BaseUseSuspenseQueryResult,
+  UseSuspenseQueryOptions,
+- UseSuspenseQueryResultOnLoading,
+- UseSuspenseQueryResultOnSuccess,
++ UseSuspenseQueryResult
+} from './useSuspenseQuery'
+export { useSuspenseQueries } from './useSuspenseQueries'
++ export type { SuspenseQueriesOptions, SuspenseQueriesResults } from './useSuspenseQueries'
+export { useSuspenseInfiniteQuery } from './useSuspenseInfiniteQuery'
+export type {
+- BaseUseSuspenseInfiniteQueryResult,
+  UseSuspenseInfiniteQueryOptions,
+- UseSuspenseInfiniteQueryResultOnLoading,
+- UseSuspenseInfiniteQueryResultOnSuccess,
++ UseSuspenseInfiniteQueryResult
+} from './useSuspenseInfiniteQuery'
+- export { QueryAsyncBoundary } from './QueryAsyncBoundary'
+export { QueryErrorBoundary } from './QueryErrorBoundary'
+```

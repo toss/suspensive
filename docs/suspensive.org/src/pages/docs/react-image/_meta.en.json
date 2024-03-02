@@ -1,4 +1,8 @@
 {
   "installation": { "title": "Installation" },
+  "--- API Reference": {
+    "type": "separator",
+    "title": "API Reference"
+  },
   "Image": { "title": "<Image/>" }
 }
