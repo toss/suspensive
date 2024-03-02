@@ -1,5 +1,23 @@
 # @suspensive/react-query
 
+## 2.0.0-beta.8
+
+### Minor Changes
+
+- [#775](https://github.com/suspensive/react/pull/775) [`785a51a`](https://github.com/suspensive/react/commit/785a51a1b3e3cfaa70169a9a275d172009e6318a) Thanks [@manudeli](https://github.com/manudeli)! - feat(react-query): add SuspenseQuery, SuspenseInfiniteQuery
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @suspensive/react@2.0.0-beta.8
+
+## 2.0.0-beta.7
+
+### Patch Changes
+
+- Updated dependencies [[`3f6171b`](https://github.com/suspensive/react/commit/3f6171b950807d0d09f526b564a7424a7fb70fe0)]:
+  - @suspensive/react@2.0.0-beta.7
+
 ## 2.0.0-beta.6
 
 ### Patch Changes
@@ -53,6 +71,13 @@
 
 - 78f5bd4: feat(react, react-query): remove deprecated apis
 - 837ed18: feat(\*): remove target react v16, v17
+
+## 1.26.5
+
+### Patch Changes
+
+- Updated dependencies [[`df6e6d8`](https://github.com/suspensive/react/commit/df6e6d874343ca5c3ee2a872dd2ea5484b9e36c5)]:
+  - @suspensive/react@1.26.5
 
 ## 1.26.4
 

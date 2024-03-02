@@ -65,7 +65,6 @@ export type ErrorBoundaryProps = PropsWithDevMode<
      */
     fallback: ReactNode | FunctionComponent<ErrorBoundaryFallbackProps>
     /**
-     * @experimental This is experimental feature.
      * @default true
      */
     shouldCatch?: ShouldCatch | [ShouldCatch, ...ShouldCatch[]]
@@ -231,25 +230,8 @@ export const useErrorBoundaryFallbackProps = <TError extends Error = Error>(): E
   )
 }
 
-/**
- * @experimental This is experimental feature.
- */
 type ErrorBoundaryDevModeProp = {
-  /**
-   * @experimental This is experimental feature.
-   */
-  showFallback?:
-    | boolean
-    | {
-        /**
-         * @experimental This is experimental feature.
-         */
-        errorMessage?: string
-        /**
-         * @experimental This is experimental feature.
-         */
-        after?: number
-      }
+  showFallback?: boolean | { errorMessage?: string; after?: number }
 }
 const ErrorBoundaryDevMode = syncDevMode<ErrorBoundaryDevModeProp>(({ devMode, showFallback = false }) => {
   if (devMode.is && showFallback) {

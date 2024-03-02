@@ -1,3 +1,6 @@
+export { SuspenseQuery } from './SuspenseQuery'
+export { SuspenseInfiniteQuery } from './SuspenseInfiniteQuery'
+
 export { useSuspenseQuery } from './useSuspenseQuery'
 export type { UseSuspenseQueryOptions, UseSuspenseQueryResult } from './useSuspenseQuery'
 export { useSuspenseQueries } from './useSuspenseQueries'

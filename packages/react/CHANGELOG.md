@@ -1,5 +1,13 @@
 # @suspensive/react
 
+## 2.0.0-beta.8
+
+## 2.0.0-beta.7
+
+### Patch Changes
+
+- [#755](https://github.com/suspensive/react/pull/755) [`3f6171b`](https://github.com/suspensive/react/commit/3f6171b950807d0d09f526b564a7424a7fb70fe0) Thanks [@manudeli](https://github.com/manudeli)! - feat(\*): remove all experimental interface
+
 ## 2.0.0-beta.6
 
 ### Patch Changes
@@ -31,6 +39,12 @@
 - ea1c4ed: feat(react): rename Suspensive defaultOptions -> defaultProps
 - 78f5bd4: feat(react, react-query): remove deprecated apis
 - 837ed18: feat(\*): remove target react v16, v17
+
+## 1.26.5
+
+### Patch Changes
+
+- [#764](https://github.com/suspensive/react/pull/764) [`df6e6d8`](https://github.com/suspensive/react/commit/df6e6d874343ca5c3ee2a872dd2ea5484b9e36c5) Thanks [@manudeli](https://github.com/manudeli)! - fix(react): add aside, button tag, high z-index of `<DevMode/>`
 
 ## 1.26.4
 

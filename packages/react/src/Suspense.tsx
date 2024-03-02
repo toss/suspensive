@@ -33,9 +33,6 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 type SuspenseDevModeProp = {
-  /**
-   * @experimental This is experimental feature.
-   */
   showFallback?: boolean
 }
 const SuspenseDevMode = syncDevMode<SuspenseDevModeProp>(({ devMode, showFallback }) => {
