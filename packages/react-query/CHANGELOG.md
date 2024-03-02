@@ -1,5 +1,16 @@
 # @suspensive/react-query
 
+## 2.0.0-beta.8
+
+### Minor Changes
+
+- [#775](https://github.com/suspensive/react/pull/775) [`785a51a`](https://github.com/suspensive/react/commit/785a51a1b3e3cfaa70169a9a275d172009e6318a) Thanks [@manudeli](https://github.com/manudeli)! - feat(react-query): add SuspenseQuery, SuspenseInfiniteQuery
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @suspensive/react@2.0.0-beta.8
+
 ## 2.0.0-beta.7
 
 ### Patch Changes
