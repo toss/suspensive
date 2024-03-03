@@ -8,7 +8,7 @@ To accomplish this, we had to introduce some dramatic changes. As a result, we r
 
 ### The minimum required React version is now 18.0
 
-**Suspensive v2 requires React 18.0 or later.** This is because we are using the new useSyncExternalStore, useId hook, which is only available in React 18.0 and later. Previously, we have been using the shim provided by React.
+**Suspensive v2 requires React 18.0 or later.** This is because we are using the new useSyncExternalStore hook, which is only available in React 18.0 and later. Previously, we have been using the shim provided by React(use-sync-external-store).
 In addition, in React 18, [Suspense-related features were added](https://legacy.reactjs.org/blog/2022/03/29/react-v18.html), We decided that the direction of the Suspensive libraries needed to focus on React 18 or higher in the future rather than responding to Legacy React.
 
 ### Migration guide

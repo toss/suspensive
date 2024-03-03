@@ -1,19 +1,18 @@
 # v2로 마이그레이션하기
 
-@suspensive/react-query v1은 처음에는 TanStack Query v4의 커뮤니티 리소스 중 하나였으며 공식적으로는 아니지만 @tanstack/react-query v4의 `useSuspenseQuery`, `useSuspenseQueries` 및 `useSuspenseInfiniteQuery` 미리보기를 제공하는 라이브러리였습니다.
+@suspensive/react-query v1는 원래 [TanStack Query의 커뮤니티 리소스 중 하나로 추가](https://tanstack.com/query/v4/docs/framework/react/community/suspensive-react-query)되어 @tanstack/react-query v4의 사용자에게 `useSuspenseQuery`, `useSuspenseQueries` 및 `useSuspenseInfiniteQuery`를 제공하는 라이브러리였습니다.
+그 이후 [@tanstack/react-query v5에 공식적으로 `useSuspenseQuery`, `useSuspenseQueries` 및 `useSuspenseInfiniteQuery`를 추가함](https://github.com/TanStack/query/pull/5739)에 따라서 enabled와 같은 인터페이스가 사라지고 queryOptions를 하나로 받는 등의 변경이 이루어졌습니다.
+따라서 **우리는 @suspensive/react-query의 기존 사용자가 @tanstack/react-query v5로 더 쉽게 마이그레이션할 수 있도록 공식 인터페이스와 최대한 유사하게 @suspensive/react-query v2의 인터페이스를 만들었습니다.**
 
-그러나 @tanstack/react-query v5는 공식적으로 'useSuspenseQuery', 'useSuspenseQueries' 및 'useSuspenseInfiniteQuery'를 Suspense용 후크로 추가했습니다. 따라서 **우리는 개발자가 @tanstack/react-query v5로 더 쉽게 마이그레이션할 수 있도록 인터페이스를 원본과 최대한 유사하게 만들어 @suspensive/react-query v2를 라이브러리로 만들고 싶습니다**.
-
-그리고 @tanstack/react-query v4는 @tanstack/react-query v5에서 요구하는 높은 브라우저 사양으로 인해 최신 버전을 도입하는 데 어려움을 겪는 팀에게 여전히 유용합니다.
-
-그러한 경우에도 서스펜스에 대한 후크를 사용하려는 경우 이 라이브러리를 유용하게 만들고 싶습니다.
+하지만 [@tanstack/react-query v5에서 요구하는 높은 브라우저 사양(class private field)](https://tanstack.com/query/v5/docs/framework/react/installation#requirements)때문에 @tanstack/react-query v4는 여전히 많은 팀에게 유용합니다.
+따라서 저희는 @tanstack/react-query v4의 지원을 유지할 것입니다.
 
 ## 새로운 기능
 
-### 새로운 `<SuspenseQuery/>`, `<SuspenseInfiniteQuery/>` 컴포넌트 [#775](https://github.com/suspensive/react/pull/775)
+### 새로운 `<SuspenseQuery/>`, `<SuspenseInfiniteQuery/>` [#775](https://github.com/suspensive/react/pull/775)
 
-기존의 useSuspenseQuery는 훅이기 때문에 부모에 Suspense, ErrorBoundary를 배치하기 위해 Contents와 같은 이름을 가진 컴포넌트를 만들게 합니다.
-이것은 Contents 내부에서 던져질 suspense와 error가 있을지 예측하기 어렵게 만듭니다.
+기존의 useSuspenseQuery는 훅이기 때문에 부모에 Suspense, ErrorBoundary를 배치하기 위해 AuthorInfo, PostList와 같은 이름을 가진 컴포넌트를 만들게 합니다.
+이것은 AuthorInfo, PostList 내부에서 던져질 suspense와 error가 있을지 예측하기 어렵게 만듭니다.
 
 #### AS-IS: useSuspenseQuery
 
@@ -23,11 +22,11 @@ import { Suspense, ErrorBoundary } from '@suspensive/react'
 import { AuthorInfo } from './components/AuthorInfo'
 import { PostList } from './components/PostList'
 
-const PostsPage = ({ authorId }) => (
+const PostsPage = ({ userId }) => (
   <ErrorBoundary fallback={({ error }) => <>{error.message}</>}>
     <Suspense fallback={'loading...'}>
-      <AuthorInfo authorId={authorId} /> {/* 내부적으로 Suspense를 발생할 지 예상하기 어렵습니다. */}
-      <PostList authorId={authorId} /> {/* 내부적으로 Suspense를 발생할 지 예상하기 어렵습니다. */}
+      <AuthorInfo userId={userId} /> {/* 내부적으로 Suspense를 발생할 지 예상하기 어렵습니다. */}
+      <PostList userId={userId} /> {/* 내부적으로 Suspense를 발생할 지 예상하기 어렵습니다. */}
     </Suspense>
   </ErrorBoundary>
 )
@@ -38,8 +37,10 @@ const PostsPage = ({ authorId }) => (
 import { useSuspenseQuery } from '@suspensive/react-query'
 import { AuthorProfile } from '~/components'
 
-const AuthorInfo = ({ authorId }) => {
-  const { data: author } = useSuspenseQuery(userQueryOptions(authorId))
+// 이 컴포넌트를 사용하는 입장에서는 AuthorInfo라는 이름만으로는 내부적으로 Suspense를 발생시키는 지 예측할 수 없습니다.
+const AuthorInfo = ({ userId }) => {
+  // data-fetching만을 위한 이 컴포넌트를 만들어야 합니다.
+  const { data: author } = useSuspenseQuery(userQueryOptions(userId))
 
   return <AuthorProfile {...author} />
 }
@@ -50,15 +51,17 @@ const AuthorInfo = ({ authorId }) => {
 import { useSuspenseQuery } from '@suspensive/react-query'
 import { PostListItem } from '~/components'
 
-const PostList = ({ authorId }) => {
-  const { data: selectedPosts } = useSuspenseQuery({
-    ...postsQueryOptions(authorId),
+// 이 컴포넌트를 사용하는 입장에서는 PostList라는 이름만으로는 내부적으로 Suspense를 발생시키는 지 예측할 수 없습니다.
+const PostList = ({ userId }) => {
+  // data-fetching만을 위한 이 컴포넌트를 만들어야 합니다.
+  const { data: posts } = useSuspenseQuery({
+    ...postsQueryOptions(userId),
     select: (posts) => posts.filter(({ isShow }) => isShow),
   })
 
   return (
     <>
-      {selectedPosts.map((post) => (
+      {posts.map((post) => (
         <PostListItem {...post} />
       ))}
     </>
@@ -86,7 +89,7 @@ const PostsPage = ({ authorId }) => (
         {({ data: author }) => <AuthorProfile {...author} />}
       </SuspenseQuery>
       <SuspenseQuery {...postsQueryOptions(authorId)} select={(posts) => posts.filter(({ isShow }) => isShow)}>
-        {({ data: selectedPosts }) => selectedPosts.map((post) => <PostListItem {...post} />)}
+        {({ data: posts }) => posts.map((post) => <PostListItem {...post} />)}
       </SuspenseQuery>
     </Suspense>
   </ErrorBoundary>
