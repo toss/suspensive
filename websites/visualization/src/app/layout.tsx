@@ -53,6 +53,17 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </li>
             <li>
               <details>
+                <summary>@suspensive/react-query</summary>
+                <li>
+                  <Link href="/react-query/SuspenseQuery">{`<SuspenseQuery/>`}</Link>
+                </li>
+                <li>
+                  <Link href="/react-query/SuspenseInfiniteQuery">{`<SuspenseInfiniteQuery/>`}</Link>
+                </li>
+              </details>
+            </li>
+            <li>
+              <details>
                 <summary>@suspensive/react-image</summary>
                 <li>
                   <Link href="/react-image/SuspenseImage">{`<SuspenseImage/>`}</Link>

@@ -1,0 +1,86 @@
+# SuspenseQuery
+
+We provide these components to clearly express what causes suspense at the same depth.
+
+1. Prop-driling resulting from removing depth such as AuthorInfo and PostList for data-fetching only is also removed.
+2. Changing the range of Suspense and ErrorBoundary becomes simple. Parallel processing of queries is also easier.
+3. Because it manages all data-fetching within the Page component, the internal components are presentational, so it is easy to separate the components.
+
+```jsx
+import { SuspenseQuery } from '@suspensive/react-query'
+import { Suspense, ErrorBoundary } from '@suspensive/react'
+import { PostItem, AuthorProfile } from '~/components'
+
+const PostsPage = ({ authorId }) => (
+  <ErrorBoundary fallback={({ error }) => <>{error.message}</>}>
+    <Suspense fallback={'loading...'}>
+      <SuspenseQuery {...userQueryOptions(authorId)}>
+        {({ data: author }) => <AuthorProfile {...author} />}
+      </SuspenseQuery>
+      <SuspenseQuery {...postsQueryOptions(authorId)} select={(posts) => posts.filter(({ isShow }) => isShow)}>
+        {({ data: posts }) => posts.map((post) => <PostListItem {...post} />)}
+      </SuspenseQuery>
+    </Suspense>
+  </ErrorBoundary>
+)
+```
+
+## Motivation
+
+Because the existing useSuspenseQuery is a hook, it creates components with names such as AuthorInfo and PostList to place Suspense and ErrorBoundary on the parent.
+This makes it difficult to predict what suspense and errors will be thrown inside AuthorInfo and PostList.
+
+#### AS-IS: useSuspenseQuery
+
+```jsx
+// posts/page.tsx
+import { Suspense, ErrorBoundary } from '@suspensive/react'
+import { AuthorInfo } from './components/AuthorInfo'
+import { PostList } from './components/PostList'
+
+const PostsPage = ({ userId }) => (
+  <ErrorBoundary fallback={({ error }) => <>{error.message}</>}>
+    <Suspense fallback={'loading...'}>
+      <AuthorInfo userId={userId} /> {/* It is difficult to predict whether a suspension will occur internally. */}
+      <PostList userId={userId} /> {/* It is difficult to predict whether a suspension will occur internally. */}
+    </Suspense>
+  </ErrorBoundary>
+)
+```
+
+```jsx
+// posts/components/AuthorInfo.tsx
+import { useSuspenseQuery } from '@suspensive/react-query'
+import { AuthorProfile } from '~/components'
+
+// From the perspective of using this component, it is impossible to predict whether Suspense will occur internally just by the name AuthorInfo.
+const AuthorInfo = ({ userId }) => {
+  // We need to create this component just for data-fetching.
+  const { data: author } = useSuspenseQuery(userQueryOptions(userId))
+
+  return <AuthorProfile {...author} />
+}
+```
+
+```jsx
+// posts/components/PostList.tsx
+import { useSuspenseQuery } from '@suspensive/react-query'
+import { PostListItem } from '~/components'
+
+// From the perspective of using this component, it is impossible to predict whether a suspense will occur internally based on the name PostList alone.
+const PostList = ({ userId }) => {
+   // We need to create this component just for data-fetching.
+   const { data: posts } = useSuspenseQuery({
+     ...postsQueryOptions(userId);
+     select: (posts) => posts.filter(({ isShow }) => isShow),
+   })
+
+   return (
+     <>
+       {posts.map((post) => (
+         <PostListItem {...post} />
+       ))}
+     </>
+   )
+}
+```

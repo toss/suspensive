@@ -1,0 +1,154 @@
+# Migrating to v2
+
+@suspensive/react-query v1 was originally [added as one of TanStack Query's community resources](https://tanstack.com/query/v4/docs/framework/react/community/suspensive-react-query) and was a library that provided `useSuspenseQuery`, `useSuspenseQueries` and `useSuspenseInfiniteQuery` to users of @tanstack/react-query v4.
+Afterwards, [as `useSuspenseQuery`, `useSuspenseQueries`, and `useSuspenseInfiniteQuery` were officially added to @tanstack/react-query v5](https://github.com/TanStack/query/pull/5739) with changes interfaces such as enabled disappeared and queryOptions were received as one.
+Therefore **we made the interface of @suspensive/react-query v2 as similar to the official interface as possible to make it easier for existing users of @suspensive/react-query v1 to migrate to @tanstack/react-query v5**.
+
+However, because of [the higher browser specifications (class private fields) required by @tanstack/react-query v5](https://tanstack.com/query/v5/docs/framework/react/installation#requirements), @tanstack/react-query v4 is still useful to many teams.
+Therefore, we will maintain support for @tanstack/react-query v4.
+
+## What's new
+
+### New `<SuspenseQuery/>`, `<SuspenseInfiniteQuery/>` [#775](https://github.com/suspensive/react/pull/775)
+
+Because the existing useSuspenseQuery is a hook, it creates components with names such as AuthorInfo and PostList to place Suspense and ErrorBoundary on the parent.
+This makes it difficult to predict what suspense and errors will be thrown inside AuthorInfo and PostList.
+
+#### AS-IS: useSuspenseQuery
+
+```jsx
+// posts/page.tsx
+import { Suspense, ErrorBoundary } from '@suspensive/react'
+import { AuthorInfo } from './components/AuthorInfo'
+import { PostList } from './components/PostList'
+
+const PostsPage = ({ userId }) => (
+  <ErrorBoundary fallback={({ error }) => <>{error.message}</>}>
+    <Suspense fallback={'loading...'}>
+      <AuthorInfo userId={userId} /> {/* It is difficult to predict whether a suspension will occur internally. */}
+      <PostList userId={userId} /> {/* It is difficult to predict whether a suspension will occur internally. */}
+    </Suspense>
+  </ErrorBoundary>
+)
+```
+
+```jsx
+// posts/components/AuthorInfo.tsx
+import { useSuspenseQuery } from '@suspensive/react-query'
+import { AuthorProfile } from '~/components'
+
+// From the perspective of using this component, it is impossible to predict whether Suspense will occur internally just by the name AuthorInfo.
+const AuthorInfo = ({ userId }) => {
+  // We need to create this component just for data-fetching.
+  const { data: author } = useSuspenseQuery(userQueryOptions(userId))
+
+  return <AuthorProfile {...author} />
+}
+```
+
+```jsx
+// posts/components/PostList.tsx
+import { useSuspenseQuery } from '@suspensive/react-query'
+import { PostListItem } from '~/components'
+
+// From the perspective of using this component, it is impossible to predict whether a suspense will occur internally based on the name PostList alone.
+const PostList = ({ userId }) => {
+   // We need to create this component just for data-fetching.
+   const { data: posts } = useSuspenseQuery({
+     ...postsQueryOptions(userId);
+     select: (posts) => posts.filter(({ isShow }) => isShow),
+   })
+
+   return (
+     <>
+       {posts.map((post) => (
+         <PostListItem {...post} />
+       ))}
+     </>
+   )
+}
+```
+
+#### TO-BE: `<SuspenseQuery/>`
+
+Therefore, we provide these components to clearly express what causes suspension at the same depth.
+
+1. Prop-driling resulting from removing depth such as AuthorInfo and PostList for data-fetching only is also removed.
+2. Changing the range of Suspense and ErrorBoundary becomes simple. Parallel processing of queries is also easier.
+3. Because it manages all data-fetching within the Page component, the internal components are presentational, so it is easy to separate the components.
+
+```jsx
+import { SuspenseQuery } from '@suspensive/react-query'
+import { Suspense, ErrorBoundary } from '@suspensive/react'
+import { PostItem, AuthorProfile } from '~/components'
+
+const PostsPage = ({ authorId }) => (
+  <ErrorBoundary fallback={({ error }) => <>{error.message}</>}>
+    <Suspense fallback={'loading...'}>
+      <SuspenseQuery {...userQueryOptions(authorId)}>
+        {({ data: author }) => <AuthorProfile {...author} />}
+      </SuspenseQuery>
+      <SuspenseQuery {...postsQueryOptions(authorId)} select={(posts) => posts.filter(({ isShow }) => isShow)}>
+        {({ data: posts }) => posts.map((post) => <PostListItem {...post} />)}
+      </SuspenseQuery>
+    </Suspense>
+  </ErrorBoundary>
+)
+```
+
+## Handling BREAKING CHANGES
+
+### Removed `enabled`, `placeholderData` option of `useSuspenseQuery`
+
+```diff
+import { useSuspenseQuery } from '@suspensive/react-query'
+
+const Example = () => {
+  const query = useSuspenseQuery({
+    queryKey: ['key'],
+    queryFn: () => api.text()
+-   enabled: Math.random() > 0.5,
+-   placeholderData: 'placeholder'
+  })
+}
+```
+
+### Removed `enabled`, `placeholderData` option of `useSuspenseInfiniteQuery`
+
+```diff
+import { useSuspenseInfiniteQuery } from '@suspensive/react-query'
+
+const Example = () => {
+  const infiniteQuery = useSuspenseInfiniteQuery({
+    queryKey: ['key'],
+    queryFn: () => api.text()
+-   enabled: Math.random() > 0.5,
+-   placeholderData: 'placeholder'
+  })
+}
+```
+
+### Unified interface naming for options and return type of `useSuspenseQuery` same with @tanstack/react-query v5's useSuspenseQuery
+
+```diff filename="index.ts of @suspensive/react-query"
+export { useSuspenseQuery } from './useSuspenseQuery'
+export type {
+- BaseUseSuspenseQueryResult,
+  UseSuspenseQueryOptions,
+- UseSuspenseQueryResultOnLoading,
+- UseSuspenseQueryResultOnSuccess,
++ UseSuspenseQueryResult
+} from './useSuspenseQuery'
+export { useSuspenseQueries } from './useSuspenseQueries'
++ export type { SuspenseQueriesOptions, SuspenseQueriesResults } from './useSuspenseQueries'
+export { useSuspenseInfiniteQuery } from './useSuspenseInfiniteQuery'
+export type {
+- BaseUseSuspenseInfiniteQueryResult,
+  UseSuspenseInfiniteQueryOptions,
+- UseSuspenseInfiniteQueryResultOnLoading,
+- UseSuspenseInfiniteQueryResultOnSuccess,
++ UseSuspenseInfiniteQueryResult
+} from './useSuspenseInfiniteQuery'
+- export { QueryAsyncBoundary } from './QueryAsyncBoundary'
+export { QueryErrorBoundary } from './QueryErrorBoundary'
+```
