@@ -1,5 +1,9 @@
 {
   "installation": { "title": "Installation" },
+  "--- API Reference": {
+    "type": "separator",
+    "title": "API Reference"
+  },
   "useSuspenseQuery": { "title": "useSuspenseQuery" },
   "useSuspenseQueries": { "title": "useSuspenseQueries" },
   "useSuspenseInfiniteQuery": { "title": "useSuspenseInfiniteQuery" },
