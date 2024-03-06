@@ -64,7 +64,7 @@
     "@suspensive/test-utils": "workspace:*",
     "@suspensive/tsconfig": "workspace:*",
     "@suspensive/tsup": "workspace:*",
-    "@types/react": "^18.2.63",
+    "@types/react": "^18.2.64",
     "@types/react-dom": "^18.2.20",
     "@types/use-sync-external-store": "^0.0.6",
     "react": "^18.2.0",
