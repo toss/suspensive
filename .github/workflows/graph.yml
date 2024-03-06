@@ -2,15 +2,15 @@ name: Deploy graph site to Pages
 
 on:
   push:
-    branches: ["main"]
-    
+    branches: [main]
+
 permissions:
   contents: read
   pages: write
   id-token: write
 
 concurrency:
-  group: "pages"
+  group: 'pages'
   cancel-in-progress: false
 
 jobs:
