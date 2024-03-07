@@ -255,8 +255,8 @@ importers:
         specifier: ^5.24.8
         version: 5.24.8(@tanstack/react-query@5.24.8)(react@18.2.0)
       '@tanstack/react-query-next-experimental':
-        specifier: ^5.24.8
-        version: 5.24.8(@tanstack/react-query@5.24.8)(next@14.1.1)(react@18.2.0)
+        specifier: ^5.25.0
+        version: 5.25.0(@tanstack/react-query@5.24.8)(next@14.1.1)(react@18.2.0)
       axios:
         specifier: ^1.6.5
         version: 1.6.7
@@ -2358,10 +2358,10 @@ packages:
       react: 18.2.0
     dev: false
 
-  /@tanstack/react-query-next-experimental@5.24.8(@tanstack/react-query@5.24.8)(next@14.1.1)(react@18.2.0):
-    resolution: {integrity: sha512-CN7X5I38yujiVJMTZfsUkjFRroion0JEwOB3wAkdAJKvLRCpNqzWOYnkGFv86jCOGA6FeNWl9LxAyOt5+iGd1g==}
+  /@tanstack/react-query-next-experimental@5.25.0(@tanstack/react-query@5.24.8)(next@14.1.1)(react@18.2.0):
+    resolution: {integrity: sha512-F1SZd130l73Iaz4713V6Nlh0uSakFTABykewAGz0ft+K3pAbIvg5QmaxxR4xFkyvHbT04x8i+oNEgd9LGXYELg==}
     peerDependencies:
-      '@tanstack/react-query': ^5.24.8
+      '@tanstack/react-query': ^5.25.0
       next: ^13 || ^14
       react: ^18.0.0
     dependencies:
