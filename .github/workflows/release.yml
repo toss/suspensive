@@ -2,8 +2,7 @@ name: Changesets PR or Publish
 
 on:
   push:
-    branches:
-      - main
+    branches: [main, beta]
 
 jobs:
   build:

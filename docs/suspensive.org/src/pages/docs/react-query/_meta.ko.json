@@ -1,5 +1,9 @@
 {
   "installation": { "title": "설치하기" },
+  "--- API Reference": {
+    "type": "separator",
+    "title": "API 문서"
+  },
   "useSuspenseQuery": { "title": "useSuspenseQuery" },
   "useSuspenseQueries": { "title": "useSuspenseQueries" },
   "useSuspenseInfiniteQuery": { "title": "useSuspenseInfiniteQuery" },
