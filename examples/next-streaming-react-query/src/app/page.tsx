@@ -1,4 +1,5 @@
 import { HydrationBoundary, dehydrate } from '@tanstack/react-query'
+import Link from 'next/link'
 import { PageClientComponent } from './PageClientComponent'
 import { query } from '~/query'
 import { getQueryClient } from '~/react-query'
@@ -17,6 +18,7 @@ export default async function MyPage() {
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
+      <Link href="/test">to test page</Link>
       <PageClientComponent />
     </HydrationBoundary>
   )
