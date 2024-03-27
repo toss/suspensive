@@ -56,17 +56,13 @@
     "test": "vitest run --coverage --typecheck",
     "test:watch": "vitest --ui --coverage --typecheck"
   },
-  "dependencies": {
-    "use-sync-external-store": "^1.2.0"
-  },
   "devDependencies": {
     "@suspensive/eslint-config": "workspace:*",
     "@suspensive/test-utils": "workspace:*",
     "@suspensive/tsconfig": "workspace:*",
     "@suspensive/tsup": "workspace:*",
-    "@types/react": "^18.2.66",
+    "@types/react": "^18.2.72",
     "@types/react-dom": "^18.2.22",
-    "@types/use-sync-external-store": "^0.0.6",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },

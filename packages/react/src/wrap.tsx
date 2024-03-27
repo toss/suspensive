@@ -3,11 +3,11 @@ import { Delay } from './Delay'
 import { ErrorBoundary } from './ErrorBoundary'
 import { ErrorBoundaryGroup } from './ErrorBoundaryGroup'
 import { Suspense } from './Suspense'
-import type { OmitKeyOf } from './utility-types'
+import type { OmitKeyof } from './utility-types'
 
 type WrapperItem<
   TWrapperComponent extends typeof Suspense | typeof ErrorBoundary | typeof ErrorBoundaryGroup | typeof Delay,
-> = [TWrapperComponent, OmitKeyOf<ComponentProps<TWrapperComponent>, 'children'>]
+> = [TWrapperComponent, OmitKeyof<ComponentProps<TWrapperComponent>, 'children'>]
 
 class Wrap {
   constructor(
@@ -19,19 +19,19 @@ class Wrap {
     )[]
   ) {}
 
-  Suspense = (props: OmitKeyOf<ComponentProps<typeof Suspense>, 'children'> = {}) => {
+  Suspense = (props: OmitKeyof<ComponentProps<typeof Suspense>, 'children'> = {}) => {
     this.wrappers.unshift([Suspense, props])
     return this
   }
-  ErrorBoundary = (props: OmitKeyOf<ComponentProps<typeof ErrorBoundary>, 'children'>) => {
+  ErrorBoundary = (props: OmitKeyof<ComponentProps<typeof ErrorBoundary>, 'children'>) => {
     this.wrappers.unshift([ErrorBoundary, props])
     return this
   }
-  ErrorBoundaryGroup = (props: OmitKeyOf<ComponentProps<typeof ErrorBoundaryGroup>, 'children'> = {}) => {
+  ErrorBoundaryGroup = (props: OmitKeyof<ComponentProps<typeof ErrorBoundaryGroup>, 'children'> = {}) => {
     this.wrappers.unshift([ErrorBoundaryGroup, props])
     return this
   }
-  Delay = (props: OmitKeyOf<ComponentProps<typeof Delay>, 'children'> = {}) => {
+  Delay = (props: OmitKeyof<ComponentProps<typeof Delay>, 'children'> = {}) => {
     this.wrappers.unshift([Delay, props])
     return this
   }
@@ -57,10 +57,10 @@ class Wrap {
 }
 
 export const wrap = {
-  Suspense: (props: OmitKeyOf<ComponentProps<typeof Suspense>, 'children'> = {}) => new Wrap([[Suspense, props]]),
-  ErrorBoundary: (props: OmitKeyOf<ComponentProps<typeof ErrorBoundary>, 'children'>) =>
+  Suspense: (props: OmitKeyof<ComponentProps<typeof Suspense>, 'children'> = {}) => new Wrap([[Suspense, props]]),
+  ErrorBoundary: (props: OmitKeyof<ComponentProps<typeof ErrorBoundary>, 'children'>) =>
     new Wrap([[ErrorBoundary, props]]),
-  ErrorBoundaryGroup: (props: OmitKeyOf<ComponentProps<typeof ErrorBoundaryGroup>, 'children'>) =>
+  ErrorBoundaryGroup: (props: OmitKeyof<ComponentProps<typeof ErrorBoundaryGroup>, 'children'>) =>
     new Wrap([[ErrorBoundaryGroup, props]]),
-  Delay: (props: OmitKeyOf<ComponentProps<typeof Delay>, 'children'> = {}) => new Wrap([[Delay, props]]),
+  Delay: (props: OmitKeyof<ComponentProps<typeof Delay>, 'children'> = {}) => new Wrap([[Delay, props]]),
 }
