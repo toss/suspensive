@@ -1,8 +1,8 @@
 import { createContext } from 'react'
 import type { DelayProps, SuspenseProps } from '..'
-import type { OmitKeyOf } from '../utility-types'
+import type { OmitKeyof } from '../utility-types'
 
-export const DelayDefaultPropsContext = createContext<OmitKeyOf<DelayProps, 'children'>>({
+export const DelayDefaultPropsContext = createContext<OmitKeyof<DelayProps, 'children'>>({
   ms: undefined,
   fallback: undefined,
 })
@@ -10,7 +10,7 @@ if (process.env.NODE_ENV === 'development') {
   DelayDefaultPropsContext.displayName = 'DelayDefaultPropsContext'
 }
 
-export const SuspenseDefaultPropsContext = createContext<OmitKeyOf<SuspenseProps, 'children' | 'devMode'>>({
+export const SuspenseDefaultPropsContext = createContext<OmitKeyof<SuspenseProps, 'children' | 'devMode'>>({
   fallback: undefined,
   clientOnly: undefined,
 })
