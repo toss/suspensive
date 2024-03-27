@@ -1,7 +1,7 @@
 import { Suspense as ReactSuspense, type SuspenseProps as ReactSuspenseProps, useContext } from 'react'
 import { SuspenseDefaultPropsContext, syncDevMode } from './contexts'
 import { useIsClient } from './hooks'
-import type { OmitKeyOf, PropsWithDevMode } from './utility-types'
+import type { OmitKeyof, PropsWithDevMode } from './utility-types'
 
 const SuspenseClientOnly = (props: ReactSuspenseProps) =>
   useIsClient() ? <ReactSuspense {...props} /> : <>{props.fallback}</>
@@ -40,7 +40,7 @@ export const Suspense = Object.assign(
      * @deprecated Use `<Suspense clientOnly/>` instead
      */
     CSROnly: (() => {
-      const Suspense = ({ devMode, children, fallback }: OmitKeyOf<SuspenseProps, 'clientOnly'>) => {
+      const Suspense = ({ devMode, children, fallback }: OmitKeyof<SuspenseProps, 'clientOnly'>) => {
         const defaultProps = useContext(SuspenseDefaultPropsContext)
         return (
           <SuspenseClientOnly fallback={typeof fallback === 'undefined' ? defaultProps.fallback : fallback}>
