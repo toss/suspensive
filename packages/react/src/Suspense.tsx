@@ -40,7 +40,7 @@ export const Suspense = Object.assign(
      * @deprecated Use `<Suspense clientOnly/>` instead
      */
     CSROnly: (() => {
-      const Suspense = ({ devMode, children, fallback }: OmitKeyof<SuspenseProps, 'clientOnly', 'safely'>) => {
+      const Suspense = ({ devMode, children, fallback }: OmitKeyof<SuspenseProps, 'clientOnly'>) => {
         const defaultProps = useContext(SuspenseDefaultPropsContext)
         return (
           <SuspenseClientOnly fallback={typeof fallback === 'undefined' ? defaultProps.fallback : fallback}>
