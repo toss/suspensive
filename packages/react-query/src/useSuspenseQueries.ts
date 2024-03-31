@@ -9,6 +9,7 @@ import {
   useQueries,
 } from '@tanstack/react-query'
 import type { UseSuspenseQueryResultOnLoading, UseSuspenseQueryResultOnSuccess } from './useSuspenseQuery'
+import type { OmitKeyof } from './utility-types'
 
 // Avoid TS depth-limit error in case of large array literal
 type MAXIMUM_DEPTH = 20
@@ -18,7 +19,7 @@ type UseQueryOptionsForUseSuspenseQueries<
   TData = TQueryFnData,
   TQueryKey extends QueryKey = QueryKey,
   TEnabled extends boolean | undefined = true,
-> = Omit<UseQueryOptions<TQueryFnData, unknown, TData, TQueryKey>, 'context' | 'suspense'> & {
+> = OmitKeyof<UseQueryOptions<TQueryFnData, unknown, TData, TQueryKey>, 'context' | 'suspense'> & {
   enabled?: TEnabled
 }
 
