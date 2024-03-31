@@ -1,5 +1,14 @@
 # @suspensive/react-query
 
+## 1.26.7
+
+### Patch Changes
+
+- [#826](https://github.com/suspensive/react/pull/826) [`3f2bed2`](https://github.com/suspensive/react/commit/3f2bed2008844c8372632c18eefef8cef6c9b839) Thanks [@manudeli](https://github.com/manudeli)! - fix(react-query): add OmitKeyof to type strictly
+
+- Updated dependencies []:
+  - @suspensive/react@1.26.7
+
 ## 1.26.6
 
 ### Patch Changes
