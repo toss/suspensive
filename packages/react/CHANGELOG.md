@@ -40,6 +40,8 @@
 - 78f5bd4: feat(react, react-query): remove deprecated apis
 - 837ed18: feat(\*): remove target react v16, v17
 
+## 1.26.7
+
 ## 1.26.6
 
 ### Patch Changes
