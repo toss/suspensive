@@ -8,6 +8,7 @@
   "useSuspenseQuery": { "title": "useSuspenseQuery" },
   "useSuspenseQueries": { "title": "useSuspenseQueries" },
   "useSuspenseInfiniteQuery": { "title": "useSuspenseInfiniteQuery" },
+  "queryOptions": { "title": "queryOptions" },
   "SuspenseQuery": { "title": "<SuspenseQuery/>" },
   "SuspenseInfiniteQuery": { "title": "<SuspenseInfiniteQuery/>" },
   "QueryErrorBoundary": { "title": "<QueryErrorBoundary/>" }
