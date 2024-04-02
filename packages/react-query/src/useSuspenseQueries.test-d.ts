@@ -17,6 +17,7 @@ describe('useSuspenseQueries', () => {
         {
           queryKey: [...queryKey, 2] as const,
           queryFn,
+          select,
           // @ts-expect-error no suspense
           suspense: true,
         },
@@ -29,6 +30,8 @@ describe('useSuspenseQueries', () => {
         {
           queryKey: [...queryKey, 4] as const,
           queryFn,
+          // @ts-expect-error no enabled
+          enabled: true,
           select,
         },
       ] as const,
