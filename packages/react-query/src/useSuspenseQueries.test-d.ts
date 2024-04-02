@@ -1,7 +1,8 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { queryFn, queryKey, select } from '@suspensive/test-utils'
 import { describe, expectTypeOf, it } from 'vitest'
-import { type UseSuspenseQueryResult, useSuspenseQueries } from '../dist'
+import { useSuspenseQueries } from './useSuspenseQueries'
+import type { UseSuspenseQueryResult } from './useSuspenseQuery'
 
 describe('useSuspenseQueries', () => {
   it('type error', () => {
