@@ -1,5 +1,3 @@
-// TODO: remove this eslint
-/* eslint-disable @typescript-eslint/naming-convention */
 import { type QueryFunction, type UseQueryOptions, useQueries } from '@tanstack/react-query'
 import type { UseSuspenseQueryOptions, UseSuspenseQueryResult } from './useSuspenseQuery'
 

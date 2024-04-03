@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { queryFn, queryKey, select } from '@suspensive/test-utils'
 import { describe, expectTypeOf, it } from 'vitest'
+import { queryOptions } from './queryOptions'
 import { useSuspenseQueries } from './useSuspenseQueries'
 import type { UseSuspenseQueryResult } from './useSuspenseQuery'
 
@@ -34,6 +35,11 @@ describe('useSuspenseQueries', () => {
           enabled: true,
           select,
         },
+        queryOptions({
+          queryKey: [...queryKey, 4] as const,
+          queryFn: () => Promise.resolve({ field: 'success' }),
+          select: (data) => data.field,
+        }),
       ] as const,
     })
     // @ts-expect-error if no items
@@ -43,10 +49,15 @@ describe('useSuspenseQueries', () => {
   })
 
   it('type check', () => {
-    const [query, selectedQuery] = useSuspenseQueries({
+    const [query, selectedQuery, selectedQueryByQueryOptions] = useSuspenseQueries({
       queries: [
         { queryKey: [...queryKey, 5] as const, queryFn },
         { queryKey: [...queryKey, 6] as const, queryFn, select },
+        queryOptions({
+          queryKey: [...queryKey, 4] as const,
+          queryFn: () => Promise.resolve({ field: 'success' }),
+          select: (data) => data.field,
+        }),
       ] as const,
     })
 
@@ -57,5 +68,9 @@ describe('useSuspenseQueries', () => {
     expectTypeOf(selectedQuery).toEqualTypeOf<UseSuspenseQueryResult<string>>()
     expectTypeOf(selectedQuery.status).toEqualTypeOf<`success`>()
     expectTypeOf(selectedQuery.data).toEqualTypeOf<string>()
+
+    expectTypeOf(selectedQueryByQueryOptions).toEqualTypeOf<UseSuspenseQueryResult<string>>()
+    expectTypeOf(selectedQueryByQueryOptions.status).toEqualTypeOf<`success`>()
+    expectTypeOf(selectedQueryByQueryOptions.data).toEqualTypeOf<string>()
   })
 })
