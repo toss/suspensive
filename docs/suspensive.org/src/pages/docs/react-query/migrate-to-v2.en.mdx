@@ -130,7 +130,11 @@ const [post1Query, post2Query] = useQueries({
 const [{ data: post1 }, { data: post2 }] = useSuspenseQueries({
    queries: [postQueryOptions(1), { ...postQueryOptions(2), refetchInterval: 2000 }],
 })
-const Example = () => <SuspenseQuery {...postQueryOptions(1)}>{({ data: post1 }) => <>{post1.text}</>}</SuspenseQuery>
+const Example = () => (
+  <SuspenseQuery {...postQueryOptions(1)}>
+    {({ data: post1 }) => <>{post1.text}</>}
+  </SuspenseQuery>
+);
 
 // You can easily use queryKey and queryFn in queryClient's methods.
 const queryClient = useQueryClient()

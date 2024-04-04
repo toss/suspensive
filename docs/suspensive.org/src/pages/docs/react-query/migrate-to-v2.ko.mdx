@@ -132,7 +132,7 @@ const [{ data: post1 }, { data: post2 }] = useSuspenseQueries({
 })
 const Example = () => (
   <SuspenseQuery {...postQueryOptions(1)}>
-    {({data: post1}) => <>{post1.text}</>}
+    {({ data: post1 }) => <>{post1.text}</>}
   </SuspenseQuery>
 );
 
