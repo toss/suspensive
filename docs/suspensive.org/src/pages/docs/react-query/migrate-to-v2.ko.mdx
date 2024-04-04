@@ -122,7 +122,7 @@ const postQueryOptions = (postId) =>
 const post1Query = useQuery(postQueryOptions(1))
 const { data: post1 } = useSuspenseQuery({
   ...postQueryOptions(1),
-  refetchInterval: 2000, // 사용처에서 확장성을 명확히 표현됩니다.
+  refetchInterval: 2000, // 사용처에서 확장성이 명확히 표현됩니다.
 })
 const [post1Query, post2Query] = useQueries({
   queries: [postQueryOptions(1), { ...postQueryOptions(2), refetchInterval: 2000 }],
