@@ -1,5 +1,16 @@
 # @suspensive/react-query
 
+## 2.0.0-beta.9
+
+### Minor Changes
+
+- [#828](https://github.com/suspensive/react/pull/828) [`7f19c76`](https://github.com/suspensive/react/commit/7f19c76248136a91ff034dfb5c354e46272fa282) Thanks [@manudeli](https://github.com/manudeli)! - feat(react-query): add queryOptions
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @suspensive/react@2.0.0-beta.9
+
 ## 2.0.0-beta.8
 
 ### Minor Changes
