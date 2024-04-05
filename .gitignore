@@ -35,8 +35,5 @@ esm
 # graph
 graph/
 
-# lighthouse
-.lighthouseci/
-
 # test
 tsconfig.vitest-temp.json

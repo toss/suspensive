@@ -1,5 +1,13 @@
 # @suspensive/react
 
+## 1.26.7
+
+## 1.26.6
+
+### Patch Changes
+
+- [#816](https://github.com/suspensive/react/pull/816) [`33fe78c`](https://github.com/suspensive/react/commit/33fe78cc2cfaae05fdd641499ac4b209e6b72130) Thanks [@manudeli](https://github.com/manudeli)! - fix(react): add OmitKeyof safely and test cases for it
+
 ## 1.26.5
 
 ### Patch Changes

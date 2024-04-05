@@ -1,14 +1,14 @@
 import { type ComponentRef, forwardRef } from 'react'
 import { ErrorBoundary, type ErrorBoundaryProps } from './ErrorBoundary'
 import { Suspense, type SuspenseProps } from './Suspense'
-import type { OmitKeyOf } from './utility-types'
+import type { OmitKeyof } from './utility-types'
 
 /**
  * @deprecated Use SuspenseProps and ErrorBoundaryProps instead
  */
 export interface AsyncBoundaryProps
-  extends OmitKeyOf<SuspenseProps, 'fallback' | 'devMode'>,
-    OmitKeyOf<ErrorBoundaryProps, 'fallback' | 'devMode'> {
+  extends OmitKeyof<SuspenseProps, 'fallback' | 'devMode'>,
+    OmitKeyof<ErrorBoundaryProps, 'fallback' | 'devMode'> {
   pendingFallback?: SuspenseProps['fallback']
   rejectedFallback: ErrorBoundaryProps['fallback']
 }
@@ -38,7 +38,7 @@ export const AsyncBoundary = Object.assign(
      * @deprecated Use `<Suspense clientOnly />` and `<ErrorBoundary/>` instead
      */
     CSROnly: (() => {
-      const CSROnly = forwardRef<ComponentRef<typeof ErrorBoundary>, OmitKeyOf<AsyncBoundaryProps, 'clientOnly'>>(
+      const CSROnly = forwardRef<ComponentRef<typeof ErrorBoundary>, OmitKeyof<AsyncBoundaryProps, 'clientOnly'>>(
         ({ pendingFallback, rejectedFallback, children, ...errorBoundaryProps }, resetRef) => (
           <ErrorBoundary {...errorBoundaryProps} ref={resetRef} fallback={rejectedFallback}>
             <Suspense clientOnly fallback={pendingFallback}>
