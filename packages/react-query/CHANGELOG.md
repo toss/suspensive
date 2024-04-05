@@ -1,5 +1,16 @@
 # @suspensive/react-query
 
+## 2.0.0-beta.9
+
+### Minor Changes
+
+- [#828](https://github.com/suspensive/react/pull/828) [`7f19c76`](https://github.com/suspensive/react/commit/7f19c76248136a91ff034dfb5c354e46272fa282) Thanks [@manudeli](https://github.com/manudeli)! - feat(react-query): add queryOptions
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @suspensive/react@2.0.0-beta.9
+
 ## 2.0.0-beta.8
 
 ### Minor Changes
@@ -71,6 +82,15 @@
 
 - 78f5bd4: feat(react, react-query): remove deprecated apis
 - 837ed18: feat(\*): remove target react v16, v17
+
+## 1.26.7
+
+### Patch Changes
+
+- [#826](https://github.com/suspensive/react/pull/826) [`3f2bed2`](https://github.com/suspensive/react/commit/3f2bed2008844c8372632c18eefef8cef6c9b839) Thanks [@manudeli](https://github.com/manudeli)! - fix(react-query): add OmitKeyof to type strictly
+
+- Updated dependencies []:
+  - @suspensive/react@1.26.7
 
 ## 1.26.6
 

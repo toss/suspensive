@@ -1,6 +1,6 @@
 import { queryFn, queryKey } from '@suspensive/test-utils'
 import { describe, expectTypeOf, it } from 'vitest'
-import { type UseSuspenseQueryResult, useSuspenseQuery } from '../dist'
+import { type UseSuspenseQueryResult, useSuspenseQuery } from './useSuspenseQuery'
 
 describe('useSuspenseQuery', () => {
   it('type error', () => {

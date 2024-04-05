@@ -1,5 +1,7 @@
 # @suspensive/react
 
+## 2.0.0-beta.9
+
 ## 2.0.0-beta.8
 
 ## 2.0.0-beta.7
@@ -39,6 +41,8 @@
 - ea1c4ed: feat(react): rename Suspensive defaultOptions -> defaultProps
 - 78f5bd4: feat(react, react-query): remove deprecated apis
 - 837ed18: feat(\*): remove target react v16, v17
+
+## 1.26.7
 
 ## 1.26.6
 

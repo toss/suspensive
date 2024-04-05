@@ -6,7 +6,7 @@ We provide these components to clearly express what causes suspense at the same 
 2. Changing the range of Suspense and ErrorBoundary becomes simple. Parallel processing of queries is also easier.
 3. Because it manages all data-fetching within the Page component, the internal components are presentational, so it is easy to separate the components.
 
-```jsx
+```jsx /SuspenseQuery/
 import { SuspenseQuery } from '@suspensive/react-query'
 import { Suspense, ErrorBoundary } from '@suspensive/react'
 import { PostItem, AuthorProfile } from '~/components'
@@ -25,12 +25,10 @@ const PostsPage = ({ authorId }) => (
 )
 ```
 
-## Motivation
+## Motivation: useSuspenseQuery is not obvious
 
 Because the existing useSuspenseQuery is a hook, it creates components with names such as AuthorInfo and PostList to place Suspense and ErrorBoundary on the parent.
 This makes it difficult to predict what suspense and errors will be thrown inside AuthorInfo and PostList.
-
-#### AS-IS: useSuspenseQuery
 
 ```jsx
 // posts/page.tsx
@@ -48,7 +46,7 @@ const PostsPage = ({ userId }) => (
 )
 ```
 
-```jsx
+```jsx /useSuspenseQuery/
 // posts/components/AuthorInfo.tsx
 import { useSuspenseQuery } from '@suspensive/react-query'
 import { AuthorProfile } from '~/components'
@@ -62,7 +60,7 @@ const AuthorInfo = ({ userId }) => {
 }
 ```
 
-```jsx
+```jsx /useSuspenseQuery/
 // posts/components/PostList.tsx
 import { useSuspenseQuery } from '@suspensive/react-query'
 import { PostListItem } from '~/components'

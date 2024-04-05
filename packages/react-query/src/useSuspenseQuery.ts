@@ -1,7 +1,8 @@
 import { type QueryKey, type UseQueryOptions, type UseQueryResult, useQuery } from '@tanstack/react-query'
+import type { OmitKeyof } from './utility-types'
 
 export interface UseSuspenseQueryResult<TData = unknown, TError = unknown>
-  extends Omit<UseQueryResult<TData, TError>, keyof Pick<UseQueryResult, 'isPlaceholderData'>> {
+  extends OmitKeyof<UseQueryResult<TData, TError>, keyof Pick<UseQueryResult, 'isPlaceholderData'>> {
   data: TData
   status: 'success'
 }
@@ -11,7 +12,7 @@ export interface UseSuspenseQueryOptions<
   TError = unknown,
   TData = TQueryFnData,
   TQueryKey extends QueryKey = QueryKey,
-> extends Omit<
+> extends OmitKeyof<
     UseQueryOptions<TQueryFnData, TError, TData, TQueryKey>,
     'suspense' | 'useErrorBoundary' | 'enabled' | 'placeholderData'
   > {}

@@ -1,1 +1,33 @@
 # SuspenseInfiniteQuery
+
+[`<SuspenseQuery/>`](./SuspenseQuery.ko.mdx)가 useSuspenseQuery를 jsx에서 쉽게 사용하게 하는 역할과 마찬가지로 `<SuspenseInfiniteQuery/>`는 useSuspenseInfiniteQuery를 jsx에서 사용하기 쉽게 하기 위한 역할을 합니다.
+
+```jsx /SuspenseInfiniteQuery/
+import { SuspenseInfiniteQuery } from '@suspensive/react-query'
+import { Suspense, ErrorBoundary } from '@suspensive/react'
+import { PostItem } from '~/components'
+
+const InfinitePostsPage = ({ authorId }) => (
+  <ErrorBoundary fallback={({ error }) => <>{error.message}</>}>
+    <Suspense fallback="loading...">
+      <SuspenseInfiniteQuery {...postsInfiniteQueryOptions(authorId)}>
+        {({ data, fetchNextPage }) => (
+          <>
+            {data.pages.map((post) => (
+              <PostItem {...post} />
+            ))}
+            <button
+              type="button"
+              onClick={() => {
+                fetchNextPage()
+              }}
+            >
+              more
+            </button>
+          </>
+        )}
+      </SuspenseInfiniteQuery>
+    </Suspense>
+  </ErrorBoundary>
+)
+```
