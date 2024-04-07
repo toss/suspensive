@@ -1,7 +1,7 @@
 'use client'
 
-import { ErrorBoundary, Suspense } from '@suspensive/react'
 import { Await } from '@suspensive/react-await'
+import { ErrorBoundary, Suspense } from '@suspensive/react-query'
 import { api } from '~/utils'
 
 export default function Page() {

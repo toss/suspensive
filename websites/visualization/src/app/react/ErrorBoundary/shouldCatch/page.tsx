@@ -1,7 +1,6 @@
 'use client'
 
-import { ErrorBoundary, Suspense } from '@suspensive/react'
-import { useSuspenseQuery } from '@suspensive/react-query'
+import { ErrorBoundary, Suspense, useSuspenseQuery } from '@suspensive/react-query'
 import { useQueryErrorResetBoundary } from '@tanstack/react-query'
 import { AxiosError, isAxiosError } from 'axios'
 import { Area, Box, Button } from '~/components/uis'

@@ -1,5 +1,5 @@
 'use client'
-import { Delay } from '@suspensive/react'
+import { Delay } from '@suspensive/react-query'
 
 export default function Page() {
   return (

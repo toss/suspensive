@@ -1,7 +1,7 @@
 'use client'
 
-import { wrap } from '@suspensive/react'
 import { SuspenseImage } from '@suspensive/react-image'
+import { wrap } from '@suspensive/react-query'
 
 export default wrap
   .ErrorBoundary({ fallback: () => <div>error</div> })

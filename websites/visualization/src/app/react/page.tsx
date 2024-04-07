@@ -1,6 +1,6 @@
 'use client'
 
-import { ErrorBoundary, ErrorBoundaryGroup, Suspense } from '@suspensive/react'
+import { ErrorBoundary, ErrorBoundaryGroup, Suspense } from '@suspensive/react-query'
 import { useQueryErrorResetBoundary } from '@tanstack/react-query'
 import { UseSuspenseQuery } from '~/components'
 import { Area, Button, RejectedFallback, Spinner } from '~/components/uis'

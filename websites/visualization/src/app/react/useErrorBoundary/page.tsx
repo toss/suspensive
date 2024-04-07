@@ -1,6 +1,6 @@
 'use client'
 
-import { ErrorBoundary, useErrorBoundary, useErrorBoundaryFallbackProps } from '@suspensive/react'
+import { ErrorBoundary, useErrorBoundary, useErrorBoundaryFallbackProps } from '@suspensive/react-query'
 import { type PropsWithChildren, createElement, useEffect, useState } from 'react'
 
 export default function Page() {

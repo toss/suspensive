@@ -1,6 +1,6 @@
 'use client'
 
-import { useErrorBoundary, wrap } from '@suspensive/react'
+import { useErrorBoundary, wrap } from '@suspensive/react-query'
 
 const logError = (error: Error) => console.error(error)
 

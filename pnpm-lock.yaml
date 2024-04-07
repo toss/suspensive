@@ -377,13 +377,14 @@ importers:
         version: 18.2.0(react@18.2.0)
 
   packages/react-query:
+    dependencies:
+      '@suspensive/react':
+        specifier: workspace:^2.0.0-beta.9
+        version: link:../react
     devDependencies:
       '@suspensive/eslint-config':
         specifier: workspace:*
         version: link:../../configs/eslint-config
-      '@suspensive/react':
-        specifier: workspace:*
-        version: link:../react
       '@suspensive/test-utils':
         specifier: workspace:*
         version: link:../../configs/test-utils
@@ -411,9 +412,6 @@ importers:
 
   websites/visualization:
     dependencies:
-      '@suspensive/react':
-        specifier: workspace:*
-        version: link:../../packages/react
       '@suspensive/react-await':
         specifier: workspace:*
         version: link:../../packages/react-await
@@ -2357,11 +2355,11 @@ packages:
       tslib: 2.6.2
     dev: false
 
-  /@tanstack/match-sorter-utils@8.8.4:
-    resolution: {integrity: sha512-rKH8LjZiszWEvmi01NR72QWZ8m4xmXre0OOwlRGnjU01Eqz/QnN+cqpty2PJ0efHblq09+KilvyR7lsbzmXVEw==}
+  /@tanstack/match-sorter-utils@8.15.1:
+    resolution: {integrity: sha512-PnVV3d2poenUM31ZbZi/yXkBu3J7kd5k2u51CGwwNojag451AjTH9N6n41yjXz2fpLeewleyLBmNS6+HcGDlXw==}
     engines: {node: '>=12'}
     dependencies:
-      remove-accents: 0.4.2
+      remove-accents: 0.5.0
     dev: false
 
   /@tanstack/query-core@4.36.1:
@@ -2382,7 +2380,7 @@ packages:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
       react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
     dependencies:
-      '@tanstack/match-sorter-utils': 8.8.4
+      '@tanstack/match-sorter-utils': 8.15.1
       '@tanstack/react-query': 4.36.1(react-dom@18.2.0)(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
@@ -8538,6 +8536,10 @@ packages:
 
   /remove-accents@0.4.2:
     resolution: {integrity: sha512-7pXIJqJOq5tFgG1A2Zxti3Ht8jJF337m4sowbuHsW30ZnkQFnDzy9qBNhgzX8ZLW4+UBcXiiR7SwR6pokHsxiA==}
+    dev: false
+
+  /remove-accents@0.5.0:
+    resolution: {integrity: sha512-8g3/Otx1eJaVD12e31UbJj1YzdtVvzH85HV7t+9MJYk/u3XmkOUJ5Ys9wQrf9PCPK8+xn4ymzqYCiZl6QWKn+A==}
     dev: false
 
   /repeat-string@1.6.1:

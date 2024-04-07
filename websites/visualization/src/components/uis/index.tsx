@@ -1,4 +1,4 @@
-import type { ErrorBoundaryFallbackProps } from '@suspensive/react'
+import type { ErrorBoundaryFallbackProps } from '@suspensive/react-query'
 import { clsx } from 'clsx'
 import { type ComponentPropsWithoutRef, type PropsWithChildren, forwardRef } from 'react'
 
