@@ -1,1 +1,0 @@
-export { UseSuspenseQuery } from './UseSuspenseQuery'
