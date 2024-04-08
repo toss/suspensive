@@ -1,10 +1,23 @@
 'use client'
 
-import { ErrorBoundary, ErrorBoundaryGroup, QueryErrorBoundary, Suspense, wrap } from '@suspensive/react-query'
+import {
+  ErrorBoundary,
+  ErrorBoundaryGroup,
+  QueryErrorBoundary,
+  Suspense,
+  SuspenseQuery,
+  queryOptions,
+  wrap,
+} from '@suspensive/react-query'
 import { useQueryErrorResetBoundary } from '@tanstack/react-query'
-import { UseSuspenseQuery } from '~/components'
-import { Area, Button, RejectedFallback, Spinner } from '~/components/uis'
+import { Area, Box, Button, RejectedFallback, Spinner } from '~/components/uis'
 import { api } from '~/utils/api'
+
+const delayQuery = (id: number, { ms, percentage }: { ms: number; percentage: number }) =>
+  queryOptions({
+    queryKey: ['@suspensive/react-query', 'delayQuery', id] as const,
+    queryFn: () => api.delay(ms, { percentage }),
+  })
 
 export default wrap.ErrorBoundaryGroup({}).on(function Page() {
   const queryErrorResetBoundary = useQueryErrorResetBoundary()
@@ -17,8 +30,12 @@ export default wrap.ErrorBoundaryGroup({}).on(function Page() {
       <Area title="QueryErrorResetBoundary + ErrorBoundary + Suspense">
         <ErrorBoundary onReset={queryErrorResetBoundary.reset} fallback={RejectedFallback}>
           <Suspense clientOnly fallback={<Spinner />}>
-            <UseSuspenseQuery queryKey={['query', 1] as const} queryFn={() => api.delay(500, { percentage: 40 })} />
-            <UseSuspenseQuery queryKey={['query', 2] as const} queryFn={() => api.delay(500, { percentage: 40 })} />
+            <SuspenseQuery {...delayQuery(1, { ms: 500, percentage: 40 })}>
+              {({ data }) => <Box.Success>{data}</Box.Success>}
+            </SuspenseQuery>
+            <SuspenseQuery {...delayQuery(2, { ms: 500, percentage: 40 })}>
+              {({ data }) => <Box.Success>{data}</Box.Success>}
+            </SuspenseQuery>
           </Suspense>
         </ErrorBoundary>
       </Area>
@@ -26,8 +43,12 @@ export default wrap.ErrorBoundaryGroup({}).on(function Page() {
       <Area title="QueryErrorBoundary + Suspense">
         <QueryErrorBoundary fallback={RejectedFallback}>
           <Suspense clientOnly fallback={<Spinner />}>
-            <UseSuspenseQuery queryKey={['query', 3] as const} queryFn={() => api.delay(500, { percentage: 40 })} />
-            <UseSuspenseQuery queryKey={['query', 4] as const} queryFn={() => api.delay(500, { percentage: 40 })} />
+            <SuspenseQuery {...delayQuery(3, { ms: 500, percentage: 40 })}>
+              {({ data }) => <Box.Success>{data}</Box.Success>}
+            </SuspenseQuery>
+            <SuspenseQuery {...delayQuery(4, { ms: 500, percentage: 40 })}>
+              {({ data }) => <Box.Success>{data}</Box.Success>}
+            </SuspenseQuery>
           </Suspense>
         </QueryErrorBoundary>
       </Area>
