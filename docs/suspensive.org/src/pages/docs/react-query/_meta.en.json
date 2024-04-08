@@ -1,4 +1,5 @@
 {
+  "motivation": { "title": "Why need to use?" },
   "installation": { "title": "Installation" },
   "--- API Reference": {
     "type": "separator",

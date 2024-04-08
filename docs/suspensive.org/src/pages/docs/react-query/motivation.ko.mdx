@@ -1,0 +1,66 @@
+import { Callout } from '@/components'
+import { Steps } from 'nextra/components'
+
+# 어떤 이유로 사용하나요?
+
+@suspensive/react-query는 아래와 같은 동기로 사용됩니다.
+
+<Steps>
+
+### Hooks for Suspense를 @tanstack/react-query v4에서도 사용할 수 있습니다 (@tanstack/react-query v5에서 뿐 아니라)
+
+@tanstack/react-query v4에서 원래 없던 [useSuspenseQuery](./useSuspenseQuery), [useSuspenseQueries](./useSuspenseQueries), [useSuspenseInfiniteQuery](./useSuspenseInfiniteQuery)를 사용할 수 있게 됩니다. 현재 이 훅은 @tanstack/react-query v5에서는 공식적으로 제공하기 때문에 @tanstack/react-query v4에서 v5로 마이그레이션하기 위한 좋은 대안이 됩니다.
+
+### @tanstack/react-query v5의 [es private field로 인해 저버전의 브라우저를 지원하지 못하는 문제](https://github.com/TanStack/query/issues/6371#issuecomment-1810246027)를 해결합니다
+
+여전히 많은 곳에서 성능과 별개로 safari 12.1,13,14와 같은 낮은 버전의 브라우저 환경도 지원할 필요가 있습니다. 하지만 @tanstack/react-query v5의 브라우저 호환성은 safari>=15와 같은 높은 브라우저 환경을 타겟팅하고 있기 때문에 사용에 제한이 있을 수 있습니다.
+
+![ES Private fields error](/img/react-query_private-class-fields-error.png)
+
+- [@tanstack/react-query v5 브라우저 호환성이 높은 버전만을 지원하는 이유(es private field)](https://github.com/TanStack/query/issues/6371#issuecomment-1810246027)를 확인하세요
+
+  ![ES Private fields issue tkdodo comment](/img/react-query_private-class-fields-tkdodo-comment.png)
+
+이 경우 @suspensive/react-query는 @tanstack/react-query v4와 함께 사용해 @tanstack/react-query v5의 인터페이스를 사용할 수 있게 도와주는 좋은 대안이 되어줄 수 있습니다.
+(@suspensive/react-query는 내부적으로 @tanstack/react-query v4를 사용하기 때문에 낮은 버전 브라우저 지원을 유지하면서도 Suspense와 관련 훅을 지원할 수 있습니다.)
+
+#### [@tanstack/react-query v4](https://tanstack.com/query/v4/docs/framework/react/installation#requirements)과 [@tanstack/react-query v5](https://tanstack.com/query/v5/docs/framework/react/installation#requirements) 브라우저 호환성
+
+<br />
+
+<table>
+  <thead>
+    <tr>
+      <th>TanStack Query 지원 브라우저</th>
+      <th>v4</th>
+      <th>v5</th>
+    </tr>
+  </thead>
+  <tbody>
+    {[
+      { browser: 'Chrome', version4: '>= 73', version5: '>= 91' },
+      { browser: 'Firefox', version4: '>= 78', version5: '>= 90' },
+      { browser: 'Edge', version4: '>= 79', version5: '>= 91' },
+      { browser: 'Safari', version4: '>= 12.1', version5: '>= 15' },
+      { browser: 'iOS', version4: '>= 12.2', version5: '>= 15' },
+      { browser: 'Opera', version4: '>= 53', version5: '>= 77' },
+    ].map((item) => (
+      <tr key={item.browser}>
+        <td>{item.browser}</td>
+        <td className="text-center">{item.version4}</td>
+        <td className="text-center">{item.version5}</td>
+      </tr>
+    ))}
+  </tbody>
+</table>
+
+### 이 라이브러리는 현재 [TanStack Query의 커뮤니티 리소스](https://tanstack.com/query/v4/docs/framework/react/community/suspensive-react-query)입니다.
+
+TanStack 공식문서에 등록된 커뮤니티 리소스인 만큼 저희 Suspensive 메인테이너들은 지원을 아끼지 않고 있습니다.
+
+![TanStack Query Community Resources](/img/react-query_community-resources.png)
+
+공식문서를 통해 당신의 팀원들이 이해하기 쉬운 공식문서를 제공하고 있고 이슈가 있을 경우 신속하게 지원합니다.
+따라서 @tanstack/react-query v4와 함께 프로덕션 레벨에서 팀 동료들과 사용할 수 있습니다.
+
+</Steps>
