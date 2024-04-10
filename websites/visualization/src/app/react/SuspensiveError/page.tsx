@@ -11,7 +11,7 @@ export default function Page() {
 
         return (
           <button onClick={reset} className="text-red-50">
-            {error.message}hi
+            {error.message}
           </button>
         )
       }}
@@ -20,7 +20,7 @@ export default function Page() {
         fallback={({ error, reset }) => {
           console.log(error)
 
-          return <button onClick={reset}>hihihi{error.message}</button>
+          return <button onClick={reset}>{error.message}</button>
         }}
       >
         <Delay fallback="delaying..." ms={1000}>
