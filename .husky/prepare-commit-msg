@@ -1,1 +1,1 @@
-npx @coauthors/prepare-commit-msg $1
+npx coauthors
