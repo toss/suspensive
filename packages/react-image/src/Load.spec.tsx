@@ -1,4 +1,3 @@
-import { describe, expect, it } from 'vitest'
 import { load } from './Load'
 
 describe('load', () => {

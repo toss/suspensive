@@ -1,7 +1,6 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { sleep } from '@suspensive/test-utils'
 import type { InfiniteData } from '@tanstack/react-query'
-import { expectTypeOf } from 'vitest'
 import { useSuspenseInfiniteQuery } from '../dist'
 
 const queryKey = ['key'] as const

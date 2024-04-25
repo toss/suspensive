@@ -2,7 +2,6 @@ import { CustomError, FALLBACK, Suspend, TEXT } from '@suspensive/test-utils'
 import { render, screen, waitFor } from '@testing-library/react'
 import ms from 'ms'
 import { createElement, useContext } from 'react'
-import { describe, expect, it } from 'vitest'
 import { DelayDefaultPropsContext, SuspenseDefaultPropsContext } from './contexts'
 import { Delay, type DelayProps } from './Delay'
 import {

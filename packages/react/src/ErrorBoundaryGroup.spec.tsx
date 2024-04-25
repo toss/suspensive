@@ -2,7 +2,6 @@ import { CustomError, ERROR_MESSAGE, TEXT, ThrowError } from '@suspensive/test-u
 import { fireEvent, render, screen, waitFor } from '@testing-library/react'
 import ms from 'ms'
 import { createElement } from 'react'
-import { describe, expect, it } from 'vitest'
 import { ErrorBoundary } from './ErrorBoundary'
 import { ErrorBoundaryGroup, useErrorBoundaryGroup } from './ErrorBoundaryGroup'
 import {
