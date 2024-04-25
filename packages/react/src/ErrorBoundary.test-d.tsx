@@ -1,6 +1,5 @@
 import { CustomError, CustomNotError } from '@suspensive/test-utils'
 import type { ComponentProps } from 'react'
-import { describe, expectTypeOf, it } from 'vitest'
 import { ErrorBoundary } from './ErrorBoundary'
 import type { ConstructorType } from './utility-types'
 

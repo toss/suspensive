@@ -1,6 +1,4 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import { sleep } from '@suspensive/test-utils'
-import { expectTypeOf } from 'vitest'
 import { useSuspenseQueries } from '../dist'
 
 const queryKey = ['key'] as const

@@ -1,4 +1,3 @@
-import { describe, expect, expectTypeOf, it } from 'vitest'
 import { SuspensiveError } from './SuspensiveError'
 
 describe('SuspensiveError.assert', () => {
