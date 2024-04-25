@@ -1,7 +1,6 @@
 import { ERROR_MESSAGE, FALLBACK, Suspend, TEXT, ThrowError } from '@suspensive/test-utils'
 import { render, screen, waitFor } from '@testing-library/react'
 import ms from 'ms'
-import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { AsyncBoundary } from './AsyncBoundary'
 
 describe('<AsyncBoundary/>', () => {
