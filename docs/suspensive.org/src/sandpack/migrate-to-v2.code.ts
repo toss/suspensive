@@ -1,4 +1,4 @@
-export default {
+export const MigrateToV2 = {
   devMode: `import { useState } from 'react'
 import { DevMode, Suspensive, SuspensiveProvider, Suspense, ErrorBoundary } from '@suspensive/react'
   

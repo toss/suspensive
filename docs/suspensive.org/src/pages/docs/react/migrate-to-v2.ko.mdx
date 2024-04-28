@@ -1,5 +1,5 @@
 import { Sandpack } from '@/components'
-import Code from './migrate-to-v2.code'
+import { MigrateToV2 } from '@/sandpack'
 
 # v2로 마이그레이션하기
 
@@ -15,7 +15,7 @@ import Code from './migrate-to-v2.code'
 
 <Sandpack
   files={{
-    '/App.tsx': Code.devMode,
+    '/App.tsx': MigrateToV2.devMode,
   }}
   customSetup={{
     dependencies: {
@@ -32,9 +32,9 @@ import Code from './migrate-to-v2.code'
 
 <Sandpack
   files={{
-    '/App.tsx': Code.wrap.App,
-    '/Example.tsx': Code.wrap.Example,
-    '/api.ts': Code.api,
+    '/App.tsx': MigrateToV2.wrap.App,
+    '/Example.tsx': MigrateToV2.wrap.Example,
+    '/api.ts': MigrateToV2.api,
   }}
   customSetup={{
     dependencies: {
