@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/rules-of-hooks */
 import { queryFn, queryKey, select } from '@suspensive/test-utils'
 import { describe, expectTypeOf, it } from 'vitest'
 import { queryOptions } from './queryOptions'
