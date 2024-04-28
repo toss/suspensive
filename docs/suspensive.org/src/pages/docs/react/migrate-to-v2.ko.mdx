@@ -1,3 +1,6 @@
+import { Sandpack } from '@/components'
+import Code from './migrate-to-v2.code'
+
 # v2로 마이그레이션하기
 
 ## 새로운 기능
@@ -10,29 +13,16 @@
 
 ![devMode example](/devMode.gif)
 
-```jsx
-import { useState } from 'react'
-import { DevMode, Suspensive, SuspensiveProvider, Suspense, ErrorBoundary } from '@suspensive/react'
-
-const Example = () => {
-  const [suspensive] = useState(new Suspensive())
-
-  return (
-    <SuspensiveProvider value={suspensive}>
-      {/* This devMode prop will work only in development mode */}
-      <Suspense fallback={<>loading...</>} devMode={{ showFallback: true }}>
-        {/* children */}
-      </Suspense>
-      <ErrorBoundary fallback={<>error</>} devMode={{ showFallback: true }}>
-        {/* children */}
-      </ErrorBoundary>
-      {/* This <DevMode/> component will appear only in development mode */}
-      {/* If developer click <DevMode/>, devMode prop of <Suspense/> <ErrorBoundary/> will be activated */}
-      <DevMode />
-    </SuspensiveProvider>
-  )
-}
-```
+<Sandpack
+  files={{
+    '/App.tsx': Code.devMode,
+  }}
+  customSetup={{
+    dependencies: {
+      '@suspensive/react': 'latest',
+    },
+  }}
+/>
 
 ### 새로운 [`wrap`](./react/wrap) 빌더 [#270](https://github.com/suspensive/react/pull/270)
 
@@ -40,22 +30,23 @@ const Example = () => {
 
 `<Suspense/>`, `<ErrorBoundary/>`, `<ErrorBoundaryGroup/>` 등의 경우 많은 사람들이 hoc를 사용하여 이러한 구성 요소를 구성 요소 주위에 래핑합니다. 이 컴포넌트들은 children에 어떤 처리를 요하기 때문입니다. 그래서 컴포넌트를 불필요하게 나누지 않고 depth를 만들지 않기 위해 각 interface를 위한 hoc인 withErrorBoundary, withErrorBoundaryGroup, withSuspense를 사용하지만 각 hoc를 조합해서 사용하는 경우도 자주 발생하면서 가독성 또한 개선할 필요가 있었습니다. 이를 개선하기 위해 wrap을 제공하기로 했습니다.
 
-```jsx
-import { wrap } from '@suspensive/react'
-import { useSuspenseQuery } from '@suspensive/react-query'
-
-const Example = wrap
-  .ErrorBoundaryGroup({ blockOutside: false })
-  .ErrorBoundary({ fallback: ({ error }) => <>{error.message}</>, onError: logger.log })
-  .Suspense({ fallback: <>loading...</>, clientOnly: true })
-  .on(() => {
-    const query = useSuspenseQuery({
-      queryKey: ['key'],
-      queryFn: () => api.text(),
-    })
-    return <>{query.data.text}</>
-  })
-```
+<Sandpack
+  files={{
+    '/App.tsx': Code.wrap.App,
+    '/Example.tsx': Code.wrap.Example,
+    '/api.ts': Code.api,
+  }}
+  customSetup={{
+    dependencies: {
+      '@suspensive/react': 'latest',
+      '@suspensive/react-query': 'latest',
+      '@tanstack/react-query': '^4.0.0',
+    },
+  }}
+  options={{
+    activeFile: '/Example.tsx',
+  }}
+/>
 
 ### 새로운 `<ErrorBoundary/>`의 `shouldCatch` prop [#569](https://github.com/suspensive/react/pull/569)
 
