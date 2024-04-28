@@ -25,7 +25,7 @@ export const HomePage = ({
           </div>
           <p className="text-3xl">{description}</p>
         </div>
-        <Link href="/docs/intro">
+        <Link href="/docs/react/motivation">
           <button className="rounded-xl bg-gray-800 px-10 py-3 text-xl font-bold">{buttonText}</button>
         </Link>
       </div>

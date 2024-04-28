@@ -1,7 +1,6 @@
 import { FALLBACK, Suspend, TEXT } from '@suspensive/test-utils'
 import { render, screen, waitFor } from '@testing-library/react'
 import ms from 'ms'
-import { beforeEach, describe, expect, it } from 'vitest'
 import { Suspense } from './Suspense'
 
 describe('<Suspense/>', () => {

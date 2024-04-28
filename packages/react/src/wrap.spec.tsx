@@ -2,7 +2,6 @@ import { ERROR_MESSAGE, FALLBACK, Suspend, TEXT, ThrowError } from '@suspensive/
 import { render, screen, waitFor } from '@testing-library/react'
 import ms from 'ms'
 import { createElement } from 'react'
-import { beforeEach, describe, expect, it } from 'vitest'
 import { useErrorBoundaryGroup } from './ErrorBoundaryGroup'
 import { wrap } from './wrap'
 

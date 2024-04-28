@@ -1,6 +1,5 @@
 import { renderHook } from '@testing-library/react'
 import { useContext } from 'react'
-import { describe, expect, it } from 'vitest'
 import { Suspensive, SuspensiveProvider } from '../Suspensive'
 import { DevModeContext, SuspensiveDevMode } from './SuspensiveDevModeContext'
 
