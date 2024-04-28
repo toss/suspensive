@@ -2,7 +2,6 @@ import { sleep } from '@suspensive/test-utils'
 import { render, renderHook, screen } from '@testing-library/react'
 import ms from 'ms'
 import { useState } from 'react'
-import { describe, expect, it, vi } from 'vitest'
 import { useTimeout } from '.'
 
 describe('useTimeout', () => {

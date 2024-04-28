@@ -1,5 +1,4 @@
 import { useEffect, useLayoutEffect } from 'react'
-import { afterEach, describe, expect, it, vi } from 'vitest'
 
 describe('useIsomorphicLayoutEffect', () => {
   const originWindow = global.window

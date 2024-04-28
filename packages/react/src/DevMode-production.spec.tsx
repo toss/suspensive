@@ -1,4 +1,3 @@
-import { describe, expect, it } from 'vitest'
 import { ProductionDevMode } from './contexts/SuspensiveDevModeContext'
 
 describe('<DevMode/> in production mode', () => {

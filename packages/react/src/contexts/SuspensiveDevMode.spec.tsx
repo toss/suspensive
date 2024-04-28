@@ -1,6 +1,5 @@
 import { sleep } from '@suspensive/test-utils'
 import { waitFor } from '@testing-library/react'
-import { describe, expect, it, vi } from 'vitest'
 import { SuspensiveDevMode, SuspensiveDevModeOnInfoText } from './SuspensiveDevModeContext'
 
 describe('SuspensiveDevMode', () => {

@@ -1,5 +1,4 @@
 import { fireEvent, render, screen } from '@testing-library/react'
-import { describe, expect, it } from 'vitest'
 import { DevMode } from './DevMode'
 import { ErrorBoundary } from './ErrorBoundary'
 import { Suspense } from './Suspense'
