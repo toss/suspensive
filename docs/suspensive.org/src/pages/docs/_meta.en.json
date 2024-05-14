@@ -21,6 +21,7 @@
     "type": "separator",
     "title": "More"
   },
+  "migrate-to-v2": "Migrating to v2",
   "changelogs": "Changelogs",
   "links": "Related Links"
 }

@@ -5,9 +5,6 @@ import { Delay_ms_prop_should_be_greater_than_or_equal_to_0, SuspensiveError } f
 
 export interface DelayProps extends PropsWithChildren {
   ms?: number
-  /**
-   * @experimental This is experimental feature.
-   */
   fallback?: ReactNode
 }
 

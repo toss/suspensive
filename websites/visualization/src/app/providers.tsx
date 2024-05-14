@@ -20,7 +20,7 @@ export const Providers = ({ children }: PropsWithChildren) => {
   const suspensive = useState(
     () =>
       new Suspensive({
-        defaultOptions: {
+        defaultProps: {
           delay: {
             ms: 1200,
           },
@@ -37,7 +37,7 @@ export const Providers = ({ children }: PropsWithChildren) => {
         {children}
         <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>
-      <DevMode />
+      <DevMode position="bottomRight" />
     </SuspensiveProvider>
   )
 }

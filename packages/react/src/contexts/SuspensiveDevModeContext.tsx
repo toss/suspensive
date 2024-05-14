@@ -1,7 +1,12 @@
-import { type ComponentProps, type ComponentType, createContext, useCallback, useContext, useState } from 'react'
-// https://github.com/suspensive/react/pull/203
-// https://github.com/TanStack/query/blob/v4/packages/react-query/src/useSyncExternalStore.ts
-import { useSyncExternalStore } from 'use-sync-external-store/shim/index.js'
+import {
+  type ComponentProps,
+  type ComponentType,
+  createContext,
+  useCallback,
+  useContext,
+  useState,
+  useSyncExternalStore,
+} from 'react'
 import { Subscribable } from '../models/Subscribable'
 import type { Nullable } from '../utility-types'
 import { noop } from '../utils'
@@ -65,9 +70,6 @@ const devModePosition = {
   topRight: { top: 0, right: 0 },
 } as const
 interface DevModeProps {
-  /**
-   * @experimental This is experimental feature.
-   */
   position?: keyof typeof devModePosition
 }
 export const DevelopmentDevMode = syncDevMode<DevModeProps>(({ devMode, position = 'bottomRight' }) => {

@@ -1,136 +1,51 @@
-/* eslint-disable react-hooks/rules-of-hooks */
-import { sleep } from '@suspensive/test-utils'
-import { useSuspenseQuery } from '../dist'
+import { queryFn, queryKey } from '@suspensive/test-utils'
+import { describe, expectTypeOf, it } from 'vitest'
+import { type UseSuspenseQueryResult, useSuspenseQuery } from './useSuspenseQuery'
 
-const queryKey = ['key'] as const
-const queryFn = () => sleep(10).then(() => ({ text: 'response' }) as const)
-const boolean = Math.random() > 0.5
-const select = (data: Awaited<ReturnType<typeof queryFn>>) => data.text
+describe('useSuspenseQuery', () => {
+  it('type error', () => {
+    //@ts-expect-error no arg
+    useSuspenseQuery()
+    useSuspenseQuery({
+      queryKey,
+      queryFn,
+      //@ts-expect-error no suspense
+      suspense: boolean,
+    })
+    useSuspenseQuery({
+      queryKey,
+      queryFn,
+      //@ts-expect-error no useErrorBoundary
+      useErrorBoundary: boolean,
+    })
+    useSuspenseQuery({
+      queryKey,
+      queryFn,
+      //@ts-expect-error no enabled
+      enabled: boolean,
+    })
+    useSuspenseQuery({
+      queryKey,
+      queryFn,
+      //@ts-expect-error no placeholderData
+      placeholderData: 'placeholder',
+    })
+    useSuspenseQuery({
+      queryKey,
+      queryFn,
+      //@ts-expect-error no isPlaceholderData
+    }).isPlaceholderData
+  })
 
-// arg1:queryKey, arg2: queryFn, arg3: options
-expectTypeOf(
-  useSuspenseQuery(queryKey, queryFn, {
-    enabled: true,
-  }).data
-).toEqualTypeOf<Awaited<ReturnType<typeof queryFn>>>()
-expectTypeOf(
-  useSuspenseQuery(queryKey, queryFn, {
-    enabled: boolean,
-  }).data
-).toEqualTypeOf<Awaited<ReturnType<typeof queryFn>> | undefined>()
-expectTypeOf(
-  useSuspenseQuery(queryKey, queryFn, {
-    enabled: false,
-  }).data
-).toEqualTypeOf<undefined>()
-// arg1:queryKey, arg2: options
-expectTypeOf(
-  useSuspenseQuery(queryKey, {
-    queryFn,
-    enabled: true,
-  }).data
-).toEqualTypeOf<Awaited<ReturnType<typeof queryFn>>>()
-expectTypeOf(
-  useSuspenseQuery(queryKey, {
-    queryFn,
-    enabled: boolean,
-  }).data
-).toEqualTypeOf<Awaited<ReturnType<typeof queryFn>> | undefined>()
-expectTypeOf(
-  useSuspenseQuery(queryKey, {
-    queryFn,
-    enabled: false,
-  }).data
-).toEqualTypeOf<undefined>()
-// arg1: options
-expectTypeOf(
-  useSuspenseQuery({
-    queryKey,
-    queryFn,
-    enabled: true,
-  }).data
-).toEqualTypeOf<Awaited<ReturnType<typeof queryFn>>>()
-expectTypeOf(
-  useSuspenseQuery({
-    queryKey,
-    queryFn,
-    enabled: boolean,
-  }).data
-).toEqualTypeOf<Awaited<ReturnType<typeof queryFn>> | undefined>()
-expectTypeOf(
-  useSuspenseQuery({
-    queryKey,
-    queryFn,
-    enabled: false,
-  }).data
-).toEqualTypeOf<undefined>()
+  it('type check', () => {
+    const result = useSuspenseQuery({ queryKey, queryFn })
+    expectTypeOf(result).toEqualTypeOf<UseSuspenseQueryResult<{ text: string }>>()
+    expectTypeOf(result.data).toEqualTypeOf<{ text: string }>()
+    expectTypeOf(result.status).toEqualTypeOf<'success'>()
 
-// select
-// arg1:queryKey, arg2: queryFn, arg3: options
-expectTypeOf(
-  useSuspenseQuery(queryKey, queryFn, {
-    enabled: true,
-    select,
-  }).data
-).toEqualTypeOf<ReturnType<typeof select>>()
-expectTypeOf(
-  useSuspenseQuery(queryKey, queryFn, {
-    enabled: boolean,
-    select,
-  }).data
-).toEqualTypeOf<ReturnType<typeof select> | undefined>()
-expectTypeOf(
-  useSuspenseQuery(queryKey, queryFn, {
-    enabled: false,
-    select,
-  }).data
-).toEqualTypeOf<undefined>()
-// arg1:queryKey, arg2: options
-expectTypeOf(
-  useSuspenseQuery(queryKey, {
-    queryFn,
-    enabled: true,
-    select,
-  }).data
-).toEqualTypeOf<ReturnType<typeof select>>()
-expectTypeOf(
-  useSuspenseQuery(queryKey, {
-    queryFn,
-    enabled: boolean,
-    select,
-  }).data
-).toEqualTypeOf<ReturnType<typeof select> | undefined>()
-expectTypeOf(
-  useSuspenseQuery(queryKey, {
-    queryFn,
-    enabled: false,
-  }).data
-).toEqualTypeOf<undefined>()
-// arg1: options
-expectTypeOf(
-  useSuspenseQuery({
-    queryKey,
-    queryFn,
-    enabled: true,
-    select,
-  }).data
-).toEqualTypeOf<ReturnType<typeof select>>()
-expectTypeOf(
-  useSuspenseQuery({
-    queryKey,
-    queryFn,
-    enabled: boolean,
-    select,
-  }).data
-).toEqualTypeOf<ReturnType<typeof select> | undefined>()
-expectTypeOf(
-  useSuspenseQuery({
-    queryKey,
-    queryFn,
-    enabled: false,
-    select,
-  }).data
-).toEqualTypeOf<undefined>()
-
-// @ts-expect-error no arg
-useSuspenseQuery()
+    const selectedResult = useSuspenseQuery({ queryKey, queryFn, select: (data) => data.text })
+    expectTypeOf(selectedResult).toEqualTypeOf<UseSuspenseQueryResult<string>>()
+    expectTypeOf(selectedResult.data).toEqualTypeOf<string>()
+    expectTypeOf(selectedResult.status).toEqualTypeOf<'success'>()
+  })
+})
