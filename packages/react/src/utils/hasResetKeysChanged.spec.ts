@@ -5,7 +5,7 @@ const reference1 = { test: 0 }
 const reference2 = { test: 0 }
 
 describe('hasResetKeysChanged', () => {
-  describe('If it is judged to be true', () => {
+  describe('true cases', () => {
     it('should return true if the two arrays have different lengths.', () => {
       const array1 = Array.from({ length: 1 }).map((_, index) => primitive + index)
       const array2 = Array.from({ length: 2 }).map((_, index) => primitive + index)
