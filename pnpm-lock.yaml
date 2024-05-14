@@ -47,6 +47,9 @@ importers:
       '@vitest/ui':
         specifier: ^1.6.0
         version: 1.6.0(vitest@1.6.0)
+      coauthors:
+        specifier: latest
+        version: 0.1.0
       eslint:
         specifier: ^8.57.0
         version: 8.57.0
@@ -931,12 +934,29 @@ packages:
       prettier: 2.8.8
     dev: true
 
+  /@coauthors/core@0.1.0:
+    resolution: {integrity: sha512-7vic14NSMjZ0k/429cG//MpHR5HCXjZbHxpg0SimMnDKXWwCpCCee9CU4YPETk3kBl/p3gxowzeh6OYNOuhKjg==}
+    dependencies:
+      node-fetch: 2.7.0
+      zod: 3.23.8
+    transitivePeerDependencies:
+      - encoding
+    dev: true
+
   /@colors/colors@1.5.0:
     resolution: {integrity: sha512-ooWCrlZP11i8GImSjTHYHLkvFDP48nS4+204nGb1RiX/WXYHmJA2III9/e2DWVabCESdW7hBAEzHRqUn9OUVvQ==}
     engines: {node: '>=0.1.90'}
     requiresBuild: true
     dev: true
     optional: true
+
+  /@commander-js/extra-typings@12.0.1(commander@12.0.0):
+    resolution: {integrity: sha512-OvkMobb1eMqOCuJdbuSin/KJkkZr7n24/UNV+Lcz/0Dhepf3r2p9PaGwpRpAWej7A+gQnny4h8mGhpFl4giKkg==}
+    peerDependencies:
+      commander: ~12.0.0
+    dependencies:
+      commander: 12.0.0
+    dev: true
 
   /@commitlint/cli@19.3.0(@types/node@18.19.33)(typescript@5.4.5):
     resolution: {integrity: sha512-LgYWOwuDR7BSTQ9OLZ12m7F/qhNY+NpAyPBgo4YNMkACE7lGuUnuQq1yi9hz1KA4+3VqpOYl8H1rY/LYK43v7g==}
@@ -3611,6 +3631,17 @@ packages:
     engines: {node: '>=6'}
     dev: false
 
+  /coauthors@0.1.0:
+    resolution: {integrity: sha512-L3nqtikq7ncUQT9Qq2pckMUPIQh96huBRpW3dYrGidMvEd+IsVAunEg1pTZKys8YoH665vZHwVjMOLVW7pok5Q==}
+    hasBin: true
+    dependencies:
+      '@coauthors/core': 0.1.0
+      '@commander-js/extra-typings': 12.0.1(commander@12.0.0)
+      commander: 12.0.0
+    transitivePeerDependencies:
+      - encoding
+    dev: true
+
   /color-convert@1.9.3:
     resolution: {integrity: sha512-QfAUtd+vFdAtFQcC8CCyYt1fYWxSqAiK2cSD6zDB8N3cpsEBAvRxp9zOGg6G/SHHJYAT88/az/IuDGALsNVbGg==}
     dependencies:
@@ -3650,6 +3681,11 @@ packages:
   /commander@11.1.0:
     resolution: {integrity: sha512-yPVavfyCcRhmorC7rWlkHn15b4wDVgVmBA7kV4QVBsF7kv/9TKJAbAXVTxvTnwP8HHKjRCJDClKbciiYS7p0DQ==}
     engines: {node: '>=16'}
+    dev: true
+
+  /commander@12.0.0:
+    resolution: {integrity: sha512-MwVNWlYjDTtOjX5PiD7o5pK0UrFU/OYgcJfjjK4RaHZETNtjJqrZa9Y9ds88+A+f+d5lv+561eZ+yCKoS3gbAA==}
+    engines: {node: '>=18'}
     dev: true
 
   /commander@4.1.1:
