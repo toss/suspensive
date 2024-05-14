@@ -34,8 +34,8 @@
     "@suspensive/eslint-config": "workspace:*",
     "@suspensive/tsconfig": "workspace:*",
     "@suspensive/tsup": "workspace:*",
-    "@types/react": "^18.2.75",
-    "react": "^18.2.0"
+    "@types/react": "^18.3.2",
+    "react": "^18.3.1"
   },
   "peerDependencies": {
     "react": "^16.8 || ^17 || ^18"
