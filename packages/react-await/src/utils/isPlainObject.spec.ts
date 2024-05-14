@@ -11,7 +11,7 @@ describe('isPlainObject', () => {
     })
   })
 
-  describe('If it is judged to be false', () => {
+  describe('false cases', () => {
     it('should return false for an array', () => {
       expect(isPlainObject([])).toBe(false)
     })
