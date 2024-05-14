@@ -71,9 +71,9 @@ ThrowError.reset = () => {
   throwErrorIsNeed.current = false
 }
 
-export const TEXT = 'TEXT' as const
-export const ERROR_MESSAGE = 'ERROR_MESSAGE' as const
-export const FALLBACK = 'FALLBACK' as const
+export const TEXT = 'TEXT'
+export const ERROR_MESSAGE = 'ERROR_MESSAGE'
+export const FALLBACK = 'FALLBACK'
 
 export const queryKey = ['key'] as const
 export const queryFn = () => sleep(10).then(() => ({ text: 'response' }))

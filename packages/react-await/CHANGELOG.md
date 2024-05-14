@@ -1,5 +1,11 @@
 # @suspensive/react-await
 
+## 0.0.17
+
+### Patch Changes
+
+- [#876](https://github.com/suspensive/react/pull/876) [`52d5380`](https://github.com/suspensive/react/commit/52d5380f3fbfc30a1c2bd048aab07e612e1791df) Thanks [@manudeli](https://github.com/manudeli)! - chore(\*): last versioning before v2
+
 ## 0.0.16-beta.0
 
 ### Patch Changes
