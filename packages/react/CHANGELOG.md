@@ -1,5 +1,11 @@
 # @suspensive/react
 
+## 2.0.0-beta.10
+
+### Major Changes
+
+- [#629](https://github.com/suspensive/react/pull/629) [`36d7416`](https://github.com/suspensive/react/commit/36d74169eb6fda88b62fe7d6f71f7b319480e9ba) Thanks [@manudeli](https://github.com/manudeli)! - chore(\*): versioning last beta
+
 ## 2.0.0-beta.9
 
 ## 2.0.0-beta.8
