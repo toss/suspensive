@@ -36,7 +36,7 @@ module.exports = {
     {
       files: ['*.spec.ts*', '*.test.ts*'],
       plugins: ['vitest', 'jest-dom'],
-      extends: ['plugin:vitest/recommended'],
+      extends: ['plugin:vitest/legacy-recommended'],
     },
   ],
 }
