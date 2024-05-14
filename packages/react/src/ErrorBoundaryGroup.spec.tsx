@@ -38,29 +38,6 @@ describe('<ErrorBoundaryGroup/>', () => {
     expect(screen.queryByText(ERROR_MESSAGE)).not.toBeInTheDocument()
   })
 
-  it('should reset all ErrorBoundaries in children by <ErrorBoundaryGroup.Reset/> too yet', async () => {
-    render(
-      <ErrorBoundaryGroup>
-        <ErrorBoundaryGroup.Reset trigger={(group) => <button onClick={group.reset}>{resetButtonText}</button>} />
-        {Array.from({ length: innerErrorBoundaryCount }).map((_, key) => (
-          <ErrorBoundary key={key} fallback={(props) => <div>{props.error.message}</div>}>
-            <ThrowError message={ERROR_MESSAGE} after={ms('0.1s')}>
-              <div>{TEXT}</div>
-            </ThrowError>
-          </ErrorBoundary>
-        ))}
-      </ErrorBoundaryGroup>
-    )
-
-    expect(screen.getAllByText(TEXT).length).toBe(innerErrorBoundaryCount)
-    await waitFor(() => expect(screen.getAllByText(ERROR_MESSAGE).length).toBe(innerErrorBoundaryCount))
-    ThrowError.reset()
-
-    fireEvent.click(screen.getByRole('button', { name: resetButtonText }))
-    expect(screen.getAllByText(TEXT).length).toBe(innerErrorBoundaryCount)
-    expect(screen.queryByText(ERROR_MESSAGE)).not.toBeInTheDocument()
-  })
-
   it('should reset all ErrorBoundaries in children even if it is nested, but if use blockOutside, can block reset by outside', async () => {
     render(
       <ErrorBoundaryGroup>

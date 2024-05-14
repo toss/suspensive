@@ -21,6 +21,7 @@
     "type": "separator",
     "title": "더보기"
   },
+  "migrate-to-v2": "v2로 마이그레이션하기",
   "changelogs": "Changelogs",
   "links": "관련 링크"
 }

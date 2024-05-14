@@ -18,7 +18,7 @@
   },
   "versions": {
     "type": "menu",
-    "title": "v1",
+    "title": "v2",
     "theme": {
       "collapsed": true
     },
@@ -28,12 +28,12 @@
         "href": "https://suspensive.org"
       },
       "v2": {
-        "title": "v2 (beta)",
-        "href": "https://beta.suspensive.org"
+        "title": "v2",
+        "href": "https://suspensive.org"
       },
       "v1": {
         "title": "v1",
-        "href": "https://suspensive.org"
+        "href": "https://v1.suspensive.org"
       }
     }
   }

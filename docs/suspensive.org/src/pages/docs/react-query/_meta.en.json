@@ -1,6 +1,7 @@
 {
   "motivation": { "title": "Why need to use?" },
   "installation": { "title": "Installation" },
+  "migrate-to-v2": { "title": "Migrating to v2" },
   "--- API Reference": {
     "type": "separator",
     "title": "API Reference"
@@ -8,5 +9,8 @@
   "useSuspenseQuery": { "title": "useSuspenseQuery" },
   "useSuspenseQueries": { "title": "useSuspenseQueries" },
   "useSuspenseInfiniteQuery": { "title": "useSuspenseInfiniteQuery" },
+  "queryOptions": { "title": "queryOptions" },
+  "SuspenseQuery": { "title": "<SuspenseQuery/>" },
+  "SuspenseInfiniteQuery": { "title": "<SuspenseInfiniteQuery/>" },
   "QueryErrorBoundary": { "title": "<QueryErrorBoundary/>" }
 }

@@ -1,5 +1,122 @@
 # @suspensive/react-query
 
+## 2.0.0
+
+### Major Changes
+
+- [#629](https://github.com/suspensive/react/pull/629) [`78f5bd4`](https://github.com/suspensive/react/commit/78f5bd42068f730dc71e12719c1d60c24f1bb78f) Thanks [@manudeli](https://github.com/manudeli)! - feat(react, react-query): remove deprecated apis
+
+- [#401](https://github.com/suspensive/react/pull/401) [`d06e883`](https://github.com/suspensive/react/commit/d06e883318d412e1f410dd4820bd73eaac64966a) Thanks [@manudeli](https://github.com/manudeli)! - fix(react-query): @suspensive/react-query v2's all naming convention correctly like @tanstack/react-query v5
+
+- [#629](https://github.com/suspensive/react/pull/629) [`36d7416`](https://github.com/suspensive/react/commit/36d74169eb6fda88b62fe7d6f71f7b319480e9ba) Thanks [@manudeli](https://github.com/manudeli)! - chore(\*): versioning last beta
+
+- [#631](https://github.com/suspensive/react/pull/631) [`837ed18`](https://github.com/suspensive/react/commit/837ed184f3257d895400669b290be470871ce46a) Thanks [@manudeli](https://github.com/manudeli)! - feat(\*): remove target react v16, v17
+
+### Minor Changes
+
+- [#828](https://github.com/suspensive/react/pull/828) [`7f19c76`](https://github.com/suspensive/react/commit/7f19c76248136a91ff034dfb5c354e46272fa282) Thanks [@manudeli](https://github.com/manudeli)! - feat(react-query): add queryOptions
+
+- [#775](https://github.com/suspensive/react/pull/775) [`785a51a`](https://github.com/suspensive/react/commit/785a51a1b3e3cfaa70169a9a275d172009e6318a) Thanks [@manudeli](https://github.com/manudeli)! - feat(react-query): add SuspenseQuery, SuspenseInfiniteQuery
+
+### Patch Changes
+
+- Updated dependencies [[`ea1c4ed`](https://github.com/suspensive/react/commit/ea1c4ed2126aac570fbeda86e0366017ca1f437f), [`78f5bd4`](https://github.com/suspensive/react/commit/78f5bd42068f730dc71e12719c1d60c24f1bb78f), [`6a3f6f4`](https://github.com/suspensive/react/commit/6a3f6f4abf4a1860c710224293251db9ae6b5f19), [`36d7416`](https://github.com/suspensive/react/commit/36d74169eb6fda88b62fe7d6f71f7b319480e9ba), [`3f6171b`](https://github.com/suspensive/react/commit/3f6171b950807d0d09f526b564a7424a7fb70fe0), [`73c0cc7`](https://github.com/suspensive/react/commit/73c0cc714aa4f1fe611bfb118050114dc6648926), [`837ed18`](https://github.com/suspensive/react/commit/837ed184f3257d895400669b290be470871ce46a)]:
+  - @suspensive/react@2.0.0
+
+## 2.0.0-beta.10
+
+### Major Changes
+
+- [#629](https://github.com/suspensive/react/pull/629) [`36d7416`](https://github.com/suspensive/react/commit/36d74169eb6fda88b62fe7d6f71f7b319480e9ba) Thanks [@manudeli](https://github.com/manudeli)! - chore(\*): versioning last beta
+
+### Patch Changes
+
+- Updated dependencies [[`36d7416`](https://github.com/suspensive/react/commit/36d74169eb6fda88b62fe7d6f71f7b319480e9ba)]:
+  - @suspensive/react@2.0.0-beta.10
+
+## 2.0.0-beta.9
+
+### Minor Changes
+
+- [#828](https://github.com/suspensive/react/pull/828) [`7f19c76`](https://github.com/suspensive/react/commit/7f19c76248136a91ff034dfb5c354e46272fa282) Thanks [@manudeli](https://github.com/manudeli)! - feat(react-query): add queryOptions
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @suspensive/react@2.0.0-beta.9
+
+## 2.0.0-beta.8
+
+### Minor Changes
+
+- [#775](https://github.com/suspensive/react/pull/775) [`785a51a`](https://github.com/suspensive/react/commit/785a51a1b3e3cfaa70169a9a275d172009e6318a) Thanks [@manudeli](https://github.com/manudeli)! - feat(react-query): add SuspenseQuery, SuspenseInfiniteQuery
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @suspensive/react@2.0.0-beta.8
+
+## 2.0.0-beta.7
+
+### Patch Changes
+
+- Updated dependencies [[`3f6171b`](https://github.com/suspensive/react/commit/3f6171b950807d0d09f526b564a7424a7fb70fe0)]:
+  - @suspensive/react@2.0.0-beta.7
+
+## 2.0.0-beta.6
+
+### Patch Changes
+
+- Updated dependencies [[`2bfe301`](https://github.com/suspensive/react/commit/2bfe301fd97e8cc9467245dde71ea052dbba409e)]:
+  - @suspensive/react@2.0.0-beta.6
+
+## 2.0.0-beta.5
+
+### Patch Changes
+
+- Updated dependencies [[`df78d21`](https://github.com/suspensive/react/commit/df78d21faef478930fb6fb26d6f2eccfc148da9d)]:
+  - @suspensive/react@2.0.0-beta.5
+
+## 2.0.0-beta.4
+
+### Patch Changes
+
+- [#711](https://github.com/suspensive/react/pull/711) [`30f43c2`](https://github.com/suspensive/react/commit/30f43c2a08798be739f3892483103289fba4fe78) Thanks [@Kanary159357](https://github.com/Kanary159357)! - fix(react-query): useSuspenseQueries type error with select option
+
+- Updated dependencies []:
+  - @suspensive/react@2.0.0-beta.4
+
+## 2.0.0-beta.3
+
+### Patch Changes
+
+- Updated dependencies [[`73c0cc7`](https://github.com/suspensive/react/commit/73c0cc714aa4f1fe611bfb118050114dc6648926)]:
+  - @suspensive/react@2.0.0-beta.3
+
+## 2.0.0-beta.2
+
+### Patch Changes
+
+- Updated dependencies [6a3f6f4]
+  - @suspensive/react@2.0.0-beta.2
+
+## 2.0.0-beta.1
+
+### Major Changes
+
+- d06e883: fix(react-query): @suspensive/react-query v2's all naming convention correctly like @tanstack/react-query v5
+
+### Patch Changes
+
+- @suspensive/react@2.0.0-beta.1
+
+## 2.0.0-beta.0
+
+### Major Changes
+
+- 78f5bd4: feat(react, react-query): remove deprecated apis
+- 837ed18: feat(\*): remove target react v16, v17
+
 ## 1.27.0
 
 ### Minor Changes
@@ -36,17 +153,9 @@
 
 ## 1.26.4
 
-### Patch Changes
-
-- Updated dependencies [[`2bfe301`](https://github.com/suspensive/react/commit/2bfe301fd97e8cc9467245dde71ea052dbba409e)]:
-  - @suspensive/react@1.26.4
+- @suspensive/react@1.26.4
 
 ## 1.26.3
-
-### Patch Changes
-
-- Updated dependencies [[`df78d21`](https://github.com/suspensive/react/commit/df78d21faef478930fb6fb26d6f2eccfc148da9d)]:
-  - @suspensive/react@1.26.3
 
 ## 1.26.2
 

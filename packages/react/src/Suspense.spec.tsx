@@ -30,29 +30,33 @@ describe('<Suspense/>', () => {
     await waitFor(() => expect(screen.queryByText(TEXT)).toBeInTheDocument())
   })
 })
-describe('<Suspense.CSROnly/>', () => {
+describe('<Suspense clientOnly/>', () => {
   beforeEach(() => Suspend.reset())
 
   it('should render the fallback during suspending', () => {
     render(
-      <Suspense.CSROnly fallback={FALLBACK}>
+      <Suspense clientOnly fallback={FALLBACK}>
         <Suspend during={Infinity} toShow={TEXT} />
-      </Suspense.CSROnly>
+      </Suspense>
     )
     expect(screen.queryByText(FALLBACK)).toBeInTheDocument()
     expect(screen.queryByText(TEXT)).not.toBeInTheDocument()
   })
   it('should render the children after the suspending', async () => {
     render(
-      <Suspense.CSROnly fallback={FALLBACK}>
+      <Suspense clientOnly fallback={FALLBACK}>
         <Suspend during={ms('0.1s')} toShow={TEXT} />
-      </Suspense.CSROnly>
+      </Suspense>
     )
     await waitFor(() => expect(screen.queryByText(TEXT)).toBeInTheDocument())
     expect(screen.queryByText(FALLBACK)).not.toBeInTheDocument()
   })
   it('should render the children if nothing to suspend in children', () => {
-    render(<Suspense.CSROnly fallback={FALLBACK}>{TEXT}</Suspense.CSROnly>)
+    render(
+      <Suspense clientOnly fallback={FALLBACK}>
+        {TEXT}
+      </Suspense>
+    )
     expect(screen.queryByText(FALLBACK)).not.toBeInTheDocument()
     expect(screen.queryByText(TEXT)).toBeInTheDocument()
   })

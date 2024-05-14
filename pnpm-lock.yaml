@@ -296,10 +296,6 @@ importers:
         version: 8.4.38
 
   packages/react:
-    dependencies:
-      use-sync-external-store:
-        specifier: ^1.2.2
-        version: 1.2.2(react@18.3.1)
     devDependencies:
       '@suspensive/eslint-config':
         specifier: workspace:*
@@ -319,9 +315,6 @@ importers:
       '@types/react-dom':
         specifier: ^18.3.0
         version: 18.3.0
-      '@types/use-sync-external-store':
-        specifier: ^0.0.6
-        version: 0.0.6
       react:
         specifier: ^18.3.1
         version: 18.3.1
@@ -330,10 +323,6 @@ importers:
         version: 18.3.1(react@18.3.1)
 
   packages/react-await:
-    dependencies:
-      use-sync-external-store:
-        specifier: ^1.2.2
-        version: 1.2.2(react@18.3.1)
     devDependencies:
       '@suspensive/eslint-config':
         specifier: workspace:*
@@ -356,9 +345,6 @@ importers:
       '@types/react-dom':
         specifier: ^18.3.0
         version: 18.3.0
-      '@types/use-sync-external-store':
-        specifier: ^0.0.6
-        version: 0.0.6
       react:
         specifier: ^18.3.1
         version: 18.3.1
@@ -367,10 +353,6 @@ importers:
         version: 18.3.1(react@18.3.1)
 
   packages/react-image:
-    dependencies:
-      use-sync-external-store:
-        specifier: ^1.2.2
-        version: 1.2.2(react@18.3.1)
     devDependencies:
       '@suspensive/eslint-config':
         specifier: workspace:*
@@ -390,9 +372,6 @@ importers:
       '@types/react-dom':
         specifier: ^18.3.0
         version: 18.3.0
-      '@types/use-sync-external-store':
-        specifier: ^0.0.6
-        version: 0.0.6
       react:
         specifier: ^18.3.1
         version: 18.3.1
@@ -448,7 +427,7 @@ importers:
         specifier: workspace:*
         version: link:../../packages/react-query
       '@tanstack/react-query':
-        specifier: ^4.36.1
+        specifier: '4'
         version: 4.36.1(react-dom@18.3.1)(react@18.3.1)
       '@tanstack/react-query-devtools':
         specifier: ^4.36.1
@@ -2731,10 +2710,6 @@ packages:
   /@types/unist@3.0.1:
     resolution: {integrity: sha512-ue/hDUpPjC85m+PM9OQDMZr3LywT+CT6mPsQq8OJtCLiERkGRcQUFvu9XASF5XWqyZFXbf15lvb3JFJ4dRLWPg==}
     dev: false
-
-  /@types/use-sync-external-store@0.0.6:
-    resolution: {integrity: sha512-zFDAD+tlpf2r4asuHEj0XH6pY6i0g5NeAHPn+15wk3BV6JA69eERFXC1gyGThDkVa1zCyKr5jox1+2LbV/AMLg==}
-    dev: true
 
   /@typescript-eslint/eslint-plugin@7.9.0(@typescript-eslint/parser@7.9.0)(eslint@8.57.0)(typescript@5.4.5):
     resolution: {integrity: sha512-6e+X0X3sFe/G/54aC3jt0txuMTURqLyekmEHViqyA2VnxhLMpvA6nqmcjIy+Cr9tLDHPssA74BP5Mx9HQIxBEA==}
