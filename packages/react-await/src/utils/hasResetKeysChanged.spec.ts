@@ -35,7 +35,7 @@ describe('hasResetKeysChanged', () => {
     })
   })
 
-  describe('If it is judged to be false', () => {
+  describe('false cases', () => {
     it('should return false if the two arrays have same lengths and same primitive element in each index of arrays.', () => {
       const array1 = Array.from({ length: 1 }).map((_, index) => primitive + index)
       const array2 = Array.from({ length: 1 }).map((_, index) => primitive + index)
