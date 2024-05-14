@@ -1,7 +1,7 @@
 import { isPlainObject } from './isPlainObject'
 
 describe('isPlainObject', () => {
-  describe('If it is judged to be true', () => {
+  describe('true cases', () => {
     it('should return true for a plain object', () => {
       expect(isPlainObject({})).toBe(true)
     })
