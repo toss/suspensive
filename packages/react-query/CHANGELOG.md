@@ -83,6 +83,17 @@
 - 78f5bd4: feat(react, react-query): remove deprecated apis
 - 837ed18: feat(\*): remove target react v16, v17
 
+## 1.27.0
+
+### Minor Changes
+
+- [#876](https://github.com/suspensive/react/pull/876) [`52d5380`](https://github.com/suspensive/react/commit/52d5380f3fbfc30a1c2bd048aab07e612e1791df) Thanks [@manudeli](https://github.com/manudeli)! - chore(\*): last versioning before v2
+
+### Patch Changes
+
+- Updated dependencies [[`52d5380`](https://github.com/suspensive/react/commit/52d5380f3fbfc30a1c2bd048aab07e612e1791df)]:
+  - @suspensive/react@1.27.0
+
 ## 1.26.7
 
 ### Patch Changes

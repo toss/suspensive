@@ -118,7 +118,7 @@ class AwaitClient {
         .then((data) => {
           newAwaitState.data = data
         })
-        .catch((error) => {
+        .catch((error: unknown) => {
           newAwaitState.error = error
         }),
     }

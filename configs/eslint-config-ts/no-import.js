@@ -40,5 +40,8 @@ module.exports = {
     '@typescript-eslint/no-unsafe-call': 'warn',
     '@typescript-eslint/no-throw-literal': 'warn',
     '@typescript-eslint/no-confusing-void-expression': 'off',
+    '@typescript-eslint/restrict-template-expressions': 'off',
+    '@typescript-eslint/only-throw-error': 'warn',
+    '@typescript-eslint/ban-ts-comment': ['error', { minimumDescriptionLength: 3 }],
   },
 }
