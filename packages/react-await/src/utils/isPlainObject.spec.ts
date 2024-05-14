@@ -1,30 +1,30 @@
 import { isPlainObject } from './isPlainObject'
 
 describe('isPlainObject', () => {
-  describe('should return true', () => {
-    it('for a plain object', () => {
+  describe('If it is judged to be true', () => {
+    it('should return true for a plain object', () => {
       expect(isPlainObject({})).toBe(true)
     })
 
-    it('for an object without a constructor', () => {
+    it('should return true for an object without a constructor', () => {
       expect(isPlainObject(Object.create(null))).toBe(true)
     })
   })
 
-  describe('should return false', () => {
-    it('for an array', () => {
+  describe('If it is judged to be false', () => {
+    it('should return false for an array', () => {
       expect(isPlainObject([])).toBe(false)
     })
 
-    it('for a null value', () => {
+    it('should return false for a null value', () => {
       expect(isPlainObject(null)).toBe(false)
     })
 
-    it('for an undefined value', () => {
+    it('should return false for an undefined value', () => {
       expect(isPlainObject(undefined)).toBe(false)
     })
 
-    it('for an object instance without an Object-specific method', () => {
+    it('should return false for an object instance without an Object-specific method', () => {
       class Foo {
         abc: any
         constructor() {
@@ -34,7 +34,7 @@ describe('isPlainObject', () => {
       expect(isPlainObject(new Foo())).toBe(false)
     })
 
-    it('for an object with a custom prototype', () => {
+    it('should return false for an object with a custom prototype', () => {
       function Graph(this: any) {
         this.vertices = []
         this.edges = []
