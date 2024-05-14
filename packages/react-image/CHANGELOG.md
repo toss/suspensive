@@ -1,5 +1,11 @@
 # @suspensive/react-image
 
+## 0.0.12
+
+### Patch Changes
+
+- [#631](https://github.com/suspensive/react/pull/631) [`837ed18`](https://github.com/suspensive/react/commit/837ed184f3257d895400669b290be470871ce46a) Thanks [@manudeli](https://github.com/manudeli)! - feat(\*): remove target react v16, v17
+
 ## 0.0.11
 
 ### Patch Changes
