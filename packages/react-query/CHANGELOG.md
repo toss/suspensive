@@ -1,5 +1,28 @@
 # @suspensive/react-query
 
+## 2.0.0
+
+### Major Changes
+
+- [#629](https://github.com/suspensive/react/pull/629) [`78f5bd4`](https://github.com/suspensive/react/commit/78f5bd42068f730dc71e12719c1d60c24f1bb78f) Thanks [@manudeli](https://github.com/manudeli)! - feat(react, react-query): remove deprecated apis
+
+- [#401](https://github.com/suspensive/react/pull/401) [`d06e883`](https://github.com/suspensive/react/commit/d06e883318d412e1f410dd4820bd73eaac64966a) Thanks [@manudeli](https://github.com/manudeli)! - fix(react-query): @suspensive/react-query v2's all naming convention correctly like @tanstack/react-query v5
+
+- [#629](https://github.com/suspensive/react/pull/629) [`36d7416`](https://github.com/suspensive/react/commit/36d74169eb6fda88b62fe7d6f71f7b319480e9ba) Thanks [@manudeli](https://github.com/manudeli)! - chore(\*): versioning last beta
+
+- [#631](https://github.com/suspensive/react/pull/631) [`837ed18`](https://github.com/suspensive/react/commit/837ed184f3257d895400669b290be470871ce46a) Thanks [@manudeli](https://github.com/manudeli)! - feat(\*): remove target react v16, v17
+
+### Minor Changes
+
+- [#828](https://github.com/suspensive/react/pull/828) [`7f19c76`](https://github.com/suspensive/react/commit/7f19c76248136a91ff034dfb5c354e46272fa282) Thanks [@manudeli](https://github.com/manudeli)! - feat(react-query): add queryOptions
+
+- [#775](https://github.com/suspensive/react/pull/775) [`785a51a`](https://github.com/suspensive/react/commit/785a51a1b3e3cfaa70169a9a275d172009e6318a) Thanks [@manudeli](https://github.com/manudeli)! - feat(react-query): add SuspenseQuery, SuspenseInfiniteQuery
+
+### Patch Changes
+
+- Updated dependencies [[`ea1c4ed`](https://github.com/suspensive/react/commit/ea1c4ed2126aac570fbeda86e0366017ca1f437f), [`78f5bd4`](https://github.com/suspensive/react/commit/78f5bd42068f730dc71e12719c1d60c24f1bb78f), [`6a3f6f4`](https://github.com/suspensive/react/commit/6a3f6f4abf4a1860c710224293251db9ae6b5f19), [`36d7416`](https://github.com/suspensive/react/commit/36d74169eb6fda88b62fe7d6f71f7b319480e9ba), [`3f6171b`](https://github.com/suspensive/react/commit/3f6171b950807d0d09f526b564a7424a7fb70fe0), [`73c0cc7`](https://github.com/suspensive/react/commit/73c0cc714aa4f1fe611bfb118050114dc6648926), [`837ed18`](https://github.com/suspensive/react/commit/837ed184f3257d895400669b290be470871ce46a)]:
+  - @suspensive/react@2.0.0
+
 ## 2.0.0-beta.10
 
 ### Major Changes
