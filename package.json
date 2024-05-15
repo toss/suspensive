@@ -47,7 +47,7 @@
     "@commitlint/config-conventional": "^19.2.2",
     "@testing-library/dom": "^9.3.4",
     "@testing-library/jest-dom": "^6.4.5",
-    "@testing-library/react": "^14.3.1",
+    "@testing-library/react": "^15.0.7",
     "@testing-library/user-event": "^14.5.2",
     "@types/node": "^18.19.33",
     "@vitest/browser": "^1.6.0",
