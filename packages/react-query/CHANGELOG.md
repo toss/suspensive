@@ -1,5 +1,14 @@
 # @suspensive/react-query
 
+## 2.0.1
+
+### Patch Changes
+
+- [#887](https://github.com/suspensive/react/pull/887) [`8330a6b`](https://github.com/suspensive/react/commit/8330a6b62f922bd71dbcf5f963fe2eb1d4d9e89f) Thanks [@manudeli](https://github.com/manudeli)! - fix(react-query): fix SuspenseQuery, SuspenseInfiniteQuery's return type
+
+- Updated dependencies []:
+  - @suspensive/react@2.0.1
+
 ## 2.0.0
 
 ### Major Changes
