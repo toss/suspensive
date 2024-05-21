@@ -78,5 +78,11 @@ describe('<SuspenseQuery/>', () => {
         }}
       </SuspenseQuery>
     )
+
+    expectTypeOf(
+      <SuspenseQuery queryKey={queryKey} queryFn={queryFn}>
+        {() => <></>}
+      </SuspenseQuery>
+    ).toEqualTypeOf<JSX.Element>()
   })
 })

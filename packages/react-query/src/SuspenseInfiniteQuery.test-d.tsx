@@ -86,5 +86,11 @@ describe('<SuspenseInfiniteQuery/>', () => {
         }}
       </SuspenseInfiniteQuery>
     )
+
+    expectTypeOf(
+      <SuspenseInfiniteQuery queryKey={queryKey} queryFn={queryFn}>
+        {() => <></>}
+      </SuspenseInfiniteQuery>
+    ).toEqualTypeOf<JSX.Element>()
   })
 })
