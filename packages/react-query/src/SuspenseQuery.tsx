@@ -15,4 +15,4 @@ export const SuspenseQuery = <
   ...options
 }: UseSuspenseQueryOptions<TQueryFnData, TError, TData, TQueryKey> & {
   children: (queryResult: UseSuspenseQueryResult<TData, TError>) => ReactNode
-}) => children(useSuspenseQuery(options))
+}) => <>{children(useSuspenseQuery(options))}</>
