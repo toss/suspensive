@@ -59,7 +59,7 @@ export const ErrorBoundaryGroup = Object.assign(
       children,
     }: {
       children: (errorBoundaryGroup: ReturnType<typeof useErrorBoundaryGroup>) => ReactNode
-    }) => children(useErrorBoundaryGroup()),
+    }) => <>{children(useErrorBoundaryGroup())}</>,
   }
 )
 

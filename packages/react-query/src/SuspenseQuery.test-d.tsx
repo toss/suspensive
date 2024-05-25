@@ -1,4 +1,5 @@
 import { queryFn, queryKey } from '@suspensive/test-utils'
+import type { ReactNode } from 'react'
 import { describe, expectTypeOf, it } from 'vitest'
 import { SuspenseQuery } from './SuspenseQuery'
 import type { UseSuspenseQueryResult } from './useSuspenseQuery'
@@ -84,5 +85,10 @@ describe('<SuspenseQuery/>', () => {
         {() => <></>}
       </SuspenseQuery>
     ).toEqualTypeOf<JSX.Element>()
+    expectTypeOf(
+      <SuspenseQuery queryKey={queryKey} queryFn={queryFn}>
+        {() => <></>}
+      </SuspenseQuery>
+    ).not.toEqualTypeOf<ReactNode>()
   })
 })

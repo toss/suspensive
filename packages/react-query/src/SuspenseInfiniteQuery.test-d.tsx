@@ -1,5 +1,6 @@
 import { queryFn, queryKey } from '@suspensive/test-utils'
 import type { InfiniteData } from '@tanstack/react-query'
+import type { ReactNode } from 'react'
 import { describe, expectTypeOf, it } from 'vitest'
 import { SuspenseInfiniteQuery } from './SuspenseInfiniteQuery'
 import type { UseSuspenseInfiniteQueryResult } from './useSuspenseInfiniteQuery'
@@ -92,5 +93,10 @@ describe('<SuspenseInfiniteQuery/>', () => {
         {() => <></>}
       </SuspenseInfiniteQuery>
     ).toEqualTypeOf<JSX.Element>()
+    expectTypeOf(
+      <SuspenseInfiniteQuery queryKey={queryKey} queryFn={queryFn}>
+        {() => <></>}
+      </SuspenseInfiniteQuery>
+    ).not.toEqualTypeOf<ReactNode>()
   })
 })
