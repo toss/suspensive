@@ -181,8 +181,9 @@ export const ErrorBoundary = Object.assign(
     return ErrorBoundary
   })(),
   {
-    Consumer: ({ children }: { children: (errorBoundary: ReturnType<typeof useErrorBoundary>) => ReactNode }) =>
-      children(useErrorBoundary()),
+    Consumer: ({ children }: { children: (errorBoundary: ReturnType<typeof useErrorBoundary>) => ReactNode }) => (
+      <>{children(useErrorBoundary())}</>
+    ),
   }
 )
 

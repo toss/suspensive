@@ -1,5 +1,5 @@
 import { CustomError, CustomNotError } from '@suspensive/test-utils'
-import type { ComponentProps } from 'react'
+import type { ComponentProps, ReactNode } from 'react'
 import { ErrorBoundary } from './ErrorBoundary'
 import type { ConstructorType } from './utility-types'
 
@@ -33,5 +33,10 @@ describe('<ErrorBoundary/>', () => {
         fallback={({ error }) => <>{error.message} of Child</>}
       ></ErrorBoundary>
     )
+  })
+
+  it('type check', () => {
+    expectTypeOf(<ErrorBoundary.Consumer>{() => <></>}</ErrorBoundary.Consumer>).toEqualTypeOf<JSX.Element>()
+    expectTypeOf(<ErrorBoundary.Consumer>{() => <></>}</ErrorBoundary.Consumer>).not.toEqualTypeOf<ReactNode>()
   })
 })
