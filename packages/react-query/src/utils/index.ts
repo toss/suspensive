@@ -1,0 +1,1 @@
+export { isVersion } from './isVersion'
