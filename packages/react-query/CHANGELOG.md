@@ -1,5 +1,14 @@
 # @suspensive/react-query
 
+## 2.0.3
+
+### Patch Changes
+
+- [#893](https://github.com/suspensive/react/pull/893) [`39b4f1b`](https://github.com/suspensive/react/commit/39b4f1b42d2e02efba7c0af3e7d5568dceb62bca) Thanks [@manudeli](https://github.com/manudeli)! - fix(react-query): easier to know constraint @tanstack/react-query v4 runtimely
+
+- Updated dependencies []:
+  - @suspensive/react@2.0.3
+
 ## 2.0.2
 
 ### Patch Changes
