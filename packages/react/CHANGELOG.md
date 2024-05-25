@@ -1,5 +1,11 @@
 # @suspensive/react
 
+## 2.0.2
+
+### Patch Changes
+
+- [#891](https://github.com/suspensive/react/pull/891) [`be1b7ee`](https://github.com/suspensive/react/commit/be1b7eef61721c93292f6f993596bd94f4752978) Thanks [@manudeli](https://github.com/manudeli)! - fix(react): change return type of Consumers as JSX.Element
+
 ## 2.0.1
 
 ## 2.0.0
