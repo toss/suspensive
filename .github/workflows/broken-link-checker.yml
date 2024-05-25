@@ -1,0 +1,17 @@
+name: Broken link checker
+
+on:
+  schedule:
+    - cron: '0 5 * * 1-5'
+  workflow_dispatch:
+    inputs: { url: { description: 'URL to check', required: false, default: 'https://suspensive.org' } }
+
+jobs:
+  broken-link-checker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+      - run: npx broken-link-checker ${{ github.event.inputs.url }} --ro
