@@ -31,11 +31,12 @@ All declarative components to use suspense on both CSR, SSR.
 ### Features
 
 - Suspense
-- ErrorBoundary, useErrorBoundary, useErrorBoundaryFallbackProps
-- ErrorBoundaryGroup, useErrorBoundaryGroup
+- ErrorBoundary, ErrorBoundary.Consumer useErrorBoundary, useErrorBoundaryFallbackProps
+- ErrorBoundaryGroup, ErrorBoundaryGroup.Consumer useErrorBoundaryGroup
 - Delay
-- SuspensiveProvider, Suspensive
+- Suspensive, SuspensiveProvider
 - DevMode
+- wrap
 
 ### Installation
 
@@ -59,24 +60,17 @@ import { Suspense, ErrorBoundary, ErrorBoundaryGroup, Delay } from '@suspensive/
 const Example = () => (
   <ErrorBoundaryGroup>
     <ErrorBoundaryGroup.Consumer>
-      {(group) => <Button onClick={group.reset}>Reset All</Button>}
+      {(group) => <button onClick={group.reset}>Reset All</button>}
     </ErrorBoundaryGroup.Consumer>
-    <ErrorBoundary
-      fallback={(props) => (
-        <>
-          <button onClick={props.reset}>Try again</button>
-          {props.error.message}
-        </>
-      )}
-    >
+    <ErrorBoundary fallback={(props) => <button onClick={props.reset}>Reset error: {props.error.message}</button>}>
       <Suspense
         fallback={
-          <Delay>
+          <Delay ms={200}>
             <Spinner />
           </Delay>
         }
       >
-        <SuspendedComponent />
+        <SuspenseMaker />
       </Suspense>
     </ErrorBoundary>
   </ErrorBoundaryGroup>
@@ -96,54 +90,54 @@ Declarative apis to use [@tanstack/react-query with suspense](https://tanstack.c
 
 ### Features
 
-- useSuspenseQuery
-- useSuspenseQueries
-- useSuspenseInfiniteQuery
+- useSuspenseQuery, useSuspenseQueries, useSuspenseInfiniteQuery
+- SuspenseQuery, SuspenseInfiniteQuery
 - QueryErrorBoundary
+- queryOptions
 
 ### Installation
 
 ```shell
-npm install @suspensive/react-query
+npm install @suspensive/react-query @tanstack/react-query@4
 ```
 
 ```shell
-pnpm add @suspensive/react-query
+pnpm add @suspensive/react-query @tanstack/react-query@4
 ```
 
 ```shell
-yarn add @suspensive/react-query
+yarn add @suspensive/react-query @tanstack/react-query@4
 ```
 
 ### Usage
 
 ```tsx
 import { Suspense } from '@suspensive/react'
-import { QueryErrorBoundary, useSuspenseQuery } from '@suspensive/react-query'
+import { QueryErrorBoundary, useSuspenseQuery, SuspenseQuery, queryOptions } from '@suspensive/react-query'
+
+const customQuery = () =>
+  queryOptions({
+    queryKey: ['queryKey'],
+    queryFn: () => Promise.resolve({ text: 'Hello Suspensive' }),
+  })
+
+const SuspenseMaker = () => {
+  const query = useSuspenseQuery(customQuery())
+  return <>{query.data}</>
+}
 
 const Example = () => (
-  <QueryErrorBoundary
-    fallback={(props) => (
-      <>
-        <button onClick={props.reset}>Try again</button>
-        {props.error.message}
-      </>
-    )}
-  >
+  <QueryErrorBoundary fallback={(props) => <button onClick={props.reset}>Reset error: {props.error.message}</button>}>
     <Suspense fallback={<Spinner />}>
-      <SuspendedComponent />
+      <SuspenseMaker />
+    </Suspense>
+    <Suspense fallback={<Spinner />}>
+      <SuspenseQuery {...customQuery()} select={({ text }) => text}>
+        {({ data: text }) => <>{text}</>}
+      </SuspenseQuery>
     </Suspense>
   </QueryErrorBoundary>
 )
-
-const SuspendedComponent = () => {
-  const query = useSuspenseQuery({
-    queryKey,
-    queryFn,
-  })
-
-  return <>{query.data}</>
-}
 ```
 
 <br/>
