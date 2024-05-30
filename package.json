@@ -16,6 +16,7 @@
   "packageManager": "pnpm@8.15.2",
   "type": "module",
   "scripts": {
+    "blc:suspensive.org": "pnpm blc https://suspensive.org --ro",
     "build": "turbo run build",
     "build:watch": "turbo run build:watch --parallel",
     "changeset": "changeset",
@@ -53,6 +54,7 @@
     "@vitest/browser": "^1.6.0",
     "@vitest/coverage-istanbul": "^1.6.0",
     "@vitest/ui": "^1.6.0",
+    "broken-link-checker": "^0.7.8",
     "coauthors": "latest",
     "eslint": "^8.57.0",
     "husky": "^9.0.11",

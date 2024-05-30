@@ -11,7 +11,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version-file: '.nvmrc'
-      - run: npx broken-link-checker ${{ github.event.inputs.url }} --ro
+      - uses: ./.github/actions/pnpm-setup-node
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm blc ${{ github.event.inputs.url }} --ro
