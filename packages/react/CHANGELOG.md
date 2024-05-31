@@ -1,5 +1,11 @@
 # @suspensive/react
 
+## 2.0.4
+
+### Patch Changes
+
+- [#898](https://github.com/suspensive/react/pull/898) [`8c5844b`](https://github.com/suspensive/react/commit/8c5844bfa64c952d126ca1465299e920a906b505) Thanks [@manudeli](https://github.com/manudeli)! - fix(react): return type of Delay should be JSX.Element
+
 ## 2.0.3
 
 ## 2.0.2
