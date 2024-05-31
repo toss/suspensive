@@ -21,7 +21,7 @@ export const Delay = (props: DelayProps) => {
   useTimeout(() => setIsDelaying(false), ms)
 
   const fallback = typeof props.fallback === 'undefined' ? defaultProps.fallback : props.fallback
-  return isDelaying ? fallback : props.children
+  return <>{isDelaying ? fallback : props.children}</>
 }
 if (process.env.NODE_ENV === 'development') {
   Delay.displayName = 'Delay'
