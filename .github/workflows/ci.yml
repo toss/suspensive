@@ -33,3 +33,13 @@ jobs:
         uses: codecov/codecov-action@v4
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+      - if: matrix.command == 'ci:eslint' && failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: "@${{ github.event.pull_request.user.login }}, Please run `pnpm ci:eslint -- --fix` on root to fix eslint error."
+            })
