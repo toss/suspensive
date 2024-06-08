@@ -3,10 +3,6 @@ name: Broken Lint Commenter
 on:
   - pull_request_target
 
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
-
 jobs:
   lint-commenter:
     name: Lint Commenter
