@@ -8,6 +8,11 @@ export interface DelayProps extends PropsWithChildren {
   fallback?: ReactNode
 }
 
+
+
+
+
+
 export const Delay = (props: DelayProps) => {
   if (process.env.NODE_ENV === 'development') {
     if (typeof props.ms === 'number') {
