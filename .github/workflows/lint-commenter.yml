@@ -1,0 +1,32 @@
+name: Lint Commenter
+
+on:
+  pull_request_target:
+    types: [opened, synchronize, reopened]
+
+env:
+  TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+  TURBO_TEAM: ${{ vars.TURBO_TEAM }}
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lint-commenter:
+    name: Lint Commenter
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/pnpm-setup-node
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm ci:eslint
+      - if: failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: "@${{ github.event.pull_request.user.login }}, Please run `pnpm ci:eslint -- --fix` on root to fix eslint error."
+            })
