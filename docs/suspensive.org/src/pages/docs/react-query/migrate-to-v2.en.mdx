@@ -73,7 +73,7 @@ const PostList = ({ userId }) => {
 
 Therefore, we provide these components to clearly express what causes suspension at the same depth.
 
-1. Prop-driling resulting from removing depth such as AuthorInfo and PostList for data-fetching only is also removed.
+1. Prop-drilling resulting from removing depth such as AuthorInfo and PostList for data-fetching only is also removed.
 2. Changing the range of Suspense and ErrorBoundary becomes simple. Parallel processing of queries is also easier.
 3. Because it manages all data-fetching within the Page component, the internal components are presentational, so it is easy to separate the components.
 

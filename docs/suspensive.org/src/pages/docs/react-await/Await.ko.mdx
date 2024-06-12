@@ -22,7 +22,7 @@ const getPost = (postId: number) => fetch(`/post/${postId}`).then<Post>((res) =>
 const Example = () => (
   <Suspense fallback="awaiting...">
     <Await options={{ key: ['post', 2] as const, fn: ({ key: [, postId] }) => getPost(postId) }}>
-      {(awaited) => <>{awiated.data}</>} // Post
+      {(awaited) => <>{awaited.data}</>} // Post
     </Await>
   </Suspense>
 )
