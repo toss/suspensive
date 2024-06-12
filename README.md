@@ -1,13 +1,13 @@
 <div align="center">
   <a href="https://suspensive.org" title="Suspensive Libraries - TypeScript/JavaScript packages to use React Suspense easily">
-    <img src="https://github.com/suspensive/react/blob/main/assets/logo_background_star.png?raw=true" alt="Suspensive Libraries Logo - TypeScript/JavaScript packages to use React Suspense easily." width="600" />
+    <img src="https://github.com/toss/suspensive/blob/main/assets/logo_background_star.png?raw=true" alt="Suspensive Libraries Logo - TypeScript/JavaScript packages to use React Suspense easily." width="600" />
     <h1 align="center">Suspensive</h1>
   </a>
 </div>
 
 <div align="center">
 
-[![MIT License](https://img.shields.io/badge/license-MIT-blue.svg?style=for-the-badge&color=000&labelColor=000)](https://github.com/suspensive/react/blob/main/LICENSE)
+[![MIT License](https://img.shields.io/badge/license-MIT-blue.svg?style=for-the-badge&color=000&labelColor=000)](https://github.com/toss/suspensive/blob/main/LICENSE)
 [![@suspensive/react downloads](https://img.shields.io/npm/dt/@suspensive/react.svg?label=@suspensive/react&color=000&labelColor=000&style=for-the-badge)](https://www.npmjs.com/package/@suspensive/react)
 [![@suspensive/react-query downloads](https://img.shields.io/npm/dt/@suspensive/react-query.svg?label=@suspensive/react-query&color=000&labelColor=000&style=for-the-badge)](https://www.npmjs.com/package/@suspensive/react-query)
 
@@ -164,7 +164,7 @@ Read our [Contributing Guide](./CONTRIBUTING.md) to familiarize yourself with Su
 
 ### Contributors
 
-[![contributors](https://contrib.rocks/image?repo=suspensive/react)](https://github.com/suspensive/react/graphs/contributors)
+[![contributors](https://contrib.rocks/image?repo=toss/suspensive)](https://github.com/toss/suspensive/graphs/contributors)
 
 <br/>
 
@@ -175,7 +175,7 @@ MIT © Suspensive. See [LICENSE](./LICENSE) for details.
 <div align="center">
   <a title="Suspensive" href="https://github.com/suspensive">
     <div style='display:flex; align-items:center;'>
-      <img alt="Suspensive" src="https://github.com/suspensive/react/blob/main/assets/logo_dark.png?raw=true" width="24">
+      <img alt="Suspensive" src="https://github.com/toss/suspensive/blob/main/assets/logo_dark.png?raw=true" width="24">
       <sup>Suspensive</sup>
     </div>
   </a>

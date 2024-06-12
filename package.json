@@ -7,10 +7,10 @@
     "react-query"
   ],
   "homepage": "https://suspensive.org",
-  "bugs": "https://github.com/suspensive/react/issues",
+  "bugs": "https://github.com/toss/suspensive/issues",
   "repository": {
     "type": "git",
-    "url": "https://github.com/suspensive/react.git"
+    "url": "https://github.com/toss/suspensive.git"
   },
   "license": "MIT",
   "packageManager": "pnpm@8.15.2",
