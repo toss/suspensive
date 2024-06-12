@@ -57,7 +57,7 @@ const Example = wrap
   })
 ```
 
-### 새로운 `<ErrorBoundary/>`의 `shouldCatch` prop [#569](https://toss/suspensive/pull/569)
+### 새로운 `<ErrorBoundary/>`의 `shouldCatch` prop [#569](https://github.com/toss/suspensive/pull/569)
 
 Suspensive의 `<ErrorBoundary/>`는 children에서 발생된 모든 thrown error를 잡아낼 수 있습니다. 하지만 모든 thrown error를 잡아내기 때문에 `<ErrorBoundary/>`를 사용할 때 더 좁은 위치에 `<ErrorBoundary/>`를 놓는 것을 고민하게 되었습니다.
 이 때문에 어떤 Error를 잡아내야 할지 설정할 수 있는 shouldCatch라는 새 prop을 ErrorBoundary에 추가하게 되었습니다.
