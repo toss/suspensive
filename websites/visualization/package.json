@@ -3,14 +3,10 @@
   "version": "0.0.0",
   "private": true,
   "homepage": "https://visualization.suspensive.org",
-  "bugs": "https://github.com/suspensive/react/issues",
-  "funding": {
-    "type": "github",
-    "url": "https://github.com/sponsors/manudeli"
-  },
+  "bugs": "https://github.com/toss/suspensive/issues",
   "author": {
     "name": "Jonghyeon Ko",
-    "email": "manudeli.ko@gmail.com"
+    "email": "jonghyeon@toss.im"
   },
   "scripts": {
     "build": "next build",

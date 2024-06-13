@@ -9,7 +9,7 @@
 
 ## 새로운 기능
 
-### 새로운 `<SuspenseQuery/>`, `<SuspenseInfiniteQuery/>` [#775](https://github.com/suspensive/react/pull/775)
+### 새로운 `<SuspenseQuery/>`, `<SuspenseInfiniteQuery/>` [#775](https://github.com/toss/suspensive/pull/775)
 
 기존의 useSuspenseQuery는 훅이기 때문에 부모에 Suspense, ErrorBoundary를 배치하기 위해 AuthorInfo, PostList와 같은 이름을 가진 컴포넌트를 만들게 합니다.
 이것은 AuthorInfo, PostList 내부에서 던져질 suspense와 error가 있을지 예측하기 어렵게 만듭니다.
@@ -96,7 +96,7 @@ const PostsPage = ({ authorId }) => (
 )
 ```
 
-### 새로운 `queryOptions` [#828](https://github.com/suspensive/react/pull/828)
+### 새로운 `queryOptions` [#828](https://github.com/toss/suspensive/pull/828)
 
 TanStack Query의 메인테이너 [Tkdodo의 TanStack Query v5의 queryOptions 설명 영상](https://youtu.be/bhE3wuB_TuA?feature=shared&t=1697)에서 이 interface가 필요한 이유를 잘 설명되어 있습니다.
 TanStack Query v4에서도 queryOptions를 활용할 수 있습니다.

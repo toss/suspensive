@@ -4,14 +4,14 @@
 
 ### Patch Changes
 
-- Updated dependencies [[`8c5844b`](https://github.com/suspensive/react/commit/8c5844bfa64c952d126ca1465299e920a906b505)]:
+- Updated dependencies [[`8c5844b`](https://github.com/toss/suspensive/commit/8c5844bfa64c952d126ca1465299e920a906b505)]:
   - @suspensive/react@2.0.4
 
 ## 2.0.3
 
 ### Patch Changes
 
-- [#893](https://github.com/suspensive/react/pull/893) [`39b4f1b`](https://github.com/suspensive/react/commit/39b4f1b42d2e02efba7c0af3e7d5568dceb62bca) Thanks [@manudeli](https://github.com/manudeli)! - fix(react-query): easier to know constraint @tanstack/react-query v4 runtimely
+- [#893](https://github.com/toss/suspensive/pull/893) [`39b4f1b`](https://github.com/toss/suspensive/commit/39b4f1b42d2e02efba7c0af3e7d5568dceb62bca) Thanks [@manudeli](https://github.com/manudeli)! - fix(react-query): easier to know constraint @tanstack/react-query v4 runtimely
 
 - Updated dependencies []:
   - @suspensive/react@2.0.3
@@ -20,14 +20,14 @@
 
 ### Patch Changes
 
-- Updated dependencies [[`be1b7ee`](https://github.com/suspensive/react/commit/be1b7eef61721c93292f6f993596bd94f4752978)]:
+- Updated dependencies [[`be1b7ee`](https://github.com/toss/suspensive/commit/be1b7eef61721c93292f6f993596bd94f4752978)]:
   - @suspensive/react@2.0.2
 
 ## 2.0.1
 
 ### Patch Changes
 
-- [#887](https://github.com/suspensive/react/pull/887) [`8330a6b`](https://github.com/suspensive/react/commit/8330a6b62f922bd71dbcf5f963fe2eb1d4d9e89f) Thanks [@manudeli](https://github.com/manudeli)! - fix(react-query): fix SuspenseQuery, SuspenseInfiniteQuery's return type
+- [#887](https://github.com/toss/suspensive/pull/887) [`8330a6b`](https://github.com/toss/suspensive/commit/8330a6b62f922bd71dbcf5f963fe2eb1d4d9e89f) Thanks [@manudeli](https://github.com/manudeli)! - fix(react-query): fix SuspenseQuery, SuspenseInfiniteQuery's return type
 
 - Updated dependencies []:
   - @suspensive/react@2.0.1
@@ -36,41 +36,41 @@
 
 ### Major Changes
 
-- [#629](https://github.com/suspensive/react/pull/629) [`78f5bd4`](https://github.com/suspensive/react/commit/78f5bd42068f730dc71e12719c1d60c24f1bb78f) Thanks [@manudeli](https://github.com/manudeli)! - feat(react, react-query): remove deprecated apis
+- [#629](https://github.com/toss/suspensive/pull/629) [`78f5bd4`](https://github.com/toss/suspensive/commit/78f5bd42068f730dc71e12719c1d60c24f1bb78f) Thanks [@manudeli](https://github.com/manudeli)! - feat(react, react-query): remove deprecated apis
 
-- [#401](https://github.com/suspensive/react/pull/401) [`d06e883`](https://github.com/suspensive/react/commit/d06e883318d412e1f410dd4820bd73eaac64966a) Thanks [@manudeli](https://github.com/manudeli)! - fix(react-query): @suspensive/react-query v2's all naming convention correctly like @tanstack/react-query v5
+- [#401](https://github.com/toss/suspensive/pull/401) [`d06e883`](https://github.com/toss/suspensive/commit/d06e883318d412e1f410dd4820bd73eaac64966a) Thanks [@manudeli](https://github.com/manudeli)! - fix(react-query): @suspensive/react-query v2's all naming convention correctly like @tanstack/react-query v5
 
-- [#629](https://github.com/suspensive/react/pull/629) [`36d7416`](https://github.com/suspensive/react/commit/36d74169eb6fda88b62fe7d6f71f7b319480e9ba) Thanks [@manudeli](https://github.com/manudeli)! - chore(\*): versioning last beta
+- [#629](https://github.com/toss/suspensive/pull/629) [`36d7416`](https://github.com/toss/suspensive/commit/36d74169eb6fda88b62fe7d6f71f7b319480e9ba) Thanks [@manudeli](https://github.com/manudeli)! - chore(\*): versioning last beta
 
-- [#631](https://github.com/suspensive/react/pull/631) [`837ed18`](https://github.com/suspensive/react/commit/837ed184f3257d895400669b290be470871ce46a) Thanks [@manudeli](https://github.com/manudeli)! - feat(\*): remove target react v16, v17
+- [#631](https://github.com/toss/suspensive/pull/631) [`837ed18`](https://github.com/toss/suspensive/commit/837ed184f3257d895400669b290be470871ce46a) Thanks [@manudeli](https://github.com/manudeli)! - feat(\*): remove target react v16, v17
 
 ### Minor Changes
 
-- [#828](https://github.com/suspensive/react/pull/828) [`7f19c76`](https://github.com/suspensive/react/commit/7f19c76248136a91ff034dfb5c354e46272fa282) Thanks [@manudeli](https://github.com/manudeli)! - feat(react-query): add queryOptions
+- [#828](https://github.com/toss/suspensive/pull/828) [`7f19c76`](https://github.com/toss/suspensive/commit/7f19c76248136a91ff034dfb5c354e46272fa282) Thanks [@manudeli](https://github.com/manudeli)! - feat(react-query): add queryOptions
 
-- [#775](https://github.com/suspensive/react/pull/775) [`785a51a`](https://github.com/suspensive/react/commit/785a51a1b3e3cfaa70169a9a275d172009e6318a) Thanks [@manudeli](https://github.com/manudeli)! - feat(react-query): add SuspenseQuery, SuspenseInfiniteQuery
+- [#775](https://github.com/toss/suspensive/pull/775) [`785a51a`](https://github.com/toss/suspensive/commit/785a51a1b3e3cfaa70169a9a275d172009e6318a) Thanks [@manudeli](https://github.com/manudeli)! - feat(react-query): add SuspenseQuery, SuspenseInfiniteQuery
 
 ### Patch Changes
 
-- Updated dependencies [[`ea1c4ed`](https://github.com/suspensive/react/commit/ea1c4ed2126aac570fbeda86e0366017ca1f437f), [`78f5bd4`](https://github.com/suspensive/react/commit/78f5bd42068f730dc71e12719c1d60c24f1bb78f), [`6a3f6f4`](https://github.com/suspensive/react/commit/6a3f6f4abf4a1860c710224293251db9ae6b5f19), [`36d7416`](https://github.com/suspensive/react/commit/36d74169eb6fda88b62fe7d6f71f7b319480e9ba), [`3f6171b`](https://github.com/suspensive/react/commit/3f6171b950807d0d09f526b564a7424a7fb70fe0), [`73c0cc7`](https://github.com/suspensive/react/commit/73c0cc714aa4f1fe611bfb118050114dc6648926), [`837ed18`](https://github.com/suspensive/react/commit/837ed184f3257d895400669b290be470871ce46a)]:
+- Updated dependencies [[`ea1c4ed`](https://github.com/toss/suspensive/commit/ea1c4ed2126aac570fbeda86e0366017ca1f437f), [`78f5bd4`](https://github.com/toss/suspensive/commit/78f5bd42068f730dc71e12719c1d60c24f1bb78f), [`6a3f6f4`](https://github.com/toss/suspensive/commit/6a3f6f4abf4a1860c710224293251db9ae6b5f19), [`36d7416`](https://github.com/toss/suspensive/commit/36d74169eb6fda88b62fe7d6f71f7b319480e9ba), [`3f6171b`](https://github.com/toss/suspensive/commit/3f6171b950807d0d09f526b564a7424a7fb70fe0), [`73c0cc7`](https://github.com/toss/suspensive/commit/73c0cc714aa4f1fe611bfb118050114dc6648926), [`837ed18`](https://github.com/toss/suspensive/commit/837ed184f3257d895400669b290be470871ce46a)]:
   - @suspensive/react@2.0.0
 
 ## 2.0.0-beta.10
 
 ### Major Changes
 
-- [#629](https://github.com/suspensive/react/pull/629) [`36d7416`](https://github.com/suspensive/react/commit/36d74169eb6fda88b62fe7d6f71f7b319480e9ba) Thanks [@manudeli](https://github.com/manudeli)! - chore(\*): versioning last beta
+- [#629](https://github.com/toss/suspensive/pull/629) [`36d7416`](https://github.com/toss/suspensive/commit/36d74169eb6fda88b62fe7d6f71f7b319480e9ba) Thanks [@manudeli](https://github.com/manudeli)! - chore(\*): versioning last beta
 
 ### Patch Changes
 
-- Updated dependencies [[`36d7416`](https://github.com/suspensive/react/commit/36d74169eb6fda88b62fe7d6f71f7b319480e9ba)]:
+- Updated dependencies [[`36d7416`](https://github.com/toss/suspensive/commit/36d74169eb6fda88b62fe7d6f71f7b319480e9ba)]:
   - @suspensive/react@2.0.0-beta.10
 
 ## 2.0.0-beta.9
 
 ### Minor Changes
 
-- [#828](https://github.com/suspensive/react/pull/828) [`7f19c76`](https://github.com/suspensive/react/commit/7f19c76248136a91ff034dfb5c354e46272fa282) Thanks [@manudeli](https://github.com/manudeli)! - feat(react-query): add queryOptions
+- [#828](https://github.com/toss/suspensive/pull/828) [`7f19c76`](https://github.com/toss/suspensive/commit/7f19c76248136a91ff034dfb5c354e46272fa282) Thanks [@manudeli](https://github.com/manudeli)! - feat(react-query): add queryOptions
 
 ### Patch Changes
 
@@ -81,7 +81,7 @@
 
 ### Minor Changes
 
-- [#775](https://github.com/suspensive/react/pull/775) [`785a51a`](https://github.com/suspensive/react/commit/785a51a1b3e3cfaa70169a9a275d172009e6318a) Thanks [@manudeli](https://github.com/manudeli)! - feat(react-query): add SuspenseQuery, SuspenseInfiniteQuery
+- [#775](https://github.com/toss/suspensive/pull/775) [`785a51a`](https://github.com/toss/suspensive/commit/785a51a1b3e3cfaa70169a9a275d172009e6318a) Thanks [@manudeli](https://github.com/manudeli)! - feat(react-query): add SuspenseQuery, SuspenseInfiniteQuery
 
 ### Patch Changes
 
@@ -92,28 +92,28 @@
 
 ### Patch Changes
 
-- Updated dependencies [[`3f6171b`](https://github.com/suspensive/react/commit/3f6171b950807d0d09f526b564a7424a7fb70fe0)]:
+- Updated dependencies [[`3f6171b`](https://github.com/toss/suspensive/commit/3f6171b950807d0d09f526b564a7424a7fb70fe0)]:
   - @suspensive/react@2.0.0-beta.7
 
 ## 2.0.0-beta.6
 
 ### Patch Changes
 
-- Updated dependencies [[`2bfe301`](https://github.com/suspensive/react/commit/2bfe301fd97e8cc9467245dde71ea052dbba409e)]:
+- Updated dependencies [[`2bfe301`](https://github.com/toss/suspensive/commit/2bfe301fd97e8cc9467245dde71ea052dbba409e)]:
   - @suspensive/react@2.0.0-beta.6
 
 ## 2.0.0-beta.5
 
 ### Patch Changes
 
-- Updated dependencies [[`df78d21`](https://github.com/suspensive/react/commit/df78d21faef478930fb6fb26d6f2eccfc148da9d)]:
+- Updated dependencies [[`df78d21`](https://github.com/toss/suspensive/commit/df78d21faef478930fb6fb26d6f2eccfc148da9d)]:
   - @suspensive/react@2.0.0-beta.5
 
 ## 2.0.0-beta.4
 
 ### Patch Changes
 
-- [#711](https://github.com/suspensive/react/pull/711) [`30f43c2`](https://github.com/suspensive/react/commit/30f43c2a08798be739f3892483103289fba4fe78) Thanks [@Kanary159357](https://github.com/Kanary159357)! - fix(react-query): useSuspenseQueries type error with select option
+- [#711](https://github.com/toss/suspensive/pull/711) [`30f43c2`](https://github.com/toss/suspensive/commit/30f43c2a08798be739f3892483103289fba4fe78) Thanks [@Kanary159357](https://github.com/Kanary159357)! - fix(react-query): useSuspenseQueries type error with select option
 
 - Updated dependencies []:
   - @suspensive/react@2.0.0-beta.4
@@ -122,7 +122,7 @@
 
 ### Patch Changes
 
-- Updated dependencies [[`73c0cc7`](https://github.com/suspensive/react/commit/73c0cc714aa4f1fe611bfb118050114dc6648926)]:
+- Updated dependencies [[`73c0cc7`](https://github.com/toss/suspensive/commit/73c0cc714aa4f1fe611bfb118050114dc6648926)]:
   - @suspensive/react@2.0.0-beta.3
 
 ## 2.0.0-beta.2
@@ -153,18 +153,18 @@
 
 ### Minor Changes
 
-- [#876](https://github.com/suspensive/react/pull/876) [`52d5380`](https://github.com/suspensive/react/commit/52d5380f3fbfc30a1c2bd048aab07e612e1791df) Thanks [@manudeli](https://github.com/manudeli)! - chore(\*): last versioning before v2
+- [#876](https://github.com/toss/suspensive/pull/876) [`52d5380`](https://github.com/toss/suspensive/commit/52d5380f3fbfc30a1c2bd048aab07e612e1791df) Thanks [@manudeli](https://github.com/manudeli)! - chore(\*): last versioning before v2
 
 ### Patch Changes
 
-- Updated dependencies [[`52d5380`](https://github.com/suspensive/react/commit/52d5380f3fbfc30a1c2bd048aab07e612e1791df)]:
+- Updated dependencies [[`52d5380`](https://github.com/toss/suspensive/commit/52d5380f3fbfc30a1c2bd048aab07e612e1791df)]:
   - @suspensive/react@1.27.0
 
 ## 1.26.7
 
 ### Patch Changes
 
-- [#826](https://github.com/suspensive/react/pull/826) [`3f2bed2`](https://github.com/suspensive/react/commit/3f2bed2008844c8372632c18eefef8cef6c9b839) Thanks [@manudeli](https://github.com/manudeli)! - fix(react-query): add OmitKeyof to type strictly
+- [#826](https://github.com/toss/suspensive/pull/826) [`3f2bed2`](https://github.com/toss/suspensive/commit/3f2bed2008844c8372632c18eefef8cef6c9b839) Thanks [@manudeli](https://github.com/manudeli)! - fix(react-query): add OmitKeyof to type strictly
 
 - Updated dependencies []:
   - @suspensive/react@1.26.7
@@ -173,14 +173,14 @@
 
 ### Patch Changes
 
-- Updated dependencies [[`33fe78c`](https://github.com/suspensive/react/commit/33fe78cc2cfaae05fdd641499ac4b209e6b72130)]:
+- Updated dependencies [[`33fe78c`](https://github.com/toss/suspensive/commit/33fe78cc2cfaae05fdd641499ac4b209e6b72130)]:
   - @suspensive/react@1.26.6
 
 ## 1.26.5
 
 ### Patch Changes
 
-- Updated dependencies [[`df6e6d8`](https://github.com/suspensive/react/commit/df6e6d874343ca5c3ee2a872dd2ea5484b9e36c5)]:
+- Updated dependencies [[`df6e6d8`](https://github.com/toss/suspensive/commit/df6e6d874343ca5c3ee2a872dd2ea5484b9e36c5)]:
   - @suspensive/react@1.26.5
 
 ## 1.26.4
@@ -193,9 +193,9 @@
 
 ### Patch Changes
 
-- [#723](https://github.com/suspensive/react/pull/723) [`53120da`](https://github.com/suspensive/react/commit/53120daa0c9c3f3064d9a1d0dbbe37eae6092697) Thanks [@manudeli](https://github.com/manudeli)! - test(react-query): add test cases for hooks with select
+- [#723](https://github.com/toss/suspensive/pull/723) [`53120da`](https://github.com/toss/suspensive/commit/53120daa0c9c3f3064d9a1d0dbbe37eae6092697) Thanks [@manudeli](https://github.com/manudeli)! - test(react-query): add test cases for hooks with select
 
-- [#711](https://github.com/suspensive/react/pull/711) [`30f43c2`](https://github.com/suspensive/react/commit/30f43c2a08798be739f3892483103289fba4fe78) Thanks [@Kanary159357](https://github.com/Kanary159357)! - fix(react-query): useSuspenseQueries type error with select option
+- [#711](https://github.com/toss/suspensive/pull/711) [`30f43c2`](https://github.com/toss/suspensive/commit/30f43c2a08798be739f3892483103289fba4fe78) Thanks [@Kanary159357](https://github.com/Kanary159357)! - fix(react-query): useSuspenseQueries type error with select option
 
 - Updated dependencies []:
   - @suspensive/react@1.26.2
@@ -204,14 +204,14 @@
 
 ### Patch Changes
 
-- Updated dependencies [[`d3b7c15`](https://github.com/suspensive/react/commit/d3b7c1526dfe900e1dd1a559a406ccdf70456737), [`d3b7c15`](https://github.com/suspensive/react/commit/d3b7c1526dfe900e1dd1a559a406ccdf70456737)]:
+- Updated dependencies [[`d3b7c15`](https://github.com/toss/suspensive/commit/d3b7c1526dfe900e1dd1a559a406ccdf70456737), [`d3b7c15`](https://github.com/toss/suspensive/commit/d3b7c1526dfe900e1dd1a559a406ccdf70456737)]:
   - @suspensive/react@1.26.1
 
 ## 1.26.0
 
 ### Patch Changes
 
-- Updated dependencies [[`43bd74e`](https://github.com/suspensive/react/commit/43bd74e080fe7487fc43f75688c65af594099ef8)]:
+- Updated dependencies [[`43bd74e`](https://github.com/toss/suspensive/commit/43bd74e080fe7487fc43f75688c65af594099ef8)]:
   - @suspensive/react@1.26.0
 
 ## 1.25.3

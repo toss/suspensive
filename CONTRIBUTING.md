@@ -9,12 +9,12 @@ All communications in this repository will be by English.
 
 ### 1. Search for duplicates
 
-[Search the existing issues](https://github.com/suspensive/react/issues) before logging a new one.
+[Search the existing issues](https://github.com/toss/suspensive/issues) before logging a new one.
 
 ### 2. Have a question?
 
 The issue tracker is for **issues**, in other words, bugs and suggestions.
-If you have a _question_, please use [GitHub Discussions](https://github.com/suspensive/react/discussions), your favorite search engine, or other resources.
+If you have a _question_, please use [GitHub Discussions](https://github.com/toss/suspensive/discussions), your favorite search engine, or other resources.
 
 ### 3. Found a bug?
 
@@ -26,7 +26,7 @@ When logging a bug, please be sure to include the following:
 
 ### 4. Feature suggestion?
 
-We also accept suggestions in the [issue tracker](https://github.com/suspensive/react/issues/new?assignees=&labels=&projects=&template=feature_request.md&title=%5BFeature%5D%3A).
+We also accept suggestions in the [issue tracker](https://github.com/toss/suspensive/issues/new?assignees=&labels=&projects=&template=feature_request.md&title=%5BFeature%5D%3A).
 
 In general, things we find useful when reviewing suggestions are:
 
@@ -37,20 +37,20 @@ In general, things we find useful when reviewing suggestions are:
 
 ### Prerequisites
 
-0. [Choose an issue about bug or feature you want to work on](https://github.com/suspensive/react/issues)
+0. [Choose an issue about bug or feature you want to work on](https://github.com/toss/suspensive/issues)
 1. Clone the repository
-    ```shell
-    git clone git@github.com:suspensive/react.git
-    ```
-2. Please use the correct node version. You can use the version declared in [.nvmrc](https://github.com/suspensive/react/blob/main/.nvmrc). We strongly recommend [nvm](https://github.com/nvm-sh/nvm) to control local machine's node version easily. also We recommend [nvm's deeper shell integration](https://github.com/nvm-sh/nvm#deeper-shell-integration) too.
+   ```shell
+   git clone git@github.com:suspensive/react.git
+   ```
+2. Please use the correct node version. You can use the version declared in [.nvmrc](https://github.com/toss/suspensive/blob/main/.nvmrc). We strongly recommend [nvm](https://github.com/nvm-sh/nvm) to control local machine's node version easily. also We recommend [nvm's deeper shell integration](https://github.com/nvm-sh/nvm#deeper-shell-integration) too.
 3. Install packages. [We use pnpm v8. Install pnpm with corepack please if you can](https://pnpm.io/installation#using-corepack). We recommend using corepack for pnpm to automatically use the version declared in the packageManager field of package.json.
-    ```shell
-    pnpm install
-    ```
+   ```shell
+   pnpm install
+   ```
 
 ### Pull Requests
 
-> [Opening a pull request](https://github.com/suspensive/react/pulls)
+> [Opening a pull request](https://github.com/toss/suspensive/pulls)
 
 All commit message and title of your Pull Request should match the following format:
 

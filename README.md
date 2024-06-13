@@ -1,17 +1,17 @@
 <div align="center">
   <a href="https://suspensive.org" title="Suspensive Libraries - TypeScript/JavaScript packages to use React Suspense easily">
-    <img src="https://github.com/suspensive/react/blob/main/assets/logo_background_star.png?raw=true" alt="Suspensive Libraries Logo - TypeScript/JavaScript packages to use React Suspense easily." width="600" />
+    <img src="https://github.com/toss/suspensive/blob/main/assets/logo_background_star.png?raw=true" alt="Suspensive Libraries Logo - TypeScript/JavaScript packages to use React Suspense easily." width="600" />
     <h1 align="center">Suspensive</h1>
   </a>
 </div>
 
 <div align="center">
 
-[![MIT License](https://img.shields.io/badge/license-MIT-blue.svg?style=for-the-badge&color=000&labelColor=000)](https://github.com/suspensive/react/blob/main/LICENSE)
+[![MIT License](https://img.shields.io/badge/license-MIT-blue.svg?style=for-the-badge&color=000&labelColor=000)](https://github.com/toss/suspensive/blob/main/LICENSE)
 [![@suspensive/react downloads](https://img.shields.io/npm/dt/@suspensive/react.svg?label=@suspensive/react&color=000&labelColor=000&style=for-the-badge)](https://www.npmjs.com/package/@suspensive/react)
 [![@suspensive/react-query downloads](https://img.shields.io/npm/dt/@suspensive/react-query.svg?label=@suspensive/react-query&color=000&labelColor=000&style=for-the-badge)](https://www.npmjs.com/package/@suspensive/react-query)
 
-[![codecov](https://codecov.io/gh/suspensive/react/branch/main/graph/badge.svg?token=H4VQ71NJ16)](https://codecov.io/gh/suspensive/react) ![GitHub stars](https://img.shields.io/github/stars/suspensive/react?style=social) ![GitHub forks](https://img.shields.io/github/forks/suspensive/react?style=social)
+[![codecov](https://codecov.io/gh/toss/suspensive/graph/badge.svg?token=5PopssACmx)](https://codecov.io/gh/toss/suspensive) ![GitHub stars](https://img.shields.io/github/stars/toss/suspensive?style=social) ![GitHub forks](https://img.shields.io/github/forks/toss/suspensive?style=social)
 
 [OFFICIAL DOCS](https://suspensive.org) | [VISUALIZATION](https://visualization.suspensive.org) | [DEPENDENCY GRAPH](https://graph.suspensive.org)
 
@@ -142,7 +142,7 @@ const Example = () => (
 
 <br/>
 
-## Docs [![deployment](https://img.shields.io/github/deployments/suspensive/react/Production%20%E2%80%93%20docs-v1?label=vercel&logo=vercel&logoColor=white&color=000&labelColor=000)](https://suspensive.org)
+## Docs [![deployment](https://img.shields.io/github/deployments/toss/suspensive/Production%20%E2%80%93%20docs-v1?label=vercel&logo=vercel&logoColor=white&color=000&labelColor=000)](https://suspensive.org)
 
 We provide Official Docs
 
@@ -150,7 +150,7 @@ See [OFFICIAL DOCS](https://suspensive.org)
 
 <br/>
 
-## Visualization [![deployment](https://img.shields.io/github/deployments/suspensive/react/Production%20%E2%80%93%20Visualization?label=vercel&logo=vercel&logoColor=white&color=000&labelColor=000)](https://visualization.suspensive.org)
+## Visualization [![deployment](https://img.shields.io/github/deployments/toss/suspensive/Production%20%E2%80%93%20Visualization?label=vercel&logo=vercel&logoColor=white&color=000&labelColor=000)](https://visualization.suspensive.org)
 
 Concepts Visualization ready. You can see core concepts of Suspensive visually
 
@@ -164,19 +164,17 @@ Read our [Contributing Guide](./CONTRIBUTING.md) to familiarize yourself with Su
 
 ### Contributors
 
-[![contributors](https://contrib.rocks/image?repo=suspensive/react)](https://github.com/suspensive/react/graphs/contributors)
+[![contributors](https://contrib.rocks/image?repo=toss/suspensive)](https://github.com/toss/suspensive/graphs/contributors)
 
 <br/>
 
 ## License
 
-MIT © Suspensive. See [LICENSE](./LICENSE) for details.
+MIT © Viva Republica, Inc. See [LICENSE](./LICENSE) for details.
 
-<div align="center">
-  <a title="Suspensive" href="https://github.com/suspensive">
-    <div style='display:flex; align-items:center;'>
-      <img alt="Suspensive" src="https://github.com/suspensive/react/blob/main/assets/logo_dark.png?raw=true" width="24">
-      <sup>Suspensive</sup>
-    </div>
-  </a>
-</div>
+<a title="Toss" href="https://toss.im">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://static.toss.im/logos/png/4x/logo-toss-reverse.png">
+    <img alt="Toss" src="https://static.toss.im/logos/png/4x/logo-toss.png" width="100">
+  </picture>
+</a>
