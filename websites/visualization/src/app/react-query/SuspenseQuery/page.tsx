@@ -10,7 +10,7 @@ export default function Page() {
 
   return (
     <ErrorBoundary fallback={({ error }) => <>{error.message}</>}>
-      <Suspense fallback={<Spinner />}>
+      <Suspense clientOnly fallback={<Spinner />}>
         <div>
           <SuspenseQuery
             queryKey={['users', userId]}
