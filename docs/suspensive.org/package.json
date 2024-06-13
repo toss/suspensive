@@ -9,14 +9,10 @@
     "@suspensive/react-query"
   ],
   "homepage": "https://suspensive.org",
-  "bugs": "https://github.com/suspensive/react/issues",
-  "funding": {
-    "type": "github",
-    "url": "https://github.com/sponsors/manudeli"
-  },
+  "bugs": "https://github.com/toss/suspensive/issues",
   "author": {
     "name": "Jonghyeon Ko",
-    "email": "manudeli.ko@gmail.com"
+    "email": "jonghyeon@toss.im"
   },
   "type": "commonjs",
   "scripts": {

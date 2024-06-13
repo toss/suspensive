@@ -9,7 +9,7 @@ export default function Page() {
   const authorId = 0
   return (
     <ErrorBoundary fallback={({ error }) => <>{error.message}</>}>
-      <Suspense fallback={<Spinner />}>
+      <Suspense clientOnly fallback={<Spinner />}>
         <SuspenseInfiniteQuery
           queryKey={['users', authorId]}
           queryFn={({ pageParam }) => {

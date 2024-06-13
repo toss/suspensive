@@ -2,7 +2,7 @@
 
 ## 새로운 기능
 
-### 새로운 [`<DevMode/>`](/docs/react/DevMode) [#470](https://github.com/suspensive/react/pull/470)
+### 새로운 [`<DevMode/>`](/docs/react/DevMode) [#470](https://github.com/toss/suspensive/pull/470)
 
 이것은 DX를 위해 `<Suspense/>`, `<ErrorBoundary/>`의 새로운 `devMode` prop과 함께 사용하는 새로운 기능입니다.
 
@@ -34,7 +34,7 @@ const Example = () => {
 }
 ```
 
-### 새로운 [`wrap`](/docs/react/wrap) 빌더 [#270](https://github.com/suspensive/react/pull/270)
+### 새로운 [`wrap`](/docs/react/wrap) 빌더 [#270](https://github.com/toss/suspensive/pull/270)
 
 컴포넌트를 `<Suspense/>`, `<ErrorBoundary/>`, `<ErrorBoundaryGroup/>`으로 한번에 래핑하는 새로운 기능입니다.
 
@@ -57,7 +57,7 @@ const Example = wrap
   })
 ```
 
-### 새로운 `<ErrorBoundary/>`의 `shouldCatch` prop [#569](https://github.com/suspensive/react/pull/569)
+### 새로운 `<ErrorBoundary/>`의 `shouldCatch` prop [#569](https://github.com/toss/suspensive/pull/569)
 
 Suspensive의 `<ErrorBoundary/>`는 children에서 발생된 모든 thrown error를 잡아낼 수 있습니다. 하지만 모든 thrown error를 잡아내기 때문에 `<ErrorBoundary/>`를 사용할 때 더 좁은 위치에 `<ErrorBoundary/>`를 놓는 것을 고민하게 되었습니다.
 이 때문에 어떤 Error를 잡아내야 할지 설정할 수 있는 shouldCatch라는 새 prop을 ErrorBoundary에 추가하게 되었습니다.
@@ -130,7 +130,7 @@ const Example = () => {
 }
 ```
 
-### 새로운 [`<ErrorBoundary.Consumer/>`](/docs/react/ErrorBoundary), [`<ErrorBoundaryGroup.Consumer/>`](/docs/react/ErrorBoundaryGroup) 컴포넌트 [#610](https://github.com/suspensive/react/pull/610)
+### 새로운 [`<ErrorBoundary.Consumer/>`](/docs/react/ErrorBoundary), [`<ErrorBoundaryGroup.Consumer/>`](/docs/react/ErrorBoundaryGroup) 컴포넌트 [#610](https://github.com/toss/suspensive/pull/610)
 
 이 컴포넌트는 jsx에서 `useErrorBoundary`, `useErrorBoundaryGroup`을 인라인으로 사용할 수 있습니다.
 
@@ -157,7 +157,7 @@ const Example = () => {
 
 ### `<AsyncBoundary/>` 제거
 
-v2에서는 `<AsyncBoundary/>`를 제거했습니다[#295](https://github.com/suspensive/react/issues/295).
+v2에서는 `<AsyncBoundary/>`를 제거했습니다[#295](https://github.com/toss/suspensive/issues/295).
 
 `<AsyncBoundary/>`는 내부적으로 `<ErrorBoundary/>`를 사용하기 때문에 `useErrorBoundary`와 함께 사용할 수 있으며 `<ErrorBoundaryGroup/>`의 영향을 받습니다. 우리는 라이브러리 사용자를 위한 유지 관리 및 인터페이스 통합에 더 좋을 것이라고 믿고 이 구성 요소를 v2에서 제거하기로 결정했습니다.
 
@@ -253,7 +253,7 @@ v2에서는 `<AsyncBoundary/>`를 제거했습니다[#295](https://github.com/su
 ```diff
 import { ErrorBoundaryGroup } from '@suspensive/react'
 
-const Exmample = () => {
+const Example = () => {
   return (
     <ErrorBoundaryGroup>
 -     <ErrorBoundaryGroup.Reset trigger={(group) => <button onClick={group.reset}>reset all</button>} />

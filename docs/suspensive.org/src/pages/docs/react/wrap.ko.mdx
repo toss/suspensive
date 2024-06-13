@@ -15,7 +15,7 @@ export const Page = wrap
     () => {
       const { data: postList } = useSuspenseQuery({
         queryKey: ['posts'],
-        queryFn: () => fetch(`https://exmaple.com/posts`).then((res) => res.json()),
+        queryFn: () => fetch(`https://example.com/posts`).then((res) => res.json()),
       })
 
       return (
@@ -38,7 +38,7 @@ const PostItem =
   ((props) => {
     const { data: post } = useSuspenseQuery({
       queryKey: ['posts', props.id],
-      queryFn: () => fetch(`https://exmaple.com/posts/${props.id}`).then((res) => res.json()),
+      queryFn: () => fetch(`https://example.com/posts/${props.id}`).then((res) => res.json()),
     })
 
     return <>{post.title}</>

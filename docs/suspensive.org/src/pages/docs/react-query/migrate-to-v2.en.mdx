@@ -9,7 +9,7 @@ Therefore, we will maintain support for @tanstack/react-query v4.
 
 ## What's new
 
-### New `<SuspenseQuery/>`, `<SuspenseInfiniteQuery/>` [#775](https://github.com/suspensive/react/pull/775)
+### New `<SuspenseQuery/>`, `<SuspenseInfiniteQuery/>` [#775](https://github.com/toss/suspensive/pull/775)
 
 Because the existing useSuspenseQuery is a hook, it creates components with names such as AuthorInfo and PostList to place Suspense and ErrorBoundary on the parent.
 This makes it difficult to predict what suspense and errors will be thrown inside AuthorInfo and PostList.
@@ -73,7 +73,7 @@ const PostList = ({ userId }) => {
 
 Therefore, we provide these components to clearly express what causes suspension at the same depth.
 
-1. Prop-driling resulting from removing depth such as AuthorInfo and PostList for data-fetching only is also removed.
+1. Prop-drilling resulting from removing depth such as AuthorInfo and PostList for data-fetching only is also removed.
 2. Changing the range of Suspense and ErrorBoundary becomes simple. Parallel processing of queries is also easier.
 3. Because it manages all data-fetching within the Page component, the internal components are presentational, so it is easy to separate the components.
 
@@ -96,7 +96,7 @@ const PostsPage = ({ authorId }) => (
 )
 ```
 
-### New `queryOptions` [#828](https://github.com/suspensive/react/pull/828)
+### New `queryOptions` [#828](https://github.com/toss/suspensive/pull/828)
 
 Tkdodo, The maintainer of TanStack Query explains well why this interface is needed in [video explaining queryOptions in TanStack Query v5](https://youtu.be/bhE3wuB_TuA?feature=shared&t=1697).
 You can also use queryOptions in TanStack Query v4.
