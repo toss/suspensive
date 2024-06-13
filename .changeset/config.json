@@ -1,6 +1,6 @@
 {
   "$schema": "https://unpkg.com/@changesets/config@2.3.0/schema.json",
-  "changelog": ["@changesets/changelog-github", { "repo": "suspensive/react" }],
+  "changelog": ["@changesets/changelog-github", { "repo": "toss/suspensive" }],
   "commit": false,
   "fixed": [["@suspensive/react", "@suspensive/react-query"]],
   "ignore": ["@suspensive/next-streaming-react-query", "@suspensive/visualization", "@suspensive/suspensive.org"],
