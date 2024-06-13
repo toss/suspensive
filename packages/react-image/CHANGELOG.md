@@ -4,13 +4,13 @@
 
 ### Patch Changes
 
-- [#631](https://github.com/suspensive/react/pull/631) [`837ed18`](https://github.com/suspensive/react/commit/837ed184f3257d895400669b290be470871ce46a) Thanks [@manudeli](https://github.com/manudeli)! - feat(\*): remove target react v16, v17
+- [#631](https://github.com/toss/suspensive/pull/631) [`837ed18`](https://github.com/toss/suspensive/commit/837ed184f3257d895400669b290be470871ce46a) Thanks [@manudeli](https://github.com/manudeli)! - feat(\*): remove target react v16, v17
 
 ## 0.0.11
 
 ### Patch Changes
 
-- [#876](https://github.com/suspensive/react/pull/876) [`52d5380`](https://github.com/suspensive/react/commit/52d5380f3fbfc30a1c2bd048aab07e612e1791df) Thanks [@manudeli](https://github.com/manudeli)! - chore(\*): last versioning before v2
+- [#876](https://github.com/toss/suspensive/pull/876) [`52d5380`](https://github.com/toss/suspensive/commit/52d5380f3fbfc30a1c2bd048aab07e612e1791df) Thanks [@manudeli](https://github.com/manudeli)! - chore(\*): last versioning before v2
 
 ## 0.0.10-beta.0
 
