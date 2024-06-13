@@ -109,14 +109,15 @@ export type SuspenseQueriesResults<
           : // Fallback
             Array<UseSuspenseQueryResult>
 
-export const useSuspenseQueries = <T extends any[]>({
+export function useSuspenseQueries<T extends any[]>({
   queries,
   context,
 }: {
   queries: readonly [...SuspenseQueriesOptions<T>]
   context?: UseQueryOptions['context']
-}) =>
-  useQueries({
+}): SuspenseQueriesResults<T> {
+  return useQueries({
     queries: queries.map((query: typeof queries) => ({ ...query, suspense: true })),
     context,
   }) as SuspenseQueriesResults<T>
+}
