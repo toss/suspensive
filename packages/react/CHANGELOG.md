@@ -1,5 +1,11 @@
 # @suspensive/react
 
+## 2.0.5
+
+### Patch Changes
+
+- [#912](https://github.com/toss/suspensive/pull/912) [`0c86892`](https://github.com/toss/suspensive/commit/0c868927ec30dc0699fd3c8753cab7ee6848f6c2) Thanks [@manudeli](https://github.com/manudeli)! - chore(\*): suspensive with toss
+
 ## 2.0.4
 
 ### Patch Changes
