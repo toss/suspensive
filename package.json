@@ -69,7 +69,7 @@
     "rimraf": "^5.0.7",
     "sherif": "^0.8.4",
     "tsup": "^8.0.2",
-    "turbo": "latest",
+    "turbo": "^2.0.3",
     "typescript": "^5.4.5",
     "vite": "^5.2.11",
     "vitest": "^1.6.0"
