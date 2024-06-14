@@ -142,7 +142,7 @@ const Example = () => (
 
 <br/>
 
-## Docs [![deployment](https://img.shields.io/github/deployments/toss/suspensive/Production%20%E2%80%93%20docs-v1?label=vercel&logo=vercel&logoColor=white&color=000&labelColor=000)](https://suspensive.org)
+## Docs [![deployment](https://img.shields.io/github/deployments/toss/suspensive/Production%20%E2%80%93%20suspensive.org?label=vercel&logo=vercel&logoColor=white&color=000&labelColor=000)](https://suspensive.org)
 
 We provide Official Docs
 
@@ -150,7 +150,7 @@ See [OFFICIAL DOCS](https://suspensive.org)
 
 <br/>
 
-## Visualization [![deployment](https://img.shields.io/github/deployments/toss/suspensive/Production%20%E2%80%93%20Visualization?label=vercel&logo=vercel&logoColor=white&color=000&labelColor=000)](https://visualization.suspensive.org)
+## Visualization [![deployment](https://img.shields.io/github/deployments/toss/suspensive/Production%20%E2%80%93%20visualization.suspensive.org?label=vercel&logo=vercel&logoColor=white&color=000&labelColor=000)](https://visualization.suspensive.org)
 
 Concepts Visualization ready. You can see core concepts of Suspensive visually
 
