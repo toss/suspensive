@@ -102,7 +102,7 @@ const config: DocsThemeConfig = {
     },
   },
   footer: {
-    text: 'MIT 2023 © Jonghyeon Ko and the Suspensive authors.',
+    text: 'MIT 2024 © Viva Republica, Inc.',
   },
   darkMode: false,
   nextThemes: {
