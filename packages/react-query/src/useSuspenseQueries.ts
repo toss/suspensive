@@ -109,6 +109,10 @@ export type SuspenseQueriesResults<
           : // Fallback
             Array<UseSuspenseQueryResult>
 
+/**
+ * This hook is wrapping useQueries of `@tanstack/react-query` v4 with default suspense option.
+ * @see {@link https://suspensive.org/docs/react-query/useSuspenseQueries}
+ */
 export function useSuspenseQueries<T extends any[]>({
   queries,
   context,
