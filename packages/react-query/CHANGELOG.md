@@ -1,5 +1,14 @@
 # @suspensive/react-query
 
+## 2.0.6
+
+### Patch Changes
+
+- [#923](https://github.com/toss/suspensive/pull/923) [`1e7fbbe`](https://github.com/toss/suspensive/commit/1e7fbbed8d2ece0090ffaa9c68ed21fbd4eb9a64) Thanks [@gwansikk](https://github.com/gwansikk)! - fix(react-query): update JSDoc for `useSuspenseQueries`, `useSuspenseInfiniteQuery`
+
+- Updated dependencies []:
+  - @suspensive/react@2.0.6
+
 ## 2.0.5
 
 ### Patch Changes
