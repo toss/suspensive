@@ -1,5 +1,14 @@
 # @suspensive/react-query
 
+## 2.0.7
+
+### Patch Changes
+
+- [#925](https://github.com/toss/suspensive/pull/925) [`306c94d`](https://github.com/toss/suspensive/commit/306c94d4ca3047df3f783a3307aa9fb4ccade5a8) Thanks [@manudeli](https://github.com/manudeli)! - fix(react-query): update QueryErrorBoundary's jsdoc
+
+- Updated dependencies []:
+  - @suspensive/react@2.0.7
+
 ## 2.0.6
 
 ### Patch Changes
