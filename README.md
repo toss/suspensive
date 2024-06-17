@@ -11,7 +11,7 @@
 [![@suspensive/react downloads](https://img.shields.io/npm/dt/@suspensive/react.svg?label=@suspensive/react&color=000&labelColor=000&style=for-the-badge)](https://www.npmjs.com/package/@suspensive/react)
 [![@suspensive/react-query downloads](https://img.shields.io/npm/dt/@suspensive/react-query.svg?label=@suspensive/react-query&color=000&labelColor=000&style=for-the-badge)](https://www.npmjs.com/package/@suspensive/react-query)
 
-[![codecov](https://codecov.io/gh/toss/suspensive/graph/badge.svg?token=5PopssACmx)](https://codecov.io/gh/toss/suspensive) ![GitHub stars](https://img.shields.io/github/stars/toss/suspensive?style=social) ![GitHub forks](https://img.shields.io/github/forks/toss/suspensive?style=social)
+[![codecov](https://codecov.io/gh/toss/suspensive/graph/badge.svg?token=5PopssACmx)](https://codecov.io/gh/toss/suspensive) [![CodSpeed Badge](https://img.shields.io/endpoint?url=https://codspeed.io/badge.json)](https://codspeed.io/toss/suspensive) ![GitHub stars](https://img.shields.io/github/stars/toss/suspensive?style=social) ![GitHub forks](https://img.shields.io/github/forks/toss/suspensive?style=social)
 
 [OFFICIAL DOCS](https://suspensive.org) | [VISUALIZATION](https://visualization.suspensive.org) | [DEPENDENCY GRAPH](https://graph.suspensive.org)
 
