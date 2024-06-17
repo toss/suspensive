@@ -25,7 +25,7 @@ export const Suspend = ({ during, toShow }: SuspendProps) => {
       }, during)
     )
   }
-  return <>{toShow}</>
+  return toShow
 }
 Suspend.reset = () => {
   suspendIsNeed.current = true

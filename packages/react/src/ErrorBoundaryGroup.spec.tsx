@@ -5,8 +5,8 @@ import { createElement } from 'react'
 import { ErrorBoundary } from './ErrorBoundary'
 import { ErrorBoundaryGroup, useErrorBoundaryGroup } from './ErrorBoundaryGroup'
 import {
+  Message_useErrorBoundaryGroup_this_hook_should_be_called_in_ErrorBoundary_props_children,
   SuspensiveError,
-  useErrorBoundaryGroup_this_hook_should_be_called_in_ErrorBoundary_props_children,
 } from './models/SuspensiveError'
 
 const innerErrorBoundaryCount = 3
@@ -75,7 +75,7 @@ describe('useErrorBoundaryGroup', () => {
           return <></>
         })
       )
-    ).toThrow(useErrorBoundaryGroup_this_hook_should_be_called_in_ErrorBoundary_props_children)
+    ).toThrow(Message_useErrorBoundaryGroup_this_hook_should_be_called_in_ErrorBoundary_props_children)
     try {
       render(
         createElement(() => {
