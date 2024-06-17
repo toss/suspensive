@@ -1,5 +1,16 @@
 # @suspensive/react-query
 
+## 2.1.0
+
+### Minor Changes
+
+- [#938](https://github.com/toss/suspensive/pull/938) [`6248459`](https://github.com/toss/suspensive/commit/62484590f799e86dc93f59e2a356752690295989) Thanks [@manudeli](https://github.com/manudeli)! - feat(react-query): add SuspenseQueries
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @suspensive/react@2.1.0
+
 ## 2.0.8
 
 ### Patch Changes
