@@ -39,4 +39,4 @@ graph/
 tsconfig.vitest-temp.json
 
 # benchmark
-benchmark/
+benchmarks/

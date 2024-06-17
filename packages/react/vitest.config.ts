@@ -11,6 +11,7 @@ export default defineConfig({
     environment: 'jsdom',
     globals: true,
     setupFiles: './vitest.setup.ts',
+    benchmark: { outputJson: `benchmarks/${packageJson.version}.json` },
     coverage: {
       provider: 'istanbul',
     },

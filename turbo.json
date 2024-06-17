@@ -31,7 +31,7 @@
     },
     "ci:bench": {
       "dependsOn": ["prepack"],
-      "outputs": ["benchmark/**"]
+      "outputs": ["benchmarks/**"]
     },
     "prepack": {
       "dependsOn": ["^prepack"],
