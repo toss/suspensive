@@ -5,8 +5,8 @@ import { createElement, useContext } from 'react'
 import { DelayDefaultPropsContext, SuspenseDefaultPropsContext } from './contexts'
 import { Delay, type DelayProps } from './Delay'
 import {
+  Message_Suspensive_config_defaultProps_delay_ms_should_be_greater_than_0,
   SuspensiveError,
-  Suspensive_config_defaultProps_delay_ms_should_be_greater_than_0,
 } from './models/SuspensiveError'
 import { Suspense, type SuspenseProps } from './Suspense'
 import { Suspensive, SuspensiveProvider } from './Suspensive'
@@ -117,7 +117,7 @@ describe('<SuspensiveProvider/>', () => {
 
   it('should accept defaultOptions.delay.ms only positive number', () => {
     expect(() => new Suspensive({ defaultProps: { delay: { ms: 0 } } })).toThrow(
-      Suspensive_config_defaultProps_delay_ms_should_be_greater_than_0
+      Message_Suspensive_config_defaultProps_delay_ms_should_be_greater_than_0
     )
     try {
       new Suspensive({ defaultProps: { delay: { ms: 0 } } })
@@ -128,7 +128,7 @@ describe('<SuspensiveProvider/>', () => {
     }
 
     expect(() => new Suspensive({ defaultProps: { delay: { ms: -1 } } })).toThrow(
-      Suspensive_config_defaultProps_delay_ms_should_be_greater_than_0
+      Message_Suspensive_config_defaultProps_delay_ms_should_be_greater_than_0
     )
     try {
       new Suspensive({ defaultProps: { delay: { ms: -1 } } })

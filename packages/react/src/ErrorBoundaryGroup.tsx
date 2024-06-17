@@ -9,8 +9,8 @@ import {
 } from 'react'
 import { useIsChanged } from './hooks'
 import {
+  Message_useErrorBoundaryGroup_this_hook_should_be_called_in_ErrorBoundary_props_children,
   SuspensiveError,
-  useErrorBoundaryGroup_this_hook_should_be_called_in_ErrorBoundary_props_children,
 } from './models/SuspensiveError'
 import { increase } from './utils'
 
@@ -67,7 +67,7 @@ export const useErrorBoundaryGroup = () => {
   const group = useContext(ErrorBoundaryGroupContext)
   SuspensiveError.assert(
     group != null,
-    useErrorBoundaryGroup_this_hook_should_be_called_in_ErrorBoundary_props_children
+    Message_useErrorBoundaryGroup_this_hook_should_be_called_in_ErrorBoundary_props_children
   )
   return useMemo(
     () => ({
