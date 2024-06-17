@@ -1,5 +1,14 @@
 # @suspensive/react-query
 
+## 2.1.1
+
+### Patch Changes
+
+- [`ddfca6e`](https://github.com/toss/suspensive/commit/ddfca6ef45d365050c1a7788c1f126ae1efb98c1) Thanks [@manudeli](https://github.com/manudeli)! - chore(react-query): SuspenseQueries as public api
+
+- Updated dependencies []:
+  - @suspensive/react@2.1.1
+
 ## 2.1.0
 
 ### Minor Changes
