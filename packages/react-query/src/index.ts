@@ -1,16 +1,6 @@
-import TanStackReactQuery from '@tanstack/react-query/package.json'
-import { isVersion } from './utils'
-
-if (process.env.NODE_ENV === 'development') {
-  if (!isVersion(4).of(TanStackReactQuery.version)) {
-    console.warn(
-      `@suspensive/react-query: We support only @tanstack/react-query v4. but you installed @tanstack/react-query@${TanStackReactQuery.version}. Please install @tanstack/react-query v4 correctly`
-    )
-  }
-}
-
 export { queryOptions } from './queryOptions'
 export { SuspenseQuery } from './SuspenseQuery'
+export { SuspenseQueries } from './SuspenseQueries'
 export { SuspenseInfiniteQuery } from './SuspenseInfiniteQuery'
 
 export { useSuspenseQuery } from './useSuspenseQuery'
