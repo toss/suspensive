@@ -1,7 +1,7 @@
 {
-  "name": "@suspensive/react-query",
+  "name": "@suspensive/react-query-5",
   "version": "2.1.1",
-  "description": "Useful helpers for @tanstack/react-query@4 with suspense",
+  "description": "Useful helpers for @tanstack/react-query@5 with suspense",
   "keywords": [
     "suspensive",
     "react",
@@ -12,7 +12,7 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/toss/suspensive.git",
-    "directory": "packages/react-query"
+    "directory": "packages/react-query-5"
   },
   "license": "MIT",
   "author": {
@@ -59,15 +59,15 @@
     "@suspensive/test-utils": "workspace:*",
     "@suspensive/tsconfig": "workspace:*",
     "@suspensive/tsup": "workspace:*",
-    "@tanstack/react-query": "^4.36.1",
+    "@tanstack/react-query": "^5.45.1",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },
   "peerDependencies": {
-    "@suspensive/react": "workspace:^2.1.1",
-    "@tanstack/react-query": "^4",
+    "@suspensive/react": "workspace:^2.0.8",
+    "@tanstack/react-query": "^5",
     "react": "^18"
   },
   "peerDependenciesMeta": {

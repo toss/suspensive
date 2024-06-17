@@ -1,12 +1,12 @@
 'use client'
 
 import { Suspense } from '@suspensive/react'
+import { SuspenseQuery } from '@suspensive/react-query-5'
 import { useQueryClient } from '@tanstack/react-query'
 import Link from 'next/link'
 import { Text } from '~/app/components/Text'
 import { Text2 } from '~/app/components/Text2'
 import { query } from '~/query'
-import { SuspenseQuery } from '~/react-query'
 
 export default function Page() {
   const queryClient = useQueryClient()

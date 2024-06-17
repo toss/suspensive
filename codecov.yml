@@ -28,6 +28,10 @@ component_management:
       name: '@suspensive/react-query'
       paths:
         - packages/react-query/**
+    - component_id: react-query
+      name: '@suspensive/react-query-5'
+      paths:
+        - packages/react-query-5/**
     - component_id: react-await
       name: '@suspensive/react-await'
       paths:
