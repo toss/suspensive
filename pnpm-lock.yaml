@@ -267,8 +267,8 @@ importers:
         specifier: ^5.45.0
         version: 5.45.0(@tanstack/react-query@5.45.0)(next@14.2.3)(react@18.3.1)
       axios:
-        specifier: ^1.6.8
-        version: 1.6.8
+        specifier: ^1.7.2
+        version: 1.7.2
       next:
         specifier: ^14.2.3
         version: 14.2.3(@babel/core@7.24.5)(react-dom@18.3.1)(react@18.3.1)
@@ -442,8 +442,8 @@ importers:
         specifier: ^4.36.1
         version: 4.36.1(@tanstack/react-query@4.36.1)(react-dom@18.3.1)(react@18.3.1)
       axios:
-        specifier: ^1.6.8
-        version: 1.6.8
+        specifier: ^1.7.2
+        version: 1.7.2
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
@@ -1143,7 +1143,7 @@ packages:
   /@codspeed/core@3.1.0:
     resolution: {integrity: sha512-oYd7X46QhnRkgRbZkqAoX9i3Fwm17FpunK4Ee5RdrvRYR0Xr93ewH8/O5g6uyTPDOOqDEv1v2KRYtWhVgN+2VQ==}
     dependencies:
-      axios: 1.6.8
+      axios: 1.7.2
       find-up: 6.3.0
       form-data: 4.0.0
       node-gyp-build: 4.8.1
@@ -3342,8 +3342,8 @@ packages:
     resolution: {integrity: sha512-3AungXC4I8kKsS9PuS4JH2nc+0bVY/mjgrephHTIi8fpEeGsTHBUJeosp0Wc1myYMElmD0B3Oc4XL/HVJ4PV2g==}
     dev: true
 
-  /axios@1.6.8:
-    resolution: {integrity: sha512-v/ZHtJDU39mDpyBoFVkETcd/uNdxrWRrg3bKpOKzXFA6Bvqopts6ALSMU3y6ijYxbw2B+wPrIv46egTzJXCLGQ==}
+  /axios@1.7.2:
+    resolution: {integrity: sha512-2A8QhOMrbomlDuiLeK9XibIBzuHeRcqqNOHp0Cyp5EoJ1IFDh+XZH3A6BkXtv0K4gFGCI0Y4BM7B1wOEi0Rmgw==}
     dependencies:
       follow-redirects: 1.15.6
       form-data: 4.0.0
