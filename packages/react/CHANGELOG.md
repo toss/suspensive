@@ -1,5 +1,11 @@
 # @suspensive/react
 
+## 2.0.8
+
+### Patch Changes
+
+- [#934](https://github.com/toss/suspensive/pull/934) [`db95088`](https://github.com/toss/suspensive/commit/db95088abf61f032f236bf9b6e7e13466d99868d) Thanks [@manudeli](https://github.com/manudeli)! - ci(\*): add eslint-plugin-react-compiler to prepare react 19
+
 ## 2.0.7
 
 ## 2.0.6
