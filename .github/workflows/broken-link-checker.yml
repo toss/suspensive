@@ -13,4 +13,4 @@ jobs:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/pnpm-setup-node
       - run: pnpm install --frozen-lockfile
-      - run: pnpm blc ${{ github.event.inputs.url }} --ro
+      - run: pnpm blc ${{ github.event.inputs.url || 'https://suspensive.org' }} --ro
