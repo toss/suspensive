@@ -16,9 +16,9 @@ import { syncDevMode } from './contexts'
 import { Delay } from './Delay'
 import { ErrorBoundaryGroupContext } from './ErrorBoundaryGroup'
 import {
+  Message_useErrorBoundaryFallbackProps_this_hook_should_be_called_in_ErrorBoundary_props_fallback,
+  Message_useErrorBoundary_this_hook_should_be_called_in_ErrorBoundary_props_children,
   SuspensiveError,
-  useErrorBoundaryFallbackProps_this_hook_should_be_called_in_ErrorBoundary_props_fallback,
-  useErrorBoundary_this_hook_should_be_called_in_ErrorBoundary_props_children,
 } from './models/SuspensiveError'
 import type { ConstructorType, Nullable, PropsWithDevMode } from './utility-types'
 import { hasResetKeysChanged } from './utils'
@@ -204,7 +204,7 @@ export const useErrorBoundary = <TError extends Error = Error>() => {
   const errorBoundary = useContext(ErrorBoundaryContext)
   SuspensiveError.assert(
     errorBoundary != null && !errorBoundary.isError,
-    useErrorBoundary_this_hook_should_be_called_in_ErrorBoundary_props_children
+    Message_useErrorBoundary_this_hook_should_be_called_in_ErrorBoundary_props_children
   )
 
   return useMemo(
@@ -219,7 +219,7 @@ export const useErrorBoundaryFallbackProps = <TError extends Error = Error>(): E
   const errorBoundary = useContext(ErrorBoundaryContext)
   SuspensiveError.assert(
     errorBoundary != null && errorBoundary.isError,
-    useErrorBoundaryFallbackProps_this_hook_should_be_called_in_ErrorBoundary_props_fallback
+    Message_useErrorBoundaryFallbackProps_this_hook_should_be_called_in_ErrorBoundary_props_fallback
   )
 
   return useMemo(

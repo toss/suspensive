@@ -2,7 +2,7 @@ import { CustomError, TEXT } from '@suspensive/test-utils'
 import { render, screen, waitFor } from '@testing-library/react'
 import ms from 'ms'
 import { Delay } from './Delay'
-import { Delay_ms_prop_should_be_greater_than_or_equal_to_0, SuspensiveError } from './models/SuspensiveError'
+import { Message_Delay_ms_prop_should_be_greater_than_or_equal_to_0, SuspensiveError } from './models/SuspensiveError'
 
 beforeEach(() => {
   vi.useFakeTimers({ shouldAdvanceTime: true })
@@ -42,7 +42,9 @@ describe('<Delay/>', () => {
     await waitFor(() => expect(screen.queryByText(TEXT)).toBeInTheDocument())
   })
   it('should throw SuspensiveError if negative number is passed as ms prop', () => {
-    expect(() => render(<Delay ms={-1}>{TEXT}</Delay>)).toThrow(Delay_ms_prop_should_be_greater_than_or_equal_to_0)
+    expect(() => render(<Delay ms={-1}>{TEXT}</Delay>)).toThrow(
+      Message_Delay_ms_prop_should_be_greater_than_or_equal_to_0
+    )
     try {
       render(<Delay ms={-1}>{TEXT}</Delay>)
     } catch (error) {
