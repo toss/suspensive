@@ -20,14 +20,18 @@
     "clean": {
       "cache": false
     },
-    "test": {
+    "ci:test": {
       "dependsOn": ["prepack"],
       "outputs": ["coverage/**"]
     },
-    "test:watch": {
+    "ci:test:watch": {
       "dependsOn": ["prepack"],
       "cache": false,
       "outputs": ["coverage/**"]
+    },
+    "ci:bench": {
+      "dependsOn": ["prepack"],
+      "outputs": ["benchmark/**"]
     },
     "prepack": {
       "dependsOn": ["^prepack"],

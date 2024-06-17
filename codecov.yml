@@ -8,9 +8,15 @@ coverage:
 
 comment:
   layout: 'header, reach, diff, flags, components'
+  behavior: default
+  require_changes: false
+  require_base: false
+  require_head: true
+  hide_project_coverage: false
 
 ignore:
   - '**/*.test-d.*'
+  - '**/*.bench.*'
 
 component_management:
   individual_components:

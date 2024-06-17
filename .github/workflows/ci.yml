@@ -8,7 +8,7 @@ on:
 env:
   TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
   TURBO_TEAM: ${{ vars.TURBO_TEAM }}
-  NEXT_PUBLIC_STREAMING_HTML_URL: ${{ vars.NEXT_PUBLIC_STREAMING_HTML_URL }}
+  CI: ${{ vars.CI }}
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
@@ -19,17 +19,22 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        command: ['ci:attw', 'ci:eslint', 'ci:publint', 'ci:sherif', 'ci:type', 'test', 'build']
+        command: ['ci:attw', 'ci:eslint', 'ci:publint', 'ci:sherif', 'ci:type', 'ci:test', 'ci:bench', 'build']
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/pnpm-setup-node
       - run: pnpm install --frozen-lockfile
-      - if: matrix.command == 'test'
+      - if: matrix.command == 'ci:test'
         run: pnpm playwright install
       - run: pnpm ${{ matrix.command }}
         env:
           LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
-      - if: matrix.command == 'test'
+      - if: matrix.command == 'ci:test'
         uses: codecov/codecov-action@v4
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+      - if: matrix.command == 'ci:bench'
+        uses: CodSpeedHQ/action@v2
+        with:
+          run: pnpm ci:bench
+          token: ${{ secrets.CODSPEED_TOKEN }}
