@@ -9,7 +9,7 @@
 ```jsx /SuspenseQuery/
 import { SuspenseQuery } from '@suspensive/react-query'
 import { Suspense, ErrorBoundary } from '@suspensive/react'
-import { PostItem, AuthorProfile } from '~/components'
+import { PostListItem, AuthorProfile } from '~/components'
 
 const PostsPage = ({ authorId }) => (
   <ErrorBoundary fallback={({ error }) => <>{error.message}</>}>
