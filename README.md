@@ -86,7 +86,7 @@ const Example = () => (
 [![npm](https://img.shields.io/npm/dm/@suspensive/react-query?color=000&labelColor=000)](https://www.npmjs.com/package/@suspensive/react-query)
 [![npm bundle size](https://img.shields.io/bundlephobia/minzip/@suspensive/react-query?color=000&labelColor=000)](https://www.npmjs.com/package/@suspensive/react-query)
 
-Declarative apis to use [@tanstack/react-query with suspense](https://tanstack.com/query/v4/docs/guides/suspense) easily.
+Declarative apis to use [@tanstack/react-query with suspense](https://tanstack.com/query/v4/docs/framework/react/guides/suspense) easily.
 
 ### Features
 
