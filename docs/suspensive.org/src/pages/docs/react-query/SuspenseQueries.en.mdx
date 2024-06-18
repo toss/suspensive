@@ -1,0 +1,26 @@
+# SuspenseQueries
+
+Just as [`<SuspenseQuery/>`](/docs/react-query/SuspenseQuery) makes useSuspenseQuery easier to use in jsx, `<SuspenseQueries/>` serves to make useSuspenseQueries easier to use in jsx.
+
+```jsx /SuspenseQueries/
+import { SuspenseQueries } from '@suspensive/react-query'
+import { Suspense, ErrorBoundary } from '@suspensive/react'
+import { PostListItem, AuthorProfile } from '~/components'
+
+const PostsPage = ({ authorId }) => (
+  <ErrorBoundary fallback={({ error }) => <>{error.message}</>}>
+    <Suspense fallback="loading...">
+      <SuspenseQueries queries={[userQueryOptions(authorId), postsQueryOptions(authorId)]}>
+        {([{ data: author }, { data: posts }]) => (
+          <>
+            {<AuthorProfile {...author} />}
+            {posts.map((post) => (
+              <PostListItem key={post.id} {...post} />
+            ))}
+          </>
+        )}
+      </SuspenseQueries>
+    </Suspense>
+  </ErrorBoundary>
+)
+```
