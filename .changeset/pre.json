@@ -1,0 +1,20 @@
+{
+  "mode": "pre",
+  "tag": "beta",
+  "initialVersions": {
+    "@suspensive/eslint-config": "0.0.0",
+    "@suspensive/eslint-config-js": "0.0.0",
+    "@suspensive/eslint-config-ts": "0.0.0",
+    "@suspensive/test-utils": "0.0.0",
+    "@suspensive/tsconfig": "0.0.0-development",
+    "@suspensive/tsup": "0.0.0",
+    "@suspensive/suspensive.org": "0.0.0-development",
+    "@suspensive/next-streaming-react-query": "0.0.0",
+    "@suspensive/react": "2.1.1",
+    "@suspensive/react-await": "0.0.19",
+    "@suspensive/react-image": "0.0.13",
+    "@suspensive/react-query": "2.1.1",
+    "@suspensive/visualization": "0.0.0"
+  },
+  "changesets": []
+}
