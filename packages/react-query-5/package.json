@@ -1,6 +1,6 @@
 {
   "name": "@suspensive/react-query-5",
-  "version": "2.1.1",
+  "version": "0.0.0",
   "description": "Useful helpers for @tanstack/react-query@5 with suspense",
   "keywords": [
     "suspensive",

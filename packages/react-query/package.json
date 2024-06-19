@@ -52,8 +52,8 @@
     "prepack": "pnpm build"
   },
   "dependencies": {
-    "@suspensive/react-query-4": "workspace:*",
-    "@suspensive/react-query-5": "workspace:*"
+    "@suspensive/react-query-4": "workspace:^0.0.0",
+    "@suspensive/react-query-5": "workspace:^0.0.0"
   },
   "devDependencies": {
     "@suspensive/eslint-config": "workspace:*",
