@@ -1,1 +1,0 @@
-export { SuspenseQuery } from './SuspenseQuery'
