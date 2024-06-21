@@ -1,5 +1,7 @@
 # @suspensive/react
 
+## 2.1.2-beta.1
+
 ## 2.1.2-beta.0
 
 ## 2.1.1

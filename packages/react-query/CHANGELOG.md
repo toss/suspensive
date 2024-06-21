@@ -1,5 +1,16 @@
 # @suspensive/react-query
 
+## 2.1.2-beta.1
+
+### Patch Changes
+
+- [#953](https://github.com/toss/suspensive/pull/953) [`8d8a2d6`](https://github.com/toss/suspensive/commit/8d8a2d6cd8f2469ed547e00e9634ac212ed68bbe) Thanks [@gwansikk](https://github.com/gwansikk)! - feat(react-query): universal support for TanStack Query 4 and 5
+
+- Updated dependencies []:
+  - @suspensive/react@2.1.2-beta.1
+  - @suspensive/react-query-4@0.0.1-beta.0
+  - @suspensive/react-query-5@0.0.1-beta.0
+
 ## 2.1.2-beta.0
 
 ### Patch Changes
