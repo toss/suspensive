@@ -19,6 +19,7 @@
     "@suspensive/react-query-5": "0.0.0"
   },
   "changesets": [
-    "beige-plums-retire"
+    "beige-plums-retire",
+    "fair-mayflies-knock"
   ]
 }
