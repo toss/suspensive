@@ -39,8 +39,13 @@
   "types": "dist/index.d.ts",
   "files": [
     "dist",
-    "src"
+    "src",
+    "bin",
+    "scripts"
   ],
+  "bin": {
+    "suspensive-react-query-switch": "bin/suspensive-react-query-switch.js"
+  },
   "scripts": {
     "build": "tsup",
     "ci:attw": "attw --pack",
@@ -49,7 +54,8 @@
     "ci:type": "tsc --noEmit",
     "clean": "rimraf ./dist && rimraf ./coverage",
     "dev": "tsup --watch",
-    "prepack": "pnpm build"
+    "prepack": "pnpm build",
+    "postinstall": "node -e \"import('./scripts/postinstall.js').catch(e => console.error(e))\""
   },
   "dependencies": {
     "@suspensive/react-query-4": "workspace:^0.0.1-beta.0",
@@ -69,7 +75,7 @@
   },
   "peerDependencies": {
     "@suspensive/react": "workspace:^2.1.2-beta.0",
-    "@tanstack/react-query": "^4",
+    "@tanstack/react-query": "^4 || ^5",
     "react": "^18"
   },
   "peerDependenciesMeta": {
