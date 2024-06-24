@@ -1,26 +1,26 @@
 import fs from 'fs'
-import { dirname, join, resolve } from 'path'
-import { fileURLToPath } from 'url'
+import { extname, join, resolve } from 'path'
 
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = dirname(__filename)
+const __dirname = process.cwd()
 
-const dir = resolve(__dirname, '..', 'dist')
+const dir = resolve(__dirname, '..')
 
 export function copy(version: number): void {
-  const srcDir = join(dir, `v${version}`)
-  const files = fs.readdirSync(srcDir)
+  const files = fs.readdirSync(dir)
 
   files.forEach((file) => {
-    const src = join(srcDir, file)
-    const dest = join(dir, file)
-    const content = fs.readFileSync(src, 'utf-8')
+    if (file.startsWith(`v${version}`)) {
+      const src = join(dir, file)
+      const ext = extname(file)
+      const dest = join(dir, `index${ext}`)
+      const content = fs.readFileSync(src, 'utf-8')
 
-    try {
-      fs.unlinkSync(dest)
-    } catch (e) {
-      /* empty */
+      try {
+        fs.unlinkSync(dest)
+      } catch (e) {
+        /* empty */
+      }
+      fs.writeFileSync(dest, content, 'utf-8')
     }
-    fs.writeFileSync(dest, content, 'utf-8')
   })
 }
