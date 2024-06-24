@@ -1,13 +1,9 @@
 import type { ReactNode } from 'react'
-import { useIsClient } from './useIsClient'
+import { useIsClient } from '../hooks/useIsClient'
 
-interface ClientOnlyProp {
+interface ClientOnlyProps {
   children: ReactNode
   fallback?: ReactNode
 }
 
-export const ClientOnly = ({ children, fallback }: ClientOnlyProp) => {
-  const isClient = useIsClient()
-
-  return isClient ? <>{children}</> : <>{fallback}</>
-}
+export const ClientOnly = ({ children, fallback }: ClientOnlyProps) => <>{useIsClient() ? children : fallback}</>

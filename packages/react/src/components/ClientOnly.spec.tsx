@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react'
+import { useIsClient } from '../hooks/useIsClient'
 import { ClientOnly } from './ClientOnly'
-import { useIsClient } from './useIsClient'
 
 vi.mock('./useIsClient', () => ({
   useIsClient: vi.fn(),
