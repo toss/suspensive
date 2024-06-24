@@ -9,7 +9,7 @@ function getServerSnapshot() {
   return true
 }
 
-// hook interface
+// hook interface instead of useIsClient in hooks
 function useIsClient() {
   return useSyncExternalStore(() => noop, getSnapshot, getServerSnapshot)
 }
