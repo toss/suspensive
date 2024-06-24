@@ -39,9 +39,7 @@
   "types": "dist/index.d.ts",
   "files": [
     "dist",
-    "src",
-    "bin",
-    "scripts"
+    "src"
   ],
   "bin": {
     "suspensive-react-query-switch": "dist/bin/suspensive-react-query-switch.js"
