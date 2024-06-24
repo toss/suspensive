@@ -23,11 +23,14 @@
     "start": "next start -p 4000"
   },
   "dependencies": {
+    "@codesandbox/sandpack-react": "^2.14.4",
+    "@codesandbox/sandpack-themes": "^2.0.21",
     "next": "^14.2.3",
     "nextra": "^2.13.4",
     "nextra-theme-docs": "^2.13.4",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react-dom": "^18.3.1",
+    "remark-sandpack": "^0.0.3"
   },
   "devDependencies": {
     "@next/eslint-plugin-next": "^14.2.3",
