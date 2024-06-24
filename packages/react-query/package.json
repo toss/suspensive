@@ -42,7 +42,7 @@
     "src"
   ],
   "bin": {
-    "suspensive-react-query-switch": "dist/suspensive-react-query-switch.js"
+    "suspensive-react-query-switch": "dist/suspensive-react-query-switch.cjs"
   },
   "scripts": {
     "build": "tsup",
@@ -53,7 +53,7 @@
     "clean": "rimraf ./dist && rimraf ./coverage",
     "dev": "tsup --watch",
     "prepack": "pnpm build",
-    "postinstall": "node -e \"import('./dist/postinstall.js').catch(e => console.error(e))\""
+    "postinstall": "node -e \"import('./dist/postinstall.cjs').catch(e => console.error(e))\""
   },
   "dependencies": {
     "@suspensive/react-query-4": "workspace:^0.0.1",
