@@ -1,5 +1,11 @@
 # @suspensive/react
 
+## 2.2.1
+
+### Patch Changes
+
+- [#964](https://github.com/toss/suspensive/pull/964) [`d87a482`](https://github.com/toss/suspensive/commit/d87a48289244737f368c855d6afa1e85c250d78c) Thanks [@Collection50](https://github.com/Collection50)! - fix(react): add `<ClienOnly/>` for clientOnly prop of `<Suspense/>`
+
 ## 2.2.0
 
 ## 2.1.2-beta.1
