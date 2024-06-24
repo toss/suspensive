@@ -1,7 +1,7 @@
 {
-  "name": "@suspensive/react-query",
-  "version": "2.2.0",
-  "description": "Useful helpers for @tanstack/react-query with suspense",
+  "name": "@suspensive/react-query-4",
+  "version": "0.0.1",
+  "description": "Useful helpers for @tanstack/react-query@4 with suspense",
   "keywords": [
     "suspensive",
     "react",
@@ -39,27 +39,19 @@
   "types": "dist/index.d.ts",
   "files": [
     "dist",
-    "src",
-    "bin",
-    "scripts"
+    "src"
   ],
-  "bin": {
-    "suspensive-react-query-switch": "bin/suspensive-react-query-switch.js"
-  },
   "scripts": {
     "build": "tsup",
     "ci:attw": "attw --pack",
     "ci:eslint": "eslint \"**/*.{js,jsx,cjs,mjs,ts,tsx,cts,mts}\"",
     "ci:publint": "publint --strict",
+    "ci:test": "vitest run --coverage --typecheck",
+    "ci:test:watch": "vitest --ui --coverage --typecheck",
     "ci:type": "tsc --noEmit",
     "clean": "rimraf ./dist && rimraf ./coverage",
     "dev": "tsup --watch",
-    "prepack": "pnpm build",
-    "postinstall": "node -e \"import('./scripts/postinstall.js').catch(e => console.error(e))\""
-  },
-  "dependencies": {
-    "@suspensive/react-query-4": "workspace:^0.0.1",
-    "@suspensive/react-query-5": "workspace:^0.0.1"
+    "prepack": "pnpm build"
   },
   "devDependencies": {
     "@suspensive/eslint-config": "workspace:*",
@@ -75,7 +67,7 @@
   },
   "peerDependencies": {
     "@suspensive/react": "workspace:^2.2.0",
-    "@tanstack/react-query": "^4 || ^5",
+    "@tanstack/react-query": "^4",
     "react": "^18"
   },
   "peerDependenciesMeta": {

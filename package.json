@@ -27,7 +27,7 @@
     "ci:bench": "turbo run ci:bench",
     "ci:eslint": "turbo run ci:eslint",
     "ci:publint": "turbo run ci:publint",
-    "ci:sherif": "sherif --ignore-package \"./examples/*\" --ignore-package \"./websites/*\" --ignore-package \"./docs/*\"",
+    "ci:sherif": "sherif --ignore-package \"./examples/*\" --ignore-package \"./websites/*\" --ignore-package \"./docs/*\" --ignore-dependency \"@tanstack/react-query\" ",
     "ci:test": "turbo run ci:test",
     "ci:test:watch": "turbo run test:watch --parallel",
     "ci:type": "turbo run ci:type",

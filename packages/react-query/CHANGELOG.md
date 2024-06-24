@@ -1,5 +1,42 @@
 # @suspensive/react-query
 
+## 2.2.0
+
+### Minor Changes
+
+- [#953](https://github.com/toss/suspensive/pull/953) [`8d8a2d6`](https://github.com/toss/suspensive/commit/8d8a2d6cd8f2469ed547e00e9634ac212ed68bbe) Thanks [@gwansikk](https://github.com/gwansikk)! - feat(react-query): universal support for TanStack Query 4 and 5
+
+### Patch Changes
+
+- [#946](https://github.com/toss/suspensive/pull/946) [`2fd8108`](https://github.com/toss/suspensive/commit/2fd8108ae7f0bd0df8ecbe8bba90e3fe8ec41bbc) Thanks [@manudeli](https://github.com/manudeli)! - feat(react-query) depend on @suspensive/react-query-4,5 to support @tanstack/react-query@4,5 at once automatically
+
+- Updated dependencies [[`2fd8108`](https://github.com/toss/suspensive/commit/2fd8108ae7f0bd0df8ecbe8bba90e3fe8ec41bbc)]:
+  - @suspensive/react-query-4@0.0.1
+  - @suspensive/react-query-5@0.0.1
+  - @suspensive/react@2.2.0
+
+## 2.1.2-beta.1
+
+### Patch Changes
+
+- [#953](https://github.com/toss/suspensive/pull/953) [`8d8a2d6`](https://github.com/toss/suspensive/commit/8d8a2d6cd8f2469ed547e00e9634ac212ed68bbe) Thanks [@gwansikk](https://github.com/gwansikk)! - feat(react-query): universal support for TanStack Query 4 and 5
+
+- Updated dependencies []:
+  - @suspensive/react@2.1.2-beta.1
+  - @suspensive/react-query-4@0.0.1-beta.0
+  - @suspensive/react-query-5@0.0.1-beta.0
+
+## 2.1.2-beta.0
+
+### Patch Changes
+
+- [#946](https://github.com/toss/suspensive/pull/946) [`2fd8108`](https://github.com/toss/suspensive/commit/2fd8108ae7f0bd0df8ecbe8bba90e3fe8ec41bbc) Thanks [@manudeli](https://github.com/manudeli)! - feat(react-query) depend on @suspensive/react-query-4,5 to support @tanstack/react-query@4,5 at once automatically
+
+- Updated dependencies [[`2fd8108`](https://github.com/toss/suspensive/commit/2fd8108ae7f0bd0df8ecbe8bba90e3fe8ec41bbc)]:
+  - @suspensive/react-query-4@0.0.1-beta.0
+  - @suspensive/react-query-5@0.0.1-beta.0
+  - @suspensive/react@2.1.2-beta.0
+
 ## 2.1.1
 
 ### Patch Changes
