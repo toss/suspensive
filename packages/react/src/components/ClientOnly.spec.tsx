@@ -10,7 +10,7 @@ afterEach(() => {
   vi.clearAllMocks()
 })
 
-describe('ClientOnly Component', () => {
+describe('<ClientOnly/>', () => {
   it('renders children when isClient is true', () => {
     useIsClient.mockReturnValue(true)
 
