@@ -42,7 +42,7 @@
     "src"
   ],
   "bin": {
-    "suspensive-react-query-switch": "dist/bin/suspensive-react-query-switch.js"
+    "suspensive-react-query-switch": "dist/suspensive-react-query-switch.js"
   },
   "scripts": {
     "build": "tsup",

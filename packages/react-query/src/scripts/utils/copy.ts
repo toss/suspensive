@@ -1,9 +1,12 @@
 import fs from 'fs'
-import { extname, join, resolve } from 'path'
+import { dirname, extname, join, resolve } from 'path'
 
-const __dirname = process.cwd()
+const currentFilePath = __filename
+const __dirname = dirname(currentFilePath)
 
 const dir = resolve(__dirname, '..')
+
+console.log(dir)
 
 export function copy(version: number): void {
   const files = fs.readdirSync(dir)
