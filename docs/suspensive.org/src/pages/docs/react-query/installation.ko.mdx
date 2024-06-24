@@ -48,17 +48,32 @@ Suspensive 라이브러리는 모던 브라우저를 위해 최적화되었습�
 
 ### 의존성 추가
 
-@suspensive/react-query는 npm에 있습니다. 최신 안정버전을 설치하기 위해 아래 커맨드를 실행하세요
-
 [![npm version](https://img.shields.io/npm/v/@suspensive/react-query?color=000&labelColor=000&logo=npm&label=)](https://www.npmjs.com/package/@suspensive/react-query)
+
+@suspensive/react-query는 npm에 있습니다.  
+2.2.0 버전 이후로는 @tanstack/react-query의 v4와 v5을 모두 지원합니다. 최신 안정버전을 사용하고자 하면 아래 커맨드를 실행하세요.
+
+dependencies에 @tanstack/react-query의 버전에 따라 자동으로 알맞는 @suspensive/react-query 버전을 사용하게 됩니다.
+
+```shell npm2yarn
+npm install @suspensive/react-query @tanstack/react-query
+```
+
+<Callout type='info'>
+
+@tanstack/react-query v4를 사용하고자 하면 아래 커맨드를 실행하세요.
+
+@tanstack/react-query v4는 @tanstack/react-query v5 보다 더 낮은 버전의 브라우저를 지원합니다.
 
 ```shell npm2yarn
 npm install @suspensive/react-query @tanstack/react-query@4
 ```
 
+</Callout>
+
 <Callout type='info'>
 
-@suspensive/react-query는 내부적으로 peerDependencies로 @tanstack/react-query v4를 사용합니다. 때문에 package.json의 dependencies에 @tanstack/react-query의 올바른 버전이 설치되어있는지 확인하세요. 이유는 [어떤 이유로 사용하나요?](/docs/react-query/motivation)에서 설명하고 있습니다.
+@suspensive/react-query는 내부적으로 peerDependencies로 @tanstack/react-query v4 혹은 v5를 사용합니다. 때문에 package.json의 dependencies에 @tanstack/react-query의 올바른 버전이 설치되어있는지 확인하세요. 이유는 [어떤 이유로 사용하나요?](/docs/react-query/motivation)에서 설명하고 있습니다.
 
 </Callout>
 

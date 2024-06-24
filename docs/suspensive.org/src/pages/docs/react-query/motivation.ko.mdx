@@ -13,6 +13,8 @@ import { Steps } from 'nextra/components'
 
 ### @tanstack/react-query v5의 [es private field로 인해 저버전의 브라우저를 지원하지 못하는 문제](https://github.com/TanStack/query/issues/6371#issuecomment-1810246027)를 해결합니다
 
+> @tanstack/react-query@2.2.0 버전 이후로는 @tanstack/react-query v4와 v5을 모두 지원합니다. 더 낮은 버전의 브라우저를 지원하려면 @tanstack/react-query v4를 사용하세요.
+
 여전히 많은 곳에서 성능과 별개로 safari 12.1,13,14와 같은 낮은 버전의 브라우저 환경도 지원할 필요가 있습니다. 하지만 @tanstack/react-query v5의 브라우저 호환성은 safari>=15와 같은 높은 브라우저 환경을 타겟팅하고 있기 때문에 사용에 제한이 있을 수 있습니다.
 
 ![ES Private fields error](/img/react-query_private-class-fields-error.png)
@@ -21,7 +23,7 @@ import { Steps } from 'nextra/components'
 
   ![ES Private fields issue tkdodo comment](/img/react-query_private-class-fields-tkdodo-comment.png)
 
-이 경우 @suspensive/react-query는 @tanstack/react-query v4와 함께 사용해 @tanstack/react-query v5의 인터페이스를 사용할 수 있게 도와주는 좋은 대안이 되어줄 수 있습니다.
+이 경우 @suspensive/react-query는 @tanstack/react-query v4와 함께 사용해 @tanstack/react-query v5의 인터페이스를 사용할 수 있게 도와주는 좋은 대안이 됩니다.
 (@suspensive/react-query는 내부적으로 @tanstack/react-query v4를 사용하기 때문에 낮은 버전 브라우저 지원을 유지하면서도 Suspense와 관련 훅을 지원할 수 있습니다.)
 
 #### [@tanstack/react-query v4](https://tanstack.com/query/v4/docs/framework/react/installation#requirements)과 [@tanstack/react-query v5](https://tanstack.com/query/v5/docs/framework/react/installation#requirements) 브라우저 호환성
