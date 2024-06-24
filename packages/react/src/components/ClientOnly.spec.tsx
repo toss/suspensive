@@ -1,4 +1,5 @@
 import { render, screen } from '@testing-library/react'
+import { type Mock } from 'vitest'
 import { useIsClient } from '../hooks/useIsClient'
 import { ClientOnly } from './ClientOnly'
 
@@ -12,7 +13,7 @@ afterEach(() => {
 
 describe('<ClientOnly/>', () => {
   it('renders children when isClient is true', () => {
-    useIsClient.mockReturnValue(true)
+    ;(useIsClient as Mock).mockReturnValue(true)
 
     render(
       <ClientOnly fallback={<div>Loading...</div>}>
@@ -25,7 +26,7 @@ describe('<ClientOnly/>', () => {
   })
 
   it('renders fallback when isClient is false', () => {
-    useIsClient.mockReturnValue(false)
+    ;(useIsClient as Mock).mockReturnValue(false)
 
     render(
       <ClientOnly fallback={<div>Loading...</div>}>
