@@ -1,5 +1,11 @@
 # @suspensive/react
 
+## 2.2.2
+
+### Patch Changes
+
+- [#966](https://github.com/toss/suspensive/pull/966) [`0051a0e`](https://github.com/toss/suspensive/commit/0051a0e19a28a8acc5749aa8891c54c0ab20844c) Thanks [@ssi02014](https://github.com/ssi02014)! - fix(react): improved useTimeout and added usePreservedCallback
+
 ## 2.2.1
 
 ### Patch Changes
