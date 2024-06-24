@@ -58,7 +58,7 @@
     "@vitest/ui": "^1.6.0",
     "broken-link-checker": "^0.7.8",
     "coauthors": "latest",
-    "eslint": "^8.57.0",
+    "eslint": "^9.5.0",
     "husky": "^9.0.11",
     "jsdom": "^24.1.0",
     "lint-staged": "^15.2.7",
