@@ -20,11 +20,11 @@ describe('useTimeout', () => {
     const timeoutMockFn1 = vi.fn()
     const timeoutMockFn2 = vi.fn()
 
-    const result = renderHook(({ fn }) => useTimeout(fn, ms('0.1s')), {
+    const { rerender } = renderHook(({ fn }) => useTimeout(fn, ms('0.1s')), {
       initialProps: { fn: timeoutMockFn1 },
     })
 
-    result.rerender({ fn: timeoutMockFn2 })
+    rerender({ fn: timeoutMockFn2 })
 
     expect(timeoutMockFn1).toHaveBeenCalledTimes(0)
     expect(timeoutMockFn2).toHaveBeenCalledTimes(0)
