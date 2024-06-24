@@ -6,11 +6,18 @@ import { Steps } from 'nextra/components'
 @suspensive/react-query is used with the following motivation:
 
 <Steps>
+
 ### Hooks for Suspense are also available in @tanstack/react-query v4 (as well as @tanstack/react-query v5)
 
 [useSuspenseQuery](/docs/react-query/useSuspenseQuery), [useSuspenseQueries](/docs/react-query/useSuspenseQueries), and [useSuspenseInfiniteQuery](/docs/react-query/useSuspenseInfiniteQuery), which were not originally available in @tanstack/react-query v4, can now be used. Currently, this hook is officially provided in @tanstack/react-query v5, making it a good alternative for migrating from @tanstack/react-query v4 to v5.
 
 ### Solution for [the issue of @tanstack/react-query v5 not being able to support lower version browsers due to es private field](https://github.com/TanStack/query/issues/6371#issuecomment-1810246027)
+
+<Callout type='info'>
+
+From version 2.2.0 onwards, @tanstack/react-query supports both v4 and v5. To support older browser versions, use @tanstack/react-query v4.
+
+</Callout>
 
 Apart from performance, many places still need to support lower browser versions such as Safari 12.1, 13, and 14. However, the browser compatibility of @tanstack/react-query v5 may limit its use because it targets high browser environments such as safari>=15.
 
