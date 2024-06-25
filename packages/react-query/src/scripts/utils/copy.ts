@@ -1,21 +1,19 @@
 import fs from 'fs'
-import { dirname, extname, join, resolve } from 'path'
-
-const currentFilePath = __filename
-const __dirname = dirname(currentFilePath)
+import { join, resolve } from 'path'
 
 const dir = resolve(__dirname, '..')
 
-console.log(dir)
-
-export function copy(version: number): void {
+export function copy(version: number) {
   const files = fs.readdirSync(dir)
 
+  if (!dir.includes('dist') || files.length === 0) {
+    return false
+  }
+
   files.forEach((file) => {
-    if (file.startsWith(`v${version}`)) {
+    if (file.includes(`v${version}`)) {
       const src = join(dir, file)
-      const ext = extname(file)
-      const dest = join(dir, `index${ext}`)
+      const dest = join(dir, file.replace(`v${version}`, 'index'))
       const content = fs.readFileSync(src, 'utf-8')
 
       try {
@@ -26,4 +24,6 @@ export function copy(version: number): void {
       fs.writeFileSync(dest, content, 'utf-8')
     }
   })
+
+  return true
 }
