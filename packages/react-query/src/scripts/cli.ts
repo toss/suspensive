@@ -18,7 +18,7 @@ program
 
 program
   .command('status')
-  .description('Check the status of the current version')
+  .description('Check the compatibility status of the current version')
   .action(() => {
     const tanstackMajorVersion = tanstackPackageJson.version.split('.')[0]
 
@@ -30,19 +30,19 @@ program
     console.log('[@tanstack/react-query]', `v${tanstackPackageJson.version}`)
 
     if (suspensiveReactQueryVersion === tanstackMajorVersion) {
-      console.log(`\nversion v${suspensiveReactQueryVersion} is supported.`)
+      console.log(`\nThe versions are compatible.`)
     } else {
       console.warn(
-        '\nThe version of @suspensive/react-query is not compatible with the version of @tanstack/react-query.',
-        `\nPlease run 'npx suspensive-react-query switch ${tanstackMajorVersion}' to switch to the supported version.`
+        '\nThe version of @suspensive/react-query is not compatible with the current version of @tanstack/react-query.',
+        `\nPlease run 'npx suspensive-react-query switch ${suspensiveReactQueryVersion}' to switch to the compatible version.`
       )
     }
   })
 
 program
   .command('switch')
-  .description('Switch to @suspensive/react-query version')
-  .argument('<version>', 'The version to switch to')
+  .description('Switch to a specific version of @suspensive/react-query')
+  .argument('<version>', 'Switches the version of @suspensive/react-query')
   .action((version) => {
     if (version === '4') {
       switchVersion(4)
