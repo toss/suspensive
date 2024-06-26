@@ -42,7 +42,8 @@
     "src"
   ],
   "bin": {
-    "suspensive-react-query": "dist/scripts/cli.cjs"
+    "suspensive-react-query": "dist/scripts/cli.cjs",
+    "srq": "dist/scripts/cli.cjs"
   },
   "scripts": {
     "build": "tsup",
