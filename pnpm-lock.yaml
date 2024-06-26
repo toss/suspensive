@@ -402,6 +402,9 @@ importers:
 
   packages/react-query:
     dependencies:
+      '@commander-js/extra-typings':
+        specifier: ^12.1.0
+        version: 12.1.0(commander@12.1.0)
       '@suspensive/react-query-4':
         specifier: workspace:^0.0.1
         version: link:../react-query-4
@@ -1504,7 +1507,6 @@ packages:
       commander: ~12.1.0
     dependencies:
       commander: 12.1.0
-    dev: true
 
   /@commitlint/cli@19.3.0(@types/node@18.19.34)(typescript@5.4.5):
     resolution: {integrity: sha512-LgYWOwuDR7BSTQ9OLZ12m7F/qhNY+NpAyPBgo4YNMkACE7lGuUnuQq1yi9hz1KA4+3VqpOYl8H1rY/LYK43v7g==}

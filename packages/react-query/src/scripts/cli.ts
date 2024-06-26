@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 'use strict'
 
-import { Command } from 'commander'
+import { Command } from '@commander-js/extra-typings'
 import { getPackageJson, getSuspensiveReactQueryVersion, getTanstackPackageJson } from './utils/package'
 import { switchVersion } from './utils/switchVersion'
 
