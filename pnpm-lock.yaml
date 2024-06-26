@@ -408,6 +408,9 @@ importers:
       '@suspensive/react-query-5':
         specifier: workspace:^0.0.1
         version: link:../react-query-5
+      commander:
+        specifier: ^12.1.0
+        version: 12.1.0
     devDependencies:
       '@suspensive/eslint-config':
         specifier: workspace:*
@@ -4354,7 +4357,6 @@ packages:
   /commander@12.1.0:
     resolution: {integrity: sha512-Vw8qHK3bZM9y/P10u3Vib8o/DdkvA2OtPtZvD871QKjy74Wj1WSKFILMPRPSdUSx5RFK1arlJzEtA4PkFgnbuA==}
     engines: {node: '>=18'}
-    dev: true
 
   /commander@4.1.1:
     resolution: {integrity: sha512-NOKm8xhkzAjzFx8B2v5OAHT+u5pRQc2UCa2Vq9jYL/31o2wi9mxBA7LIFs3sV5VSC49z6pEhfbMULvShKj26WA==}

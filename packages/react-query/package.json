@@ -42,7 +42,7 @@
     "src"
   ],
   "bin": {
-    "suspensive-react-query-switch": "dist/scripts/suspensive-react-query-switch.cjs"
+    "suspensive-react-query": "dist/scripts/cli.cjs"
   },
   "scripts": {
     "build": "tsup",
@@ -57,7 +57,8 @@
   },
   "dependencies": {
     "@suspensive/react-query-4": "workspace:^0.0.1",
-    "@suspensive/react-query-5": "workspace:^0.0.1"
+    "@suspensive/react-query-5": "workspace:^0.0.1",
+    "commander": "^12.1.0"
   },
   "devDependencies": {
     "@suspensive/eslint-config": "workspace:*",
