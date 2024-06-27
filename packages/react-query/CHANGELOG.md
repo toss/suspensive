@@ -1,5 +1,18 @@
 # @suspensive/react-query
 
+## 2.3.0
+
+### Minor Changes
+
+- [#976](https://github.com/toss/suspensive/pull/976) [`c693ee8`](https://github.com/toss/suspensive/commit/c693ee8212885e717a64f91fe30b98bbe0cb0171) Thanks [@gwansikk](https://github.com/gwansikk)! - feat(react-query): improve cli DX
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @suspensive/react@2.3.0
+  - @suspensive/react-query-4@2.3.0
+  - @suspensive/react-query-5@2.3.0
+
 ## 2.2.4
 
 ### Patch Changes
