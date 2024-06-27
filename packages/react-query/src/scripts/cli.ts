@@ -46,7 +46,7 @@ program
   .description('Switch to a specific version of @suspensive/react-query')
   .argument('<version>', 'Switches the version of @suspensive/react-query')
   .action((version) => {
-    console.warn(`"suspensive-react-query status" is experimental feature`)
+    console.warn(`"suspensive-react-query switch <version>" is experimental feature`)
 
     if (version === '4') {
       switchVersion(4)
