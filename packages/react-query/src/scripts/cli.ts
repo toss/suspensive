@@ -50,4 +50,19 @@ program
     }
   })
 
+program
+  .command('fix')
+  .description('Fix the compatibility issues')
+  .action(() => {
+    const tanstackMajorVersion = tanstackPackageJson.version.split('.')[0]
+    const suspensiveReactQueryVersion = suspensiveReactQueryPackageName.split('-')[2]
+
+    if (suspensiveReactQueryVersion === tanstackMajorVersion) {
+      console.log('[@suspensive/react-query]', `The versions are compatible.`)
+    } else {
+      console.log('[@suspensive/react-query]', `Switching to the compatible version...`)
+      switchVersion(Number(tanstackMajorVersion))
+    }
+  })
+
 program.parse()
