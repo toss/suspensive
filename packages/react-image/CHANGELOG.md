@@ -1,5 +1,11 @@
 # @suspensive/react-image
 
+## 0.0.14
+
+### Patch Changes
+
+- [#987](https://github.com/toss/suspensive/pull/987) [`1bc423d`](https://github.com/toss/suspensive/commit/1bc423d7fd4536366983482a3723d86dc5139c58) Thanks [@saul-atomrigs](https://github.com/saul-atomrigs)! - fix(react-image): update error message
+
 ## 0.0.13
 
 ### Patch Changes
