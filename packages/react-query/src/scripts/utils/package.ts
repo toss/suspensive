@@ -1,4 +1,3 @@
-import { resolve } from 'path'
 import { exit } from 'process'
 import { loadModule } from './loadModule'
 
@@ -9,7 +8,7 @@ type PackageJson = {
 }
 
 export function getPackageJson() {
-  const packageJson = loadModule<PackageJson>(resolve(__dirname, '..', '..', 'package.json'))
+  const packageJson = loadModule<PackageJson>('@suspensive/react-query/package.json')
   if (!packageJson) {
     console.warn('@suspensive/react-query `package.json` is not found.')
     exit(1)
@@ -18,20 +17,18 @@ export function getPackageJson() {
   return packageJson
 }
 
-export function getTanstackPackageJson() {
-  const tanstackPackageJson = loadModule<PackageJson>('@tanstack/react-query/package.json')
-  if (!tanstackPackageJson) {
+export function getTanStackReactQueryPackageJson() {
+  const packageJson = loadModule<PackageJson>('@tanstack/react-query/package.json')
+  if (!packageJson) {
     console.warn('@tanstack/react-query is not found. Please install @tanstack/react-query.')
     exit(1)
   }
 
-  return tanstackPackageJson
+  return packageJson
 }
 
-export function getSuspensiveReactQueryVersion() {
-  const { suspensiveReactQueryVersion } = loadModule('@suspensive/react-query') as {
-    suspensiveReactQueryVersion: string
-  }
+export function getSuspensiveReactQueryPackageName() {
+  const { packageName } = loadModule('@suspensive/react-query') as { packageName: string }
 
-  return suspensiveReactQueryVersion
+  return packageName
 }

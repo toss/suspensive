@@ -1,7 +1,7 @@
-import { getTanstackPackageJson } from './utils/package'
+import { getTanStackReactQueryPackageJson } from './utils/package'
 import { switchVersion } from './utils/switchVersion'
 
-const { version } = getTanstackPackageJson()
+const { version } = getTanStackReactQueryPackageJson()
 
 if (version.startsWith('4.')) {
   switchVersion(4)

@@ -2,12 +2,12 @@
 'use strict'
 
 import { Command } from '@commander-js/extra-typings'
-import { getPackageJson, getSuspensiveReactQueryVersion, getTanstackPackageJson } from './utils/package'
+import { getPackageJson, getSuspensiveReactQueryPackageName, getTanStackReactQueryPackageJson } from './utils/package'
 import { switchVersion } from './utils/switchVersion'
 
 const packageJson = getPackageJson()
-const tanstackPackageJson = getTanstackPackageJson()
-const suspensiveReactQueryVersion = getSuspensiveReactQueryVersion()
+const tanstackPackageJson = getTanStackReactQueryPackageJson()
+const suspensiveReactQueryPackageName = getSuspensiveReactQueryPackageName()
 
 const program = new Command()
 
@@ -21,12 +21,9 @@ program
   .description('Check the compatibility status of the current version')
   .action(() => {
     const tanstackMajorVersion = tanstackPackageJson.version.split('.')[0]
+    const suspensiveReactQueryVersion = suspensiveReactQueryPackageName.split('-')[2]
 
-    console.log(
-      `[${packageJson.name}]`,
-      `v${packageJson.version}`,
-      `(@suspensive/react-query-${suspensiveReactQueryVersion})`
-    )
+    console.log(`[@suspensive/react-query]`, `v${packageJson.version}`, `(${suspensiveReactQueryPackageName})`)
     console.log('[@tanstack/react-query]', `v${tanstackPackageJson.version}`)
 
     if (suspensiveReactQueryVersion === tanstackMajorVersion) {
@@ -34,7 +31,7 @@ program
     } else {
       console.warn(
         '\nThe version of @suspensive/react-query is not compatible with the current version of @tanstack/react-query.',
-        `\nPlease run 'npx suspensive-react-query switch ${suspensiveReactQueryVersion}' to switch to the compatible version.`
+        `\nPlease run 'npx suspensive-react-query switch ${suspensiveReactQueryVersion === '5' ? '4' : '5'}' to switch to the compatible version.`
       )
     }
   })
