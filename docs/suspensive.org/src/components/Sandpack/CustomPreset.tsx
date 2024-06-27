@@ -23,7 +23,7 @@ export const CustomPreset = (
 
   const mode = props.previewOptions?.layout ?? 'preview'
   const showConsole = props.previewOptions?.showConsole ?? false
-  const showConsoleButton = props.previewOptions?.showConsoleButton ?? true
+  const showConsoleButton = props.previewOptions?.showConsoleButton ?? false
 
   const hasRightColumn = showConsole || showConsoleButton
   const RightColumn = hasRightColumn ? SandpackStack : Fragment
