@@ -2,4 +2,4 @@
 "@suspensive/react-query": minor
 ---
 
-refactor(react-query): improve cli DX
+feat(react-query): improve cli DX
