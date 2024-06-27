@@ -24,6 +24,8 @@ program
   .command('status')
   .description('Check the compatibility status of the current version')
   .action(() => {
+    console.warn(`"suspensive-react-query status" is experimental feature`)
+
     const tanStackReactQueryMajorVersion = tanStackReactQueryPackageJson.version.split('.')[0]
 
     console.log(`[@suspensive/react-query]`, `v${packageJson.version}`, `(${suspensiveReactQueryVersion})`)
@@ -44,6 +46,8 @@ program
   .description('Switch to a specific version of @suspensive/react-query')
   .argument('<version>', 'Switches the version of @suspensive/react-query')
   .action((version) => {
+    console.warn(`"suspensive-react-query status" is experimental feature`)
+
     if (version === '4') {
       switchVersion(4)
     } else if (version === '5') {
@@ -57,6 +61,8 @@ program
   .command('fix')
   .description('Fix the compatibility issues')
   .action(() => {
+    console.warn(`"suspensive-react-query status" is experimental feature`)
+
     const tanStackReactQueryMajorVersion = tanStackReactQueryPackageJson.version.split('.')[0]
 
     if (suspensiveReactQueryVersion === tanStackReactQueryMajorVersion) {
