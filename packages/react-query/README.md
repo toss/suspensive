@@ -11,5 +11,5 @@
 @suspensive/react-query lives in npm. To install the latest stable version, run the following command
 
 ```shell npm2yarn
-npm install @suspensive/react-query @tanstack/react-query@4
+npm install @suspensive/react-query @tanstack/react-query
 ```
