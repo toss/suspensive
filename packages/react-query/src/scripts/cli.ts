@@ -1,13 +1,17 @@
 #!/usr/bin/env node
 'use strict'
 
+import fs from 'fs'
+import path from 'path'
 import { Command } from '@commander-js/extra-typings'
-import { getPackageJson, getSuspensiveReactQueryPackageName, getTanStackReactQueryPackageJson } from './utils/package'
+import { getPackageJson, getTanStackReactQueryPackageJson } from './utils/package'
 import { switchVersion } from './utils/switchVersion'
 
 const packageJson = getPackageJson()
-const tanstackPackageJson = getTanStackReactQueryPackageJson()
-const suspensiveReactQueryPackageName = getSuspensiveReactQueryPackageName()
+const tanStackReactQueryPackageJson = getTanStackReactQueryPackageJson()
+const indexFileContent = fs.readFileSync(path.join(__dirname, '../../dist/index.js'), 'utf-8')
+const suspensiveReactQueryVersion =
+  (RegExp(/@suspensive\/react-query-(\d+)/).exec(indexFileContent) || [])[1] || 'not found'
 
 const program = new Command()
 
@@ -20,13 +24,12 @@ program
   .command('status')
   .description('Check the compatibility status of the current version')
   .action(() => {
-    const tanstackMajorVersion = tanstackPackageJson.version.split('.')[0]
-    const suspensiveReactQueryVersion = suspensiveReactQueryPackageName.split('-')[2]
+    const tanStackReactQueryMajorVersion = tanStackReactQueryPackageJson.version.split('.')[0]
 
-    console.log(`[@suspensive/react-query]`, `v${packageJson.version}`, `(${suspensiveReactQueryPackageName})`)
-    console.log('[@tanstack/react-query]', `v${tanstackPackageJson.version}`)
+    console.log(`[@suspensive/react-query]`, `v${packageJson.version}`, `(${suspensiveReactQueryVersion})`)
+    console.log('[@tanstack/react-query]', `v${tanStackReactQueryPackageJson.version}`)
 
-    if (suspensiveReactQueryVersion === tanstackMajorVersion) {
+    if (suspensiveReactQueryVersion === tanStackReactQueryMajorVersion) {
       console.log(`\nThe versions are compatible.`)
     } else {
       console.warn(
@@ -54,14 +57,13 @@ program
   .command('fix')
   .description('Fix the compatibility issues')
   .action(() => {
-    const tanstackMajorVersion = tanstackPackageJson.version.split('.')[0]
-    const suspensiveReactQueryVersion = suspensiveReactQueryPackageName.split('-')[2]
+    const tanStackReactQueryMajorVersion = tanStackReactQueryPackageJson.version.split('.')[0]
 
-    if (suspensiveReactQueryVersion === tanstackMajorVersion) {
+    if (suspensiveReactQueryVersion === tanStackReactQueryMajorVersion) {
       console.log('[@suspensive/react-query]', `The versions are compatible.`)
     } else {
       console.log('[@suspensive/react-query]', `Switching to the compatible version...`)
-      switchVersion(Number(tanstackMajorVersion))
+      switchVersion(Number(tanStackReactQueryMajorVersion))
     }
   })
 

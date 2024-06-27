@@ -26,9 +26,3 @@ export function getTanStackReactQueryPackageJson() {
 
   return packageJson
 }
-
-export function getSuspensiveReactQueryPackageName() {
-  const { packageName } = loadModule('@suspensive/react-query') as { packageName: string }
-
-  return packageName
-}
