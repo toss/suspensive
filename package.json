@@ -13,7 +13,7 @@
     "url": "https://github.com/toss/suspensive.git"
   },
   "license": "MIT",
-  "packageManager": "pnpm@8.15.2",
+  "packageManager": "pnpm@9.4.0",
   "type": "module",
   "scripts": {
     "blc:suspensive.org": "pnpm blc https://suspensive.org --ro",
