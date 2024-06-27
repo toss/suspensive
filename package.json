@@ -32,7 +32,7 @@
     "ci:test:watch": "turbo run test:watch --parallel",
     "ci:type": "turbo run ci:type",
     "clean": "turbo run clean",
-    "dev": "turbo run dev",
+    "dev": "turbo run dev --concurrency 20",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "graph": "rimraf ./graph && mkdir graph && turbo run build --graph=graph/index.html",
     "packlint": "packlint sort -R",
