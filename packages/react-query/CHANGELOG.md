@@ -1,5 +1,27 @@
 # @suspensive/react-query
 
+## 2.2.4
+
+### Patch Changes
+
+- [#978](https://github.com/toss/suspensive/pull/978) [`09e957c`](https://github.com/toss/suspensive/commit/09e957c4e9a0d2e2a5789961f9242843922915a4) Thanks [@gwansikk](https://github.com/gwansikk)! - feat(configs): add options for scripts
+
+- Updated dependencies [[`09e957c`](https://github.com/toss/suspensive/commit/09e957c4e9a0d2e2a5789961f9242843922915a4)]:
+  - @suspensive/react@2.2.4
+  - @suspensive/react-query-4@0.0.1
+  - @suspensive/react-query-5@0.0.1
+
+## 2.2.3
+
+### Patch Changes
+
+- [#970](https://github.com/toss/suspensive/pull/970) [`c9815d4`](https://github.com/toss/suspensive/commit/c9815d4c5fbf7da64dd288f78ac9969f2fc6c60a) Thanks [@jungwoo3490](https://github.com/jungwoo3490)! - refactor(react-query): only TypeScript & only src, dist
+
+- Updated dependencies []:
+  - @suspensive/react@2.2.3
+  - @suspensive/react-query-4@0.0.1
+  - @suspensive/react-query-5@0.0.1
+
 ## 2.2.2
 
 ### Patch Changes

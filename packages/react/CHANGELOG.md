@@ -1,5 +1,13 @@
 # @suspensive/react
 
+## 2.2.4
+
+### Patch Changes
+
+- [#978](https://github.com/toss/suspensive/pull/978) [`09e957c`](https://github.com/toss/suspensive/commit/09e957c4e9a0d2e2a5789961f9242843922915a4) Thanks [@gwansikk](https://github.com/gwansikk)! - feat(configs): add options for scripts
+
+## 2.2.3
+
 ## 2.2.2
 
 ### Patch Changes
