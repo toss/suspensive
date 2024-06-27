@@ -61,7 +61,7 @@ program
   .command('fix')
   .description('Fix the compatibility issues')
   .action(() => {
-    console.warn(`"suspensive-react-query status" is experimental feature`)
+    console.warn(`"suspensive-react-query fix" is experimental feature`)
 
     const tanStackReactQueryMajorVersion = tanStackReactQueryPackageJson.version.split('.')[0]
 
