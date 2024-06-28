@@ -91,22 +91,22 @@ Declarative apis to use [@tanstack/react-query with suspense](https://tanstack.c
 ### Features
 
 - useSuspenseQuery, useSuspenseQueries, useSuspenseInfiniteQuery
-- SuspenseQuery, SuspenseInfiniteQuery
+- SuspenseQuery, SuspenseQueries, SuspenseInfiniteQuery
 - QueryErrorBoundary
 - queryOptions
 
 ### Installation
 
 ```shell
-npm install @suspensive/react-query @tanstack/react-query@4
+npm install @suspensive/react-query @tanstack/react-query
 ```
 
 ```shell
-pnpm add @suspensive/react-query @tanstack/react-query@4
+pnpm add @suspensive/react-query @tanstack/react-query
 ```
 
 ```shell
-yarn add @suspensive/react-query @tanstack/react-query@4
+yarn add @suspensive/react-query @tanstack/react-query
 ```
 
 ### Usage
