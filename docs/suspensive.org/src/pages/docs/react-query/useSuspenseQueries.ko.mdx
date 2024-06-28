@@ -26,7 +26,6 @@ const Example = () => {
 ```tsx Post.tsx active
 import { Suspense } from '@suspensive/react'
 import { useSuspenseQueries } from '@suspensive/react-query'
-import { useQueryClient } from '@tanstack/react-query'
 import { getPost, getComments } from './api'
 
 export const Post = ({ postId }: { postId: number }) => {
