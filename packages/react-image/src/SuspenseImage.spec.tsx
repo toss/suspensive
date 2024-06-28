@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react'
 import { SuspenseImage } from './SuspenseImage'
 
-describe('SuspenseImage', () => {
+describe('<SuspenseImage/>', () => {
   it('renders an image with the loaded src', async () => {
     const src = 'https://placehold.co/200x100'
     render(<SuspenseImage src={src} alt="Test Image" />)
