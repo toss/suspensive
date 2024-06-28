@@ -24,7 +24,7 @@ export default function App() {
     },
   },
   dependencies: {
-    '@tanstack/react-query': '^4.0.0',
+    '@tanstack/react-query': '^4',
     '@suspensive/react': 'latest',
     '@suspensive/react-query': 'latest',
   },
