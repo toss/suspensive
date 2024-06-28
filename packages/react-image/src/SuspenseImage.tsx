@@ -7,7 +7,7 @@ export const SuspenseImage = forwardRef<HTMLImageElement, SuspenseImageProps>(fu
   ref
 ) {
   if (typeof src !== 'string') {
-    throw new Error('Image of @suspensive/react-image requires src')
+    throw new Error('<SuspenseImage/> of @suspensive/react-image requires string src')
   }
   const loaded = useLoad({ src })
   return <img ref={ref} src={loaded.src} {...props} />

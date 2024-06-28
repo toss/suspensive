@@ -1,5 +1,11 @@
 # @suspensive/react-image
 
+## 0.0.15
+
+### Patch Changes
+
+- [#999](https://github.com/toss/suspensive/pull/999) [`8862c2a`](https://github.com/toss/suspensive/commit/8862c2a4ec46b2b1e4a924e4fde46802a5fc66ba) Thanks [@saul-atomrigs](https://github.com/saul-atomrigs)! - test(react-image): add test code for `<SuspenseImage/>`
+
 ## 0.0.14
 
 ### Patch Changes
