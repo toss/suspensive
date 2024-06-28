@@ -19,9 +19,6 @@
   "versions": {
     "type": "menu",
     "title": "v2",
-    "theme": {
-      "collapsed": true
-    },
     "items": {
       "latest": {
         "title": "latest",
