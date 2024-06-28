@@ -14,6 +14,6 @@ describe('SuspenseImage', () => {
     expect(() => {
       // @ts-expect-error: non-string src value for testing purposes
       render(<SuspenseImage src={123} alt="Test Image" />)
-    }).toThrow('Image of @suspensive/react-image requires src')
+    }).toThrow('<SuspenseImage/> of @suspensive/react-image requires string src')
   })
 })
