@@ -2,6 +2,7 @@ import { ErrorBoundary, Suspense } from '@suspensive/react'
 import { ERROR_MESSAGE, FALLBACK, TEXT, sleep } from '@suspensive/test-utils'
 import { render, screen, waitFor } from '@testing-library/react'
 import ms from 'ms'
+import { hashKey } from './utils'
 import { Await, awaitClient, useAwait } from '.'
 
 const key = (id: number) => ['key', id] as const
@@ -189,5 +190,13 @@ describe('awaitClient', () => {
     await waitFor(() => expect(screen.queryByText(TEXT)).toBeInTheDocument())
     expect(screen.queryByText(FALLBACK)).not.toBeInTheDocument()
     expect(awaitClient.getData(key(1))).toBe(TEXT)
+  })
+
+  it('should handle unsubscribe gracefully when no subscribers exist', () => {
+    const mockSync = vi.fn()
+    const key = ['nonexistent', 'key'] as const
+    awaitClient.unsubscribe(key, mockSync)
+
+    expect(awaitClient['syncsMap'].get(hashKey(key))).toBeUndefined()
   })
 })
