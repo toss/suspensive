@@ -17,7 +17,7 @@ describe('cli', () => {
 
   it('should display the status of the packages', () => {
     const result = execFileSync('node', [cliPath, 'status']).toString()
-    expect(result).toContain(`[@suspensive/react-query] v2.3.0 (4)\n[@tanstack/react-query] v4.36.1`)
+    expect(result).toContain(`[@suspensive/react-query] v${packageJson.version} (4)\n[@tanstack/react-query] v4.36.1`)
   })
 
   it('should switch to the specified version when using the switch command', () => {
