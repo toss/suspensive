@@ -2,6 +2,7 @@ import { queryFn, queryKey } from '@suspensive/test-utils'
 import type { InfiniteData } from '@tanstack/react-query'
 import type { ReactNode } from 'react'
 import { describe, expectTypeOf, it } from 'vitest'
+import { queryOptions } from './queryOptions'
 import { SuspenseInfiniteQuery } from './SuspenseInfiniteQuery'
 import type { UseSuspenseInfiniteQueryResult } from './useSuspenseInfiniteQuery'
 
@@ -60,6 +61,20 @@ describe('<SuspenseInfiniteQuery/>', () => {
   })
 
   it('type check', () => {
+    const infiniteQueryOptions = queryOptions({
+      queryKey: queryKey,
+      queryFn: queryFn,
+    })
+    ;() => (
+      <SuspenseInfiniteQuery {...infiniteQueryOptions}>
+        {(query) => {
+          expectTypeOf(query).toEqualTypeOf<UseSuspenseInfiniteQueryResult<{ text: string }>>()
+          expectTypeOf(query.data).toEqualTypeOf<InfiniteData<{ text: string }>>()
+          expectTypeOf(query.status).toEqualTypeOf<'success'>()
+          return <></>
+        }}
+      </SuspenseInfiniteQuery>
+    )
     ;() => (
       <SuspenseInfiniteQuery queryKey={queryKey} queryFn={queryFn}>
         {(query) => {
@@ -88,6 +103,9 @@ describe('<SuspenseInfiniteQuery/>', () => {
       </SuspenseInfiniteQuery>
     )
 
+    expectTypeOf(
+      <SuspenseInfiniteQuery {...infiniteQueryOptions}>{() => <></>}</SuspenseInfiniteQuery>
+    ).toEqualTypeOf<JSX.Element>()
     expectTypeOf(
       <SuspenseInfiniteQuery queryKey={queryKey} queryFn={queryFn}>
         {() => <></>}
