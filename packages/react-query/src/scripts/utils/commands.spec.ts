@@ -2,7 +2,14 @@ import fs from 'fs'
 import path from 'path'
 import type { Mock, MockInstance } from 'vitest'
 import packageJson from '../../../package.json'
-import { fixAction, getSuspensiveReactQueryVersion, statusAction, switchAction } from './commands'
+import {
+  fixAction,
+  getSuspensiveReactQueryVersion,
+  statusAction,
+  switchAction,
+  version4APIs,
+  version5APIs,
+} from './commands'
 import * as packageUtils from './package'
 import { switchVersion } from './switchVersion'
 
@@ -50,15 +57,40 @@ describe('commands', () => {
   })
 
   describe('statusAction', () => {
-    it('should display the status correctly when versions are compatible', () => {
+    it('should display the status correctly when versions are compatible (version 4)', () => {
       vi.mocked(fs.readFileSync).mockReturnValue(`export * from '@suspensive/react-query-4'`)
+      const getTanStackReactQueryPackageJsonMock = packageUtils.getTanStackReactQueryPackageJson as Mock
+      getTanStackReactQueryPackageJsonMock.mockReturnValue({ version: '4.0.0' })
 
       statusAction()
 
       expect(consoleWarnSpy).toHaveBeenCalledWith(`"suspensive-react-query status" is experimental feature`)
-      expect(consoleLogSpy).toHaveBeenCalledWith('[@suspensive/react-query]', `v${packageJson.version}`, `(4)`)
-      expect(consoleLogSpy).toHaveBeenCalledWith('[@tanstack/react-query]', `v${tanStackReactQueryPackageJson.version}`)
+      expect(consoleLogSpy).toHaveBeenCalledWith('\nSuspensive React Query status:')
+      expect(consoleLogSpy).toHaveBeenCalledWith(
+        `@suspensive/react-query@${packageJson.version} export @suspensive/react-query-4's interfaces`
+      )
+      version4APIs.forEach((api) => {
+        expect(consoleLogSpy).toHaveBeenCalledWith(`  - ${api}`)
+      })
+      expect(consoleLogSpy).toHaveBeenCalledWith(`@tanstack/react-query@${tanStackReactQueryPackageJson.version}`)
       expect(consoleLogSpy).toHaveBeenCalledWith('\nThe versions are compatible.')
+    })
+
+    it('should display the status correctly when versions are compatible (version 5)', () => {
+      vi.mocked(fs.readFileSync).mockReturnValue(`export * from '@suspensive/react-query-5'`)
+      const getTanStackReactQueryPackageJsonMock = packageUtils.getTanStackReactQueryPackageJson as Mock
+      getTanStackReactQueryPackageJsonMock.mockReturnValue({ version: '5.0.0' })
+
+      statusAction()
+
+      expect(consoleWarnSpy).toHaveBeenCalledWith(`"suspensive-react-query status" is experimental feature`)
+      expect(consoleLogSpy).toHaveBeenCalledWith('\nSuspensive React Query status:')
+      expect(consoleLogSpy).toHaveBeenCalledWith(
+        `@suspensive/react-query@${packageJson.version} export @suspensive/react-query-5's interfaces`
+      )
+      version5APIs.forEach((api) => {
+        expect(consoleLogSpy).toHaveBeenCalledWith(`  - ${api}`)
+      })
     })
 
     it('should display incompatible versions message (suspensive 5, tanstack 4)', () => {
