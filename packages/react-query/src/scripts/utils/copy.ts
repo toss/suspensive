@@ -6,7 +6,7 @@ const dir = resolve(__dirname, '..')
 export function copy(version: number) {
   const files = fs.readdirSync(dir)
 
-  if (!dir.includes('dist') || files.length === 0) {
+  if (files.length === 0) {
     return false
   }
 
