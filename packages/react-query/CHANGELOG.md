@@ -1,5 +1,16 @@
 # @suspensive/react-query
 
+## 2.3.3
+
+### Patch Changes
+
+- [#1008](https://github.com/toss/suspensive/pull/1008) [`2309449`](https://github.com/toss/suspensive/commit/2309449c19a4335765fd2714cbc002fa3b918282) Thanks [@gwansikk](https://github.com/gwansikk)! - test(react-query): add tests for commands, switchVersion, copy, package
+
+- Updated dependencies []:
+  - @suspensive/react@2.3.3
+  - @suspensive/react-query-4@2.3.3
+  - @suspensive/react-query-5@2.3.3
+
 ## 2.3.2
 
 ### Patch Changes
