@@ -3,7 +3,7 @@ import packageJson from '../../../package.json'
 import { getPackageJson, getTanStackReactQueryPackageJson } from './package'
 
 describe('package', () => {
-  it('should get package json', () => {
+  it('should get package.json', () => {
     const result = getPackageJson()
 
     expect(result).toBeDefined()
@@ -12,7 +12,7 @@ describe('package', () => {
     expect(result.version).toBe(packageJson.version)
   })
 
-  it('should get TanStack React Query package json', () => {
+  it('should get @tanstack/react-query package.json', () => {
     const result = getTanStackReactQueryPackageJson()
 
     expect(result).toBeDefined()
