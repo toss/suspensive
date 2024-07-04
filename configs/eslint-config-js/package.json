@@ -10,7 +10,7 @@
     "ci:eslint": "eslint \"**/*.{js,jsx,cjs,mjs,ts,tsx,cts,mts}\""
   },
   "dependencies": {
-    "@cspell/eslint-plugin": "^8.10.0",
+    "@cspell/eslint-plugin": "^8.8.1",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-import": "^2.29.1",
     "eslint-plugin-jest-dom": "^5.4.0",

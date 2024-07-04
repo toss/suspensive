@@ -14,8 +14,8 @@
     "@suspensive/eslint-config-js": "workspace:*",
     "@suspensive/eslint-config-ts": "workspace:*",
     "eslint-plugin-import": "^2.29.1",
-    "eslint-plugin-react": "^7.34.3",
-    "eslint-plugin-react-compiler": "0.0.0-experimental-0998c1e-20240625",
+    "eslint-plugin-react": "^7.34.2",
+    "eslint-plugin-react-compiler": "0.0.0-experimental-51a85ea-20240601",
     "eslint-plugin-react-hooks": "^4.6.2"
   }
 }
