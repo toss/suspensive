@@ -4,13 +4,13 @@ import { Callout } from '@/components'
 
 @suspensive/react-query는 v2.2.0 버전 이후로 @tanstack/react-query의 v4와 v5를 모두 지원합니다.
 
-내부적으로 @tanstack/react-query 버전에 대응하는 @suspensive/react-query-4와 @suspensive/react-query-5로 구성되어 있습니다. (대응되는 버전 패키지를 해당 문서에서는 "모듈"이라고 부르겠습니다.) 사용자 환경에 설치된 @tanstack/react-query 버전을 감지하여 자동으로 호환되는 모듈을 사용합니다.
+내부적으로 @tanstack/react-query 버전에 대응하는 @suspensive/react-query-4와 @suspensive/react-query-5로 구성되어 있습니다. 사용자 환경에 설치된 @tanstack/react-query 버전을 감지하여 자동으로 @suspensive/react-query의 호환되는 인터페이스를 제공합니다.
 
 ## Command-Line Interface (CLI)
 
-@suspensive/react-query의 Command-Line Interface (CLI)는 @tanstack/react-query와의 호환성 문제를 해결하기 위한 도구입니다. 명령어를 통해 @tanstack/react-query와의 호환 여부를 확인하고, @suspensive/react-query의 호환되는 버전으로 변경할 수 있습니다.
+@suspensive/react-query의 Command-Line Interface (CLI)는 @tanstack/react-query와의 호환성 문제를 해결하기 위한 도구입니다. 명령어를 통해 @tanstack/react-query와의 호환 여부를 확인하고, @suspensive/react-query의 호환되는 인터페이스로 전환할 수 있습니다.
 
-특수한 이유로 @tanstack/react-query와 호환되지 않아 에러가 발생하면, CLI를 통해 문제를 해결할 수 있습니다. 하지만 실제로 CLI를 사용할 일은 드물며, @suspensive/react-query 설치 시 자동으로 알맞은 버전을 사용합니다.
+특수한 이유로 @tanstack/react-query와 호환되지 않아 에러가 발생하면, CLI를 통해 문제를 해결할 수 있습니다. 하지만 실제로 CLI를 사용할 일은 드물며, @suspensive/react-query 설치 시 자동으로 알맞은 인터페이스를 사용합니다.
 
 <Callout type="info">CLI는 아직 실험적인 기능이며, 의도대로 동작하지 않을 수 있습니다.</Callout>
 
@@ -32,13 +32,13 @@ npx srq
 
 현재 CLI가 제공하는 명령어는 총 5개로, 각 명령어의 설명은 다음과 같습니다.
 
-| 명령어  | 설명                                                                             |
-| ------- | -------------------------------------------------------------------------------- |
-| version | 현재 설치된 @suspensive/react-query의 버전을 표시합니다.                         |
-| help    | 명령어의 사용 방법을 콘솔에서 확인할 수 있습니다.                                |
-| status  | 현재 사용 중인 @tanstack/react-query와의 호환성 여부를 확인합니다.               |
-| switch  | @suspensive/react-query의 모듈을 지정한 버전의 모듈로 변경합니다.                |
-| fix     | @tanstack/react-query와 호환되는 @suspensive/react-query 모듈로 자동 변경합니다. |
+| 명령어  | 설명                                                               |
+| ------- | ------------------------------------------------------------------ |
+| version | 현재 설치된 @suspensive/react-query의 버전을 표시합니다.           |
+| help    | 명령어의 사용 방법을 콘솔에서 확인할 수 있습니다.                  |
+| status  | 현재 사용 중인 @tanstack/react-query와의 호환성 여부를 확인합니다. |
+| switch  | 지정한 버전의 @suspensive/react-query 인터페이스로 전환합니다.     |
+| fix     | @tanstack/react-query와 호환되는 인터페이스로 자동 전환합니다.     |
 
 ### version
 
@@ -70,7 +70,7 @@ npx suspensive-react-query --help
 
 ### status
 
-현재 사용 중인 @tanstack/react-query와 대응되고 있는 @suspensive/react-query의 모듈을 확인하고, 호환성 여부를 확인할 수 있습니다. 또한 버전에 따라 사용 가능한 API를 확인할 수 있습니다.
+현재 사용 중인 @tanstack/react-query와 대응되고 있는 @suspensive/react-query의 인터페이스를 확인하고, 호환성 여부를 확인할 수 있습니다. 또한 버전에 따라 사용 가능한 API를 확인할 수 있습니다.
 
 ```bash
 npx suspensive-react-query status
@@ -94,7 +94,7 @@ The versions are compatible.
 
 ### switch
 
-@tanstack/react-query에 대응하고 있는 @suspensive/react-query 모듈을 변경할 수 있습니다. 예를 들어, @tanstack/react-query v5를 사용하고 있는데 오류가 발생하면, 다음 명령어를 사용하여 호환되는 모듈로 변경할 수 있습니다.
+@tanstack/react-query에 대응하고 있는 @suspensive/react-query 인터페이스로 변경할 수 있습니다. 예를 들어, @tanstack/react-query v5를 사용하고 있는데 오류가 발생하면, 다음 명령어를 사용하여 호환되는 인터페이스로 변경할 수 있습니다.
 
 ```bash
 npx suspensive-react-query switch 5
@@ -102,7 +102,7 @@ npx suspensive-react-query switch 5
 
 ### fix
 
-`fix` 명령어는 손쉽게 버전을 맞추는 간편한 방법입니다. 사용자 환경에서 @tanstack/react-query 버전을 감지하여, @suspensive/react-query의 모듈을 자동으로 변경합니다.
+`fix` 명령어는 손쉽게 버전을 맞추는 간편한 방법입니다. 사용자 환경에서 @tanstack/react-query 버전을 감지하여, 호환되는 @suspensive/react-query의 인터페이스를 자동으로 변경합니다.
 
 ```bash
 npx suspensive-react-query fix
