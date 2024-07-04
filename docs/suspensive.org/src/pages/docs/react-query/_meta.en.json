@@ -1,6 +1,7 @@
 {
   "motivation": { "title": "Why need to use?" },
   "installation": { "title": "Installation" },
+  "command-line-interface": { "title": "Command-Line Interface" },
   "migrate-to-v2": { "title": "Migrating to v2" },
   "--- API Reference": {
     "type": "separator",

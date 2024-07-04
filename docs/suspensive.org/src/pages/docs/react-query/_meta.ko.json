@@ -1,6 +1,7 @@
 {
   "motivation": { "title": "어떤 이유로 사용하나요?" },
   "installation": { "title": "설치하기" },
+  "command-line-interface": { "title": "Command-Line Interface" },
   "migrate-to-v2": { "title": "v2로 마이그레이션하기" },
   "--- API Reference": {
     "type": "separator",
