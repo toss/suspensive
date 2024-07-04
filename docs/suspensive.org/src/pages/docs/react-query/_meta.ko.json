@@ -1,7 +1,7 @@
 {
   "motivation": { "title": "어떤 이유로 사용하나요?" },
   "installation": { "title": "설치하기" },
-  "command-line-interface": { "title": "Command-Line Interface" },
+  "support-both-tanstack-query-v4-and-5": { "title": "TanStack Query v4, 5를 모두 지원" },
   "migrate-to-v2": { "title": "v2로 마이그레이션하기" },
   "--- API Reference": {
     "type": "separator",

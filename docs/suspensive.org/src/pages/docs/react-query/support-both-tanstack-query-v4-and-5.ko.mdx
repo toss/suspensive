@@ -1,18 +1,18 @@
 import { Callout } from '@/components'
 
-# Command-Line Interface (CLI)
-
-@suspensive/react-query의 Command-Line Interface (CLI)는 @tanstack/react-query와의 호환성 문제를 해결하기 위한 도구입니다. 명령어를 통해 @tanstack/react-query와의 호환 여부를 확인하고, @suspensive/react-query의 호환되는 버전으로 변경할 수 있습니다.
-
-<Callout type="info">CLI는 아직 실험적인 기능이며, 의도대로 동작하지 않을 수 있습니다.</Callout>
-
-## 언제 사용하나요?
+# TanStack Query v4, 5를 모두 지원
 
 @suspensive/react-query는 v2.2.0 버전 이후로 @tanstack/react-query의 v4와 v5를 모두 지원합니다.
 
-내부적으로 @tanstack/react-query 버전에 대응하는 @suspensive/react-query-4와 @suspensive/react-query-5로 구성되어 있습니다. (대응되는 버전 패키지를 해당 문서에서는 모듈이라고 부르겠습니다.) 사용자 환경에 설치된 @tanstack/react-query 버전을 자동으로 감지하여 호환되는 버전을 사용합니다.
+내부적으로 @tanstack/react-query 버전에 대응하는 @suspensive/react-query-4와 @suspensive/react-query-5로 구성되어 있습니다. (대응되는 버전 패키지를 해당 문서에서는 "모듈"이라고 부르겠습니다.) 사용자 환경에 설치된 @tanstack/react-query 버전을 감지하여 자동으로 호환되는 모듈을 사용합니다.
+
+## Command-Line Interface (CLI)
+
+@suspensive/react-query의 Command-Line Interface (CLI)는 @tanstack/react-query와의 호환성 문제를 해결하기 위한 도구입니다. 명령어를 통해 @tanstack/react-query와의 호환 여부를 확인하고, @suspensive/react-query의 호환되는 버전으로 변경할 수 있습니다.
 
 특수한 이유로 @tanstack/react-query와 호환되지 않아 에러가 발생하면, CLI를 통해 문제를 해결할 수 있습니다. 하지만 실제로 CLI를 사용할 일은 드물며, @suspensive/react-query 설치 시 자동으로 알맞은 버전을 사용합니다.
+
+<Callout type="info">CLI는 아직 실험적인 기능이며, 의도대로 동작하지 않을 수 있습니다.</Callout>
 
 ## 시작하기
 

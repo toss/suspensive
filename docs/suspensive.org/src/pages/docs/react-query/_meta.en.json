@@ -1,7 +1,7 @@
 {
   "motivation": { "title": "Why need to use?" },
   "installation": { "title": "Installation" },
-  "command-line-interface": { "title": "Command-Line Interface" },
+  "support-both-tanstack-query-v4-and-5": { "title": "Support both TanStack Query v4 and 5" },
   "migrate-to-v2": { "title": "Migrating to v2" },
   "--- API Reference": {
     "type": "separator",
