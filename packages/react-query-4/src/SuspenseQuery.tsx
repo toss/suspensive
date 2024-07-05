@@ -2,9 +2,6 @@ import type { QueryKey } from '@tanstack/react-query'
 import type { ReactNode } from 'react'
 import { type UseSuspenseQueryOptions, type UseSuspenseQueryResult, useSuspenseQuery } from './useSuspenseQuery'
 
-/**
- * @experimental This is experimental feature.
- */
 export const SuspenseQuery = <
   TQueryFnData = unknown,
   TError = unknown,
