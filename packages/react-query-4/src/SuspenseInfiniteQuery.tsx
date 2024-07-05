@@ -6,9 +6,6 @@ import {
   useSuspenseInfiniteQuery,
 } from './useSuspenseInfiniteQuery'
 
-/**
- * @experimental This is experimental feature.
- */
 export const SuspenseInfiniteQuery = <
   TQueryFnData = unknown,
   TError = unknown,

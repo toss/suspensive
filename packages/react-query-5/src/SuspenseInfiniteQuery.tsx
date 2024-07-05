@@ -8,9 +8,6 @@ import {
 } from '@tanstack/react-query'
 import type { ReactNode } from 'react'
 
-/**
- * @experimental This is experimental feature.
- */
 export const SuspenseInfiniteQuery = <
   TQueryFnData,
   TError = DefaultError,

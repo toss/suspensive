@@ -64,7 +64,6 @@ describe('commands', () => {
 
       statusAction()
 
-      expect(consoleWarnSpy).toHaveBeenCalledWith(`"suspensive-react-query status" is experimental feature`)
       expect(consoleLogSpy).toHaveBeenCalledWith('\nSuspensive React Query status:')
       expect(consoleLogSpy).toHaveBeenCalledWith(
         `@suspensive/react-query@${packageJson.version} export @suspensive/react-query-4's interfaces`
@@ -83,7 +82,6 @@ describe('commands', () => {
 
       statusAction()
 
-      expect(consoleWarnSpy).toHaveBeenCalledWith(`"suspensive-react-query status" is experimental feature`)
       expect(consoleLogSpy).toHaveBeenCalledWith('\nSuspensive React Query status:')
       expect(consoleLogSpy).toHaveBeenCalledWith(
         `@suspensive/react-query@${packageJson.version} export @suspensive/react-query-5's interfaces`
@@ -122,14 +120,12 @@ describe('commands', () => {
     it('should switch to version 4', () => {
       switchAction('4')
 
-      expect(consoleWarnSpy).toHaveBeenCalledWith(`"suspensive-react-query switch <version>" is experimental feature`)
       expect(switchVersion).toHaveBeenCalledWith(4)
     })
 
     it('should switch to version 5', () => {
       switchAction('5')
 
-      expect(consoleWarnSpy).toHaveBeenCalledWith(`"suspensive-react-query switch <version>" is experimental feature`)
       expect(switchVersion).toHaveBeenCalledWith(5)
     })
 
@@ -146,7 +142,6 @@ describe('commands', () => {
 
       fixAction()
 
-      expect(consoleWarnSpy).toHaveBeenCalledWith(`"suspensive-react-query fix" is experimental feature`)
       expect(consoleLogSpy).toHaveBeenCalledWith('[@suspensive/react-query]', `The versions are compatible.`)
       expect(switchVersion).not.toHaveBeenCalled()
     })
@@ -158,7 +153,6 @@ describe('commands', () => {
 
       fixAction()
 
-      expect(consoleWarnSpy).toHaveBeenCalledWith(`"suspensive-react-query fix" is experimental feature`)
       expect(consoleLogSpy).toHaveBeenCalledWith('[@suspensive/react-query]', `Switching to the compatible version...`)
       expect(switchVersion).toHaveBeenCalledWith(5)
     })

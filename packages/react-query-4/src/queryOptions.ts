@@ -71,9 +71,6 @@ export function queryOptions<
 >(
   options: UnSelectedQueryOptions<TQueryFnData, TError, TData, TQueryKey>
 ): UnSelectedQueryOptions<TQueryFnData, TError, TData, TQueryKey>
-/**
- * @experimental This is experimental feature.
- */
 export function queryOptions<
   TQueryFnData = unknown,
   TError = unknown,
