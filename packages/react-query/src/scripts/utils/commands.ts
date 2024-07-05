@@ -22,8 +22,6 @@ export const getSuspensiveReactQueryVersion = (): string => {
 }
 
 export const statusAction = () => {
-  console.warn(`"suspensive-react-query status" is experimental feature`)
-
   const packageJson = getPackageJson()
   const tanStackReactQueryPackageJson = getTanStackReactQueryPackageJson()
   const suspensiveReactQueryVersion = getSuspensiveReactQueryVersion()
@@ -50,8 +48,6 @@ export const statusAction = () => {
 }
 
 export const switchAction = (version: string) => {
-  console.warn(`"suspensive-react-query switch <version>" is experimental feature`)
-
   if (version === '4') {
     switchVersion(4)
   } else if (version === '5') {
@@ -62,8 +58,6 @@ export const switchAction = (version: string) => {
 }
 
 export const fixAction = () => {
-  console.warn(`"suspensive-react-query fix" is experimental feature`)
-
   const tanStackReactQueryPackageJson = getTanStackReactQueryPackageJson()
   const suspensiveReactQueryVersion = getSuspensiveReactQueryVersion()
 
