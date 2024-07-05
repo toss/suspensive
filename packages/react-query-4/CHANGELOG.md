@@ -1,5 +1,14 @@
 # @suspensive/react-query-4
 
+## 2.5.1
+
+### Patch Changes
+
+- [#1039](https://github.com/toss/suspensive/pull/1039) [`35f9f6a`](https://github.com/toss/suspensive/commit/35f9f6a36c59e144551ff40e1735cef2c3c36096) Thanks [@manudeli](https://github.com/manudeli)! - fix(react-query): remove experimental in jsdoc
+
+- Updated dependencies []:
+  - @suspensive/react@2.5.1
+
 ## 2.5.0
 
 ### Patch Changes
