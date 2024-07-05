@@ -1,5 +1,16 @@
 # @suspensive/react-query-5
 
+## 2.5.0
+
+### Minor Changes
+
+- [#1035](https://github.com/toss/suspensive/pull/1035) [`9966b3d`](https://github.com/toss/suspensive/commit/9966b3dabe59ee66bcd40a1f9c2c064364f11cb2) Thanks [@manudeli](https://github.com/manudeli)! - feat(@suspensive/react-query-5): add combine prop of SuspenseQueries
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @suspensive/react@2.5.0
+
 ## 2.4.0
 
 ### Patch Changes
