@@ -4,12 +4,14 @@ import type { ReactNode } from 'react'
 /**
  * @experimental This is experimental feature.
  */
-export function SuspenseQueries<T extends any[]>({
+export function SuspenseQueries<T extends any[], TCombinedResult = SuspenseQueriesResults<T>>({
   children,
   queries,
+  combine,
 }: {
   queries: readonly [...SuspenseQueriesOptions<T>]
-  children: (queries: SuspenseQueriesResults<T>) => ReactNode
+  children: (queries: TCombinedResult) => ReactNode
+  combine?: (result: SuspenseQueriesResults<T>) => TCombinedResult
 }) {
-  return <>{children(useSuspenseQueries({ queries }))}</>
+  return <>{children(useSuspenseQueries({ queries, combine }))}</>
 }
