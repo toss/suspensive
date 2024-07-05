@@ -43,6 +43,23 @@ describe('<SuspenseQueries/>', () => {
         }}
       </SuspenseQueries>
     )
+    ;() => (
+      <SuspenseQueries
+        queries={[
+          { queryKey, queryFn },
+          { queryKey, queryFn },
+        ]}
+        combine={([query1, query2]) => ({
+          query1Text: query1.data.text,
+          query2Text: query2.data.text,
+        })}
+      >
+        {(result) => {
+          expectTypeOf(result).toEqualTypeOf<{ query1Text: string; query2Text: string }>()
+          return <></>
+        }}
+      </SuspenseQueries>
+    )
 
     expectTypeOf(
       <SuspenseQueries queries={[{ queryKey, queryFn }]}>{() => <></>}</SuspenseQueries>
