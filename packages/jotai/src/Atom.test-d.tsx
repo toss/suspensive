@@ -1,15 +1,27 @@
-import { atom } from 'jotai'
+import { type SetStateAction, atom } from 'jotai'
 import type { ReactNode } from 'react'
 import { Atom } from './Atom'
+import type { SetAtom } from './types'
+
+const countAtom = atom(0)
+const asyncAtom = atom(async () => Promise.resolve('string'))
 
 describe('<Atom/>', () => {
-  const asyncAtom = atom(async () => Promise.resolve('string'))
-
   it('type check', () => {
     ;() => (
+      <Atom atom={countAtom}>
+        {([count, setCount]) => {
+          expectTypeOf(count).toEqualTypeOf<number>()
+          expectTypeOf(setCount).toEqualTypeOf<SetAtom<[SetStateAction<number>], void>>()
+          return <></>
+        }}
+      </Atom>
+    )
+    ;() => (
       <Atom atom={asyncAtom}>
-        {([value]) => {
+        {([value, setter]) => {
           expectTypeOf(value).toEqualTypeOf<string>()
+          expectTypeOf(setter).toEqualTypeOf<unknown>()
           return <></>
         }}
       </Atom>
