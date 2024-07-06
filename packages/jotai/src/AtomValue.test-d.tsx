@@ -2,9 +2,9 @@ import { atom } from 'jotai'
 import type { ReactNode } from 'react'
 import { AtomValue } from './AtomValue'
 
-describe('<AtomValue/>', () => {
-  const asyncAtom = atom(async () => Promise.resolve('string'))
+const asyncAtom = atom(async () => Promise.resolve('string'))
 
+describe('<AtomValue/>', () => {
   it('type check', () => {
     ;() => (
       <AtomValue atom={asyncAtom}>
