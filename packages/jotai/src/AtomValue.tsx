@@ -1,12 +1,9 @@
-import { useAtomValue, type useStore } from 'jotai'
-import type { ReactNode } from 'react'
-import type { TAtomProps } from './types'
+import { type Atom, useAtomValue, type useStore } from 'jotai'
+import type { AtomProps, WithChildren } from './types'
 
 type AtomValueOptions = Parameters<typeof useStore>[0] & {
   delay?: number
 }
-
-type AtomValueResult<TValue> = Awaited<TValue>
 
 /**
  * @experimental This is experimental feature.
@@ -15,8 +12,6 @@ export function AtomValue<TValue>({
   children,
   atom,
   options,
-}: TAtomProps<TValue, AtomValueOptions> & {
-  children: (value: AtomValueResult<TValue>) => ReactNode
-}) {
+}: AtomProps<Atom<TValue>, AtomValueOptions> & WithChildren<Awaited<TValue>>) {
   return <>{children(useAtomValue(atom, options))}</>
 }

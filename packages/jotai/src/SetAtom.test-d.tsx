@@ -1,15 +1,16 @@
 import { type SetStateAction, atom } from 'jotai'
 import type { ReactNode } from 'react'
-import { SetAtom, type SetAtomResult } from './SetAtom'
+import { SetAtom } from './SetAtom'
+import type { SetAtom as TSetAtom } from './types'
+
+const countAtom = atom(0)
 
 describe('<SetAtom/>', () => {
-  const countAtom = atom(0)
-
   it('type check', () => {
     ;() => (
       <SetAtom atom={countAtom}>
         {(setCount) => {
-          expectTypeOf(setCount).toEqualTypeOf<SetAtomResult<[SetStateAction<number>], void>>()
+          expectTypeOf(setCount).toEqualTypeOf<TSetAtom<[SetStateAction<number>], void>>()
           return <></>
         }}
       </SetAtom>
