@@ -2,7 +2,9 @@ import { useAtom, type useAtomValue } from 'jotai'
 import type { ReactNode } from 'react'
 import type { TAtomProps } from './types'
 
-type TOptions = Parameters<typeof useAtomValue>[1]
+type AtomOptions = Parameters<typeof useAtomValue>[1]
+
+type AtomResult<TValue, TSetter = never> = [Awaited<TValue>, TSetter]
 
 /**
  * @experimental This is experimental feature.
@@ -10,8 +12,8 @@ type TOptions = Parameters<typeof useAtomValue>[1]
 export function Atom<TValue>({
   children,
   ...options
-}: TAtomProps<TValue, TOptions> & {
-  children: (value: [Awaited<TValue>, never]) => ReactNode
+}: TAtomProps<TValue, AtomOptions> & {
+  children: (value: AtomResult<TValue>) => ReactNode
 }) {
   return <>{children(useAtom(options.atom, options.options))}</>
 }
