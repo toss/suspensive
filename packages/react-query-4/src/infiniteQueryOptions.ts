@@ -51,6 +51,9 @@ export type UnSelectedInfiniteOptions<
   select?: undefined
 }
 
+/**
+ * @experimental This is experimental feature.
+ */
 export function infiniteQueryOptions<
   TQueryFnData,
   TError = unknown,
@@ -60,6 +63,9 @@ export function infiniteQueryOptions<
   options: SelectedInfiniteOptions<TQueryFnData, TError, TData, TQueryKey>
 ): SelectedInfiniteOptions<TQueryFnData, TError, TData, TQueryKey>
 
+/**
+ * @experimental This is experimental feature.
+ */
 export function infiniteQueryOptions<
   TQueryFnData,
   TError = unknown,
@@ -69,6 +75,9 @@ export function infiniteQueryOptions<
   options: UnSelectedInfiniteOptions<TQueryFnData, TError, TData, TQueryKey>
 ): UnSelectedInfiniteOptions<TQueryFnData, TError, TData, TQueryKey>
 
+/**
+ * @experimental This is experimental feature.
+ */
 export function infiniteQueryOptions(options: unknown) {
   return options
 }
