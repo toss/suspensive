@@ -8,7 +8,7 @@ describe('<AtomValue/>', () => {
   it('type check', () => {
     ;() => (
       <AtomValue atom={asyncAtom}>
-        {([value]) => {
+        {(value) => {
           expectTypeOf(value).toEqualTypeOf<string>()
           return <></>
         }}
