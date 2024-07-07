@@ -5,7 +5,7 @@ type AtomValueOptions = Parameters<typeof useStore>[0] & {
   delay?: number
 }
 
-type AtomValueProps<TAtom, TOptions = unknown> = {
+type AtomValueProps<TAtom, TOptions = AtomValueOptions> = {
   atom: TAtom
   options?: TOptions
 }
@@ -17,6 +17,6 @@ export function AtomValue<TValue>({
   children,
   atom,
   options,
-}: AtomValueProps<Atom<TValue>, AtomValueOptions> & ChildrenRenderProps<Awaited<TValue>>) {
+}: AtomValueProps<Atom<TValue>> & ChildrenRenderProps<Awaited<TValue>>) {
   return <>{children(useAtomValue(atom, options))}</>
 }

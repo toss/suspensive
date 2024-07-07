@@ -3,7 +3,7 @@ import type { ChildrenRenderProps, SetAtom as TSetAtom } from './utility-types/C
 
 type SetAtomOptions = Parameters<typeof useStore>[0]
 
-type SetAtomProps<TValue, TArgs extends unknown[], TResult, TOptions = unknown> = {
+type SetAtomProps<TValue, TArgs extends unknown[], TResult, TOptions = SetAtomOptions> = {
   atom: WritableAtom<TValue, TArgs, TResult>
   options?: TOptions
 }
@@ -15,6 +15,6 @@ export function SetAtom<TValue, TArgs extends unknown[], TResult>({
   children,
   atom,
   options,
-}: SetAtomProps<TValue, TArgs, TResult, SetAtomOptions> & ChildrenRenderProps<TSetAtom<TArgs, TResult>>) {
+}: SetAtomProps<TValue, TArgs, TResult> & ChildrenRenderProps<TSetAtom<TArgs, TResult>>) {
   return <>{children(useSetAtom(atom, options))}</>
 }
