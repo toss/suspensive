@@ -1,15 +1,16 @@
-import { atom } from 'jotai'
+import { atom, useAtomValue } from 'jotai'
 import type { ReactNode } from 'react'
 import { AtomValue } from './AtomValue'
 
-const asyncAtom = atom(async () => Promise.resolve('string'))
+const asyncAtom = atom(() => Promise.resolve('string'))
 
 describe('<AtomValue/>', () => {
   it('type check', () => {
     ;() => (
       <AtomValue atom={asyncAtom}>
         {(value) => {
-          expectTypeOf(value).toEqualTypeOf<string>()
+          const valueOfJotai = useAtomValue(asyncAtom)
+          expectTypeOf(value).toEqualTypeOf<typeof valueOfJotai>()
           return <></>
         }}
       </AtomValue>

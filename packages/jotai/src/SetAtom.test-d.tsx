@@ -1,7 +1,6 @@
-import { type SetStateAction, atom } from 'jotai'
+import { atom, useSetAtom } from 'jotai'
 import type { ReactNode } from 'react'
 import { SetAtom } from './SetAtom'
-import type { SetAtom as TSetAtom } from './utility-types/ChildrenRenderProps'
 
 const countAtom = atom(0)
 
@@ -10,7 +9,8 @@ describe('<SetAtom/>', () => {
     ;() => (
       <SetAtom atom={countAtom}>
         {(setCount) => {
-          expectTypeOf(setCount).toEqualTypeOf<TSetAtom<[SetStateAction<number>], void>>()
+          const setCountOfJotai = useSetAtom(countAtom)
+          expectTypeOf(setCount).toEqualTypeOf<typeof setCountOfJotai>()
           return <></>
         }}
       </SetAtom>
