@@ -21,7 +21,7 @@ describe('<Atom/>', () => {
       <Atom atom={asyncAtom}>
         {([value, setter]) => {
           expectTypeOf(value).toEqualTypeOf<string>()
-          expectTypeOf(setter).toEqualTypeOf<unknown>()
+          expectTypeOf(setter).toEqualTypeOf<never>()
           return <></>
         }}
       </Atom>
