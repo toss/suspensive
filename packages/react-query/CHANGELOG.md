@@ -1,5 +1,18 @@
 # @suspensive/react-query
 
+## 2.6.0
+
+### Minor Changes
+
+- [#1044](https://github.com/toss/suspensive/pull/1044) [`ed632c9`](https://github.com/toss/suspensive/commit/ed632c94170b1b042f9da4c80408552df9f57cd2) Thanks [@gwansikk](https://github.com/gwansikk)! - feat(react-query): add infiniteQueryOptions
+
+### Patch Changes
+
+- Updated dependencies [[`ed632c9`](https://github.com/toss/suspensive/commit/ed632c94170b1b042f9da4c80408552df9f57cd2)]:
+  - @suspensive/react-query-4@2.6.0
+  - @suspensive/react@2.6.0
+  - @suspensive/react-query-5@2.6.0
+
 ## 2.5.1
 
 ### Patch Changes
