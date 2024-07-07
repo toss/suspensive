@@ -14,6 +14,7 @@ body:
         - "@suspensive/react-query"
         - "@suspensive/react-query-4"
         - "@suspensive/react-query-5"
+        - "@suspensive/jotai"
         - "@suspensive/react-await"
         - "@suspensive/react-image"
         - etc
