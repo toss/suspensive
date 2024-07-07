@@ -89,10 +89,7 @@ describe('<SuspenseInfiniteQuery/>', () => {
       </SuspenseInfiniteQuery>
     )
 
-    const options = infiniteQueryOptions({
-      queryKey: queryKey,
-      queryFn: queryFn,
-    })
+    const options = infiniteQueryOptions({ queryKey, queryFn })
 
     ;() => (
       <SuspenseInfiniteQuery {...options}>
