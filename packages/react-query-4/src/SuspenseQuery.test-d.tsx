@@ -1,6 +1,7 @@
 import { queryFn, queryKey } from '@suspensive/test-utils'
 import type { ReactNode } from 'react'
 import { describe, expectTypeOf, it } from 'vitest'
+import { queryOptions } from './queryOptions'
 import { SuspenseQuery } from './SuspenseQuery'
 import type { UseSuspenseQueryResult } from './useSuspenseQuery'
 
@@ -80,6 +81,32 @@ describe('<SuspenseQuery/>', () => {
       </SuspenseQuery>
     )
 
+    const options = queryOptions({
+      queryKey,
+      queryFn,
+    })
+
+    ;() => (
+      <SuspenseQuery {...options}>
+        {(query) => {
+          expectTypeOf(query).toEqualTypeOf<UseSuspenseQueryResult<{ text: string }>>()
+          expectTypeOf(query.data).toEqualTypeOf<{ text: string }>()
+          expectTypeOf(query.status).toEqualTypeOf<'success'>()
+          return <></>
+        }}
+      </SuspenseQuery>
+    )
+    ;() => (
+      <SuspenseQuery {...options} select={(data) => data.text}>
+        {(selectedQuery) => {
+          expectTypeOf(selectedQuery).toEqualTypeOf<UseSuspenseQueryResult<string>>()
+          expectTypeOf(selectedQuery.data).toEqualTypeOf<string>()
+          expectTypeOf(selectedQuery.status).toEqualTypeOf<'success'>()
+          return <></>
+        }}
+      </SuspenseQuery>
+    )
+
     expectTypeOf(
       <SuspenseQuery queryKey={queryKey} queryFn={queryFn}>
         {() => <></>}
@@ -90,5 +117,7 @@ describe('<SuspenseQuery/>', () => {
         {() => <></>}
       </SuspenseQuery>
     ).not.toEqualTypeOf<ReactNode>()
+    expectTypeOf(<SuspenseQuery {...options}>{() => <></>}</SuspenseQuery>).toEqualTypeOf<JSX.Element>()
+    expectTypeOf(<SuspenseQuery {...options}>{() => <></>}</SuspenseQuery>).not.toEqualTypeOf<ReactNode>()
   })
 })

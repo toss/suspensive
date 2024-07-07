@@ -1,5 +1,6 @@
 import { queryFn, queryKey } from '@suspensive/test-utils'
 import type { InfiniteData } from '@tanstack/react-query'
+import { infiniteQueryOptions } from './infiniteQueryOptions'
 import { type UseSuspenseInfiniteQueryResult, useSuspenseInfiniteQuery } from './useSuspenseInfiniteQuery'
 
 describe('useSuspenseInfiniteQuery', () => {
@@ -55,5 +56,26 @@ describe('useSuspenseInfiniteQuery', () => {
     expectTypeOf(selectedInfiniteQuery).toEqualTypeOf<UseSuspenseInfiniteQueryResult<string>>()
     expectTypeOf(selectedInfiniteQuery.data).toEqualTypeOf<InfiniteData<string>>()
     expectTypeOf(selectedInfiniteQuery.status).toEqualTypeOf<'success'>()
+
+    const options = infiniteQueryOptions({
+      queryKey,
+      queryFn,
+    })
+
+    const infiniteQueryWithOptions = useSuspenseInfiniteQuery(options)
+    expectTypeOf(infiniteQueryWithOptions).toEqualTypeOf<UseSuspenseInfiniteQueryResult<{ text: string }>>()
+    expectTypeOf(infiniteQueryWithOptions.data).toEqualTypeOf<InfiniteData<{ text: string }>>()
+    expectTypeOf(infiniteQueryWithOptions.status).toEqualTypeOf<'success'>()
+
+    const selectedInfiniteQueryWithOptions = useSuspenseInfiniteQuery({
+      ...options,
+      select: (data) => ({
+        pages: data.pages.map(({ text }) => text),
+        pageParams: data.pageParams,
+      }),
+    })
+    expectTypeOf(selectedInfiniteQueryWithOptions).toEqualTypeOf<UseSuspenseInfiniteQueryResult<string>>()
+    expectTypeOf(selectedInfiniteQueryWithOptions.data).toEqualTypeOf<InfiniteData<string>>()
+    expectTypeOf(selectedInfiniteQueryWithOptions.status).toEqualTypeOf<'success'>()
   })
 })
