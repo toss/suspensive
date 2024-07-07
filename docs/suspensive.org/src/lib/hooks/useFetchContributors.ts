@@ -1,8 +1,37 @@
 import { useEffect, useState } from 'react'
 import type { GithubRepoContributor } from '../../types'
 
-const useFetchContributors = (): GithubRepoContributor[] => {
-  const [contributors, setContributors] = useState<GithubRepoContributor[]>([])
+type Result =
+  | {
+      isLoading: false
+      isSuccess: true
+      isError: false
+      data: GithubRepoContributor[]
+      error: undefined
+    }
+  | {
+      isLoading: false
+      isSuccess: false
+      isError: true
+      data: undefined
+      error: Error
+    }
+  | {
+      isLoading: true
+      isSuccess: false
+      isError: false
+      data: undefined
+      error: undefined
+    }
+
+const useFetchContributors = () => {
+  const [result, setResult] = useState<Result>({
+    isSuccess: false,
+    data: undefined,
+    error: undefined,
+    isError: false,
+    isLoading: true,
+  })
 
   useEffect(() => {
     async function fetchContributors(): Promise<void> {
@@ -16,7 +45,13 @@ const useFetchContributors = (): GithubRepoContributor[] => {
           const login = contributor.author.login
           return !['github-actions[bot]', 'dependabot[bot]', 'renovate[bot]'].includes(login)
         })
-        setContributors(filteredContributors)
+        setResult({
+          data: filteredContributors,
+          error: undefined,
+          isError: false,
+          isLoading: false,
+          isSuccess: true,
+        })
       } catch (error) {
         console.error('Error fetching contributors:', error)
       }
@@ -25,7 +60,7 @@ const useFetchContributors = (): GithubRepoContributor[] => {
     void fetchContributors()
   }, [])
 
-  return contributors
+  return result
 }
 
 export default useFetchContributors
