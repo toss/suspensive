@@ -1,7 +1,7 @@
 import { type SetStateAction, atom } from 'jotai'
 import type { ReactNode } from 'react'
 import { SetAtom } from './SetAtom'
-import type { SetAtom as TSetAtom } from './types'
+import type { SetAtom as TSetAtom } from './utility-types/ChildrenRenderProps'
 
 const countAtom = atom(0)
 

@@ -1,7 +1,7 @@
 import { type SetStateAction, atom } from 'jotai'
 import type { ReactNode } from 'react'
 import { Atom } from './Atom'
-import type { SetAtom } from './types'
+import type { SetAtom } from './utility-types/ChildrenRenderProps'
 
 const countAtom = atom(0)
 const asyncAtom = atom(async () => Promise.resolve('string'))

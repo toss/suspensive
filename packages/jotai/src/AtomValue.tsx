@@ -1,8 +1,13 @@
 import { type Atom, useAtomValue, type useStore } from 'jotai'
-import type { AtomProps, WithChildren } from './types'
+import type { ChildrenRenderProps } from './utility-types/ChildrenRenderProps'
 
 type AtomValueOptions = Parameters<typeof useStore>[0] & {
   delay?: number
+}
+
+type AtomValueProps<TAtom, TOptions = unknown> = {
+  atom: TAtom
+  options?: TOptions
 }
 
 /**
@@ -12,6 +17,6 @@ export function AtomValue<TValue>({
   children,
   atom,
   options,
-}: AtomProps<Atom<TValue>, AtomValueOptions> & WithChildren<Awaited<TValue>>) {
+}: AtomValueProps<Atom<TValue>, AtomValueOptions> & ChildrenRenderProps<Awaited<TValue>>) {
   return <>{children(useAtomValue(atom, options))}</>
 }
