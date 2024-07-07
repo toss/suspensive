@@ -22,6 +22,7 @@
   "dependencies": {
     "@codesandbox/sandpack-react": "^2.14.4",
     "@codesandbox/sandpack-themes": "^2.0.21",
+    "d3": "^7.9.0",
     "next": "^14.2.3",
     "nextra": "^2.13.4",
     "nextra-theme-docs": "^2.13.4",
@@ -33,6 +34,7 @@
     "@next/eslint-plugin-next": "^14.2.3",
     "@suspensive/eslint-config": "workspace:*",
     "@suspensive/tsconfig": "workspace:*",
+    "@types/d3": "^7.4.3",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "autoprefixer": "^10.4.19",
