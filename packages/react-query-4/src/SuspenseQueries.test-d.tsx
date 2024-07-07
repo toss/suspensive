@@ -1,6 +1,7 @@
 import { queryFn, queryKey } from '@suspensive/test-utils'
 import type { ReactNode } from 'react'
 import { describe, expectTypeOf, it } from 'vitest'
+import { queryOptions } from './queryOptions'
 import { SuspenseQueries } from './SuspenseQueries'
 import type { UseSuspenseQueryResult } from './useSuspenseQuery'
 
@@ -23,12 +24,7 @@ describe('<SuspenseQueries/>', () => {
       </SuspenseQueries>
     )
     ;() => (
-      <SuspenseQueries
-        queries={[
-          { queryKey, queryFn },
-          { queryKey, queryFn },
-        ]}
-      >
+      <SuspenseQueries queries={[{ queryKey, queryFn }, queryOptions({ queryKey, queryFn })]}>
         {([
           query1,
 

@@ -10,6 +10,7 @@ export const version4APIs = [
   'useSuspenseQueries',
   'useSuspenseInfiniteQuery',
   'queryOptions',
+  'infiniteQueryOptions',
   'SuspenseQuery',
   'SuspenseQueries',
   'SuspenseInfiniteQuery',

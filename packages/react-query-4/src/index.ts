@@ -1,4 +1,5 @@
 export { queryOptions } from './queryOptions'
+export { infiniteQueryOptions } from './infiniteQueryOptions'
 export { SuspenseQuery } from './SuspenseQuery'
 export { SuspenseQueries } from './SuspenseQueries'
 export { SuspenseInfiniteQuery } from './SuspenseInfiniteQuery'
