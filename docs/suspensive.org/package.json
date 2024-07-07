@@ -10,10 +10,7 @@
   ],
   "homepage": "https://suspensive.org",
   "bugs": "https://github.com/toss/suspensive/issues",
-  "author": {
-    "name": "Jonghyeon Ko",
-    "email": "jonghyeon@toss.im"
-  },
+  "author": "Jonghyeon Ko <jonghyeon@toss.im>",
   "type": "commonjs",
   "scripts": {
     "build": "next build",

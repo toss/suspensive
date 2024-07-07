@@ -15,10 +15,7 @@
     "directory": "packages/react-query-5"
   },
   "license": "MIT",
-  "author": {
-    "name": "Jonghyeon Ko",
-    "email": "jonghyeon@toss.im"
-  },
+  "author": "Jonghyeon Ko <jonghyeon@toss.im>",
   "sideEffects": false,
   "type": "module",
   "exports": {

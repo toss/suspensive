@@ -14,10 +14,7 @@
     "directory": "packages/jotai"
   },
   "license": "MIT",
-  "author": {
-    "name": "GwanSik Kim & Jonghyeon Ko",
-    "email": "jonghyeon@toss.im"
-  },
+  "author": "GwanSik Kim <Seorit98@gmail.com> & Jonghyeon Ko <jonghyeon@toss.im>",
   "sideEffects": false,
   "type": "module",
   "exports": {
