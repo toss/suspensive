@@ -1,7 +1,6 @@
 import { Suspense } from '@suspensive/react'
 import { QueryErrorBoundary, SuspenseQuery, queryOptions } from '@suspensive/react-query-4'
 import * as d3 from 'd3'
-import Image from 'next/image'
 import Link from 'next/link'
 import React, { useEffect, useRef } from 'react'
 
