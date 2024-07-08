@@ -43,7 +43,7 @@ const useFetchContributors = () => {
         const data: GithubRepoContributor[] = (await response.json()) as GithubRepoContributor[]
 
         if (!Array.isArray(data)) {
-          throw new Error('Data is not an array')
+          throw new Error('Github contributors data is not an array')
         }
 
         if (data.length === 0) {
