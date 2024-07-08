@@ -1,11 +1,9 @@
-import { type WritableAtom, useSetAtom, type useStore } from 'jotai'
-import type { ChildrenRenderProps, SetAtom as TSetAtom } from './utility-types/ChildrenRenderProps'
+import { type WritableAtom, useSetAtom } from 'jotai'
+import type { ChildrenRenderProps } from './utility-types'
 
-type SetAtomOptions = Parameters<typeof useStore>[0]
-
-type SetAtomProps<TValue, TArgs extends unknown[], TResult, TOptions = SetAtomOptions> = {
+type UseSetAtomProps<TValue, TArgs extends unknown[], TResult> = {
   atom: WritableAtom<TValue, TArgs, TResult>
-  options?: TOptions
+  options?: Parameters<typeof useSetAtom>[1]
 }
 
 /**
@@ -15,6 +13,6 @@ export function SetAtom<TValue, TArgs extends unknown[], TResult>({
   children,
   atom,
   options,
-}: SetAtomProps<TValue, TArgs, TResult> & ChildrenRenderProps<TSetAtom<TArgs, TResult>>) {
+}: UseSetAtomProps<TValue, TArgs, TResult> & ChildrenRenderProps<(...args: TArgs) => TResult>) {
   return <>{children(useSetAtom(atom, options))}</>
 }
