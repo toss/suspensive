@@ -1,20 +1,20 @@
 {
-  "name": "@suspensive/react",
-  "version": "2.6.0",
-  "description": "Useful interfaces for React Suspense",
+  "name": "@suspensive/jotai",
+  "version": "0.0.0",
+  "description": "Useful helpers for jotai with suspense",
   "keywords": [
     "suspensive",
-    "react"
+    "jotai"
   ],
   "homepage": "https://suspensive.org",
   "bugs": "https://github.com/toss/suspensive/issues",
   "repository": {
     "type": "git",
     "url": "https://github.com/toss/suspensive.git",
-    "directory": "packages/react"
+    "directory": "packages/jotai"
   },
   "license": "MIT",
-  "author": "Jonghyeon Ko <jonghyeon@toss.im>",
+  "author": "GwanSik Kim <Seorit98@gmail.com> & Jonghyeon Ko <jonghyeon@toss.im>",
   "sideEffects": false,
   "type": "module",
   "exports": {
@@ -40,7 +40,6 @@
   "scripts": {
     "build": "tsup",
     "ci:attw": "attw --pack",
-    "ci:bench": "vitest bench --run",
     "ci:eslint": "eslint \"**/*.{js,jsx,cjs,mjs,ts,tsx,cts,mts}\"",
     "ci:publint": "publint --strict",
     "ci:test": "vitest run --coverage --typecheck",
@@ -52,15 +51,16 @@
   },
   "devDependencies": {
     "@suspensive/eslint-config": "workspace:*",
-    "@suspensive/test-utils": "workspace:*",
     "@suspensive/tsconfig": "workspace:*",
     "@suspensive/tsup": "workspace:*",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
+    "jotai": "^2.8.4",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },
   "peerDependencies": {
+    "jotai": "^2",
     "react": "^18"
   },
   "publishConfig": {

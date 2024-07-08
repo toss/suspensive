@@ -322,6 +322,33 @@ importers:
         specifier: ^8.4.38
         version: 8.4.38
 
+  packages/jotai:
+    devDependencies:
+      '@suspensive/eslint-config':
+        specifier: workspace:*
+        version: link:../../configs/eslint-config
+      '@suspensive/tsconfig':
+        specifier: workspace:*
+        version: link:../../configs/tsconfig
+      '@suspensive/tsup':
+        specifier: workspace:*
+        version: link:../../configs/tsup
+      '@types/react':
+        specifier: ^18.3.3
+        version: 18.3.3
+      '@types/react-dom':
+        specifier: ^18.3.0
+        version: 18.3.0
+      jotai:
+        specifier: ^2.8.4
+        version: 2.8.4(@types/react@18.3.3)(react@18.3.1)
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      react-dom:
+        specifier: ^18.3.1
+        version: 18.3.1(react@18.3.1)
+
   packages/react:
     devDependencies:
       '@suspensive/eslint-config':
@@ -4185,6 +4212,18 @@ packages:
   jiti@1.21.6:
     resolution: {integrity: sha512-2yTgeWTWzMWkHu6Jp9NKgePDaYHbntiwvYuuJLbbN9vl7DC9DvXKOB2BC3ZZ92D3cvV/aflH0osDfwpHepQ53w==}
     hasBin: true
+
+  jotai@2.8.4:
+    resolution: {integrity: sha512-f6jwjhBJcDtpeauT2xH01gnqadKEySwwt1qNBLvAXcnojkmb76EdqRt05Ym8IamfHGAQz2qMKAwftnyjeSoHAA==}
+    engines: {node: '>=12.20.0'}
+    peerDependencies:
+      '@types/react': '>=17.0.0'
+      react: '>=17.0.0'
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
+      react:
+        optional: true
 
   joycon@3.1.1:
     resolution: {integrity: sha512-34wB/Y7MW7bzjKRjUKTa46I2Z7eV62Rkhva+KkopW7Qvv/OSWBqvkSY7vusOPrNuZcUG3tApvdVgNB8POj3SPw==}
@@ -10868,6 +10907,11 @@ snapshots:
   jiti@1.21.0: {}
 
   jiti@1.21.6: {}
+
+  jotai@2.8.4(@types/react@18.3.3)(react@18.3.1):
+    optionalDependencies:
+      '@types/react': 18.3.3
+      react: 18.3.1
 
   joycon@3.1.1: {}
 

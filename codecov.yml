@@ -36,6 +36,10 @@ component_management:
       name: '@suspensive/react-query-5'
       paths:
         - packages/react-query-5/**
+    - component_id: jotai
+      name: '@suspensive/jotai'
+      paths:
+        - packages/jotai/**
     - component_id: react-await
       name: '@suspensive/react-await'
       paths:
