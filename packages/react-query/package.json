@@ -34,14 +34,14 @@
   "main": "dist/index.cjs",
   "module": "dist/index.js",
   "types": "dist/index.d.ts",
-  "files": [
-    "dist",
-    "src"
-  ],
   "bin": {
     "suspensive-react-query": "dist/scripts/cli.cjs",
     "srq": "dist/scripts/cli.cjs"
   },
+  "files": [
+    "dist",
+    "src"
+  ],
   "scripts": {
     "build": "tsup",
     "ci:attw": "attw --pack",
@@ -52,8 +52,8 @@
     "ci:type": "tsc --noEmit",
     "clean": "rimraf ./dist && rimraf ./coverage",
     "dev": "tsup --watch",
-    "prepack": "pnpm build",
-    "postinstall": "node -e \"import('./dist/scripts/postinstall.cjs').catch(e => console.error(e))\""
+    "postinstall": "node -e \"import('./dist/scripts/postinstall.cjs').catch(e => console.error(e))\"",
+    "prepack": "pnpm build"
   },
   "dependencies": {
     "@commander-js/extra-typings": "^12.1.0",
