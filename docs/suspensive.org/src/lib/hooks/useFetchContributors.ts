@@ -41,17 +41,19 @@ const useFetchContributors = () => {
           throw new Error('Failed to fetch contributors')
         }
         const data: GithubRepoContributor[] = (await response.json()) as GithubRepoContributor[]
-        const filteredContributors = data.filter((contributor) => {
-          const login = contributor.author.login
-          return !['github-actions[bot]', 'dependabot[bot]', 'renovate[bot]'].includes(login)
-        })
-        setResult({
-          data: filteredContributors,
-          error: undefined,
-          isError: false,
-          isLoading: false,
-          isSuccess: true,
-        })
+        if (Array.isArray(data) && data.length) {
+          const filteredContributors = data.filter((contributor) => {
+            const login = contributor.author.login
+            return !['github-actions[bot]', 'dependabot[bot]', 'renovate[bot]'].includes(login)
+          })
+          setResult({
+            data: filteredContributors,
+            error: undefined,
+            isError: false,
+            isLoading: false,
+            isSuccess: true,
+          })
+        }
       } catch (error) {
         console.error('Error fetching contributors:', error)
       }
