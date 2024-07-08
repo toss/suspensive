@@ -2,6 +2,12 @@
   - "packages/react/**/*"
 "@suspensive/react-query":
   - "packages/react-query/**/*"
+"@suspensive/react-query-4":
+  - "packages/react-query-4/**/*"
+"@suspensive/react-query-5":
+  - "packages/react-query-5/**/*"
+"@suspensive/jotai":
+  - "packages/jotai/**/*"
 "@suspensive/react-await":
   - "packages/react-await/**/*"
 "@suspensive/react-image":
