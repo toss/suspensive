@@ -51,6 +51,7 @@ export const BubbleChart = () => (
   <QueryErrorBoundary
     fallback={
       <Link href="https://github.com/toss/suspensive/graphs/contributors">
+        <br />
         <img
           src="https://contrib.rocks/image?repo=toss/suspensive"
           alt="contributors"
@@ -60,7 +61,7 @@ export const BubbleChart = () => (
       </Link>
     }
   >
-    <Suspense fallback={<></>}>
+    <Suspense clientOnly fallback={<></>}>
       <SuspenseQuery {...contributorsQueryOptions()}>
         {({ data }) => {
           const chartData = data
@@ -95,6 +96,7 @@ export const BubbleChart = () => (
 
           return (
             <Link href="https://github.com/toss/suspensive/graphs/contributors">
+              <br />
               <img
                 src="https://contrib.rocks/image?repo=toss/suspensive"
                 alt="contributors"
