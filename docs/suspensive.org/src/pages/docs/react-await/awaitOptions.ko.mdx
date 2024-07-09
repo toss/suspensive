@@ -1,0 +1,28 @@
+import { Callout } from '@/components'
+
+# awaitOptions
+
+<Callout type='experimental'>
+
+`awaitOptions`는 실험 기능이므로 이 인터페이스는 변경될 수 있습니다.
+
+</Callout>
+
+`awaitOptions`는 key와 fn을 묶어서 처리해 현재 `<Await />`에 options 관리를 도와줍니다.
+
+```tsx /awaitOptions/
+import { Await, awaitOptions } from '@suspensive/react-await'
+import { Suspense } from '@suspensive/react'
+
+const getPost = (postId: number) => fetch(`/post/${postId}`).then<Post>((res) => res.json())
+
+const postAwaitOptions = awaitOptions({ key: ['post', 2] as const, fn: ({ key: [, postId] }) => getPost(postId) })
+
+const Example = () => (
+  <Suspense fallback="awaiting...">
+    <Await options={postAwaitOptions}>
+      {(awaited) => <>{awaited.data}</>} // Post
+    </Await>
+  </Suspense>
+)
+```

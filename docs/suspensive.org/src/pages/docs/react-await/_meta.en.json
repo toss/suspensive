@@ -4,5 +4,6 @@
     "type": "separator",
     "title": "API Reference"
   },
-  "Await": { "title": "<Await/>" }
+  "Await": { "title": "<Await/>" },
+  "awaitOptions": { "title": "awaitOptions" }
 }

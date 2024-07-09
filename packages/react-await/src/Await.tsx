@@ -4,7 +4,7 @@ import { hashKey } from './utils'
 
 export type Key = Tuple
 
-type AwaitOptions<TData, TKey extends Key> = {
+export type AwaitOptions<TData, TKey extends Key> = {
   key: TKey
   fn: (options: { key: TKey }) => Promise<TData>
 }
