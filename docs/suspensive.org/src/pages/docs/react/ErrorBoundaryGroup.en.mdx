@@ -1,0 +1,249 @@
+import { Callout, Sandpack } from '@/components'
+
+# ErrorBoundaryGroup
+
+This is a component for managing multiple `<ErrorBoundary/>`s easily.
+
+`<ErrorBoundary/>`s as children of nested `<ErrorBoundaryGroup/>` will also be reset by parent `<ErrorBoundaryGroup.Consumer/>`.
+
+```jsx /ErrorBoundaryGroup/
+import { ErrorBoundaryGroup, ErrorBoundary } from '@suspensive/react'
+
+const Example = () => (
+  <ErrorBoundaryGroup>
+    {/* Resets all ErrorBoundaries that are children of ErrorBoundaryGroup. All ErrorBoundaries within nested ErrorBoundaryGroups are also reset. */}
+    <ErrorBoundaryGroup.Consumer>
+      {(group) => <button onClick={group.reset}>Try again</button>}
+    </ErrorBoundaryGroup.Consumer>
+    <ErrorBoundary fallback={(props) => <>{props.error.message}</>}>
+      <ErrorAfter2s />
+    </ErrorBoundary>
+    <ErrorBoundaryGroup>
+      <ErrorBoundaryGroup.Consumer>
+        {(group) => <button onClick={group.reset}>Try again</button>}
+      </ErrorBoundaryGroup.Consumer>
+      <ErrorBoundary fallback={(props) => <>{props.error.message}</>}>
+        <ErrorAfter2s />
+      </ErrorBoundary>
+    </ErrorBoundaryGroup>
+  </ErrorBoundaryGroup>
+)
+```
+
+<Sandpack>
+
+```tsx Example.tsx active
+import { ErrorBoundaryGroup, ErrorBoundary } from '@suspensive/react'
+import { ErrorAfter2s } from './ErrorAfter2s'
+
+export const Example = () => {
+  return (
+    <ErrorBoundaryGroup>
+    <fieldset style={{ border: '1px solid red', padding: '10px' }}>
+      <legend>Outer ErrorBoundaryGroup</legend>
+      <ErrorBoundaryGroup.Consumer>
+        {(group) => <button onClick={group.reset}>Try again</button>}
+      </ErrorBoundaryGroup.Consumer>
+      <ErrorBoundary fallback={(props) => <>{props.error.message}</>}>
+        <ErrorAfter2s />
+      </ErrorBoundary>
+
+      <ErrorBoundaryGroup>
+        <fieldset style={{ border: '1px solid blue', padding: '10px' }}>
+          <legend>Inner ErrorBoundaryGroup</legend>
+          <ErrorBoundaryGroup.Consumer>
+            {(group) => <button onClick={group.reset}>Try again</button>}
+          </ErrorBoundaryGroup.Consumer>
+
+          <ErrorBoundary fallback={(props) => <>{props.error.message}</>}>
+            <ErrorAfter2s />
+          </ErrorBoundary>
+        </fieldset>
+      </ErrorBoundaryGroup>
+    </fieldset>
+  </ErrorBoundaryGroup>
+  )
+}
+```
+
+```tsx ErrorAfter2s.tsx
+import { useState, useEffect } from 'react'
+
+export const ErrorAfter2s = () => {
+  const [asyncState, setAsyncState] = useState<{ isError: true; error: Error } | { isError: false; error: null }>({
+    isError: false,
+    error: null,
+  })
+
+  useEffect(() => {
+    setTimeout(() => {
+      setAsyncState({ isError: true, error: { status: 401, message: 'unauthorized' } })
+    }, 2000)
+  }, [])
+
+  if (asyncState.isError) {
+    throw asyncState.error
+  }
+
+  return <>No error</>
+}
+```
+
+</Sandpack>
+
+### props.blockOutside
+
+If you want to block resetting nested `<ErrorBoundaryGroup/>` by parent `<ErrorBoundaryGroup/>`, Use blockOutside.
+
+```jsx /blockOutside/
+import { ErrorBoundaryGroup, ErrorBoundary } from '@suspensive/react'
+
+const Example = () => (
+  <ErrorBoundaryGroup>
+    <ErrorBoundaryGroup.Consumer>
+      {(group) => <button onClick={group.reset}>Try again</button>}
+    </ErrorBoundaryGroup.Consumer>
+    <ErrorBoundary fallback={(props) => <>{props.error.message}</>}>
+      <ErrorAfter2s />
+    </ErrorBoundary>
+
+    {/* blockOutside prop prevents reset by the parent ErrorBoundaryGroup*/}
+    <ErrorBoundaryGroup blockOutside>
+      <ErrorBoundaryGroup.Consumer>
+        {(group) => <button onClick={group.reset}>Try again</button>}
+      </ErrorBoundaryGroup.Consumer>
+      <ErrorBoundary fallback={(props) => <>{props.error.message}</>}>
+        <ErrorAfter2s />
+      </ErrorBoundary>
+    </ErrorBoundaryGroup>
+  </ErrorBoundaryGroup>
+)
+```
+
+<Sandpack>
+
+```tsx Example.tsx active
+import { ErrorBoundaryGroup, ErrorBoundary } from '@suspensive/react'
+import { ErrorAfter2s } from './ErrorAfter2s'
+
+export const Example = () => {
+  return (
+    <ErrorBoundaryGroup>
+      <fieldset style={{ border: '1px solid red', padding: '10px' }}>
+        <legend>Outer ErrorBoundaryGroup</legend>
+        <ErrorBoundaryGroup.Consumer>
+          {(group) => <button onClick={group.reset}>Try again</button>}
+        </ErrorBoundaryGroup.Consumer>
+        <ErrorBoundary fallback={(props) => <>{props.error.message}</>}>
+          <ErrorAfter2s />
+        </ErrorBoundary>
+
+        <ErrorBoundaryGroup blockOutside>
+          <fieldset style={{ border: '1px solid blue', padding: '10px' }}>
+            <legend>Inner ErrorBoundaryGroup</legend>
+            <ErrorBoundaryGroup.Consumer>
+              {(group) => <button onClick={group.reset}>Try again</button>}
+            </ErrorBoundaryGroup.Consumer>
+            <ErrorBoundary fallback={(props) => <>{props.error.message}</>}>
+              <ErrorAfter2s />
+            </ErrorBoundary>
+          </fieldset>
+        </ErrorBoundaryGroup>
+      </fieldset>
+    </ErrorBoundaryGroup>
+  )
+}
+```
+
+```tsx ErrorAfter2s.tsx
+import { useState, useEffect } from 'react'
+
+export const ErrorAfter2s = () => {
+  const [asyncState, setAsyncState] = useState<{ isError: true; error: Error } | { isError: false; error: null }>({
+    isError: false,
+    error: null,
+  })
+
+  useEffect(() => {
+    setTimeout(() => {
+      setAsyncState({ isError: true, error: { status: 401, message: 'unauthorized' } })
+    }, 2000)
+  }, [])
+
+  if (asyncState.isError) {
+    throw asyncState.error
+  }
+
+  return <>No error</>
+}
+```
+
+</Sandpack>
+
+## useErrorBoundaryGroup
+
+If you use useErrorBoundaryGroup, you can get a function to reset `<ErrorBoundary/>`s in `<ErrorBoundaryGroup/>`.
+
+```tsx /useErrorBoundaryGroup/
+import { useErrorBoundaryGroup } from '@suspensive/react'
+
+const Example = () => {
+  const group = useErrorBoundaryGroup()
+
+  return <button onClick={group.reset}>Try again</button>
+}
+```
+
+<Sandpack>
+
+```tsx Button.tsx active
+import { useErrorBoundaryGroup } from '@suspensive/react'
+
+export const Button = () => {
+  const group = useErrorBoundaryGroup()
+
+  return <button onClick={group.reset}>Try again</button>
+}
+```
+
+```tsx Example.tsx
+import { ErrorBoundaryGroup, ErrorBoundary } from '@suspensive/react'
+import { ErrorAfter2s } from './ErrorAfter2s'
+import { Button } from './Button'
+
+export const Example = () => {
+  return (
+    <ErrorBoundaryGroup>
+      <Button />
+      <ErrorBoundary fallback={(props) => <>{props.error.message}</>}>
+        <ErrorAfter2s />
+      </ErrorBoundary>
+    </ErrorBoundaryGroup>
+  )
+}
+```
+
+```tsx ErrorAfter2s.tsx
+import { useState, useEffect } from 'react'
+
+export const ErrorAfter2s = () => {
+  const [asyncState, setAsyncState] = useState<{ isError: true; error: Error } | { isError: false; error: null }>({
+    isError: false,
+    error: null,
+  })
+
+  useEffect(() => {
+    setTimeout(() => {
+      setAsyncState({ isError: true, error: { status: 401, message: 'unauthorized' } })
+    }, 2000)
+  }, [])
+
+  if (asyncState.isError) {
+    throw asyncState.error
+  }
+
+  return <>No error</>
+}
+```
+
+</Sandpack>

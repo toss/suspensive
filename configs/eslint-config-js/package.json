@@ -7,15 +7,15 @@
     "no-import.js"
   ],
   "scripts": {
-    "lint": "eslint \"**/*.{js,jsx,cjs,mjs,ts,tsx,cts,mts}\""
+    "ci:eslint": "eslint \"**/*.{js,jsx,cjs,mjs,ts,tsx,cts,mts}\""
   },
   "dependencies": {
-    "@cspell/eslint-plugin": "^8.3.2",
+    "@cspell/eslint-plugin": "^8.10.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-import": "^2.29.1",
-    "eslint-plugin-jest-dom": "^5.1.0",
-    "eslint-plugin-jsdoc": "^48.0.2",
-    "eslint-plugin-prettier": "^5.1.2",
-    "eslint-plugin-vitest": "0.3.20"
+    "eslint-plugin-jest-dom": "^5.4.0",
+    "eslint-plugin-jsdoc": "^48.2.12",
+    "eslint-plugin-prettier": "^5.1.3",
+    "eslint-plugin-vitest": "0.5.4"
   }
 }

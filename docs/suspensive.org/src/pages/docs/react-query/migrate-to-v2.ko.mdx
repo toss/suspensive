@@ -1,0 +1,229 @@
+# v2로 마이그레이션하기
+
+@suspensive/react-query v1는 원래 [TanStack Query의 커뮤니티 리소스 중 하나로 추가](https://tanstack.com/query/v4/docs/framework/react/community/suspensive-react-query)되어 @tanstack/react-query v4의 사용자에게 `useSuspenseQuery`, `useSuspenseQueries` 및 `useSuspenseInfiniteQuery`를 제공하는 라이브러리였습니다.
+그 이후 [@tanstack/react-query v5에 공식적으로 `useSuspenseQuery`, `useSuspenseQueries` 및 `useSuspenseInfiniteQuery`를 추가함](https://github.com/TanStack/query/pull/5739)에 따라서 enabled와 같은 인터페이스가 사라지고 queryOptions를 하나로 받는 등의 변경이 이루어졌습니다.
+따라서 **우리는 @suspensive/react-query의 기존 사용자가 @tanstack/react-query v5로 더 쉽게 마이그레이션할 수 있도록 공식 인터페이스와 최대한 유사하게 @suspensive/react-query v2의 인터페이스를 만들었습니다.**
+
+하지만 [@tanstack/react-query v5에서 요구하는 높은 브라우저 사양(class private field)](https://tanstack.com/query/v5/docs/framework/react/installation#requirements)때문에 @tanstack/react-query v4는 여전히 많은 팀에게 유용합니다.
+따라서 저희는 @tanstack/react-query v4의 지원을 유지할 것입니다.
+
+## 새로운 기능
+
+### 새로운 `<SuspenseQuery/>`, `<SuspenseInfiniteQuery/>` [#775](https://github.com/toss/suspensive/pull/775)
+
+기존의 useSuspenseQuery는 훅이기 때문에 부모에 Suspense, ErrorBoundary를 배치하기 위해 AuthorInfo, PostList와 같은 이름을 가진 컴포넌트를 만들게 합니다.
+이것은 AuthorInfo, PostList 내부에서 던져질 suspense와 error가 있을지 예측하기 어렵게 만듭니다.
+
+#### 동기: 자식 컴포넌트에서 suspense가 발생됨을 명확히 드러나게 하고 싶음
+
+```jsx
+// posts/page.tsx
+import { Suspense, ErrorBoundary } from '@suspensive/react'
+import { AuthorInfo } from './components/AuthorInfo'
+import { PostList } from './components/PostList'
+
+const PostsPage = ({ userId }) => (
+  <ErrorBoundary fallback={({ error }) => <>{error.message}</>}>
+    <Suspense fallback={'loading...'}>
+      <AuthorInfo userId={userId} /> {/* 내부적으로 Suspense를 발생할 지 예상하기 어렵습니다. */}
+      <PostList userId={userId} /> {/* 내부적으로 Suspense를 발생할 지 예상하기 어렵습니다. */}
+    </Suspense>
+  </ErrorBoundary>
+)
+```
+
+```jsx
+// posts/components/AuthorInfo.tsx
+import { useSuspenseQuery } from '@suspensive/react-query'
+import { AuthorProfile } from '~/components'
+
+// 이 컴포넌트를 사용하는 입장에서는 AuthorInfo라는 이름만으로는 내부적으로 Suspense를 발생시키는 지 예측할 수 없습니다.
+const AuthorInfo = ({ userId }) => {
+  // data-fetching만을 위한 이 컴포넌트를 만들어야 합니다.
+  const { data: author } = useSuspenseQuery(userQueryOptions(userId))
+
+  return <AuthorProfile {...author} />
+}
+```
+
+```jsx
+// posts/components/PostList.tsx
+import { useSuspenseQuery } from '@suspensive/react-query'
+import { PostListItem } from '~/components'
+
+// 이 컴포넌트를 사용하는 입장에서는 PostList라는 이름만으로는 내부적으로 Suspense를 발생시키는 지 예측할 수 없습니다.
+const PostList = ({ userId }) => {
+  // data-fetching만을 위한 이 컴포넌트를 만들어야 합니다.
+  const { data: posts } = useSuspenseQuery({
+    ...postsQueryOptions(userId),
+    select: (posts) => posts.filter(({ isShow }) => isShow),
+  })
+
+  return (
+    <>
+      {posts.map((post) => (
+        <PostListItem {...post} />
+      ))}
+    </>
+  )
+}
+```
+
+#### 해결법: `<SuspenseQuery/>`로 suspense가 발생됨을 드러내자
+
+따라서 같은 depth에서 Suspense를 발생시키는 것이 무엇인지 명확하게 표현하기 위해 이 컴포넌트들을 제공합니다.
+
+1. data-fetching만을 위한 AuthorInfo, PostList와 같은 depth를 제거하기 때문에 생긴 prop-drilling도 제거됩니다.
+2. Suspense, ErrorBoundary의 범위 변경도 간단해집니다. query의 병렬처리도 더 쉽습니다.
+3. Page 컴포넌트 내에서 data-fetching을 모두 관장하기 때문에 내부의 컴포넌트는 presentational하므로 컴포넌트를 분리하기 쉽습니다.
+
+```jsx
+import { SuspenseQuery } from '@suspensive/react-query'
+import { Suspense, ErrorBoundary } from '@suspensive/react'
+import { PostItem, AuthorProfile } from '~/components'
+
+const PostsPage = ({ authorId }) => (
+  <ErrorBoundary fallback={({ error }) => <>{error.message}</>}>
+    <Suspense fallback={'loading...'}>
+      <SuspenseQuery {...userQueryOptions(authorId)}>
+        {({ data: author }) => <AuthorProfile {...author} />}
+      </SuspenseQuery>
+      <SuspenseQuery {...postsQueryOptions(authorId)} select={(posts) => posts.filter(({ isShow }) => isShow)}>
+        {({ data: posts }) => posts.map((post) => <PostListItem {...post} />)}
+      </SuspenseQuery>
+    </Suspense>
+  </ErrorBoundary>
+)
+```
+
+### 새로운 `queryOptions` [#828](https://github.com/toss/suspensive/pull/828)
+
+TanStack Query의 메인테이너 [Tkdodo의 TanStack Query v5의 queryOptions 설명 영상](https://youtu.be/bhE3wuB_TuA?feature=shared&t=1697)에서 이 interface가 필요한 이유를 잘 설명되어 있습니다.
+TanStack Query v4에서도 queryOptions를 활용할 수 있습니다.
+
+1. queryKey와 queryFn을 묶어서 처리해 queryKey관리가 쉬워집니다.
+2. 불필요한 커스텀 쿼리 훅을 제거할 수 있습니다. TanStack Query v4의 `useQuery`, `useQueries`, Suspensive React Query의 `useSuspenseQuery`, `useSuspenseQueries`, `SuspenseQuery`에 모두 직접 사용할 수 있기 때문입니다.
+3. TanStack Query v5에는 이미 queryOptions가 제공되고 있기 때문에 TanStack Query v4에서 TanStack Query v5로의 마이그레이션이 쉬워집니다.
+
+```jsx /queryOptions/
+import { queryOptions, useSuspenseQuery, useSuspenseQueries, SuspenseQuery } from '@suspensive/react-query'
+import { useQuery, useQueries, useQueryClient } from '@tanstack/react-query'
+
+const postQueryOptions = (postId) =>
+  queryOptions({
+    queryKey: ['posts', postId] as const,
+    queryFn: ({
+      queryKey: [, postId], // queryKey를 활용할 수 있습니다.
+    }) => fetch(`https://example.com/posts/${postId}`),
+  })
+
+// 커스텀 쿼리 훅을 만들 필요가 없습니다.
+// useQuery, useQueries, useSuspenseQuery, useSuspenseQueries, SuspenseQuery에서 직접 queryOptions를 활용할 수 있습니다.
+const post1Query = useQuery(postQueryOptions(1))
+const { data: post1 } = useSuspenseQuery({
+  ...postQueryOptions(1),
+  refetchInterval: 2000, // 사용처에서 확장성이 명확히 표현됩니다.
+})
+const [post1Query, post2Query] = useQueries({
+  queries: [postQueryOptions(1), { ...postQueryOptions(2), refetchInterval: 2000 }],
+})
+const [{ data: post1 }, { data: post2 }] = useSuspenseQueries({
+  queries: [postQueryOptions(1), { ...postQueryOptions(2), refetchInterval: 2000 }],
+})
+const Example = () => (
+  <SuspenseQuery {...postQueryOptions(1)}>
+    {({ data: post1 }) => <>{post1.text}</>}
+  </SuspenseQuery>
+);
+
+// queryClient의 메소드에서 queryKey와 queryFn을 쉽게 활용할 수 있습니다.
+const queryClient = useQueryClient()
+queryClient.refetchQueries(postQueryOptions(1))
+queryClient.prefetchQuery(postQueryOptions(1))
+queryClient.invalidateQueries(postQueryOptions(1))
+queryClient.fetchQuery(postQueryOptions(1))
+queryClient.resetQueries(postQueryOptions(1))
+queryClient.cancelQueries(postQueryOptions(1))
+
+```
+
+## BREAKING CHANGES 처리하기
+
+### 오직 하나의 queryOptions만을 받습니다.
+
+기존 @supensive/react-query에서는 @tanstack/react-query의 구현사항에 따라 queryKey, queryFn, options를 arg1, arg2, arg3에 나누어 인자를 받게 했습니다.
+하지만 더 이상 queryKey, queryFn을 분리해 받지 않습니다. 이유는 아래와 같습니다.
+
+1. Suspensive 메인테이너가 함수에 불필요한 오버라이딩을 만들어야 합니다. 이것은 유지관리가 쉽지 않을 뿐 아니라 TypeScript Parser가 사용처의 코드를 해석할 때에 좋지 않습니다.
+2. 내부구현으로도 parseArgs와 같이 인자들을 처리하는 별도의 함수를 실행해야 합니다. 이것은 런타임에 성능적으로도 좋지 않습니다.
+3. @tanstack/react-query v5으로 마이그레이션 해야하는 유저에게는 이 변경이 필수적으로 변경인 것도 예정되어있습니다.
+
+```diff
+import { useSuspenseQuery } from '@suspensive/react-query'
+
+const Example = () => {
+- const query = useSuspenseQuery(queryKey, queryFn, {
+-   ...options,
+- })
++ const query = useSuspenseQuery({
++   queryKey,
++   queryFn,
++   ...options,
++ })
+}
+```
+
+### `useSuspenseQuery`의 `enabled`, `placeholderData` 옵션을 제거했습니다.
+
+```diff
+import { useSuspenseQuery } from '@suspensive/react-query'
+
+const Example = () => {
+  const query = useSuspenseQuery({
+    queryKey: ['key'],
+    queryFn: () => api.text()
+-   enabled: Math.random() > 0.5,
+-   placeholderData: 'placeholder'
+  })
+}
+```
+
+### `useSuspenseInfiniteQuery`의 `enabled`, `placeholderData` 옵션을 제거했습니다.
+
+```diff
+import { useSuspenseInfiniteQuery } from '@suspensive/react-query'
+
+const Example = () => {
+  const infiniteQuery = useSuspenseInfiniteQuery({
+    queryKey: ['key'],
+    queryFn: () => api.text()
+-   enabled: Math.random() > 0.5,
+-   placeholderData: 'placeholder'
+  })
+}
+```
+
+### @tanstack/react-query v5의 useSuspenseQuery와 동일한 'useSuspenseQuery' options, return type에 대한 동일한 인터페이스 이름으로 변경
+
+```diff filename="index.ts of @suspensive/react-query"
+export { useSuspenseQuery } from './useSuspenseQuery'
+export type {
+- BaseUseSuspenseQueryResult,
+  UseSuspenseQueryOptions,
+- UseSuspenseQueryResultOnLoading,
+- UseSuspenseQueryResultOnSuccess,
++ UseSuspenseQueryResult
+} from './useSuspenseQuery'
+export { useSuspenseQueries } from './useSuspenseQueries'
++ export type { SuspenseQueriesOptions, SuspenseQueriesResults } from './useSuspenseQueries'
+export { useSuspenseInfiniteQuery } from './useSuspenseInfiniteQuery'
+export type {
+- BaseUseSuspenseInfiniteQueryResult,
+  UseSuspenseInfiniteQueryOptions,
+- UseSuspenseInfiniteQueryResultOnLoading,
+- UseSuspenseInfiniteQueryResultOnSuccess,
++ UseSuspenseInfiniteQueryResult
+} from './useSuspenseInfiniteQuery'
+- export { QueryAsyncBoundary } from './QueryAsyncBoundary'
+export { QueryErrorBoundary } from './QueryErrorBoundary'
+```

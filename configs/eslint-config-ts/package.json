@@ -7,16 +7,16 @@
     "./no-import.js"
   ],
   "scripts": {
-    "lint": "eslint \"**/*.{js,jsx,cjs,mjs,ts,tsx,cts,mts}\""
+    "ci:eslint": "eslint \"**/*.{js,jsx,cjs,mjs,ts,tsx,cts,mts}\""
   },
   "dependencies": {
     "@suspensive/eslint-config-js": "workspace:*",
-    "@typescript-eslint/eslint-plugin": "^6.17.0",
-    "@typescript-eslint/parser": "^6.17.0",
+    "@typescript-eslint/eslint-plugin": "^7.13.0",
+    "@typescript-eslint/parser": "^7.13.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-import-resolver-typescript": "^3.6.1",
     "eslint-plugin-import": "^2.29.1",
-    "eslint-plugin-jsdoc": "^48.0.2",
-    "eslint-plugin-prettier": "^5.1.2"
+    "eslint-plugin-jsdoc": "^48.2.12",
+    "eslint-plugin-prettier": "^5.1.3"
   }
 }

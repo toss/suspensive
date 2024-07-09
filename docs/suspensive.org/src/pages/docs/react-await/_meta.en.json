@@ -1,0 +1,8 @@
+{
+  "installation": { "title": "Installation" },
+  "--- API Reference": {
+    "type": "separator",
+    "title": "API Reference"
+  },
+  "Await": { "title": "<Await/>" }
+}

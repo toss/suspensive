@@ -1,5 +1,4 @@
-import { type FunctionComponent, useMemo } from 'react'
-import { useSyncExternalStore } from 'use-sync-external-store/shim'
+import { type FunctionComponent, useMemo, useSyncExternalStore } from 'react'
 import type { Tuple } from './utility-types'
 import { hashKey } from './utils'
 
@@ -119,7 +118,7 @@ class AwaitClient {
         .then((data) => {
           newAwaitState.data = data
         })
-        .catch((error) => {
+        .catch((error: unknown) => {
           newAwaitState.error = error
         }),
     }

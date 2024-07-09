@@ -1,14 +1,14 @@
 import { ErrorBoundary, Suspense } from '@suspensive/react'
-import { ERROR_MESSAGE, FALLBACK, TEXT, delay } from '@suspensive/test-utils'
+import { ERROR_MESSAGE, FALLBACK, TEXT, sleep } from '@suspensive/test-utils'
 import { render, screen, waitFor } from '@testing-library/react'
 import ms from 'ms'
-import { beforeEach, describe, expect, it } from 'vitest'
+import { hashKey } from './utils'
 import { Await, awaitClient, useAwait } from '.'
 
 const key = (id: number) => ['key', id] as const
 
 const AwaitSuccess = () => {
-  const awaited = useAwait({ key: key(1), fn: () => delay(ms('0.1s')).then(() => TEXT) })
+  const awaited = useAwait({ key: key(1), fn: () => sleep(ms('0.1s')).then(() => TEXT) })
 
   return (
     <>
@@ -21,7 +21,7 @@ const AwaitSuccess = () => {
 const AwaitFailure = () => {
   const awaited = useAwait({
     key: key(1),
-    fn: () => delay(ms('0.1s')).then(() => Promise.reject(new Error(ERROR_MESSAGE))),
+    fn: () => sleep(ms('0.1s')).then(() => Promise.reject(new Error(ERROR_MESSAGE))),
   })
 
   return <>{awaited.data}</>
@@ -105,6 +105,7 @@ describe('useAwait', () => {
   })
 })
 
+// eslint-disable-next-line @typescript-eslint/prefer-promise-reject-errors
 const asyncErrorFn = () => new Promise((_, reject) => reject(ERROR_MESSAGE))
 describe('awaitClient', () => {
   beforeEach(() => awaitClient.reset())
@@ -177,7 +178,7 @@ describe('awaitClient', () => {
   it("have getData method with key should get data of key's awaitState", async () => {
     render(
       <Suspense fallback={FALLBACK}>
-        <Await options={{ key: key(1), fn: () => delay(ms('0.1s')).then(() => TEXT) }}>
+        <Await options={{ key: key(1), fn: () => sleep(ms('0.1s')).then(() => TEXT) }}>
           {(awaited) => <>{awaited.data}</>}
         </Await>
       </Suspense>
@@ -189,5 +190,13 @@ describe('awaitClient', () => {
     await waitFor(() => expect(screen.queryByText(TEXT)).toBeInTheDocument())
     expect(screen.queryByText(FALLBACK)).not.toBeInTheDocument()
     expect(awaitClient.getData(key(1))).toBe(TEXT)
+  })
+
+  it('should handle unsubscribe gracefully when no subscribers exist', () => {
+    const mockSync = vi.fn()
+    const key = ['nonexistent', 'key'] as const
+    awaitClient.unsubscribe(key, mockSync)
+
+    expect(awaitClient['syncsMap'].get(hashKey(key))).toBeUndefined()
   })
 })

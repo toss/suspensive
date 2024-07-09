@@ -1,20 +1,24 @@
-import { ERROR_MESSAGE, TEXT, ThrowError } from '@suspensive/test-utils'
-import { act, render, screen } from '@testing-library/react'
+import { CustomError, ERROR_MESSAGE, TEXT, ThrowError } from '@suspensive/test-utils'
+import { fireEvent, render, screen, waitFor } from '@testing-library/react'
 import ms from 'ms'
 import { createElement } from 'react'
-import { describe, expect, it, vi } from 'vitest'
-import { assertMessageUseErrorBoundaryGroupOnlyInChildrenOfErrorBoundaryGroup } from './utils/assert'
-import { ErrorBoundary, ErrorBoundaryGroup, useErrorBoundaryGroup, withErrorBoundaryGroup } from '.'
+import { ErrorBoundary } from './ErrorBoundary'
+import { ErrorBoundaryGroup, useErrorBoundaryGroup } from './ErrorBoundaryGroup'
+import {
+  Message_useErrorBoundaryGroup_this_hook_should_be_called_in_ErrorBoundary_props_children,
+  SuspensiveError,
+} from './models/SuspensiveError'
 
 const innerErrorBoundaryCount = 3
 const resetButtonText = 'reset button'
 
 describe('<ErrorBoundaryGroup/>', () => {
-  it('should reset all ErrorBoundaries in children', () => {
-    vi.useFakeTimers()
+  it('should reset all ErrorBoundaries in children', async () => {
     render(
       <ErrorBoundaryGroup>
-        <ErrorBoundaryGroup.Reset trigger={(group) => <button onClick={group.reset}>{resetButtonText}</button>} />
+        <ErrorBoundaryGroup.Consumer>
+          {(group) => <button onClick={group.reset}>{resetButtonText}</button>}
+        </ErrorBoundaryGroup.Consumer>
         {Array.from({ length: innerErrorBoundaryCount }).map((_, key) => (
           <ErrorBoundary key={key} fallback={(props) => <div>{props.error.message}</div>}>
             <ThrowError message={ERROR_MESSAGE} after={ms('0.1s')}>
@@ -26,23 +30,20 @@ describe('<ErrorBoundaryGroup/>', () => {
     )
 
     expect(screen.getAllByText(TEXT).length).toBe(innerErrorBoundaryCount)
-    act(() => vi.advanceTimersByTime(ms('0.1s')))
-    expect(screen.getAllByText(ERROR_MESSAGE).length).toBe(innerErrorBoundaryCount)
+    await waitFor(() => expect(screen.getAllByText(ERROR_MESSAGE).length).toBe(innerErrorBoundaryCount))
+    ThrowError.reset()
 
-    const resetButton = screen.getByRole('button', { name: resetButtonText })
-    act(() => {
-      ThrowError.reset()
-      resetButton.click()
-    })
+    fireEvent.click(screen.getByRole('button', { name: resetButtonText }))
     expect(screen.getAllByText(TEXT).length).toBe(innerErrorBoundaryCount)
     expect(screen.queryByText(ERROR_MESSAGE)).not.toBeInTheDocument()
   })
 
-  it('should reset all ErrorBoundaries in children even if it is nested, but if use blockOutside, can block reset by outside', () => {
-    vi.useFakeTimers()
+  it('should reset all ErrorBoundaries in children even if it is nested, but if use blockOutside, can block reset by outside', async () => {
     render(
       <ErrorBoundaryGroup>
-        <ErrorBoundaryGroup.Reset trigger={(group) => <button onClick={group.reset}>{resetButtonText}</button>} />
+        <ErrorBoundaryGroup.Consumer>
+          {(group) => <button onClick={group.reset}>{resetButtonText}</button>}
+        </ErrorBoundaryGroup.Consumer>
         {Array.from({ length: innerErrorBoundaryCount }).map((_, index) => (
           <ErrorBoundaryGroup key={index} blockOutside={index === innerErrorBoundaryCount - 1}>
             <ErrorBoundary fallback={(props) => <div>{props.error.message}</div>}>
@@ -56,43 +57,36 @@ describe('<ErrorBoundaryGroup/>', () => {
     )
 
     expect(screen.getAllByText(TEXT).length).toBe(innerErrorBoundaryCount)
-    act(() => vi.advanceTimersByTime(ms('0.1s')))
-    expect(screen.getAllByText(ERROR_MESSAGE).length).toBe(innerErrorBoundaryCount)
+    await waitFor(() => expect(screen.getAllByText(ERROR_MESSAGE).length).toBe(innerErrorBoundaryCount))
+    ThrowError.reset()
 
-    const resetButton = screen.getByRole('button', { name: resetButtonText })
-    act(() => {
-      ThrowError.reset()
-      resetButton.click()
-    })
+    fireEvent.click(screen.getByRole('button', { name: resetButtonText }))
     expect(screen.getAllByText(TEXT).length).toBe(innerErrorBoundaryCount - 1)
     expect(screen.getAllByText(ERROR_MESSAGE).length).toBe(1)
   })
 })
 
-const UsingUseErrorBoundaryGroup = () => {
-  useErrorBoundaryGroup()
-  return <>{TEXT}</>
-}
 describe('useErrorBoundaryGroup', () => {
   it('should throw error without ErrorBoundaryGroup in parent', () => {
-    expect(() => render(<UsingUseErrorBoundaryGroup />)).toThrow(
-      assertMessageUseErrorBoundaryGroupOnlyInChildrenOfErrorBoundaryGroup
-    )
-  })
-})
-
-describe('withErrorBoundaryGroup', () => {
-  it('should wrap component. we can check by useErrorBoundaryGroup', () => {
-    const rendered = render(createElement(withErrorBoundaryGroup(UsingUseErrorBoundaryGroup)))
-    expect(rendered.queryByText(TEXT)).toBeInTheDocument()
-  })
-
-  it('should set displayName based on Component.displayName', () => {
-    const TestComponentWithDisplayName = () => <>{TEXT}</>
-    TestComponentWithDisplayName.displayName = 'TestDisplayName'
-    expect(withErrorBoundaryGroup(TestComponentWithDisplayName).displayName).toBe(
-      'withErrorBoundaryGroup(TestDisplayName)'
-    )
-    expect(withErrorBoundaryGroup(() => <>{TEXT}</>).displayName).toBe('withErrorBoundaryGroup(Component)')
+    expect(() =>
+      render(
+        createElement(() => {
+          useErrorBoundaryGroup()
+          return <></>
+        })
+      )
+    ).toThrow(Message_useErrorBoundaryGroup_this_hook_should_be_called_in_ErrorBoundary_props_children)
+    try {
+      render(
+        createElement(() => {
+          useErrorBoundaryGroup()
+          return <></>
+        })
+      )
+    } catch (error) {
+      expect(error).toBeInstanceOf(SuspensiveError)
+      expect(error).toBeInstanceOf(Error)
+      expect(error).not.toBeInstanceOf(CustomError)
+    }
   })
 })

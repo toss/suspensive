@@ -1,0 +1,72 @@
+import { Callout } from '@/components'
+import { Steps } from 'nextra/components'
+
+# Why need to use?
+
+@suspensive/react-query is used with the following motivation:
+
+<Steps>
+
+### Hooks for Suspense are also available in @tanstack/react-query v4 (as well as @tanstack/react-query v5)
+
+[useSuspenseQuery](/docs/react-query/useSuspenseQuery), [useSuspenseQueries](/docs/react-query/useSuspenseQueries), and [useSuspenseInfiniteQuery](/docs/react-query/useSuspenseInfiniteQuery), which were not originally available in @tanstack/react-query v4, can now be used. Currently, this hook is officially provided in @tanstack/react-query v5, making it a good alternative for migrating from @tanstack/react-query v4 to v5.
+
+### Solution for [the issue of @tanstack/react-query v5 not being able to support lower version browsers due to es private field](https://github.com/TanStack/query/issues/6371#issuecomment-1810246027)
+
+<Callout type='info'>
+
+From version 2.2.0 onwards, @tanstack/react-query supports both v4 and v5. To support older browser versions, use @tanstack/react-query v4.
+
+</Callout>
+
+Apart from performance, many places still need to support lower browser versions such as Safari 12.1, 13, and 14. However, the browser compatibility of @tanstack/react-query v5 may limit its use because it targets high browser environments such as safari>=15.
+
+![ES Private fields error](/img/react-query_private-class-fields-error.png)
+
+- Please check [Why @tanstack/react-query v5 only support versions with high browser compatibility (es private field)](https://github.com/TanStack/query/issues/6371#issuecomment-1810246027)
+
+  ![ES Private fields issue tkdodo comment](/img/react-query_private-class-fields-tkdodo-comment.png)
+
+In this case, @suspensive/react-query can be a good alternative to use with @tanstack/react-query v4 to help you use the interface of @tanstack/react-query v5.
+(@suspensive/react-query uses @tanstack/react-query v4 internally, allowing it to support Suspense and related hooks while maintaining lower version browser support.)
+
+#### Browser compatibility of [@tanstack/react-query v4](https://tanstack.com/query/v4/docs/framework/react/installation#requirements) and [@tanstack/react-query v5](https://tanstack.com/query/v5/docs/framework/react/installation#requirements)
+
+<br />
+
+<table>
+  <thead>
+    <tr>
+      <th>TanStack Query Browser Requirements</th>
+      <th>v4</th>
+      <th>v5</th>
+    </tr>
+  </thead>
+  <tbody>
+    {[
+      { browser: 'Chrome', version4: '>= 73', version5: '>= 91' },
+      { browser: 'Firefox', version4: '>= 78', version5: '>= 90' },
+      { browser: 'Edge', version4: '>= 79', version5: '>= 91' },
+      { browser: 'Safari', version4: '>= 12.1', version5: '>= 15' },
+      { browser: 'iOS', version4: '>= 12.2', version5: '>= 15' },
+      { browser: 'Opera', version4: '>= 53', version5: '>= 77' },
+    ].map((item) => (
+      <tr key={item.browser}>
+        <td>{item.browser}</td>
+        <td className="text-center">{item.version4}</td>
+        <td className="text-center">{item.version5}</td>
+      </tr>
+    ))}
+  </tbody>
+</table>
+
+### This library is currently [a community resource for TanStack Query](https://tanstack.com/query/v4/docs/framework/react/community/suspensive-react-query).
+
+As it is a community resource registered in the official TanStack document, our Suspensive maintainers are providing full support.
+
+![TanStack Query Community Resources](/img/react-query_community-resources.png)
+
+We provide official documents that are easy for your team members to understand and provide prompt support if there are any issues.
+So you can use it with your teammates at production level with @tanstack/react-query v4.
+
+</Steps>

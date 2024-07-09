@@ -1,5 +1,4 @@
-import type { FunctionComponent } from 'react'
-import { useSyncExternalStore } from 'use-sync-external-store/shim'
+import { type FunctionComponent, useSyncExternalStore } from 'react'
 
 /**
  * Loads an image from the given source URL.
@@ -11,7 +10,7 @@ export const load = (src: HTMLImageElement['src']) =>
   new Promise<HTMLImageElement>((resolve, reject) => {
     const image = new Image()
     image.onload = () => resolve(image)
-    image.onerror = () => reject()
+    image.onerror = () => reject(new Error('image error occurred during loading'))
     image.src = src
   })
 

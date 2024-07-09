@@ -1,5 +1,237 @@
 # @suspensive/react
 
+## 2.6.0
+
+## 2.5.1
+
+## 2.5.0
+
+## 2.4.0
+
+## 2.3.3
+
+## 2.3.2
+
+## 2.3.1
+
+## 2.3.0
+
+## 2.2.4
+
+### Patch Changes
+
+- [#978](https://github.com/toss/suspensive/pull/978) [`09e957c`](https://github.com/toss/suspensive/commit/09e957c4e9a0d2e2a5789961f9242843922915a4) Thanks [@gwansikk](https://github.com/gwansikk)! - feat(configs): add options for scripts
+
+## 2.2.3
+
+## 2.2.2
+
+### Patch Changes
+
+- [#966](https://github.com/toss/suspensive/pull/966) [`0051a0e`](https://github.com/toss/suspensive/commit/0051a0e19a28a8acc5749aa8891c54c0ab20844c) Thanks [@ssi02014](https://github.com/ssi02014)! - fix(react): improved useTimeout and added usePreservedCallback
+
+## 2.2.1
+
+### Patch Changes
+
+- [#964](https://github.com/toss/suspensive/pull/964) [`d87a482`](https://github.com/toss/suspensive/commit/d87a48289244737f368c855d6afa1e85c250d78c) Thanks [@Collection50](https://github.com/Collection50)! - fix(react): add `<ClienOnly/>` for clientOnly prop of `<Suspense/>`
+
+## 2.2.0
+
+## 2.1.2-beta.1
+
+## 2.1.2-beta.0
+
+## 2.1.1
+
+## 2.1.0
+
+## 2.0.8
+
+### Patch Changes
+
+- [#934](https://github.com/toss/suspensive/pull/934) [`db95088`](https://github.com/toss/suspensive/commit/db95088abf61f032f236bf9b6e7e13466d99868d) Thanks [@manudeli](https://github.com/manudeli)! - ci(\*): add eslint-plugin-react-compiler to prepare react 19
+
+## 2.0.7
+
+## 2.0.6
+
+## 2.0.5
+
+### Patch Changes
+
+- [#912](https://github.com/toss/suspensive/pull/912) [`0c86892`](https://github.com/toss/suspensive/commit/0c868927ec30dc0699fd3c8753cab7ee6848f6c2) Thanks [@manudeli](https://github.com/manudeli)! - chore(\*): suspensive with toss
+
+## 2.0.4
+
+### Patch Changes
+
+- [#898](https://github.com/toss/suspensive/pull/898) [`8c5844b`](https://github.com/toss/suspensive/commit/8c5844bfa64c952d126ca1465299e920a906b505) Thanks [@manudeli](https://github.com/manudeli)! - fix(react): return type of Delay should be JSX.Element
+
+## 2.0.3
+
+## 2.0.2
+
+### Patch Changes
+
+- [#891](https://github.com/toss/suspensive/pull/891) [`be1b7ee`](https://github.com/toss/suspensive/commit/be1b7eef61721c93292f6f993596bd94f4752978) Thanks [@manudeli](https://github.com/manudeli)! - fix(react): change return type of Consumers as JSX.Element
+
+## 2.0.1
+
+## 2.0.0
+
+### Major Changes
+
+- [#632](https://github.com/toss/suspensive/pull/632) [`ea1c4ed`](https://github.com/toss/suspensive/commit/ea1c4ed2126aac570fbeda86e0366017ca1f437f) Thanks [@manudeli](https://github.com/manudeli)! - feat(react): rename Suspensive defaultOptions -> defaultProps
+
+- [#629](https://github.com/toss/suspensive/pull/629) [`78f5bd4`](https://github.com/toss/suspensive/commit/78f5bd42068f730dc71e12719c1d60c24f1bb78f) Thanks [@manudeli](https://github.com/manudeli)! - feat(react, react-query): remove deprecated apis
+
+- [#629](https://github.com/toss/suspensive/pull/629) [`6a3f6f4`](https://github.com/toss/suspensive/commit/6a3f6f4abf4a1860c710224293251db9ae6b5f19) Thanks [@manudeli](https://github.com/manudeli)! - feat(react): remove ErrorBoundaryGroup.Reset
+
+- [#629](https://github.com/toss/suspensive/pull/629) [`36d7416`](https://github.com/toss/suspensive/commit/36d74169eb6fda88b62fe7d6f71f7b319480e9ba) Thanks [@manudeli](https://github.com/manudeli)! - chore(\*): versioning last beta
+
+- [#629](https://github.com/toss/suspensive/pull/629) [`73c0cc7`](https://github.com/toss/suspensive/commit/73c0cc714aa4f1fe611bfb118050114dc6648926) Thanks [@manudeli](https://github.com/manudeli)! - fix(react): add getServerSnapShot in syncDevMode
+
+- [#631](https://github.com/toss/suspensive/pull/631) [`837ed18`](https://github.com/toss/suspensive/commit/837ed184f3257d895400669b290be470871ce46a) Thanks [@manudeli](https://github.com/manudeli)! - feat(\*): remove target react v16, v17
+
+### Patch Changes
+
+- [#755](https://github.com/toss/suspensive/pull/755) [`3f6171b`](https://github.com/toss/suspensive/commit/3f6171b950807d0d09f526b564a7424a7fb70fe0) Thanks [@manudeli](https://github.com/manudeli)! - feat(\*): remove all experimental interface
+
+## 2.0.0-beta.10
+
+### Major Changes
+
+- [#629](https://github.com/toss/suspensive/pull/629) [`36d7416`](https://github.com/toss/suspensive/commit/36d74169eb6fda88b62fe7d6f71f7b319480e9ba) Thanks [@manudeli](https://github.com/manudeli)! - chore(\*): versioning last beta
+
+## 2.0.0-beta.9
+
+## 2.0.0-beta.8
+
+## 2.0.0-beta.7
+
+### Patch Changes
+
+- [#755](https://github.com/toss/suspensive/pull/755) [`3f6171b`](https://github.com/toss/suspensive/commit/3f6171b950807d0d09f526b564a7424a7fb70fe0) Thanks [@manudeli](https://github.com/manudeli)! - feat(\*): remove all experimental interface
+
+## 2.0.0-beta.6
+
+### Patch Changes
+
+- [#744](https://github.com/toss/suspensive/pull/744) [`2bfe301`](https://github.com/toss/suspensive/commit/2bfe301fd97e8cc9467245dde71ea052dbba409e) Thanks [@manudeli](https://github.com/manudeli)! - test(react): add test cases for devMode in production mode
+
+## 2.0.0-beta.5
+
+## 2.0.0-beta.4
+
+## 2.0.0-beta.3
+
+### Major Changes
+
+- [#629](https://github.com/toss/suspensive/pull/629) [`73c0cc7`](https://github.com/toss/suspensive/commit/73c0cc714aa4f1fe611bfb118050114dc6648926) Thanks [@manudeli](https://github.com/manudeli)! - fix(react): add getServerSnapShot in syncDevMode
+
+## 2.0.0-beta.2
+
+### Major Changes
+
+- 6a3f6f4: feat(react): remove ErrorBoundaryGroup.Reset
+
+## 2.0.0-beta.1
+
+## 2.0.0-beta.0
+
+### Major Changes
+
+- ea1c4ed: feat(react): rename Suspensive defaultOptions -> defaultProps
+- 78f5bd4: feat(react, react-query): remove deprecated apis
+- 837ed18: feat(\*): remove target react v16, v17
+
+## 1.27.0
+
+### Minor Changes
+
+- [#876](https://github.com/toss/suspensive/pull/876) [`52d5380`](https://github.com/toss/suspensive/commit/52d5380f3fbfc30a1c2bd048aab07e612e1791df) Thanks [@manudeli](https://github.com/manudeli)! - chore(\*): last versioning before v2
+
+## 1.26.7
+
+## 1.26.6
+
+### Patch Changes
+
+- [#816](https://github.com/toss/suspensive/pull/816) [`33fe78c`](https://github.com/toss/suspensive/commit/33fe78cc2cfaae05fdd641499ac4b209e6b72130) Thanks [@manudeli](https://github.com/manudeli)! - fix(react): add OmitKeyof safely and test cases for it
+
+## 1.26.5
+
+### Patch Changes
+
+- [#764](https://github.com/toss/suspensive/pull/764) [`df6e6d8`](https://github.com/toss/suspensive/commit/df6e6d874343ca5c3ee2a872dd2ea5484b9e36c5) Thanks [@manudeli](https://github.com/manudeli)! - fix(react): add aside, button tag, high z-index of `<DevMode/>`
+
+## 1.26.4
+
+## 1.26.3
+
+### Patch Changes
+
+- [#731](https://github.com/toss/suspensive/pull/731) [`df78d21`](https://github.com/toss/suspensive/commit/df78d21faef478930fb6fb26d6f2eccfc148da9d) Thanks [@ssi02014](https://github.com/ssi02014)! - feat(react): add Nullable as utility type
+
+## 1.26.2
+
+## 1.26.1
+
+### Patch Changes
+
+- [#709](https://github.com/toss/suspensive/pull/709) [`d3b7c15`](https://github.com/toss/suspensive/commit/d3b7c1526dfe900e1dd1a559a406ccdf70456737) Thanks [@ssi02014](https://github.com/ssi02014)! - fix(react): define default prop of each components
+
+- [#709](https://github.com/toss/suspensive/pull/709) [`d3b7c15`](https://github.com/toss/suspensive/commit/d3b7c1526dfe900e1dd1a559a406ccdf70456737) Thanks [@ssi02014](https://github.com/ssi02014)! - test(react): add test case for fallback prop of Delay
+
+## 1.26.0
+
+### Minor Changes
+
+- [#615](https://github.com/toss/suspensive/pull/615) [`43bd74e`](https://github.com/toss/suspensive/commit/43bd74e080fe7487fc43f75688c65af594099ef8) Thanks [@manudeli](https://github.com/manudeli)! - feat(react): add SuspensiveError for useErrorBoundary, useErrorBoundaryFallbackProps, useErrorBoundaryGroup internally
+
+## 1.25.3
+
+### Patch Changes
+
+- af96ce0: fix(react): add getServerSnapshot in for syncDevMode in SSR environment
+
+## 1.25.2
+
+### Patch Changes
+
+- a6d279e: fix(\*): add use-sync-external-store
+
+## 1.25.1
+
+### Patch Changes
+
+- 37f5465: feat(react): add ErrorBoundary.Consumer, ErrorBoundaryGroup.Consumer
+
+## 1.25.0
+
+### Minor Changes
+
+- caed129: feat(react): add `shouldCatch` prop of ErrorBoundary
+
+## 1.24.0
+
+### Minor Changes
+
+- 89c3283: feat(react): add fallback prop of Delay
+
+## 1.23.2
+
+### Patch Changes
+
+- 9bced99: fix(tsup): remove treeshaking, minification
+
+## 1.23.1
+
+### Patch Changes
+
+- c526ad3: fix(react): assert message correctly, test code simply
+
 ## 1.23.0
 
 ### Minor Changes

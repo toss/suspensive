@@ -1,0 +1,16 @@
+name: Broken link checker
+
+on:
+  schedule:
+    - cron: '0 5 * * 1-5'
+  workflow_dispatch:
+    inputs: { url: { description: 'URL to check', required: false, default: 'https://suspensive.org' } }
+
+jobs:
+  broken-link-checker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/pnpm-setup-node
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm blc ${{ github.event.inputs.url || 'https://suspensive.org' }} --ro

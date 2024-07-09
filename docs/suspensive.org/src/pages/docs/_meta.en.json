@@ -1,0 +1,28 @@
+{
+  "--- Packages": {
+    "type": "separator",
+    "title": "Packages"
+  },
+  "react": "@suspensive/react",
+  "react-query": "@suspensive/react-query",
+  "react-await": {
+    "title": "@suspensive/react-await",
+    "theme": {
+      "collapsed": true
+    }
+  },
+  "react-image": {
+    "title": "@suspensive/react-image",
+    "theme": {
+      "collapsed": true
+    }
+  },
+  "--- More": {
+    "type": "separator",
+    "title": "More"
+  },
+  "migrate-to-v2": "Migrating to v2",
+  "changelogs": "Changelogs",
+  "contributors": "Contributors",
+  "links": "Related Links"
+}

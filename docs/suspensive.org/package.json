@@ -1,0 +1,49 @@
+{
+  "name": "@suspensive/suspensive.org",
+  "version": "0.0.0-development",
+  "private": true,
+  "description": "Suspensive Official Docs",
+  "keywords": [
+    "suspensive",
+    "@suspensive/react",
+    "@suspensive/react-query"
+  ],
+  "homepage": "https://suspensive.org",
+  "bugs": "https://github.com/toss/suspensive/issues",
+  "author": "Jonghyeon Ko <jonghyeon@toss.im>",
+  "type": "commonjs",
+  "scripts": {
+    "build": "next build",
+    "ci:eslint": "next lint",
+    "ci:type": "tsc --noEmit",
+    "dev": "next dev -p 4000",
+    "start": "next start -p 4000"
+  },
+  "dependencies": {
+    "@codesandbox/sandpack-react": "^2.14.4",
+    "@codesandbox/sandpack-themes": "^2.0.21",
+    "@suspensive/react": "workspace:*",
+    "@suspensive/react-query-4": "workspace:*",
+    "@tanstack/react-query": "4",
+    "@tanstack/react-query-devtools": "4",
+    "d3": "^7.9.0",
+    "next": "^14.2.3",
+    "nextra": "^2.13.4",
+    "nextra-theme-docs": "^2.13.4",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "remark-sandpack": "^0.0.3",
+    "sharp": "^0.33.4"
+  },
+  "devDependencies": {
+    "@next/eslint-plugin-next": "^14.2.3",
+    "@suspensive/eslint-config": "workspace:*",
+    "@suspensive/tsconfig": "workspace:*",
+    "@types/d3": "^7.4.3",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "autoprefixer": "^10.4.19",
+    "postcss": "^8.4.38",
+    "tailwindcss": "^3.4.4"
+  }
+}

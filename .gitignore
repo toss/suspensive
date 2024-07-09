@@ -35,3 +35,8 @@ esm
 # graph
 graph/
 
+# test
+tsconfig.vitest-temp.json
+
+# benchmark
+benchmarks/

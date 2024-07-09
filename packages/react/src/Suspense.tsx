@@ -1,13 +1,15 @@
 import { Suspense as ReactSuspense, type SuspenseProps as ReactSuspenseProps, useContext } from 'react'
-import { SuspenseDefaultPropsContext, useDevModeObserve } from './contexts'
-import { useIsClient } from './hooks'
-import type { OmitKeyOf, PropsWithDevMode } from './utility-types'
-import { noop } from './utils'
+import { ClientOnly } from './components/ClientOnly'
+import { SuspenseDefaultPropsContext, syncDevMode } from './contexts'
+import type { PropsWithDevMode } from './utility-types'
 
-const SuspenseClientOnly = (props: ReactSuspenseProps) =>
-  useIsClient() ? <ReactSuspense {...props} /> : <>{props.fallback}</>
+const SuspenseClientOnly = (props: ReactSuspenseProps) => (
+  <ClientOnly fallback={props.fallback}>
+    <ReactSuspense {...props} />
+  </ClientOnly>
+)
 
-export interface SuspenseProps extends PropsWithDevMode<ReactSuspenseProps, SuspenseDevModeOptions> {
+export interface SuspenseProps extends PropsWithDevMode<ReactSuspenseProps, SuspenseDevModeProp> {
   /**
    * With clientOnly prop, `<Suspense/>` will return fallback in server but after mount return children in client. Since mount only happens on the client, `<Suspense/>` can be avoid server-side rendering.
    * @see https://suspensive.org/docs/react/Suspense#avoid-server-side-rendering-clientonly
@@ -19,55 +21,27 @@ export interface SuspenseProps extends PropsWithDevMode<ReactSuspenseProps, Susp
  * This component is just wrapping React's Suspense. to use Suspense easily in Server-side rendering environment like Next.js
  * @see {@link https://suspensive.org/docs/react/Suspense}
  */
-export const Suspense = Object.assign(
-  (() => {
-    const Suspense = ({ clientOnly, devMode, children, fallback }: SuspenseProps) => {
-      const defaultProps = useContext(SuspenseDefaultPropsContext)
-      const DefinedSuspense = defaultProps.clientOnly ?? clientOnly ? SuspenseClientOnly : ReactSuspense
-      return (
-        <DefinedSuspense fallback={typeof fallback === 'undefined' ? defaultProps.fallback : fallback}>
-          {children}
-          {process.env.NODE_ENV !== 'production' && devMode && <SuspenseDevMode {...devMode} />}
-        </DefinedSuspense>
-      )
-    }
-    if (process.env.NODE_ENV !== 'production') {
-      Suspense.displayName = 'Suspense'
-    }
-    return Suspense
-  })(),
-  {
-    /**
-     * @deprecated Use `<Suspense clientOnly/>` instead
-     */
-    CSROnly: (() => {
-      const Suspense = ({ devMode, children, fallback }: OmitKeyOf<SuspenseProps, 'clientOnly'>) => {
-        const defaultProps = useContext(SuspenseDefaultPropsContext)
-        return (
-          <SuspenseClientOnly fallback={typeof fallback === 'undefined' ? defaultProps.fallback : fallback}>
-            {children}
-            {process.env.NODE_ENV !== 'production' && devMode && <SuspenseDevMode {...devMode} />}
-          </SuspenseClientOnly>
-        )
-      }
-      if (process.env.NODE_ENV !== 'production') {
-        Suspense.displayName = 'Suspense.CSROnly'
-      }
-      return Suspense
-    })(),
-  }
-)
+export const Suspense = ({ clientOnly, devMode, children, fallback }: SuspenseProps) => {
+  const defaultProps = useContext(SuspenseDefaultPropsContext)
+  const DefinedSuspense = defaultProps.clientOnly ?? clientOnly ? SuspenseClientOnly : ReactSuspense
 
-type SuspenseDevModeOptions = {
-  /**
-   * @experimental This is experimental feature.
-   */
+  return (
+    <DefinedSuspense fallback={typeof fallback === 'undefined' ? defaultProps.fallback : fallback}>
+      {children}
+      <SuspenseDevMode {...devMode} />
+    </DefinedSuspense>
+  )
+}
+if (process.env.NODE_ENV === 'development') {
+  Suspense.displayName = 'Suspense'
+}
+
+type SuspenseDevModeProp = {
   showFallback?: boolean
 }
-const SuspenseDevMode = ({ showFallback = false }: SuspenseDevModeOptions) => {
-  const devMode = useDevModeObserve()
-  if (devMode?.is && showFallback) {
-    throw new Promise(noop)
+const SuspenseDevMode = syncDevMode<SuspenseDevModeProp>(({ devMode, showFallback }) => {
+  if (devMode.is && showFallback) {
+    throw devMode.promise
   }
   return null
-}
+})

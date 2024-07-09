@@ -1,0 +1,25 @@
+import { Steps, Cards, Card } from 'nextra/components'
+import { Callout } from '@/components'
+
+# Migrating to Suspensive v2
+
+Suspensive v2, **we focused on increasing compatibility and improving DX**.
+To accomplish this, we had to introduce some dramatic changes. As a result, we removed some previously deprecated features and added some new interfaces.
+
+### The minimum required React version is now 18.0
+
+**Suspensive v2 requires React 18.0 or later.** This is because we are using the new useSyncExternalStore hook, which is only available in React 18.0 and later. Previously, we have been using the shim provided by React(use-sync-external-store).
+In addition, in React 18, [Suspense-related features were added](https://legacy.reactjs.org/blog/2022/03/29/react-v18.html), We decided that the direction of the Suspensive libraries needed to focus on React 18 or higher in the future rather than responding to Legacy React.
+
+### Migration guide
+
+<Cards num={2}>
+  <Card title="See @suspensive/react v2" href="/docs/react/migrate-to-v2" />
+  <Card title="See @suspensive/react-query v2" href="/docs/react-query/migrate-to-v2" />
+</Cards>
+
+## Thanks to all Suspensive contributors
+
+We were able to release v2 because of Suspensive's contributors. Thank you to everyone who worked together to make it a better library, and we look forward to your continued support.
+
+[![contributors](https://contrib.rocks/image?repo=toss/suspensive)](https://github.com/toss/suspensive/graphs/contributors)

@@ -1,5 +1,41 @@
 # @suspensive/react-await
 
+## 0.0.19
+
+### Patch Changes
+
+- [#912](https://github.com/toss/suspensive/pull/912) [`0c86892`](https://github.com/toss/suspensive/commit/0c868927ec30dc0699fd3c8753cab7ee6848f6c2) Thanks [@manudeli](https://github.com/manudeli)! - chore(\*): suspensive with toss
+
+## 0.0.18
+
+### Patch Changes
+
+- [#631](https://github.com/toss/suspensive/pull/631) [`837ed18`](https://github.com/toss/suspensive/commit/837ed184f3257d895400669b290be470871ce46a) Thanks [@manudeli](https://github.com/manudeli)! - feat(\*): remove target react v16, v17
+
+## 0.0.17
+
+### Patch Changes
+
+- [#876](https://github.com/toss/suspensive/pull/876) [`52d5380`](https://github.com/toss/suspensive/commit/52d5380f3fbfc30a1c2bd048aab07e612e1791df) Thanks [@manudeli](https://github.com/manudeli)! - chore(\*): last versioning before v2
+
+## 0.0.16-beta.0
+
+### Patch Changes
+
+- 837ed18: feat(\*): remove target react v16, v17
+
+## 0.0.16
+
+### Patch Changes
+
+- a6d279e: fix(\*): add use-sync-external-store
+
+## 0.0.15
+
+### Patch Changes
+
+- 9bced99: fix(tsup): remove treeshaking, minification
+
 ## 0.0.14
 
 ### Patch Changes

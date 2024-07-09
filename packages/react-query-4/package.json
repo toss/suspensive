@@ -1,0 +1,78 @@
+{
+  "name": "@suspensive/react-query-4",
+  "version": "2.6.0",
+  "description": "Useful helpers for @tanstack/react-query@4 with suspense",
+  "keywords": [
+    "suspensive",
+    "react",
+    "react-query"
+  ],
+  "homepage": "https://suspensive.org",
+  "bugs": "https://github.com/toss/suspensive/issues",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/toss/suspensive.git",
+    "directory": "packages/react-query-4"
+  },
+  "license": "MIT",
+  "author": "Jonghyeon Ko <jonghyeon@toss.im>",
+  "sideEffects": false,
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
+    },
+    "./package.json": "./package.json"
+  },
+  "main": "dist/index.cjs",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "ci:attw": "attw --pack",
+    "ci:eslint": "eslint \"**/*.{js,jsx,cjs,mjs,ts,tsx,cts,mts}\"",
+    "ci:publint": "publint --strict",
+    "ci:test": "vitest run --coverage --typecheck",
+    "ci:test:watch": "vitest --ui --coverage --typecheck",
+    "ci:type": "tsc --noEmit",
+    "clean": "rimraf ./dist && rimraf ./coverage",
+    "dev": "tsup --watch",
+    "prepack": "pnpm build"
+  },
+  "devDependencies": {
+    "@suspensive/eslint-config": "workspace:*",
+    "@suspensive/react": "workspace:*",
+    "@suspensive/test-utils": "workspace:*",
+    "@suspensive/tsconfig": "workspace:*",
+    "@suspensive/tsup": "workspace:*",
+    "@tanstack/react-query": "^4.36.1",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "peerDependencies": {
+    "@suspensive/react": "workspace:^2.6.0",
+    "@tanstack/react-query": "^4",
+    "react": "^18"
+  },
+  "peerDependenciesMeta": {
+    "@suspensive/react": {
+      "optional": true
+    }
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

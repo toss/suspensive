@@ -1,17 +1,17 @@
 <div align="center">
   <a href="https://suspensive.org" title="Suspensive Libraries - TypeScript/JavaScript packages to use React Suspense easily">
-    <img src="https://github.com/suspensive/react/blob/main/assets/logo_background_star.png?raw=true" alt="Suspensive Libraries Logo - TypeScript/JavaScript packages to use React Suspense easily." height="180" />
+    <img src="https://github.com/toss/suspensive/blob/main/assets/logo_background_star.png?raw=true" alt="Suspensive Libraries Logo - TypeScript/JavaScript packages to use React Suspense easily." width="600" />
     <h1 align="center">Suspensive</h1>
   </a>
 </div>
 
 <div align="center">
 
-[![MIT License](https://img.shields.io/badge/license-MIT-blue.svg?style=for-the-badge&color=000&labelColor=000)](https://github.com/suspensive/react/blob/main/LICENSE)
+[![MIT License](https://img.shields.io/badge/license-MIT-blue.svg?style=for-the-badge&color=000&labelColor=000)](https://github.com/toss/suspensive/blob/main/LICENSE)
 [![@suspensive/react downloads](https://img.shields.io/npm/dt/@suspensive/react.svg?label=@suspensive/react&color=000&labelColor=000&style=for-the-badge)](https://www.npmjs.com/package/@suspensive/react)
 [![@suspensive/react-query downloads](https://img.shields.io/npm/dt/@suspensive/react-query.svg?label=@suspensive/react-query&color=000&labelColor=000&style=for-the-badge)](https://www.npmjs.com/package/@suspensive/react-query)
 
-[![codecov](https://codecov.io/gh/suspensive/react/branch/main/graph/badge.svg?token=H4VQ71NJ16)](https://codecov.io/gh/suspensive/react) ![GitHub stars](https://img.shields.io/github/stars/suspensive/react?style=social) ![GitHub forks](https://img.shields.io/github/forks/suspensive/react?style=social)
+[![codecov](https://codecov.io/gh/toss/suspensive/graph/badge.svg?token=5PopssACmx)](https://codecov.io/gh/toss/suspensive) [![CodSpeed Badge](https://img.shields.io/endpoint?url=https://codspeed.io/badge.json)](https://codspeed.io/toss/suspensive) ![GitHub stars](https://img.shields.io/github/stars/toss/suspensive?style=social) ![GitHub forks](https://img.shields.io/github/forks/toss/suspensive?style=social)
 
 [OFFICIAL DOCS](https://suspensive.org) | [VISUALIZATION](https://visualization.suspensive.org) | [DEPENDENCY GRAPH](https://graph.suspensive.org)
 
@@ -31,11 +31,12 @@ All declarative components to use suspense on both CSR, SSR.
 ### Features
 
 - Suspense
-- ErrorBoundary, useErrorBoundary, useErrorBoundaryFallbackProps
-- ErrorBoundaryGroup, useErrorBoundaryGroup
+- ErrorBoundary, ErrorBoundary.Consumer useErrorBoundary, useErrorBoundaryFallbackProps
+- ErrorBoundaryGroup, ErrorBoundaryGroup.Consumer useErrorBoundaryGroup
 - Delay
-- SuspensiveProvider, Suspensive
+- Suspensive, SuspensiveProvider
 - DevMode
+- wrap
 
 ### Installation
 
@@ -58,23 +59,18 @@ import { Suspense, ErrorBoundary, ErrorBoundaryGroup, Delay } from '@suspensive/
 
 const Example = () => (
   <ErrorBoundaryGroup>
-    <ErrorBoundaryGroup.Reset trigger={(group) => <button onClick={group.reset}>Reset All</button>} />
-    <ErrorBoundary
-      fallback={(props) => (
-        <>
-          <button onClick={props.reset}>Try again</button>
-          {props.error.message}
-        </>
-      )}
-    >
+    <ErrorBoundaryGroup.Consumer>
+      {(group) => <button onClick={group.reset}>Reset All</button>}
+    </ErrorBoundaryGroup.Consumer>
+    <ErrorBoundary fallback={(props) => <button onClick={props.reset}>Reset error: {props.error.message}</button>}>
       <Suspense
         fallback={
-          <Delay>
+          <Delay ms={200}>
             <Spinner />
           </Delay>
         }
       >
-        <SuspendedComponent />
+        <SuspenseMaker />
       </Suspense>
     </ErrorBoundary>
   </ErrorBoundaryGroup>
@@ -90,63 +86,63 @@ const Example = () => (
 [![npm](https://img.shields.io/npm/dm/@suspensive/react-query?color=000&labelColor=000)](https://www.npmjs.com/package/@suspensive/react-query)
 [![npm bundle size](https://img.shields.io/bundlephobia/minzip/@suspensive/react-query?color=000&labelColor=000)](https://www.npmjs.com/package/@suspensive/react-query)
 
-Declarative apis to use [@tanstack/react-query with suspense](https://tanstack.com/query/v4/docs/guides/suspense) easily.
+Declarative apis to use [@tanstack/react-query with suspense](https://tanstack.com/query/v4/docs/framework/react/guides/suspense) easily.
 
 ### Features
 
-- useSuspenseQuery
-- useSuspenseQueries
-- useSuspenseInfiniteQuery
+- useSuspenseQuery, useSuspenseQueries, useSuspenseInfiniteQuery
+- queryOptions, infiniteQueryOptions
+- SuspenseQuery, SuspenseQueries, SuspenseInfiniteQuery
 - QueryErrorBoundary
 
 ### Installation
 
 ```shell
-npm install @suspensive/react-query
+npm install @suspensive/react-query @tanstack/react-query
 ```
 
 ```shell
-pnpm add @suspensive/react-query
+pnpm add @suspensive/react-query @tanstack/react-query
 ```
 
 ```shell
-yarn add @suspensive/react-query
+yarn add @suspensive/react-query @tanstack/react-query
 ```
 
 ### Usage
 
 ```tsx
 import { Suspense } from '@suspensive/react'
-import { QueryErrorBoundary, useSuspenseQuery } from '@suspensive/react-query'
+import { QueryErrorBoundary, useSuspenseQuery, SuspenseQuery, queryOptions } from '@suspensive/react-query'
+
+const customQuery = () =>
+  queryOptions({
+    queryKey: ['queryKey'],
+    queryFn: () => Promise.resolve({ text: 'Hello Suspensive' }),
+  })
+
+const SuspenseMaker = () => {
+  const query = useSuspenseQuery(customQuery())
+  return <>{query.data}</>
+}
 
 const Example = () => (
-  <QueryErrorBoundary
-    fallback={(props) => (
-      <>
-        <button onClick={props.reset}>Try again</button>
-        {props.error.message}
-      </>
-    )}
-  >
+  <QueryErrorBoundary fallback={(props) => <button onClick={props.reset}>Reset error: {props.error.message}</button>}>
     <Suspense fallback={<Spinner />}>
-      <SuspendedComponent />
+      <SuspenseMaker />
+    </Suspense>
+    <Suspense fallback={<Spinner />}>
+      <SuspenseQuery {...customQuery()} select={({ text }) => text}>
+        {({ data: text }) => <>{text}</>}
+      </SuspenseQuery>
     </Suspense>
   </QueryErrorBoundary>
 )
-
-const SuspendedComponent = () => {
-  const query = useSuspenseQuery({
-    queryKey,
-    queryFn,
-  })
-
-  return <>{query.data}</>
-}
 ```
 
 <br/>
 
-## Docs [![deployment](https://img.shields.io/github/deployments/suspensive/react/Production%20%E2%80%93%20docs-v1?label=vercel&logo=vercel&logoColor=white&color=000&labelColor=000)](https://suspensive.org)
+## Docs [![deployment](https://img.shields.io/github/deployments/toss/suspensive/Production%20%E2%80%93%20suspensive.org?label=vercel&logo=vercel&logoColor=white&color=000&labelColor=000)](https://suspensive.org)
 
 We provide Official Docs
 
@@ -154,7 +150,7 @@ See [OFFICIAL DOCS](https://suspensive.org)
 
 <br/>
 
-## Visualization [![deployment](https://img.shields.io/github/deployments/suspensive/react/Production%20%E2%80%93%20Visualization?label=vercel&logo=vercel&logoColor=white&color=000&labelColor=000)](https://visualization.suspensive.org)
+## Visualization [![deployment](https://img.shields.io/github/deployments/toss/suspensive/Production%20%E2%80%93%20visualization.suspensive.org?label=vercel&logo=vercel&logoColor=white&color=000&labelColor=000)](https://visualization.suspensive.org)
 
 Concepts Visualization ready. You can see core concepts of Suspensive visually
 
@@ -168,19 +164,17 @@ Read our [Contributing Guide](./CONTRIBUTING.md) to familiarize yourself with Su
 
 ### Contributors
 
-[![contributors](https://contrib.rocks/image?repo=suspensive/react)](https://github.com/suspensive/react/graphs/contributors)
+[![contributors](https://contrib.rocks/image?repo=toss/suspensive)](https://github.com/toss/suspensive/graphs/contributors)
 
 <br/>
 
 ## License
 
-MIT © Suspensive. See [LICENSE](./LICENSE) for details.
+MIT © Viva Republica, Inc. See [LICENSE](./LICENSE) for details.
 
-<div align="center">
-  <a title="Suspensive" href="https://github.com/suspensive">
-    <div style='display:flex; align-items:center;'>
-      <img alt="Suspensive" src="https://github.com/suspensive/react/blob/main/assets/logo_dark.png?raw=true" width="24">
-      <sup>Suspensive</sup>
-    </div>
-  </a>
-</div>
+<a title="Toss" href="https://toss.im">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://static.toss.im/logos/png/4x/logo-toss-reverse.png">
+    <img alt="Toss" src="https://static.toss.im/logos/png/4x/logo-toss.png" width="100">
+  </picture>
+</a>

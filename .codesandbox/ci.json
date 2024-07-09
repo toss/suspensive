@@ -1,5 +1,0 @@
-{
-  "packages": ["packages/**"],
-  "sandboxes": ["websites/visualization"],
-  "node": "18"
-}

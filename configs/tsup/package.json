@@ -22,12 +22,16 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsup",
-    "build:watch": "tsup --watch",
+    "ci:attw": "attw --pack",
+    "ci:eslint": "eslint \"**/*.{js,jsx,cjs,mjs,ts,tsx,cts,mts}\"",
+    "ci:publint": "publint --strict",
+    "ci:type": "tsc --noEmit",
     "clean": "rimraf ./dist && rimraf ./coverage",
-    "lint": "eslint \"**/*.{js,jsx,cjs,mjs,ts,tsx,cts,mts}\"",
-    "lint:attw": "attw --pack",
-    "lint:pub": "publint --strict",
-    "prepack": "pnpm build",
-    "type:check": "tsc --noEmit"
+    "dev": "tsup --watch",
+    "prepack": "pnpm build"
+  },
+  "devDependencies": {
+    "@suspensive/eslint-config-ts": "workspace:*",
+    "@suspensive/tsconfig": "workspace:*"
   }
 }

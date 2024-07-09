@@ -1,27 +1,20 @@
 {
   "name": "@suspensive/react",
-  "version": "1.23.0",
+  "version": "2.6.0",
   "description": "Useful interfaces for React Suspense",
   "keywords": [
     "suspensive",
     "react"
   ],
   "homepage": "https://suspensive.org",
-  "bugs": "https://github.com/suspensive/react/issues",
+  "bugs": "https://github.com/toss/suspensive/issues",
   "repository": {
     "type": "git",
-    "url": "https://github.com/suspensive/react.git",
+    "url": "https://github.com/toss/suspensive.git",
     "directory": "packages/react"
   },
-  "funding": {
-    "type": "github",
-    "url": "https://github.com/sponsors/manudeli"
-  },
   "license": "MIT",
-  "author": {
-    "name": "Jonghyeon Ko",
-    "email": "manudeli.ko@gmail.com"
-  },
+  "author": "Jonghyeon Ko <jonghyeon@toss.im>",
   "sideEffects": false,
   "type": "module",
   "exports": {
@@ -46,27 +39,29 @@
   ],
   "scripts": {
     "build": "tsup",
-    "build:watch": "tsup --watch",
+    "ci:attw": "attw --pack",
+    "ci:bench": "vitest bench --run",
+    "ci:eslint": "eslint \"**/*.{js,jsx,cjs,mjs,ts,tsx,cts,mts}\"",
+    "ci:publint": "publint --strict",
+    "ci:test": "vitest run --coverage --typecheck",
+    "ci:test:watch": "vitest --ui --coverage --typecheck",
+    "ci:type": "tsc --noEmit",
     "clean": "rimraf ./dist && rimraf ./coverage",
-    "lint": "eslint \"**/*.{js,jsx,cjs,mjs,ts,tsx,cts,mts}\"",
-    "lint:attw": "attw --pack",
-    "lint:pub": "publint --strict",
-    "prepack": "pnpm build",
-    "test": "vitest run --coverage --typecheck",
-    "test:watch": "vitest --ui --coverage --typecheck",
-    "type:check": "tsc --noEmit"
+    "dev": "tsup --watch",
+    "prepack": "pnpm build"
   },
   "devDependencies": {
-    "@suspensive/package-json-name": "workspace:*",
+    "@suspensive/eslint-config": "workspace:*",
     "@suspensive/test-utils": "workspace:*",
+    "@suspensive/tsconfig": "workspace:*",
     "@suspensive/tsup": "workspace:*",
-    "@types/react": "^18.2.46",
-    "@types/react-dom": "^18.2.18",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
   },
   "peerDependencies": {
-    "react": "^16.8 || ^17 || ^18"
+    "react": "^18"
   },
   "publishConfig": {
     "access": "public"

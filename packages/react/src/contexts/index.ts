@@ -1,2 +1,2 @@
-export { DelayDefaultPropsContext, SuspenseDefaultPropsContext } from './DefaultOptionsContexts'
-export { SuspensiveDevMode, useDevModeObserve, SuspensiveDevModeContext } from './SuspensiveDevModeContext'
+export { DelayDefaultPropsContext, SuspenseDefaultPropsContext } from './DefaultPropsContexts'
+export { SuspensiveDevMode, DevModeContext, syncDevMode } from './SuspensiveDevModeContext'
