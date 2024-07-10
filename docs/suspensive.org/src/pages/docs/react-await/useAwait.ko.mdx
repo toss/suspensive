@@ -19,7 +19,7 @@ import { Suspense } from '@suspensive/react'
 
 const getPost = (postId: number) => fetch(`/post/${postId}`).then<Post>((res) => res.json())
 
-const AwaitedPost = () => {
+const Post = () => {
   const awaited = useAwait({ key: ['post', 2] as const, fn: ({ key: [, postId] }) => getPost(postId) })
 
   return <>{awaited.data}</>
@@ -27,7 +27,7 @@ const AwaitedPost = () => {
 
 const Example = () => (
   <Suspense fallback="awaiting...">
-    <AwaitedPost />
+    <Post />
   </Suspense>
 )
 ```
