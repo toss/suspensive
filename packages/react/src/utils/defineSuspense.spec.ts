@@ -3,32 +3,28 @@ import { SuspenseClientOnly, defineSuspense } from './defineSuspense'
 
 describe('defineSuspense', () => {
   it('should return SuspenseClientOnly when componentPropsClientOnly is true', () => {
-    const DefinedSuspense = defineSuspense({ componentPropsClientOnly: true })
-    expect(DefinedSuspense).toBe(SuspenseClientOnly)
+    expect(defineSuspense({ componentPropsClientOnly: true })).toBe(SuspenseClientOnly)
+    expect(defineSuspense({ componentPropsClientOnly: true, defaultPropsClientOnly: undefined })).toBe(
+      SuspenseClientOnly
+    )
   })
-
   it('should return SuspenseClientOnly when defaultPropsClientOnly is true and componentPropsClientOnly is undefined', () => {
-    const DefinedSuspense = defineSuspense({ defaultPropsClientOnly: true })
-    expect(DefinedSuspense).toBe(SuspenseClientOnly)
+    expect(defineSuspense({ defaultPropsClientOnly: true })).toBe(SuspenseClientOnly)
+    expect(defineSuspense({ componentPropsClientOnly: undefined, defaultPropsClientOnly: true })).toBe(
+      SuspenseClientOnly
+    )
   })
-
   it('should return SuspenseClientOnly when defaultPropsClientOnly is false and componentPropsClientOnly is true', () => {
-    const DefinedSuspense = defineSuspense({ defaultPropsClientOnly: false, componentPropsClientOnly: true })
-    expect(DefinedSuspense).toBe(SuspenseClientOnly)
+    expect(defineSuspense({ defaultPropsClientOnly: false, componentPropsClientOnly: true })).toBe(SuspenseClientOnly)
   })
-
   it('should return Suspense when both defaultPropsClientOnly and componentPropsClientOnly are false', () => {
-    const DefinedSuspense = defineSuspense({ defaultPropsClientOnly: false, componentPropsClientOnly: false })
-    expect(DefinedSuspense).toBe(Suspense)
+    expect(defineSuspense({ defaultPropsClientOnly: false, componentPropsClientOnly: false })).toBe(Suspense)
   })
-
   it('should return Suspense when defaultPropsClientOnly is true and componentPropsClientOnly is false', () => {
-    const DefinedSuspense = defineSuspense({ defaultPropsClientOnly: true, componentPropsClientOnly: false })
-    expect(DefinedSuspense).toBe(Suspense)
+    expect(defineSuspense({ defaultPropsClientOnly: true, componentPropsClientOnly: false })).toBe(Suspense)
   })
-
   it('should return Suspense when both defaultPropsClientOnly and componentPropsClientOnly are undefined', () => {
-    const DefinedSuspense = defineSuspense({})
-    expect(DefinedSuspense).toBe(Suspense)
+    expect(defineSuspense({})).toBe(Suspense)
+    expect(defineSuspense({})).toBe(Suspense)
   })
 })
