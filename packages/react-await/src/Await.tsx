@@ -4,6 +4,9 @@ import { hashKey } from './utils'
 
 export type Key = Tuple
 
+/**
+ * @experimental This is experimental feature.
+ */
 export type AwaitOptions<TData, TKey extends Key> = {
   key: TKey
   fn: (options: { key: TKey }) => Promise<TData>
