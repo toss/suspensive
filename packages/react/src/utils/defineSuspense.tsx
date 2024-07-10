@@ -7,7 +7,10 @@ export const SuspenseClientOnly = (props: SuspenseProps) => (
   </ClientOnly>
 )
 
-export const defineSuspense = ({ defaultPropsClientOnly, componentPropsClientOnly }: {
+export const defineSuspense = ({
+  defaultPropsClientOnly,
+  componentPropsClientOnly,
+}: {
   defaultPropsClientOnly?: boolean
   componentPropsClientOnly?: boolean
-}) => componentPropsClientOnly ?? defaultPropsClientOnly ? SuspenseClientOnly : Suspense
+}) => (componentPropsClientOnly ?? defaultPropsClientOnly ? SuspenseClientOnly : Suspense)
