@@ -1,5 +1,11 @@
 # @suspensive/react
 
+## 2.6.1
+
+### Patch Changes
+
+- [#1065](https://github.com/toss/suspensive/pull/1065) [`2216377`](https://github.com/toss/suspensive/commit/221637789075d55af2efeb7201146642c6d05262) Thanks [@ssi02014](https://github.com/ssi02014)! - feat(react): fix clientOnly prop of Suspense with defaultProps
+
 ## 2.6.0
 
 ## 2.5.1
