@@ -1,5 +1,5 @@
 ---
-'@suspensive/react-await': patch
+'@suspensive/react-await': minor
 ---
 
 feat(react-await): Separate useAwait, AwaitClient and add useAwait docs
