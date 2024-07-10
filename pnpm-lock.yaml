@@ -364,6 +364,36 @@ importers:
         specifier: ^18.3.1
         version: 18.3.1(react@18.3.1)
 
+  packages/promise:
+    devDependencies:
+      '@suspensive/eslint-config':
+        specifier: workspace:*
+        version: link:../../configs/eslint-config
+      '@suspensive/react':
+        specifier: workspace:*
+        version: link:../react
+      '@suspensive/test-utils':
+        specifier: workspace:*
+        version: link:../../configs/test-utils
+      '@suspensive/tsconfig':
+        specifier: workspace:*
+        version: link:../../configs/tsconfig
+      '@suspensive/tsup':
+        specifier: workspace:*
+        version: link:../../configs/tsup
+      '@types/react':
+        specifier: ^18.3.3
+        version: 18.3.3
+      '@types/react-dom':
+        specifier: ^18.3.0
+        version: 18.3.0
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      react-dom:
+        specifier: ^18.3.1
+        version: 18.3.1(react@18.3.1)
+
   packages/react:
     devDependencies:
       '@suspensive/eslint-config':
