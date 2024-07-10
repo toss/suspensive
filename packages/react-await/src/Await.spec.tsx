@@ -1,7 +1,7 @@
 import { Suspense } from '@suspensive/react'
 import { TEXT } from '@suspensive/test-utils'
 import { render, screen } from '@testing-library/react'
-import { Await } from '.'
+import { Await } from './Await'
 
 const key = (id: number) => ['key', id] as const
 

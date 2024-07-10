@@ -22,7 +22,9 @@ describe('awaitOptions', () => {
 
   it('should be used with useAwait', async () => {
     const AwaitedComponent = () => {
-      return <>{useAwait(options).data}</>
+      const awaited = useAwait(options)
+
+      return <>{awaited.data}</>
     }
 
     render(
