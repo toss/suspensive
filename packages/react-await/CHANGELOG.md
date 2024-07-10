@@ -1,5 +1,11 @@
 # @suspensive/react-await
 
+## 0.1.0
+
+### Minor Changes
+
+- [#1059](https://github.com/toss/suspensive/pull/1059) [`b1e9495`](https://github.com/toss/suspensive/commit/b1e9495e7580c2fc8520ae031d1387bf1f30acbe) Thanks [@SEOKKAMONI](https://github.com/SEOKKAMONI)! - feat(react-await): add `awaitOptions`
+
 ## 0.0.19
 
 ### Patch Changes
