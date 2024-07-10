@@ -1,8 +1,9 @@
 import { FALLBACK, TEXT } from '@suspensive/test-utils'
 import { render, screen } from '@testing-library/react'
 import { Suspense } from 'react'
-import { Await, useAwait } from './Await'
+import { Await } from './Await'
 import { awaitOptions } from './awaitOptions'
+import { useAwait } from './useAwait'
 
 const key = (id: number) => ['key', id] as const
 
