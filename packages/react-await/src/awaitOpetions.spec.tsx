@@ -19,7 +19,7 @@ describe('awaitOptions', () => {
     expect(await screen.findByText(TEXT)).toBeInTheDocument()
   })
 
-  it('should ve used with useAwait', async () => {
+  it('should be used with useAwait', async () => {
     const AwaitedComponent = () => {
       return <>{useAwait(options).data}</>
     }
