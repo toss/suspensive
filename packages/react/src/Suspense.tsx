@@ -1,13 +1,7 @@
-import { Suspense as ReactSuspense, type SuspenseProps as ReactSuspenseProps, useContext } from 'react'
-import { ClientOnly } from './components/ClientOnly'
+import { type SuspenseProps as ReactSuspenseProps, useContext } from 'react'
 import { SuspenseDefaultPropsContext, syncDevMode } from './contexts'
 import type { PropsWithDevMode } from './utility-types'
-
-const SuspenseClientOnly = (props: ReactSuspenseProps) => (
-  <ClientOnly fallback={props.fallback}>
-    <ReactSuspense {...props} />
-  </ClientOnly>
-)
+import { defineSuspense } from './utils/defineSuspense'
 
 export interface SuspenseProps extends PropsWithDevMode<ReactSuspenseProps, SuspenseDevModeProp> {
   /**
@@ -23,7 +17,10 @@ export interface SuspenseProps extends PropsWithDevMode<ReactSuspenseProps, Susp
  */
 export const Suspense = ({ clientOnly, devMode, children, fallback }: SuspenseProps) => {
   const defaultProps = useContext(SuspenseDefaultPropsContext)
-  const DefinedSuspense = defaultProps.clientOnly ?? clientOnly ? SuspenseClientOnly : ReactSuspense
+  const DefinedSuspense = defineSuspense({
+    defaultPropsClientOnly: defaultProps.clientOnly,
+    componentPropsClientOnly: clientOnly,
+  })
 
   return (
     <DefinedSuspense fallback={typeof fallback === 'undefined' ? defaultProps.fallback : fallback}>
