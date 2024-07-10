@@ -4,5 +4,6 @@
     "type": "separator",
     "title": "API 문서"
   },
-  "Await": { "title": "<Await/>" }
+  "Await": { "title": "<Await/>" },
+  "awaitOptions": { "title": "awaitOptions" }
 }
