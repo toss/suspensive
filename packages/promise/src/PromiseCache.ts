@@ -5,7 +5,7 @@ type Sync = (...args: unknown[]) => unknown
 
 type PromiseCacheState<TKey extends Key = Key> = {
   promise?: Promise<unknown>
-  key: TKey
+  promiseKey: TKey
   hashedKey: ReturnType<typeof hashKey>
   error?: unknown
   data?: unknown
@@ -31,7 +31,6 @@ export class PromiseCache {
       // TODO: reset with key index hierarchy
       this.cache.delete(hashedKey)
     }
-
     this.syncSubscribers(key)
   }
 
@@ -51,27 +50,40 @@ export class PromiseCache {
     }
   }
 
-  public suspend = <TData, TKey extends Key = Key>({ key, fn }: SuspensePromiseOptions<TData, TKey>): TData => {
+  public invalidate(key: Key) {
     const hashedKey = hashKey(key)
+
+    if (this.cache.has(hashedKey)) {
+      this.cache.delete(hashedKey)
+    }
+    this.syncSubscriber(key)
+  }
+
+  public suspend = <TData, TKey extends Key = Key>({
+    promiseKey,
+    promiseFn,
+  }: SuspensePromiseOptions<TData, TKey>): TData => {
+    const hashedKey = hashKey(promiseKey)
     const promiseCacheState = this.cache.get(hashedKey)
 
-    if (promiseCacheState?.error) {
-      // eslint-disable-next-line @typescript-eslint/no-throw-literal
-      throw promiseCacheState.error
-    }
-    if (promiseCacheState?.data) {
-      return promiseCacheState.data as TData
-    }
+    if (promiseCacheState) {
+      if (promiseCacheState.error) {
+        // eslint-disable-next-line @typescript-eslint/no-throw-literal
+        throw promiseCacheState.error
+      }
+      if (promiseCacheState.data) {
+        return promiseCacheState.data as TData
+      }
 
-    if (promiseCacheState?.promise) {
-      // eslint-disable-next-line @typescript-eslint/no-throw-literal
-      throw promiseCacheState.promise
+      if (promiseCacheState.promise) {
+        // eslint-disable-next-line @typescript-eslint/no-throw-literal
+        throw promiseCacheState.promise
+      }
     }
-
     const newPromiseCache: PromiseCacheState<TKey> = {
-      key,
+      promiseKey,
       hashedKey,
-      promise: fn({ key })
+      promise: promiseFn({ promiseKey })
         .then((data) => {
           newPromiseCache.data = data
         })
@@ -117,5 +129,13 @@ export class PromiseCache {
     return hashedKey
       ? this.syncsMap.get(hashedKey)?.forEach((sync) => sync())
       : this.syncsMap.forEach((syncs) => syncs.forEach((sync) => sync()))
+  }
+
+  private syncSubscriber = (key: Key) => {
+    const hashedKey = hashKey(key)
+
+    if (hashedKey) {
+      this.syncsMap.get(hashedKey)?.forEach((sync) => sync())
+    }
   }
 }

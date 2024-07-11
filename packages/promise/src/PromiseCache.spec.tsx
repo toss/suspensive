@@ -23,22 +23,22 @@ describe('promiseCache', () => {
     expect(promiseCache.getError(key(1))).toBeUndefined()
     expect(promiseCache.getError(key(2))).toBeUndefined()
     try {
-      promiseCache.suspend({ key: key(1), fn: asyncErrorFn })
+      promiseCache.suspend({ promiseKey: key(1), promiseFn: asyncErrorFn })
     } catch (promiseToSuspense) {
       expect(await promiseToSuspense).toBeUndefined()
     }
     try {
-      promiseCache.suspend({ key: key(1), fn: asyncErrorFn })
+      promiseCache.suspend({ promiseKey: key(1), promiseFn: asyncErrorFn })
     } catch (error) {
       expect(error).toBe(ERROR_MESSAGE)
     }
     try {
-      promiseCache.suspend({ key: key(2), fn: asyncErrorFn })
+      promiseCache.suspend({ promiseKey: key(2), promiseFn: asyncErrorFn })
     } catch (promiseToSuspense) {
       expect(await promiseToSuspense).toBeUndefined()
     }
     try {
-      promiseCache.suspend({ key: key(2), fn: asyncErrorFn })
+      promiseCache.suspend({ promiseKey: key(2), promiseFn: asyncErrorFn })
     } catch (error) {
       expect(error).toBe(ERROR_MESSAGE)
     }
@@ -54,22 +54,22 @@ describe('promiseCache', () => {
     expect(promiseCache.getError(key(1))).toBeUndefined()
     expect(promiseCache.getError(key(2))).toBeUndefined()
     try {
-      promiseCache.suspend({ key: key(1), fn: asyncErrorFn })
+      promiseCache.suspend({ promiseKey: key(1), promiseFn: asyncErrorFn })
     } catch (promiseToSuspense) {
       expect(await promiseToSuspense).toBeUndefined()
     }
     try {
-      promiseCache.suspend({ key: key(1), fn: asyncErrorFn })
+      promiseCache.suspend({ promiseKey: key(1), promiseFn: asyncErrorFn })
     } catch (error) {
       expect(error).toBe(ERROR_MESSAGE)
     }
     try {
-      promiseCache.suspend({ key: key(2), fn: asyncErrorFn })
+      promiseCache.suspend({ promiseKey: key(2), promiseFn: asyncErrorFn })
     } catch (promiseToSuspense) {
       expect(await promiseToSuspense).toBeUndefined()
     }
     try {
-      promiseCache.suspend({ key: key(2), fn: asyncErrorFn })
+      promiseCache.suspend({ promiseKey: key(2), promiseFn: asyncErrorFn })
     } catch (error) {
       expect(error).toBe(ERROR_MESSAGE)
     }
@@ -88,7 +88,7 @@ describe('promiseCache', () => {
     render(
       <PromiseCacheProvider cache={promiseCache}>
         <Suspense fallback={FALLBACK}>
-          <SuspensePromise options={{ key: key(1), fn: () => sleep(ms('0.1s')).then(() => TEXT) }}>
+          <SuspensePromise options={{ promiseKey: key(1), promiseFn: () => sleep(ms('0.1s')).then(() => TEXT) }}>
             {(resolvedData) => <>{resolvedData.data}</>}
           </SuspensePromise>
         </Suspense>

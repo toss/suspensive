@@ -9,7 +9,7 @@ import { useSuspensePromise } from './useSuspensePromise'
 
 const key = (id: number) => ['key', id] as const
 
-const options = promiseOptions({ key: key(1), fn: () => Promise.resolve(TEXT) })
+const options = promiseOptions({ promiseKey: key(1), promiseFn: () => Promise.resolve(TEXT) })
 
 describe('promiseOptions', () => {
   let promiseCache: PromiseCache
