@@ -2,6 +2,9 @@ import { type FunctionComponent } from 'react'
 import type { AwaitOptions, Awaited, Key } from './types'
 import { useAwait } from './useAwait'
 
+/**
+ * @experimental This is experimental feature.
+ */
 export type AwaitProps<TData, TKey extends Key> = {
   options: AwaitOptions<TData, TKey>
   children: FunctionComponent<Awaited<TData>>
