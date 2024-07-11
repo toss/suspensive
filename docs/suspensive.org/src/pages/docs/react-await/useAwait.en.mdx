@@ -1,0 +1,33 @@
+import { Callout } from '@/components'
+
+# Await
+
+<Callout type='experimental'>
+
+`useAwait` is experimental feature, this interfaces could be changed
+
+</Callout>
+
+`useAwait` exposes the fallback of the nearest parent Suspense if the Promise returned by the received asynchronous function is pending.
+Afterwards, when the Promise is fulfilled, the guaranteed awaited data can be used.
+
+Additionally, this data is cached with the received key and can be reused immediately without pending.
+
+```tsx /useAwait/
+import { Await } from '@suspensive/react-await'
+import { Suspense } from '@suspensive/react'
+
+const getPost = (postId: number) => fetch(`/post/${postId}`).then<Post>((res) => res.json())
+
+const Post = () => {
+  const awaited = useAwait({ key: ['post', 2] as const, fn: ({ key: [, postId] }) => getPost(postId) })
+
+  return <>{awaited.data}</>
+}
+
+const Example = () => (
+  <Suspense fallback="awaiting...">
+    <Post />
+  </Suspense>
+)
+```
