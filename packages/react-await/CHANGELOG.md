@@ -1,5 +1,11 @@
 # @suspensive/react-await
 
+## 0.2.0
+
+### Minor Changes
+
+- [#1066](https://github.com/toss/suspensive/pull/1066) [`3fc22eb`](https://github.com/toss/suspensive/commit/3fc22eb3ee3c9fceccb736cd845b641eb44c656b) Thanks [@SEOKKAMONI](https://github.com/SEOKKAMONI)! - feat(react-await): separate useAwait, AwaitClient
+
 ## 0.1.0
 
 ### Minor Changes
