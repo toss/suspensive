@@ -2,7 +2,8 @@ import { ErrorBoundary, Suspense } from '@suspensive/react'
 import { ERROR_MESSAGE, FALLBACK, TEXT, sleep } from '@suspensive/test-utils'
 import { render, screen, waitFor } from '@testing-library/react'
 import ms from 'ms'
-import { promiseCache } from './PromiseCache'
+import { PromiseCache } from './PromiseCache'
+import { PromiseCacheProvider } from './PromiseCacheProvider'
 import { useSuspensePromise } from './useSuspensePromise'
 
 const key = (id: number) => ['key', id] as const
@@ -28,12 +29,20 @@ const SuspensePromiseFailure = () => {
 }
 
 describe('useSuspensePromise', () => {
-  beforeEach(() => promiseCache.reset())
+  let promiseCache: PromiseCache
+
+  beforeEach(() => {
+    promiseCache = new PromiseCache()
+    promiseCache.reset()
+  })
+
   it('should return object containing data field with only success, and It will be cached', async () => {
     const { unmount } = render(
-      <Suspense fallback={FALLBACK}>
-        <SuspensePromiseSuccess />
-      </Suspense>
+      <PromiseCacheProvider cache={promiseCache}>
+        <Suspense fallback={FALLBACK}>
+          <SuspensePromiseSuccess />
+        </Suspense>
+      </PromiseCacheProvider>
     )
     expect(screen.queryByText(FALLBACK)).toBeInTheDocument()
     await waitFor(() => expect(screen.queryByText(TEXT)).toBeInTheDocument())
@@ -41,9 +50,11 @@ describe('useSuspensePromise', () => {
     // success data cache test
     unmount()
     render(
-      <Suspense fallback={FALLBACK}>
-        <SuspensePromiseSuccess />
-      </Suspense>
+      <PromiseCacheProvider cache={promiseCache}>
+        <Suspense fallback={FALLBACK}>
+          <SuspensePromiseSuccess />
+        </Suspense>
+      </PromiseCacheProvider>
     )
     expect(screen.queryByText(FALLBACK)).not.toBeInTheDocument()
     expect(screen.queryByText(TEXT)).toBeInTheDocument()
@@ -51,11 +62,13 @@ describe('useSuspensePromise', () => {
 
   it('should throw Error, and It will be cached', async () => {
     const { unmount } = render(
-      <ErrorBoundary fallback={(props) => <>{props.error.message}</>}>
-        <Suspense fallback={FALLBACK}>
-          <SuspensePromiseFailure />
-        </Suspense>
-      </ErrorBoundary>
+      <PromiseCacheProvider cache={promiseCache}>
+        <ErrorBoundary fallback={(props) => <>{props.error.message}</>}>
+          <Suspense fallback={FALLBACK}>
+            <SuspensePromiseFailure />
+          </Suspense>
+        </ErrorBoundary>
+      </PromiseCacheProvider>
     )
     expect(screen.queryByText(FALLBACK)).toBeInTheDocument()
     await waitFor(() => expect(screen.queryByText(ERROR_MESSAGE)).toBeInTheDocument())
@@ -63,11 +76,13 @@ describe('useSuspensePromise', () => {
     // error cache test
     unmount()
     render(
-      <ErrorBoundary fallback={(props) => <>{props.error.message}</>}>
-        <Suspense fallback={FALLBACK}>
-          <SuspensePromiseFailure />
-        </Suspense>
-      </ErrorBoundary>
+      <PromiseCacheProvider cache={promiseCache}>
+        <ErrorBoundary fallback={(props) => <>{props.error.message}</>}>
+          <Suspense fallback={FALLBACK}>
+            <SuspensePromiseFailure />
+          </Suspense>
+        </ErrorBoundary>
+      </PromiseCacheProvider>
     )
     expect(screen.queryByText(FALLBACK)).not.toBeInTheDocument()
     expect(screen.queryByText(ERROR_MESSAGE)).toBeInTheDocument()
@@ -75,18 +90,22 @@ describe('useSuspensePromise', () => {
 
   it('should return object containing reset method to reset cache by key', async () => {
     const { rerender } = render(
-      <Suspense fallback={FALLBACK}>
-        <SuspensePromiseSuccess />
-      </Suspense>
+      <PromiseCacheProvider cache={promiseCache}>
+        <Suspense fallback={FALLBACK}>
+          <SuspensePromiseSuccess />
+        </Suspense>
+      </PromiseCacheProvider>
     )
     expect(screen.queryByText(FALLBACK)).toBeInTheDocument()
     await waitFor(() => expect(screen.queryByText(TEXT)).toBeInTheDocument())
     const resetButton = await screen.findByRole('button', { name: 'Try again' })
     resetButton.click()
     rerender(
-      <Suspense fallback={FALLBACK}>
-        <SuspensePromiseSuccess />
-      </Suspense>
+      <PromiseCacheProvider cache={promiseCache}>
+        <Suspense fallback={FALLBACK}>
+          <SuspensePromiseSuccess />
+        </Suspense>
+      </PromiseCacheProvider>
     )
     expect(screen.queryByText(FALLBACK)).toBeInTheDocument()
     await waitFor(() => expect(screen.queryByText(TEXT)).toBeInTheDocument())

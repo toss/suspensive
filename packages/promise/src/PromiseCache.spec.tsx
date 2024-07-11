@@ -2,7 +2,8 @@ import { ERROR_MESSAGE, FALLBACK, TEXT, sleep } from '@suspensive/test-utils'
 import { render, screen, waitFor } from '@testing-library/react'
 import ms from 'ms'
 import { Suspense } from 'react'
-import { promiseCache } from './PromiseCache'
+import { PromiseCache } from './PromiseCache'
+import { PromiseCacheProvider } from './PromiseCacheProvider'
 import { SuspensePromise } from './SuspensePromise'
 import { hashKey } from './utils'
 
@@ -11,7 +12,12 @@ const key = (id: number) => ['key', id] as const
 // eslint-disable-next-line @typescript-eslint/prefer-promise-reject-errors
 const asyncErrorFn = () => new Promise((_, reject) => reject(ERROR_MESSAGE))
 describe('promiseCache', () => {
-  beforeEach(() => promiseCache.reset())
+  let promiseCache: PromiseCache
+
+  beforeEach(() => {
+    promiseCache = new PromiseCache()
+    promiseCache.reset()
+  })
 
   it("have clearError method without key should clear promise & error for all key's promiseCacheState", async () => {
     expect(promiseCache.getError(key(1))).toBeUndefined()
@@ -80,11 +86,13 @@ describe('promiseCache', () => {
 
   it("have getData method with key should get data of key's promiseCacheState", async () => {
     render(
-      <Suspense fallback={FALLBACK}>
-        <SuspensePromise options={{ key: key(1), fn: () => sleep(ms('0.1s')).then(() => TEXT) }}>
-          {(resolvedData) => <>{resolvedData.data}</>}
-        </SuspensePromise>
-      </Suspense>
+      <PromiseCacheProvider cache={promiseCache}>
+        <Suspense fallback={FALLBACK}>
+          <SuspensePromise options={{ key: key(1), fn: () => sleep(ms('0.1s')).then(() => TEXT) }}>
+            {(resolvedData) => <>{resolvedData.data}</>}
+          </SuspensePromise>
+        </Suspense>
+      </PromiseCacheProvider>
     )
 
     expect(screen.queryByText(FALLBACK)).toBeInTheDocument()

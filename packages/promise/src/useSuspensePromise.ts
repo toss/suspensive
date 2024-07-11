@@ -1,6 +1,6 @@
 import { useMemo, useSyncExternalStore } from 'react'
-import { promiseCache } from './PromiseCache'
 import type { Key, ResolvedData, SuspensePromiseOptions } from './types'
+import { usePromiseCache } from './usePromiseCache'
 
 /**
  * @experimental This is experimental feature.
@@ -8,6 +8,7 @@ import type { Key, ResolvedData, SuspensePromiseOptions } from './types'
 export const useSuspensePromise = <TData, TKey extends Key>(
   options: SuspensePromiseOptions<TData, TKey>
 ): ResolvedData<TData> => {
+  const promiseCache = usePromiseCache()
   const syncData = () => promiseCache.suspend(options)
   const data = useSyncExternalStore<TData>(
     (sync) => promiseCache.subscribe(options.key, sync).unsubscribe,

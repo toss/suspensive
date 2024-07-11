@@ -11,7 +11,10 @@ type PromiseCacheState<TKey extends Key = Key> = {
   data?: unknown
 }
 
-class PromiseCache {
+/**
+ * @experimental This is experimental feature.
+ */
+export class PromiseCache {
   private cache = new Map<ReturnType<typeof hashKey>, PromiseCacheState>()
   private syncsMap = new Map<ReturnType<typeof hashKey>, Sync[]>()
 
@@ -116,8 +119,3 @@ class PromiseCache {
       : this.syncsMap.forEach((syncs) => syncs.forEach((sync) => sync()))
   }
 }
-
-/**
- * @experimental This is experimental feature.
- */
-export const promiseCache = new PromiseCache()
