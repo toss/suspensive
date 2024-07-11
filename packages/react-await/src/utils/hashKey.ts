@@ -1,4 +1,4 @@
-import type { Key } from '../Await'
+import type { Key } from '../types'
 import { type PlainObject, isPlainObject } from './isPlainObject'
 
 export const hashKey = (key: Key) =>

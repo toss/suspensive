@@ -1,4 +1,4 @@
-import type { AwaitOptions, Key } from './Await'
+import type { AwaitOptions, Key } from './types'
 
 /**
  * @experimental This is experimental feature.
