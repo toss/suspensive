@@ -2,4 +2,4 @@
 '@suspensive/react-await': minor
 ---
 
-feat(react-await): Separate useAwait, AwaitClient
+feat(react-await): separate useAwait, AwaitClient
