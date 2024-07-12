@@ -110,4 +110,14 @@ describe('promiseCache', () => {
 
     expect(promiseCache['syncsMap'].get(hashKey(key))).toBeUndefined()
   })
+
+  it('should refetch when cache is invalidated', () => {
+    const mockSync1 = vi.fn()
+    const mockSync2 = vi.fn()
+    promiseCache.subscribe(key(1), mockSync1)
+    promiseCache.subscribe(key(2), mockSync2)
+    promiseCache.invalidate(key(1))
+    expect(mockSync1).toHaveBeenCalledTimes(1)
+    expect(mockSync2).toHaveBeenCalledTimes(0)
+  })
 })
