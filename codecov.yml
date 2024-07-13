@@ -40,10 +40,6 @@ component_management:
       name: '@suspensive/jotai'
       paths:
         - packages/jotai/**
-    - component_id: promise
-      name: '@suspensive/promise'
-      paths:
-        - packages/promise/**
     - component_id: react-await
       name: '@suspensive/react-await'
       paths:
