@@ -8,8 +8,8 @@
   - "packages/react-query-5/**/*"
 "@suspensive/jotai":
   - "packages/jotai/**/*"
-"@suspensive/promise":
-  - "packages/promise/**/*"
+"@suspensive/cache":
+  - "packages/cache/**/*"
 "@suspensive/react-await":
   - "packages/react-await/**/*"
 "@suspensive/react-image":
