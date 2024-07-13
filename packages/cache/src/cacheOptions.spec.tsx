@@ -22,7 +22,9 @@ describe('cacheOptions', () => {
     render(
       <CacheProvider cache={cache}>
         <Suspense fallback={FALLBACK}>
-          <SuspenseCache options={options}>{({ data }) => <>{data}</>}</SuspenseCache>
+          <SuspenseCache cacheKey={options.cacheKey} cacheFn={options.cacheFn}>
+            {({ data }) => <>{data}</>}
+          </SuspenseCache>
         </Suspense>
       </CacheProvider>
     )

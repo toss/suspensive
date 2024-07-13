@@ -18,7 +18,7 @@ describe('<SuspenseCache />', () => {
     render(
       <CacheProvider cache={cache}>
         <Suspense fallback="Loading...">
-          <SuspenseCache options={{ cacheKey: key(1), cacheFn: () => Promise.resolve(TEXT) }}>
+          <SuspenseCache cacheKey={key(1)} cacheFn={() => Promise.resolve(TEXT)}>
             {({ data }) => <>{data}</>}
           </SuspenseCache>
         </Suspense>

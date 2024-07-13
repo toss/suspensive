@@ -1,13 +1,14 @@
 import { type FunctionComponent } from 'react'
-import type { CacheKey, CacheOptions, ResolvedData } from './types'
+import type { CacheKey, CacheOptions, SuspenseCacheResult } from './types'
 import { useSuspenseCache } from './useSuspenseCache'
 
 /**
  * @experimental This is experimental feature.
  */
 export type SuspenseCacheProps<TData, TCacheKey extends CacheKey> = {
-  options: CacheOptions<TData, TCacheKey>
-  children: FunctionComponent<ResolvedData<TData>>
+  cacheKey: CacheOptions<TData, TCacheKey>['cacheKey']
+  cacheFn: CacheOptions<TData, TCacheKey>['cacheFn']
+  children: FunctionComponent<SuspenseCacheResult<TData>>
 }
 
 /**
@@ -15,5 +16,10 @@ export type SuspenseCacheProps<TData, TCacheKey extends CacheKey> = {
  */
 export const SuspenseCache = <TData, TCacheKey extends CacheKey>({
   children: Children,
-  options,
-}: SuspenseCacheProps<TData, TCacheKey>) => <Children {...useSuspenseCache<TData, TCacheKey>(options)} />
+  cacheKey,
+  cacheFn,
+}: SuspenseCacheProps<TData, TCacheKey>) => {
+  const options = { cacheKey, cacheFn }
+
+  return <Children {...useSuspenseCache<TData, TCacheKey>(options)} />
+}

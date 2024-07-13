@@ -10,7 +10,7 @@ export type CacheOptions<TData, TCacheKey extends CacheKey> = {
   cacheFn: (options: { cacheKey: TCacheKey }) => Promise<TData>
 }
 
-export type ResolvedData<TData> = {
+export type SuspenseCacheResult<TData> = {
   data: TData
   reset: () => void
 }

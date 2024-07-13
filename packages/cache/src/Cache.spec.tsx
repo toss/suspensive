@@ -88,7 +88,7 @@ describe('cache', () => {
     render(
       <CacheProvider cache={cache}>
         <Suspense fallback={FALLBACK}>
-          <SuspenseCache options={{ cacheKey: key(1), cacheFn: () => sleep(ms('0.1s')).then(() => TEXT) }}>
+          <SuspenseCache cacheKey={key(1)} cacheFn={() => sleep(ms('0.1s')).then(() => TEXT)}>
             {(resolvedData) => <>{resolvedData.data}</>}
           </SuspenseCache>
         </Suspense>
