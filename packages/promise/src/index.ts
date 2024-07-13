@@ -4,4 +4,3 @@ export { promiseOptions } from './promiseOptions'
 export { PromiseCache } from './PromiseCache'
 export { PromiseCacheProvider } from './PromiseCacheProvider'
 export { usePromiseCache } from './usePromiseCache'
-
