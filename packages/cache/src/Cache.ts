@@ -1,12 +1,12 @@
 import type { CacheKey, CacheOptions } from './types'
-import { hashKey } from './utils'
+import { hashCacheKey } from './utils'
 
 type Sync = (...args: unknown[]) => unknown
 
 type CacheState<TCacheKey extends CacheKey = CacheKey> = {
   promise?: Promise<unknown>
   cacheKey: TCacheKey
-  hashedKey: ReturnType<typeof hashKey>
+  hashedCacheKey: ReturnType<typeof hashCacheKey>
   error?: unknown
   data?: unknown
 }
@@ -15,8 +15,8 @@ type CacheState<TCacheKey extends CacheKey = CacheKey> = {
  * @experimental This is experimental feature.
  */
 export class Cache {
-  private cache = new Map<ReturnType<typeof hashKey>, CacheState>()
-  private syncsMap = new Map<ReturnType<typeof hashKey>, Sync[]>()
+  private cache = new Map<ReturnType<typeof hashCacheKey>, CacheState>()
+  private syncsMap = new Map<ReturnType<typeof hashCacheKey>, Sync[]>()
 
   public reset = (cacheKey?: CacheKey) => {
     if (cacheKey === undefined || cacheKey.length === 0) {
@@ -25,10 +25,9 @@ export class Cache {
       return
     }
 
-    const hashedKey = hashKey(cacheKey)
+    const hashedKey = hashCacheKey(cacheKey)
 
     if (this.cache.has(hashedKey)) {
-      // TODO: reset with key index hierarchy
       this.cache.delete(hashedKey)
     }
 
@@ -43,7 +42,7 @@ export class Cache {
       return
     }
 
-    const hashedKey = hashKey(cacheKey)
+    const hashedKey = hashCacheKey(cacheKey)
     const cachedState = this.cache.get(hashedKey)
     if (cachedState) {
       // TODO: clearError with key index hierarchy
@@ -55,8 +54,8 @@ export class Cache {
     cacheKey,
     cacheFn,
   }: CacheOptions<TData, TCacheKey>): TData => {
-    const hashedKey = hashKey(cacheKey)
-    const cachedState = this.cache.get(hashedKey)
+    const hashedCacheKey = hashCacheKey(cacheKey)
+    const cachedState = this.cache.get(hashedCacheKey)
 
     if (cachedState) {
       if (cachedState.error) {
@@ -72,28 +71,28 @@ export class Cache {
         throw cachedState.promise
       }
     }
-    const newCache: CacheState<TCacheKey> = {
+    const newCacheState: CacheState<TCacheKey> = {
       cacheKey,
-      hashedKey,
+      hashedCacheKey,
       promise: cacheFn({ cacheKey })
         .then((data) => {
-          newCache.data = data
+          newCacheState.data = data
         })
         .catch((error: unknown) => {
-          newCache.error = error
+          newCacheState.error = error
         }),
     }
 
-    this.cache.set(hashedKey, newCache)
+    this.cache.set(hashedCacheKey, newCacheState)
     // eslint-disable-next-line @typescript-eslint/no-throw-literal
-    throw newCache.promise
+    throw newCacheState.promise
   }
 
-  public getData = (cacheKey: CacheKey) => this.cache.get(hashKey(cacheKey))?.data
-  public getError = (cacheKey: CacheKey) => this.cache.get(hashKey(cacheKey))?.error
+  public getData = (cacheKey: CacheKey) => this.cache.get(hashCacheKey(cacheKey))?.data
+  public getError = (cacheKey: CacheKey) => this.cache.get(hashCacheKey(cacheKey))?.error
 
   public subscribe(cacheKey: CacheKey, syncSubscriber: Sync) {
-    const hashedKey = hashKey(cacheKey)
+    const hashedKey = hashCacheKey(cacheKey)
     const syncs = this.syncsMap.get(hashedKey)
     this.syncsMap.set(hashedKey, [...(syncs ?? []), syncSubscriber])
 
@@ -104,7 +103,7 @@ export class Cache {
   }
 
   public unsubscribe(cacheKey: CacheKey, syncSubscriber: Sync) {
-    const hashedKey = hashKey(cacheKey)
+    const hashedKey = hashCacheKey(cacheKey)
     const syncs = this.syncsMap.get(hashedKey)
 
     if (syncs) {
@@ -116,10 +115,10 @@ export class Cache {
   }
 
   private syncSubscribers = (cacheKey?: CacheKey) => {
-    const hashedKey = cacheKey ? hashKey(cacheKey) : undefined
+    const hashedCacheKey = cacheKey ? hashCacheKey(cacheKey) : undefined
 
-    return hashedKey
-      ? this.syncsMap.get(hashedKey)?.forEach((sync) => sync())
+    return hashedCacheKey
+      ? this.syncsMap.get(hashedCacheKey)?.forEach((sync) => sync())
       : this.syncsMap.forEach((syncs) => syncs.forEach((sync) => sync()))
   }
 }

@@ -1,2 +1,1 @@
-export { hasResetKeysChanged } from './hasResetKeysChanged'
-export { hashKey } from './hashKey'
+export { hashCacheKey } from './hashCacheKey'

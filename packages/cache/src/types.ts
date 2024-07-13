@@ -1,7 +1,6 @@
 import type { Tuple } from './utility-types'
 
-export type Key = Tuple
-export type CacheKey = Key
+export type CacheKey = Tuple
 
 /**
  * @experimental This is experimental feature.

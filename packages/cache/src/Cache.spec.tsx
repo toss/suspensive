@@ -5,7 +5,7 @@ import { Suspense } from 'react'
 import { Cache } from './Cache'
 import { CacheProvider } from './CacheProvider'
 import { SuspenseCache } from './SuspenseCache'
-import { hashKey } from './utils'
+import { hashCacheKey } from './utils'
 
 const key = (id: number) => ['key', id] as const
 
@@ -108,6 +108,6 @@ describe('cache', () => {
     const key = ['nonexistent', 'key'] as const
     cache.unsubscribe(key, mockSync)
 
-    expect(cache['syncsMap'].get(hashKey(key))).toBeUndefined()
+    expect(cache['syncsMap'].get(hashCacheKey(key))).toBeUndefined()
   })
 })

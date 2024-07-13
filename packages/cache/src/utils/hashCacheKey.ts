@@ -1,7 +1,7 @@
-import type { Key } from '../types'
+import type { CacheKey } from '../types'
 import { type PlainObject, isPlainObject } from './isPlainObject'
 
-export const hashKey = (key: Key) =>
+export const hashCacheKey = (key: CacheKey) =>
   JSON.stringify(key, (_, val: unknown) =>
     isPlainObject(val)
       ? Object.keys(val)

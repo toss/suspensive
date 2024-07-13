@@ -1,4 +1,4 @@
-import { hashKey } from './hashKey'
+import { hashCacheKey } from './hashCacheKey'
 
 const key1 = [
   {
@@ -19,8 +19,8 @@ describe('JSON.stringify', () => {
   })
 })
 
-describe('hashKey', () => {
+describe('hashCacheKey', () => {
   it("should make same string regardless of key's field order", () => {
-    expect(hashKey(key1) === hashKey(key2)).toBe(true)
+    expect(hashCacheKey(key1) === hashCacheKey(key2)).toBe(true)
   })
 })

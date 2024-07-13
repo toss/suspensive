@@ -3,13 +3,20 @@ import { ERROR_MESSAGE, FALLBACK, TEXT, sleep } from '@suspensive/test-utils'
 import { render, screen, waitFor } from '@testing-library/react'
 import ms from 'ms'
 import { Cache } from './Cache'
+import { cacheOptions } from './cacheOptions'
 import { CacheProvider } from './CacheProvider'
 import { useSuspenseCache } from './useSuspenseCache'
 
 const key = (id: number) => ['key', id] as const
 
+const successCacheOptions = cacheOptions({ cacheKey: key(1), cacheFn: () => sleep(ms('0.1s')).then(() => TEXT) })
+const failureCacheOptions = cacheOptions({
+  cacheKey: key(1),
+  cacheFn: () => sleep(ms('0.1s')).then(() => Promise.reject(new Error(ERROR_MESSAGE))),
+})
+
 const SuspenseCacheSuccess = () => {
-  const resolvedData = useSuspenseCache({ cacheKey: key(1), cacheFn: () => sleep(ms('0.1s')).then(() => TEXT) })
+  const resolvedData = useSuspenseCache(successCacheOptions)
 
   return (
     <>
@@ -20,10 +27,7 @@ const SuspenseCacheSuccess = () => {
 }
 
 const SuspenseCacheFailure = () => {
-  const resolvedData = useSuspenseCache({
-    cacheKey: key(1),
-    cacheFn: () => sleep(ms('0.1s')).then(() => Promise.reject(new Error(ERROR_MESSAGE))),
-  })
+  const resolvedData = useSuspenseCache(failureCacheOptions)
 
   return <>{resolvedData.data}</>
 }
