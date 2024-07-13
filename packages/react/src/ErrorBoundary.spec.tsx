@@ -125,7 +125,7 @@ describe('<ErrorBoundary/>', () => {
 
   it('should be reset by render prop reset(), and call onReset', async () => {
     const onReset = vi.fn()
-    const fallbackFn = vi.fn<Parameters<(props: ErrorBoundaryFallbackProps) => void>, undefined>()
+    const fallbackFn = vi.fn<(props: ErrorBoundaryFallbackProps) => undefined>()
     render(
       <ErrorBoundary fallback={fallbackFn} onReset={onReset}>
         <ThrowError message={ERROR_MESSAGE} after={ms('0.1s')}>
