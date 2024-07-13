@@ -9,7 +9,7 @@ import { useSuspensePromise } from './useSuspensePromise'
 const key = (id: number) => ['key', id] as const
 
 const SuspensePromiseSuccess = () => {
-  const resolvedData = useSuspensePromise({ key: key(1), fn: () => sleep(ms('0.1s')).then(() => TEXT) })
+  const resolvedData = useSuspensePromise({ promiseKey: key(1), promiseFn: () => sleep(ms('0.1s')).then(() => TEXT) })
 
   return (
     <>
@@ -21,8 +21,8 @@ const SuspensePromiseSuccess = () => {
 
 const SuspensePromiseFailure = () => {
   const resolvedData = useSuspensePromise({
-    key: key(1),
-    fn: () => sleep(ms('0.1s')).then(() => Promise.reject(new Error(ERROR_MESSAGE))),
+    promiseKey: key(1),
+    promiseFn: () => sleep(ms('0.1s')).then(() => Promise.reject(new Error(ERROR_MESSAGE))),
   })
 
   return <>{resolvedData.data}</>

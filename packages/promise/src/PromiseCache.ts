@@ -5,7 +5,7 @@ type Sync = (...args: unknown[]) => unknown
 
 type PromiseCacheState<TKey extends Key = Key> = {
   promise?: Promise<unknown>
-  key: TKey
+  promiseKey: TKey
   hashedKey: ReturnType<typeof hashKey>
   error?: unknown
   data?: unknown
@@ -18,32 +18,32 @@ export class PromiseCache {
   private cache = new Map<ReturnType<typeof hashKey>, PromiseCacheState>()
   private syncsMap = new Map<ReturnType<typeof hashKey>, Sync[]>()
 
-  public reset = (key?: Key) => {
-    if (key === undefined || key.length === 0) {
+  public reset = (promiseKey?: Key) => {
+    if (promiseKey === undefined || promiseKey.length === 0) {
       this.cache.clear()
       this.syncSubscribers()
       return
     }
 
-    const hashedKey = hashKey(key)
+    const hashedKey = hashKey(promiseKey)
 
     if (this.cache.has(hashedKey)) {
       // TODO: reset with key index hierarchy
       this.cache.delete(hashedKey)
     }
 
-    this.syncSubscribers(key)
+    this.syncSubscribers(promiseKey)
   }
 
-  public clearError = (key?: Key) => {
-    if (key === undefined || key.length === 0) {
+  public clearError = (promiseKey?: Key) => {
+    if (promiseKey === undefined || promiseKey.length === 0) {
       this.cache.forEach((value, key, map) => {
         map.set(key, { ...value, promise: undefined, error: undefined })
       })
       return
     }
 
-    const hashedKey = hashKey(key)
+    const hashedKey = hashKey(promiseKey)
     const promiseCacheState = this.cache.get(hashedKey)
     if (promiseCacheState) {
       // TODO: clearError with key index hierarchy
@@ -51,27 +51,31 @@ export class PromiseCache {
     }
   }
 
-  public suspend = <TData, TKey extends Key = Key>({ key, fn }: SuspensePromiseOptions<TData, TKey>): TData => {
-    const hashedKey = hashKey(key)
+  public suspend = <TData, TKey extends Key = Key>({
+    promiseKey,
+    promiseFn,
+  }: SuspensePromiseOptions<TData, TKey>): TData => {
+    const hashedKey = hashKey(promiseKey)
     const promiseCacheState = this.cache.get(hashedKey)
 
-    if (promiseCacheState?.error) {
-      // eslint-disable-next-line @typescript-eslint/no-throw-literal
-      throw promiseCacheState.error
-    }
-    if (promiseCacheState?.data) {
-      return promiseCacheState.data as TData
-    }
+    if (promiseCacheState) {
+      if (promiseCacheState.error) {
+        // eslint-disable-next-line @typescript-eslint/no-throw-literal
+        throw promiseCacheState.error
+      }
+      if (promiseCacheState.data) {
+        return promiseCacheState.data as TData
+      }
 
-    if (promiseCacheState?.promise) {
-      // eslint-disable-next-line @typescript-eslint/no-throw-literal
-      throw promiseCacheState.promise
+      if (promiseCacheState.promise) {
+        // eslint-disable-next-line @typescript-eslint/no-throw-literal
+        throw promiseCacheState.promise
+      }
     }
-
     const newPromiseCache: PromiseCacheState<TKey> = {
-      key,
+      promiseKey,
       hashedKey,
-      promise: fn({ key })
+      promise: promiseFn({ promiseKey })
         .then((data) => {
           newPromiseCache.data = data
         })
@@ -85,22 +89,22 @@ export class PromiseCache {
     throw newPromiseCache.promise
   }
 
-  public getData = (key: Key) => this.cache.get(hashKey(key))?.data
-  public getError = (key: Key) => this.cache.get(hashKey(key))?.error
+  public getData = (promiseKey: Key) => this.cache.get(hashKey(promiseKey))?.data
+  public getError = (promiseKey: Key) => this.cache.get(hashKey(promiseKey))?.error
 
-  public subscribe(key: Key, syncSubscriber: Sync) {
-    const hashedKey = hashKey(key)
+  public subscribe(promiseKey: Key, syncSubscriber: Sync) {
+    const hashedKey = hashKey(promiseKey)
     const syncs = this.syncsMap.get(hashedKey)
     this.syncsMap.set(hashedKey, [...(syncs ?? []), syncSubscriber])
 
     const subscribed = {
-      unsubscribe: () => this.unsubscribe(key, syncSubscriber),
+      unsubscribe: () => this.unsubscribe(promiseKey, syncSubscriber),
     }
     return subscribed
   }
 
-  public unsubscribe(key: Key, syncSubscriber: Sync) {
-    const hashedKey = hashKey(key)
+  public unsubscribe(promiseKey: Key, syncSubscriber: Sync) {
+    const hashedKey = hashKey(promiseKey)
     const syncs = this.syncsMap.get(hashedKey)
 
     if (syncs) {
@@ -111,8 +115,8 @@ export class PromiseCache {
     }
   }
 
-  private syncSubscribers = (key?: Key) => {
-    const hashedKey = key ? hashKey(key) : undefined
+  private syncSubscribers = (promiseKey?: Key) => {
+    const hashedKey = promiseKey ? hashKey(promiseKey) : undefined
 
     return hashedKey
       ? this.syncsMap.get(hashedKey)?.forEach((sync) => sync())

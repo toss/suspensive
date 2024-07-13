@@ -11,17 +11,17 @@ export const useSuspensePromise = <TData, TKey extends Key>(
   const promiseCache = usePromiseCache()
   const syncData = () => promiseCache.suspend(options)
   const data = useSyncExternalStore<TData>(
-    (sync) => promiseCache.subscribe(options.key, sync).unsubscribe,
+    (sync) => promiseCache.subscribe(options.promiseKey, sync).unsubscribe,
     syncData,
     syncData
   )
 
   return useMemo(
     () => ({
-      key: options.key,
+      promiseKey: options.promiseKey,
       data,
-      reset: () => promiseCache.reset(options.key),
+      reset: () => promiseCache.reset(),
     }),
-    [data, options.key]
+    [data, options.promiseKey, promiseCache]
   )
 }
