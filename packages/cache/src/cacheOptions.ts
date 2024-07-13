@@ -1,8 +1,8 @@
-import type { CacheOptions, Key } from './types'
+import type { CacheKey, CacheOptions } from './types'
 
 /**
  * @experimental This is experimental feature.
  */
-export const cacheOptions = <TData, TKey extends Key>(options: CacheOptions<TData, TKey>) => {
+export const cacheOptions = <TData, TCacheKey extends CacheKey>(options: CacheOptions<TData, TCacheKey>) => {
   return options
 }

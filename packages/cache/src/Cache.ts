@@ -1,11 +1,11 @@
-import type { CacheOptions, Key } from './types'
+import type { CacheKey, CacheOptions } from './types'
 import { hashKey } from './utils'
 
 type Sync = (...args: unknown[]) => unknown
 
-type CacheState<TKey extends Key = Key> = {
+type CacheState<TCacheKey extends CacheKey = CacheKey> = {
   promise?: Promise<unknown>
-  cacheKey: TKey
+  cacheKey: TCacheKey
   hashedKey: ReturnType<typeof hashKey>
   error?: unknown
   data?: unknown
@@ -18,7 +18,7 @@ export class Cache {
   private cache = new Map<ReturnType<typeof hashKey>, CacheState>()
   private syncsMap = new Map<ReturnType<typeof hashKey>, Sync[]>()
 
-  public reset = (cacheKey?: Key) => {
+  public reset = (cacheKey?: CacheKey) => {
     if (cacheKey === undefined || cacheKey.length === 0) {
       this.cache.clear()
       this.syncSubscribers()
@@ -35,7 +35,7 @@ export class Cache {
     this.syncSubscribers(cacheKey)
   }
 
-  public clearError = (cacheKey?: Key) => {
+  public clearError = (cacheKey?: CacheKey) => {
     if (cacheKey === undefined || cacheKey.length === 0) {
       this.cache.forEach((value, key, map) => {
         map.set(key, { ...value, promise: undefined, error: undefined })
@@ -51,7 +51,10 @@ export class Cache {
     }
   }
 
-  public suspend = <TData, TKey extends Key = Key>({ cacheKey, cacheFn }: CacheOptions<TData, TKey>): TData => {
+  public suspend = <TData, TCacheKey extends CacheKey = CacheKey>({
+    cacheKey,
+    cacheFn,
+  }: CacheOptions<TData, TCacheKey>): TData => {
     const hashedKey = hashKey(cacheKey)
     const cachedState = this.cache.get(hashedKey)
 
@@ -69,7 +72,7 @@ export class Cache {
         throw cachedState.promise
       }
     }
-    const newCache: CacheState<TKey> = {
+    const newCache: CacheState<TCacheKey> = {
       cacheKey,
       hashedKey,
       promise: cacheFn({ cacheKey })
@@ -86,10 +89,10 @@ export class Cache {
     throw newCache.promise
   }
 
-  public getData = (cacheKey: Key) => this.cache.get(hashKey(cacheKey))?.data
-  public getError = (cacheKey: Key) => this.cache.get(hashKey(cacheKey))?.error
+  public getData = (cacheKey: CacheKey) => this.cache.get(hashKey(cacheKey))?.data
+  public getError = (cacheKey: CacheKey) => this.cache.get(hashKey(cacheKey))?.error
 
-  public subscribe(cacheKey: Key, syncSubscriber: Sync) {
+  public subscribe(cacheKey: CacheKey, syncSubscriber: Sync) {
     const hashedKey = hashKey(cacheKey)
     const syncs = this.syncsMap.get(hashedKey)
     this.syncsMap.set(hashedKey, [...(syncs ?? []), syncSubscriber])
@@ -100,7 +103,7 @@ export class Cache {
     return subscribed
   }
 
-  public unsubscribe(cacheKey: Key, syncSubscriber: Sync) {
+  public unsubscribe(cacheKey: CacheKey, syncSubscriber: Sync) {
     const hashedKey = hashKey(cacheKey)
     const syncs = this.syncsMap.get(hashedKey)
 
@@ -112,7 +115,7 @@ export class Cache {
     }
   }
 
-  private syncSubscribers = (cacheKey?: Key) => {
+  private syncSubscribers = (cacheKey?: CacheKey) => {
     const hashedKey = cacheKey ? hashKey(cacheKey) : undefined
 
     return hashedKey

@@ -1,11 +1,13 @@
 import { useMemo, useSyncExternalStore } from 'react'
-import type { CacheOptions, Key, ResolvedData } from './types'
+import type { CacheKey, CacheOptions, ResolvedData } from './types'
 import { useCache } from './useCache'
 
 /**
  * @experimental This is experimental feature.
  */
-export const useSuspenseCache = <TData, TKey extends Key>(options: CacheOptions<TData, TKey>): ResolvedData<TData> => {
+export const useSuspenseCache = <TData, TCacheKey extends CacheKey>(
+  options: CacheOptions<TData, TCacheKey>
+): ResolvedData<TData> => {
   const cache = useCache()
   const syncData = () => cache.suspend(options)
   const data = useSyncExternalStore<TData>(
