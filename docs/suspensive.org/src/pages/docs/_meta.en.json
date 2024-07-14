@@ -5,7 +5,7 @@
   },
   "react": "@suspensive/react",
   "react-query": "@suspensive/react-query",
-  "jotai": "@suspensive/jotai (WIP)",
+  "jotai": "@suspensive/jotai",
   "react-await": {
     "title": "@suspensive/react-await",
     "theme": {
