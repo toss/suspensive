@@ -1,4 +1,5 @@
 import { Callout, Sandpack } from '@/components'
+import { Tabs } from 'nextra/components'
 
 # ErrorBoundary
 
@@ -61,7 +62,7 @@ export const ErrorAfter2s = () => {
 
   useEffect(() => {
     setTimeout(() => {
-      setAsyncState({ isError: true, error: { status: 401, message: 'unauthorized' } })
+      setAsyncState({ isError: true, error: new Error('error made by Error') })
     }, 2000)
   }, [])
 
@@ -196,7 +197,7 @@ export const ErrorAfter2s = () => {
 
   useEffect(() => {
     setTimeout(() => {
-      setAsyncState({ isError: true, error: { status: 401, message: 'unauthorized' } })
+      setAsyncState({ isError: true, error: new Error('error made by Error') })
     }, 2000)
   }, [])
 
@@ -350,7 +351,202 @@ export const ErrorAfter2s = () => {
 
   useEffect(() => {
     setTimeout(() => {
-      setAsyncState({ isError: true, error: { status: 401, message: 'unauthorized' } })
+      setAsyncState({ isError: true, error: new Error('error made by Error') })
+    }, 2000)
+  }, [])
+
+  if (asyncState.isError) {
+    throw asyncState.error
+  }
+
+  return <>No error</>
+}
+```
+
+</Sandpack>
+
+### props.shouldCatch
+
+shouldCatch determines whether `<ErrorBoundary/>` should catch errors based on conditions.
+
+It accepts three criteria: Boolean, ErrorConstructor, and Callback, and defaults to true.
+
+<Tabs items={['Boolean', 'ErrorConstructor', 'Callback']}>
+  <Tabs.Tab>
+  
+```tsx /shouldCatch/
+import { ErrorBoundary } from '@suspensive/react'
+import { useState, useEffect, createElement } from 'react'
+
+export const Example = () => {
+  return (
+    <ErrorBoundary fallback={({ error }) => <>Parent ErrorBoundary fallback: {error.message}</>}>
+      <ErrorBoundary
+        shouldCatch={false}
+        fallback={({ error }) => <>Child ErrorBoundary fallback: {error.message}</>}
+      >
+        <CustomErrorAfter2s />
+      </ErrorBoundary>
+    </ErrorBoundary>
+  )
+}
+```
+
+  </Tabs.Tab>
+  <Tabs.Tab>
+
+```tsx /shouldCatch/
+import { ErrorBoundary } from '@suspensive/react'
+import { useState, useEffect, createElement } from 'react'
+
+export const Example = () => {
+  return (
+    <ErrorBoundary fallback={({ error }) => <>Parent ErrorBoundary fallback: {error.message}</>}>
+      <ErrorBoundary
+        shouldCatch={CustomError}
+        fallback={({ error }) => <>Child ErrorBoundary fallback: {error.message}</>}
+      >
+        <CustomErrorAfter2s />
+      </ErrorBoundary>
+    </ErrorBoundary>
+  )
+}
+```
+
+  </Tabs.Tab>
+  <Tabs.Tab>
+  
+```tsx /shouldCatch/
+import { ErrorBoundary } from '@suspensive/react'
+import { useState, useEffect, createElement } from 'react'
+
+export const Example = () => {
+  return (
+    <ErrorBoundary fallback={({ error }) => <>Parent ErrorBoundary fallback: {error.message}</>}>
+      <ErrorBoundary
+        shouldCatch={(error) => error instanceof CustomError}
+        fallback={({ error }) => <>Child ErrorBoundary fallback: {error.message}</>}
+      >
+        <CustomErrorAfter2s />
+      </ErrorBoundary>
+    </ErrorBoundary>
+  )
+}
+```
+
+  </Tabs.Tab>
+</Tabs>
+
+You can also apply multiple criteria through array.
+
+```tsx /shouldCatch/
+import { ErrorBoundary } from '@suspensive/react'
+import { useState, useEffect, createElement } from 'react'
+
+const Example = () => {
+  return (
+    <ErrorBoundary fallback={({ error }) => <>Parent ErrorBoundary fallback: {error.message}</>}>
+      <ErrorBoundary
+        shouldCatch={[false, CustomError, (error) => error instanceof CustomError]}
+        fallback={({ error }) => <>Child ErrorBoundary fallback: {error.message}</>}
+      >
+        <CustomErrorAfter2s />
+      </ErrorBoundary>
+    </ErrorBoundary>
+  )
+}
+```
+
+<Sandpack>
+
+```tsx Example.tsx active
+import { ErrorBoundary } from '@suspensive/react'
+import { useState, useEffect, createElement } from 'react'
+
+export const Example = () => {
+  return (
+    <ErrorBoundary fallback={({ error }) => <>Parent ErrorBoundary fallback: {error.message}</>}>
+      <ErrorBoundary
+        shouldCatch={CustomError}
+        fallback={({ error }) => <>Child ErrorBoundary fallback: {error.message}</>}
+      >
+        <CustomErrorAfter2s />
+      </ErrorBoundary>
+    </ErrorBoundary>
+  )
+}
+
+export class CustomError extends Error {
+  constructor(...args: ConstructorParameters<ErrorConstructor>) {
+    super(...args)
+    console.error(...args)
+  }
+}
+
+export const CustomErrorAfter2s = () => {
+  const [asyncState, setAsyncState] = useState<
+    { isError: true; error: CustomError } | { isError: false; error: null }
+  >({
+    isError: false,
+    error: null
+  });
+
+  useEffect(() => {
+    setTimeout(() => {
+      setAsyncState({
+        isError: true,
+        error: () => new CustomError("error made by CustomError")
+      });
+    }, 2000);
+  }, []);
+
+  if (asyncState.isError) {
+    throw asyncState.error();
+  }
+
+  return <>No error</>;
+};
+```
+
+</Sandpack>
+
+<br />
+
+<Sandpack>
+
+```tsx Example.tsx active
+import { ErrorBoundary } from '@suspensive/react'
+import { useState, useEffect, createElement } from 'react'
+
+export const Example = () => {
+  return (
+    <ErrorBoundary fallback={({ error }) => <>Parent ErrorBoundary fallback: {error.message}</>}>
+      <ErrorBoundary
+        shouldCatch={CustomError}
+        fallback={({ error }) => <>Child ErrorBoundary fallback: {error.message}</>}
+      >
+        <ErrorAfter2s />
+      </ErrorBoundary>
+    </ErrorBoundary>
+  )
+}
+
+export class CustomError extends Error {
+  constructor(...args: ConstructorParameters<ErrorConstructor>) {
+    super(...args)
+    console.error(...args)
+  }
+}
+
+export const ErrorAfter2s = () => {
+  const [asyncState, setAsyncState] = useState<{ isError: true; error: Error } | { isError: false; error: null }>({
+    isError: false,
+    error: null,
+  })
+
+  useEffect(() => {
+    setTimeout(() => {
+      setAsyncState({ isError: true, error: new Error('error made by Error') })
     }, 2000)
   }, [])
 
