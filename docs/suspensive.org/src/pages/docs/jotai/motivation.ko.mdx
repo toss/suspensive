@@ -1,0 +1,23 @@
+import { Steps } from 'nextra/components'
+
+# 어떤 이유로 사용하나요?
+
+@suspensive/jotai는 아래와 같은 동기로 사용됩니다.
+
+<Steps>
+
+### Jotai에서 발생되는 Suspnse를 더욱 강력하게 사용할 수 있습니다.
+
+Jotai의 모든 Atom은 비동기 읽기 또는 비동기 쓰기와 같은 비동기 동작을 지원합니다. 비동기식 Atom을 사용하면 실제 데이터를 접근하면서 동시에 Atom에서 놀라울 정도로 쉽게 데이터를 관리할 수 있습니다.
+
+Jotai의 Async는 본질적으로 비동기 흐름을 처리하기 위해 Suspense를 활용하고 있습니다. Atom이 비동기 요청을 시작하게 되면 Suspense가 활성화되어 동작합니다.
+
+[@suspensive/react](http://localhost:4000/ko/docs/react/motivation)와 조합하여 Suspense를 강력하게 사용할 수 있습니다.
+
+### Async Atom를 선언적으로 사용할 수 있습니다.
+
+Jotai와 동일한 인터페이스를 Props를 가지며 컴포넌트를 통해서 선언적으로 사용할 수 있습니다. 이는 Async Atom이 요청될 때 Suspense를 발생시키는 것이 무엇인지 명확하게 표현할 수 있습니다.
+
+@suspensive/react-query와 동일하게, 같은 depth에서 Suspense를 발생시키는 것이 무엇인지 명확하게 표현할 수 있습니다.
+
+</Steps>
