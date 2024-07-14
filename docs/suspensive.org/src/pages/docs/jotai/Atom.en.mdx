@@ -40,11 +40,14 @@ import { Suspense } from '@suspensive/react'
 import { atom } from "jotai";
 
 const countAtom = atom(1)
-const asyncAtom = atom(async (get) => get(countAtom) * 2)
+const asyncDoubleCountAtom = atom(async (get) => {
+  await delay(2000)
+  return get(countAtom) * 2
+})
 
 const Example = () => (
     <Suspense fallback={'loading...'}>
-      <Atom atom={asyncAtom}>
+      <Atom atom={asyncDoubleCountAtom}>
         {([count]) => (
           <>count: {count}</>
         )}
