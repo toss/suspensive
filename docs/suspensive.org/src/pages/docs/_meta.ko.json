@@ -17,12 +17,7 @@
       "collapsed": true
     }
   },
-  "jotai": {
-    "title": "@suspensive/jotai",
-    "theme": {
-      "collapsed": true
-    }
-  },
+  "jotai": "@suspensive/jotai",
   "--- More": {
     "type": "separator",
     "title": "더보기"
