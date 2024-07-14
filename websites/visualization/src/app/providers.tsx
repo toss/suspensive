@@ -1,5 +1,6 @@
 'use client'
 
+import { Cache, CacheProvider } from '@suspensive/cache'
 import { DevMode, Suspensive, SuspensiveProvider } from '@suspensive/react'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
@@ -7,6 +8,7 @@ import { type PropsWithChildren, useState } from 'react'
 import { Spinner } from '~/components/uis'
 
 export const Providers = ({ children }: PropsWithChildren) => {
+  const cache = useState(new Cache())[0]
   const queryClient = useState(
     () =>
       new QueryClient({
@@ -32,12 +34,14 @@ export const Providers = ({ children }: PropsWithChildren) => {
   )[0]
 
   return (
-    <SuspensiveProvider value={suspensive}>
-      <QueryClientProvider client={queryClient}>
-        {children}
-        <ReactQueryDevtools initialIsOpen={false} />
-      </QueryClientProvider>
-      <DevMode position="bottomRight" />
-    </SuspensiveProvider>
+    <CacheProvider cache={cache}>
+      <SuspensiveProvider value={suspensive}>
+        <QueryClientProvider client={queryClient}>
+          {children}
+          <ReactQueryDevtools initialIsOpen={false} />
+        </QueryClientProvider>
+        <DevMode position="bottomRight" />
+      </SuspensiveProvider>
+    </CacheProvider>
   )
 }

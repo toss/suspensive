@@ -1,27 +1,16 @@
-import { useMemo, useSyncExternalStore } from 'react'
-import type { CacheKey, CacheOptions, SuspenseCacheResult } from './types'
+import { useSyncExternalStore } from 'react'
+import type { ResolvedCached } from './Cache'
+import type { CacheKey, CacheOptions } from './types'
 import { useCache } from './useCache'
 
 /**
  * @experimental This is experimental feature.
  */
-export const useSuspenseCache = <TData, TCacheKey extends CacheKey>(
-  options: CacheOptions<TData, TCacheKey>
-): SuspenseCacheResult<TData> => {
+export const useSuspenseCache = <TData, TCacheKey extends CacheKey>(options: CacheOptions<TData, TCacheKey>) => {
   const cache = useCache()
-  const syncData = () => cache.suspend(options)
-  const data = useSyncExternalStore<TData>(
-    (sync) => cache.subscribe(options.cacheKey, sync).unsubscribe,
-    syncData,
-    syncData
-  )
-
-  return useMemo(
-    () => ({
-      promiseKey: options.cacheKey,
-      data,
-      reset: () => cache.reset(),
-    }),
-    [data, options.cacheKey, cache]
-  )
+  return useSyncExternalStore<ResolvedCached<TData, TCacheKey>>(
+    (sync) => cache.subscribe(options, sync).unsubscribe,
+    () => cache.suspend<TData, TCacheKey>(options),
+    () => cache.suspend<TData, TCacheKey>(options)
+  ).state
 }
