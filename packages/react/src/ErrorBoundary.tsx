@@ -65,6 +65,7 @@ export type ErrorBoundaryProps = PropsWithDevMode<
      */
     fallback: ReactNode | FunctionComponent<ErrorBoundaryFallbackProps>
     /**
+     * determines whether the ErrorBoundary should catch errors based on conditions
      * @default true
      */
     shouldCatch?: ShouldCatch | [ShouldCatch, ...ShouldCatch[]]
