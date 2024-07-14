@@ -1,109 +1,189 @@
 import type { CacheKey, CacheOptions } from './types'
+import type { ExtractPartial } from './utility-types/ExtractPartial'
 import { hashCacheKey } from './utils'
 
 type Sync = (...args: unknown[]) => unknown
 
-type CacheState<TCacheKey extends CacheKey = CacheKey> = {
-  promise?: Promise<unknown>
-  cacheKey: TCacheKey
-  hashedCacheKey: ReturnType<typeof hashCacheKey>
-  error?: unknown
-  data?: unknown
-}
+export type AllStatusCached<TData, TCacheKey extends CacheKey = CacheKey> =
+  | {
+      status: 'idle'
+      promiseToSuspend: undefined
+      cacheKey: TCacheKey
+      hashedCacheKey: ReturnType<typeof hashCacheKey>
+      state: {
+        promise: undefined
+        data: undefined
+        error: undefined
+      }
+    }
+  | {
+      status: 'pending'
+      promiseToSuspend: Promise<void>
+      cacheKey: TCacheKey
+      hashedCacheKey: ReturnType<typeof hashCacheKey>
+      state: {
+        promise: Promise<TData>
+        data: undefined
+        error: undefined
+      }
+    }
+  | {
+      status: 'resolved'
+      promiseToSuspend: Promise<void>
+      cacheKey: TCacheKey
+      hashedCacheKey: ReturnType<typeof hashCacheKey>
+      state: {
+        promise: Promise<TData>
+        data: TData
+        error: undefined
+      }
+    }
+  | {
+      status: 'rejected'
+      promiseToSuspend: Promise<void>
+      cacheKey: TCacheKey
+      hashedCacheKey: ReturnType<typeof hashCacheKey>
+      state: {
+        promise: Promise<TData>
+        data: undefined
+        error: unknown
+      }
+    }
+
+export interface IdleCached<TData, TCacheKey extends CacheKey = CacheKey>
+  extends ExtractPartial<AllStatusCached<TData, TCacheKey>, { status: 'idle' }> {}
+export interface PendingCached<TData, TCacheKey extends CacheKey = CacheKey>
+  extends ExtractPartial<AllStatusCached<TData, TCacheKey>, { status: 'pending' }> {}
+export interface ResolvedCached<TData, TCacheKey extends CacheKey = CacheKey>
+  extends ExtractPartial<AllStatusCached<TData, TCacheKey>, { status: 'resolved' }> {}
+export interface RejectedCached<TData, TCacheKey extends CacheKey = CacheKey>
+  extends ExtractPartial<AllStatusCached<TData, TCacheKey>, { status: 'rejected' }> {}
+
+export type Cached<TData, TCacheKey extends CacheKey = CacheKey> =
+  | IdleCached<TData, TCacheKey>
+  | PendingCached<TData, TCacheKey>
+  | ResolvedCached<TData, TCacheKey>
+  | RejectedCached<TData, TCacheKey>
 
 /**
  * @experimental This is experimental feature.
  */
 export class Cache {
-  private cache = new Map<ReturnType<typeof hashCacheKey>, CacheState>()
-  private syncsMap = new Map<ReturnType<typeof hashCacheKey>, Sync[]>()
+  private cache = new Map<ReturnType<typeof hashCacheKey>, Cached<unknown>>()
+  private syncsMap = new Map<ReturnType<typeof hashCacheKey>, Array<Sync>>()
 
-  public reset = (cacheKey?: CacheKey) => {
-    if (cacheKey === undefined || cacheKey.length === 0) {
+  public reset = (options?: Pick<CacheOptions<unknown, CacheKey>, 'cacheKey'>) => {
+    if (typeof options?.cacheKey === 'undefined' || options.cacheKey.length === 0) {
       this.cache.clear()
       this.syncSubscribers()
       return
     }
 
-    const hashedKey = hashCacheKey(cacheKey)
+    const hashedKey = hashCacheKey(options.cacheKey)
 
     if (this.cache.has(hashedKey)) {
       this.cache.delete(hashedKey)
     }
 
-    this.syncSubscribers(cacheKey)
+    this.syncSubscribers(options.cacheKey)
   }
 
-  public clearError = (cacheKey?: CacheKey) => {
-    if (cacheKey === undefined || cacheKey.length === 0) {
-      this.cache.forEach((value, key, map) => {
-        map.set(key, { ...value, promise: undefined, error: undefined })
+  public clearError = (options?: Pick<CacheOptions<unknown, CacheKey>, 'cacheKey'>) => {
+    if (options?.cacheKey === undefined || options.cacheKey.length === 0) {
+      this.cache.forEach((cached, hashedCacheKey, cache) => {
+        cache.set(hashedCacheKey, {
+          ...cached,
+          status: 'idle',
+          promiseToSuspend: undefined,
+          state: {
+            promise: undefined,
+            error: undefined,
+            data: undefined,
+          },
+        })
       })
       return
     }
 
-    const hashedKey = hashCacheKey(cacheKey)
-    const cachedState = this.cache.get(hashedKey)
+    const hashedCacheKey = hashCacheKey(options.cacheKey)
+    const cachedState = this.cache.get(hashedCacheKey)
     if (cachedState) {
-      // TODO: clearError with key index hierarchy
-      this.cache.set(hashedKey, { ...cachedState, promise: undefined, error: undefined })
+      this.cache.set(hashedCacheKey, {
+        ...cachedState,
+        status: 'idle',
+        promiseToSuspend: undefined,
+        state: {
+          promise: undefined,
+          error: undefined,
+          data: undefined,
+        },
+      })
     }
   }
 
   public suspend = <TData, TCacheKey extends CacheKey = CacheKey>({
     cacheKey,
     cacheFn,
-  }: CacheOptions<TData, TCacheKey>): TData => {
+  }: CacheOptions<TData, TCacheKey>): ResolvedCached<TData, TCacheKey> => {
     const hashedCacheKey = hashCacheKey(cacheKey)
-    const cachedState = this.cache.get(hashedCacheKey)
-
-    if (cachedState) {
-      if (cachedState.error) {
-        // eslint-disable-next-line @typescript-eslint/no-throw-literal
-        throw cachedState.error
+    const cached = this.cache.get(hashedCacheKey)
+    if (cached && cached.status !== 'idle') {
+      if (cached.status === 'rejected') {
+        throw cached.state.error
       }
-      if (cachedState.data) {
-        return cachedState.data as TData
+      if (cached.status === 'resolved') {
+        return cached as ResolvedCached<TData, TCacheKey>
       }
-
-      if (cachedState.promise) {
-        // eslint-disable-next-line @typescript-eslint/no-throw-literal
-        throw cachedState.promise
-      }
+      throw cached.promiseToSuspend
     }
-    const newCacheState: CacheState<TCacheKey> = {
+
+    const promise = cacheFn({ cacheKey })
+    const newCached: Cached<TData, TCacheKey> = {
       cacheKey,
       hashedCacheKey,
-      promise: cacheFn({ cacheKey })
-        .then((data) => {
-          newCacheState.data = data
-        })
-        .catch((error: unknown) => {
-          newCacheState.error = error
-        }),
+      status: 'pending',
+      state: {
+        promise,
+        data: undefined,
+        error: undefined,
+      },
+      promiseToSuspend: promise.then(
+        (data) => {
+          newCached.status = 'resolved'
+          newCached.state.data = data
+          newCached.state.error = undefined
+        },
+        (error: unknown) => {
+          newCached.status = 'rejected'
+          newCached.state.data = undefined
+          newCached.state.error = error
+        }
+      ),
     }
 
-    this.cache.set(hashedCacheKey, newCacheState)
-    // eslint-disable-next-line @typescript-eslint/no-throw-literal
-    throw newCacheState.promise
+    this.cache.set(hashedCacheKey, newCached)
+
+    throw newCached.promiseToSuspend
   }
 
-  public getData = (cacheKey: CacheKey) => this.cache.get(hashCacheKey(cacheKey))?.data
-  public getError = (cacheKey: CacheKey) => this.cache.get(hashCacheKey(cacheKey))?.error
+  public getData = (options: Pick<CacheOptions<unknown, CacheKey>, 'cacheKey'>) =>
+    this.cache.get(hashCacheKey(options.cacheKey))?.state.data
+  public getError = (options: Pick<CacheOptions<unknown, CacheKey>, 'cacheKey'>) =>
+    this.cache.get(hashCacheKey(options.cacheKey))?.state.error
 
-  public subscribe(cacheKey: CacheKey, syncSubscriber: Sync) {
-    const hashedKey = hashCacheKey(cacheKey)
+  public subscribe(options: Pick<CacheOptions<unknown, CacheKey>, 'cacheKey'>, syncSubscriber: Sync) {
+    const hashedKey = hashCacheKey(options.cacheKey)
     const syncs = this.syncsMap.get(hashedKey)
     this.syncsMap.set(hashedKey, [...(syncs ?? []), syncSubscriber])
 
     const subscribed = {
-      unsubscribe: () => this.unsubscribe(cacheKey, syncSubscriber),
+      unsubscribe: () => this.unsubscribe(options, syncSubscriber),
     }
     return subscribed
   }
 
-  public unsubscribe(cacheKey: CacheKey, syncSubscriber: Sync) {
-    const hashedKey = hashCacheKey(cacheKey)
+  public unsubscribe(options: Pick<CacheOptions<unknown, CacheKey>, 'cacheKey'>, syncSubscriber: Sync) {
+    const hashedKey = hashCacheKey(options.cacheKey)
     const syncs = this.syncsMap.get(hashedKey)
 
     if (syncs) {

@@ -13,6 +13,7 @@
     "start": "next start -p 4001"
   },
   "dependencies": {
+    "@suspensive/cache": "workspace:*",
     "@suspensive/react": "workspace:*",
     "@suspensive/react-await": "workspace:*",
     "@suspensive/react-image": "workspace:*",

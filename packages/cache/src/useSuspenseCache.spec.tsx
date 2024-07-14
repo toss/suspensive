@@ -5,6 +5,7 @@ import ms from 'ms'
 import { Cache } from './Cache'
 import { cacheOptions } from './cacheOptions'
 import { CacheProvider } from './CacheProvider'
+import { useCache } from './useCache'
 import { useSuspenseCache } from './useSuspenseCache'
 
 const key = (id: number) => ['key', id] as const
@@ -12,16 +13,18 @@ const key = (id: number) => ['key', id] as const
 const successCacheOptions = cacheOptions({ cacheKey: key(1), cacheFn: () => sleep(ms('0.1s')).then(() => TEXT) })
 const failureCacheOptions = cacheOptions({
   cacheKey: key(1),
-  cacheFn: () => sleep(ms('0.1s')).then(() => Promise.reject(new Error(ERROR_MESSAGE))),
+  // eslint-disable-next-line @typescript-eslint/prefer-promise-reject-errors
+  cacheFn: () => sleep(ms('0.1s')).then(() => Promise.reject(ERROR_MESSAGE)),
 })
 
 const SuspenseCacheSuccess = () => {
   const resolvedData = useSuspenseCache(successCacheOptions)
+  const cache = useCache()
 
   return (
     <>
       {resolvedData.data}
-      <button onClick={resolvedData.reset}>Try again</button>
+      <button onClick={() => cache.reset(successCacheOptions)}>Try again</button>
     </>
   )
 }
@@ -67,7 +70,7 @@ describe('useSuspenseCache', () => {
   it('should throw Error, and It will be cached', async () => {
     const { unmount } = render(
       <CacheProvider cache={cache}>
-        <ErrorBoundary fallback={(props) => <>{props.error.message}</>}>
+        <ErrorBoundary fallback={(props) => <>{props.error}</>}>
           <Suspense fallback={FALLBACK}>
             <SuspenseCacheFailure />
           </Suspense>
@@ -81,7 +84,7 @@ describe('useSuspenseCache', () => {
     unmount()
     render(
       <CacheProvider cache={cache}>
-        <ErrorBoundary fallback={(props) => <>{props.error.message}</>}>
+        <ErrorBoundary fallback={(props) => <>{props.error}</>}>
           <Suspense fallback={FALLBACK}>
             <SuspenseCacheFailure />
           </Suspense>
