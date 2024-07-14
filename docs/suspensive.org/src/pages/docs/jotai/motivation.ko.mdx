@@ -16,8 +16,42 @@ Jotai의 Async는 본질적으로 비동기 흐름을 처리하기 위해 Suspen
 
 ### Async Atom를 선언적으로 사용할 수 있습니다.
 
-제공 되는 컴포넌트는 Jotai와 동일한 인터페이스의 Props를 가지며 선언적으로 사용할 수 있습니다. 이는 [@suspensive/react-query와 동일하게](https://suspensive.org/ko/docs/react-query/SuspenseQuery) 같은 depth에서 Suspense를 발생시키는 것이 무엇인지 명확하게 표현할 수 있습니다.
+제공되는 컴포넌트는 Jotai와 동일한 인터페이스의 Props를 가지며 선언적으로 사용할 수 있습니다. 이는 [@suspensive/react-query와 동일하게](https://suspensive.org/ko/docs/react-query/SuspenseQuery), 같은 depth에서 Suspense를 발생시키는 것이 무엇인지 명확하게 표현할 수 있습니다.
 
-@suspensive/react-query와 동일하게, 같은 depth에서 Suspense를 발생시키는 것이 무엇인지 명확하게 표현할 수 있습니다.
+```tsx
+import { Atom } from '@suspensive/jotai'
+import { Suspense } from '@suspensive/react'
+import { UserProfile } from '~/components'
+import { userAtom } from "~/atoms";
+
+const Example = () => (
+  <Suspense fallback="loading...">
+    <Atom atom={userAtom}>{([ data ]) => <UserProfile key={data.id} {...data} />}
+  </Suspense>
+)
+```
+
+### Jotai의 커뮤니티 리소스와 함께 사용할 수 있습니다.
+
+Jotai에는 [Query](https://jotai.org/docs/extensions/query), [Cache](https://jotai.org/docs/extensions/cache) 등 다양한 커뮤니티 리소스가 있습니다. 커뮤니티 리소스에서 발생되는 Suspense 또한 지원됩니다.
+
+아래 예시 처럼 [jotai-tanstack-query](https://github.com/jotaijs/jotai-tanstack-query)와 함께 선언적으로 사용할 수 있습니다.
+
+```tsx
+import { AtomValue } from '@suspensive/jotai'
+import { Suspense, ErrorBoundary } from '@suspensive/react'
+import { UserProfile } from '~/components'
+import { userQueryAtom } from '~/queries'
+
+const PostsPage = ({ userId }) => (
+  <ErrorBoundary fallback={({ error }) => <>{error.message}</>}>
+    <Suspense fallback={'loading...'}>
+      <AtomValue atom={userQueryAtom}>
+        {({ data: user }) => <UserProfile key={user.id} {...user} />}
+      </AtomValue>
+    </Suspense>
+  </ErrorBoundary>
+)
+```
 
 </Steps>
