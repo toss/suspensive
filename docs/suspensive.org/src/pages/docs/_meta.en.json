@@ -5,6 +5,7 @@
   },
   "react": "@suspensive/react",
   "react-query": "@suspensive/react-query",
+  "jotai": "@suspensive/jotai (WIP)",
   "react-await": {
     "title": "@suspensive/react-await",
     "theme": {
@@ -17,7 +18,6 @@
       "collapsed": true
     }
   },
-  "jotai": "@suspensive/jotai",
   "--- More": {
     "type": "separator",
     "title": "More"
