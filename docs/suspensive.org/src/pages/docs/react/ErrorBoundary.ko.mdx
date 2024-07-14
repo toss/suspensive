@@ -373,16 +373,14 @@ export const ErrorAfter2s = () => {
 
 shouldCatch는 조건에 따라 `<ErrorBoundary/>`가 에러를 잡을지 결정합니다.
 
-Boolean, Constructor, Callback의 3가지 기준을 받으며 기본값은 `true`입니다.
+Boolean, ErrorConstructor, Callback의 3가지 기준을 받으며 기본값은 `true`입니다.
 
-<Tabs items={['Boolean', 'Constructor', 'Callback']}>
+<Tabs items={['Boolean', 'ErrorConstructor', 'Callback']}>
   <Tabs.Tab>
 
-```tsx {10}
+```tsx /shouldCatch/
 import { ErrorBoundary } from '@suspensive/react'
-import { createElement } from 'react'
-import { CustomError } from './CustomError'
-import { CustomErrorAfter2s } from './CustomErrorAfter2s'
+import { useState, useEffect, createElement } from 'react'
 
 export const Example = () => {
   return (
@@ -401,11 +399,9 @@ export const Example = () => {
   </Tabs.Tab>
   <Tabs.Tab>
   
-```tsx {10}
+```tsx /shouldCatch/
 import { ErrorBoundary } from '@suspensive/react'
-import { createElement } from 'react'
-import { CustomError } from './CustomError'
-import { CustomErrorAfter2s } from './CustomErrorAfter2s'
+import { useState, useEffect, createElement } from 'react'
 
 export const Example = () => {
   return (
@@ -420,14 +416,13 @@ export const Example = () => {
   )
 }
 ```
+
   </Tabs.Tab>
   <Tabs.Tab>
   
-```tsx {10}
+```tsx /shouldCatch/
 import { ErrorBoundary } from '@suspensive/react'
-import { createElement } from 'react'
-import { CustomError } from './CustomError'
-import { CustomErrorAfter2s } from './CustomErrorAfter2s'
+import { useState, useEffect, createElement } from 'react'
 
 export const Example = () => {
   return (
@@ -442,27 +437,26 @@ export const Example = () => {
   )
 }
 ```
+
   </Tabs.Tab>
 </Tabs>
 
 배열을 통해 여러 조건을 적용할 수도 있습니다.
 
-```tsx {10}
+```tsx /shouldCatch/
 import { ErrorBoundary } from '@suspensive/react'
-import { createElement } from 'react'
-import { CustomError } from './CustomError'
-import { CustomErrorAfter2s } from './CustomErrorAfter2s'
+import { useState, useEffect, createElement } from 'react'
 
-export const Example = () => {
-return (
-  <ErrorBoundary fallback={({ error }) => <>{error.message} of Parent</>}>
-    <ErrorBoundary
-      shouldCatch={[false, CustomError, (error) => error instanceof CustomError]}
-      fallback={({ error }) => <>{error.message} of Child</>}
-    >
-      <CustomErrorAfter2s />
+const Example = () => {
+  return (
+    <ErrorBoundary fallback={({ error }) => <>{error.message} of Parent</>}>
+      <ErrorBoundary
+        shouldCatch={[false, CustomError, (error) => error instanceof CustomError]}
+        fallback={({ error }) => <>{error.message} of Child</>}
+      >
+        <CustomErrorAfter2s />
+      </ErrorBoundary>
     </ErrorBoundary>
-  </ErrorBoundary>
   )
 }
 ```
@@ -471,9 +465,7 @@ return (
 
 ```tsx Example.tsx active
 import { ErrorBoundary } from '@suspensive/react'
-import { createElement } from 'react'
-import { CustomError } from './CustomError'
-import { CustomErrorAfter2s } from './CustomErrorAfter2s'
+import { useState, useEffect, createElement } from 'react'
 
 export const Example = () => {
   return (
@@ -487,9 +479,7 @@ export const Example = () => {
     </ErrorBoundary>
   )
 }
-```
 
-```tsx CustomError.ts
 
 export class CustomError extends Error {
   constructor(...args: ConstructorParameters<ErrorConstructor>) {
@@ -497,11 +487,6 @@ export class CustomError extends Error {
     console.error(...args)
   }
 }
-```
-
-```tsx CustomErrorAfter2s.tsx
-import { useState, useEffect } from "react";
-import { CustomError } from "./CustomError";
 
 export const CustomErrorAfter2s = () => {
   const [asyncState, setAsyncState] = useState<
@@ -515,7 +500,7 @@ export const CustomErrorAfter2s = () => {
     setTimeout(() => {
       setAsyncState({
         isError: true,
-        error: () => new CustomError("unauthorized")
+        error: () => new CustomError("Error made by CustomError Constructor")
       });
     }, 2000);
   }, []);
@@ -536,9 +521,8 @@ export const CustomErrorAfter2s = () => {
 
 ```tsx Example.tsx active
 import { ErrorBoundary } from '@suspensive/react'
-import { createElement } from 'react'
-import { CustomError } from './CustomError'
-import { ErrorAfter2s } from './ErrorAfter2s'
+import { useState, useEffect, createElement } from 'react'
+
 
 export const Example = () => {
   return (
@@ -552,9 +536,6 @@ export const Example = () => {
     </ErrorBoundary>
   )
 }
-```
-
-```tsx CustomError.ts
 
 export class CustomError extends Error {
   constructor(...args: ConstructorParameters<ErrorConstructor>) {
@@ -562,10 +543,6 @@ export class CustomError extends Error {
     console.error(...args)
   }
 }
-```
-
-```tsx /ErrorAfter2s.tsx
-import { useState, useEffect } from 'react'
 
 export const ErrorAfter2s = () => {
   const [asyncState, setAsyncState] = useState<{ isError: true; error: Error } | { isError: false; error: null }>({
@@ -575,7 +552,7 @@ export const ErrorAfter2s = () => {
 
   useEffect(() => {
     setTimeout(() => {
-      setAsyncState({ isError: true, error: { status: 401, message: 'unauthorized' } })
+      setAsyncState({ isError: true, error: { status: 400, message: 'Error made by ErrorConstructor' } })
     }, 2000)
   }, [])
 
