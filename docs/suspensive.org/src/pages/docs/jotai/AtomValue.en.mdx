@@ -4,15 +4,15 @@ import { Callout } from '@/components'
 
 <Callout type='experimental'>
 
-`<AtomValue/>`는 실험 기능이므로 이 인터페이스는 변경될 수 있습니다.
+`<AtomValue/>` is experimental feature, this interfaces could be changed
 
 </Callout>
 
-AtomValue 컴포넌트는 Jotai의 [useAtomValue](https://jotai.org/docs/core/use-atom#useatomvalue) 훅과 동일한 인터페이스를 Props로 제공하며 선언적으로 사용할 수 있습니다.
+The AtomValue component provides the same props interface as Jotai's [useAtomValue](https://jotai.org/docs/core/use-atom#useatomvalue) hook and can be used declaratively.
 
 ### props.atom
 
-atom은 Jotai의 atom 인터페이스와 동일하게 동작합니다.
+The atom prop behaves the same as Jotai's atom interface.
 
 ```tsx /AtomValue/
 import { AtomValue } from '@suspensive/jotai'
@@ -29,7 +29,7 @@ const Example = () => (
 )
 ```
 
-Async Atom일 경우 Suspense를 사용하여 로딩 상태를 처리할 수 있습니다.
+For async atoms, you can handle the loading state using Suspense.
 
 ```tsx /AtomValue/
 import { AtomValue } from '@suspensive/jotai'

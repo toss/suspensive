@@ -1,0 +1,57 @@
+import { Steps } from 'nextra/components'
+
+# Why Use This?
+
+@suspensive/jotai is used for the following reasons.
+
+<Steps>
+
+### Enhance the Power of Suspense in Jotai
+
+All atoms in Jotai support asynchronous operations like asynchronous reads or writes. By using asynchronous atoms, you can access real data while easily managing the data within the atom.
+
+Jotai's async functionality leverages Suspense to handle asynchronous flows inherently. When an atom initiates an asynchronous request, Suspense gets activated and handles the operation.
+
+By using it together with [@suspensive/react](https://suspensive.org/ko/docs/react/motivation), you can use Suspense more powerfully and conveniently.
+
+### Use Async Atoms Declaratively
+
+The provided components have the same interface props as Jotai and can be used declaratively. This allows you to clearly express what triggers Suspense at the same depth, similar to [SuspenseQuery in @suspensive/react-query](https://suspensive.org/ko/docs/react-query/SuspenseQuery).
+
+```tsx
+import { Atom } from '@suspensive/jotai'
+import { Suspense } from '@suspensive/react'
+import { UserProfile } from '~/components'
+import { userAtom } from "~/atoms";
+
+const Example = () => (
+  <Suspense fallback="loading...">
+    <Atom atom={userAtom}>{([data]) => <UserProfile key={data.id} {...data} />}
+  </Suspense>
+)
+```
+
+### Utilize Jotai's Community Resources
+
+Jotai has various community resources such as [Query](https://jotai.org/docs/extensions/query) and [Cache](https://jotai.org/docs/extensions/cache). Suspense is also supported in these community resources.
+
+As shown in the example below, you can use it declaratively with [jotai-tanstack-query](https://github.com/jotaijs/jotai-tanstack-query).
+
+```tsx
+import { AtomValue } from '@suspensive/jotai'
+import { Suspense, ErrorBoundary } from '@suspensive/react'
+import { UserProfile } from '~/components'
+import { userQueryAtom } from '~/queries'
+
+const PostsPage = () => (
+  <ErrorBoundary fallback={({ error }) => <>{error.message}</>}>
+    <Suspense fallback={'loading...'}>
+      <AtomValue atom={userQueryAtom}>
+        {({ data: user }) => <UserProfile key={user.id} {...user} />}
+      </AtomValue>
+    </Suspense>
+  </ErrorBoundary>
+)
+```
+
+</Steps>
