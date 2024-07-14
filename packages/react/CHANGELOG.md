@@ -1,5 +1,11 @@
 # @suspensive/react
 
+## 2.6.2
+
+### Patch Changes
+
+- [#1085](https://github.com/toss/suspensive/pull/1085) [`6848e8d`](https://github.com/toss/suspensive/commit/6848e8df6f73b5a0029e82da3356c9c73e6b16be) Thanks [@jgjgill](https://github.com/jgjgill)! - fix(react): add jsdoc for shouldCatch prop of ErrorBoundary
+
 ## 2.6.1
 
 ### Patch Changes
