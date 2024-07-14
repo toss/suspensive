@@ -2,4 +2,4 @@
 '@suspensive/cache': minor
 ---
 
-feat(cache): add SuspenseCache, useSuspenseCache, cacheOptions, Cache, CacheProvider, useCache
+feat(cache): add CacheStore, useCacheStore, CacheStoreProvider, useCache, Cache, cacheOptions
