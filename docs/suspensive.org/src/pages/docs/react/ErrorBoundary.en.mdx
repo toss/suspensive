@@ -62,7 +62,7 @@ export const ErrorAfter2s = () => {
 
   useEffect(() => {
     setTimeout(() => {
-      setAsyncState({ isError: true, error: { status: 401, message: 'unauthorized' } })
+      setAsyncState({ isError: true, error: new Error('error made by Error') })
     }, 2000)
   }, [])
 
@@ -197,7 +197,7 @@ export const ErrorAfter2s = () => {
 
   useEffect(() => {
     setTimeout(() => {
-      setAsyncState({ isError: true, error: { status: 401, message: 'unauthorized' } })
+      setAsyncState({ isError: true, error: new Error('error made by Error') })
     }, 2000)
   }, [])
 
@@ -351,7 +351,7 @@ export const ErrorAfter2s = () => {
 
   useEffect(() => {
     setTimeout(() => {
-      setAsyncState({ isError: true, error: { status: 401, message: 'unauthorized' } })
+      setAsyncState({ isError: true, error: new Error('error made by Error') })
     }, 2000)
   }, [])
 
@@ -380,10 +380,10 @@ import { useState, useEffect, createElement } from 'react'
 
 export const Example = () => {
   return (
-    <ErrorBoundary fallback={({ error }) => <>{error.message} of Parent</>}>
+    <ErrorBoundary fallback={({ error }) => <>Parent ErrorBoundary fallback: {error.message}</>}>
       <ErrorBoundary
         shouldCatch={false}
-        fallback={({ error }) => <>{error.message} of Child</>}
+        fallback={({ error }) => <>Child ErrorBoundary fallback: {error.message}</>}
       >
         <CustomErrorAfter2s />
       </ErrorBoundary>
@@ -401,10 +401,10 @@ import { useState, useEffect, createElement } from 'react'
 
 export const Example = () => {
   return (
-    <ErrorBoundary fallback={({ error }) => <>{error.message} of Parent</>}>
+    <ErrorBoundary fallback={({ error }) => <>Parent ErrorBoundary fallback: {error.message}</>}>
       <ErrorBoundary
         shouldCatch={CustomError}
-        fallback={({ error }) => <>{error.message} of Child</>}
+        fallback={({ error }) => <>Child ErrorBoundary fallback: {error.message}</>}
       >
         <CustomErrorAfter2s />
       </ErrorBoundary>
@@ -422,10 +422,10 @@ import { useState, useEffect, createElement } from 'react'
 
 export const Example = () => {
   return (
-    <ErrorBoundary fallback={({ error }) => <>{error.message} of Parent</>}>
+    <ErrorBoundary fallback={({ error }) => <>Parent ErrorBoundary fallback: {error.message}</>}>
       <ErrorBoundary
         shouldCatch={(error) => error instanceof CustomError}
-        fallback={({ error }) => <>{error.message} of Child</>}
+        fallback={({ error }) => <>Child ErrorBoundary fallback: {error.message}</>}
       >
         <CustomErrorAfter2s />
       </ErrorBoundary>
@@ -445,10 +445,10 @@ import { useState, useEffect, createElement } from 'react'
 
 const Example = () => {
   return (
-    <ErrorBoundary fallback={({ error }) => <>{error.message} of Parent</>}>
+    <ErrorBoundary fallback={({ error }) => <>Parent ErrorBoundary fallback: {error.message}</>}>
       <ErrorBoundary
         shouldCatch={[false, CustomError, (error) => error instanceof CustomError]}
-        fallback={({ error }) => <>{error.message} of Child</>}
+        fallback={({ error }) => <>Child ErrorBoundary fallback: {error.message}</>}
       >
         <CustomErrorAfter2s />
       </ErrorBoundary>
@@ -465,10 +465,10 @@ import { useState, useEffect, createElement } from 'react'
 
 export const Example = () => {
   return (
-    <ErrorBoundary fallback={({ error }) => <>{error.message} of Parent</>}>
+    <ErrorBoundary fallback={({ error }) => <>Parent ErrorBoundary fallback: {error.message}</>}>
       <ErrorBoundary
         shouldCatch={CustomError}
-        fallback={({ error }) => <>{error.message} of Child</>}
+        fallback={({ error }) => <>Child ErrorBoundary fallback: {error.message}</>}
       >
         <CustomErrorAfter2s />
       </ErrorBoundary>
@@ -495,7 +495,7 @@ export const CustomErrorAfter2s = () => {
     setTimeout(() => {
       setAsyncState({
         isError: true,
-        error: () => new CustomError("Error made by CustomError Constructor")
+        error: () => new CustomError("error made by CustomError")
       });
     }, 2000);
   }, []);
@@ -520,10 +520,10 @@ import { useState, useEffect, createElement } from 'react'
 
 export const Example = () => {
   return (
-    <ErrorBoundary fallback={({ error }) => <>{error.message} of Parent</>}>
+    <ErrorBoundary fallback={({ error }) => <>Parent ErrorBoundary fallback: {error.message}</>}>
       <ErrorBoundary
         shouldCatch={CustomError}
-        fallback={({ error }) => <>{error.message} of Child</>}
+        fallback={({ error }) => <>Child ErrorBoundary fallback: {error.message}</>}
       >
         <ErrorAfter2s />
       </ErrorBoundary>
@@ -546,7 +546,7 @@ export const ErrorAfter2s = () => {
 
   useEffect(() => {
     setTimeout(() => {
-      setAsyncState({ isError: true, error: { status: 400, message: 'Error made by ErrorConstructor' } })
+      setAsyncState({ isError: true, error: new Error('error made by Error') })
     }, 2000)
   }, [])
 
