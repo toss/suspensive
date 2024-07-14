@@ -1,0 +1,21 @@
+import { Callout } from '@/components'
+
+# Atom
+
+<Callout type='experimental'>
+
+`<Atom/>`는 실험 기능이므로 이 인터페이스는 변경될 수 있습니다.
+
+</Callout>
+
+```tsx /Atom/
+import { Atom } from '@suspensive/jotai'
+import { Suspense } from '@suspensive/react'
+import { UserProfile } from '~/components'
+
+const Example = () => (
+  <Suspense fallback="loading...">
+    <Atom atom={userQueryAtom}>{([{ data }]) => <UserProfile key={data.id} {...data} />}
+  </Suspense>
+)
+```
