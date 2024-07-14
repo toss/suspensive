@@ -1,0 +1,23 @@
+import { Callout } from '@/components'
+
+# AtomValue
+
+<Callout type='experimental'>
+
+`<AtomValue/>`는 실험 기능이므로 이 인터페이스는 변경될 수 있습니다.
+
+</Callout>
+
+Async Atom을 요청될때 Suspense를 발생시키는 것이 무엇인지 명확하게 표현하기 위해 이 컴포넌트를 제공합니다.
+
+```tsx /AtomValue/
+import { AtomValue } from '@suspensive/jotai'
+import { Suspense } from '@suspensive/react'
+import { UserProfile } from '~/components'
+
+const Example = () => (
+  <Suspense fallback="loading...">
+    <AtomValue atom={userQueryAtom}>{({ data }) => <UserProfile key={data.id} {...data} />}
+  </Suspense>
+)
+```
