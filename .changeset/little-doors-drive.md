@@ -2,4 +2,4 @@
 '@suspensive/cache': minor
 ---
 
-feat(cache): add DataTag type to cacheOptions
+feat(cache): add DataTag feature of cacheOptions
