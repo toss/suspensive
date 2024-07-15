@@ -1,14 +1,9 @@
 import { expectTypeOf } from 'vitest'
 import { Cache } from './Cache'
 import { cacheOptions } from './cacheOptions'
+import type { ResolvedCached } from './CacheStore'
 import { dataTagSymbol } from './types'
 import { useCache } from './useCache'
-
-interface ResolvedCachedState<TData> {
-  promise: Promise<TData>
-  data: TData
-  error: undefined
-}
 
 const key = (id: number) => ['key', id] as const
 
@@ -23,7 +18,7 @@ describe('cacheOptions', () => {
     ;(() => (
       <Cache {...cache()}>
         {(cached) => {
-          expectTypeOf(cached).toEqualTypeOf<ResolvedCachedState<number>>()
+          expectTypeOf(cached).toEqualTypeOf<ResolvedCached<number>['state']>()
           expectTypeOf(cached.data).toEqualTypeOf<number>()
           return <></>
         }}
@@ -33,7 +28,7 @@ describe('cacheOptions', () => {
 
   it('should be used with useCache', () => {
     const cached = useCache(cache())
-    expectTypeOf(cached).toEqualTypeOf<ResolvedCachedState<number>>()
+    expectTypeOf(cached).toEqualTypeOf<ResolvedCached<number>['state']>()
     expectTypeOf(cached.data).toEqualTypeOf<number>()
   })
 
