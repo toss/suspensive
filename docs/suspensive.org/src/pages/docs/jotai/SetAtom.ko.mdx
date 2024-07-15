@@ -32,7 +32,7 @@ const Example = () => (
 )
 ```
 
-Async Atom일 경우 요청이 해결되기 전까지 Suspense가 발동됩니다.
+Async Atom일 경우 프로미스(Promise)가 해결(resolve) 되기 전까지 Suspense가 발동됩니다.
 
 ```tsx /SetAtom/
 import { SetAtom } from '@suspensive/jotai'
@@ -45,7 +45,7 @@ const Example = () => (
   <SetAtom atom={baseAtom}>
     {(setValue) => (
       <>
-        <button onClick={() => setValue(request())}>request</button> // 요청이 해결되기 전까지 Suspend가 발생됩니다.
+        <button onClick={() => setValue(request())}>request</button> // 프로미스(Promise)가 해결되기 전까지 Suspend가 발생됩니다.
       </>
     )}
   </SetAtom>

@@ -32,7 +32,7 @@ const Example = () => (
 )
 ```
 
-For async atoms, Suspense is triggered until the request is resolved.
+For Async Atom, Suspense is triggered until the Promise is resolved.
 
 ```tsx /SetAtom/
 import { SetAtom } from '@suspensive/jotai'
@@ -45,7 +45,7 @@ const Example = () => (
   <SetAtom atom={baseAtom}>
     {(setValue) => (
       <>
-        <button onClick={() => setValue(request())}>request</button> // Suspense is triggered until the request is resolved.
+        <button onClick={() => setValue(request())}>request</button> // Suspend is triggered until the promise is resolved.
       </>
     )}
   </SetAtom>
