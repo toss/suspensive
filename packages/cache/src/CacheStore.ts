@@ -75,21 +75,21 @@ export type Cached<TData, TCacheKey extends CacheKey = CacheKey> =
 /**
  * @experimental This is experimental feature.
  */
-export class Cache {
-  private cache = new Map<ReturnType<typeof hashCacheKey>, Cached<unknown>>()
+export class CacheStore {
+  private cacheStore = new Map<ReturnType<typeof hashCacheKey>, Cached<unknown>>()
   private syncsMap = new Map<ReturnType<typeof hashCacheKey>, Array<Sync>>()
 
   public reset = (options?: Pick<CacheOptions<unknown, CacheKey>, 'cacheKey'>) => {
     if (typeof options?.cacheKey === 'undefined' || options.cacheKey.length === 0) {
-      this.cache.clear()
+      this.cacheStore.clear()
       this.syncSubscribers()
       return
     }
 
     const hashedCacheKey = hashCacheKey(options.cacheKey)
 
-    if (this.cache.has(hashedCacheKey)) {
-      this.cache.delete(hashedCacheKey)
+    if (this.cacheStore.has(hashedCacheKey)) {
+      this.cacheStore.delete(hashedCacheKey)
     }
 
     this.syncSubscribers(options.cacheKey)
@@ -97,7 +97,7 @@ export class Cache {
 
   public clearError = (options?: Pick<CacheOptions<unknown, CacheKey>, 'cacheKey'>) => {
     if (options?.cacheKey === undefined || options.cacheKey.length === 0) {
-      this.cache.forEach((cached, hashedCacheKey, cache) => {
+      this.cacheStore.forEach((cached, hashedCacheKey, cache) => {
         cache.set(hashedCacheKey, {
           ...cached,
           status: CacheStatus.Idle,
@@ -113,10 +113,10 @@ export class Cache {
     }
 
     const hashedCacheKey = hashCacheKey(options.cacheKey)
-    const cachedState = this.cache.get(hashedCacheKey)
-    if (cachedState) {
-      this.cache.set(hashedCacheKey, {
-        ...cachedState,
+    const cached = this.cacheStore.get(hashedCacheKey)
+    if (cached) {
+      this.cacheStore.set(hashedCacheKey, {
+        ...cached,
         status: CacheStatus.Idle,
         promiseToSuspend: undefined,
         state: {
@@ -133,7 +133,7 @@ export class Cache {
     cacheFn,
   }: CacheOptions<TData, TCacheKey>): ResolvedCached<TData, TCacheKey> => {
     const hashedCacheKey = hashCacheKey(cacheKey)
-    const cached = this.cache.get(hashedCacheKey)
+    const cached = this.cacheStore.get(hashedCacheKey)
     if (cached && cached.status !== CacheStatus.Idle) {
       if (cached.status === CacheStatus.Rejected) {
         throw cached.state.error
@@ -168,15 +168,15 @@ export class Cache {
       ),
     }
 
-    this.cache.set(hashedCacheKey, newCached)
+    this.cacheStore.set(hashedCacheKey, newCached)
 
     throw newCached.promiseToSuspend
   }
 
   public getData = (options: Pick<CacheOptions<unknown, CacheKey>, 'cacheKey'>) =>
-    this.cache.get(hashCacheKey(options.cacheKey))?.state.data
+    this.cacheStore.get(hashCacheKey(options.cacheKey))?.state.data
   public getError = (options: Pick<CacheOptions<unknown, CacheKey>, 'cacheKey'>) =>
-    this.cache.get(hashCacheKey(options.cacheKey))?.state.error
+    this.cacheStore.get(hashCacheKey(options.cacheKey))?.state.error
 
   public subscribe(options: Pick<CacheOptions<unknown, CacheKey>, 'cacheKey'>, syncSubscriber: Sync) {
     const hashedCacheKey = hashCacheKey(options.cacheKey)

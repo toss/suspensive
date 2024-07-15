@@ -1,6 +1,6 @@
 'use client'
 
-import { SuspenseCache, cacheOptions, useCache } from '@suspensive/cache'
+import { Cache, cacheOptions, useCacheStore } from '@suspensive/cache'
 import { ErrorBoundary, Suspense } from '@suspensive/react'
 import { api } from '~/utils'
 
@@ -11,18 +11,18 @@ const caches = (ms: number) =>
   })
 
 export default function Page() {
-  const cache = useCache()
+  const cacheStore = useCacheStore()
 
   return (
     <ErrorBoundary fallback={() => <div>error</div>}>
       <div className="flex flex-col">
         <Suspense clientOnly fallback={<div>loading...</div>}>
-          <SuspenseCache {...caches(2000)}>
+          <Cache {...caches(2000)}>
             {(cached) => (
               <div>
                 <button
                   onClick={() => {
-                    cache.reset(caches(2000))
+                    cacheStore.reset(caches(2000))
                   }}
                 >
                   Try again
@@ -30,7 +30,7 @@ export default function Page() {
                 <div>{cached.data}</div>
               </div>
             )}
-          </SuspenseCache>
+          </Cache>
         </Suspense>
       </div>
     </ErrorBoundary>
