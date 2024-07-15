@@ -7,6 +7,6 @@ type CacheProviderProps = PropsWithChildren<{ store: CacheStore }>
 /**
  * @experimental This is experimental feature.
  */
-export const CacheStoreProvider = ({ store, children }: CacheProviderProps) => (
-  <CacheStoreContext.Provider value={store}>{children}</CacheStoreContext.Provider>
-)
+export function CacheStoreProvider({ store, children }: CacheProviderProps) {
+  return <CacheStoreContext.Provider value={store}>{children}</CacheStoreContext.Provider>
+}

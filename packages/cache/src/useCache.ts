@@ -6,7 +6,9 @@ import { useCacheStore } from './useCacheStore'
 /**
  * @experimental This is experimental feature.
  */
-export const useCache = <TData, TCacheKey extends CacheKey>(options: CacheOptions<TData, TCacheKey>) => {
+export function useCache<TData, TCacheKey extends CacheKey>(
+  options: CacheOptions<TData, TCacheKey>
+): ResolvedCached<TData, TCacheKey>['state'] {
   const cacheStore = useCacheStore()
   return useSyncExternalStore<ResolvedCached<TData, TCacheKey>>(
     (sync) => cacheStore.subscribe(options, sync).unsubscribe,
