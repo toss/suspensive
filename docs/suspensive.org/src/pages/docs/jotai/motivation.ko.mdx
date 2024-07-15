@@ -6,11 +6,11 @@ import { Steps } from 'nextra/components'
 
 <Steps>
 
-### Jotai에서 발생되는 Suspnse를 더욱 강력하게 사용할 수 있습니다.
+### Jotai의 비동기 atom을 Suspense와 함께 더 직관적으로 사용할 수 있습니다.
 
-Jotai의 모든 Atom은 비동기 읽기 또는 비동기 쓰기와 같은 비동기 동작을 지원합니다. 비동기식 Atom을 사용하면 실제 데이터를 접근하면서 동시에 Atom에서 놀라울 정도로 쉽게 데이터를 관리할 수 있습니다.
+Jotai의 atom은 비동기 읽기/쓰기를 지원합니다. @suspensive/jotai의 `<Atom/>`과 함께라면 놀라울 정도로 쉽게 비동기 atom을 사용할 수 있습니다.
 
-Jotai의 Async는 본질적으로 비동기 흐름을 처리하기 위해 Suspense를 활용하고 있습니다. Atom이 비동기 요청을 시작하게 되면 Suspense가 활성화되어 동작합니다.
+Jotai의 비동기 atom은 비동기 흐름을 처리하기 위해 Suspense를 활용하고 있습니다. Atom이 비동기 동작을 시작하게 되면 부모의 Suspense에게 Promise의 pending 상태를 위임합니다.
 
 [@suspensive/react](https://suspensive.org/ko/docs/react/motivation)와 함께 사용하여 Suspense를 강력하고 편리하게 사용할 수 있습니다.
 

@@ -12,7 +12,7 @@ AtomValue 컴포넌트는 Jotai의 [useAtomValue](https://jotai.org/docs/core/us
 
 ### props.atom
 
-atom은 Jotai의 atom 인터페이스와 동일하게 동작합니다.
+Jotai의 atom을 그대로 사용할 수 있습니다.
 
 ```tsx /AtomValue/
 import { AtomValue } from '@suspensive/jotai'
@@ -43,7 +43,7 @@ const asyncDoubleCountAtom = atom(async (get) => {
 })
 
 const Example = () => (
-  <Suspense fallback={'loading...'}>
+  <Suspense fallback={'pending...'}>
     <AtomValue atom={asyncDoubleCountAtom}>
       {(count) => (
         <>count: {count}</>

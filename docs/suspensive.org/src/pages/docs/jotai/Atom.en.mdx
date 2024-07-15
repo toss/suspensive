@@ -12,7 +12,7 @@ The Atom component provides the same props interface as Jotai's [useAtom](https:
 
 ### props.atom
 
-The atom prop behaves the same as Jotai's atom interface.
+You can use Jotai's atom as is.
 
 ```tsx /Atom/
 import { Atom } from '@suspensive/jotai'
@@ -46,7 +46,7 @@ const asyncDoubleCountAtom = atom(async (get) => {
 })
 
 const Example = () => (
-    <Suspense fallback={'loading...'}>
+    <Suspense fallback={'pending...'}>
       <Atom atom={asyncDoubleCountAtom}>
         {([count]) => (
           <>count: {count}</>
