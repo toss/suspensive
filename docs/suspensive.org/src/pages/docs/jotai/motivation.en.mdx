@@ -8,9 +8,9 @@ import { Steps } from 'nextra/components'
 
 ### You Can Use Jotai's Async Atoms More Intuitively with Suspense
 
-Jotai atoms support asynchronous reading/writing. With `<Atom/>` from @suspensive/jotai, using asynchronous atoms becomes incredibly easy.
+Jotai atoms support asynchronous reading/writing. With `<Atom/>` from @suspensive/jotai, using async atoms becomes incredibly easy.
 
-Jotai's async atoms leverage Suspense to handle asynchronous flows. When an atom initiates an asynchronous operation, it delegates the pending state of the Promise to its parent Suspense.
+Jotai's async atoms leverage Suspense to handle asynchronous flows. When an atom initiates an async operation, it delegates the pending state of the Promise to its parent Suspense.
 
 By using it together with [@suspensive/react](https://suspensive.org/en/docs/react/motivation), you can use Suspense more powerfully and conveniently.
 
@@ -25,17 +25,17 @@ import { UserProfile } from '~/components'
 import { userAtom } from "~/atoms";
 
 const Example = () => (
-  <Suspense fallback="loading...">
+  <Suspense fallback={'pending...'}>
     <Atom atom={userAtom}>{([data]) => <UserProfile key={data.id} {...data} />}
   </Suspense>
 )
 ```
 
-### Utilize Jotai's Community Resources
+### Jotai's Extension Library can be used together.
 
-Jotai has various community resources such as [Query](https://jotai.org/docs/extensions/query) and [Cache](https://jotai.org/docs/extensions/cache). Suspense is also supported in these community resources.
+Jotai offers a variety of extension libraries, including [tRPC](https://jotai.org/docs/extensions/trpc), [Query](https://jotai.org/docs/extensions/query), and [Cache](https://jotai.org/docs/extensions/cache). These extensions are also compatible with Suspense.
 
-As shown in the example below, you can use it declaratively with [jotai-tanstack-query](https://github.com/jotaijs/jotai-tanstack-query).
+The example below uses the [jotai-tanstack-query](https://github.com/jotaijs/jotai-tanstack-query) extension library, introduced in [Query](https://jotai.org/docs/extensions/query#suspense).
 
 ```tsx
 import { AtomValue } from '@suspensive/jotai'
@@ -45,7 +45,7 @@ import { userQueryAtom } from '~/queries'
 
 const PostsPage = () => (
   <ErrorBoundary fallback={({ error }) => <>{error.message}</>}>
-    <Suspense fallback={'loading...'}>
+    <Suspense fallback={'pending...'}>
       <AtomValue atom={userQueryAtom}>
         {({ data: user }) => <UserProfile key={user.id} {...user} />}
       </AtomValue>

@@ -10,7 +10,7 @@ import { Steps } from 'nextra/components'
 
 Jotai의 atom은 비동기 읽기/쓰기를 지원합니다. @suspensive/jotai의 `<Atom/>`과 함께라면 놀라울 정도로 쉽게 비동기 atom을 사용할 수 있습니다.
 
-Jotai의 비동기 atom은 비동기 흐름을 처리하기 위해 Suspense를 활용하고 있습니다. Atom이 비동기 동작을 시작하게 되면 부모의 Suspense에게 Promise의 pending 상태를 위임합니다.
+Jotai의 비동기 atom은 비동기 흐름을 처리하기 위해 Suspense를 활용하고 있습니다. atom이 비동기 동작을 시작하게 되면 부모의 Suspense에게 Promise의 pending 상태를 위임합니다.
 
 [@suspensive/react](https://suspensive.org/ko/docs/react/motivation)와 함께 사용하여 Suspense를 강력하고 편리하게 사용할 수 있습니다.
 
@@ -25,17 +25,17 @@ import { UserProfile } from '~/components'
 import { userAtom } from "~/atoms";
 
 const Example = () => (
-  <Suspense fallback="loading...">
+  <Suspense fallback={'pending...'}>
     <Atom atom={userAtom}>{([data]) => <UserProfile key={data.id} {...data} />}
   </Suspense>
 )
 ```
 
-### Jotai의 커뮤니티 리소스와 함께 사용할 수 있습니다.
+### Jotai의 확장 라이브러리(Extension Library)와 함께 사용할 수 있습니다.
 
-Jotai에는 [Query](https://jotai.org/docs/extensions/query), [Cache](https://jotai.org/docs/extensions/cache) 등 다양한 커뮤니티 리소스가 있습니다. 커뮤니티 리소스에서 발생되는 Suspense 또한 지원됩니다.
+Jotai에는 [tRPC](https://jotai.org/docs/extensions/trpc), [Query](https://jotai.org/docs/extensions/query), [Cache](https://jotai.org/docs/extensions/cache) 등 다양한 확장 라이브러리가 있습니다. 확장 라이브러리에서 발생되는 Suspense 또한 호환됩니다.
 
-아래 예시처럼 [jotai-tanstack-query](https://github.com/jotaijs/jotai-tanstack-query)와 함께 선언적으로 사용할 수 있습니다.
+아래 예시는 [Query](https://jotai.org/docs/extensions/query#suspense)에서 소개된 확장 라이브러리인 [jotai-tanstack-query](https://github.com/jotaijs/jotai-tanstack-query)를 활용한 예시입니다.
 
 ```tsx
 import { AtomValue } from '@suspensive/jotai'
@@ -45,7 +45,7 @@ import { userQueryAtom } from '~/queries'
 
 const PostsPage = () => (
   <ErrorBoundary fallback={({ error }) => <>{error.message}</>}>
-    <Suspense fallback={'loading...'}>
+    <Suspense fallback={'pending...'}>
       <AtomValue atom={userQueryAtom}>
         {({ data: user }) => <UserProfile key={user.id} {...user} />}
       </AtomValue>
