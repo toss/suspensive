@@ -5,7 +5,12 @@ export type CacheKey = Tuple
 /**
  * @experimental This is experimental feature.
  */
-export type CacheOptions<TData, TCacheKey extends CacheKey> = {
+export interface CacheOptions<TData, TCacheKey extends CacheKey> {
   cacheKey: TCacheKey
   cacheFn: (options: { cacheKey: TCacheKey }) => Promise<TData>
+}
+
+export declare const dataTagSymbol: unique symbol
+export type DataTag<TType, TValue> = TType & {
+  [dataTagSymbol]: TValue
 }
