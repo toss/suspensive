@@ -592,6 +592,9 @@ importers:
 
   websites/visualization:
     dependencies:
+      '@suspensive/cache':
+        specifier: workspace:*
+        version: link:../../packages/cache
       '@suspensive/react':
         specifier: workspace:*
         version: link:../../packages/react
