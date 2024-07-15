@@ -8,12 +8,16 @@ import { CacheStoreProvider } from './CacheStoreProvider'
 import { useCache } from './useCache'
 import { useCacheStore } from './useCacheStore'
 
-const key = (id: number) => ['key', id] as const
+const key = (id: string) => ['key', id] as const
 
-const successCache = () => cacheOptions({ cacheKey: key(1), cacheFn: () => sleep(ms('0.1s')).then(() => TEXT) })
+const successCache = () =>
+  cacheOptions({
+    cacheKey: key('success'),
+    cacheFn: () => sleep(ms('0.1s')).then(() => TEXT),
+  })
 const failureCache = () =>
   cacheOptions({
-    cacheKey: key(1),
+    cacheKey: key('failure'),
     // eslint-disable-next-line @typescript-eslint/prefer-promise-reject-errors
     cacheFn: () => sleep(ms('0.1s')).then(() => Promise.reject(ERROR_MESSAGE)),
   })
