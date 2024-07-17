@@ -2,16 +2,10 @@ import fs from 'fs'
 import path from 'path'
 import type { Mock, MockInstance } from 'vitest'
 import packageJson from '../../../package.json'
-import {
-  fixAction,
-  getSuspensiveReactQueryVersion,
-  statusAction,
-  switchAction,
-  version4APIs,
-  version5APIs,
-} from './commands'
+import { fixAction, getSuspensiveReactQueryVersion, statusAction, switchAction } from './commands'
 import * as packageUtils from './package'
 import { switchVersion } from './switchVersion'
+import { getStatusTable } from './table'
 
 vi.mock('fs')
 vi.mock('path')
@@ -64,15 +58,7 @@ describe('commands', () => {
 
       statusAction()
 
-      expect(consoleLogSpy).toHaveBeenCalledWith('\nSuspensive React Query status:')
-      expect(consoleLogSpy).toHaveBeenCalledWith(
-        `@suspensive/react-query@${packageJson.version} export @suspensive/react-query-4's interfaces`
-      )
-      version4APIs.forEach((api) => {
-        expect(consoleLogSpy).toHaveBeenCalledWith(`  - ${api}`)
-      })
-      expect(consoleLogSpy).toHaveBeenCalledWith(`@tanstack/react-query@${tanStackReactQueryPackageJson.version}`)
-      expect(consoleLogSpy).toHaveBeenCalledWith('\nThe versions are compatible.')
+      expect(consoleLogSpy).toHaveBeenCalledWith(getStatusTable('4'))
     })
 
     it('should display the status correctly when versions are compatible (version 5)', () => {
@@ -82,13 +68,7 @@ describe('commands', () => {
 
       statusAction()
 
-      expect(consoleLogSpy).toHaveBeenCalledWith('\nSuspensive React Query status:')
-      expect(consoleLogSpy).toHaveBeenCalledWith(
-        `@suspensive/react-query@${packageJson.version} export @suspensive/react-query-5's interfaces`
-      )
-      version5APIs.forEach((api) => {
-        expect(consoleLogSpy).toHaveBeenCalledWith(`  - ${api}`)
-      })
+      expect(consoleLogSpy).toHaveBeenCalledWith(getStatusTable('5'))
     })
 
     it('should display incompatible versions message (suspensive 5, tanstack 4)', () => {
@@ -96,10 +76,7 @@ describe('commands', () => {
 
       statusAction()
 
-      expect(consoleLogSpy).toHaveBeenCalledWith(
-        '\nThe version of @suspensive/react-query is not compatible with the current version of @tanstack/react-query.',
-        `\nPlease run 'npx suspensive-react-query switch 4' to switch to the compatible version.`
-      )
+      expect(consoleLogSpy).toHaveBeenCalledWith(getStatusTable('5'))
     })
 
     it('should display incompatible versions message (suspensive 4, tanstack 5)', () => {
@@ -109,10 +86,7 @@ describe('commands', () => {
 
       statusAction()
 
-      expect(consoleLogSpy).toHaveBeenCalledWith(
-        '\nThe version of @suspensive/react-query is not compatible with the current version of @tanstack/react-query.',
-        `\nPlease run 'npx suspensive-react-query switch 5' to switch to the compatible version.`
-      )
+      expect(consoleLogSpy).toHaveBeenCalledWith(getStatusTable('4'))
     })
   })
 

@@ -1,7 +1,8 @@
 import { execFileSync } from 'child_process'
 import path from 'path'
 import packageJson from '../../package.json'
-import { version4APIs } from './utils/commands'
+import { getTanStackReactQueryPackageJson } from './utils/package'
+import { getStatusTable } from './utils/table'
 
 const cliPath = path.resolve(__dirname, '../../dist/scripts/cli.cjs')
 
@@ -20,17 +21,10 @@ describe('cli', () => {
 
   it('should display the status of the packages', () => {
     const result = execFileSync('node', [cliPath, 'status']).toString()
+    const tanStackReactQueryPackageJson = getTanStackReactQueryPackageJson()
+    const tanStackReactQueryMajorVersion = tanStackReactQueryPackageJson.version.split('.')[0]
 
-    expect(result).toContain('Suspensive React Query status:')
-    expect(result).toContain(
-      `@suspensive/react-query@${packageJson.version} export @suspensive/react-query-4's interfaces`
-    )
-
-    version4APIs.forEach((api) => {
-      expect(result).toContain(`  - ${api}`)
-    })
-
-    expect(result).toContain('\nThe versions are compatible.')
+    expect(result).toContain(getStatusTable(tanStackReactQueryMajorVersion))
   })
 
   it('should switch to the specified version when using the switch command', () => {
