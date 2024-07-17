@@ -3,7 +3,13 @@ import path from 'path'
 import { getPackageJson, getTanStackReactQueryPackageJson } from './package'
 import { switchVersion } from './switchVersion'
 
-export const version5APIs = ['SuspenseQuery', 'SuspenseQueries', 'SuspenseInfiniteQuery', 'QueryErrorBoundary']
+export const version5APIs = [
+  '<SuspenseQuery/>',
+  '<SuspenseQueries/>',
+  '<SuspenseInfiniteQuery/>',
+  '<Mutation/>',
+  '<QueryErrorBoundary/>',
+]
 
 export const version4APIs = [
   'useSuspenseQuery',
@@ -11,10 +17,11 @@ export const version4APIs = [
   'useSuspenseInfiniteQuery',
   'queryOptions',
   'infiniteQueryOptions',
-  'SuspenseQuery',
-  'SuspenseQueries',
-  'SuspenseInfiniteQuery',
-  'QueryErrorBoundary',
+  '<SuspenseQuery/>',
+  '<SuspenseQueries/>',
+  '<SuspenseInfiniteQuery/>',
+  '<Mutation/>',
+  '<QueryErrorBoundary/>',
 ]
 
 export const getSuspensiveReactQueryVersion = (): string => {
