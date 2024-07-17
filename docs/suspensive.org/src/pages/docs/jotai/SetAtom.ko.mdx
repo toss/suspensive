@@ -32,7 +32,7 @@ const Example = () => (
 )
 ```
 
-Async Atom일 경우 프로미스(Promise)가 해결(resolve) 되기 전까지 Suspense가 발동됩니다.
+Async Atom일 경우 프로미스(Promise)가 해결(resolve) 되기 전까지, 부모의 Suspense에게 Promise의 pending 상태를 위임합니다.
 
 ```tsx /SetAtom/
 import { SetAtom } from '@suspensive/jotai'

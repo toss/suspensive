@@ -29,7 +29,7 @@ const Example = () => (
 )
 ```
 
-Async Atom일 경우 Suspense를 사용하여 로딩 상태를 처리할 수 있습니다.
+Async Atom일 경우 프로미스(Promise)가 해결(resolve) 되기 전까지, 부모의 Suspense에게 Promise의 pending 상태를 위임합니다.
 
 ```tsx /AtomValue/
 import { AtomValue } from '@suspensive/jotai'
