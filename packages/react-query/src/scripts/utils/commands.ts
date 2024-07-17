@@ -1,5 +1,6 @@
 import fs from 'fs'
 import path from 'path'
+import Table from 'cli-table3'
 import { getPackageJson, getTanStackReactQueryPackageJson } from './package'
 import { switchVersion } from './switchVersion'
 
@@ -35,24 +36,29 @@ export const statusAction = () => {
   const suspensiveReactQueryVersion = getSuspensiveReactQueryVersion()
   const tanStackReactQueryMajorVersion = tanStackReactQueryPackageJson.version.split('.')[0]
 
-  console.log('\nSuspensive React Query status:')
-  console.log(
-    `@suspensive/react-query@${packageJson.version} export @suspensive/react-query-${suspensiveReactQueryVersion}'s interfaces`
-  )
+  const table = new Table({
+    head: ['', 'result', 'status', 'advice'],
+    style: { head: [] },
+  })
 
-  const apis = suspensiveReactQueryVersion === '5' ? version5APIs : version4APIs
-  apis.forEach((api) => console.log(`  - ${api}`))
+  table.push(['version', `@suspensive/react-query@${packageJson.version}`, '🟢', ''])
+  table.push(['export', `@suspensive/react-query-${suspensiveReactQueryVersion}@${packageJson.version}`, '🟢', ''])
+  table.push([
+    'peerDependency',
+    `@tanstack/react-query@${tanStackReactQueryPackageJson.version}`,
+    suspensiveReactQueryVersion === tanStackReactQueryMajorVersion ? '🟢' : '❌',
+    suspensiveReactQueryVersion === tanStackReactQueryMajorVersion
+      ? 'The versions are compatible.'
+      : `Install @tanstack/react-query@${tanStackReactQueryMajorVersion} or execute suspensive-react-query switch ${tanStackReactQueryMajorVersion} to match @suspensive/react-query version with @tanstack/react-query`,
+  ])
+  table.push([
+    'You can use',
+    suspensiveReactQueryVersion === '5' ? version5APIs.join('\n') : version4APIs.join('\n'),
+    '🟢',
+    '',
+  ])
 
-  console.log(`@tanstack/react-query@${tanStackReactQueryPackageJson.version}`)
-
-  if (suspensiveReactQueryVersion === tanStackReactQueryMajorVersion) {
-    console.log(`\nThe versions are compatible.`)
-  } else {
-    console.log(
-      '\nThe version of @suspensive/react-query is not compatible with the current version of @tanstack/react-query.',
-      `\nPlease run 'npx suspensive-react-query switch ${suspensiveReactQueryVersion === '5' ? '4' : '5'}' to switch to the compatible version.`
-    )
-  }
+  console.log(table.toString())
 }
 
 export const switchAction = (version: string) => {
