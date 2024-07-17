@@ -1,5 +1,18 @@
 # @suspensive/react-query
 
+## 2.7.0
+
+### Minor Changes
+
+- [#1095](https://github.com/toss/suspensive/pull/1095) [`fff4d7b`](https://github.com/toss/suspensive/commit/fff4d7b09cf4c2db6e069eb03f90d54d56e7d176) Thanks [@manudeli](https://github.com/manudeli)! - feat(react-query): add `<Mutation/>`
+
+### Patch Changes
+
+- Updated dependencies [[`fff4d7b`](https://github.com/toss/suspensive/commit/fff4d7b09cf4c2db6e069eb03f90d54d56e7d176)]:
+  - @suspensive/react-query-4@2.7.0
+  - @suspensive/react-query-5@2.7.0
+  - @suspensive/react@2.7.0
+
 ## 2.6.2
 
 ### Patch Changes
