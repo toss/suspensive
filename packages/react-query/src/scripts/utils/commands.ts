@@ -1,28 +1,8 @@
 import fs from 'fs'
 import path from 'path'
-import { getPackageJson, getTanStackReactQueryPackageJson } from './package'
+import { getTanStackReactQueryPackageJson } from './package'
 import { switchVersion } from './switchVersion'
-
-export const version5APIs = [
-  '<SuspenseQuery/>',
-  '<SuspenseQueries/>',
-  '<SuspenseInfiniteQuery/>',
-  '<Mutation/>',
-  '<QueryErrorBoundary/>',
-]
-
-export const version4APIs = [
-  'useSuspenseQuery',
-  'useSuspenseQueries',
-  'useSuspenseInfiniteQuery',
-  'queryOptions',
-  'infiniteQueryOptions',
-  '<SuspenseQuery/>',
-  '<SuspenseQueries/>',
-  '<SuspenseInfiniteQuery/>',
-  '<Mutation/>',
-  '<QueryErrorBoundary/>',
-]
+import { getStatusTable } from './table'
 
 export const getSuspensiveReactQueryVersion = (): string => {
   const indexFileContent = fs.readFileSync(path.join(__dirname, '../../dist/index.js'), 'utf-8')
@@ -30,29 +10,9 @@ export const getSuspensiveReactQueryVersion = (): string => {
 }
 
 export const statusAction = () => {
-  const packageJson = getPackageJson()
-  const tanStackReactQueryPackageJson = getTanStackReactQueryPackageJson()
   const suspensiveReactQueryVersion = getSuspensiveReactQueryVersion()
-  const tanStackReactQueryMajorVersion = tanStackReactQueryPackageJson.version.split('.')[0]
 
-  console.log('\nSuspensive React Query status:')
-  console.log(
-    `@suspensive/react-query@${packageJson.version} export @suspensive/react-query-${suspensiveReactQueryVersion}'s interfaces`
-  )
-
-  const apis = suspensiveReactQueryVersion === '5' ? version5APIs : version4APIs
-  apis.forEach((api) => console.log(`  - ${api}`))
-
-  console.log(`@tanstack/react-query@${tanStackReactQueryPackageJson.version}`)
-
-  if (suspensiveReactQueryVersion === tanStackReactQueryMajorVersion) {
-    console.log(`\nThe versions are compatible.`)
-  } else {
-    console.log(
-      '\nThe version of @suspensive/react-query is not compatible with the current version of @tanstack/react-query.',
-      `\nPlease run 'npx suspensive-react-query switch ${suspensiveReactQueryVersion === '5' ? '4' : '5'}' to switch to the compatible version.`
-    )
-  }
+  console.log(getStatusTable(suspensiveReactQueryVersion))
 }
 
 export const switchAction = (version: string) => {
