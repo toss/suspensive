@@ -26,3 +26,26 @@ export function getTanStackReactQueryPackageJson() {
 
   return packageJson
 }
+
+export function getSuspensiveReactQueryPackageJson(targetVersion: string) {
+  let packageJson: PackageJson | undefined
+
+  switch (targetVersion) {
+    case '4':
+      packageJson = loadModule<PackageJson>('@suspensive/react-query-4/package.json')
+      break
+    case '5':
+      packageJson = loadModule<PackageJson>('@suspensive/react-query-5/package.json')
+      break
+    default:
+      console.warn(`@suspensive/react-query-${targetVersion} is not found.`)
+      exit(1)
+  }
+
+  if (!packageJson) {
+    console.warn(`@suspensive/react-query-${targetVersion} is not found.`)
+    exit(1)
+  }
+
+  return packageJson
+}
