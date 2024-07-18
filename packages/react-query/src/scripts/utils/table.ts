@@ -52,7 +52,7 @@ export function getStatusTable(currentTargetVersion: string) {
     'You can use',
     currentTargetVersion === '5' ? VERSION5_APIS.join('\n') : VERSION4_APIS.join('\n'),
     '🟢',
-    'For more detailed information about the provided APIs,\nplease visit the official documentation:\nhttps://suspensive.org/links/react-query',
+    'For more detailed information about the provided APIs,\nplease visit the official documentation:\nhttps://suspensive.org/docs/react-query/motivation',
   ])
 
   return table.toString()
