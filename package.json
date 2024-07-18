@@ -29,7 +29,7 @@
     "ci:publint": "turbo run ci:publint",
     "ci:sherif": "sherif --ignore-package \"./examples/*\" --ignore-package \"./websites/*\" --ignore-package \"./docs/*\" --ignore-dependency \"@tanstack/react-query\" ",
     "ci:test": "turbo run ci:test",
-    "ci:test:watch": "turbo run test:watch --parallel",
+    "ci:test:watch": "turbo run ci:test:watch --parallel",
     "ci:type": "turbo run ci:type",
     "clean": "turbo run clean",
     "dev": "turbo run dev --concurrency 20",
