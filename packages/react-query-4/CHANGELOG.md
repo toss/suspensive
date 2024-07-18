@@ -1,5 +1,12 @@
 # @suspensive/react-query-4
 
+## 2.8.0
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @suspensive/react@2.8.0
+
 ## 2.7.0
 
 ### Minor Changes

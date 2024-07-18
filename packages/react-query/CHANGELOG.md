@@ -1,5 +1,18 @@
 # @suspensive/react-query
 
+## 2.8.0
+
+### Minor Changes
+
+- [#1100](https://github.com/toss/suspensive/pull/1100) [`8dcd88f`](https://github.com/toss/suspensive/commit/8dcd88f3770e0f0276bce8d40d06020511270ced) Thanks [@gwansikk](https://github.com/gwansikk)! - feat(react-query): cli status result as table
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @suspensive/react@2.8.0
+  - @suspensive/react-query-4@2.8.0
+  - @suspensive/react-query-5@2.8.0
+
 ## 2.7.0
 
 ### Minor Changes
