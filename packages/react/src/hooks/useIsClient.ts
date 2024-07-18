@@ -1,12 +1,7 @@
-import { useState } from 'react'
-import { useIsomorphicLayoutEffect } from './useIsomorphicLayoutEffect'
+import { useSyncExternalStore } from 'react'
+import { noop } from '../utils'
 
-export const useIsClient = () => {
-  const [isClient, setIsClient] = useState(false)
-
-  useIsomorphicLayoutEffect(() => {
-    setIsClient(true)
-  }, [])
-
-  return isClient
-}
+const emptySubscribe = () => noop
+const getSnapshot = () => true
+const getServerSnapshot = () => false
+export const useIsClient = () => useSyncExternalStore(emptySubscribe, getSnapshot, getServerSnapshot)
