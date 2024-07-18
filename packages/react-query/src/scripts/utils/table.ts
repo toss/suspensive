@@ -1,5 +1,5 @@
 import Table from 'cli-table3'
-import { getPackageJson, getTanStackReactQueryPackageJson } from './package'
+import { getPackageJson, getSuspensiveReactQueryPackageJson, getTanStackReactQueryPackageJson } from './package'
 
 export const VERSION5_APIS = [
   '<SuspenseQuery/>',
@@ -22,29 +22,38 @@ export const VERSION4_APIS = [
   '<QueryErrorBoundary/>',
 ]
 
-export function getStatusTable(currentVersion: string) {
+export function getStatusTable(currentTargetVersion: string) {
   const packageJson = getPackageJson()
   const tanStackReactQueryPackageJson = getTanStackReactQueryPackageJson()
   const tanStackReactQueryMajorVersion = tanStackReactQueryPackageJson.version.split('.')[0]
+  const targetSuspensiveReactQueryPackageJson = getSuspensiveReactQueryPackageJson(tanStackReactQueryMajorVersion)
 
   const table = new Table({
-    head: ['', 'result', 'status', 'advice'],
+    head: [packageJson.name, 'result', 'status', 'advice'],
     style: { head: [] },
   })
 
-  console.log(tanStackReactQueryMajorVersion)
-
-  table.push(['version', `@suspensive/react-query@${packageJson.version}`, '🟢', ''])
-  table.push(['export', `@suspensive/react-query-${currentVersion}@${packageJson.version}`, '🟢', ''])
+  table.push(['version', packageJson.version, '🟢', ''])
+  table.push([
+    'export',
+    `@suspensive/react-query-${currentTargetVersion}@${targetSuspensiveReactQueryPackageJson.version}`,
+    '🟢',
+    '',
+  ])
   table.push([
     'peerDependency',
-    `@tanstack/react-query@${tanStackReactQueryPackageJson.version}`,
-    currentVersion === tanStackReactQueryMajorVersion ? '🟢' : '❌',
-    currentVersion === tanStackReactQueryMajorVersion
+    `@tanstack/react-query@${tanStackReactQueryMajorVersion}`,
+    currentTargetVersion === tanStackReactQueryMajorVersion ? '🟢' : '❌',
+    currentTargetVersion === tanStackReactQueryMajorVersion
       ? 'The versions are compatible.'
       : `Install @tanstack/react-query@${tanStackReactQueryMajorVersion} or\n execute suspensive-react-query switch ${tanStackReactQueryMajorVersion} to match\n @suspensive/react-query version with\n @tanstack/react-query`,
   ])
-  table.push(['You can use', currentVersion === '5' ? VERSION5_APIS.join('\n') : VERSION4_APIS.join('\n'), '🟢', ''])
+  table.push([
+    'You can use',
+    currentTargetVersion === '5' ? VERSION5_APIS.join('\n') : VERSION4_APIS.join('\n'),
+    '🟢',
+    '',
+  ])
 
   return table.toString()
 }
