@@ -1,0 +1,58 @@
+import { Callout } from '@/components'
+
+# AtomValue
+
+<Callout type='experimental'>
+
+`<AtomValue/>`는 실험 기능이므로 이 인터페이스는 변경될 수 있습니다.
+
+</Callout>
+
+AtomValue 컴포넌트는 Jotai의 [useAtomValue](https://jotai.org/docs/core/use-atom#useatomvalue) 훅과 동일한 인터페이스를 Props로 제공하며 선언적으로 사용할 수 있습니다.
+
+### props.atom
+
+Jotai의 atom을 그대로 사용할 수 있습니다.
+
+```tsx /AtomValue/
+import { AtomValue } from '@suspensive/jotai'
+import { atom } from "jotai";
+
+const countAtom = atom(1);
+
+const Example = () => (
+  <AtomValue atom={countAtom}>
+    {(count) => (
+      <>count: {count}</>
+    )}
+  </AtomValue>
+)
+```
+
+Async Atom일 경우 프로미스(Promise)가 해결(resolve) 되기 전까지, 부모의 Suspense에게 Promise의 pending 상태를 위임합니다.
+
+```tsx /AtomValue/
+import { AtomValue } from '@suspensive/jotai'
+import { Suspense } from '@suspensive/react'
+import { atom } from "jotai";
+
+const countAtom = atom(1)
+const asyncDoubleCountAtom = atom(async (get) => {
+  await delay(2000)
+  return get(countAtom) * 2
+})
+
+const Example = () => (
+  <Suspense fallback={'pending...'}>
+    <AtomValue atom={asyncDoubleCountAtom}>
+      {(count) => (
+        <>count: {count}</>
+      )}
+    </AtomValue>
+  </Suspense>
+)
+```
+
+### 동기
+
+[`<Atom/>`](https://suspensive.org/ko/docs/jotai/Atom)의 동기와 같이 `<AtomValue/>` 또한, 상위 컴포넌트에서 명확하게 드러나지 않습니다. 하위에 선언된 컴포넌트가 내부적으로 어떤 Atom을 사용하고, Suspense를 발생할지 예상하기 어렵습니다.

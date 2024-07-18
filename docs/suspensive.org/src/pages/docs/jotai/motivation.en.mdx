@@ -1,0 +1,53 @@
+import { Steps } from 'nextra/components'
+
+# Why Use?
+
+@suspensive/jotai is utilized for the following reasons:
+
+<Steps>
+
+### Enables Easier and More Intuitive Use of Jotai's Async Atoms
+
+Jotai atoms support asynchronous read/write operations. Async atoms leverage Suspense to handle asynchronous flows, delegating the Promise's pending state to the parent Suspense when an async operation starts.
+
+Props of `<Atom/>` in @suspensive/jotai can be used identically to the interface of `useAtom` in Jotai. Using `<Atom/>` makes it clear internally which atom is being used and intuitively shows how Suspense is triggered at various depths.
+
+```tsx
+import { Atom } from '@suspensive/jotai'
+import { Suspense } from '@suspensive/react'
+import { UserProfile, UserPosts } from '~/components'
+import { userAtom } from "~/atoms";
+
+const MyPage = () => (
+  <Suspense fallback={'pending...'}>
+    {/* It's clear which atom is being used and where Suspense is triggered. */}
+    <Atom atom={userAtom}>{([data]) => <UserProfile {...data} />}</Atom>
+    <Atom atom={userAtom}>{([data]) => <UserPosts {...data} />}</Atom>
+  </Suspense>
+)
+```
+
+### Compatible with Jotai's Extension Libraries
+
+Jotai offers various extension libraries like [tRPC](https://jotai.org/docs/extensions/trpc), [Query](https://jotai.org/docs/extensions/query), and [Cache](https://jotai.org/docs/extensions/cache). Atoms from extension libraries are compatible with @suspensive/jotai's `<Atom/>`, `<SetAtom/>`, `<AtomValue/>`.
+
+Below is an example using the extension library [jotai-tanstack-query](https://github.com/jotaijs/jotai-tanstack-query) introduced in [Query](https://jotai.org/docs/extensions/query#suspense).
+
+```tsx
+import { AtomValue } from '@suspensive/jotai'
+import { Suspense, ErrorBoundary } from '@suspensive/react'
+import { UserProfile } from '~/components'
+import { userQueryAtom } from '~/queries' {/* Used 'atomWithSuspenseQuery' from 'jotai-tanstack-query'. */}
+
+const MyPage = () => (
+  <ErrorBoundary fallback={({ error }) => <>{error.message}</>}>
+    <Suspense fallback={'pending...'}>
+      <AtomValue atom={userQueryAtom}> {/* Atoms from extension libraries are also compatible. */}
+        {({ data: user }) => <UserProfile key={user.id} {...user} />}
+      </AtomValue>
+    </Suspense>
+  </ErrorBoundary>
+)
+```
+
+</Steps>
