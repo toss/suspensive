@@ -1,0 +1,108 @@
+import { Callout } from '@/components'
+
+# Atom
+
+<Callout type='experimental'>
+
+`<Atom/>` is an experimental feature, so this interface may change.
+
+</Callout>
+
+The Atom component provides an interface similar to Jotai's [useAtom](https://jotai.org/docs/core/use-atom#useatom) hook as props, allowing declarative usage.
+
+### props.atom
+
+You can use Jotai's atom as is.
+
+```tsx /Atom/
+import { Atom } from '@suspensive/jotai'
+import { atom } from "jotai";
+
+const countAtom = atom(1);
+
+const Example = () => (
+  <Atom atom={countAtom}>
+    {([count, setCount]) => (
+      <>
+        <div>count: {count}</div>
+        <button onClick={() => setCount(count + 1)}>+1</button>
+      </>
+    )}
+  </Atom>
+)
+```
+
+For Async Atom, it delegates the pending state of the Promise to the parent Suspense until the Promise resolves.
+
+```tsx /Atom/
+import { Atom } from '@suspensive/jotai'
+import { Suspense } from '@suspensive/react'
+import { atom } from "jotai";
+
+const countAtom = atom(1)
+const asyncDoubleCountAtom = atom(async (get) => {
+  await delay(2000)
+  return get(countAtom) * 2
+})
+
+const Example = () => (
+    <Suspense fallback={'pending...'}>
+      <Atom atom={asyncDoubleCountAtom}>
+        {([count]) => (
+          <>count: {count}</>
+        )}
+      </Atom>
+    </Suspense>
+)
+```
+
+### Motivation
+
+It's not immediately clear from the parent component which atoms are used internally in the child components and whether they trigger Suspense.
+
+```tsx
+// payment/page.tsx
+import { Atom } from '@suspensive/jotai'
+import { Suspense } from '@suspensive/react'
+import { UserInfo, ShoppingCart } from '~/components'
+
+const PaymentPage = () => (
+  <Suspense fallback={'pending...'}>
+    <UserInfo /> {/* It's not clear whether UserInfo internally triggers Suspense with an Async Atom. */}
+    <ShoppingCart /> {/* It's not clear whether ShoppingCart internally triggers Suspense with an Async Atom. */}
+  </Suspense>
+)
+```
+
+```tsx
+// payment/components/UserInfo.tsx
+import { useAtomValue } from '@suspensive/jotai'
+import { Suspense } from '@suspensive/react'
+import { UserAddress } from '~/components'
+import { userAsyncAtom } from "~/atoms";
+
+// It's not clear from the usage of this component what Atom UserInfo uses internally and whether it triggers Suspense.
+const UserInfo = () => {
+  const data = useAtomValue(userAsyncAtom)
+
+  return <UserAddress {...data} />
+}
+```
+
+```tsx
+// payment/components/ShoppingCart.tsx
+import { Atom } from '@suspensive/jotai'
+import { Suspense } from '@suspensive/react'
+import { shoppingCartAtom } from "~/atoms";
+
+// It's not clear from the usage of this component what Atom ShoppingCart uses internally and whether it triggers Suspense.
+const ShoppingCart = () => {
+  const [data] = useAtom(shoppingCartAtom)
+
+  return (
+    <>
+      {data.map(item => <ShoppingItem key={item.id} {...item} />)}
+    </>
+  )
+}
+```
