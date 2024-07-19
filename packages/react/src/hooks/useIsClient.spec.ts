@@ -1,7 +1,7 @@
+import { useIsomorphicLayoutEffect } from '@suspensive/utils'
 import { renderHook } from '@testing-library/react'
-import { useState, useSyncExternalStore } from 'react'
-import { noop } from '../utils'
-import { useIsClient, useIsomorphicLayoutEffect } from '.'
+import { useState } from 'react'
+import { useIsClient } from './useIsClient'
 
 describe('useIsClient', () => {
   it('should return true in client side rendering', () => {
@@ -14,57 +14,37 @@ describe('useIsClient', () => {
   it("'s comparison with legacy useIsClientOnly", () => {
     // check CSR environment first
     expect(typeof document !== 'undefined').toBe(true)
-
-    let renderCount = 0
-    let chanceIsClientToBeFalse = false
-
-    const emptySubscribe = () => noop
-    const getSnapshot = () => true
-    const getServerSnapshot = () => false
-    const useIsClient = () => {
-      const isClient = useSyncExternalStore(emptySubscribe, getSnapshot, getServerSnapshot)
-      renderCount++
-      if (!isClient) {
-        chanceIsClientToBeFalse = true
-      }
-      return isClient
-    }
-    const { unmount } = renderHook(() => useIsClient())
-    expect(renderCount).toBe(1)
-    expect(chanceIsClientToBeFalse).toBe(false)
+    const mockUseIsClient = vi.fn(useIsClient)
+    const { unmount } = renderHook(() => mockUseIsClient())
+    expect(mockUseIsClient).toBeCalledTimes(1)
     unmount()
-    renderHook(() => useIsClient())
-    expect(renderCount).toBe(2)
-    expect(chanceIsClientToBeFalse).toBe(false)
+    renderHook(() => mockUseIsClient())
+    expect(mockUseIsClient).toBeCalledTimes(2)
   })
   it('improve legacy useIsClientOnly', () => {
     // check CSR environment first
     expect(typeof document !== 'undefined').toBe(true)
-
-    let renderCount = 0
     let chanceIsClientToBeFalse = false
-
     /**
      * @deprecated This is legacy useIsClientOnly
      */
-    const useIsClientLegacy = () => {
-      renderCount++
+    const mockUseIsClientLegacy = vi.fn(() => {
       const [isClient, setIsClient] = useState(false)
       if (!isClient) {
+        // eslint-disable-next-line react-compiler/react-compiler
         chanceIsClientToBeFalse = true
       }
       useIsomorphicLayoutEffect(() => {
         setIsClient(true)
       }, [])
-
       return isClient
-    }
-    const { unmount } = renderHook(() => useIsClientLegacy())
-    expect(renderCount).toBe(2)
+    })
+    const { unmount } = renderHook(() => mockUseIsClientLegacy())
+    expect(mockUseIsClientLegacy).toBeCalledTimes(2)
     expect(chanceIsClientToBeFalse).toBe(true)
     unmount()
-    renderHook(() => useIsClientLegacy())
-    expect(renderCount).toBe(4)
+    renderHook(() => mockUseIsClientLegacy())
+    expect(mockUseIsClientLegacy).toBeCalledTimes(4)
     expect(chanceIsClientToBeFalse).toBe(true)
   })
 })
