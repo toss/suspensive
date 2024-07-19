@@ -1,7 +1,20 @@
 {
-  "name": "@suspensive/test-utils",
-  "version": "0.0.0",
-  "private": true,
+  "name": "@suspensive/utils",
+  "version": "2.9.0",
+  "description": "Useful interfaces for React Suspense",
+  "keywords": [
+    "suspensive",
+    "react"
+  ],
+  "homepage": "https://suspensive.org",
+  "bugs": "https://github.com/toss/suspensive/issues",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/toss/suspensive.git",
+    "directory": "packages/utils"
+  },
+  "license": "MIT",
+  "author": "Jonghyeon Ko <jonghyeon@toss.im>",
   "sideEffects": false,
   "type": "module",
   "exports": {
@@ -20,11 +33,17 @@
   "main": "dist/index.cjs",
   "module": "dist/index.js",
   "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "src"
+  ],
   "scripts": {
     "build": "tsup",
     "ci:attw": "attw --pack",
     "ci:eslint": "eslint \"**/*.{js,jsx,cjs,mjs,ts,tsx,cts,mts}\"",
     "ci:publint": "publint --strict",
+    "ci:test": "vitest run --coverage --typecheck",
+    "ci:test:watch": "vitest --ui --coverage --typecheck",
     "ci:type": "tsc --noEmit",
     "clean": "rimraf ./dist && rimraf ./coverage",
     "dev": "tsup --watch",
@@ -39,5 +58,8 @@
   },
   "peerDependencies": {
     "react": "^18"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

@@ -1,6 +1,6 @@
 {
   "name": "@suspensive/react-await",
-  "version": "0.2.0",
+  "version": "0.2.2",
   "description": "Useful interfaces for React Suspense",
   "keywords": [
     "suspensive",
@@ -49,10 +49,12 @@
     "dev": "tsup --watch",
     "prepack": "pnpm build"
   },
+  "dependencies": {
+    "@suspensive/utils": "workspace:*"
+  },
   "devDependencies": {
     "@suspensive/eslint-config": "workspace:*",
     "@suspensive/react": "workspace:*",
-    "@suspensive/test-utils": "workspace:*",
     "@suspensive/tsconfig": "workspace:*",
     "@suspensive/tsup": "workspace:*",
     "@types/react": "^18.3.3",

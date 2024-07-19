@@ -1,5 +1,19 @@
 # @suspensive/react-image
 
+## 0.0.17
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @suspensive/utils@2.9.0
+
+## 0.0.16
+
+### Patch Changes
+
+- Updated dependencies [[`2326b13`](https://github.com/toss/suspensive/commit/2326b1341f167454a889953fb0bbf58449e1ca98)]:
+  - @suspensive/utils@2.8.1
+
 ## 0.0.15
 
 ### Patch Changes

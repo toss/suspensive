@@ -1,5 +1,23 @@
 # @suspensive/react
 
+## 2.9.0
+
+### Minor Changes
+
+- [#1105](https://github.com/toss/suspensive/pull/1105) [`f9fb719`](https://github.com/toss/suspensive/commit/f9fb719c65a8de198946ac75933a8d9130ff1ce9) Thanks [@manudeli](https://github.com/manudeli)! - feat(react): improve ClientOnly by useSyncExternalStore
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @suspensive/utils@2.9.0
+
+## 2.8.1
+
+### Patch Changes
+
+- Updated dependencies [[`2326b13`](https://github.com/toss/suspensive/commit/2326b1341f167454a889953fb0bbf58449e1ca98)]:
+  - @suspensive/utils@2.8.1
+
 ## 2.8.0
 
 ## 2.7.0

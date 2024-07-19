@@ -1,3 +1,4 @@
+import type { OmitKeyof } from '@suspensive/utils'
 import {
   type InfiniteData,
   type QueryKey,
@@ -5,7 +6,6 @@ import {
   type UseInfiniteQueryResult,
   useInfiniteQuery,
 } from '@tanstack/react-query'
-import type { OmitKeyof } from './utility-types'
 
 export interface UseSuspenseInfiniteQueryResult<TData = unknown, TError = unknown>
   extends OmitKeyof<

@@ -1,4 +1,4 @@
-import { FALLBACK, TEXT } from '@suspensive/test-utils'
+import { FALLBACK, TEXT } from '@suspensive/utils'
 import { render, screen } from '@testing-library/react'
 import { Suspense } from 'react'
 import { Await } from './Await'

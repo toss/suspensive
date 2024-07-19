@@ -180,24 +180,6 @@ importers:
         specifier: ^5.1.3
         version: 5.1.3(@types/eslint@8.56.10)(eslint-config-prettier@9.1.0(eslint@8.57.0))(eslint@8.57.0)(prettier@3.3.2)
 
-  configs/test-utils:
-    devDependencies:
-      '@suspensive/eslint-config':
-        specifier: workspace:*
-        version: link:../eslint-config
-      '@suspensive/tsconfig':
-        specifier: workspace:*
-        version: link:../tsconfig
-      '@suspensive/tsup':
-        specifier: workspace:*
-        version: link:../tsup
-      '@types/react':
-        specifier: ^18.3.3
-        version: 18.3.3
-      react:
-        specifier: ^18.3.1
-        version: 18.3.1
-
   configs/tsconfig: {}
 
   configs/tsup:
@@ -338,6 +320,10 @@ importers:
         version: 8.4.38
 
   packages/cache:
+    dependencies:
+      '@suspensive/utils':
+        specifier: workspace:*
+        version: link:../utils
     devDependencies:
       '@suspensive/eslint-config':
         specifier: workspace:*
@@ -345,9 +331,6 @@ importers:
       '@suspensive/react':
         specifier: workspace:*
         version: link:../react
-      '@suspensive/test-utils':
-        specifier: workspace:*
-        version: link:../../configs/test-utils
       '@suspensive/tsconfig':
         specifier: workspace:*
         version: link:../../configs/tsconfig
@@ -368,6 +351,10 @@ importers:
         version: 18.3.1(react@18.3.1)
 
   packages/jotai:
+    dependencies:
+      '@suspensive/utils':
+        specifier: workspace:*
+        version: link:../utils
     devDependencies:
       '@suspensive/eslint-config':
         specifier: workspace:*
@@ -395,13 +382,14 @@ importers:
         version: 18.3.1(react@18.3.1)
 
   packages/react:
+    dependencies:
+      '@suspensive/utils':
+        specifier: workspace:*
+        version: link:../utils
     devDependencies:
       '@suspensive/eslint-config':
         specifier: workspace:*
         version: link:../../configs/eslint-config
-      '@suspensive/test-utils':
-        specifier: workspace:*
-        version: link:../../configs/test-utils
       '@suspensive/tsconfig':
         specifier: workspace:*
         version: link:../../configs/tsconfig
@@ -422,6 +410,10 @@ importers:
         version: 18.3.1(react@18.3.1)
 
   packages/react-await:
+    dependencies:
+      '@suspensive/utils':
+        specifier: workspace:*
+        version: link:../utils
     devDependencies:
       '@suspensive/eslint-config':
         specifier: workspace:*
@@ -429,9 +421,6 @@ importers:
       '@suspensive/react':
         specifier: workspace:*
         version: link:../react
-      '@suspensive/test-utils':
-        specifier: workspace:*
-        version: link:../../configs/test-utils
       '@suspensive/tsconfig':
         specifier: workspace:*
         version: link:../../configs/tsconfig
@@ -452,13 +441,14 @@ importers:
         version: 18.3.1(react@18.3.1)
 
   packages/react-image:
+    dependencies:
+      '@suspensive/utils':
+        specifier: workspace:*
+        version: link:../utils
     devDependencies:
       '@suspensive/eslint-config':
         specifier: workspace:*
         version: link:../../configs/eslint-config
-      '@suspensive/test-utils':
-        specifier: workspace:*
-        version: link:../../configs/test-utils
       '@suspensive/tsconfig':
         specifier: workspace:*
         version: link:../../configs/tsconfig
@@ -484,11 +474,14 @@ importers:
         specifier: ^12.1.0
         version: 12.1.0(commander@12.1.0)
       '@suspensive/react-query-4':
-        specifier: workspace:^2.8.0
+        specifier: workspace:^2.9.0
         version: link:../react-query-4
       '@suspensive/react-query-5':
-        specifier: workspace:^2.8.0
+        specifier: workspace:^2.9.0
         version: link:../react-query-5
+      '@suspensive/utils':
+        specifier: workspace:*
+        version: link:../utils
       cli-table3:
         specifier: ^0.6.5
         version: 0.6.5
@@ -502,9 +495,6 @@ importers:
       '@suspensive/react':
         specifier: workspace:*
         version: link:../react
-      '@suspensive/test-utils':
-        specifier: workspace:*
-        version: link:../../configs/test-utils
       '@suspensive/tsconfig':
         specifier: workspace:*
         version: link:../../configs/tsconfig
@@ -528,6 +518,10 @@ importers:
         version: 18.3.1(react@18.3.1)
 
   packages/react-query-4:
+    dependencies:
+      '@suspensive/utils':
+        specifier: workspace:*
+        version: link:../utils
     devDependencies:
       '@suspensive/eslint-config':
         specifier: workspace:*
@@ -535,9 +529,6 @@ importers:
       '@suspensive/react':
         specifier: workspace:*
         version: link:../react
-      '@suspensive/test-utils':
-        specifier: workspace:*
-        version: link:../../configs/test-utils
       '@suspensive/tsconfig':
         specifier: workspace:*
         version: link:../../configs/tsconfig
@@ -561,6 +552,10 @@ importers:
         version: 18.3.1(react@18.3.1)
 
   packages/react-query-5:
+    dependencies:
+      '@suspensive/utils':
+        specifier: workspace:*
+        version: link:../utils
     devDependencies:
       '@suspensive/eslint-config':
         specifier: workspace:*
@@ -568,9 +563,6 @@ importers:
       '@suspensive/react':
         specifier: workspace:*
         version: link:../react
-      '@suspensive/test-utils':
-        specifier: workspace:*
-        version: link:../../configs/test-utils
       '@suspensive/tsconfig':
         specifier: workspace:*
         version: link:../../configs/tsconfig
@@ -592,6 +584,24 @@ importers:
       react-dom:
         specifier: ^18.3.1
         version: 18.3.1(react@18.3.1)
+
+  packages/utils:
+    devDependencies:
+      '@suspensive/eslint-config':
+        specifier: workspace:*
+        version: link:../../configs/eslint-config
+      '@suspensive/tsconfig':
+        specifier: workspace:*
+        version: link:../../configs/tsconfig
+      '@suspensive/tsup':
+        specifier: workspace:*
+        version: link:../../configs/tsup
+      '@types/react':
+        specifier: ^18.3.3
+        version: 18.3.3
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
 
   websites/visualization:
     dependencies:

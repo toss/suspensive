@@ -1,6 +1,6 @@
 {
   "name": "@suspensive/react-image",
-  "version": "0.0.15",
+  "version": "0.0.17",
   "description": "Useful image interfaces for React Suspense",
   "keywords": [
     "suspensive",
@@ -49,9 +49,11 @@
     "dev": "tsup --watch",
     "prepack": "pnpm build"
   },
+  "dependencies": {
+    "@suspensive/utils": "workspace:*"
+  },
   "devDependencies": {
     "@suspensive/eslint-config": "workspace:*",
-    "@suspensive/test-utils": "workspace:*",
     "@suspensive/tsconfig": "workspace:*",
     "@suspensive/tsup": "workspace:*",
     "@types/react": "^18.3.3",
