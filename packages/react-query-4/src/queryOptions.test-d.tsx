@@ -1,4 +1,4 @@
-import { queryKey } from '@suspensive/test-utils'
+import { queryKey } from '@suspensive/utils'
 import { type UseQueryResult, useQueries, useQuery, useQueryClient } from '@tanstack/react-query'
 import { describe, expectTypeOf, it } from 'vitest'
 import { queryOptions } from './queryOptions'

@@ -1,5 +1,5 @@
 import { ErrorBoundary, Suspense } from '@suspensive/react'
-import { ERROR_MESSAGE, FALLBACK, TEXT, sleep } from '@suspensive/test-utils'
+import { ERROR_MESSAGE, FALLBACK, TEXT, sleep } from '@suspensive/utils'
 import { render, screen, waitFor } from '@testing-library/react'
 import ms from 'ms'
 import { cacheOptions } from './cacheOptions'
