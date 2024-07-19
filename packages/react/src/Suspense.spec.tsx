@@ -1,4 +1,4 @@
-import { FALLBACK, Suspend, TEXT } from '@suspensive/test-utils'
+import { FALLBACK, Suspend, TEXT } from '@suspensive/utils'
 import { render, screen, waitFor } from '@testing-library/react'
 import ms from 'ms'
 import { Suspense } from './Suspense'

@@ -1,3 +1,4 @@
+import { type Nullable, noop } from '@suspensive/utils'
 import {
   type ComponentProps,
   type ComponentType,
@@ -8,8 +9,6 @@ import {
   useSyncExternalStore,
 } from 'react'
 import { Subscribable } from '../models/Subscribable'
-import type { Nullable } from '../utility-types'
-import { noop } from '../utils'
 
 const getNull = () => null
 

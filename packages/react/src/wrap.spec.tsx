@@ -1,4 +1,4 @@
-import { ERROR_MESSAGE, FALLBACK, Suspend, TEXT, ThrowError } from '@suspensive/test-utils'
+import { ERROR_MESSAGE, FALLBACK, Suspend, TEXT, Throw } from '@suspensive/utils'
 import { render, screen, waitFor } from '@testing-library/react'
 import ms from 'ms'
 import { createElement } from 'react'
@@ -74,7 +74,7 @@ describe('wrap.Suspense({ clientOnly: true }).on', () => {
 })
 
 describe('wrap.ErrorBoundary().on', () => {
-  beforeEach(() => ThrowError.reset())
+  beforeEach(() => Throw.reset())
 
   it("should render the wrapped component when there's no error", () => {
     render(
@@ -97,9 +97,9 @@ describe('wrap.ErrorBoundary().on', () => {
             fallback: (props) => <>{props.error.message}</>,
           })
           .on(() => (
-            <ThrowError message={ERROR_MESSAGE} after={ms('0.1s')}>
+            <Throw.Error message={ERROR_MESSAGE} after={ms('0.1s')}>
               {TEXT}
-            </ThrowError>
+            </Throw.Error>
           ))
       )
     )

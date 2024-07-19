@@ -1,5 +1,5 @@
+import { useIsomorphicLayoutEffect } from '@suspensive/utils'
 import { useState } from 'react'
-import { useIsomorphicLayoutEffect } from './useIsomorphicLayoutEffect'
 
 export const useIsClient = () => {
   const [isClient, setIsClient] = useState(false)

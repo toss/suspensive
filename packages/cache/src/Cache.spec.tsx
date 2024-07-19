@@ -1,5 +1,5 @@
 import { Suspense } from '@suspensive/react'
-import { TEXT } from '@suspensive/test-utils'
+import { TEXT } from '@suspensive/utils'
 import { render, screen } from '@testing-library/react'
 import { Cache } from './Cache'
 import { CacheStore } from './CacheStore'
