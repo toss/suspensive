@@ -1,3 +1,5 @@
+import fs from 'fs'
+import path from 'path'
 import { exit } from 'process'
 import { loadModule } from './loadModule'
 
@@ -48,4 +50,42 @@ export function getSuspensiveReactQueryPackageJson(targetVersion: string) {
   }
 
   return packageJson
+}
+
+export function getIndexFileContent() {
+  const basePath = path.resolve(__dirname, '../../dist').replace(/src/, '')
+
+  return fs.readFileSync(path.join(basePath, 'index.js'), 'utf-8') || ''
+}
+
+export function getTargetSuspensiveReactQueryVersion(): string {
+  const indexFileContent = getIndexFileContent()
+
+  return (RegExp(/@suspensive\/react-query-(\d+)/).exec(indexFileContent) || [])[1] || ''
+}
+
+export function getTargetSuspensiveReactQueryAPIs() {
+  const indexFileContent = getIndexFileContent()
+
+  const modules = [...indexFileContent.matchAll(/export \* from ['"](.+?)['"]/g)]
+  const results: string[] = []
+
+  for (const module of modules) {
+    const moduleName = module[1]
+    const moduleExports = loadModule<Record<string, unknown>>(moduleName)
+
+    if (moduleExports === undefined) {
+      console.warn('[@suspensive/react-query]', `Module ${moduleName} is not found`)
+      exit(1)
+    }
+
+    const functions = Object.keys(moduleExports)
+      .filter((key) => typeof moduleExports[key] === 'function')
+      .map((fn) => (fn[0] === fn[0].toUpperCase() ? `<${fn}/>` : fn))
+      .reverse()
+
+    results.push(...functions)
+  }
+
+  return results
 }

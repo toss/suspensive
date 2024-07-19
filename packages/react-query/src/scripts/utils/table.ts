@@ -1,32 +1,17 @@
 import Table from 'cli-table3'
-import { getPackageJson, getSuspensiveReactQueryPackageJson, getTanStackReactQueryPackageJson } from './package'
-
-export const VERSION5_APIS = [
-  '<SuspenseQuery/>',
-  '<SuspenseQueries/>',
-  '<SuspenseInfiniteQuery/>',
-  '<Mutation/>',
-  '<QueryErrorBoundary/>',
-]
-
-export const VERSION4_APIS = [
-  'useSuspenseQuery',
-  'useSuspenseQueries',
-  'useSuspenseInfiniteQuery',
-  'queryOptions',
-  'infiniteQueryOptions',
-  '<SuspenseQuery/>',
-  '<SuspenseQueries/>',
-  '<SuspenseInfiniteQuery/>',
-  '<Mutation/>',
-  '<QueryErrorBoundary/>',
-]
+import {
+  getPackageJson,
+  getSuspensiveReactQueryPackageJson,
+  getTanStackReactQueryPackageJson,
+  getTargetSuspensiveReactQueryAPIs,
+} from './package'
 
 export function getStatusTable(currentTargetVersion: string) {
   const packageJson = getPackageJson()
   const tanStackReactQueryPackageJson = getTanStackReactQueryPackageJson()
   const tanStackReactQueryMajorVersion = tanStackReactQueryPackageJson.version.split('.')[0]
   const targetSuspensiveReactQueryPackageJson = getSuspensiveReactQueryPackageJson(tanStackReactQueryMajorVersion)
+  const targetSuspensiveReactQueryAPIs = getTargetSuspensiveReactQueryAPIs()
 
   const table = new Table({
     head: [packageJson.name, 'result', 'status', 'advice'],
@@ -46,11 +31,11 @@ export function getStatusTable(currentTargetVersion: string) {
     currentTargetVersion === tanStackReactQueryMajorVersion ? '🟢' : '❌',
     currentTargetVersion === tanStackReactQueryMajorVersion
       ? 'The versions are compatible.'
-      : `Install @tanstack/react-query@${tanStackReactQueryMajorVersion} or\n execute suspensive-react-query switch ${tanStackReactQueryMajorVersion} to match\n @suspensive/react-query version with\n @tanstack/react-query`,
+      : `Install @tanstack/react-query@${currentTargetVersion} or\nexecute suspensive-react-query switch ${tanStackReactQueryMajorVersion} to match\n@suspensive/react-query version with\n@tanstack/react-query`,
   ])
   table.push([
     'You can use',
-    currentTargetVersion === '5' ? VERSION5_APIS.join('\n') : VERSION4_APIS.join('\n'),
+    targetSuspensiveReactQueryAPIs.join('\n'),
     '🟢',
     'For more detailed information about the provided APIs,\nplease visit the official documentation:\nhttps://suspensive.org/docs/react-query/motivation',
   ])
