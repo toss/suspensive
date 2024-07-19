@@ -1,8 +1,8 @@
-import { sleep } from '@suspensive/test-utils'
 import { render, renderHook, screen } from '@testing-library/react'
 import ms from 'ms'
 import { useState } from 'react'
-import { useTimeout } from '.'
+import { sleep } from './test-utils'
+import { useTimeout } from './useTimeout'
 
 describe('useTimeout', () => {
   it('should run given function once after given timeout', async () => {

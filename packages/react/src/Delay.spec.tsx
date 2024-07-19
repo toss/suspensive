@@ -1,4 +1,4 @@
-import { CustomError, TEXT } from '@suspensive/test-utils'
+import { CustomError, TEXT } from '@suspensive/utils'
 import { render, screen, waitFor } from '@testing-library/react'
 import ms from 'ms'
 import { Delay } from './Delay'

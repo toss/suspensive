@@ -1,6 +1,6 @@
 {
   "name": "@suspensive/react",
-  "version": "2.8.0",
+  "version": "2.8.1",
   "description": "Useful interfaces for React Suspense",
   "keywords": [
     "suspensive",
@@ -50,9 +50,11 @@
     "dev": "tsup --watch",
     "prepack": "pnpm build"
   },
+  "dependencies": {
+    "@suspensive/utils": "workspace:*"
+  },
   "devDependencies": {
     "@suspensive/eslint-config": "workspace:*",
-    "@suspensive/test-utils": "workspace:*",
     "@suspensive/tsconfig": "workspace:*",
     "@suspensive/tsup": "workspace:*",
     "@types/react": "^18.3.3",

@@ -1,4 +1,4 @@
-import { sleep } from '@suspensive/test-utils'
+import { sleep } from '@suspensive/utils'
 import { waitFor } from '@testing-library/react'
 import { SuspensiveDevMode, SuspensiveDevModeOnInfoText } from './SuspensiveDevModeContext'
 
