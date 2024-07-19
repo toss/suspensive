@@ -16,7 +16,6 @@ body:
         - "@suspensive/react-query-5"
         - "@suspensive/jotai"
         - "@suspensive/cache"
-        - "@suspensive/react-await"
         - "@suspensive/react-image"
         - etc
     validations:
