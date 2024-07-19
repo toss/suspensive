@@ -1,4 +1,4 @@
-import { CustomError, ERROR_MESSAGE, TEXT, ThrowError } from '@suspensive/test-utils'
+import { CustomError, ERROR_MESSAGE, TEXT, Throw } from '@suspensive/utils'
 import { fireEvent, render, screen, waitFor } from '@testing-library/react'
 import ms from 'ms'
 import { createElement } from 'react'
@@ -21,9 +21,9 @@ describe('<ErrorBoundaryGroup/>', () => {
         </ErrorBoundaryGroup.Consumer>
         {Array.from({ length: innerErrorBoundaryCount }).map((_, key) => (
           <ErrorBoundary key={key} fallback={(props) => <div>{props.error.message}</div>}>
-            <ThrowError message={ERROR_MESSAGE} after={ms('0.1s')}>
+            <Throw.Error message={ERROR_MESSAGE} after={ms('0.1s')}>
               <div>{TEXT}</div>
-            </ThrowError>
+            </Throw.Error>
           </ErrorBoundary>
         ))}
       </ErrorBoundaryGroup>
@@ -31,7 +31,7 @@ describe('<ErrorBoundaryGroup/>', () => {
 
     expect(screen.getAllByText(TEXT).length).toBe(innerErrorBoundaryCount)
     await waitFor(() => expect(screen.getAllByText(ERROR_MESSAGE).length).toBe(innerErrorBoundaryCount))
-    ThrowError.reset()
+    Throw.reset()
 
     fireEvent.click(screen.getByRole('button', { name: resetButtonText }))
     expect(screen.getAllByText(TEXT).length).toBe(innerErrorBoundaryCount)
@@ -47,9 +47,9 @@ describe('<ErrorBoundaryGroup/>', () => {
         {Array.from({ length: innerErrorBoundaryCount }).map((_, index) => (
           <ErrorBoundaryGroup key={index} blockOutside={index === innerErrorBoundaryCount - 1}>
             <ErrorBoundary fallback={(props) => <div>{props.error.message}</div>}>
-              <ThrowError message={ERROR_MESSAGE} after={ms('0.1s')}>
+              <Throw.Error message={ERROR_MESSAGE} after={ms('0.1s')}>
                 <div>{TEXT}</div>
-              </ThrowError>
+              </Throw.Error>
             </ErrorBoundary>
           </ErrorBoundaryGroup>
         ))}
@@ -58,7 +58,7 @@ describe('<ErrorBoundaryGroup/>', () => {
 
     expect(screen.getAllByText(TEXT).length).toBe(innerErrorBoundaryCount)
     await waitFor(() => expect(screen.getAllByText(ERROR_MESSAGE).length).toBe(innerErrorBoundaryCount))
-    ThrowError.reset()
+    Throw.reset()
 
     fireEvent.click(screen.getByRole('button', { name: resetButtonText }))
     expect(screen.getAllByText(TEXT).length).toBe(innerErrorBoundaryCount - 1)

@@ -1,6 +1,6 @@
+import { useTimeout } from '@suspensive/utils'
 import { type PropsWithChildren, type ReactNode, useContext, useState } from 'react'
 import { DelayDefaultPropsContext } from './contexts'
-import { useTimeout } from './hooks'
 import { Message_Delay_ms_prop_should_be_greater_than_or_equal_to_0, SuspensiveError } from './models/SuspensiveError'
 
 export interface DelayProps extends PropsWithChildren {
