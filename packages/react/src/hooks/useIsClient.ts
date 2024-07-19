@@ -1,12 +1,7 @@
-import { useIsomorphicLayoutEffect } from '@suspensive/utils'
-import { useState } from 'react'
+import { noop } from '@suspensive/utils'
+import { useSyncExternalStore } from 'react'
 
-export const useIsClient = () => {
-  const [isClient, setIsClient] = useState(false)
-
-  useIsomorphicLayoutEffect(() => {
-    setIsClient(true)
-  }, [])
-
-  return isClient
-}
+const emptySubscribe = () => noop
+const getSnapshot = () => true
+const getServerSnapshot = () => false
+export const useIsClient = () => useSyncExternalStore(emptySubscribe, getSnapshot, getServerSnapshot)
