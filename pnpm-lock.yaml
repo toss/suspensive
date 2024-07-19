@@ -409,37 +409,6 @@ importers:
         specifier: ^18.3.1
         version: 18.3.1(react@18.3.1)
 
-  packages/react-await:
-    dependencies:
-      '@suspensive/utils':
-        specifier: workspace:*
-        version: link:../utils
-    devDependencies:
-      '@suspensive/eslint-config':
-        specifier: workspace:*
-        version: link:../../configs/eslint-config
-      '@suspensive/react':
-        specifier: workspace:*
-        version: link:../react
-      '@suspensive/tsconfig':
-        specifier: workspace:*
-        version: link:../../configs/tsconfig
-      '@suspensive/tsup':
-        specifier: workspace:*
-        version: link:../../configs/tsup
-      '@types/react':
-        specifier: ^18.3.3
-        version: 18.3.3
-      '@types/react-dom':
-        specifier: ^18.3.0
-        version: 18.3.0
-      react:
-        specifier: ^18.3.1
-        version: 18.3.1
-      react-dom:
-        specifier: ^18.3.1
-        version: 18.3.1(react@18.3.1)
-
   packages/react-image:
     dependencies:
       '@suspensive/utils':
@@ -611,9 +580,6 @@ importers:
       '@suspensive/react':
         specifier: workspace:*
         version: link:../../packages/react
-      '@suspensive/react-await':
-        specifier: workspace:*
-        version: link:../../packages/react-await
       '@suspensive/react-image':
         specifier: workspace:*
         version: link:../../packages/react-image
