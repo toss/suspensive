@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react'
-import { useIsClient } from '../hooks/useIsClient'
+import { useIsClient } from '../hooks'
 
 interface ClientOnlyProps {
   children: ReactNode
