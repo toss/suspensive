@@ -12,8 +12,6 @@
   - "packages/jotai/**/*"
 "@suspensive/cache":
   - "packages/cache/**/*"
-"@suspensive/react-await":
-  - "packages/react-await/**/*"
 "@suspensive/react-image":
   - "packages/react-image/**/*"
 "suspensive.org":

@@ -70,14 +70,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 </li>
               </details>
             </li>
-            <li>
-              <details>
-                <summary>@suspensive/react-await</summary>
-                <li>
-                  <Link href="/react-await/Await">{`<Await/>`}</Link>
-                </li>
-              </details>
-            </li>
           </ul>
           <div className="flex flex-1 items-center justify-center">{children}</div>
         </Providers>
