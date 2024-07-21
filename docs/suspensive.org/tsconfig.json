@@ -16,10 +16,10 @@
     "module": "esnext",
     "resolveJsonModule": true,
     "paths": {
-      "@/*": ["src/*"],
+      "@/*": ["src/*"]
     },
     "plugins": [{ "name": "next" }],
-    "strictNullChecks": true,
+    "strictNullChecks": true
   },
   "include": [
     "next-env.d.ts",
@@ -31,7 +31,7 @@
     "postcss.config.js",
     "prettier.config.mjs",
     "tailwind.config.js",
-    "theme.config.tsx",
+    "theme.config.tsx"
   ],
-  "exclude": ["node_modules"],
+  "exclude": ["node_modules"]
 }

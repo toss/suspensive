@@ -1,0 +1,20 @@
+{
+  "$schema": "https://unpkg.com/knip@5/schema.json",
+  "ignoreWorkspaces": ["websites/**", "examples/**"],
+  "ignoreDependencies": ["coauthors", "react-dom", "@types/react-dom", "@suspensive/utils"],
+  "workspaces": {
+    ".": {
+      "ignore": ["packlint.config.mjs"]
+    },
+    "configs/eslint-config*": {
+      "eslint": {
+        "config": [".eslintrc.cjs", "*.js"]
+      }
+    },
+    "docs/suspensive.org": {
+      "ignore": ["theme.config.tsx"],
+      "ignoreDependencies": ["sharp"],
+      "entry": ["src/**/*.{ts,tsx,mdx}"]
+    }
+  }
+}
