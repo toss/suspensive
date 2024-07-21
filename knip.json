@@ -15,6 +15,9 @@
       "ignore": ["theme.config.tsx"],
       "ignoreDependencies": ["sharp"],
       "entry": ["src/**/*.{ts,tsx,mdx}"]
+    },
+    "packages/react-query-*": {
+      "ignoreDependencies": ["@suspensive/react"]
     }
   }
 }
