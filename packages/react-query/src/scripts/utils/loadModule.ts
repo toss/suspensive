@@ -1,8 +1,10 @@
-export function loadModule<T>(name: string): T | undefined {
+export type LoadModuleResult<T> = { exports: T; isSuccess: true } | { exports: undefined; isSuccess: false }
+
+export function loadModule<T>(name: string): LoadModuleResult<T> {
   try {
     // eslint-disable-next-line @typescript-eslint/no-var-requires
-    return require(name) as T
+    return { exports: require(name) as T, isSuccess: true }
   } catch (e) {
-    return undefined
+    return { exports: undefined, isSuccess: false }
   }
 }

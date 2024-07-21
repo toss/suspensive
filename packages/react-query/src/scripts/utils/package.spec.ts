@@ -7,6 +7,19 @@ import {
   getTargetSuspensiveReactQueryVersion,
 } from './package'
 
+const version4APIs = [
+  'useSuspenseQuery',
+  'useSuspenseQueries',
+  'useSuspenseInfiniteQuery',
+  'queryOptions',
+  'infiniteQueryOptions',
+  'SuspenseQuery',
+  'SuspenseQueries',
+  'SuspenseInfiniteQuery',
+  'QueryErrorBoundary',
+  'Mutation',
+]
+
 describe('package', () => {
   it('should get package.json', () => {
     const result = getPackageJson()
@@ -34,17 +47,6 @@ describe('package', () => {
 
   it('should get the target @suspensive/react-query version 4 APIs', () => {
     const apis = getTargetSuspensiveReactQueryAPIs()
-    const version4APIs = [
-      'useSuspenseQuery',
-      'useSuspenseQueries',
-      'useSuspenseInfiniteQuery',
-      'queryOptions',
-      'infiniteQueryOptions',
-      '<SuspenseQuery/>',
-      '<SuspenseQueries/>',
-      '<SuspenseInfiniteQuery/>',
-      '<Mutation/>',
-    ]
 
     expect(apis).toEqual(version4APIs)
   })
