@@ -1,7 +1,7 @@
 import Table from 'cli-table3'
 import { getPackageJson, getSuspensiveReactQueryPackageJson, getTanStackReactQueryPackageJson } from './package'
 
-export const VERSION5_APIS = [
+const VERSION5_APIS = [
   '<SuspenseQuery/>',
   '<SuspenseQueries/>',
   '<SuspenseInfiniteQuery/>',
@@ -9,7 +9,7 @@ export const VERSION5_APIS = [
   '<QueryErrorBoundary/>',
 ]
 
-export const VERSION4_APIS = [
+const VERSION4_APIS = [
   'useSuspenseQuery',
   'useSuspenseQueries',
   'useSuspenseInfiniteQuery',
