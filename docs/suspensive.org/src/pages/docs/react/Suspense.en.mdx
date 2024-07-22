@@ -29,7 +29,7 @@ Control multiple `<Suspense/>`s default fallback with `<SuspensiveProvider/>`. D
 
 ### Avoid Server side rendering (clientOnly)
 
-If you use clientOnly prop, `<Suspense/>` will return fallback in server. After mount(in client) return children. Since mount only happens on the client, server-side rendering can be avoided.
+If you use clientOnly prop, `<Suspense/>` will return fallback in server and return children in client.
 
 ```tsx /clientOnly/
 import { Suspense } from '@suspensive/react'
@@ -40,6 +40,18 @@ const Example = () => (
   </Suspense>
 )
 ```
+
+When using the clientOnly prop, the useIsClient hook is used internally, and useIsClient uses getSnapshot and getServerSnapshot of useSyncExternalStore to ensure that it is a client.
+
+```tsx /useIsClient/
+const useIsClient = () => useSyncExternalStore(emptySubscribe, getSnapshot, getServerSnapshot)
+
+const emptySubscribe = () => noop
+const getSnapshot = () => true
+const getServerSnapshot = () => false
+```
+
+https://x.com/TkDodo/status/1741068994981826947?t=XmG17etMUL2m0JFim03vqw&s=19
 
 <Callout type='info'>
 
