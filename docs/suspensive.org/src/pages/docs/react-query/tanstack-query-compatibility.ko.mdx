@@ -92,19 +92,30 @@ status로 호환 상태를 확인할 수 있으며, You can use 항목에서 현
 ├─────────────────────────┼─────────────────────────────────┼────────┼────────────────────────────────────────────────────────┤
 │ peerDependency          │ @tanstack/react-query@5         │ 🟢     │ The versions are compatible.                           │
 ├─────────────────────────┼─────────────────────────────────┼────────┼────────────────────────────────────────────────────────┤
-│ You can use             │ <SuspenseQuery/>                │ 🟢     │ For more detailed information about the provided APIs, │
-│                         │ <SuspenseQueries/>              │        │ please visit the official documentation:               │
-│                         │ <SuspenseInfiniteQuery/>        │        │ https://suspensive.org/docs/react-query/motivation     │
-│                         │ <Mutation/>                     │        │                                                        │
-│                         │ <QueryErrorBoundary/>           │        │                                                        │
+│ You can use             │ SuspenseQuery                   │ 🟢     │ For more detailed information about the provided APIs, │
+│                         │ SuspenseQueries                 │        │ please visit the official documentation:               │
+│                         │ SuspenseInfiniteQuery           │        │ https://suspensive.org/docs/react-query/motivation     │
+│                         │ Mutation                        │        │                                                        │
+│                         │ QueryErrorBoundary              │        │                                                        │
 └─────────────────────────┴─────────────────────────────────┴────────┴────────────────────────────────────────────────────────┘
 ```
 
 ### switch
 
-@tanstack/react-query 버전에 따라 사용할 수 있는 @susepensive/react-query의 인터페이스를 다른 버전의 인터페이스로 전환할 수 있습니다. 이는 현재 설치된 환경의 호환과 맞지 않게 강제로 변경될 수 있으며 주의가 필요합니다.
+@suspensive/react-query의 엔트리 파일(dist/index.js)을 업데이트합니다. 이는 지정한 버전의 @suspensive/react-query 인터페이스로 전환됩니다.
 
-예를 들어, @tanstack/react-query v5를 사용하고 있는데 오류가 발생하면, 다음 명령어를 사용하여 호환되는 인터페이스로 전환할 수 있습니다.
+```typescript
+// dist/index.js of @suspensive/react-query
+
+// "npx suspensive-react-query switch 4"를 사용할 때
+// @suspensive/react-query의 dist/index.js
+export * from '@suspensive/react-query-4' // @tanstack/react-query@4용 Suspensive 인터페이스
+// "npx suspensive-react-query switch 5"를 사용할 때
+// @suspensive/react-query의 dist/index.js
+export * from '@suspensive/react-query-5' // @tanstack/react-query@5용 Suspensive 인터페이스
+```
+
+@tanstack/react-query v5를 사용하고 있는데 오류가 발생하면, 다음 명령어를 사용하여 엔트리 파일(dist/index.js)을 업데이트하여 호환되는 인터페이스로 전환할 수 있습니다.
 
 ```bash
 npx suspensive-react-query switch 5

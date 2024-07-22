@@ -90,19 +90,30 @@ For instance, if using @suspensive/react-query@2.9.0 and @tanstack/react-query@5
 ├─────────────────────────┼─────────────────────────────────┼────────┼────────────────────────────────────────────────────────┤
 │ peerDependency          │ @tanstack/react-query@5         │ 🟢     │ The versions are compatible.                           │
 ├─────────────────────────┼─────────────────────────────────┼────────┼────────────────────────────────────────────────────────┤
-│ You can use             │ <SuspenseQuery/>                │ 🟢     │ For more detailed information about the provided APIs, │
-│                         │ <SuspenseQueries/>              │        │ please visit the official documentation:               │
-│                         │ <SuspenseInfiniteQuery/>        │        │ https://suspensive.org/docs/react-query/motivation     │
-│                         │ <Mutation/>                     │        │                                                        │
-│                         │ <QueryErrorBoundary/>           │        │                                                        │
+│ You can use             │ SuspenseQuery                   │ 🟢     │ For more detailed information about the provided APIs, │
+│                         │ SuspenseQueries                 │        │ please visit the official documentation:               │
+│                         │ SuspenseInfiniteQuery           │        │ https://suspensive.org/docs/react-query/motivation     │
+│                         │ Mutation                        │        │                                                        │
+│                         │ QueryErrorBoundary              │        │                                                        │
 └─────────────────────────┴─────────────────────────────────┴────────┴────────────────────────────────────────────────────────┘
 ```
 
 ### switch
 
-Switches to a different version of the @suspensive/react-query interface based on the @tanstack/react-query version. Use caution as this can force a change that may not be compatible with your current setup.
+Updating the entry file (dist/index.js) of @suspensive/react-query. This will switch to the specified version of the @suspensive/react-query interface.
 
-For example, to switch to the interface compatible with @tanstack/react-query v5.
+```typescript
+// dist/index.js of @suspensive/react-query
+
+// When you use "npx suspensive-react-query switch 4"
+// @suspensive/react-query's dist/index.js
+export * from '@suspensive/react-query-4' // Suspensive interfaces for @tanstack/react-query@4
+// When you use "npx suspensive-react-query switch 5"
+// @suspensive/react-query's dist/index.js
+export * from '@suspensive/react-query-5' // Suspensive interfaces for @tanstack/react-query@5
+```
+
+If you are using @tanstack/react-query v5 and encounter errors, you can update the entry file (dist/index.js) and switch to the compatible interface by using the following command:
 
 ```bash
 npx suspensive-react-query switch 5
