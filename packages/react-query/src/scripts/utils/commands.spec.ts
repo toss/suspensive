@@ -1,9 +1,16 @@
 import fs from 'fs'
-import path from 'path'
 import type { Mock, MockInstance } from 'vitest'
 import packageJson from '../../../package.json'
-import { fixAction, getSuspensiveReactQueryVersion, statusAction, switchAction } from './commands'
-import * as packageUtils from './package'
+import { fixAction, statusAction, switchAction } from './commands'
+import {
+  getExportAPIsWithoutSuspensive,
+  getIndexFileContent,
+  getPackageJson,
+  getSuspensiveReactQueryPackageJson,
+  getTanStackReactQueryPackageJson,
+  getTargetSuspensiveReactQueryAPIs,
+  getTargetSuspensiveReactQueryVersion,
+} from './package'
 import { switchVersion } from './switchVersion'
 import { getStatusTable } from './table'
 
@@ -17,19 +24,23 @@ describe('commands', () => {
   let consoleWarnSpy: MockInstance
 
   beforeEach(() => {
-    // eslint-disable-next-line @typescript-eslint/unbound-method
-    vi.mocked(path.join).mockReturnValue('./dist/index.js')
     consoleLogSpy = vi.spyOn(console, 'log').mockImplementation((): void => {})
     consoleWarnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {})
 
-    const getPackageJsonMock = packageUtils.getPackageJson as Mock
+    const getPackageJsonMock = getPackageJson as Mock
     getPackageJsonMock.mockReturnValue(packageJson)
-
-    const getTanStackReactQueryPackageJsonMock = packageUtils.getTanStackReactQueryPackageJson as Mock
-    getTanStackReactQueryPackageJsonMock.mockReturnValue({ version: '4.0.0' })
-
-    const getTargetSuspensiveReactQueryPackageJsonMock = packageUtils.getSuspensiveReactQueryPackageJson as Mock
-    getTargetSuspensiveReactQueryPackageJsonMock.mockReturnValue({ version: '' })
+    const getIndexFileContentMock = getIndexFileContent as Mock
+    getIndexFileContentMock.mockReturnValue('export * from "@suspensive/react-query-4"')
+    const getTanStackReactQueryPackageJsonMock = getTanStackReactQueryPackageJson as Mock
+    getTanStackReactQueryPackageJsonMock.mockReturnValue({ version: '5.0.0' })
+    const getSuspensiveReactQueryPackageJsonMock = getSuspensiveReactQueryPackageJson as Mock
+    getSuspensiveReactQueryPackageJsonMock.mockReturnValue({ version: packageJson.version })
+    const getTargetSuspensiveReactQueryVersionMock = getTargetSuspensiveReactQueryVersion as Mock
+    getTargetSuspensiveReactQueryVersionMock.mockReturnValue('5')
+    const getTargetSuspensiveReactQueryAPIsMock = getTargetSuspensiveReactQueryAPIs as Mock
+    getTargetSuspensiveReactQueryAPIsMock.mockReturnValue([])
+    const getExportAPIsWithoutSuspensiveMock = vi.mocked(getExportAPIsWithoutSuspensive)
+    getExportAPIsWithoutSuspensiveMock.mockReturnValue([])
 
     vi.mocked(switchVersion).mockImplementation(() => {})
   })
@@ -40,21 +51,28 @@ describe('commands', () => {
 
   describe('getSuspensiveReactQueryVersion', () => {
     it('should return the correct version', () => {
-      vi.mocked(fs.readFileSync).mockReturnValue(`export * from '@suspensive/react-query-4'`)
-      const result = getSuspensiveReactQueryVersion()
+      const getTargetSuspensiveReactQueryVersionMock = getTargetSuspensiveReactQueryVersion as Mock
+      getTargetSuspensiveReactQueryVersionMock.mockReturnValue('4')
+
+      const result = getTargetSuspensiveReactQueryVersion()
+
       expect(result).toBe('4')
     })
 
     it('should return "not found" when version is not present', () => {
-      vi.mocked(fs.readFileSync).mockReturnValue(`export * from '@suspensive/react-query'`)
-      const result = getSuspensiveReactQueryVersion()
+      const getTargetSuspensiveReactQueryVersionMock = getTargetSuspensiveReactQueryVersion as Mock
+      getTargetSuspensiveReactQueryVersionMock.mockReturnValue('not found')
+
+      const result = getTargetSuspensiveReactQueryVersion()
+
       expect(result).toBe('not found')
     })
   })
 
   describe('statusAction', () => {
     it('should display the status correctly when versions are compatible (version 4)', () => {
-      vi.mocked(fs.readFileSync).mockReturnValue(`export * from '@suspensive/react-query-4'`)
+      const getTargetSuspensiveReactQueryVersionMock = getTargetSuspensiveReactQueryVersion as Mock
+      getTargetSuspensiveReactQueryVersionMock.mockReturnValue('4')
 
       statusAction()
 
@@ -62,27 +80,20 @@ describe('commands', () => {
     })
 
     it('should display the status correctly when versions are compatible (version 5)', () => {
-      vi.mocked(fs.readFileSync).mockReturnValue(`export * from '@suspensive/react-query-5'`)
-
       statusAction()
 
       expect(consoleLogSpy).toHaveBeenCalledWith(getStatusTable('5'))
     })
 
     it('should display incompatible versions message (suspensive 5, tanstack 4)', () => {
-      vi.mocked(fs.readFileSync).mockReturnValue(`export * from '@suspensive/react-query-5'`)
-      const getTanStackReactQueryPackageJsonMock = packageUtils.getTanStackReactQueryPackageJson as Mock
-      getTanStackReactQueryPackageJsonMock.mockReturnValue({ version: '4.0.0' })
-
       statusAction()
 
       expect(consoleLogSpy).toHaveBeenCalledWith(getStatusTable('5'))
     })
 
     it('should display incompatible versions message (suspensive 4, tanstack 5)', () => {
-      vi.mocked(fs.readFileSync).mockReturnValue(`export * from '@suspensive/react-query-4'`)
-      const getTanStackReactQueryPackageJsonMock = packageUtils.getTanStackReactQueryPackageJson as Mock
-      getTanStackReactQueryPackageJsonMock.mockReturnValue({ version: '5.0.0' })
+      const getTargetSuspensiveReactQueryVersionMock = getTargetSuspensiveReactQueryVersion as Mock
+      getTargetSuspensiveReactQueryVersionMock.mockReturnValue('4')
 
       statusAction()
 
@@ -112,8 +123,6 @@ describe('commands', () => {
 
   describe('fixAction', () => {
     it('should not switch when versions are compatible', () => {
-      vi.mocked(fs.readFileSync).mockReturnValue(`export * from '@suspensive/react-query-4'`)
-
       fixAction()
 
       expect(consoleLogSpy).toHaveBeenCalledWith('[@suspensive/react-query]', `The versions are compatible.`)
@@ -122,8 +131,8 @@ describe('commands', () => {
 
     it('should switch to version 5 when tanstack is 5', () => {
       vi.mocked(fs.readFileSync).mockReturnValue(`export * from '@suspensive/react-query-4'`)
-      const getTanStackReactQueryPackageJsonMock = packageUtils.getTanStackReactQueryPackageJson as Mock
-      getTanStackReactQueryPackageJsonMock.mockReturnValue({ version: '5.0.0' })
+      const getTargetSuspensiveReactQueryVersionMock = getTargetSuspensiveReactQueryVersion as Mock
+      getTargetSuspensiveReactQueryVersionMock.mockReturnValue('4')
 
       fixAction()
 
