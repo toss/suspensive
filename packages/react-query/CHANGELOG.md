@@ -1,5 +1,17 @@
 # @suspensive/react-query
 
+## 2.9.1
+
+### Patch Changes
+
+- [#1113](https://github.com/toss/suspensive/pull/1113) [`67492ac`](https://github.com/toss/suspensive/commit/67492ac47985608834d761eb25b61e619f54ff4d) Thanks [@gwansikk](https://github.com/gwansikk)! - fix(react-query): parse public apis for command `srq status`'s table from built file
+
+- Updated dependencies []:
+  - @suspensive/utils@2.9.1
+  - @suspensive/react@2.9.1
+  - @suspensive/react-query-4@2.9.1
+  - @suspensive/react-query-5@2.9.1
+
 ## 2.9.0
 
 ### Patch Changes

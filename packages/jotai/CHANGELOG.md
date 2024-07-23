@@ -1,5 +1,12 @@
 # @suspensive/jotai
 
+## 0.0.4
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @suspensive/utils@2.9.1
+
 ## 0.0.3
 
 ### Patch Changes
