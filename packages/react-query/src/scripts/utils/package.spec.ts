@@ -1,7 +1,9 @@
 import tanStackReactQueryPackageJson from '@tanstack/react-query/package.json'
 import packageJson from '../../../package.json'
 import {
+  getExportAPIsWithoutSuspensive,
   getPackageJson,
+  getSuspensiveReactQueryPackageJson,
   getTanStackReactQueryPackageJson,
   getTargetSuspensiveReactQueryAPIs,
   getTargetSuspensiveReactQueryVersion,
@@ -49,5 +51,18 @@ describe('package', () => {
     const apis = getTargetSuspensiveReactQueryAPIs()
 
     expect(apis).toEqual(version4APIs)
+  })
+
+  it('should get the @suspensive/react-query package.json for version 4', () => {
+    const result = getSuspensiveReactQueryPackageJson('4')
+
+    expect(result).toBeDefined()
+    expect(result.name).toBe('@suspensive/react-query-4')
+  })
+
+  it('should get exported APIs without @suspensive/react-query', () => {
+    const apis = getExportAPIsWithoutSuspensive()
+
+    expect(apis).toEqual(expect.arrayContaining([]))
   })
 })

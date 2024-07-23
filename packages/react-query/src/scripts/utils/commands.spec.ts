@@ -3,6 +3,7 @@ import type { Mock, MockInstance } from 'vitest'
 import packageJson from '../../../package.json'
 import { fixAction, statusAction, switchAction } from './commands'
 import {
+  getExportAPIsWithoutSuspensive,
   getIndexFileContent,
   getPackageJson,
   getSuspensiveReactQueryPackageJson,
@@ -38,6 +39,8 @@ describe('commands', () => {
     getTargetSuspensiveReactQueryVersionMock.mockReturnValue('5')
     const getTargetSuspensiveReactQueryAPIsMock = getTargetSuspensiveReactQueryAPIs as Mock
     getTargetSuspensiveReactQueryAPIsMock.mockReturnValue([])
+    const getExportAPIsWithoutSuspensiveMock = vi.mocked(getExportAPIsWithoutSuspensive)
+    getExportAPIsWithoutSuspensiveMock.mockReturnValue([])
 
     vi.mocked(switchVersion).mockImplementation(() => {})
   })
