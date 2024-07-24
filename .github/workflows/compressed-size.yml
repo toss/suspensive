@@ -23,7 +23,7 @@ jobs:
       - name: Report build size
         uses: preactjs/compressed-size-action@v2
         with:
-          build-script: 'ci:size'
+          build-script: '--filter ./websites/visualization build'
           pattern: '{packages/**/dist/*.{js,cjs,mjs},websites/visualization/.next/static/chunks/**/*.js,websites/visualization/.next/server/pages/*.{html,json}}'
           exclude: '{**/*.map,**/node_modules/**}'
           strip-hash: "\\w+-(\\w{16}).js$"
