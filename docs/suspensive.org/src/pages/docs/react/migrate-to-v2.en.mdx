@@ -2,38 +2,6 @@
 
 ## What's new
 
-### New [`<DevMode/>`](/docs/react/DevMode) [#470](https://github.com/toss/suspensive/pull/470)
-
-This is our new feature for DX with new `devMode` prop of `<Suspense/>`, `<ErrorBoundary/>`
-
-We have seen many people use way such as forcing a fallback into each component to test the fallback directly or reloading the page to re-fetch. so We added the `devMode` prop to each `<Suspense/>` and `<ErrorBoundary/>` to easily test the fallback of them.
-
-![devMode example](/devMode.gif)
-
-```jsx
-import { useState } from 'react'
-import { DevMode, Suspensive, SuspensiveProvider, Suspense, ErrorBoundary } from '@suspensive/react'
-
-const Example = () => {
-  const [suspensive] = useState(new Suspensive())
-
-  return (
-    <SuspensiveProvider value={suspensive}>
-      {/* This devMode prop will work only in development mode */}
-      <Suspense fallback={<>loading...</>} devMode={{ showFallback: true }}>
-        {/* children */}
-      </Suspense>
-      <ErrorBoundary fallback={<>error</>} devMode={{ showFallback: true }}>
-        {/* children */}
-      </ErrorBoundary>
-      {/* This <DevMode/> component will appear only in development mode */}
-      {/* If developer click <DevMode/>, devMode prop of <Suspense/> <ErrorBoundary/> will be activated */}
-      <DevMode />
-    </SuspensiveProvider>
-  )
-}
-```
-
 ### New [`wrap`](/docs/react/wrap) builder [#270](https://github.com/toss/suspensive/pull/270)
 
 A new feature that wraps a component in `<Suspense/>`, `<ErrorBoundary/>`, and `<ErrorBoundaryGroup/>` all at once.

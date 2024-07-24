@@ -1,5 +1,5 @@
 import { type ContextType, type PropsWithChildren, useMemo } from 'react'
-import { DelayDefaultPropsContext, DevModeContext, SuspenseDefaultPropsContext, SuspensiveDevMode } from './contexts'
+import { DelayDefaultPropsContext, SuspenseDefaultPropsContext } from './contexts'
 import {
   Message_Suspensive_config_defaultProps_delay_ms_should_be_greater_than_0,
   SuspensiveError,
@@ -10,7 +10,6 @@ export class Suspensive {
     suspense?: ContextType<typeof SuspenseDefaultPropsContext>
     delay?: ContextType<typeof DelayDefaultPropsContext>
   }
-  public devMode = new SuspensiveDevMode()
 
   constructor(config: { defaultProps?: Suspensive['defaultProps'] } = {}) {
     if (process.env.NODE_ENV === 'development' && typeof config.defaultProps?.delay?.ms === 'number') {
@@ -31,12 +30,10 @@ export const SuspensiveProvider = ({ value, children }: SuspensiveProviderProps)
   const suspenseDefaultProps = useMemo(() => value.defaultProps?.suspense || {}, [value.defaultProps?.suspense])
 
   return (
-    <DevModeContext.Provider value={value.devMode}>
-      <DelayDefaultPropsContext.Provider value={delayDefaultProps}>
-        <SuspenseDefaultPropsContext.Provider value={suspenseDefaultProps}>
-          {children}
-        </SuspenseDefaultPropsContext.Provider>
-      </DelayDefaultPropsContext.Provider>
-    </DevModeContext.Provider>
+    <DelayDefaultPropsContext.Provider value={delayDefaultProps}>
+      <SuspenseDefaultPropsContext.Provider value={suspenseDefaultProps}>
+        {children}
+      </SuspenseDefaultPropsContext.Provider>
+    </DelayDefaultPropsContext.Provider>
   )
 }

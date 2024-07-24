@@ -4,7 +4,6 @@ export { ErrorBoundary, useErrorBoundary, useErrorBoundaryFallbackProps } from '
 export { ErrorBoundaryGroup, useErrorBoundaryGroup } from './ErrorBoundaryGroup'
 export { Delay } from './Delay'
 export { wrap } from './wrap'
-export { DevMode } from './DevMode'
 
 export type { SuspenseProps } from './Suspense'
 export type { ErrorBoundaryProps, ErrorBoundaryFallbackProps } from './ErrorBoundary'
