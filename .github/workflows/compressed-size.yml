@@ -39,9 +39,9 @@ jobs:
       - name: Report app size
         uses: preactjs/compressed-size-action@v2
         with:
-          build-script: '--filter ./websites/visualization build'
+          build-script: 'build'
           pattern: '.next/static/chunks/**/*.js'
-          strip-hash: "(?:runtime/\\w+-(\\w{20}).js$|chunks/\\w{40}\\.(\\w{20})\\.js$|static/(\\w{20,21})/)"
+          strip-hash: "\\w+-(\\w{16}).js$"
           exclude: '{**/*.map,**/node_modules/**}'
           use-check: true
           repo-token: ${{ secrets.GITHUB_TOKEN }}
