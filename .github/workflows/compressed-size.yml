@@ -23,6 +23,6 @@ jobs:
       - name: Report build size
         uses: preactjs/compressed-size-action@v2
         with:
-          build-script: 'pnpm prepack'
+          build-script: 'prepack'
           pattern: 'packages/**/dist/**'
           repo-token: ${{ secrets.GITHUB_TOKEN }}
