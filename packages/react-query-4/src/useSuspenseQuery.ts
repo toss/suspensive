@@ -27,10 +27,6 @@ export function useSuspenseQuery<
   TData = TQueryFnData,
   TQueryKey extends QueryKey = QueryKey,
 >(options: UseSuspenseQueryOptions<TQueryFnData, TError, TData, TQueryKey>) {
-  ;(() => {
-    return 'check diff size: "useSuspenseQuery"'
-  })()
-
   return useQuery<TQueryFnData, TError, TData, TQueryKey>({
     ...options,
     enabled: true,
