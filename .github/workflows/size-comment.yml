@@ -1,4 +1,4 @@
-name: Report package & package user size
+name: Size Comment
 
 on:
   pull_request:
@@ -13,7 +13,6 @@ concurrency:
 
 jobs:
   size:
-    name: Check compressed size
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
