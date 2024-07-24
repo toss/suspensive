@@ -23,8 +23,25 @@ jobs:
       - name: Report build size
         uses: preactjs/compressed-size-action@v2
         with:
-          build-script: 'build'
-          pattern: '{packages/**/dist/*.{js,cjs,mjs},websites/visualization/.next/static/chunks/**/*.js,websites/visualization/.next/server/pages/*.{html,json}}'
+          build-script: 'prepack'
+          pattern: 'packages/**/dist/*.{js,cjs,mjs}'
           exclude: '{**/*.map,**/node_modules/**}'
-          strip-hash: "\\w+-(\\w{16}).js$"
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+  visualization-app-size:
+    name: visualization app size
+    runs-on: ubuntu-latest
+    needs: size
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/pnpm-setup-node
+      - run: pnpm install --frozen-lockfile
+
+      - name: Report app size
+        uses: preactjs/compressed-size-action@v2
+        with:
+          build-script: '--filter ./websites/visualization build'
+          pattern: '.next/static/chunks/**/*.js'
+          strip-hash: "(?:runtime/\\w+-(\\w{20}).js$|chunks/\\w{40}\\.(\\w{20})\\.js$|static/(\\w{20,21})/)"
+          exclude: '{**/*.map,**/node_modules/**}'
+          use-check: true
           repo-token: ${{ secrets.GITHUB_TOKEN }}
