@@ -39,18 +39,3 @@ jobs:
         with:
           run: pnpm ci:bench
           token: ${{ secrets.CODSPEED_TOKEN }}
-
-  size:
-    name: Size
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: ./.github/actions/pnpm-setup-node
-      - run: pnpm install --frozen-lockfile
-
-      - name: Report build size
-        uses: preactjs/compressed-size-action@v2
-        with:
-          build-script: "pnpm prepack"
-          pattern: 'packages/**/dist/**'
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
