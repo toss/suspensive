@@ -70,10 +70,22 @@ export type ErrorBoundaryProps = PropsWithDevMode<
     shouldCatch?: ShouldCatch | [ShouldCatch, ...ShouldCatch[]]
   }>,
   {
+    /**
+     * @deprecated Use official react devtools instead
+     * @see https://react.dev/learn/react-developer-tools
+     */
     showFallback?:
       | boolean
       | {
+          /**
+           * @deprecated Use official react devtools instead
+           * @see https://react.dev/learn/react-developer-tools
+           */
           errorMessage?: string
+          /**
+           * @deprecated Use official react devtools instead
+           * @see https://react.dev/learn/react-developer-tools
+           */
           after?: number
         }
   }
