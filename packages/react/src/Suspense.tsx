@@ -1,8 +1,9 @@
 import { type SuspenseProps as ReactSuspenseProps, useContext } from 'react'
 import { SuspenseDefaultPropsContext } from './contexts'
+import type { PropsWithDevMode } from './utility-types'
 import { defineSuspense } from './utils'
 
-export interface SuspenseProps extends ReactSuspenseProps {
+export interface SuspenseProps extends PropsWithDevMode<ReactSuspenseProps, { showFallback?: boolean }> {
   /**
    * With clientOnly prop, `<Suspense/>` will return fallback in server but after mount return children in client. Since mount only happens on the client, `<Suspense/>` can be avoid server-side rendering.
    * @see https://suspensive.org/docs/react/Suspense#avoid-server-side-rendering-clientonly
