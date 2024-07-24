@@ -24,7 +24,7 @@ jobs:
         uses: preactjs/compressed-size-action@v2
         with:
           build-script: 'prepack'
-          pattern: 'packages/**/dist/*.{js,cjs,mjs},websites/visualization/.next/static/chunks/**/*.js,websites/visualization/.next/server/pages/*.{html,json}}'
+          pattern: '{packages/**/dist/*.{js,cjs,mjs},websites/visualization/.next/static/chunks/**/*.js,websites/visualization/.next/server/pages/*.{html,json}}'
           exclude: '{**/*.map,**/node_modules/**}'
           strip-hash: "\\w+-(\\w{16}).js$"
           repo-token: ${{ secrets.GITHUB_TOKEN }}
