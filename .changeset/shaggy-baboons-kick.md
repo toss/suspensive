@@ -2,4 +2,4 @@
 "@suspensive/react": patch
 ---
 
-fix(react): remove unnecessary DevMode
+fix(react): deprcate DevMode
