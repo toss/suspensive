@@ -1,7 +1,7 @@
 'use client'
 
 import { CacheStore, CacheStoreProvider } from '@suspensive/cache'
-import { Suspensive, SuspensiveProvider } from '@suspensive/react'
+import { DevMode, Suspensive, SuspensiveProvider } from '@suspensive/react'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { type PropsWithChildren, useState } from 'react'
@@ -40,6 +40,7 @@ export const Providers = ({ children }: PropsWithChildren) => {
           {children}
           <ReactQueryDevtools initialIsOpen={false} />
         </QueryClientProvider>
+        <DevMode position="bottomRight" />
       </SuspensiveProvider>
     </CacheStoreProvider>
   )
