@@ -1,4 +1,4 @@
-name: Compressed Size
+name: Size Comment
 
 on:
   pull_request:
@@ -13,16 +13,20 @@ concurrency:
 
 jobs:
   size:
-    name: Check compressed size
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/pnpm-setup-node
       - run: pnpm install --frozen-lockfile
-
-      - name: Report build size
+      - name: Report package size
         uses: preactjs/compressed-size-action@v2
         with:
-          build-script: 'prepack'
           pattern: 'packages/**/dist/*.{js,cjs,mjs}'
+          exclude: '{**/*.map,**/node_modules/**}'
           repo-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Report package user size
+        uses: transferwise/actions-next-bundle-analyzer@v2
+        with:
+          working-directory: ./websites/visualization
+          comment-strategy: 'always'
+          create-issue: false
