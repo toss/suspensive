@@ -1,4 +1,4 @@
-name: Compressed Size
+name: Report package & package user size
 
 on:
   pull_request:
@@ -19,13 +19,13 @@ jobs:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/pnpm-setup-node
       - run: pnpm install --frozen-lockfile
-      - name: Report packages size
+      - name: Report package size
         uses: preactjs/compressed-size-action@v2
         with:
           pattern: 'packages/**/dist/*.{js,cjs,mjs}'
           exclude: '{**/*.map,**/node_modules/**}'
           repo-token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Report apps size
+      - name: Report package user size
         uses: transferwise/actions-next-bundle-analyzer@v2
         with:
           working-directory: ./websites/visualization
