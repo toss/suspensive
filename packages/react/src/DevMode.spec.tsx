@@ -4,7 +4,7 @@ import { Suspense } from './Suspense'
 
 describe('<DevMode/>', () => {
   it('should return just null this should be removed at @suspensive/react v3', () => {
-    expect(DevMode()).toBe(null)
+    expect(DevMode({})).toBe(null)
   })
   ;() => <Suspense devMode={{}} /> // devMode prop jsdoc deprecated
   ;() => <ErrorBoundary fallback={() => null} devMode={{}} /> // devMode prop jsdoc deprecated
