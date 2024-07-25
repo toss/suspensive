@@ -63,3 +63,4 @@ jobs:
           working-directory: ./websites/visualization
           comment-strategy: 'always'
           create-issue: false
+          github-token: ${{ secrets.GITHUB_TOKEN }}
