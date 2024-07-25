@@ -13,8 +13,6 @@ import {
   useRef,
   useState,
 } from 'react'
-import { syncDevMode } from './contexts'
-import { Delay } from './Delay'
 import { ErrorBoundaryGroupContext } from './ErrorBoundaryGroup'
 import {
   Message_useErrorBoundaryFallbackProps_this_hook_should_be_called_in_ErrorBoundary_props_fallback,
@@ -71,7 +69,26 @@ export type ErrorBoundaryProps = PropsWithDevMode<
      */
     shouldCatch?: ShouldCatch | [ShouldCatch, ...ShouldCatch[]]
   }>,
-  ErrorBoundaryDevModeProp
+  {
+    /**
+     * @deprecated Use official react devtools instead
+     * @see https://react.dev/learn/react-developer-tools
+     */
+    showFallback?:
+      | boolean
+      | {
+          /**
+           * @deprecated Use official react devtools instead
+           * @see https://react.dev/learn/react-developer-tools
+           */
+          errorMessage?: string
+          /**
+           * @deprecated Use official react devtools instead
+           * @see https://react.dev/learn/react-developer-tools
+           */
+          after?: number
+        }
+  }
 >
 
 type ErrorBoundaryState<TError extends Error = Error> =
@@ -153,7 +170,7 @@ class BaseErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState
 export const ErrorBoundary = Object.assign(
   (() => {
     const ErrorBoundary = forwardRef<{ reset(): void }, ErrorBoundaryProps>(
-      ({ devMode, fallback, children, onError, onReset, resetKeys, ...props }, ref) => {
+      ({ fallback, children, onError, onReset, resetKeys, shouldCatch }, ref) => {
         const group = useContext(ErrorBoundaryGroupContext) ?? { resetKey: 0 }
         const baseErrorBoundaryRef = useRef<BaseErrorBoundary>(null)
         useImperativeHandle(ref, () => ({
@@ -162,7 +179,7 @@ export const ErrorBoundary = Object.assign(
 
         return (
           <BaseErrorBoundary
-            {...props}
+            shouldCatch={shouldCatch}
             fallback={fallback}
             onError={onError}
             onReset={onReset}
@@ -170,7 +187,6 @@ export const ErrorBoundary = Object.assign(
             ref={baseErrorBoundaryRef}
           >
             {children}
-            <ErrorBoundaryDevMode {...devMode} />
           </BaseErrorBoundary>
         )
       }
@@ -231,30 +247,4 @@ export const useErrorBoundaryFallbackProps = <TError extends Error = Error>(): E
     }),
     [errorBoundary.error, errorBoundary.reset]
   )
-}
-
-type ErrorBoundaryDevModeProp = {
-  showFallback?: boolean | { errorMessage?: string; after?: number }
-}
-const ErrorBoundaryDevMode = syncDevMode<ErrorBoundaryDevModeProp>(({ devMode, showFallback = false }) => {
-  if (devMode.is && showFallback) {
-    if (showFallback === true) {
-      showFallback = devModeDefaultErrorBoundaryShowFallback
-    }
-    return (
-      <Delay ms={showFallback.after ?? devModeDefaultErrorBoundaryShowFallback.after}>
-        <SetError errorMessage={showFallback.errorMessage ?? devModeDefaultErrorBoundaryShowFallback.errorMessage} />
-      </Delay>
-    )
-  }
-  return null
-})
-const devModeDefaultErrorBoundaryShowFallback = {
-  errorMessage: `<DevMode.ErrorBoundary> set Error ErrorBoundary`,
-  after: 0,
-} as const
-
-const SetError = ({ errorMessage }: { errorMessage: string }) => {
-  useErrorBoundary().setError(new Error(errorMessage))
-  return null
 }

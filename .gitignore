@@ -5,6 +5,7 @@ node_modules
 
 # testing
 coverage
+__screenshots__
 
 # next.js
 .next/
