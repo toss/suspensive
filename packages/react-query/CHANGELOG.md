@@ -1,5 +1,17 @@
 # @suspensive/react-query
 
+## 2.10.0
+
+### Patch Changes
+
+- [`e5ed2be`](https://github.com/toss/suspensive/commit/e5ed2be611998a8a86b33998d36b6dc5c7322b43) Thanks [@manudeli](https://github.com/manudeli)! - fix(react-query): fixed dependencies
+
+- Updated dependencies [[`314410e`](https://github.com/toss/suspensive/commit/314410edadee92c10727fb825f2f2666a2bcd6ea)]:
+  - @suspensive/react-query-5@2.10.0
+  - @suspensive/utils@2.10.0
+  - @suspensive/react@2.10.0
+  - @suspensive/react-query-4@2.10.0
+
 ## 2.9.4
 
 ### Patch Changes
