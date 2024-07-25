@@ -1,5 +1,17 @@
 # @suspensive/react-query
 
+## 2.9.3
+
+### Patch Changes
+
+- [#1130](https://github.com/toss/suspensive/pull/1130) [`51f6a49`](https://github.com/toss/suspensive/commit/51f6a49a235293ec5c9dd5d15736de695861418c) Thanks [@manudeli](https://github.com/manudeli)! - fix(react-query): peerDeps @suspensive/react version
+
+- Updated dependencies []:
+  - @suspensive/utils@2.9.3
+  - @suspensive/react@2.9.3
+  - @suspensive/react-query-4@2.9.3
+  - @suspensive/react-query-5@2.9.3
+
 ## 2.9.2
 
 ### Patch Changes
