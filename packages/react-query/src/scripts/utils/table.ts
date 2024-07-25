@@ -29,18 +29,12 @@ export function getStatusTable(currentTargetVersion: string) {
   })
   table.push([
     { content: 'exports from', rowSpan: 2 },
-    {
-      content: `@suspensive/react-query-${currentTargetVersion}\n@${targetSuspensiveReactQueryPackageJson.version}`,
-      wordWrap: true,
-    },
+    `@suspensive/react-query-${currentTargetVersion}\n@${targetSuspensiveReactQueryPackageJson.version}`,
     isCompatible ? '🟢' : '❌',
     suspensiveAPIs.join(' '),
   ])
   table.push([
-    {
-      content: `@tanstack/react-query\n@${tanStackReactQueryPackageJson.version}`,
-      wordWrap: true,
-    },
+    `@tanstack/react-query\n@${tanStackReactQueryPackageJson.version}`,
     isCompatible ? '🟢' : '❌',
     exportAPIs.length > 0 ? exportAPIs.join(' ') : '-',
   ])
