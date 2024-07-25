@@ -57,8 +57,8 @@
   },
   "dependencies": {
     "@commander-js/extra-typings": "^12.1.0",
-    "@suspensive/react-query-4": "workspace:*",
-    "@suspensive/react-query-5": "workspace:*",
+    "@suspensive/react-query-4": "workspace:^2.9.4",
+    "@suspensive/react-query-5": "workspace:^2.9.4",
     "@suspensive/utils": "workspace:*",
     "cli-table3": "^0.6.5",
     "commander": "^12.1.0"
