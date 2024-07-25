@@ -53,6 +53,8 @@ jobs:
       - if: matrix.command == 'prepack'
         uses: preactjs/compressed-size-action@v2
         with:
+          install-script: ''
+          build-script: ''
           pattern: 'packages/**/dist/*.{js,cjs,mjs}'
           exclude: '{**/*.map,**/node_modules/**}'
           repo-token: ${{ secrets.GITHUB_TOKEN }}
@@ -61,3 +63,4 @@ jobs:
         with:
           working-directory: ./websites/visualization
           comment-strategy: 'always'
+          create-issue: false
