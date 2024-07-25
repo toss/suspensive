@@ -40,15 +40,6 @@ export function queryOptions<
  * This feature is officially supported in \@tanstack/react-query@5, You can proceed with the migration.
  * @deprecated Use `queryOptions` from \@tanstack/react-query@5
  */
-export function queryOptions<
-  TQueryFnData = unknown,
-  TError = DefaultError,
-  TData = TQueryFnData,
-  TQueryKey extends QueryKey = QueryKey,
->(
-  options:
-    | DefinedInitialDataOptions<TQueryFnData, TError, TData, TQueryKey>
-    | UndefinedInitialDataOptions<TQueryFnData, TError, TData, TQueryKey>
-) {
+export function queryOptions(options: unknown) {
   return options
 }
