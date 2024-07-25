@@ -6,6 +6,7 @@ node_modules
 # testing
 coverage
 __screenshots__
+vitest.config.ts.timestamp*
 
 # next.js
 .next/
