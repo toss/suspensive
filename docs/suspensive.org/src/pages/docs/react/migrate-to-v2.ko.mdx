@@ -2,38 +2,6 @@
 
 ## 새로운 기능
 
-### 새로운 [`<DevMode/>`](/docs/react/DevMode) [#470](https://github.com/toss/suspensive/pull/470)
-
-이것은 DX를 위해 `<Suspense/>`, `<ErrorBoundary/>`의 새로운 `devMode` prop과 함께 사용하는 새로운 기능입니다.
-
-우리는 많은 사람들이 각 컴포넌트의 fallback을 강제로 적용하여 fallback을 직접 테스트하거나 페이지를 다시 로드하여 다시 fetch하는 등의 방법을 사용하는 것을 보았습니다. 그래서 우리는 각각의 `<Suspense/>` 및 `<ErrorBoundary/>`에 `devMode` prop을 추가하여 fallback을 쉽게 테스트할 수 있게 했습니다.
-
-![devMode example](/devMode.gif)
-
-```jsx
-import { useState } from 'react'
-import { DevMode, Suspensive, SuspensiveProvider, Suspense, ErrorBoundary } from '@suspensive/react'
-
-const Example = () => {
-  const [suspensive] = useState(new Suspensive())
-
-  return (
-    <SuspensiveProvider value={suspensive}>
-      {/* This devMode prop will work only in development mode */}
-      <Suspense fallback={<>loading...</>} devMode={{ showFallback: true }}>
-        {/* children */}
-      </Suspense>
-      <ErrorBoundary fallback={<>error</>} devMode={{ showFallback: true }}>
-        {/* children */}
-      </ErrorBoundary>
-      {/* This <DevMode/> component will appear only in development mode */}
-      {/* If developer click <DevMode/>, devMode prop of <Suspense/> <ErrorBoundary/> will be activated */}
-      <DevMode />
-    </SuspensiveProvider>
-  )
-}
-```
-
 ### 새로운 [`wrap`](/docs/react/wrap) 빌더 [#270](https://github.com/toss/suspensive/pull/270)
 
 컴포넌트를 `<Suspense/>`, `<ErrorBoundary/>`, `<ErrorBoundaryGroup/>`으로 한번에 래핑하는 새로운 기능입니다.

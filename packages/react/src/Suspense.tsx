@@ -1,9 +1,19 @@
 import { type SuspenseProps as ReactSuspenseProps, useContext } from 'react'
-import { SuspenseDefaultPropsContext, syncDevMode } from './contexts'
+import { SuspenseDefaultPropsContext } from './contexts'
 import type { PropsWithDevMode } from './utility-types'
 import { defineSuspense } from './utils'
 
-export interface SuspenseProps extends PropsWithDevMode<ReactSuspenseProps, SuspenseDevModeProp> {
+export interface SuspenseProps
+  extends PropsWithDevMode<
+    ReactSuspenseProps,
+    {
+      /**
+       * @deprecated Use official react devtools instead
+       * @see https://react.dev/learn/react-developer-tools
+       */
+      showFallback?: boolean
+    }
+  > {
   /**
    * With clientOnly prop, `<Suspense/>` will return fallback in server but after mount return children in client. Since mount only happens on the client, `<Suspense/>` can be avoid server-side rendering.
    * @see https://suspensive.org/docs/react/Suspense#avoid-server-side-rendering-clientonly
@@ -15,7 +25,7 @@ export interface SuspenseProps extends PropsWithDevMode<ReactSuspenseProps, Susp
  * This component is just wrapping React's Suspense. to use Suspense easily in Server-side rendering environment like Next.js
  * @see {@link https://suspensive.org/docs/react/Suspense}
  */
-export const Suspense = ({ clientOnly, devMode, children, fallback }: SuspenseProps) => {
+export const Suspense = ({ clientOnly, children, fallback }: SuspenseProps) => {
   const defaultProps = useContext(SuspenseDefaultPropsContext)
   const DefinedSuspense = defineSuspense({
     defaultPropsClientOnly: defaultProps.clientOnly,
@@ -25,20 +35,9 @@ export const Suspense = ({ clientOnly, devMode, children, fallback }: SuspensePr
   return (
     <DefinedSuspense fallback={typeof fallback === 'undefined' ? defaultProps.fallback : fallback}>
       {children}
-      <SuspenseDevMode {...devMode} />
     </DefinedSuspense>
   )
 }
 if (process.env.NODE_ENV === 'development') {
   Suspense.displayName = 'Suspense'
 }
-
-type SuspenseDevModeProp = {
-  showFallback?: boolean
-}
-const SuspenseDevMode = syncDevMode<SuspenseDevModeProp>(({ devMode, showFallback }) => {
-  if (devMode.is && showFallback) {
-    throw devMode.promise
-  }
-  return null
-})
