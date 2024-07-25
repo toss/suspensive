@@ -27,7 +27,7 @@ module.exports = {
       'warn',
       {
         cspell: {
-          words: ['packlint', 'codecov', 'tsup', 'nextra'],
+          words: ['packlint', 'codecov', 'tsup', 'nextra', 'Sandpack'],
         },
       },
     ],

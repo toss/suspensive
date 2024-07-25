@@ -40,6 +40,18 @@ const Example = () => (
 )
 ```
 
+clientOnly prop을 사용하면 내부적으로 useIsClient훅을 사용하고 useIsClient는 useSyncExternalStore의 getSnapshot와 getServerSnapshot을 활용해 client임을 보장하고 있습니다
+
+```tsx /useIsClient/
+const useIsClient = () => useSyncExternalStore(emptySubscribe, getSnapshot, getServerSnapshot)
+
+const emptySubscribe = () => noop
+const getSnapshot = () => true
+const getServerSnapshot = () => false
+```
+
+https://x.com/TkDodo/status/1741068994981826947?t=XmG17etMUL2m0JFim03vqw&s=19
+
 <Callout type='info'>
 
 SSR을 지원하도록 점진적으로 마이그레이션하기 (`<Suspense clientOnly/>` -> `<Suspense/>`)

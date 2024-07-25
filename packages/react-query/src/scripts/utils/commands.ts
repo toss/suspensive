@@ -1,18 +1,11 @@
-import fs from 'fs'
-import path from 'path'
-import { getTanStackReactQueryPackageJson } from './package'
+import { getTanStackReactQueryPackageJson, getTargetSuspensiveReactQueryVersion } from './package'
 import { switchVersion } from './switchVersion'
 import { getStatusTable } from './table'
 
-export const getSuspensiveReactQueryVersion = (): string => {
-  const indexFileContent = fs.readFileSync(path.join(__dirname, '../../dist/index.js'), 'utf-8')
-  return (RegExp(/@suspensive\/react-query-(\d+)/).exec(indexFileContent) || [])[1] || 'not found'
-}
-
 export const statusAction = () => {
-  const suspensiveReactQueryVersion = getSuspensiveReactQueryVersion()
+  const targetSuspensiveReactQueryVersion = getTargetSuspensiveReactQueryVersion()
 
-  console.log(getStatusTable(suspensiveReactQueryVersion))
+  console.log(getStatusTable(targetSuspensiveReactQueryVersion))
 }
 
 export const switchAction = (version: string) => {
@@ -27,7 +20,7 @@ export const switchAction = (version: string) => {
 
 export const fixAction = () => {
   const tanStackReactQueryPackageJson = getTanStackReactQueryPackageJson()
-  const suspensiveReactQueryVersion = getSuspensiveReactQueryVersion()
+  const suspensiveReactQueryVersion = getTargetSuspensiveReactQueryVersion()
 
   const tanStackReactQueryMajorVersion = tanStackReactQueryPackageJson.version.split('.')[0]
   if (suspensiveReactQueryVersion === tanStackReactQueryMajorVersion) {

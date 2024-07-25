@@ -26,6 +26,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <details>
                 <summary>@suspensive/react</summary>
                 <li>
+                  <Link href="/react/Suspense/clientOnly">{`<Suspense clientOnly/>`}</Link>
+                </li>
+                <li>
                   <Link href="/react/DevMode">{`<DevMode/>`}</Link>
                 </li>
                 <li>

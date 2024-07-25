@@ -3,9 +3,7 @@ import { copy } from './copy'
 
 describe('copy', () => {
   beforeEach(() => {
-    vi.spyOn(fs, 'readdirSync').mockReturnValue(['v4.js' as unknown as fs.Dirent, 'v5.js' as unknown as fs.Dirent])
     vi.spyOn(fs, 'readFileSync').mockReturnValue(`export * from '@suspensive/react-query-4'`)
-    vi.spyOn(fs, 'writeFileSync').mockImplementation(() => {})
   })
 
   afterEach(() => {

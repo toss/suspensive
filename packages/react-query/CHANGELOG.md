@@ -1,5 +1,39 @@
 # @suspensive/react-query
 
+## 2.9.3
+
+### Patch Changes
+
+- [#1130](https://github.com/toss/suspensive/pull/1130) [`51f6a49`](https://github.com/toss/suspensive/commit/51f6a49a235293ec5c9dd5d15736de695861418c) Thanks [@manudeli](https://github.com/manudeli)! - fix(react-query): peerDeps @suspensive/react version
+
+- Updated dependencies []:
+  - @suspensive/utils@2.9.3
+  - @suspensive/react@2.9.3
+  - @suspensive/react-query-4@2.9.3
+  - @suspensive/react-query-5@2.9.3
+
+## 2.9.2
+
+### Patch Changes
+
+- Updated dependencies [[`89a6528`](https://github.com/toss/suspensive/commit/89a652866699f09853f9baf74a973767f2350661)]:
+  - @suspensive/react@2.9.2
+  - @suspensive/react-query-4@2.9.2
+  - @suspensive/react-query-5@2.9.2
+  - @suspensive/utils@2.9.2
+
+## 2.9.1
+
+### Patch Changes
+
+- [#1113](https://github.com/toss/suspensive/pull/1113) [`67492ac`](https://github.com/toss/suspensive/commit/67492ac47985608834d761eb25b61e619f54ff4d) Thanks [@gwansikk](https://github.com/gwansikk)! - fix(react-query): parse public apis for command `srq status`'s table from built file
+
+- Updated dependencies []:
+  - @suspensive/utils@2.9.1
+  - @suspensive/react@2.9.1
+  - @suspensive/react-query-4@2.9.1
+  - @suspensive/react-query-5@2.9.1
+
 ## 2.9.0
 
 ### Patch Changes
