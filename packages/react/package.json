@@ -1,6 +1,6 @@
 {
   "name": "@suspensive/react",
-  "version": "2.9.3",
+  "version": "2.9.4",
   "description": "Useful interfaces for React Suspense",
   "keywords": [
     "suspensive",
