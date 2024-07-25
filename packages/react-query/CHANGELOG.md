@@ -1,5 +1,17 @@
 # @suspensive/react-query
 
+## 2.9.4
+
+### Patch Changes
+
+- [#1137](https://github.com/toss/suspensive/pull/1137) [`ff91b56`](https://github.com/toss/suspensive/commit/ff91b563960132578a0fe5e6d5124ef0e5768494) Thanks [@gwansikk](https://github.com/gwansikk)! - fix(react-query): improve status table
+
+- Updated dependencies []:
+  - @suspensive/utils@2.9.4
+  - @suspensive/react@2.9.4
+  - @suspensive/react-query-4@2.9.4
+  - @suspensive/react-query-5@2.9.4
+
 ## 2.9.3
 
 ### Patch Changes

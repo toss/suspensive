@@ -1,6 +1,6 @@
 {
   "name": "@suspensive/jotai",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Useful helpers for jotai with suspense",
   "keywords": [
     "suspensive",
