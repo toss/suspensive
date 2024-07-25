@@ -25,8 +25,8 @@ export type SuspenseQueriesOptions<
  * @deprecated Use `SuspenseQueriesResults` from \@tanstack/react-query@5
  * @example
  * ```diff
- * - import { SuspenseQueriesResults } from '@suspensive/react-query'
- * + import { SuspenseQueriesResults } from '@tanstack/react-query'
+ * - import type { SuspenseQueriesResults } from '@suspensive/react-query'
+ * + import type { SuspenseQueriesResults } from '@tanstack/react-query'
  * ```
  */
 export type SuspenseQueriesResults<
