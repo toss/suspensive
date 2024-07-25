@@ -1,6 +1,6 @@
 {
   "name": "@suspensive/cache",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "description": "Useful interfaces for React Suspense",
   "keywords": [
     "suspensive",
