@@ -43,5 +43,5 @@ export function defineSuspense({
   defaultPropsClientOnly?: boolean
   componentPropsClientOnly?: boolean
 }): typeof SuspenseClientOnly | typeof Suspense {
-  return componentPropsClientOnly ?? defaultPropsClientOnly ? SuspenseClientOnly : Suspense
+  return (componentPropsClientOnly ?? defaultPropsClientOnly) ? SuspenseClientOnly : Suspense
 }
