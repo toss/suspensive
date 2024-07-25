@@ -32,7 +32,6 @@
     "ci:test:watch": "turbo run ci:test:watch --parallel",
     "ci:type": "turbo run ci:type",
     "ci:knip": "pnpm prepack && pnpm knip",
-    "noop": "sh -c 'echo ${1:-No operation}' --",
     "clean": "turbo run clean",
     "dev": "turbo run dev --concurrency 20",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
