@@ -75,7 +75,7 @@
     "react-dom": "^18.3.1"
   },
   "peerDependencies": {
-    "@suspensive/react": "workspace:^2.9.2",
+    "@suspensive/react": "workspace:*",
     "@tanstack/react-query": "^4 || ^5",
     "react": "^18"
   },
