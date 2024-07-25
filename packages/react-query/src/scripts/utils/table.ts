@@ -15,7 +15,6 @@ export function getStatusTable(currentTargetVersion: string) {
   const isCompatible = currentTargetVersion === tanStackReactQueryMajorVersion
   const suspensiveAPIs = getTargetSuspensiveReactQueryAPIs()
   const exportAPIs = getExportAPIsWithoutSuspensive()
-  const peerDependencyDescription = exportAPIs.length > 0 ? exportAPIs.join(', ') : '-'
 
   const table = new Table({
     head: [packageJson.name, 'status', 'result'],
@@ -28,15 +27,16 @@ export function getStatusTable(currentTargetVersion: string) {
   table.push([
     `exports from @suspensive/react-query-${currentTargetVersion}@${targetSuspensiveReactQueryPackageJson.version}`,
     isCompatible ? '🟢' : '❌',
-    isCompatible
-      ? suspensiveAPIs.join(', ')
-      : `You should \`npx srq switch ${tanStackReactQueryMajorVersion}\` to fix this error`,
+    suspensiveAPIs.join(', '),
   ])
   table.push([
     `exports from @tanstack/react-query@${tanStackReactQueryPackageJson.version}`,
     isCompatible ? '🟢' : '❌',
-    isCompatible ? peerDependencyDescription : `-`,
+    exportAPIs.length > 0 ? exportAPIs.join(', ') : '-',
   ])
+  if (!isCompatible) {
+    table.push([{ content: `You should \`npx srq switch ${tanStackReactQueryMajorVersion}\` to fix this`, colSpan: 3 }])
+  }
 
   return table.toString()
 }
