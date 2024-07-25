@@ -17,25 +17,35 @@ export function getStatusTable(currentTargetVersion: string) {
   const exportAPIs = getExportAPIsWithoutSuspensive()
 
   const table = new Table({
-    head: [packageJson.name, 'status', 'result'],
-    style: { head: [] },
-    colWidths: [36, 10, 40],
+    head: [
+      // @ts-expect-error Type '{ content: string; colSpan: number; hAlign: string; }' is not assignable to type 'string'
+      { content: `${packageJson.name}@${packageJson.version}`, colSpan: 2 },
+      'status',
+      'available interfaces',
+    ],
+    style: { head: ['cyan'] },
+    colWidths: [10, 30, 10, 36],
     wordWrap: true,
   })
-
-  table.push(['version', '🟢', packageJson.version])
   table.push([
-    `exports from @suspensive/react-query-${currentTargetVersion}@${targetSuspensiveReactQueryPackageJson.version}`,
+    { content: 'exports from', rowSpan: 2 },
+    {
+      content: `@suspensive/react-query-${currentTargetVersion}\n@${targetSuspensiveReactQueryPackageJson.version}`,
+      wordWrap: true,
+    },
     isCompatible ? '🟢' : '❌',
-    suspensiveAPIs.join(', '),
+    suspensiveAPIs.join(' '),
   ])
   table.push([
-    `exports from @tanstack/react-query@${tanStackReactQueryPackageJson.version}`,
+    {
+      content: `@tanstack/react-query\n@${tanStackReactQueryPackageJson.version}`,
+      wordWrap: true,
+    },
     isCompatible ? '🟢' : '❌',
-    exportAPIs.length > 0 ? exportAPIs.join(', ') : '-',
+    exportAPIs.length > 0 ? exportAPIs.join(' ') : '-',
   ])
   if (!isCompatible) {
-    table.push([{ content: `You should \`npx srq switch ${tanStackReactQueryMajorVersion}\` to fix this`, colSpan: 3 }])
+    table.push([{ content: `You should \`npx srq switch ${tanStackReactQueryMajorVersion}\` to fix this`, colSpan: 4 }])
   }
 
   return table.toString()
