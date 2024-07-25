@@ -1,5 +1,13 @@
 # @suspensive/react-query-4
 
+## 2.9.3
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @suspensive/utils@2.9.3
+  - @suspensive/react@2.9.3
+
 ## 2.9.2
 
 ### Patch Changes
