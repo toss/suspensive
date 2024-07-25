@@ -10,4 +10,3 @@ import { queryOptions as original_queryOptions } from '@tanstack/react-query'
  * ```
  */
 export const queryOptions = original_queryOptions
-
