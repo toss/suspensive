@@ -20,7 +20,18 @@ jobs:
     strategy:
       matrix:
         command:
-          ['ci:attw', 'ci:eslint', 'ci:publint', 'ci:sherif', 'ci:type', 'ci:test', 'ci:knip', 'ci:bench', 'build']
+          [
+            'prepack',
+            'ci:attw',
+            'ci:eslint',
+            'ci:publint',
+            'ci:sherif',
+            'ci:type',
+            'ci:test',
+            'ci:knip',
+            'ci:bench',
+            'build',
+          ]
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/pnpm-setup-node
@@ -39,3 +50,14 @@ jobs:
         with:
           run: pnpm ci:bench
           token: ${{ secrets.CODSPEED_TOKEN }}
+      - if: matrix.command == 'prepack'
+        uses: preactjs/compressed-size-action@v2
+        with:
+          pattern: 'packages/**/dist/*.{js,cjs,mjs}'
+          exclude: '{**/*.map,**/node_modules/**}'
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+      - if: matrix.command == 'build'
+        uses: transferwise/actions-next-bundle-analyzer@v2
+        with:
+          working-directory: ./websites/visualization
+          comment-strategy: 'always'
