@@ -53,8 +53,8 @@ jobs:
       - if: matrix.command == 'prepack'
         uses: preactjs/compressed-size-action@v2
         with:
-          install-script: 'echo "skipping install"'
-          build-script: 'echo "skipping build"'
+          install-script: 'noop "skip install"'
+          build-script: 'noop "skip build"'
           pattern: 'packages/**/dist/*.{js,cjs,mjs}'
           exclude: '{**/*.map,**/node_modules/**}'
           repo-token: ${{ secrets.GITHUB_TOKEN }}
