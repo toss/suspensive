@@ -95,12 +95,7 @@ export class CacheStore {
     this.syncSubscribers(options.cacheKey)
   }
 
-  public remove = (options?: Pick<CacheOptions<unknown, CacheKey>, 'cacheKey'>) => {
-    if (typeof options?.cacheKey === 'undefined' || options.cacheKey.length === 0) {
-      this.cacheStore.clear()
-      return
-    }
-
+  public remove = (options: Pick<CacheOptions<unknown, CacheKey>, 'cacheKey'>) => {
     const hashedCacheKey = hashCacheKey(options.cacheKey)
 
     if (this.cacheStore.has(hashedCacheKey)) {

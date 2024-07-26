@@ -9,7 +9,7 @@ import { useCache } from './useCache'
 
 const key = (id: number) => ['key', id] as const
 
-const options = cacheOptions({ cacheKey: key(1), cacheFn: () => Promise.resolve(TEXT) })
+const cache = () => cacheOptions({ cacheKey: key(1), cacheFn: () => Promise.resolve(TEXT) })
 
 describe('cacheOptions', () => {
   let cacheStore: CacheStore
@@ -22,9 +22,7 @@ describe('cacheOptions', () => {
     render(
       <CacheStoreProvider store={cacheStore}>
         <Suspense fallback={FALLBACK}>
-          <Cache cacheKey={options.cacheKey} cacheFn={options.cacheFn}>
-            {(cached) => <>{cached.data}</>}
-          </Cache>
+          <Cache {...cache()}>{(cached) => <>{cached.data}</>}</Cache>
         </Suspense>
       </CacheStoreProvider>
     )
@@ -34,7 +32,7 @@ describe('cacheOptions', () => {
 
   it('should be used with useCache', async () => {
     const CacheComponent = () => {
-      const cached = useCache(options)
+      const cached = useCache(cache())
       return <>{cached.data}</>
     }
 
