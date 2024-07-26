@@ -93,11 +93,11 @@ describe('CacheStore', () => {
     } catch (promiseToSuspense) {
       await promiseToSuspense
     }
-    expect(cacheStore.getData(successCache(1))).toBeTruthy()
+    expect(cacheStore.getData(successCache(1))).toBe(TEXT)
     expect(() => {
       cacheStore.remove(successCache(1))
     }).not.throw()
-    expect(cacheStore.getData(successCache(1))).toBeFalsy()
+    expect(cacheStore.getData(successCache(1))).toBeUndefined()
   })
 
   it("have getData method with key should get data of key's cached", async () => {
