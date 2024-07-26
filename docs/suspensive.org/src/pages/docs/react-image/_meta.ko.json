@@ -4,5 +4,5 @@
     "type": "separator",
     "title": "API 문서"
   },
-  "Image": { "title": "<Image/>" }
+  "SuspenseImage": { "title": "<SuspenseImage/>" }
 }
