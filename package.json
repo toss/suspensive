@@ -13,7 +13,7 @@
     "url": "https://github.com/toss/suspensive.git"
   },
   "license": "MIT",
-  "packageManager": "pnpm@9.4.0",
+  "packageManager": "pnpm@8.15.9",
   "type": "module",
   "scripts": {
     "blc:suspensive.org": "pnpm blc https://suspensive.org --ro",
@@ -32,7 +32,6 @@
     "ci:test:watch": "turbo run ci:test:watch --parallel",
     "ci:type": "turbo run ci:type",
     "ci:knip": "pnpm prepack && pnpm knip",
-    "ci:size": "pnpm prepack && pnpm --filter ./websites/visualization build",
     "clean": "turbo run clean",
     "dev": "turbo run dev --concurrency 20",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
@@ -55,7 +54,7 @@
     "@testing-library/jest-dom": "^6.4.6",
     "@testing-library/react": "^16.0.0",
     "@testing-library/user-event": "^14.5.2",
-    "@types/node": "^18.19.39",
+    "@types/node": "^20.14.12",
     "@vitest/browser": "^2.0.2",
     "@vitest/coverage-istanbul": "^2.0.2",
     "@vitest/ui": "^2.0.2",
