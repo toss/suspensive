@@ -6,7 +6,7 @@ import { cacheOptions } from './cacheOptions'
 import { CacheStore } from './CacheStore'
 import { CacheStoreProvider } from './CacheStoreProvider'
 
-const cache = (id: number) =>
+const successCache = (id: number) =>
   cacheOptions({
     cacheKey: ['key', id] as const,
     cacheFn: () => Promise.resolve(TEXT),
@@ -23,7 +23,7 @@ describe('<Cache />', () => {
     render(
       <CacheStoreProvider store={cacheStore}>
         <Suspense fallback="Loading...">
-          <Cache {...cache(1)}>{(cached) => <>{cached.data}</>}</Cache>
+          <Cache {...successCache(1)}>{(cached) => <>{cached.data}</>}</Cache>
         </Suspense>
       </CacheStoreProvider>
     )

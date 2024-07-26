@@ -33,7 +33,7 @@ describe('CacheStore', () => {
   })
 
   describe('clearError', () => {
-    it("have clearError method without key should clear promise & error for all key's cached", async () => {
+    it('should clear promise & error for all cached', async () => {
       expect(cacheStore.getError(errorCache(1))).toBeUndefined()
       expect(cacheStore.getError(errorCache(2))).toBeUndefined()
       try {
@@ -54,7 +54,7 @@ describe('CacheStore', () => {
       expect(cacheStore.getError(errorCache(2))).toBeUndefined()
     })
 
-    it("have clearError method with key should clear promise & error for key's cached", async () => {
+    it('should clear promise & error for specific cached', async () => {
       expect(cacheStore.getError(errorCache(1))).toBeUndefined()
       expect(cacheStore.getError(errorCache(2))).toBeUndefined()
       try {
@@ -90,7 +90,7 @@ describe('CacheStore', () => {
   })
 
   describe('remove', () => {
-    it('should take a key and remove the cached data for that key', async () => {
+    it('should remove specific cached', async () => {
       try {
         cacheStore.suspend(successCache(1))
       } catch (promiseToSuspense) {
@@ -105,22 +105,22 @@ describe('CacheStore', () => {
   })
 
   describe('reset', () => {
-    it('should reset cache', async () => {
+    it('should reset data of specific cached', async () => {
       try {
         cacheStore.suspend(successCache(1))
       } catch (promiseToSuspense) {
         await promiseToSuspense
       }
-      let cached = cacheStore.getData(successCache(1))
-      expect(cached).toBe(TEXT)
+      let cachedData = cacheStore.getData(successCache(1))
+      expect(cachedData).toBe(TEXT)
       cacheStore.reset(successCache(1))
-      cached = cacheStore.getData(successCache(1))
-      expect(cached).toBeUndefined()
+      cachedData = cacheStore.getData(successCache(1))
+      expect(cachedData).toBeUndefined()
     })
   })
 
   describe('getData', () => {
-    it("have getData method with key should get data of key's cached", async () => {
+    it('should get data of specific cached', async () => {
       render(
         <CacheStoreProvider store={cacheStore}>
           <Suspense fallback={FALLBACK}>
