@@ -18,6 +18,12 @@ const errorCache = (id: number) =>
       ),
   })
 
+const successCache = (id: number) =>
+  cacheOptions({
+    cacheKey: ['key', id] as const,
+    cacheFn: () => sleep(ms('0.1s')).then(() => Promise.resolve(TEXT)),
+  })
+
 describe('CacheStore', () => {
   let cacheStore: CacheStore
 
@@ -79,6 +85,19 @@ describe('CacheStore', () => {
     cacheStore.clearError(errorCache(2))
     expect(cacheStore.getError(errorCache(1))).toBeUndefined()
     expect(cacheStore.getError(errorCache(2))).toBeUndefined()
+  })
+
+  it('should take a key and remove the cached data for that key', async () => {
+    try {
+      cacheStore.suspend(successCache(1))
+    } catch (promiseToSuspense) {
+      await promiseToSuspense
+    }
+    expect(cacheStore.getData(successCache(1))).toBe(TEXT)
+    expect(() => {
+      cacheStore.remove(successCache(1))
+    }).not.throw()
+    expect(cacheStore.getData(successCache(1))).toBeUndefined()
   })
 
   it("have getData method with key should get data of key's cached", async () => {
