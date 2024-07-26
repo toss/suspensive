@@ -1,5 +1,11 @@
 # @suspensive/cache
 
+## 0.3.0
+
+### Minor Changes
+
+- [#1140](https://github.com/toss/suspensive/pull/1140) [`eb5d257`](https://github.com/toss/suspensive/commit/eb5d25767013ce1125b17948028c48fb15507037) Thanks [@SEOKKAMONI](https://github.com/SEOKKAMONI)! - feat(cache): add `remove` method to CacheStore
+
 ## 0.2.7
 
 ### Patch Changes
