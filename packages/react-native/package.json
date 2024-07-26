@@ -1,0 +1,72 @@
+{
+  "name": "@suspensive/react-native",
+  "version": "0.0.0",
+  "description": "Useful interfaces for React Suspense",
+  "keywords": [
+    "suspensive",
+    "react"
+  ],
+  "homepage": "https://suspensive.org",
+  "bugs": "https://github.com/toss/suspensive/issues",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/toss/suspensive.git",
+    "directory": "packages/react-native"
+  },
+  "license": "MIT",
+  "author": "Jonghyeon Ko <jonghyeon@toss.im>",
+  "sideEffects": false,
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
+    },
+    "./package.json": "./package.json"
+  },
+  "main": "dist/index.cjs",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "ci:attw": "attw --pack",
+    "ci:bench": "vitest bench --run",
+    "ci:eslint": "eslint \"**/*.{js,jsx,cjs,mjs,ts,tsx,cts,mts}\"",
+    "ci:publint": "publint --strict",
+    "ci:test": "vitest run --coverage --typecheck",
+    "ci:test:watch": "vitest --ui --coverage --typecheck",
+    "ci:type": "tsc --noEmit",
+    "clean": "rimraf ./dist && rimraf ./coverage",
+    "dev": "tsup --watch",
+    "prepack": "pnpm build"
+  },
+  "dependencies": {
+    "@suspensive/utils": "workspace:*"
+  },
+  "devDependencies": {
+    "@react-native-community/eslint-config": "^3.2.0",
+    "@suspensive/eslint-config": "workspace:*",
+    "@suspensive/tsconfig": "workspace:*",
+    "@suspensive/tsup": "workspace:*",
+    "@types/react": "^18.3.3",
+    "react": "^18.3.1",
+    "react-native": "0.74.3"
+  },
+  "peerDependencies": {
+    "react": "^18",
+    "react-native": "0.74.3"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

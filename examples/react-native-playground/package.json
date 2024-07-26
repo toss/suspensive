@@ -1,0 +1,23 @@
+{
+  "name": "@suspensive/react-native-playground",
+  "version": "1.0.0",
+  "private": true,
+  "main": "index.js",
+  "scripts": {
+    "android": "expo start --android",
+    "eject": "expo eject",
+    "ios": "expo start --ios"
+  },
+  "dependencies": {
+    "@suspensive/react-native": "workspace:*",
+    "expo": "^51.0.22",
+    "expo-status-bar": "~1.12.1",
+    "react": "^18.3.1",
+    "react-native": "0.74.3"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.24.9",
+    "@expo/webpack-config": "^19.0.1",
+    "@types/react": "^18.3.3"
+  }
+}
