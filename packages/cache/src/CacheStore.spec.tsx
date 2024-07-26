@@ -21,11 +21,7 @@ const errorCache = (id: number) =>
 const successCache = (id: number) =>
   cacheOptions({
     cacheKey: ['key', id] as const,
-    cacheFn: () =>
-      sleep(ms('0.1s')).then(() =>
-        // eslint-disable-next-line @typescript-eslint/prefer-promise-reject-errors
-        Promise.resolve(TEXT)
-      ),
+    cacheFn: () => sleep(ms('0.1s')).then(() => Promise.resolve(TEXT)),
   })
 
 describe('CacheStore', () => {
