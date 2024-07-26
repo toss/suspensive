@@ -105,17 +105,33 @@ describe('CacheStore', () => {
   })
 
   describe('reset', () => {
+    it('should reset data of all cached', async () => {
+      try {
+        cacheStore.suspend(successCache(1))
+      } catch (promiseToSuspense) {
+        await promiseToSuspense
+      }
+      try {
+        cacheStore.suspend(successCache(2))
+      } catch (promiseToSuspense) {
+        await promiseToSuspense
+      }
+      expect(cacheStore.getData(successCache(1))).toBe(TEXT)
+      expect(cacheStore.getData(successCache(2))).toBe(TEXT)
+      cacheStore.reset()
+      expect(cacheStore.getData(successCache(1))).toBeUndefined()
+      expect(cacheStore.getData(successCache(2))).toBeUndefined()
+    })
+
     it('should reset data of specific cached', async () => {
       try {
         cacheStore.suspend(successCache(1))
       } catch (promiseToSuspense) {
         await promiseToSuspense
       }
-      let cachedData = cacheStore.getData(successCache(1))
-      expect(cachedData).toBe(TEXT)
+      expect(cacheStore.getData(successCache(1))).toBe(TEXT)
       cacheStore.reset(successCache(1))
-      cachedData = cacheStore.getData(successCache(1))
-      expect(cachedData).toBeUndefined()
+      expect(cacheStore.getData(successCache(1))).toBeUndefined()
     })
   })
 
