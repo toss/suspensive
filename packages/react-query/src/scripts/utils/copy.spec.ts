@@ -1,4 +1,5 @@
 import fs from 'fs'
+import { noop } from '@suspensive/utils'
 import { copy } from './copy'
 
 describe('copy', () => {
@@ -17,6 +18,14 @@ describe('copy', () => {
   })
 
   it('should copy and replace files with the specified version', () => {
+    vi.spyOn(fs, 'readdirSync').mockReturnValue(['v5', 'other'] as unknown as fs.Dirent[])
+    vi.spyOn(fs, 'unlinkSync').mockImplementation(noop)
+    vi.spyOn(fs, 'writeFileSync').mockImplementation(noop)
+
     expect(copy(5)).toBe(true)
+    expect(fs.readdirSync).toHaveBeenCalledTimes(1)
+    expect(fs.readFileSync).toHaveBeenCalledTimes(1)
+    expect(fs.unlinkSync).toHaveBeenCalledTimes(1)
+    expect(fs.writeFileSync).toHaveBeenCalledTimes(1)
   })
 })
