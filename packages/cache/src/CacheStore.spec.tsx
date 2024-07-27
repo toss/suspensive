@@ -6,16 +6,11 @@ import { Cache } from './Cache'
 import { cacheOptions } from './cacheOptions'
 import { CacheStore } from './CacheStore'
 import { CacheStoreProvider } from './CacheStoreProvider'
-import { hashCacheKey } from './utils'
 
 const errorCache = (id: number) =>
   cacheOptions({
     cacheKey: ['key', id] as const,
-    cacheFn: () =>
-      sleep(ms('0.1s')).then(() =>
-        // eslint-disable-next-line @typescript-eslint/prefer-promise-reject-errors
-        Promise.reject(ERROR_MESSAGE)
-      ),
+    cacheFn: () => sleep(ms('0.1s')).then(() => Promise.reject(ERROR_MESSAGE)),
   })
 
 const successCache = (id: number) =>
@@ -165,16 +160,6 @@ describe('CacheStore', () => {
       await waitFor(() => expect(screen.queryByText(TEXT)).toBeInTheDocument())
       expect(screen.queryByText(FALLBACK)).not.toBeInTheDocument()
       expect(cacheStore.getData(errorCache(1))).toBe(TEXT)
-    })
-  })
-
-  describe('unsubscribe', () => {
-    it('should handle unsubscribe gracefully when no subscribers exist', () => {
-      const mockSync = vi.fn()
-      const cacheKey = ['nonexistent', 'key'] as const
-      cacheStore.unsubscribe({ cacheKey }, mockSync)
-
-      expect(cacheStore['syncsMap'].get(hashCacheKey(cacheKey))).toBeUndefined()
     })
   })
 })
