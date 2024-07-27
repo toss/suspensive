@@ -17,6 +17,9 @@ jobs:
   quality:
     name: Check quality
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
     strategy:
       matrix:
         command:
