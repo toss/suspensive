@@ -2,10 +2,15 @@ import { Suspense } from '@suspensive/react'
 import { TEXT } from '@suspensive/utils'
 import { render, screen } from '@testing-library/react'
 import { Cache } from './Cache'
+import { cacheOptions } from './cacheOptions'
 import { CacheStore } from './CacheStore'
 import { CacheStoreProvider } from './CacheStoreProvider'
 
-const key = (id: number) => ['key', id] as const
+const successCache = (id: number) =>
+  cacheOptions({
+    cacheKey: ['key', id] as const,
+    cacheFn: () => Promise.resolve(TEXT),
+  })
 
 describe('<Cache />', () => {
   let cacheStore: CacheStore
@@ -18,9 +23,7 @@ describe('<Cache />', () => {
     render(
       <CacheStoreProvider store={cacheStore}>
         <Suspense fallback="Loading...">
-          <Cache cacheKey={key(1)} cacheFn={() => Promise.resolve(TEXT)}>
-            {(cached) => <>{cached.data}</>}
-          </Cache>
+          <Cache {...successCache(1)}>{(cached) => <>{cached.data}</>}</Cache>
         </Suspense>
       </CacheStoreProvider>
     )
