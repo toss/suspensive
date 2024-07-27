@@ -1,9 +1,6 @@
-const { resolve } = require('path')
-
 module.exports = {
-  preset: 'react-native',
+  preset: 'jest-expo',
   transform: {
     '^.+\\.(js|jsx|ts|tsx)$': 'babel-jest',
   },
-  transformIgnorePatterns: [resolve(__dirname, '../../packages')],
 }

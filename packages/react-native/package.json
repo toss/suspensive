@@ -60,6 +60,7 @@
     "@testing-library/react-native": "^12.5.2",
     "@types/react": "^18.3.3",
     "babel-jest": "^29.7.0",
+    "expo": "^51.0.22",
     "react": "^18.3.1",
     "react-native": "0.74.3"
   },
