@@ -13,6 +13,8 @@ const innerErrorBoundaryCount = 3
 const resetButtonText = 'reset button'
 
 describe('<ErrorBoundaryGroup/>', () => {
+  beforeEach(() => Throw.reset())
+
   it('should reset all ErrorBoundaries in children', async () => {
     render(
       <ErrorBoundaryGroup>
@@ -31,7 +33,6 @@ describe('<ErrorBoundaryGroup/>', () => {
 
     expect(screen.getAllByText(TEXT).length).toBe(innerErrorBoundaryCount)
     await waitFor(() => expect(screen.getAllByText(ERROR_MESSAGE).length).toBe(innerErrorBoundaryCount))
-    Throw.reset()
 
     fireEvent.click(screen.getByRole('button', { name: resetButtonText }))
     expect(screen.getAllByText(TEXT).length).toBe(innerErrorBoundaryCount)
@@ -58,7 +59,6 @@ describe('<ErrorBoundaryGroup/>', () => {
 
     expect(screen.getAllByText(TEXT).length).toBe(innerErrorBoundaryCount)
     await waitFor(() => expect(screen.getAllByText(ERROR_MESSAGE).length).toBe(innerErrorBoundaryCount))
-    Throw.reset()
 
     fireEvent.click(screen.getByRole('button', { name: resetButtonText }))
     expect(screen.getAllByText(TEXT).length).toBe(innerErrorBoundaryCount - 1)
@@ -67,7 +67,21 @@ describe('<ErrorBoundaryGroup/>', () => {
 })
 
 describe('useErrorBoundaryGroup', () => {
-  it('should throw error without ErrorBoundaryGroup in parent', () => {
+  it('should guarantee hook calling position is in children of ErrorBoundaryGroup', () => {
+    expect(
+      render(
+        <ErrorBoundaryGroup>
+          {createElement(() => {
+            useErrorBoundaryGroup()
+            return <></>
+          })}
+          <ErrorBoundary fallback={ERROR_MESSAGE}>
+            <>{TEXT}</>
+          </ErrorBoundary>
+        </ErrorBoundaryGroup>
+      ).getByText(TEXT)
+    ).toBeInTheDocument()
+
     expect(() =>
       render(
         createElement(() => {
@@ -76,6 +90,7 @@ describe('useErrorBoundaryGroup', () => {
         })
       )
     ).toThrow(Message_useErrorBoundaryGroup_this_hook_should_be_called_in_ErrorBoundary_props_children)
+
     try {
       render(
         createElement(() => {
