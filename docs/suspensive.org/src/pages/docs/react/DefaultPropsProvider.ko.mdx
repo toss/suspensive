@@ -1,0 +1,21 @@
+# DefaultPropsProvider
+
+이 컴포넌트는 Suspensive가 제공하는 컴포넌트들(Suspense, Delay 등)의 설정을 한 번에 제어합니다.
+
+```jsx /DefaultPropsProvider/ /DefaultProps/
+import { DefaultProps, DefaultPropsProvider } from '@suspensive/react'
+
+const defaultProps = new DefaultProps({
+  delay: {
+    ms: 1200,
+  },
+  suspense: {
+    fallback: <Spinner />,
+    clientOnly: false,
+  },
+})
+
+function App() {
+  return <DefaultPropsProvider defaultProps={defaultProps}>...</DefaultPropsProvider>
+}
+```
