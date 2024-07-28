@@ -170,3 +170,16 @@ describe('wrap.Delay().on', () => {
     expect(wrap.Delay({}).on(() => <></>).displayName).toBe('wrap.Delay.on(Component)')
   })
 })
+
+describe('Wrap class method chaining', () => {
+  it('should maintain the same instance across method chaining', () => {
+    const suspenseInstance = wrap.Suspense({})
+    const methodChainingInstance = suspenseInstance
+      .ErrorBoundary({ fallback: FALLBACK })
+      .ErrorBoundaryGroup({})
+      .Delay({})
+      .Suspense({})
+
+    expect(suspenseInstance).toBe(methodChainingInstance)
+  })
+})
