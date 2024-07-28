@@ -40,12 +40,6 @@ Key features: Atom, AtomValue, SetAtom, and more.
 
 Key features: Cache, useCache, CacheStore, useCacheStore, CacheStoreProvider, and more.
 
-### @suspensive/intersection [![MIT License](https://img.shields.io/badge/work_in_progress-npm.svg?color=000&labelColor=000&logo=npm)](https://github.com/toss/suspensive/blob/main/LICENSE)
-
-> This package is designed to simplify the detection and management of elements within the viewport using the Intersection Observer API. It will provide React hooks and components to help developers efficiently track element visibility and perform actions when elements enter or leave the viewport. This can be particularly useful for lazy loading images, implementing infinite scroll, and triggering animations as elements come into view.
-
-Status: Work In Progress.
-
 <br/>
 
 ## Visit [suspensive.org](https://suspensive.org) for docs, guides, API and more!
