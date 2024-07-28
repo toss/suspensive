@@ -60,10 +60,3 @@ jobs:
           pattern: 'packages/**/dist/*.{js,cjs,mjs}'
           exclude: '{**/*.map,**/node_modules/**}'
           repo-token: ${{ secrets.GITHUB_TOKEN }}
-      - if: matrix.command == 'build'
-        uses: transferwise/actions-next-bundle-analyzer@v2
-        with:
-          working-directory: ./websites/visualization
-          comment-strategy: 'always'
-          create-issue: false
-          github-token: ${{ secrets.GITHUB_TOKEN }}
