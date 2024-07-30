@@ -1,0 +1,15 @@
+# ClientOnly
+
+### props.fallback
+
+이 컴포넌트는 클라이언트 환경에서만 children을 렌더링하며, 서버에서는 fallback을 렌더링합니다. 필요에 따라 적절한 fallback을 설정하여 사용자 경험을 향상할 수 있습니다.
+
+```tsx /fallback/
+import { ClientOnly } from './ClientOnly'
+
+const Example = () => (
+  <ClientOnly fallback={<>로딩 중...</>}>
+    <div>클라이언트 환경에서만 렌더링됩니다</div>
+  </ClientOnly>
+)
+```

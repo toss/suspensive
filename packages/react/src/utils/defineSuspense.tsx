@@ -1,5 +1,5 @@
 import { Suspense, type SuspenseProps } from 'react'
-import { ClientOnly } from '../components/ClientOnly'
+import { ClientOnly } from '../ClientOnly'
 
 export const SuspenseClientOnly = (props: SuspenseProps) => (
   <ClientOnly fallback={props.fallback}>
