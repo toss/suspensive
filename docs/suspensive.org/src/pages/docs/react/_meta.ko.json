@@ -10,6 +10,7 @@
   "ErrorBoundary": { "title": "<ErrorBoundary/>" },
   "ErrorBoundaryGroup": { "title": "<ErrorBoundaryGroup/>" },
   "Delay": { "title": "<Delay/>" },
+  "ClientOnly": { "title": "<ClientOnly/>" },
   "SuspensiveProvider": { "title": "<SuspensiveProvider/>" },
   "wrap": { "title": "wrap" }
 }
