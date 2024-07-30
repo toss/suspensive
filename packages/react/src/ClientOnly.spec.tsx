@@ -3,7 +3,7 @@ import { type Mock } from 'vitest'
 import { ClientOnly } from './ClientOnly'
 import { useIsClient } from './hooks/useIsClient'
 
-vi.mock('../hooks/useIsClient', () => ({
+vi.mock('./hooks/useIsClient', () => ({
   useIsClient: vi.fn(),
 }))
 
