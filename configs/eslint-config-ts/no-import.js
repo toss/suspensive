@@ -7,7 +7,7 @@ module.exports = {
     '@suspensive/eslint-config-js/no-import',
     'plugin:jsdoc/recommended-typescript',
     'plugin:@typescript-eslint/recommended',
-    'plugin:@typescript-eslint/strict-type-checked',
+    'plugin:@typescript-eslint/strict',
   ],
   rules: {
     '@typescript-eslint/no-unused-vars': 'error',
@@ -33,7 +33,7 @@ module.exports = {
     'jsdoc/check-tag-names': 'off',
     'jsdoc/no-types': 'off',
 
-    // @typescript-eslint/strict-type-checked
+    // @typescript-eslint/strict
     '@typescript-eslint/no-unsafe-assignment': 'warn',
     '@typescript-eslint/no-unsafe-member-access': 'warn',
     '@typescript-eslint/no-floating-promises': 'warn',
@@ -41,7 +41,9 @@ module.exports = {
     '@typescript-eslint/no-throw-literal': 'warn',
     '@typescript-eslint/no-confusing-void-expression': 'off',
     '@typescript-eslint/restrict-template-expressions': 'off',
-    '@typescript-eslint/only-throw-error': 'warn',
+    '@typescript-eslint/no-empty-function': 'warn',
+    '@typescript-eslint/no-extra-semi': 'warn',
+    '@typescript-eslint/no-empty-interface': 'warn',
     '@typescript-eslint/ban-ts-comment': ['error', { minimumDescriptionLength: 3 }],
   },
 }

@@ -1,59 +1,46 @@
 import Table from 'cli-table3'
-import { getPackageJson, getSuspensiveReactQueryPackageJson, getTanStackReactQueryPackageJson } from './package'
-
-export const VERSION5_APIS = [
-  '<SuspenseQuery/>',
-  '<SuspenseQueries/>',
-  '<SuspenseInfiniteQuery/>',
-  '<Mutation/>',
-  '<QueryErrorBoundary/>',
-]
-
-export const VERSION4_APIS = [
-  'useSuspenseQuery',
-  'useSuspenseQueries',
-  'useSuspenseInfiniteQuery',
-  'queryOptions',
-  'infiniteQueryOptions',
-  '<SuspenseQuery/>',
-  '<SuspenseQueries/>',
-  '<SuspenseInfiniteQuery/>',
-  '<Mutation/>',
-  '<QueryErrorBoundary/>',
-]
+import {
+  getExportAPIsWithoutSuspensive,
+  getPackageJson,
+  getSuspensiveReactQueryPackageJson,
+  getTanStackReactQueryPackageJson,
+  getTargetSuspensiveReactQueryAPIs,
+} from './package'
 
 export function getStatusTable(currentTargetVersion: string) {
   const packageJson = getPackageJson()
   const tanStackReactQueryPackageJson = getTanStackReactQueryPackageJson()
   const tanStackReactQueryMajorVersion = tanStackReactQueryPackageJson.version.split('.')[0]
   const targetSuspensiveReactQueryPackageJson = getSuspensiveReactQueryPackageJson(tanStackReactQueryMajorVersion)
+  const isCompatible = currentTargetVersion === tanStackReactQueryMajorVersion
+  const suspensiveAPIs = getTargetSuspensiveReactQueryAPIs()
+  const exportAPIs = getExportAPIsWithoutSuspensive()
 
   const table = new Table({
-    head: [packageJson.name, 'result', 'status', 'advice'],
-    style: { head: [] },
+    head: [
+      // @ts-expect-error Type '{ content: string; colSpan: number; hAlign: string; }' is not assignable to type 'string'
+      { content: `${packageJson.name}@${packageJson.version}`, colSpan: 2 },
+      'status',
+      'available interfaces',
+    ],
+    style: { head: ['cyan'] },
+    colWidths: [10, 30, 10, 36],
+    wordWrap: true,
   })
-
-  table.push(['version', packageJson.version, '🟢', ''])
   table.push([
-    'export',
-    `@suspensive/react-query-${currentTargetVersion}@${targetSuspensiveReactQueryPackageJson.version}`,
-    '🟢',
-    '',
+    { content: 'exports from', rowSpan: 2 },
+    `@suspensive/react-query-${currentTargetVersion}\n@${targetSuspensiveReactQueryPackageJson.version}`,
+    isCompatible ? '🟢' : '❌',
+    suspensiveAPIs.join(' '),
   ])
   table.push([
-    'peerDependency',
-    `@tanstack/react-query@${tanStackReactQueryMajorVersion}`,
-    currentTargetVersion === tanStackReactQueryMajorVersion ? '🟢' : '❌',
-    currentTargetVersion === tanStackReactQueryMajorVersion
-      ? 'The versions are compatible.'
-      : `Install @tanstack/react-query@${tanStackReactQueryMajorVersion} or\n execute suspensive-react-query switch ${tanStackReactQueryMajorVersion} to match\n @suspensive/react-query version with\n @tanstack/react-query`,
+    `@tanstack/react-query\n@${tanStackReactQueryPackageJson.version}`,
+    isCompatible ? '🟢' : '❌',
+    exportAPIs.length > 0 ? exportAPIs.join(' ') : '-',
   ])
-  table.push([
-    'You can use',
-    currentTargetVersion === '5' ? VERSION5_APIS.join('\n') : VERSION4_APIS.join('\n'),
-    '🟢',
-    'For more detailed information about the provided APIs,\nplease visit the official documentation:\nhttps://suspensive.org/docs/react-query/motivation',
-  ])
+  if (!isCompatible) {
+    table.push([{ content: `You should \`npx srq switch ${tanStackReactQueryMajorVersion}\` to fix this`, colSpan: 4 }])
+  }
 
   return table.toString()
 }

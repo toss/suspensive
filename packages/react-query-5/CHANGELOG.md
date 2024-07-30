@@ -1,5 +1,49 @@
 # @suspensive/react-query-5
 
+## 2.10.0
+
+### Minor Changes
+
+- [#1138](https://github.com/toss/suspensive/pull/1138) [`314410e`](https://github.com/toss/suspensive/commit/314410edadee92c10727fb825f2f2666a2bcd6ea) Thanks [@gwansikk](https://github.com/gwansikk)! - feat(react-query): re-export tanstack query functions
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @suspensive/utils@2.10.0
+  - @suspensive/react@2.10.0
+
+## 2.9.4
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @suspensive/utils@2.9.4
+  - @suspensive/react@2.9.4
+
+## 2.9.3
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @suspensive/utils@2.9.3
+  - @suspensive/react@2.9.3
+
+## 2.9.2
+
+### Patch Changes
+
+- Updated dependencies [[`89a6528`](https://github.com/toss/suspensive/commit/89a652866699f09853f9baf74a973767f2350661)]:
+  - @suspensive/react@2.9.2
+  - @suspensive/utils@2.9.2
+
+## 2.9.1
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @suspensive/utils@2.9.1
+  - @suspensive/react@2.9.1
+
 ## 2.9.0
 
 ### Patch Changes

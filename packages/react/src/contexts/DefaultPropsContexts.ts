@@ -10,7 +10,7 @@ if (process.env.NODE_ENV === 'development') {
   DelayDefaultPropsContext.displayName = 'DelayDefaultPropsContext'
 }
 
-export const SuspenseDefaultPropsContext = createContext<OmitKeyof<SuspenseProps, 'children' | 'devMode'>>({
+export const SuspenseDefaultPropsContext = createContext<OmitKeyof<SuspenseProps, 'children'>>({
   fallback: undefined,
   clientOnly: undefined,
 })

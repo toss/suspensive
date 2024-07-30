@@ -1,5 +1,42 @@
 # @suspensive/react
 
+## 2.10.0
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @suspensive/utils@2.10.0
+
+## 2.9.4
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @suspensive/utils@2.9.4
+
+## 2.9.3
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @suspensive/utils@2.9.3
+
+## 2.9.2
+
+### Patch Changes
+
+- [#1123](https://github.com/toss/suspensive/pull/1123) [`89a6528`](https://github.com/toss/suspensive/commit/89a652866699f09853f9baf74a973767f2350661) Thanks [@manudeli](https://github.com/manudeli)! - fix(react): deprcate DevMode
+
+- Updated dependencies []:
+  - @suspensive/utils@2.9.2
+
+## 2.9.1
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @suspensive/utils@2.9.1
+
 ## 2.9.0
 
 ### Minor Changes

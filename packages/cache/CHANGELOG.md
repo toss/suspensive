@@ -1,5 +1,46 @@
 # @suspensive/cache
 
+## 0.3.0
+
+### Minor Changes
+
+- [#1140](https://github.com/toss/suspensive/pull/1140) [`eb5d257`](https://github.com/toss/suspensive/commit/eb5d25767013ce1125b17948028c48fb15507037) Thanks [@SEOKKAMONI](https://github.com/SEOKKAMONI)! - feat(cache): add `remove` method to CacheStore
+
+## 0.2.7
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @suspensive/utils@2.10.0
+
+## 0.2.6
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @suspensive/utils@2.9.4
+
+## 0.2.5
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @suspensive/utils@2.9.3
+
+## 0.2.4
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @suspensive/utils@2.9.2
+
+## 0.2.3
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @suspensive/utils@2.9.1
+
 ## 0.2.2
 
 ### Patch Changes

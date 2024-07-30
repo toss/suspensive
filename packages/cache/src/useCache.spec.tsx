@@ -18,7 +18,6 @@ const successCache = () =>
 const failureCache = () =>
   cacheOptions({
     cacheKey: key('failure'),
-    // eslint-disable-next-line @typescript-eslint/prefer-promise-reject-errors
     cacheFn: () => sleep(ms('0.1s')).then(() => Promise.reject(ERROR_MESSAGE)),
   })
 

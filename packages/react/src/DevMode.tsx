@@ -1,4 +1,16 @@
-import { DevelopmentDevMode, ProductionDevMode } from './contexts/SuspensiveDevModeContext'
+interface DevModeProps {
+  /**
+   * @deprecated Use official react devtools instead
+   * @see https://react.dev/learn/react-developer-tools
+   */
+  position?: 'bottomLeft' | 'bottomRight' | 'topLeft' | 'topRight'
+}
 
-export const DevMode: typeof DevelopmentDevMode | typeof ProductionDevMode =
-  process.env.NODE_ENV === 'development' ? DevelopmentDevMode : ProductionDevMode
+/**
+ * @deprecated Use official react devtools instead
+ * @see https://react.dev/learn/react-developer-tools
+ */
+export const DevMode = (
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  props: DevModeProps
+) => null

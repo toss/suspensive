@@ -2,19 +2,23 @@ import { Callout } from '@/components'
 
 # Support both TanStack Query v4 and 5
 
-As of version 2.2.0, @suspensive/react-query supports both v4 and v5 of @tanstack/react-query.
+<Callout type='info'>
 
-Internally, it is composed of @suspensive/react-query-4 and @suspensive/react-query-5, corresponding to the respective versions of @tanstack/react-query. It automatically detects the version of @tanstack/react-query installed in the user's environment and provides a compatible interface from @suspensive/react-query.
+From version 2.2.0 onwards, @tanstack/react-query supports both v4 and v5. To support older browser versions, use @suspensive/react-query with @tanstack/react-query v4.
+
+</Callout>
+
+@suspensive/react-query internally uses @suspensive/react-query-4 and @suspensive/react-query-5, depending on the version of @tanstack/react-query detected in your environment. It automatically provides a compatible interface.
 
 ## Command-Line Interface (CLI)
 
-The Command-Line Interface (CLI) of @suspensive/react-query is a tool designed to resolve compatibility issues with @tanstack/react-query. Through commands, it verifies compatibility with @tanstack/react-query and switches to a compatible interface of @suspensive/react-query.
+The Command-Line Interface (CLI) of @suspensive/react-query is a tool to handle compatibility issues with @tanstack/react-query. You can use commands to check compatibility and switch to the compatible interface of @suspensive/react-query.
 
-If an error occurs due to incompatibility with @tanstack/react-query for any special reason, the CLI can be used to resolve the issue. However, the actual use of the CLI is rare, as the appropriate interface is automatically used upon installing @suspensive/react-query.
+However, using the CLI is rarely necessary as @suspensive/react-query automatically provides the appropriate interface upon installation.
 
 ## Getting Started
 
-The CLI is included in the @suspensive/react-query package. No additional installation is needed, and it can be used immediately with the following command.
+The CLI is included with the @suspensive/react-query package. No additional installation is required. You can use it directly with the following command.
 
 ```bash
 npx suspensive-react-query
@@ -28,15 +32,15 @@ npx srq
 
 ## Commands
 
-Currently, the CLI provides a total of 5 commands, each described below,
+The CLI currently offers 5 commands. Here are the descriptions of each command.
 
 | Command | Description                                                                    |
 | ------- | ------------------------------------------------------------------------------ |
-| version | Displays the installed version of @suspensive/react-query.                     |
-| help    | Provides usage information for the commands in the console.                    |
-| status  | Checks compatibility with the currently used @tanstack/react-query.            |
-| switch  | Switches to the specified version of the @suspensive/react-query interface.    |
-| fix     | Automatically switches to the interface compatible with @tanstack/react-query. |
+| version | Displays the currently installed version of @suspensive/react-query.           |
+| help    | Shows usage information for the commands.                                      |
+| status  | Checks compatibility with the currently used version of @tanstack/react-query. |
+| switch  | Switches to the specified version of @suspensive/react-query interface.        |
+| fix     | Automatically switches to the compatible interface for @tanstack/react-query.  |
 
 ### version
 
@@ -68,31 +72,48 @@ npx suspensive-react-query --help
 
 ### status
 
-Checks the interface of @suspensive/react-query being used to match @tanstack/react-query and verifies compatibility. It also lists the available APIs based on the version.
+Checks and displays the interface compatibility of @suspensive/react-query with the currently used version of @tanstack/react-query. It also lists the available APIs based on the version.
 
 ```bash
 npx suspensive-react-query status
 ```
 
-For instance, if using @suspensive/react-query@2.4.0 and @tanstack/react-query@5.49.2, you might see,
+For instance, if using @suspensive/react-query@2.9.0 and @tanstack/react-query@5, the result might look like this:
 
 ```
-Suspensive React Query status:
-@suspensive/react-query@2.4.0 exports @suspensive/react-query-5's interfaces
-
-- SuspenseQuery
-- SuspenseQueries
-- SuspenseInfiniteQuery
-- QueryErrorBoundary
-
-@tanstack/react-query@5.49.2
-
-The versions are compatible.
+┌─────────────────────────┬─────────────────────────────────┬────────┬────────────────────────────────────────────────────────┐
+│ @suspensive/react-query │ result                          │ status │ advice                                                 │
+├─────────────────────────┼─────────────────────────────────┼────────┼────────────────────────────────────────────────────────┤
+│ version                 │ 2.9.0                           │ 🟢     │                                                        │
+├─────────────────────────┼─────────────────────────────────┼────────┼────────────────────────────────────────────────────────┤
+│ export                  │ @suspensive/react-query-5@2.9.0 │ 🟢     │                                                        │
+├─────────────────────────┼─────────────────────────────────┼────────┼────────────────────────────────────────────────────────┤
+│ peerDependency          │ @tanstack/react-query@5         │ 🟢     │ The versions are compatible.                           │
+├─────────────────────────┼─────────────────────────────────┼────────┼────────────────────────────────────────────────────────┤
+│ You can use             │ SuspenseQuery                   │ 🟢     │ For more detailed information about the provided APIs, │
+│                         │ SuspenseQueries                 │        │ please visit the official documentation:               │
+│                         │ SuspenseInfiniteQuery           │        │ https://suspensive.org/docs/react-query/motivation     │
+│                         │ Mutation                        │        │                                                        │
+│                         │ QueryErrorBoundary              │        │                                                        │
+└─────────────────────────┴─────────────────────────────────┴────────┴────────────────────────────────────────────────────────┘
 ```
 
 ### switch
 
-Switches to the @suspensive/react-query interface compatible with @tanstack/react-query. For example, if using @tanstack/react-query v5 and encountering issues, you can switch to a compatible interface with,
+Updating the entry file (dist/index.js) of @suspensive/react-query. This will switch to the specified version of the @suspensive/react-query interface.
+
+```typescript
+// dist/index.js of @suspensive/react-query
+
+// When you use "npx suspensive-react-query switch 4"
+// @suspensive/react-query's dist/index.js
+export * from '@suspensive/react-query-4' // Suspensive interfaces for @tanstack/react-query@4
+// When you use "npx suspensive-react-query switch 5"
+// @suspensive/react-query's dist/index.js
+export * from '@suspensive/react-query-5' // Suspensive interfaces for @tanstack/react-query@5
+```
+
+If you are using @tanstack/react-query v5 and encounter errors, you can update the entry file (dist/index.js) and switch to the compatible interface by using the following command:
 
 ```bash
 npx suspensive-react-query switch 5
@@ -100,7 +121,7 @@ npx suspensive-react-query switch 5
 
 ### fix
 
-The `fix` command provides an easy way to match versions. It detects the @tanstack/react-query version in the user's environment and automatically switches to the compatible @suspensive/react-query interface.
+The `fix` command is a convenient way to match the @suspensive/react-query interface with the @tanstack/react-query version in your environment. It detects the installed @tanstack/react-query version and switches to the compatible @suspensive/react-query interface automatically.
 
 ```bash
 npx suspensive-react-query fix
@@ -108,7 +129,9 @@ npx suspensive-react-query fix
 
 ## Troubleshooting
 
-If version errors occur during the build, you can specify the version to use in `package.json` as follows. To automatically use the correct version during build, use the script below,
+If you encounter errors related to @suspensive/react-query during build, it is likely due to compatibility issues with the installed @tanstack/react-query version.
+
+You can specify the version in `package.json` to ensure the correct version is used during build. For example, to automatically use the correct version, you can use the following script:
 
 ```json
 {
