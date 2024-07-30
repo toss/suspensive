@@ -1,0 +1,21 @@
+# DefaultPropsProvider
+
+This component controls the settings of the components provided by Suspensive (Suspense, Delay, etc.) at once.
+
+```jsx /DefaultPropsProvider/ /DefaultProps/
+import { DefaultProps, DefaultPropsProvider } from '@suspensive/react'
+
+const defaultProps = new DefaultProps({
+  Delay: {
+    ms: 1200,
+  },
+  Suspense: {
+    fallback: <Spinner />,
+    clientOnly: false,
+  },
+})
+
+function App() {
+  return <DefaultPropsProvider defaultProps={defaultProps}>...</DefaultPropsProvider>
+}
+```
