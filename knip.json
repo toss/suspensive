@@ -18,6 +18,10 @@
     },
     "packages/react-query-*": {
       "ignoreDependencies": ["@suspensive/react"]
+    },
+    "packages/react-native": {
+      "ignoreDependencies": ["expo", "@testing-library/react-native"],
+      "ignore": ["babel.config.cjs"]
     }
   }
 }
