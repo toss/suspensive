@@ -1,5 +1,16 @@
 # @suspensive/react
 
+## 2.12.0
+
+### Minor Changes
+
+- [#1160](https://github.com/toss/suspensive/pull/1160) [`1e5256d`](https://github.com/toss/suspensive/commit/1e5256d7ee91c77164cec0c9b14830927aa6da7d) Thanks [@manudeli](https://github.com/manudeli)! - feat(react): add DefaultProps, DefaultPropsProvider and deprecate Suspensive, SuspensiveProvider
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @suspensive/utils@2.12.0
+
 ## 2.11.0
 
 ### Minor Changes
