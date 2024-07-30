@@ -8,7 +8,7 @@ import { type ReactNode, useState } from 'react'
 
 export function Providers(props: { children: ReactNode }) {
   const queryClient = useState(() => new QueryClient({ defaultOptions: { queries: { staleTime: 5 * 1000 } } }))[0]
-  const defaultProps = useState(() => new DefaultProps({ suspense: { fallback: <div>loading...</div> } }))[0]
+  const defaultProps = useState(() => new DefaultProps({ Suspense: { fallback: <div>loading...</div> } }))[0]
 
   return (
     <DefaultPropsProvider defaultProps={defaultProps}>

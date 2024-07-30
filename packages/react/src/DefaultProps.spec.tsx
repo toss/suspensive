@@ -13,7 +13,7 @@ const FALLBACK_GLOBAL = 'FALLBACK_GLOBAL'
 describe('<DefaultPropsProvider/>', () => {
   it('should provide default ms prop of Delay', async () => {
     render(
-      <DefaultPropsProvider defaultProps={new DefaultProps({ delay: { ms: ms('0.1s') } })}>
+      <DefaultPropsProvider defaultProps={new DefaultProps({ Delay: { ms: ms('0.1s') } })}>
         <Delay>{TEXT}</Delay>
       </DefaultPropsProvider>
     )
@@ -47,7 +47,7 @@ describe('<DefaultPropsProvider/>', () => {
 
   it('should accept defaultProps.suspense.fallback to setup default fallback of Suspense. If Suspense accepted no fallback, Suspense should use default fallback', () => {
     render(
-      <DefaultPropsProvider defaultProps={new DefaultProps({ suspense: { fallback: FALLBACK_GLOBAL } })}>
+      <DefaultPropsProvider defaultProps={new DefaultProps({ Suspense: { fallback: FALLBACK_GLOBAL } })}>
         <Suspense>
           <Suspend during={Infinity} />
         </Suspense>
@@ -57,7 +57,7 @@ describe('<DefaultPropsProvider/>', () => {
   })
   it('should accept defaultProps.suspense.fallback to setup default fallback of Suspense. If Suspense accepted local fallback, Suspense should ignore default fallback and show it', () => {
     render(
-      <DefaultPropsProvider defaultProps={new DefaultProps({ suspense: { fallback: FALLBACK_GLOBAL } })}>
+      <DefaultPropsProvider defaultProps={new DefaultProps({ Suspense: { fallback: FALLBACK_GLOBAL } })}>
         <Suspense fallback={FALLBACK}>
           <Suspend during={Infinity} />
         </Suspense>
@@ -68,7 +68,7 @@ describe('<DefaultPropsProvider/>', () => {
   })
   it('should accept defaultProps.suspense.fallback to setup default fallback of Suspense. If Suspense accepted local fallback as null, Suspense should ignore default fallback. even though local fallback is nullish', () => {
     render(
-      <DefaultPropsProvider defaultProps={new DefaultProps({ suspense: { fallback: FALLBACK_GLOBAL } })}>
+      <DefaultPropsProvider defaultProps={new DefaultProps({ Suspense: { fallback: FALLBACK_GLOBAL } })}>
         <Suspense fallback={null}>
           <Suspend during={Infinity} />
         </Suspense>
@@ -80,7 +80,7 @@ describe('<DefaultPropsProvider/>', () => {
   it('should accept defaultProps.suspense.clientOnly to setup default clientOnly prop of Suspense. If Suspense accept no clientOnly, Suspense should use default fallback', () => {
     let clientOnly1: SuspenseProps['clientOnly'] = undefined
     render(
-      <DefaultPropsProvider defaultProps={new DefaultProps({ suspense: { clientOnly: true } })}>
+      <DefaultPropsProvider defaultProps={new DefaultProps({ Suspense: { clientOnly: true } })}>
         {createElement(() => {
           clientOnly1 = useContext(SuspenseDefaultPropsContext).clientOnly
           return <></>
@@ -91,7 +91,7 @@ describe('<DefaultPropsProvider/>', () => {
 
     let clientOnly2: SuspenseProps['clientOnly'] = undefined
     render(
-      <DefaultPropsProvider defaultProps={new DefaultProps({ suspense: { clientOnly: false } })}>
+      <DefaultPropsProvider defaultProps={new DefaultProps({ Suspense: { clientOnly: false } })}>
         {createElement(() => {
           clientOnly2 = useContext(SuspenseDefaultPropsContext).clientOnly
           return <></>
@@ -102,7 +102,7 @@ describe('<DefaultPropsProvider/>', () => {
 
     const clientOnly3: SuspenseProps['clientOnly'] = undefined
     render(
-      <DefaultPropsProvider defaultProps={new DefaultProps({ suspense: {} })}>
+      <DefaultPropsProvider defaultProps={new DefaultProps({ Suspense: {} })}>
         {createElement(() => {
           clientOnly2 = useContext(SuspenseDefaultPropsContext).clientOnly
           return <></>
@@ -113,18 +113,18 @@ describe('<DefaultPropsProvider/>', () => {
   })
 
   it('should accept defaultOptions.delay.ms only positive number', () => {
-    expect(() => new DefaultProps({ delay: { ms: 0 } })).toThrow(Message_DefaultProp_delay_ms_should_be_greater_than_0)
+    expect(() => new DefaultProps({ Delay: { ms: 0 } })).toThrow(Message_DefaultProp_delay_ms_should_be_greater_than_0)
     try {
-      new DefaultProps({ delay: { ms: 0 } })
+      new DefaultProps({ Delay: { ms: 0 } })
     } catch (error) {
       expect(error).toBeInstanceOf(SuspensiveError)
       expect(error).toBeInstanceOf(Error)
       expect(error).not.toBeInstanceOf(CustomError)
     }
 
-    expect(() => new DefaultProps({ delay: { ms: -1 } })).toThrow(Message_DefaultProp_delay_ms_should_be_greater_than_0)
+    expect(() => new DefaultProps({ Delay: { ms: -1 } })).toThrow(Message_DefaultProp_delay_ms_should_be_greater_than_0)
     try {
-      new DefaultProps({ delay: { ms: -1 } })
+      new DefaultProps({ Delay: { ms: -1 } })
     } catch (error) {
       expect(error).toBeInstanceOf(SuspensiveError)
       expect(error).toBeInstanceOf(Error)
@@ -134,7 +134,7 @@ describe('<DefaultPropsProvider/>', () => {
     const defaultPropsMs = 100
     let ms: DelayProps['ms'] = undefined
     render(
-      <DefaultPropsProvider defaultProps={new DefaultProps({ delay: { ms: defaultPropsMs } })}>
+      <DefaultPropsProvider defaultProps={new DefaultProps({ Delay: { ms: defaultPropsMs } })}>
         {createElement(() => {
           ms = useContext(DelayDefaultPropsContext).ms
           return <></>

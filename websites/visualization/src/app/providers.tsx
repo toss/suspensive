@@ -10,7 +10,7 @@ import { Spinner } from '~/components/uis'
 export const Providers = ({ children }: PropsWithChildren) => {
   const cacheStore = useState(() => new CacheStore())[0]
   const queryClient = useState(() => new QueryClient({ defaultOptions: { queries: { retry: 0 } } }))[0]
-  const defaultProps = useState(() => new DefaultProps({ delay: { ms: 1200 }, suspense: { fallback: <Spinner /> } }))[0]
+  const defaultProps = useState(() => new DefaultProps({ Delay: { ms: 1200 }, Suspense: { fallback: <Spinner /> } }))[0]
 
   return (
     <CacheStoreProvider store={cacheStore}>
