@@ -1,5 +1,16 @@
 # @suspensive/react
 
+## 2.11.0
+
+### Minor Changes
+
+- [#1162](https://github.com/toss/suspensive/pull/1162) [`d29bf9f`](https://github.com/toss/suspensive/commit/d29bf9fa6b5331f6dada5142e5ddfcc3ec2d63fc) Thanks [@Collection50](https://github.com/Collection50)! - feat(react): add ClientOnly
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @suspensive/utils@2.11.0
+
 ## 2.10.0
 
 ### Patch Changes
