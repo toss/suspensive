@@ -1,5 +1,12 @@
 # @suspensive/react-image
 
+## 0.0.24
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @suspensive/utils@2.12.0
+
 ## 0.0.23
 
 ### Patch Changes
