@@ -42,8 +42,8 @@
     "ci:attw": "attw --pack",
     "ci:eslint": "eslint \"**/*.{js,jsx,cjs,mjs,ts,tsx,cts,mts}\"",
     "ci:publint": "publint --strict",
-    "ci:test": "jest",
-    "ci:test:watch": "vitest --ui --coverage --typecheck",
+    "ci:test": "jest --coverage",
+    "ci:test:watch": "jest --watchAll --coverage",
     "ci:type": "tsc --noEmit",
     "clean": "rimraf ./dist && rimraf ./coverage",
     "dev": "tsup --watch",
@@ -63,7 +63,8 @@
     "jest": "^29.7.0",
     "jest-expo": "^51.0.3",
     "react": "^18.3.1",
-    "react-native": "0.74.3"
+    "react-native": "0.74.3",
+    "ts-node": "^10.9.2"
   },
   "peerDependencies": {
     "react": "^18",
