@@ -68,7 +68,7 @@ import { UserInfo, ShoppingCart } from '~/components'
 
 const PaymentPage = () => (
   <Suspense fallback={'pending...'}>
-    <UserInfo /> {/* UserInfo의 내부적으로 Suspense를 발생시키는 Async Atom을 사용하는지 예상하기 어렵습니다.*/}
+    <UserInfo /> {/* UserInfo의 내부적으로 Suspense를 발생시키는 Async Atom을 사용하는지 예상하기 어렵습니다. */}
     <ShoppingCart /> {/* ShoppingCart의 내부적으로 Suspense를 발생시키는 Async Atom을 사용하는지 예상하기 어렵습니다. */}
   </Suspense>
 )
