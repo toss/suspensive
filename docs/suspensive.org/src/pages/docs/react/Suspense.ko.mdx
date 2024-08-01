@@ -40,7 +40,7 @@ const Example = () => (
 )
 ```
 
-clientOnly prop을 사용하면 내부적으로 useIsClient훅을 사용하고 useIsClient는 useSyncExternalStore의 getSnapshot와 getServerSnapshot을 활용해 client임을 보장하고 있습니다
+clientOnly prop을 사용하면 내부적으로 useIsClient훅을 사용하고 useIsClient는 useSyncExternalStore의 getSnapshot와 getServerSnapshot을 활용해 client임을 보장하고 있습니다.
 
 ```tsx /useIsClient/
 const useIsClient = () => useSyncExternalStore(emptySubscribe, getSnapshot, getServerSnapshot)
