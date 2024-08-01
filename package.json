@@ -61,7 +61,7 @@
     "broken-link-checker": "^0.7.8",
     "coauthors": "latest",
     "eslint": "^8.57.0",
-    "husky": "^9.0.11",
+    "husky": "^9.1.4",
     "jsdom": "^24.1.0",
     "knip": "^5.26.0",
     "lint-staged": "^15.2.7",
