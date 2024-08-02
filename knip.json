@@ -20,7 +20,7 @@
       "ignoreDependencies": ["@suspensive/react"]
     },
     "packages/react-native": {
-      "ignoreDependencies": ["expo", "@testing-library/react-native"],
+      "ignoreDependencies": ["expo", "ts-node"],
       "ignore": ["babel.config.cjs"]
     }
   }
