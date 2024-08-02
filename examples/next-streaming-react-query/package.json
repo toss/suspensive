@@ -6,6 +6,7 @@
     "build": "next build",
     "ci:eslint": "next lint",
     "ci:type": "tsc --noEmit",
+    "clean": "rimraf ./.next",
     "dev": "next dev -p 4100",
     "start": "next start -p 4100"
   },
