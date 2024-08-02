@@ -107,7 +107,7 @@ const Example = () => (
       <ErrorAfter2s />
     </ErrorBoundary>
 
-    {/* blockOutside prop prevents reset by the parent ErrorBoundaryGroup*/}
+    {/* blockOutside prop prevents reset by the parent ErrorBoundaryGroup. */}
     <ErrorBoundaryGroup blockOutside>
       <ErrorBoundaryGroup.Consumer>
         {(group) => <button onClick={group.reset}>Try again</button>}
