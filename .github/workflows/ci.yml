@@ -20,18 +20,7 @@ jobs:
     strategy:
       matrix:
         command:
-          [
-            'prepack',
-            'ci:attw',
-            'ci:eslint',
-            'ci:publint',
-            'ci:sherif',
-            'ci:type',
-            'ci:test',
-            'ci:knip',
-            'ci:bench',
-            'build',
-          ]
+          ['prepack', 'ci:attw', 'ci:eslint', 'ci:publint', 'ci:sherif', 'ci:type', 'ci:test', 'ci:bench', 'build']
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/pnpm-setup-node
@@ -39,8 +28,6 @@ jobs:
       - if: matrix.command == 'ci:test'
         run: pnpm playwright install
       - run: pnpm ${{ matrix.command }}
-        env:
-          LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
       - if: matrix.command == 'ci:test'
         uses: codecov/codecov-action@v4
         env:
