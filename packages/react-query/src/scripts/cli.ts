@@ -21,10 +21,10 @@ program
 program
   .command('switch')
   .description(
-    "Switch @suspensive/react-query's exports to use compatible Suspensive interfaces for @tanstack/react-query@<version>"
+    "Switch @suspensive/react-query's exports to use compatible Suspensive interfaces for @tanstack/react-query"
   )
   .argument(
-    '<version>',
+    `@tanstack/react-query's version`,
     "Switch @suspensive/react-query's exports to use compatible Suspensive interfaces for @tanstack/react-query@<version>"
   )
   .action((version) => switchAction(version))
