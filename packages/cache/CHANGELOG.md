@@ -1,5 +1,12 @@
 # @suspensive/cache
 
+## 0.3.4
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @suspensive/utils@2.12.2
+
 ## 0.3.3
 
 ### Patch Changes

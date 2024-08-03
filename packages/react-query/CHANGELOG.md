@@ -1,5 +1,17 @@
 # @suspensive/react-query
 
+## 2.12.2
+
+### Patch Changes
+
+- [#1185](https://github.com/toss/suspensive/pull/1185) [`e8ab7cd`](https://github.com/toss/suspensive/commit/e8ab7cd57af7641643a15a4a7328bd8761a69523) Thanks [@gwansikk](https://github.com/gwansikk)! - feat(react-query): clarify cli command explanations
+
+- Updated dependencies []:
+  - @suspensive/utils@2.12.2
+  - @suspensive/react@2.12.2
+  - @suspensive/react-query-4@2.12.2
+  - @suspensive/react-query-5@2.12.2
+
 ## 2.12.1
 
 ### Patch Changes
