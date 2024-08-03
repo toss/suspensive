@@ -5,7 +5,6 @@ describe('<TestText />', () => {
   it('should render text "Test" with custom text', () => {
     render(<TestText />)
 
-    expect(1).toBe(1)
     expect(screen.queryByRole('text', { name: 'Test' })).toBeOnTheScreen()
     expect(screen.queryByRole('text', { name: 'Text' })).not.toBeOnTheScreen()
   })
