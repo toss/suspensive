@@ -1,6 +1,6 @@
 {
   "name": "@suspensive/cache",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "Useful interfaces for React Suspense",
   "keywords": [
     "suspensive",
@@ -58,9 +58,7 @@
     "@suspensive/tsconfig": "workspace:*",
     "@suspensive/tsup": "workspace:*",
     "@types/react": "^18.3.3",
-    "@types/react-dom": "^18.3.0",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react": "^18.3.1"
   },
   "peerDependencies": {
     "react": "^18"

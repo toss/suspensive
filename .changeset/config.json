@@ -11,7 +11,12 @@
       "@suspensive/react-query-5"
     ]
   ],
-  "ignore": ["@suspensive/next-streaming-react-query", "@suspensive/visualization", "@suspensive/suspensive.org"],
+  "ignore": [
+    "@suspensive/next-streaming-react-query",
+    "@suspensive/visualization",
+    "@suspensive/suspensive.org",
+    "@suspensive/react-native-playground"
+  ],
   "linked": [],
   "access": "restricted",
   "baseBranch": "main",
