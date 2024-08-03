@@ -12,7 +12,7 @@ From version 2.2.0 onwards, @tanstack/react-query supports both v4 and v5. To su
 
 ## Command-Line Interface (CLI)
 
-The Command-Line Interface (CLI) of @suspensive/react-query is a tool to resolve compatibility issues with @tanstack/react-query. It allows you to check the compatibility with the installed version of @tanstack/react-query and switch the interface of @suspensive/react-query to a compatible one via commands.
+The Command-Line Interface (CLI) of @suspensive/react-query is a tool to match compatibility with @tanstack/react-query. It allows you to check the compatibility with the installed version of @tanstack/react-query and switch the interface of @suspensive/react-query to a compatible one via commands.
 
 However, in most cases, the CLI is rarely needed as @suspensive/react-query automatically provides a compatible interface based on the installed version of @tanstack/react-query upon installation.
 
@@ -72,15 +72,13 @@ npx suspensive-react-query --help
 
 ### status
 
-Checks the compatibility of the currently installed version of @tanstack/react-query with @suspensive/react-query and displays the compatibility status.
+You can check the compatibility status between the installed versions of @tanstack/react-query and @suspensive/react-query in your current environment. Additionally, you can see which interfaces are available for use in the current environment from the list of available interfaces.
 
 ```bash
 npx suspensive-react-query status
 ```
 
 For example, using @suspensive/react-query@2.12.1 and @tanstack/react-query@5.51.21, the result might be.
-
-You can check the compatibility status with status, and see which interfaces are available in your environment in the available interfaces section.
 
 ```
 ┌─────────────────────────────────────────┬──────────┬────────────────────────────────────┐
