@@ -100,7 +100,7 @@ const Example = () => {
 
 ### New [`<ErrorBoundary.Consumer/>`](/docs/react/ErrorBoundary), [`<ErrorBoundaryGroup.Consumer/>`](/docs/react/ErrorBoundaryGroup) [#610](https://github.com/toss/suspensive/pull/610)
 
-These components can be used to use `useErrorBoundary`, `useErrorBoundaryGroup` in jsx inlinely
+These components can be used to use `useErrorBoundary`, `useErrorBoundaryGroup` in jsx inlinely.
 
 ```jsx
 import { ErrorBoundary, ErrorBoundaryGroup } from '@suspensive/react'
@@ -125,7 +125,7 @@ const Example = () => {
 
 ### Removed `<AsyncBoundary/>`
 
-We removed `<AsyncBoundary/>` in v2 [#295](https://github.com/toss/suspensive/issues/295)
+We removed `<AsyncBoundary/>` in v2. [#295](https://github.com/toss/suspensive/issues/295)
 
 Because `<AsyncBoundary/>` uses `<ErrorBoundary/>` internally, it can be used with `useErrorBoundary` and is affected by `<ErrorBoundaryGroup/>`. We decided to remove this component from v2, believing that it would be better for maintainability and interface unification for library users.
 
@@ -148,7 +148,7 @@ So, you can split by two like this.
 
 ### Removed `withSuspense`, `withDelay`, `withErrorboundry`, `withErrorBoundaryGroup`
 
-These all hocs can be replaced beautifully by new hoc builder [`wrap`](/docs/react/wrap) in v2
+These all hocs can be replaced beautifully by new hoc builder [`wrap`](/docs/react/wrap) in v2.
 
 ```diff
 + import { wrap } from '@suspensive/react'
