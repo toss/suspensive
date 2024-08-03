@@ -13,7 +13,7 @@ export const Page = wrap
   .ErrorBoundary({ fallback: ({ error }) => <PageErrorFallback message={error.message} /> })
   .Suspense({ fallback: <PageSkeleton /> })
   .on(
-    // will make <Page/> component wrapped in <ErrorBoundaryGroup/>, <ErrorBoundary/> and <Suspense/>
+    // will make <Page/> component wrapped in <ErrorBoundaryGroup/>, <ErrorBoundary/> and <Suspense/>.
     () => {
       const { data: postList } = useSuspenseQuery({
         queryKey: ['posts'],
@@ -36,7 +36,7 @@ export const Page = wrap
 const PostItem =
   wrap.ErrorBoundary({ fallback: ({ error }) => <>{error.message}</> }).Suspense({ fallback: <PostSkeleton /> }).on <
   { id: string } >
-  // will make <Post/> component have PostProps wrapped in <ErrorBoundary/> and <Suspense/>
+  // will make <Post/> component have PostProps wrapped in <ErrorBoundary/> and <Suspense/>.
   ((props) => {
     const { data: post } = useSuspenseQuery({
       queryKey: ['posts', props.id],
