@@ -1,5 +1,14 @@
 # @suspensive/jotai
 
+## 0.0.11
+
+### Patch Changes
+
+- [#1180](https://github.com/toss/suspensive/pull/1180) [`f79b96c`](https://github.com/toss/suspensive/commit/f79b96c728e15ebe819445cf5d1c2e33e6c96ef4) Thanks [@manudeli](https://github.com/manudeli)! - fix(\*): remove unnecessary devDeps(react-dom, @types/react-dom)
+
+- Updated dependencies []:
+  - @suspensive/utils@2.12.1
+
 ## 0.0.10
 
 ### Patch Changes
