@@ -11,22 +11,22 @@ const program = new Command()
 program
   .name(packageJson.name)
   .description(packageJson.description)
-  .version(packageJson.version, '-v, --version', 'display the current version')
+  .version(packageJson.version, '-v, --version', 'Displays the currently installed version of @suspensive/react-query')
 
 program
   .command('status')
-  .description('Check the compatibility status of the current version')
+  .description('Checks compatibility with the currently used version of @tanstack/react-query')
   .action(() => statusAction())
 
 program
   .command('switch')
-  .description('Switch to a specific version of @suspensive/react-query')
-  .argument('<version>', 'Switches the version of @suspensive/react-query')
+  .description('Switch the exports to use the specified version of  @suspensive/react-query interface')
+  .argument('<version>', 'Switch the exports to use the specified version of  @suspensive/react-query interface')
   .action((version) => switchAction(version))
 
 program
   .command('fix')
-  .description('Fix the compatibility issues')
+  .description('Automatically switches to the compatible interface for @tanstack/react-query')
   .action(() => fixAction())
 
 program.parse()
