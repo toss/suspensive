@@ -1,5 +1,17 @@
 # @suspensive/react-query
 
+## 2.12.1
+
+### Patch Changes
+
+- [#1180](https://github.com/toss/suspensive/pull/1180) [`f79b96c`](https://github.com/toss/suspensive/commit/f79b96c728e15ebe819445cf5d1c2e33e6c96ef4) Thanks [@manudeli](https://github.com/manudeli)! - fix(\*): remove unnecessary devDeps(react-dom, @types/react-dom)
+
+- Updated dependencies [[`f79b96c`](https://github.com/toss/suspensive/commit/f79b96c728e15ebe819445cf5d1c2e33e6c96ef4)]:
+  - @suspensive/react-query-4@2.12.1
+  - @suspensive/react-query-5@2.12.1
+  - @suspensive/utils@2.12.1
+  - @suspensive/react@2.12.1
+
 ## 2.12.0
 
 ### Patch Changes
