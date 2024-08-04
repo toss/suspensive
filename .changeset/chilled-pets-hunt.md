@@ -2,4 +2,4 @@
 '@suspensive/cache': patch
 ---
 
-chore(cache): remove unsubscribe method
+chore(cache): remove unsubscribe method of CacheStore
