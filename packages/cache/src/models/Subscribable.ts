@@ -28,8 +28,10 @@ export class Subscribable {
   protected syncSubscribers = (cacheKey?: CacheKey) => {
     const hashedCacheKey = cacheKey ? hashCacheKey(cacheKey) : undefined
 
-    return hashedCacheKey
-      ? this.syncsMap.get(hashedCacheKey)?.forEach((sync) => sync())
-      : this.syncsMap.forEach((syncs) => syncs.forEach((sync) => sync()))
+    if (hashedCacheKey) {
+      this.syncsMap.get(hashedCacheKey)?.forEach((sync) => sync())
+    } else {
+      this.syncsMap.forEach((syncs) => syncs.forEach((sync) => sync()))
+    }
   }
 }
