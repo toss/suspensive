@@ -19,6 +19,7 @@ jobs:
           commit: 'chore: version packages'
           version: pnpm changeset:version
           publish: pnpm changeset:publish
+          setupGitUser: false
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
