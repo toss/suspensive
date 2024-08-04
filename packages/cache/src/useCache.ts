@@ -11,7 +11,7 @@ export function useCache<TData, TCacheKey extends CacheKey>(
 ): ResolvedCached<TData, TCacheKey>['state'] {
   const cacheStore = useCacheStore()
   return useSyncExternalStore<ResolvedCached<TData, TCacheKey>>(
-    (sync) => cacheStore.subscribe(options, sync).unsubscribe,
+    (sync) => cacheStore.subscribe(options, sync),
     () => cacheStore.suspend<TData, TCacheKey>(options),
     () => cacheStore.suspend<TData, TCacheKey>(options)
   ).state
