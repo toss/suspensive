@@ -1,4 +1,4 @@
-import { Callout } from '@/components'
+import { Callout, Sandpack } from '@/components'
 
 # Delay
 
@@ -15,6 +15,22 @@ const Example = () => (
   </Delay>
 )
 ```
+
+<Sandpack>
+
+```tsx Example.tsx active
+import { Delay } from '@suspensive/react'
+
+export const Example = () => (
+  <Delay ms={1000}>
+    <div style={{ padding: 20, backgroundColor: 'lightblue' }}>
+      1s delayed Text
+    </div>
+  </Delay>
+)
+```
+
+</Sandpack>
 
 <Callout type='info'>
 
@@ -59,3 +75,21 @@ const Example = () => (
   </Delay>
 )
 ```
+
+<Sandpack>
+
+```tsx Example.tsx active
+import { Delay } from '@suspensive/react'
+
+export const Example = () => {
+  return (
+    <div style={{ padding: 20, backgroundColor: 'lightblue' }}>
+      <Delay ms={1000} fallback={<>Fallback Text</>}>
+        1s delayed Text
+      </Delay>
+    </div>
+  )
+}
+```
+
+</Sandpack>

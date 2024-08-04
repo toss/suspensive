@@ -57,14 +57,22 @@ export type AllStatusCached<TData, TCacheKey extends CacheKey = CacheKey> =
       }
     }
 
-export interface IdleCached<TData, TCacheKey extends CacheKey = CacheKey>
-  extends ExtractPartial<AllStatusCached<TData, TCacheKey>, { status: CacheStatus.Idle }> {}
-export interface PendingCached<TData, TCacheKey extends CacheKey = CacheKey>
-  extends ExtractPartial<AllStatusCached<TData, TCacheKey>, { status: CacheStatus.Pending }> {}
-export interface ResolvedCached<TData, TCacheKey extends CacheKey = CacheKey>
-  extends ExtractPartial<AllStatusCached<TData, TCacheKey>, { status: CacheStatus.Resolved }> {}
-export interface RejectedCached<TData, TCacheKey extends CacheKey = CacheKey>
-  extends ExtractPartial<AllStatusCached<TData, TCacheKey>, { status: CacheStatus.Rejected }> {}
+export type IdleCached<TData, TCacheKey extends CacheKey = CacheKey> = ExtractPartial<
+  AllStatusCached<TData, TCacheKey>,
+  { status: CacheStatus.Idle }
+>
+export type PendingCached<TData, TCacheKey extends CacheKey = CacheKey> = ExtractPartial<
+  AllStatusCached<TData, TCacheKey>,
+  { status: CacheStatus.Pending }
+>
+export type ResolvedCached<TData, TCacheKey extends CacheKey = CacheKey> = ExtractPartial<
+  AllStatusCached<TData, TCacheKey>,
+  { status: CacheStatus.Resolved }
+>
+export type RejectedCached<TData, TCacheKey extends CacheKey = CacheKey> = ExtractPartial<
+  AllStatusCached<TData, TCacheKey>,
+  { status: CacheStatus.Rejected }
+>
 
 export type Cached<TData, TCacheKey extends CacheKey = CacheKey> =
   | IdleCached<TData, TCacheKey>
@@ -191,22 +199,15 @@ export class CacheStore {
     const syncs = this.syncsMap.get(hashedCacheKey)
     this.syncsMap.set(hashedCacheKey, [...(syncs ?? []), syncSubscriber])
 
-    const subscribed = {
-      unsubscribe: () => this.unsubscribe(options, syncSubscriber),
+    const unsubscribe = () => {
+      if (syncs) {
+        this.syncsMap.set(
+          hashedCacheKey,
+          syncs.filter((sync) => sync !== syncSubscriber)
+        )
+      }
     }
-    return subscribed
-  }
-
-  public unsubscribe(options: Pick<CacheOptions<unknown, CacheKey>, 'cacheKey'>, syncSubscriber: Sync) {
-    const hashedCacheKey = hashCacheKey(options.cacheKey)
-    const syncs = this.syncsMap.get(hashedCacheKey)
-
-    if (syncs) {
-      this.syncsMap.set(
-        hashedCacheKey,
-        syncs.filter((sync) => sync !== syncSubscriber)
-      )
-    }
+    return unsubscribe
   }
 
   private syncSubscribers = (cacheKey?: CacheKey) => {
