@@ -1,5 +1,7 @@
 import type { Tuple } from './utility-types'
 
+export type Sync = (...args: unknown[]) => unknown
+
 export type CacheKey = Tuple
 
 /**
