@@ -1,5 +1,11 @@
 # @suspensive/cache
 
+## 0.3.5
+
+### Patch Changes
+
+- [#1189](https://github.com/toss/suspensive/pull/1189) [`af75cbf`](https://github.com/toss/suspensive/commit/af75cbf0d6f848a1f07099731d50d3904df2facc) Thanks [@SEOKKAMONI](https://github.com/SEOKKAMONI)! - fix(cache): remove unsubscribe method of CacheStore
+
 ## 0.3.4
 
 ### Patch Changes
