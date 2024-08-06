@@ -1,12 +1,13 @@
 import fs from 'fs'
+import { noop } from '@suspensive/utils'
 import type { Mock, MockInstance } from 'vitest'
 import packageJson from '../../../package.json'
 import { fixAction, statusAction, switchAction } from './commands'
 import {
-  getExportAPIsWithoutSuspensive,
   getIndexFileContent,
   getPackageJson,
   getSuspensiveReactQueryPackageJson,
+  getTanStackReactQueryAPIs,
   getTanStackReactQueryPackageJson,
   getTargetSuspensiveReactQueryAPIs,
   getTargetSuspensiveReactQueryVersion,
@@ -24,8 +25,8 @@ describe('commands', () => {
   let consoleWarnSpy: MockInstance
 
   beforeEach(() => {
-    consoleLogSpy = vi.spyOn(console, 'log').mockImplementation((): void => {})
-    consoleWarnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {})
+    consoleLogSpy = vi.spyOn(console, 'log').mockImplementation(noop)
+    consoleWarnSpy = vi.spyOn(console, 'warn').mockImplementation(noop)
 
     const getPackageJsonMock = getPackageJson as Mock
     getPackageJsonMock.mockReturnValue(packageJson)
@@ -39,10 +40,10 @@ describe('commands', () => {
     getTargetSuspensiveReactQueryVersionMock.mockReturnValue('5')
     const getTargetSuspensiveReactQueryAPIsMock = getTargetSuspensiveReactQueryAPIs as Mock
     getTargetSuspensiveReactQueryAPIsMock.mockReturnValue([])
-    const getExportAPIsWithoutSuspensiveMock = vi.mocked(getExportAPIsWithoutSuspensive)
-    getExportAPIsWithoutSuspensiveMock.mockReturnValue([])
+    const getTanStackReactQueryAPIsMock = getTanStackReactQueryAPIs as Mock
+    getTanStackReactQueryAPIsMock.mockReturnValue([])
 
-    vi.mocked(switchVersion).mockImplementation(() => {})
+    vi.mocked(switchVersion).mockImplementation(noop)
   })
 
   afterEach(() => {
