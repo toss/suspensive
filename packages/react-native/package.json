@@ -1,6 +1,6 @@
 {
   "name": "@suspensive/react-native",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Useful interfaces for React Suspense",
   "keywords": [
     "suspensive",
