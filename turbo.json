@@ -25,7 +25,7 @@
       "dependsOn": ["prepack"],
       "outputs": ["coverage/**"]
     },
-    "ci:test:watch": {
+    "ci:test:ui": {
       "dependsOn": ["prepack"],
       "cache": false,
       "outputs": ["coverage/**"]

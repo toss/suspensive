@@ -43,7 +43,7 @@
     "ci:eslint": "eslint \"**/*.{js,jsx,cjs,mjs,ts,tsx,cts,mts}\"",
     "ci:publint": "publint --strict",
     "ci:test": "jest --coverage",
-    "ci:test:watch": "jest --watchAll --coverage",
+    "ci:test:ui": "jest --watchAll --coverage",
     "ci:type": "tsc --noEmit",
     "clean": "rimraf ./dist && rimraf ./coverage",
     "dev": "tsup --watch",
