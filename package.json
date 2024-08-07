@@ -26,7 +26,7 @@
     "ci:attw": "turbo run ci:attw",
     "ci:attw:watch": "turbo watch ci:attw",
     "ci:bench": "turbo run ci:bench",
-    "ci:eslint": "turbo watch ci:eslint",
+    "ci:eslint": "turbo run ci:eslint",
     "ci:eslint:watch": "turbo watch ci:eslint",
     "ci:knip": "pnpm prepack && pnpm knip",
     "ci:publint": "turbo run ci:publint",
