@@ -1,5 +1,17 @@
 # @suspensive/react-query
 
+## 2.12.3
+
+### Patch Changes
+
+- [#1198](https://github.com/toss/suspensive/pull/1198) [`2dfb918`](https://github.com/toss/suspensive/commit/2dfb9180f8e5fc42ebeba5b8b35a77d52daa8156) Thanks [@gwansikk](https://github.com/gwansikk)! - fix: display tanstack apis in status cli table
+
+- Updated dependencies []:
+  - @suspensive/utils@2.12.3
+  - @suspensive/react@2.12.3
+  - @suspensive/react-query-4@2.12.3
+  - @suspensive/react-query-5@2.12.3
+
 ## 2.12.2
 
 ### Patch Changes
