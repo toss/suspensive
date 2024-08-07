@@ -34,7 +34,7 @@
     "ci:sherif": "sherif --ignore-package \"./examples/*\" --ignore-package \"./websites/*\" --ignore-package \"./docs/*\" --ignore-dependency \"@tanstack/react-query\" ",
     "ci:test": "turbo run ci:test",
     "ci:test:watch": "turbo watch ci:test",
-    "ci:test:ui": "turbo run ci:test:ui --parallel",
+    "ci:test:watch:ui": "turbo run ci:test:watch:ui --parallel",
     "ci:type": "turbo run ci:type",
     "ci:type:watch": "turbo watch ci:type",
     "clean": "turbo run clean",
