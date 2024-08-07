@@ -47,7 +47,8 @@
     "prepack": "turbo run prepack",
     "prepack:watch": "turbo watch prepack",
     "prepare": "husky",
-    "start": "turbo run start"
+    "start": "turbo run start",
+    "start:watch": "turbo watch start"
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "^0.15.3",
