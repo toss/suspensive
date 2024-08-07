@@ -84,8 +84,8 @@ export function getTargetSuspensiveReactQueryAPIs(): string[] {
   return results
 }
 
-export function getTanStackReactQueryAPIs(version: string): string[] {
-  switch (version) {
+export function getTanStackReactQueryAPIs(majorVersionOfTanStackQuery: string): string[] {
+  switch (majorVersionOfTanStackQuery) {
     case '5':
       return [
         'useSuspenseQuery',
