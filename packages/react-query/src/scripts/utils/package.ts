@@ -95,7 +95,9 @@ export function getTanStackReactQueryAPIs(version: string): string[] {
         'infiniteQueryOptions',
       ]
     case '4':
-    default:
       return ['-']
+    default: {
+      throw new Error('@tanstack/react-query version is required')
+    }
   }
 }
