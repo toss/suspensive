@@ -44,7 +44,7 @@
     "preinstall": "corepack enable",
     "prepack": "turbo run prepack",
     "prepare": "husky",
-    "start": "turbo run start",
+    "start": "turbo run start"
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "^0.15.3",
