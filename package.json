@@ -43,7 +43,6 @@
     "packlint": "packlint sort -R",
     "preinstall": "corepack enable",
     "prepack": "turbo run prepack",
-    "prepack:watch": "turbo watch prepack",
     "prepare": "husky",
     "start": "turbo run start",
     "start:watch": "turbo watch start"
