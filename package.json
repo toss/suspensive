@@ -29,7 +29,6 @@
     "ci:eslint:watch": "turbo watch ci:eslint",
     "ci:knip": "pnpm prepack && pnpm knip",
     "ci:publint": "turbo run ci:publint",
-    "ci:publint:watch": "turbo watch ci:publint",
     "ci:sherif": "sherif --ignore-package \"./examples/*\" --ignore-package \"./websites/*\" --ignore-package \"./docs/*\" --ignore-dependency \"@tanstack/react-query\" ",
     "ci:test": "turbo run ci:test",
     "ci:test:watch": "turbo run ci:test:watch --parallel",
