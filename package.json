@@ -34,7 +34,6 @@
     "ci:test": "turbo run ci:test",
     "ci:test:watch": "turbo run ci:test:watch --parallel",
     "ci:type": "turbo run ci:type",
-    "ci:type:watch": "turbo watch ci:type",
     "clean": "turbo run clean",
     "dev": "turbo run dev --concurrency 20",
     "dev:watch": "turbo watch dev",
