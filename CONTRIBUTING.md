@@ -38,13 +38,15 @@ In general, things we find useful when reviewing suggestions are:
 ### Prerequisites
 
 0. [Choose an issue about bug or feature you want to work on](https://github.com/toss/suspensive/issues)
-1. Clone the repository
+1. Fork this repository.
+2. Clone the repository
    ```shell
-   git clone git@github.com:suspensive/react.git
+   git clone git@github.com:{username}/suspensive.git
    ```
-2. Please use the correct node version. You can use the version declared in [.nvmrc](https://github.com/toss/suspensive/blob/main/.nvmrc). We strongly recommend [nvm](https://github.com/nvm-sh/nvm) to control local machine's node version easily. also We recommend [nvm's deeper shell integration](https://github.com/nvm-sh/nvm#deeper-shell-integration) too.
-3. Install packages. [We use pnpm v8. Install pnpm with corepack please if you can](https://pnpm.io/installation#using-corepack). We recommend using corepack for pnpm to automatically use the version declared in the packageManager field of package.json.
+3. Please use the correct node version. You can use the version declared in [.nvmrc](https://github.com/toss/suspensive/blob/main/.nvmrc). We strongly recommend [nvm](https://github.com/nvm-sh/nvm) to control local machine's node version easily. also We recommend [nvm's deeper shell integration](https://github.com/nvm-sh/nvm#deeper-shell-integration) too.
+4. Install packages. [We use pnpm v8. Install pnpm with corepack please if you can](https://pnpm.io/installation#using-corepack). We recommend using corepack for pnpm to automatically use the version declared in the packageManager field of package.json.
    ```shell
+   corepack enable && corepack prepare
    pnpm install
    ```
 
