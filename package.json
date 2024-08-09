@@ -18,7 +18,7 @@
   "scripts": {
     "blc:suspensive.org": "pnpm blc https://suspensive.org --ro",
     "build": "turbo run build",
-    "build:watch": "turbo run build:watch --parallel",
+    "build:watch": "turbo watch build",
     "changeset": "changeset",
     "changeset:publish": "pnpm prepack && changeset publish",
     "changeset:version": "changeset version && pnpm i --lockfile-only",
