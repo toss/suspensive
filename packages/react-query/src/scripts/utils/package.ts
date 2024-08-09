@@ -84,24 +84,20 @@ export function getTargetSuspensiveReactQueryAPIs(): string[] {
   return results
 }
 
-export function getExportAPIsWithoutSuspensive(): string[] {
-  const indexFileContent = getIndexFileContent(__dirname, '../../')
-
-  const modules = indexFileContent.matchAll(/export \* from ['"]([^'"]+)['"]/g)
-  const results: string[] = []
-
-  for (const [, moduleName] of modules) {
-    if (!moduleName.includes('@suspensive/react-query')) {
-      const module = loadModule<Record<string, unknown>>(moduleName)
-
-      if (!module.isSuccess) {
-        console.warn('[@suspensive/react-query]', 'Module not found:', moduleName)
-        exit(1)
-      }
-
-      results.push(...Object.keys(module.exports).reverse())
+export function getTanStackReactQueryAPIs(majorVersionOfTanStackQuery: string): string[] {
+  switch (majorVersionOfTanStackQuery) {
+    case '5':
+      return [
+        'useSuspenseQuery',
+        'useSuspenseQueries',
+        'useSuspenseInfiniteQuery',
+        'queryOptions',
+        'infiniteQueryOptions',
+      ]
+    case '4':
+      return ['-']
+    default: {
+      throw new Error('@tanstack/react-query version is required')
     }
   }
-
-  return results
 }
