@@ -18,7 +18,7 @@
   },
   "versions": {
     "type": "menu",
-    "title": "v2",
+    "title": "latest",
     "items": {
       "latest": {
         "title": "latest",
