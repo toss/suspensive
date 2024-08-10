@@ -6,9 +6,6 @@ type UseSetAtomProps<TValue, TArgs extends unknown[], TResult> = {
   options?: Parameters<typeof useSetAtom>[1]
 }
 
-/**
- * @experimental This is experimental feature.
- */
 export function SetAtom<TValue, TArgs extends unknown[], TResult>({
   children,
   atom,
