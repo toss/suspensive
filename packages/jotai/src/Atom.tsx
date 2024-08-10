@@ -58,9 +58,14 @@ export function Atom<TValue, TArgs extends unknown[], TResult>({
   children,
   atom,
   options,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-}: UseAtomProps<JotaiAtom<TValue> | WritableAtom<TValue, TArgs, TResult>> & ChildrenRenderProps<any>): ReactNode {
+}: UseAtomProps<JotaiAtom<TValue> | WritableAtom<TValue, TArgs, TResult>> &
+  ChildrenRenderProps<ReturnType<typeof useAtom>>): ReactNode {
   return (
-    <>{children([useAtomValue(atom, options), useSetAtom(atom as WritableAtom<TValue, TArgs, TResult>, options)])}</>
+    <>
+      {children([
+        useAtomValue(atom, options),
+        useSetAtom(atom as WritableAtom<TValue, TArgs, TResult>, options) as never,
+      ])}
+    </>
   )
 }
