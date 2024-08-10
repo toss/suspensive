@@ -12,28 +12,26 @@ import {
   useSetAtom,
 } from 'jotai'
 import type { ReactNode } from 'react'
-import type { ChildrenRenderProps } from './utility-types'
+import type { ChildrenRenderProps, SetAtom } from './utility-types'
 
 type UseAtomProps<TAtom extends Parameters<typeof useAtom>[0]> = {
   atom: TAtom
   options?: Parameters<typeof useAtom>[1]
 }
 
-type TSetAtom<TArgs extends unknown[], TResult> = (...args: TArgs) => TResult
-
 export function Atom<TValue, TArgs extends unknown[], TResult>({
   children,
   atom,
   options,
 }: UseAtomProps<WritableAtom<TValue, TArgs, TResult>> &
-  ChildrenRenderProps<[Awaited<TValue>, TSetAtom<TArgs, TResult>]>): ReactNode
+  ChildrenRenderProps<[Awaited<TValue>, SetAtom<TArgs, TResult>]>): ReactNode
 
 export function Atom<TValue>({
   children,
   atom,
   options,
 }: UseAtomProps<PrimitiveAtom<TValue>> &
-  ChildrenRenderProps<[Awaited<TValue>, TSetAtom<[SetStateAction<TValue>], void>]>): ReactNode
+  ChildrenRenderProps<[Awaited<TValue>, SetAtom<[SetStateAction<TValue>], void>]>): ReactNode
 
 export function Atom<TValue>({
   children,
@@ -47,7 +45,7 @@ export function Atom<TAtom extends WritableAtom<unknown, never[], unknown>>({
   options,
 }: UseAtomProps<TAtom> &
   ChildrenRenderProps<
-    [Awaited<ExtractAtomValue<TAtom>>, TSetAtom<ExtractAtomArgs<TAtom>, ExtractAtomResult<TAtom>>]
+    [Awaited<ExtractAtomValue<TAtom>>, SetAtom<ExtractAtomArgs<TAtom>, ExtractAtomResult<TAtom>>]
   >): ReactNode
 
 export function Atom<TAtom extends JotaiAtom<unknown>>({
