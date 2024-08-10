@@ -3,12 +3,9 @@ import type { ChildrenRenderProps } from './utility-types'
 
 type UseAtomValueProps<TValue> = {
   atom: JotaiAtom<TValue>
-  options?: Parameters<typeof useAtomValue>[1] & { delay?: number }
+  options?: Parameters<typeof useAtomValue>[1]
 }
 
-/**
- * @experimental This is experimental feature.
- */
 export function AtomValue<TValue>({
   children,
   atom,
