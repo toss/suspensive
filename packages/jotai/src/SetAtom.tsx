@@ -1,18 +1,26 @@
-import { type WritableAtom, useSetAtom } from 'jotai'
-import type { ChildrenRenderProps } from './utility-types'
+import { type ExtractAtomArgs, type ExtractAtomResult, type WritableAtom, useSetAtom } from 'jotai'
+import type { ReactNode } from 'react'
+import type { ChildrenRenderProps, SetAtom as TSetAtom } from './utility-types'
 
-type UseSetAtomProps<TValue, TArgs extends unknown[], TResult> = {
-  atom: WritableAtom<TValue, TArgs, TResult>
+type UseSetAtomProps<TAtom> = {
+  atom: TAtom
   options?: Parameters<typeof useSetAtom>[1]
 }
 
-/**
- * @experimental This is experimental feature.
- */
+export function SetAtom<TValue, TArgs extends unknown[], TResult>({
+  atom,
+  options,
+}: UseSetAtomProps<WritableAtom<TValue, TArgs, TResult>> & ChildrenRenderProps<TSetAtom<TArgs, TResult>>): ReactNode
+
+export function SetAtom<TAtom extends WritableAtom<unknown, never[], unknown>>({
+  atom,
+  options,
+}: UseSetAtomProps<TAtom> & ChildrenRenderProps<TSetAtom<ExtractAtomArgs<TAtom>, ExtractAtomResult<TAtom>>>): ReactNode
+
 export function SetAtom<TValue, TArgs extends unknown[], TResult>({
   children,
   atom,
   options,
-}: UseSetAtomProps<TValue, TArgs, TResult> & ChildrenRenderProps<(...args: TArgs) => TResult>) {
+}: UseSetAtomProps<WritableAtom<TValue, TArgs, TResult>> & ChildrenRenderProps<TSetAtom<TArgs, TResult>>): ReactNode {
   return <>{children(useSetAtom(atom, options))}</>
 }

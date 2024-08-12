@@ -1,7 +1,6 @@
 import tanStackReactQueryPackageJson from '@tanstack/react-query/package.json'
 import packageJson from '../../../package.json'
 import {
-  getExportAPIsWithoutSuspensive,
   getPackageJson,
   getSuspensiveReactQueryPackageJson,
   getTanStackReactQueryPackageJson,
@@ -58,11 +57,5 @@ describe('package', () => {
 
     expect(result).toBeDefined()
     expect(result.name).toBe('@suspensive/react-query-4')
-  })
-
-  it('should get exported APIs without @suspensive/react-query', () => {
-    const apis = getExportAPIsWithoutSuspensive()
-
-    expect(apis).toEqual(expect.arrayContaining([]))
   })
 })
