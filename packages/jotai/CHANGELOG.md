@@ -1,5 +1,16 @@
 # @suspensive/jotai
 
+## 2.13.0
+
+### Minor Changes
+
+- [#1205](https://github.com/toss/suspensive/pull/1205) [`4b9acdb`](https://github.com/toss/suspensive/commit/4b9acdb68c93ad7aedb2274a004bc188a4bdf2dd) Thanks [@gwansikk](https://github.com/gwansikk)! - feat(jotai): escape version 0
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @suspensive/utils@2.13.0
+
 ## 0.0.13
 
 ### Patch Changes
