@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react'
 
-export interface ChildrenRenderProps<TValue> {
-  children: (value: TValue) => ReactNode
+export interface ChildrenRenderProps<TArgument> {
+  children: (arg: TArgument) => ReactNode
 }
