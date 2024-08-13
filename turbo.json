@@ -9,25 +9,32 @@
     "ci:attw": {
       "dependsOn": ["prepack"]
     },
+    "ci:bench": {
+      "dependsOn": ["prepack"],
+      "outputs": ["benchmarks/**"]
+    },
     "ci:eslint": {
       "dependsOn": ["prepack"]
     },
     "ci:publint": {
       "dependsOn": ["prepack"]
     },
-    "ci:type": {
-      "dependsOn": ["prepack"]
-    },
-    "clean": {
-      "cache": false
-    },
     "ci:test": {
       "dependsOn": ["prepack"],
       "outputs": ["coverage/**"]
     },
-    "ci:bench": {
+    "ci:type": {
+      "dependsOn": ["prepack"]
+    },
+
+    "clean": {
+      "cache": false
+    },
+    "dev": {
       "dependsOn": ["prepack"],
-      "outputs": ["benchmarks/**"]
+      "outputs": ["dist/**", "coverage/**"],
+      "cache": false,
+      "persistent": true
     },
     "prepack": {
       "dependsOn": ["^prepack"],
@@ -36,12 +43,6 @@
     "start": {
       "dependsOn": ["build"],
       "cache": false
-    },
-    "dev": {
-      "dependsOn": ["prepack"],
-      "outputs": ["dist/**", "coverage/**"],
-      "cache": false,
-      "persistent": true
     }
   },
   "globalEnv": ["NODE_ENV"]
