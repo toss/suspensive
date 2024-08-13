@@ -48,12 +48,11 @@
     "ci:eslint": "eslint \"**/*.{js,jsx,cjs,mjs,ts,tsx,cts,mts}\"",
     "ci:publint": "publint --strict",
     "ci:test": "vitest run --coverage --typecheck",
-    "ci:test:watch": "vitest --ui --coverage --typecheck",
     "ci:type": "tsc --noEmit",
     "clean": "rimraf ./dist && rimraf ./coverage",
-    "dev": "tsup --watch",
     "postinstall": "node -e \"import('./dist/scripts/postinstall.cjs').catch(e => console.error(e))\"",
-    "prepack": "pnpm build"
+    "prepack": "pnpm build",
+    "test:ui": "vitest --ui --coverage --typecheck"
   },
   "dependencies": {
     "@commander-js/extra-typings": "^12.1.0",

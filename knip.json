@@ -1,7 +1,7 @@
 {
   "$schema": "https://unpkg.com/knip@5/schema.json",
   "ignoreWorkspaces": ["websites/**", "examples/**"],
-  "ignoreDependencies": ["coauthors", "@suspensive/utils"],
+  "ignoreDependencies": ["@suspensive/utils"],
   "workspaces": {
     ".": {
       "ignore": ["packlint.config.mjs"]
