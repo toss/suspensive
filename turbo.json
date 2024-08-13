@@ -25,7 +25,7 @@
       "dependsOn": ["prepack"],
       "outputs": ["coverage/**"]
     },
-    "dev:test:watch": {
+    "dev:test": {
       "dependsOn": ["prepack"],
       "cache": false,
       "outputs": ["coverage/**"]
