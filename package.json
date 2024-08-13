@@ -32,7 +32,7 @@
     "ci:test": "turbo run ci:test",
     "ci:type": "turbo run ci:type",
     "clean": "turbo run clean",
-    "dev": "pnpm prepack && concurrently \"pnpm build:watch\" \"pnpm dev:test:watch\"",
+    "dev": "concurrently \"pnpm build:watch\" \"pnpm dev:test\"",
     "dev:test:watch": "turbo watch ci:test",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "graph": "rimraf ./graph && mkdir graph && turbo run build --graph=graph/index.html",
