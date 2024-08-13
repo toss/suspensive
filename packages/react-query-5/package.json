@@ -44,7 +44,7 @@
     "ci:eslint": "eslint \"**/*.{js,jsx,cjs,mjs,ts,tsx,cts,mts}\"",
     "ci:publint": "publint --strict",
     "ci:test": "vitest run --coverage --typecheck",
-    "ci:test:watch": "vitest --ui --coverage --typecheck",
+    "test:ui": "vitest --ui --coverage --typecheck",
     "ci:type": "tsc --noEmit",
     "clean": "rimraf ./dist && rimraf ./coverage",
     "dev": "tsup --watch",
