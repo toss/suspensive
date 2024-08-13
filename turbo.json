@@ -25,11 +25,6 @@
       "dependsOn": ["prepack"],
       "outputs": ["coverage/**"]
     },
-    "dev:test": {
-      "dependsOn": ["prepack"],
-      "cache": false,
-      "outputs": ["coverage/**"]
-    },
     "ci:bench": {
       "dependsOn": ["prepack"],
       "outputs": ["benchmarks/**"]
