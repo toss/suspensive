@@ -39,7 +39,7 @@
     },
     "dev": {
       "dependsOn": ["prepack"],
-      "outputs": ["dist/**"],
+      "outputs": ["dist/**", "coverage/**"],
       "cache": false,
       "persistent": true
     }
