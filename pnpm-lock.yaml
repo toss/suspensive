@@ -56,9 +56,6 @@ importers:
       broken-link-checker:
         specifier: ^0.7.8
         version: 0.7.8
-      coauthors:
-        specifier: latest
-        version: 0.2.2
       eslint:
         specifier: ^8.57.0
         version: 8.57.0
@@ -2623,15 +2620,6 @@ packages:
       prettier: 2.8.8
     dev: true
 
-  /@coauthors/core@0.2.2:
-    resolution: {integrity: sha512-lA/9wvMtafTqcjj7Zo/GLiIiBO1u4LjTMvzIMADIHesQvDRbSvDeXnyWkWdwgfFms2qooud/1sP/NsXaYO8EjQ==}
-    dependencies:
-      node-fetch: 2.7.0
-      zod: 3.23.8
-    transitivePeerDependencies:
-      - encoding
-    dev: true
-
   /@codemirror/autocomplete@6.17.0(@codemirror/language@6.10.2)(@codemirror/state@6.4.1)(@codemirror/view@6.29.0)(@lezer/common@1.2.1):
     resolution: {integrity: sha512-fdfj6e6ZxZf8yrkMHUSJJir7OJkHkZKaOZGzLWIYp2PZ3jd+d+UjG8zVPqJF6d3bKxkhvXTPan/UZ1t7Bqm0gA==}
     peerDependencies:
@@ -2813,6 +2801,7 @@ packages:
       commander: ~12.1.0
     dependencies:
       commander: 12.1.0
+    dev: false
 
   /@commitlint/cli@19.3.0(@types/node@20.14.13)(typescript@5.5.4):
     resolution: {integrity: sha512-LgYWOwuDR7BSTQ9OLZ12m7F/qhNY+NpAyPBgo4YNMkACE7lGuUnuQq1yi9hz1KA4+3VqpOYl8H1rY/LYK43v7g==}
@@ -8138,17 +8127,6 @@ packages:
   /co@4.6.0:
     resolution: {integrity: sha512-QVb0dM5HvG+uaxitm8wONl7jltx8dqhfU33DcqtOZcLSVIKSDDLDi7+0LbAKiyI8hD9u42m2YxXSkMGWThaecQ==}
     engines: {iojs: '>= 1.0.0', node: '>= 0.12.0'}
-    dev: true
-
-  /coauthors@0.2.2:
-    resolution: {integrity: sha512-yy4QII4aW0Yp9kxzy5WKbcJVukVhMBE/bvxe4p1OrfZ2F/szvi3pbcjV/jBTijnYOL6j4bs6jYEyltz+9c/8fQ==}
-    hasBin: true
-    dependencies:
-      '@coauthors/core': 0.2.2
-      '@commander-js/extra-typings': 12.1.0(commander@12.1.0)
-      commander: 12.1.0
-    transitivePeerDependencies:
-      - encoding
     dev: true
 
   /collect-v8-coverage@1.0.2:
