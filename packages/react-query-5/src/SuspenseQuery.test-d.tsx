@@ -5,7 +5,7 @@ import { describe, expectTypeOf, it } from 'vitest'
 import { SuspenseQuery } from './SuspenseQuery'
 
 describe('<SuspenseQuery/>', () => {
-  it('type error', () => {
+  it('type check', () => {
     ;() => (
       <SuspenseQuery
         queryKey={queryKey}
@@ -56,9 +56,6 @@ describe('<SuspenseQuery/>', () => {
         {(query) => <>{query.data.text}</>}
       </SuspenseQuery>
     )
-  })
-
-  it('type check', () => {
     ;() => (
       <SuspenseQuery queryKey={queryKey} queryFn={queryFn}>
         {(query) => {
