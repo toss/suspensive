@@ -7,7 +7,7 @@ import { SuspenseInfiniteQuery } from './SuspenseInfiniteQuery'
 import type { UseSuspenseInfiniteQueryResult } from './useSuspenseInfiniteQuery'
 
 describe('<SuspenseInfiniteQuery/>', () => {
-  it('type error', () => {
+  it('type check', () => {
     ;() => (
       <SuspenseInfiniteQuery
         queryKey={queryKey}
@@ -58,9 +58,6 @@ describe('<SuspenseInfiniteQuery/>', () => {
         {(query) => <>{query.data.pages.filter(({ text }) => text)}</>}
       </SuspenseInfiniteQuery>
     )
-  })
-
-  it('type check', () => {
     ;() => (
       <SuspenseInfiniteQuery queryKey={queryKey} queryFn={queryFn}>
         {(query) => {

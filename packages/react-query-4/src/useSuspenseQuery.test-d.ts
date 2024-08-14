@@ -4,7 +4,7 @@ import { queryOptions } from './queryOptions'
 import { type UseSuspenseQueryResult, useSuspenseQuery } from './useSuspenseQuery'
 
 describe('useSuspenseQuery', () => {
-  it('type error', () => {
+  it('type check', () => {
     //@ts-expect-error no arg
     useSuspenseQuery()
     useSuspenseQuery({
@@ -36,9 +36,7 @@ describe('useSuspenseQuery', () => {
       queryFn,
       //@ts-expect-error no isPlaceholderData
     }).isPlaceholderData
-  })
 
-  it('type check', () => {
     const result = useSuspenseQuery({ queryKey, queryFn })
     expectTypeOf(result).toEqualTypeOf<UseSuspenseQueryResult<{ text: string }>>()
     expectTypeOf(result.data).toEqualTypeOf<{ text: string }>()

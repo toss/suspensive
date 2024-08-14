@@ -33,8 +33,6 @@ describe('cacheOptions', () => {
   })
 
   it('should add DataTag on cacheKey with ReturnType<typeof cacheFn>', () => {
-    expect(() => {
-      expectTypeOf(cache().cacheKey[dataTagSymbol]).toEqualTypeOf<number>()
-    })
+    expectTypeOf(cache().cacheKey[dataTagSymbol]).toEqualTypeOf<number>()
   })
 })
