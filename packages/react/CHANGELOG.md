@@ -1,5 +1,14 @@
 # @suspensive/react
 
+## 2.13.1
+
+### Patch Changes
+
+- [#1208](https://github.com/toss/suspensive/pull/1208) [`6bc19ae`](https://github.com/toss/suspensive/commit/6bc19ae44800416eee6873734607682c92ae89cf) Thanks [@ssi02014](https://github.com/ssi02014)! - refactor: seperate the usePrevious module
+
+- Updated dependencies []:
+  - @suspensive/utils@2.13.1
+
 ## 2.13.0
 
 ### Patch Changes

@@ -1,5 +1,12 @@
 # @suspensive/react-native
 
+## 0.0.7
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @suspensive/utils@2.13.1
+
 ## 0.0.6
 
 ### Patch Changes
