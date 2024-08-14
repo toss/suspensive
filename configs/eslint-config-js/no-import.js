@@ -34,9 +34,14 @@ module.exports = {
   },
   overrides: [
     {
-      files: ['*.spec.ts*', '*.test.ts*'],
+      files: ['*.spec.ts*', '*.test.ts*', '*.test-d.ts*'],
       plugins: ['@vitest', 'jest-dom'],
       extends: ['plugin:@vitest/legacy-recommended'],
+      settings: {
+        vitest: {
+          typecheck: true,
+        },
+      },
     },
   ],
 }

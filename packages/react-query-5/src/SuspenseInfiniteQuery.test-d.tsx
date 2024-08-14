@@ -5,7 +5,7 @@ import { describe, expectTypeOf, it } from 'vitest'
 import { SuspenseInfiniteQuery } from './SuspenseInfiniteQuery'
 
 describe('<SuspenseInfiniteQuery/>', () => {
-  it('type error', () => {
+  it('type check', () => {
     ;() => (
       <SuspenseInfiniteQuery
         queryKey={queryKey}
@@ -66,9 +66,6 @@ describe('<SuspenseInfiniteQuery/>', () => {
         {(query) => <>{query.data.pages.filter(({ text }) => text)}</>}
       </SuspenseInfiniteQuery>
     )
-  })
-
-  it('type check', () => {
     ;() => (
       <SuspenseInfiniteQuery
         queryKey={queryKey}

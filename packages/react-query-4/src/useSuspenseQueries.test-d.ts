@@ -5,7 +5,7 @@ import { useSuspenseQueries } from './useSuspenseQueries'
 import type { UseSuspenseQueryResult } from './useSuspenseQuery'
 
 describe('useSuspenseQueries', () => {
-  it('type error', () => {
+  it('type check', () => {
     useSuspenseQueries({
       queries: [
         {
@@ -45,9 +45,7 @@ describe('useSuspenseQueries', () => {
     useSuspenseQueries({})
     // @ts-expect-error if no items
     useSuspenseQueries()
-  })
 
-  it('type check', () => {
     const [query, selectedQuery, selectedQueryByQueryOptions] = useSuspenseQueries({
       queries: [
         { queryKey: [...queryKey, 5] as const, queryFn },

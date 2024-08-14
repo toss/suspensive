@@ -4,7 +4,7 @@ import { infiniteQueryOptions } from './infiniteQueryOptions'
 import { type UseSuspenseInfiniteQueryResult, useSuspenseInfiniteQuery } from './useSuspenseInfiniteQuery'
 
 describe('useSuspenseInfiniteQuery', () => {
-  it('type error', () => {
+  it('type check', () => {
     // @ts-expect-error no arg
     useSuspenseInfiniteQuery()
 
@@ -37,9 +37,7 @@ describe('useSuspenseInfiniteQuery', () => {
       queryFn,
       // @ts-expect-error no isPlaceholderData
     }).isPlaceholderData
-  })
 
-  it('type check', () => {
     const infiniteQuery = useSuspenseInfiniteQuery({ queryKey, queryFn })
     expectTypeOf(infiniteQuery).toEqualTypeOf<UseSuspenseInfiniteQueryResult<{ text: string }>>()
     expectTypeOf(infiniteQuery.data).toEqualTypeOf<InfiniteData<{ text: string }>>()
