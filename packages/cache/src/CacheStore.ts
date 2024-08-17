@@ -1,3 +1,4 @@
+import { Subscribable } from './models/Subscribable'
 import type { CacheKey, CacheOptions } from './types'
 import type { ExtractPartial } from './utility-types/ExtractPartial'
 import { hashCacheKey } from './utils'
@@ -8,8 +9,6 @@ const enum CacheStatus {
   Resolved = 'resolved',
   Rejected = 'rejected',
 }
-
-type Sync = (...args: unknown[]) => unknown
 
 export type AllStatusCached<TData, TCacheKey extends CacheKey = CacheKey> =
   | {
@@ -83,14 +82,13 @@ export type Cached<TData, TCacheKey extends CacheKey = CacheKey> =
 /**
  * @experimental This is experimental feature.
  */
-export class CacheStore {
+export class CacheStore extends Subscribable<() => void> {
   private cacheStore = new Map<ReturnType<typeof hashCacheKey>, Cached<unknown>>()
-  private syncsMap = new Map<ReturnType<typeof hashCacheKey>, Array<Sync>>()
 
   public reset = (options?: Pick<CacheOptions<unknown, CacheKey>, 'cacheKey'>) => {
     if (typeof options?.cacheKey === 'undefined' || options.cacheKey.length === 0) {
       this.cacheStore.clear()
-      this.syncSubscribers()
+      this.notify()
       return
     }
 
@@ -100,7 +98,7 @@ export class CacheStore {
       this.cacheStore.delete(hashedCacheKey)
     }
 
-    this.syncSubscribers(options.cacheKey)
+    this.notify()
   }
 
   public remove = (options: Pick<CacheOptions<unknown, CacheKey>, 'cacheKey'>) => {
@@ -193,28 +191,4 @@ export class CacheStore {
     this.cacheStore.get(hashCacheKey(options.cacheKey))?.state.data
   public getError = (options: Pick<CacheOptions<unknown, CacheKey>, 'cacheKey'>) =>
     this.cacheStore.get(hashCacheKey(options.cacheKey))?.state.error
-
-  public subscribe(options: Pick<CacheOptions<unknown, CacheKey>, 'cacheKey'>, syncSubscriber: Sync) {
-    const hashedCacheKey = hashCacheKey(options.cacheKey)
-    const syncs = this.syncsMap.get(hashedCacheKey)
-    this.syncsMap.set(hashedCacheKey, [...(syncs ?? []), syncSubscriber])
-
-    const unsubscribe = () => {
-      if (syncs) {
-        this.syncsMap.set(
-          hashedCacheKey,
-          syncs.filter((sync) => sync !== syncSubscriber)
-        )
-      }
-    }
-    return unsubscribe
-  }
-
-  private syncSubscribers = (cacheKey?: CacheKey) => {
-    const hashedCacheKey = cacheKey ? hashCacheKey(cacheKey) : undefined
-
-    return hashedCacheKey
-      ? this.syncsMap.get(hashedCacheKey)?.forEach((sync) => sync())
-      : this.syncsMap.forEach((syncs) => syncs.forEach((sync) => sync()))
-  }
 }
