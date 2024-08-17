@@ -11,12 +11,7 @@ All communications in this repository will be by English.
 
 [Search the existing issues](https://github.com/toss/suspensive/issues) before logging a new one.
 
-### 2. Have a question?
-
-The issue tracker is for **issues**, in other words, bugs and suggestions.
-If you have a _question_, please use [GitHub Discussions](https://github.com/toss/suspensive/discussions), your favorite search engine, or other resources.
-
-### 3. Found a bug?
+### 2. Found a bug?
 
 When logging a bug, please be sure to include the following:
 
@@ -24,7 +19,7 @@ When logging a bug, please be sure to include the following:
 - If at all possible, an _isolated_ way to reproduce the behavior
 - The behavior you expect to see, and the actual behavior
 
-### 4. Feature suggestion?
+### 3. Feature suggestion?
 
 We also accept suggestions in the [issue tracker](https://github.com/toss/suspensive/issues/new?assignees=&labels=&projects=&template=feature_request.md&title=%5BFeature%5D%3A).
 
