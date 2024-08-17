@@ -1,5 +1,11 @@
 # @suspensive/cache
 
+## 0.4.0
+
+### Minor Changes
+
+- [#1197](https://github.com/toss/suspensive/pull/1197) [`0bb493c`](https://github.com/toss/suspensive/commit/0bb493cd34300dc747abd6c138895de8d720160b) Thanks [@SEOKKAMONI](https://github.com/SEOKKAMONI)! - feat(cache): add `Subscribable`
+
 ## 0.3.8
 
 ### Patch Changes
