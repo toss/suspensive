@@ -101,10 +101,10 @@ describe('CacheStore', () => {
 
   describe('reset', () => {
     it('should delete all cached and notify to subscribers', async () => {
-      const mockSync1 = vitest.fn()
-      const mockSync2 = vitest.fn()
-      cacheStore.subscribe(successCache(1), mockSync1)
-      cacheStore.subscribe(successCache(2), mockSync2)
+      const mockListener1 = vitest.fn()
+      const mockListener2 = vitest.fn()
+      cacheStore.subscribe(mockListener1)
+      cacheStore.subscribe(mockListener2)
       try {
         cacheStore.suspend(successCache(1))
       } catch (promiseToSuspense) {
@@ -117,28 +117,28 @@ describe('CacheStore', () => {
       }
       expect(cacheStore.getData(successCache(1))).toBe(TEXT)
       expect(cacheStore.getData(successCache(2))).toBe(TEXT)
-      expect(mockSync1).not.toHaveBeenCalled()
-      expect(mockSync2).not.toHaveBeenCalled()
+      expect(mockListener1).not.toHaveBeenCalled()
+      expect(mockListener2).not.toHaveBeenCalled()
       cacheStore.reset()
       expect(cacheStore.getData(successCache(1))).toBeUndefined()
       expect(cacheStore.getData(successCache(2))).toBeUndefined()
-      expect(mockSync1).toHaveBeenCalledOnce()
-      expect(mockSync2).toHaveBeenCalledOnce()
+      expect(mockListener1).toHaveBeenCalledOnce()
+      expect(mockListener2).toHaveBeenCalledOnce()
     })
 
     it('should delete specific cached and notify to subscriber', async () => {
-      const mockSync = vitest.fn()
-      cacheStore.subscribe(successCache(1), mockSync)
+      const mockListener = vitest.fn()
+      cacheStore.subscribe(mockListener)
       try {
         cacheStore.suspend(successCache(1))
       } catch (promiseToSuspense) {
         await promiseToSuspense
       }
       expect(cacheStore.getData(successCache(1))).toBe(TEXT)
-      expect(mockSync).not.toHaveBeenCalled()
+      expect(mockListener).not.toHaveBeenCalled()
       cacheStore.reset(successCache(1))
       expect(cacheStore.getData(successCache(1))).toBeUndefined()
-      expect(mockSync).toHaveBeenCalledOnce()
+      expect(mockListener).toHaveBeenCalledOnce()
     })
   })
 

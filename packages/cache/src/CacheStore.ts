@@ -82,13 +82,13 @@ export type Cached<TData, TCacheKey extends CacheKey = CacheKey> =
 /**
  * @experimental This is experimental feature.
  */
-export class CacheStore extends Subscribable {
+export class CacheStore extends Subscribable<() => void> {
   private cacheStore = new Map<ReturnType<typeof hashCacheKey>, Cached<unknown>>()
 
   public reset = (options?: Pick<CacheOptions<unknown, CacheKey>, 'cacheKey'>) => {
     if (typeof options?.cacheKey === 'undefined' || options.cacheKey.length === 0) {
       this.cacheStore.clear()
-      this.syncSubscribers()
+      this.notify()
       return
     }
 
@@ -98,7 +98,7 @@ export class CacheStore extends Subscribable {
       this.cacheStore.delete(hashedCacheKey)
     }
 
-    this.syncSubscribers(options.cacheKey)
+    this.notify()
   }
 
   public remove = (options: Pick<CacheOptions<unknown, CacheKey>, 'cacheKey'>) => {
