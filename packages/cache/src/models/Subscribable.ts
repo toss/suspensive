@@ -1,22 +1,19 @@
 type Listener = (...args: any[]) => unknown
 
+type Unsubscribe = () => void
+type Subscribe<TListener extends Listener> = (listener: TListener) => Unsubscribe
+
 export class Subscribable<TListener extends Listener> {
   protected listeners = new Set<TListener>()
 
-  constructor() {
-    this.subscribe = this.subscribe.bind(this)
-  }
+  public subscribe: Subscribe<TListener> = (listener) => {
+    this.listeners.add(listener)
 
-  public subscribe(linstener: TListener) {
-    this.listeners.add(linstener)
-
-    const unsubscribe = () => {
-      this.listeners.delete(linstener)
+    const unsubscribe = (): void => {
+      this.listeners.delete(listener)
     }
     return unsubscribe
   }
 
-  protected notify = () => {
-    this.listeners.forEach((listener) => listener())
-  }
+  protected notify = (): void => this.listeners.forEach((listener) => listener())
 }
