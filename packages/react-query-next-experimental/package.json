@@ -1,0 +1,70 @@
+{
+  "name": "@suspensive/react-query-next-experimental",
+  "version": "0.0.0",
+  "description": "React Query Next Experimental for Streaming SSR",
+  "keywords": [
+    "suspensive",
+    "react-query-next-experimental"
+  ],
+  "homepage": "https://suspensive.org",
+  "bugs": "https://github.com/toss/suspensive/issues",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/toss/suspensive.git",
+    "directory": "packages/react-query-next-experimental"
+  },
+  "license": "MIT",
+  "author": "2-NOW <kj109888@gmail.com> & Jonghyeon Ko <jonghyeon@toss.im>",
+  "sideEffects": false,
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
+    },
+    "./package.json": "./package.json"
+  },
+  "main": "dist/index.cjs",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "ci:attw": "attw --pack",
+    "ci:eslint": "eslint \"**/*.{js,jsx,cjs,mjs,ts,tsx,cts,mts}\"",
+    "ci:publint": "publint --strict",
+    "ci:type": "tsc --noEmit",
+    "clean": "rimraf ./dist && rimraf ./coverage",
+    "dev": "tsup --watch",
+    "prepack": "pnpm build"
+  },
+  "dependencies": {
+    "@suspensive/react-query-next-experimental-4": "workspace:*",
+    "@suspensive/utils": "workspace:*"
+  },
+  "devDependencies": {
+    "@suspensive/eslint-config": "workspace:*",
+    "@suspensive/tsconfig": "workspace:*",
+    "@suspensive/tsup": "workspace:*",
+    "@types/react": "^18.3.3",
+    "next": "^14.2.5",
+    "react": "^18.3.1"
+  },
+  "peerDependencies": {
+    "@tanstack/react-query": "^4 || ^5",
+    "next": "^13 || ^14 || ^15",
+    "react": "^18"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
