@@ -21,7 +21,7 @@
     "changeset": "changeset",
     "changeset:publish": "pnpm prepack && changeset publish",
     "changeset:version": "changeset version && pnpm i --lockfile-only",
-    "ci:all": "pnpm ci:attw && pnpm ci:eslint && pnpm ci:publint && pnpm ci:sherif && pnpm ci:type && pnpm ci:test && pnpm ci:bench && pnpm build && pnpm ci:knip ",
+    "ci:all": "pnpm ci:attw && pnpm ci:eslint && pnpm ci:publint && pnpm ci:sherif && pnpm ci:type && pnpm ci:test && pnpm ci:knip && pnpm ci:bench && pnpm build",
     "ci:attw": "turbo run ci:attw",
     "ci:bench": "turbo run ci:bench",
     "ci:eslint": "turbo run ci:eslint",
