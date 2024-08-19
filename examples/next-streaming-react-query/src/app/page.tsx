@@ -1,31 +1,12 @@
 'use client'
 
 import { Suspense } from '@suspensive/react'
-import {
-  type DefaultError,
-  type QueryKey,
-  type UseSuspenseQueryOptions,
-  type UseSuspenseQueryResult,
-  useQueryClient,
-  useSuspenseQuery,
-} from '@tanstack/react-query'
+import { SuspenseQuery } from '@suspensive/react-query-5'
+import { useQueryClient } from '@tanstack/react-query'
 import Link from 'next/link'
-import type { ReactNode } from 'react'
 import { Text } from '~/app/components/Text'
 import { Text2 } from '~/app/components/Text2'
 import { query } from '~/query'
-
-export const SuspenseQuery = <
-  TQueryFnData = unknown,
-  TError = DefaultError,
-  TData = TQueryFnData,
-  TQueryKey extends QueryKey = QueryKey,
->({
-  children,
-  ...options
-}: UseSuspenseQueryOptions<TQueryFnData, TError, TData, TQueryKey> & {
-  children: (queryResult: UseSuspenseQueryResult<TData, TError>) => ReactNode
-}) => <>{children(useSuspenseQuery(options))}</>
 
 export default function Page() {
   const queryClient = useQueryClient()
