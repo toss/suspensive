@@ -26,9 +26,6 @@ importers:
       '@commitlint/config-conventional':
         specifier: ^19.2.2
         version: 19.2.2
-      '@suspensive/eslint-config-ts':
-        specifier: workspace:*
-        version: link:configs/eslint-config-ts
       '@testing-library/dom':
         specifier: ^10.4.0
         version: 10.4.0
