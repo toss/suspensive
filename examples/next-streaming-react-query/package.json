@@ -13,20 +13,21 @@
   "dependencies": {
     "@suspensive/react": "workspace:*",
     "@suspensive/react-query-5": "workspace:*",
-    "@tanstack/react-query": "^5.51.16",
-    "@tanstack/react-query-devtools": "^5.51.16",
-    "@tanstack/react-query-next-experimental": "^5.51.16",
-    "next": "^14.2.3",
+    "@tanstack/react-query": "^5.51.23",
+    "@tanstack/react-query-devtools": "^5.51.23",
+    "@tanstack/react-query-next-experimental": "^5.51.23",
+    "next": "^14.2.5",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "tailwindcss": "^3.4.4"
+    "react-dom": "^18.3.1"
   },
   "devDependencies": {
-    "@next/eslint-plugin-next": "^14.2.3",
+    "@next/eslint-plugin-next": "^14.2.5",
     "@suspensive/eslint-config": "workspace:*",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
-    "autoprefixer": "^10.4.19",
-    "postcss": "^8.4.38"
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.41",
+    "prettier-plugin-tailwindcss": "^0.6.6",
+    "tailwindcss": "^3.4.10"
   }
 }
