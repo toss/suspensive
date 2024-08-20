@@ -36,9 +36,9 @@ Key features: Atom, AtomValue, SetAtom, and more.
 
 ### @suspensive/cache [![npm version](https://img.shields.io/npm/v/@suspensive/cache?color=000&labelColor=000&logo=npm&label=)](https://www.npmjs.com/package/@suspensive/cache) [![npm](https://img.shields.io/npm/dm/@suspensive/cache?color=000&labelColor=000)](https://www.npmjs.com/package/@suspensive/cache) [![npm bundle size](https://img.shields.io/bundlephobia/minzip/@suspensive/cache?color=000&labelColor=000)](https://www.npmjs.com/package/@suspensive/cache)
 
-> This package provides caching solutions that can be used within React applications. It includes hooks like useCache and useCacheStore, as well as providers for managing and storing cache data efficiently.
+> This package provides caching solutions that can be used within React applications. It includes hooks like useRead and useCache, as well as providers for managing and storing cache data efficiently.
 
-Key features: Cache, useCache, CacheStore, useCacheStore, CacheStoreProvider, and more.
+Key features: Read, useRead, Cache, useCache, CacheProvider, and more.
 
 <br/>
 
