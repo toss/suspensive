@@ -2,11 +2,11 @@ import { ErrorBoundary, Suspense } from '@suspensive/react'
 import { ERROR_MESSAGE, FALLBACK, TEXT, sleep } from '@suspensive/utils'
 import { render, screen, waitFor } from '@testing-library/react'
 import ms from 'ms'
+import { Cache } from './Cache'
 import { cacheOptions } from './cacheOptions'
-import { CacheStore } from './CacheStore'
-import { CacheStoreProvider } from './CacheStoreProvider'
+import { CacheProvider } from './CacheProvider'
 import { useCache } from './useCache'
-import { useCacheStore } from './useCacheStore'
+import { useRead } from './useRead'
 
 const key = (id: string) => ['key', id] as const
 
@@ -21,39 +21,39 @@ const failureCache = () =>
     cacheFn: () => sleep(ms('0.1s')).then(() => Promise.reject(ERROR_MESSAGE)),
   })
 
-const CacheSuccess = () => {
-  const cached = useCache(successCache())
-  const cacheStore = useCacheStore()
+const ReadSuccess = () => {
+  const cached = useRead(successCache())
+  const cache = useCache()
 
   return (
     <>
       {cached.data}
-      <button onClick={() => cacheStore.reset(successCache())}>Try again</button>
+      <button onClick={() => cache.reset(successCache())}>Try again</button>
     </>
   )
 }
 
-const CacheFailure = () => {
-  const cached = useCache(failureCache())
+const ReadFailure = () => {
+  const cached = useRead(failureCache())
 
   return <>{cached.data}</>
 }
 
-describe('useCache', () => {
-  let cacheStore: CacheStore
+describe('useRead', () => {
+  let cache: Cache
 
   beforeEach(() => {
-    cacheStore = new CacheStore()
-    cacheStore.reset()
+    cache = new Cache()
+    cache.reset()
   })
 
   it('should return object containing data field with only success, and It will be cached', async () => {
     const { unmount } = render(
-      <CacheStoreProvider store={cacheStore}>
+      <CacheProvider cache={cache}>
         <Suspense fallback={FALLBACK}>
-          <CacheSuccess />
+          <ReadSuccess />
         </Suspense>
-      </CacheStoreProvider>
+      </CacheProvider>
     )
     expect(screen.queryByText(FALLBACK)).toBeInTheDocument()
     await waitFor(() => expect(screen.queryByText(TEXT)).toBeInTheDocument())
@@ -61,11 +61,11 @@ describe('useCache', () => {
     // success data cache test
     unmount()
     render(
-      <CacheStoreProvider store={cacheStore}>
+      <CacheProvider cache={cache}>
         <Suspense fallback={FALLBACK}>
-          <CacheSuccess />
+          <ReadSuccess />
         </Suspense>
-      </CacheStoreProvider>
+      </CacheProvider>
     )
     expect(screen.queryByText(FALLBACK)).not.toBeInTheDocument()
     expect(screen.queryByText(TEXT)).toBeInTheDocument()
@@ -73,13 +73,13 @@ describe('useCache', () => {
 
   it('should throw Error, and It will be cached', async () => {
     const { unmount } = render(
-      <CacheStoreProvider store={cacheStore}>
+      <CacheProvider cache={cache}>
         <ErrorBoundary fallback={(props) => <>{props.error}</>}>
           <Suspense fallback={FALLBACK}>
-            <CacheFailure />
+            <ReadFailure />
           </Suspense>
         </ErrorBoundary>
-      </CacheStoreProvider>
+      </CacheProvider>
     )
     expect(screen.queryByText(FALLBACK)).toBeInTheDocument()
     await waitFor(() => expect(screen.queryByText(ERROR_MESSAGE)).toBeInTheDocument())
@@ -87,13 +87,13 @@ describe('useCache', () => {
     // error cache test
     unmount()
     render(
-      <CacheStoreProvider store={cacheStore}>
+      <CacheProvider cache={cache}>
         <ErrorBoundary fallback={(props) => <>{props.error}</>}>
           <Suspense fallback={FALLBACK}>
-            <CacheFailure />
+            <ReadFailure />
           </Suspense>
         </ErrorBoundary>
-      </CacheStoreProvider>
+      </CacheProvider>
     )
     expect(screen.queryByText(FALLBACK)).not.toBeInTheDocument()
     expect(screen.queryByText(ERROR_MESSAGE)).toBeInTheDocument()
@@ -101,22 +101,22 @@ describe('useCache', () => {
 
   it('should return object containing reset method to reset cache by key', async () => {
     const { rerender } = render(
-      <CacheStoreProvider store={cacheStore}>
+      <CacheProvider cache={cache}>
         <Suspense fallback={FALLBACK}>
-          <CacheSuccess />
+          <ReadSuccess />
         </Suspense>
-      </CacheStoreProvider>
+      </CacheProvider>
     )
     expect(screen.queryByText(FALLBACK)).toBeInTheDocument()
     await waitFor(() => expect(screen.queryByText(TEXT)).toBeInTheDocument())
     const resetButton = await screen.findByRole('button', { name: 'Try again' })
     resetButton.click()
     rerender(
-      <CacheStoreProvider store={cacheStore}>
+      <CacheProvider cache={cache}>
         <Suspense fallback={FALLBACK}>
-          <CacheSuccess />
+          <ReadSuccess />
         </Suspense>
-      </CacheStoreProvider>
+      </CacheProvider>
     )
     expect(screen.queryByText(FALLBACK)).toBeInTheDocument()
     await waitFor(() => expect(screen.queryByText(TEXT)).toBeInTheDocument())

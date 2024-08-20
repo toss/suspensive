@@ -82,20 +82,20 @@ export type Cached<TData, TCacheKey extends CacheKey = CacheKey> =
 /**
  * @experimental This is experimental feature.
  */
-export class CacheStore extends Subscribable<() => void> {
-  private cacheStore = new Map<ReturnType<typeof hashCacheKey>, Cached<unknown>>()
+export class Cache extends Subscribable<() => void> {
+  private cache = new Map<ReturnType<typeof hashCacheKey>, Cached<unknown>>()
 
   public reset = (options?: Pick<CacheOptions<unknown, CacheKey>, 'cacheKey'>) => {
     if (typeof options?.cacheKey === 'undefined' || options.cacheKey.length === 0) {
-      this.cacheStore.clear()
+      this.cache.clear()
       this.notify()
       return
     }
 
     const hashedCacheKey = hashCacheKey(options.cacheKey)
 
-    if (this.cacheStore.has(hashedCacheKey)) {
-      this.cacheStore.delete(hashedCacheKey)
+    if (this.cache.has(hashedCacheKey)) {
+      this.cache.delete(hashedCacheKey)
     }
 
     this.notify()
@@ -104,14 +104,14 @@ export class CacheStore extends Subscribable<() => void> {
   public remove = (options: Pick<CacheOptions<unknown, CacheKey>, 'cacheKey'>) => {
     const hashedCacheKey = hashCacheKey(options.cacheKey)
 
-    if (this.cacheStore.has(hashedCacheKey)) {
-      this.cacheStore.delete(hashedCacheKey)
+    if (this.cache.has(hashedCacheKey)) {
+      this.cache.delete(hashedCacheKey)
     }
   }
 
   public clearError = (options?: Pick<CacheOptions<unknown, CacheKey>, 'cacheKey'>) => {
     if (options?.cacheKey === undefined || options.cacheKey.length === 0) {
-      this.cacheStore.forEach((cached, hashedCacheKey, cache) => {
+      this.cache.forEach((cached, hashedCacheKey, cache) => {
         cache.set(hashedCacheKey, {
           ...cached,
           status: CacheStatus.Idle,
@@ -127,9 +127,9 @@ export class CacheStore extends Subscribable<() => void> {
     }
 
     const hashedCacheKey = hashCacheKey(options.cacheKey)
-    const cached = this.cacheStore.get(hashedCacheKey)
+    const cached = this.cache.get(hashedCacheKey)
     if (cached) {
-      this.cacheStore.set(hashedCacheKey, {
+      this.cache.set(hashedCacheKey, {
         ...cached,
         status: CacheStatus.Idle,
         promiseToSuspend: undefined,
@@ -147,7 +147,7 @@ export class CacheStore extends Subscribable<() => void> {
     cacheFn,
   }: CacheOptions<TData, TCacheKey>): ResolvedCached<TData, TCacheKey> => {
     const hashedCacheKey = hashCacheKey(cacheKey)
-    const cached = this.cacheStore.get(hashedCacheKey)
+    const cached = this.cache.get(hashedCacheKey)
     if (cached && cached.status !== CacheStatus.Idle) {
       if (cached.status === CacheStatus.Rejected) {
         throw cached.state.error
@@ -182,13 +182,13 @@ export class CacheStore extends Subscribable<() => void> {
       ),
     }
 
-    this.cacheStore.set(hashedCacheKey, newCached)
+    this.cache.set(hashedCacheKey, newCached)
 
     throw newCached.promiseToSuspend
   }
 
   public getData = (options: Pick<CacheOptions<unknown, CacheKey>, 'cacheKey'>) =>
-    this.cacheStore.get(hashCacheKey(options.cacheKey))?.state.data
+    this.cache.get(hashCacheKey(options.cacheKey))?.state.data
   public getError = (options: Pick<CacheOptions<unknown, CacheKey>, 'cacheKey'>) =>
-    this.cacheStore.get(hashCacheKey(options.cacheKey))?.state.error
+    this.cache.get(hashCacheKey(options.cacheKey))?.state.error
 }
