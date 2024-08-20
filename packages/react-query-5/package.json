@@ -1,6 +1,6 @@
 {
   "name": "@suspensive/react-query-5",
-  "version": "2.13.1",
+  "version": "2.14.0",
   "description": "Useful helpers for @tanstack/react-query@5 with suspense",
   "keywords": [
     "suspensive",
@@ -62,7 +62,7 @@
     "react": "^18.3.1"
   },
   "peerDependencies": {
-    "@suspensive/react": "workspace:^2.13.1",
+    "@suspensive/react": "workspace:^2.14.0",
     "@tanstack/react-query": "^5",
     "react": "^18"
   },
