@@ -1,7 +1,7 @@
 import type { OmitKeyof, RequiredKeyof } from '@suspensive/utils'
 import type { InfiniteData, QueryKey, UseInfiniteQueryOptions } from '@tanstack/react-query'
 
-type SelectedInfiniteOptions<
+export type SelectedInfiniteOptions<
   TQueryFnData,
   TError = unknown,
   TData = InfiniteData<TQueryFnData>,
@@ -26,7 +26,7 @@ type SelectedInfiniteOptions<
   select: (data: InfiniteData<TQueryFnData>) => InfiniteData<TData>
 }
 
-type UnSelectedInfiniteOptions<
+export type UnSelectedInfiniteOptions<
   TQueryFnData,
   TError = unknown,
   TData = InfiniteData<TQueryFnData>,
