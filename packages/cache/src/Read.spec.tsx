@@ -3,8 +3,8 @@ import { TEXT } from '@suspensive/utils'
 import { render, screen } from '@testing-library/react'
 import { Cache } from './Cache'
 import { cacheOptions } from './cacheOptions'
-import { CacheStore } from './CacheStore'
-import { CacheStoreProvider } from './CacheStoreProvider'
+import { CacheProvider } from './CacheProvider'
+import { Read } from './Read'
 
 const successCache = (id: number) =>
   cacheOptions({
@@ -12,20 +12,20 @@ const successCache = (id: number) =>
     cacheFn: () => Promise.resolve(TEXT),
   })
 
-describe('<Cache />', () => {
-  let cacheStore: CacheStore
+describe('<Read />', () => {
+  let cache: Cache
 
   beforeEach(() => {
-    cacheStore = new CacheStore()
+    cache = new Cache()
   })
 
-  it('should render child component with data from useCache hook', async () => {
+  it('should render child component with data from useRead hook', async () => {
     render(
-      <CacheStoreProvider store={cacheStore}>
+      <CacheProvider cache={cache}>
         <Suspense fallback="Loading...">
-          <Cache {...successCache(1)}>{(cached) => <>{cached.data}</>}</Cache>
+          <Read {...successCache(1)}>{(cached) => <>{cached.data}</>}</Read>
         </Suspense>
-      </CacheStoreProvider>
+      </CacheProvider>
     )
 
     expect(await screen.findByText(TEXT)).toBeInTheDocument()

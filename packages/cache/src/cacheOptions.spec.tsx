@@ -3,45 +3,45 @@ import { render, screen } from '@testing-library/react'
 import { Suspense } from 'react'
 import { Cache } from './Cache'
 import { cacheOptions } from './cacheOptions'
-import { CacheStore } from './CacheStore'
-import { CacheStoreProvider } from './CacheStoreProvider'
-import { useCache } from './useCache'
+import { CacheProvider } from './CacheProvider'
+import { Read } from './Read'
+import { useRead } from './useRead'
 
 const key = (id: number) => ['key', id] as const
 
-const cache = () => cacheOptions({ cacheKey: key(1), cacheFn: () => Promise.resolve(TEXT) })
+const successCache = () => cacheOptions({ cacheKey: key(1), cacheFn: () => Promise.resolve(TEXT) })
 
 describe('cacheOptions', () => {
-  let cacheStore: CacheStore
+  let cache: Cache
 
   beforeEach(() => {
-    cacheStore = new CacheStore()
+    cache = new Cache()
   })
 
-  it('should be used with Cache', async () => {
+  it('should be used with Read', async () => {
     render(
-      <CacheStoreProvider store={cacheStore}>
+      <CacheProvider cache={cache}>
         <Suspense fallback={FALLBACK}>
-          <Cache {...cache()}>{(cached) => <>{cached.data}</>}</Cache>
+          <Read {...successCache()}>{(cached) => <>{cached.data}</>}</Read>
         </Suspense>
-      </CacheStoreProvider>
+      </CacheProvider>
     )
 
     expect(await screen.findByText(TEXT)).toBeInTheDocument()
   })
 
-  it('should be used with useCache', async () => {
+  it('should be used with useRead', async () => {
     const CacheComponent = () => {
-      const cached = useCache(cache())
+      const cached = useRead(successCache())
       return <>{cached.data}</>
     }
 
     render(
-      <CacheStoreProvider store={cacheStore}>
+      <CacheProvider cache={cache}>
         <Suspense fallback={FALLBACK}>
           <CacheComponent />
         </Suspense>
-      </CacheStoreProvider>
+      </CacheProvider>
     )
 
     expect(await screen.findByText(TEXT)).toBeInTheDocument()

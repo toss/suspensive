@@ -1,18 +1,14 @@
-import { useSyncExternalStore } from 'react'
-import type { ResolvedCached } from './CacheStore'
-import type { CacheKey, CacheOptions } from './types'
-import { useCacheStore } from './useCacheStore'
+import { useContext } from 'react'
+import type { Cache } from './Cache'
+import { CacheContext } from './contexts'
 
 /**
  * @experimental This is experimental feature.
  */
-export function useCache<TData, TCacheKey extends CacheKey>(
-  options: CacheOptions<TData, TCacheKey>
-): ResolvedCached<TData, TCacheKey>['state'] {
-  const cacheStore = useCacheStore()
-  return useSyncExternalStore<ResolvedCached<TData, TCacheKey>>(
-    cacheStore.subscribe,
-    () => cacheStore.suspend<TData, TCacheKey>(options),
-    () => cacheStore.suspend<TData, TCacheKey>(options)
-  ).state
+export function useCache(): Cache {
+  const cache = useContext(CacheContext)
+  if (cache == null) {
+    throw new Error('CacheProvider should be in parent')
+  }
+  return cache
 }

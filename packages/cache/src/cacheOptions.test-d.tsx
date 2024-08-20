@@ -1,38 +1,38 @@
 import { expectTypeOf } from 'vitest'
-import { Cache } from './Cache'
+import type { ResolvedCached } from './Cache'
 import { cacheOptions } from './cacheOptions'
-import type { ResolvedCached } from './CacheStore'
+import { Read } from './Read'
 import { dataTagSymbol } from './types'
-import { useCache } from './useCache'
+import { useRead } from './useRead'
 
 const key = (id: number) => ['key', id] as const
 
-const cache = () =>
+const successCache = () =>
   cacheOptions({
     cacheKey: key(1),
     cacheFn: () => Promise.resolve(5),
   })
 
 describe('cacheOptions', () => {
-  it('should be used with <Cache />', () => {
+  it('should be used with <Read />', () => {
     ;(() => (
-      <Cache {...cache()}>
+      <Read {...successCache()}>
         {(cached) => {
           expectTypeOf(cached).toEqualTypeOf<ResolvedCached<number>['state']>()
           expectTypeOf(cached.data).toEqualTypeOf<number>()
           return <></>
         }}
-      </Cache>
+      </Read>
     ))()
   })
 
-  it('should be used with useCache', () => {
-    const cached = useCache(cache())
+  it('should be used with useRead', () => {
+    const cached = useRead(successCache())
     expectTypeOf(cached).toEqualTypeOf<ResolvedCached<number>['state']>()
     expectTypeOf(cached.data).toEqualTypeOf<number>()
   })
 
   it('should add DataTag on cacheKey with ReturnType<typeof cacheFn>', () => {
-    expectTypeOf(cache().cacheKey[dataTagSymbol]).toEqualTypeOf<number>()
+    expectTypeOf(successCache().cacheKey[dataTagSymbol]).toEqualTypeOf<number>()
   })
 })

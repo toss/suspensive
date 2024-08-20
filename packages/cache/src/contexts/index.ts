@@ -1,1 +1,1 @@
-export { CacheStoreContext } from './CacheStoreContext'
+export { CacheContext } from './CacheContext'
