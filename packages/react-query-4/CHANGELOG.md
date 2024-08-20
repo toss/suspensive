@@ -1,5 +1,17 @@
 # @suspensive/react-query-4
 
+## 2.14.0
+
+### Minor Changes
+
+- [#1223](https://github.com/toss/suspensive/pull/1223) [`2221303`](https://github.com/toss/suspensive/commit/2221303321954e9644a741475cfeeeb0f47d0d59) Thanks [@berryp23](https://github.com/berryp23)! - feat(react-query-4): export UnselectedQueryOptions, SelectedQueryOptions
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @suspensive/utils@2.14.0
+  - @suspensive/react@2.14.0
+
 ## 2.13.1
 
 ### Patch Changes

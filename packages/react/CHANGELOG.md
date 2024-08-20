@@ -1,5 +1,12 @@
 # @suspensive/react
 
+## 2.14.0
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @suspensive/utils@2.14.0
+
 ## 2.13.1
 
 ### Patch Changes

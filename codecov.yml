@@ -48,6 +48,14 @@ component_management:
       name: '@suspensive/react-query-5'
       paths:
         - packages/react-query-5/**
+    - component_id: react-query-next-experimental
+      name: '@suspensive/react-query-next-experimental'
+      paths:
+        - packages/react-query-next-experimental/**
+    - component_id: react-query-next-experimental-4
+      name: '@suspensive/react-query-next-experimental-4'
+      paths:
+        - packages/react-query-next-experimental-4/**
     - component_id: jotai
       name: '@suspensive/jotai'
       paths:
