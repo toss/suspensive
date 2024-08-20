@@ -1,5 +1,11 @@
 # @suspensive/cache
 
+## 0.5.0
+
+### Minor Changes
+
+- [#1224](https://github.com/toss/suspensive/pull/1224) [`c077fc5`](https://github.com/toss/suspensive/commit/c077fc53ec1e380e238cc722eb1865b1812a2db8) Thanks [@SEOKKAMONI](https://github.com/SEOKKAMONI)! - fix(cache): rename the cache interface name
+
 ## 0.4.1
 
 ### Patch Changes
