@@ -1,5 +1,7 @@
 export { queryOptions } from './queryOptions'
+export type { SelectedQueryOptions, UnSelectedQueryOptions } from './queryOptions'
 export { infiniteQueryOptions } from './infiniteQueryOptions'
+export type { SelectedInfiniteOptions, UnSelectedInfiniteOptions } from './infiniteQueryOptions'
 export { useSuspenseQuery } from './useSuspenseQuery'
 export type { UseSuspenseQueryOptions, UseSuspenseQueryResult } from './useSuspenseQuery'
 export { useSuspenseQueries } from './useSuspenseQueries'

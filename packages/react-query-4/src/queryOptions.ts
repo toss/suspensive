@@ -1,7 +1,7 @@
 import type { OmitKeyof, RequiredKeyof } from '@suspensive/utils'
 import type { QueryKey, UseQueryOptions } from '@tanstack/react-query'
 
-type SelectedQueryOptions<
+export type SelectedQueryOptions<
   TQueryFnData = unknown,
   TError = unknown,
   TData = TQueryFnData,
@@ -28,7 +28,7 @@ type SelectedQueryOptions<
   select: (data: TQueryFnData) => TData
 }
 
-type UnSelectedQueryOptions<
+export type UnSelectedQueryOptions<
   TQueryFnData = unknown,
   TError = unknown,
   TData = TQueryFnData,
