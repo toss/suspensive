@@ -16,6 +16,7 @@
   "dependencies": {
     "@suspensive/cache": "workspace:*",
     "@suspensive/react": "workspace:*",
+    "@suspensive/react-dom": "workspace:*",
     "@suspensive/react-image": "workspace:*",
     "@suspensive/react-query": "workspace:*",
     "@tanstack/react-query": "4",

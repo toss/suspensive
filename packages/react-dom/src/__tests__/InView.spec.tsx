@@ -15,6 +15,7 @@ describe('<InView/>', () => {
     expect(callback).toHaveBeenLastCalledWith(true, expect.objectContaining({ isIntersecting: true }))
   })
 
+  // eslint-disable-next-line @vitest/expect-expect
   it('should render plain children', () => {
     render(<InView>inner</InView>)
     screen.getByText('inner')
@@ -43,6 +44,7 @@ describe('<InView/>', () => {
     expect(cb).not.toHaveBeenCalled()
   })
 
+  // eslint-disable-next-line @vitest/expect-expect
   it('should handle initialInView', () => {
     const cb = vi.fn()
     render(
@@ -53,6 +55,7 @@ describe('<InView/>', () => {
     screen.getByText('InView: true')
   })
 
+  // eslint-disable-next-line @vitest/expect-expect
   it('should unobserve old node', () => {
     const { rerender } = render(
       <InView>
@@ -75,6 +78,7 @@ describe('<InView/>', () => {
     mockAllIsIntersecting(true)
   })
 
+  // eslint-disable-next-line @vitest/expect-expect
   it('should ensure node exists before observing and unobserving', () => {
     const { unmount } = render(<InView>{() => null}</InView>)
     unmount()
@@ -149,7 +153,9 @@ describe('<InView/>', () => {
 
   it('should render with fallback', () => {
     const cb = vi.fn()
-    window.IntersectionObserver = undefined
+
+    ;(window as unknown as { IntersectionObserver: IntersectionObserver | undefined }).IntersectionObserver = undefined
+
     render(
       <InView fallbackInView={true} onChange={cb}>
         Inner
@@ -173,7 +179,7 @@ describe('<InView/>', () => {
 
   it('should render with global fallback', () => {
     const cb = vi.fn()
-    window.IntersectionObserver = undefined
+    ;(window as unknown as { IntersectionObserver: IntersectionObserver | undefined }).IntersectionObserver = undefined
     defaultFallbackInView(true)
     render(<InView onChange={cb}>Inner</InView>)
     expect(cb).toHaveBeenLastCalledWith(true, expect.objectContaining({ isIntersecting: true }))

@@ -2,65 +2,17 @@ import { Component, createElement } from 'react'
 import { observe } from './observe'
 import type { IntersectionObserverProps, PlainChildrenProps } from './types'
 
-type State = {
-  inView: boolean
-  entry?: IntersectionObserverEntry
-}
-
 function isPlainChildren(props: IntersectionObserverProps | PlainChildrenProps): props is PlainChildrenProps {
   return typeof props.children !== 'function'
 }
 
-/**
- ## Render props
- 
- To use the `<InView>` component, you pass it a function. It will be called
- whenever the state changes, with the new value of `inView`. In addition to the
- `inView` prop, children also receive a `ref` that should be set on the
- containing DOM element. This is the element that the IntersectionObserver will
- monitor.
- 
- If you need it, you can also access the
- [`IntersectionObserverEntry`](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserverEntry)
- on `entry`, giving you access to all the details about the current intersection
- state.
- 
- ```jsx
- import { InView } from 'react-intersection-observer';
- 
- const Component = () => (
- <InView>
- {({ inView, ref, entry }) => (
-      <div ref={ref}>
-        <h2>{`Header inside viewport ${inView}.`}</h2>
-      </div>
-    )}
- </InView>
- );
- 
- export default Component;
- ```
- 
- ## Plain children
- 
- You can pass any element to the `<InView />`, and it will handle creating the
- wrapping DOM element. Add a handler to the `onChange` method, and control the
- state in your own component. Any extra props you add to `<InView>` will be
- passed to the HTML element, allowing you set the `className`, `style`, etc.
- 
- ```jsx
- import { InView } from 'react-intersection-observer';
- 
- const Component = () => (
- <InView as="div" onChange={(inView, entry) => console.log('Inview:', inView)}>
- <h2>Plain children are always rendered. Use onChange to monitor state.</h2>
- </InView>
- );
- 
- export default Component;
- ```
- */
-export class InView extends Component<IntersectionObserverProps | PlainChildrenProps, State> {
+export class InView extends Component<
+  IntersectionObserverProps | PlainChildrenProps,
+  {
+    inView: boolean
+    entry?: IntersectionObserverEntry
+  }
+> {
   node: Element | null = null
   _unobserveCb: (() => void) | null = null
 
@@ -161,15 +113,25 @@ export class InView extends Component<IntersectionObserverProps | PlainChildrenP
 
     const {
       as,
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       triggerOnce,
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       threshold,
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       root,
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       rootMargin,
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       onChange,
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       skip,
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       trackVisibility,
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       delay,
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       initialInView,
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       fallbackInView,
       ...props
     } = this.props as PlainChildrenProps

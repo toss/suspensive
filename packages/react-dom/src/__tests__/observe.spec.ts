@@ -1,5 +1,4 @@
-import { observe } from '..'
-import { optionsToId } from '../observe'
+import { observe, optionsToId } from '../observe'
 import { intersectionMockInstance, mockIsIntersecting } from './test-utils'
 
 test('should be able to use observe', () => {

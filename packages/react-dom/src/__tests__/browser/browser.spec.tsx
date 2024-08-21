@@ -1,5 +1,5 @@
 import { cleanup, render, screen } from '@testing-library/react/pure'
-import type { IntersectionOptions } from '../..'
+import type { IntersectionOptions } from '../../types'
 import { useInView } from '../../useInView'
 
 afterEach(() => {

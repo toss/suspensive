@@ -5,7 +5,6 @@ export type ObserverInstanceCallback = (inView: boolean, entry: IntersectionObse
 interface RenderProps {
   inView: boolean
   entry: IntersectionObserverEntry | undefined
-  // biome-ignore lint/suspicious/noExplicitAny: Ref could be anything
   ref: React.RefObject<any> | ((node?: Element | null) => void)
 }
 

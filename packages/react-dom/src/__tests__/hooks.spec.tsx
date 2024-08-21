@@ -1,6 +1,7 @@
 import { render, screen } from '@testing-library/react'
 import React, { useCallback } from 'react'
-import { type IntersectionOptions, defaultFallbackInView } from '../index'
+import { defaultFallbackInView } from '../observe'
+import type { IntersectionOptions } from '../types'
 import { useInView } from '../useInView'
 import { intersectionMockInstance, mockAllIsIntersecting, mockIsIntersecting } from './test-utils'
 
@@ -52,6 +53,7 @@ it('should create a lazy hook', () => {
   expect(instance.observe).toHaveBeenCalledWith(wrapper)
 })
 
+// eslint-disable-next-line @vitest/expect-expect
 it('should create a hook inView', () => {
   const { getByText } = render(<HookComponent />)
   mockAllIsIntersecting(true)
@@ -59,6 +61,7 @@ it('should create a hook inView', () => {
   getByText('true')
 })
 
+// eslint-disable-next-line @vitest/expect-expect
 it('should mock thresholds', () => {
   render(<HookComponent options={{ threshold: [0.5, 1] }} />)
   mockAllIsIntersecting(0.2)
@@ -69,6 +72,7 @@ it('should mock thresholds', () => {
   screen.getByText('true')
 })
 
+// eslint-disable-next-line @vitest/expect-expect
 it('should create a hook with initialInView', () => {
   const { getByText } = render(<HookComponent options={{ initialInView: true }} />)
   getByText('true')
@@ -76,6 +80,7 @@ it('should create a hook with initialInView', () => {
   getByText('false')
 })
 
+// eslint-disable-next-line @vitest/expect-expect
 it('should trigger a hook leaving view', () => {
   const { getByText } = render(<HookComponent />)
   mockAllIsIntersecting(true)
@@ -83,6 +88,7 @@ it('should trigger a hook leaving view', () => {
   getByText('false')
 })
 
+// eslint-disable-next-line @vitest/expect-expect
 it('should respect trigger once', () => {
   const { getByText } = render(<HookComponent options={{ triggerOnce: true }} />)
   mockAllIsIntersecting(true)
@@ -108,6 +114,7 @@ it('should trigger onChange', () => {
   )
 })
 
+// eslint-disable-next-line @vitest/expect-expect
 it('should respect skip', () => {
   const { getByText, rerender } = render(<HookComponent options={{ skip: true }} />)
   mockAllIsIntersecting(false)
@@ -118,6 +125,7 @@ it('should respect skip', () => {
   getByText('true')
 })
 
+// eslint-disable-next-line @vitest/expect-expect
 it('should not reset current state if changing skip', () => {
   const { getByText, rerender } = render(<HookComponent options={{ skip: false }} />)
   mockAllIsIntersecting(true)
@@ -133,6 +141,7 @@ it('should unmount the hook', () => {
   expect(instance.unobserve).toHaveBeenCalledWith(wrapper)
 })
 
+// eslint-disable-next-line @vitest/expect-expect
 it('inView should be false when component is unmounted', () => {
   const { rerender, getByText } = render(<HookComponent />)
   mockAllIsIntersecting(true)
@@ -142,11 +151,13 @@ it('inView should be false when component is unmounted', () => {
   getByText('false')
 })
 
+// eslint-disable-next-line @vitest/expect-expect
 it('should handle trackVisibility', () => {
   render(<HookComponent options={{ trackVisibility: true, delay: 100 }} />)
   mockAllIsIntersecting(true)
 })
 
+// eslint-disable-next-line @vitest/expect-expect
 it('should handle trackVisibility when unsupported', () => {
   render(<HookComponent options={{ trackVisibility: true, delay: 100 }} />)
 })
@@ -260,6 +271,7 @@ it('should handle multiple hooks on the same element', () => {
   expect(getByTestId('item-3').getAttribute('data-inview')).toBe('true')
 })
 
+// eslint-disable-next-line @vitest/expect-expect
 it('should handle thresholds missing on observer instance', () => {
   render(<HookComponent options={{ threshold: [0.1, 1] }} />)
   const wrapper = screen.getByTestId('wrapper')
@@ -270,6 +282,7 @@ it('should handle thresholds missing on observer instance', () => {
   screen.getByText('true')
 })
 
+// eslint-disable-next-line @vitest/expect-expect
 it('should handle thresholds missing on observer instance with no threshold set', () => {
   render(<HookComponent />)
   const wrapper = screen.getByTestId('wrapper')
@@ -289,6 +302,7 @@ const HookComponentWithEntry = ({ options, unmount }: { options?: IntersectionOp
   )
 }
 
+// eslint-disable-next-line @vitest/expect-expect
 it('should set intersection ratio as the largest threshold smaller than trigger', () => {
   render(<HookComponentWithEntry options={{ threshold: [0, 0.25, 0.5, 0.75, 1] }} />)
   const wrapper = screen.getByTestId('wrapper')
@@ -298,7 +312,7 @@ it('should set intersection ratio as the largest threshold smaller than trigger'
 })
 
 it('should handle fallback if unsupported', () => {
-  window.IntersectionObserver = undefined
+  ;(window as unknown as { IntersectionObserver: IntersectionObserver | undefined }).IntersectionObserver = undefined
   const { rerender } = render(<HookComponent options={{ fallbackInView: true }} />)
   screen.getByText('true')
 
@@ -313,7 +327,7 @@ it('should handle fallback if unsupported', () => {
 })
 
 it('should handle defaultFallbackInView if unsupported', () => {
-  window.IntersectionObserver = undefined
+  ;(window as unknown as { IntersectionObserver: IntersectionObserver | undefined }).IntersectionObserver = undefined
   defaultFallbackInView(true)
   const { rerender } = render(<HookComponent key="true" />)
   screen.getByText('true')

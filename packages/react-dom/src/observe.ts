@@ -52,7 +52,12 @@ export function optionsToId(options: IntersectionObserverInit) {
     .toString()
 }
 
-function createObserver(options: IntersectionObserverInit) {
+function createObserver(
+  options: IntersectionObserverInit & {
+    trackVisibility?: boolean
+    delay?: number
+  }
+) {
   // Create a unique ID for this observer instance, based on the root, root margin and threshold.
   const id = optionsToId(options)
   let instance = observerMap.get(id)
@@ -60,10 +65,9 @@ function createObserver(options: IntersectionObserverInit) {
   if (!instance) {
     // Create a map of elements this observer is going to observe. Each element has a list of callbacks that should be triggered, once it comes into view.
     const elements = new Map<Element, Array<ObserverInstanceCallback>>()
-    // biome-ignore lint/style/useConst: It's fine to use let here, as we are going to assign it later
-    const thresholds: number[] | readonly number[] = []
+    let thresholds: number[] | readonly number[] = []
 
-    const observer = new IntersectionObserver((entries) => {
+    const observer = new IntersectionObserver((entries: Array<IntersectionObserverEntry & { isVisible?: boolean }>) => {
       entries.forEach((entry) => {
         // While it would be nice if you could just look at isIntersecting to determine if the component is inside the viewport, browsers can't agree on how to use it.
         // -Firefox ignores `threshold` when considering `isIntersecting`, so it will never be false again if `threshold` is > 0
@@ -106,7 +110,10 @@ function createObserver(options: IntersectionObserverInit) {
 export function observe(
   element: Element,
   callback: ObserverInstanceCallback,
-  options: IntersectionObserverInit = {},
+  options: IntersectionObserverInit & {
+    trackVisibility?: boolean
+    delay?: number
+  } = {},
   fallbackInView = unsupportedValue
 ) {
   if (typeof window.IntersectionObserver === 'undefined' && fallbackInView !== undefined) {
