@@ -42,7 +42,7 @@ function getRootId(root: IntersectionObserverInit['root']) {
  * Ensures we can reuse the same observer when observing elements with the same options.
  * @param options
  */
-export function optionsToId(options: IntersectionObserverInit) {
+export function optionsToId(options: IntersectionObserverInit & { trackVisibility?: boolean; delay?: number }) {
   return Object.keys(options)
     .sort()
     .filter((key) => options[key as keyof IntersectionObserverInit] !== undefined)

@@ -13,24 +13,9 @@ type Item = {
   created: number
 }
 
-let isMocking = false
-
 const observers = new Map<IntersectionObserver, Item>()
 
-// If we are running in a valid testing environment, we can mock the IntersectionObserver.
-if (typeof beforeAll !== 'undefined' && typeof afterEach !== 'undefined') {
-  beforeAll(() => {
-    // Use the exposed mock function. Currently, only supports Jest (`jest.fn`) and Vitest with globals (`vi.fn`).
-    if (typeof jest !== 'undefined') setupIntersectionMocking(jest.fn)
-    else if (typeof vi !== 'undefined') {
-      setupIntersectionMocking(vi.fn)
-    }
-  })
-
-  afterEach(() => {
-    resetIntersectionMocking()
-  })
-}
+const isMocking = false
 
 function warnOnMissingSetup() {
   if (isMocking) return
@@ -49,57 +34,6 @@ afterEach(() => {
   resetIntersectionMocking();
 });`
   )
-}
-
-/**
- * Create a custom IntersectionObserver mock, allowing us to intercept the `observe` and `unobserve` calls.
- * We keep track of the elements being observed, so when `mockAllIsIntersecting` is triggered it will
- * know which elements to trigger the event on.
- * @param mockFn The mock function to use. Defaults to `vi.fn`.
- */
-export function setupIntersectionMocking(mockFn: typeof vi.fn) {
-  global.IntersectionObserver = mockFn((cb, options = {}) => {
-    const item = {
-      callback: cb,
-      elements: new Set<Element>(),
-      created: Date.now(),
-    }
-    const instance: IntersectionObserver = {
-      thresholds: Array.isArray(options.threshold) ? options.threshold : [options.threshold ?? 0],
-      root: options.root ?? null,
-      rootMargin: options.rootMargin ?? '',
-      observe: mockFn((element: Element) => {
-        item.elements.add(element)
-      }),
-      unobserve: mockFn((element: Element) => {
-        item.elements.delete(element)
-      }),
-      disconnect: mockFn(() => {
-        observers.delete(instance)
-      }),
-      takeRecords: mockFn(),
-    }
-
-    observers.set(instance, item)
-
-    return instance
-  })
-
-  isMocking = true
-}
-
-/**
- * Reset the IntersectionObserver mock to its initial state, and clear all the elements being observed.
- */
-export function resetIntersectionMocking() {
-  if (
-    global.IntersectionObserver &&
-    'mockClear' in global.IntersectionObserver &&
-    typeof global.IntersectionObserver.mockClear === 'function'
-  ) {
-    global.IntersectionObserver.mockClear()
-  }
-  observers.clear()
 }
 
 function triggerIntersection(
@@ -194,4 +128,8 @@ export function intersectionMockInstance(element: Element): IntersectionObserver
   }
 
   throw new Error('Failed to find IntersectionObserver for element. Is it being observed?')
+}
+
+export type Mutable<TObject> = {
+  -readonly [TKey in keyof TObject]: TObject[TKey]
 }

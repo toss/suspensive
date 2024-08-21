@@ -1,9 +1,14 @@
 import { render, screen } from '@testing-library/react'
 import React, { useCallback } from 'react'
-import { defaultFallbackInView } from '../observe'
-import type { IntersectionOptions } from '../types'
-import { useInView } from '../useInView'
-import { intersectionMockInstance, mockAllIsIntersecting, mockIsIntersecting } from './test-utils'
+import {
+  type Mutable,
+  intersectionMockInstance,
+  mockAllIsIntersecting,
+  mockIsIntersecting,
+} from './__tests__/test-utils'
+import { defaultFallbackInView } from './observe'
+import type { IntersectionOptions } from './types'
+import { useInView } from './useInView'
 
 const HookComponent = ({ options, unmount }: { options?: IntersectionOptions; unmount?: boolean }) => {
   const [ref, inView] = useInView(options)
@@ -276,7 +281,7 @@ it('should handle thresholds missing on observer instance', () => {
   render(<HookComponent options={{ threshold: [0.1, 1] }} />)
   const wrapper = screen.getByTestId('wrapper')
   const instance = intersectionMockInstance(wrapper)
-  instance.thresholds = undefined
+  ;(instance as unknown as Partial<Mutable<IntersectionObserver>>).thresholds = undefined
   mockAllIsIntersecting(true)
 
   screen.getByText('true')
@@ -287,7 +292,7 @@ it('should handle thresholds missing on observer instance with no threshold set'
   render(<HookComponent />)
   const wrapper = screen.getByTestId('wrapper')
   const instance = intersectionMockInstance(wrapper)
-  instance.thresholds = undefined
+  ;(instance as unknown as Partial<Mutable<IntersectionObserver>>).thresholds = undefined
   mockAllIsIntersecting(true)
 
   screen.getByText('true')
@@ -322,7 +327,7 @@ it('should handle fallback if unsupported', () => {
   expect(() => {
     vi.spyOn(console, 'error').mockImplementation(() => {})
     rerender(<HookComponent options={{ fallbackInView: undefined }} />)
-    console.error.mockRestore()
+    vi.restoreAllMocks()
   }).toThrowErrorMatchingInlineSnapshot(`[TypeError: IntersectionObserver is not a constructor]`)
 })
 
@@ -340,6 +345,6 @@ it('should handle defaultFallbackInView if unsupported', () => {
   expect(() => {
     vi.spyOn(console, 'error').mockImplementation(() => {})
     rerender(<HookComponent key="undefined" />)
-    console.error.mockRestore()
+    vi.restoreAllMocks()
   }).toThrowErrorMatchingInlineSnapshot(`[TypeError: IntersectionObserver is not a constructor]`)
 })
