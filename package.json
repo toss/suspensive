@@ -16,7 +16,7 @@
   "packageManager": "pnpm@9.7.1",
   "type": "module",
   "scripts": {
-    "blc:suspensive.org": "pnpm blc https://suspensive.org --ro",
+    "blc:suspensive.org": "pnpm blc https://suspensive.org --ro --exclude='https://x.com/*' --exclude='https://codesandbox.io/api/v1/sandboxes/define?undefined&environment=create-react-app'",
     "build": "turbo run build",
     "changeset": "changeset",
     "changeset:publish": "pnpm prepack && changeset publish",
