@@ -21,30 +21,30 @@
     "start": "next start -p 4000"
   },
   "dependencies": {
-    "@codesandbox/sandpack-react": "^2.14.4",
-    "@codesandbox/sandpack-themes": "^2.0.21",
+    "@codesandbox/sandpack-react": "catalog:",
+    "@codesandbox/sandpack-themes": "catalog:",
     "@suspensive/react": "workspace:*",
     "@suspensive/react-query-4": "workspace:*",
-    "@tanstack/react-query": "4",
-    "@tanstack/react-query-devtools": "4",
+    "@tanstack/react-query": "^4.36.1",
+    "@tanstack/react-query-devtools": "^4.36.1",
     "d3": "^7.9.0",
-    "next": "^14.2.5",
-    "nextra": "^2.13.4",
-    "nextra-theme-docs": "^2.13.4",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "remark-sandpack": "^0.0.3",
-    "sharp": "^0.33.4"
+    "next": "catalog:",
+    "nextra": "catalog:",
+    "nextra-theme-docs": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:",
+    "remark-sandpack": "catalog:",
+    "sharp": "catalog:"
   },
   "devDependencies": {
-    "@next/eslint-plugin-next": "^14.2.5",
+    "@next/eslint-plugin-next": "catalog:",
     "@suspensive/eslint-config": "workspace:*",
     "@types/d3": "^7.4.3",
-    "@types/react": "^18.3.3",
-    "@types/react-dom": "^18.3.0",
-    "autoprefixer": "^10.4.20",
-    "postcss": "^8.4.41",
-    "prettier-plugin-tailwindcss": "^0.6.6",
-    "tailwindcss": "^3.4.10"
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "autoprefixer": "catalog:",
+    "postcss": "catalog:",
+    "prettier-plugin-tailwindcss": "catalog:",
+    "tailwindcss": "catalog:"
   }
 }
