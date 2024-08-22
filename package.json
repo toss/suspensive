@@ -27,7 +27,7 @@
     "ci:eslint": "turbo run ci:eslint",
     "ci:knip": "pnpm prepack && pnpm knip",
     "ci:publint": "turbo run ci:publint",
-    "ci:sherif": "sherif --ignore-package \"./examples/*\" --ignore-package \"./websites/*\" --ignore-package \"./docs/*\" --ignore-dependency \"@tanstack/react-query\" ",
+    "ci:sherif": "sherif --ignore-package \"./examples/*\" --ignore-package \"./docs/*\" --ignore-dependency \"@tanstack/react-query\" ",
     "ci:test": "turbo run ci:test",
     "ci:type": "turbo run ci:type",
     "clean": "turbo run clean",
