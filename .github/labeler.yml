@@ -24,8 +24,8 @@
   - "packages/react-image/**/*"
 "suspensive.org":
   - "docs/suspensive.org/**/*"
-"visualization":
-  - "websites/visualization/**/*"
+"examples":
+  - "examples/**/*"
 "eslint":
   - "configs/eslint/**/*"
   - "**/.eslint*"
