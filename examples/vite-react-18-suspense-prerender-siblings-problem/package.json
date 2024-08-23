@@ -1,5 +1,5 @@
 {
-  "name": "@suspensive/vite-react-18-suspense-waterfall",
+  "name": "@suspensive/vite-react-18-suspense-prerender-siblings-problem",
   "version": "0.0.0",
   "private": true,
   "type": "module",

@@ -544,7 +544,7 @@ importers:
         specifier: 'catalog:'
         version: 3.4.10(ts-node@10.9.2(@types/node@20.14.13)(typescript@5.5.4))
 
-  examples/vite-react-18-suspense-waterfall:
+  examples/vite-react-18-suspense-prerender-siblings-problem:
     dependencies:
       '@tanstack/react-query':
         specifier: ^5.52.1
