@@ -4,13 +4,14 @@
   "description": "Useful helpers for jotai with suspense",
   "keywords": [
     "suspensive",
+    "react",
     "jotai"
   ],
   "homepage": "https://suspensive.org",
   "bugs": "https://github.com/toss/suspensive/issues",
   "repository": {
     "type": "git",
-    "url": "https://github.com/toss/suspensive.git",
+    "url": "git+https://github.com/toss/suspensive.git",
     "directory": "packages/jotai"
   },
   "license": "MIT",

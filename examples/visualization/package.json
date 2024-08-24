@@ -2,8 +2,6 @@
   "name": "@suspensive/visualization",
   "version": "0.0.0",
   "private": true,
-  "homepage": "https://visualization.suspensive.org",
-  "bugs": "https://github.com/toss/suspensive/issues",
   "author": "Jonghyeon Ko <jonghyeon@toss.im>",
   "scripts": {
     "build": "next build",

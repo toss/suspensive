@@ -1,7 +1,8 @@
 {
   "name": "@suspensive/react-native-playground",
-  "version": "1.0.2",
+  "version": "0.0.0",
   "private": true,
+  "author": "Jonghyeon Ko <jonghyeon@toss.im>",
   "main": "index.js",
   "scripts": {
     "android": "expo start --android",
