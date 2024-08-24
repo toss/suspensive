@@ -11,7 +11,7 @@
   "bugs": "https://github.com/toss/suspensive/issues",
   "repository": {
     "type": "git",
-    "url": "https://github.com/toss/suspensive.git",
+    "url": "git+https://github.com/toss/suspensive.git",
     "directory": "packages/react-query-5"
   },
   "license": "MIT",

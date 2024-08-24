@@ -1,0 +1,27 @@
+{
+  "name": "@suspensive/vite-react-18-suspense-prerender-siblings-problem",
+  "version": "0.0.0",
+  "private": true,
+  "author": "Jonghyeon Ko <jonghyeon@toss.im>",
+  "type": "module",
+  "scripts": {
+    "build": "tsc -b && vite build",
+    "ci:eslint": "eslint .",
+    "dev": "vite",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@tanstack/react-query": "^5.52.1",
+    "@tanstack/react-query-devtools": "^5.52.1",
+    "react": "catalog:",
+    "react-dom": "catalog:"
+  },
+  "devDependencies": {
+    "@suspensive/eslint-config": "workspace:*",
+    "@suspensive/tsconfig": "workspace:*",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "@vitejs/plugin-react": "^4.3.1",
+    "globals": "^15.9.0"
+  }
+}

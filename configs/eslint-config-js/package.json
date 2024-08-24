@@ -2,6 +2,7 @@
   "name": "@suspensive/eslint-config-js",
   "version": "0.0.0",
   "private": true,
+  "author": "Jonghyeon Ko <jonghyeon@toss.im>",
   "main": "index.js",
   "type": "module",
   "files": [

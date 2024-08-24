@@ -4,13 +4,14 @@
   "description": "Useful interfaces for React Suspense",
   "keywords": [
     "suspensive",
-    "react"
+    "react",
+    "utils"
   ],
   "homepage": "https://suspensive.org",
   "bugs": "https://github.com/toss/suspensive/issues",
   "repository": {
     "type": "git",
-    "url": "https://github.com/toss/suspensive.git",
+    "url": "git+https://github.com/toss/suspensive.git",
     "directory": "packages/utils"
   },
   "license": "MIT",

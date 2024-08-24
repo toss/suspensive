@@ -10,9 +10,10 @@
   "bugs": "https://github.com/toss/suspensive/issues",
   "repository": {
     "type": "git",
-    "url": "https://github.com/toss/suspensive.git"
+    "url": "git+https://github.com/toss/suspensive.git"
   },
   "license": "MIT",
+  "author": "Jonghyeon Ko <jonghyeon@toss.im>",
   "packageManager": "pnpm@9.7.1",
   "type": "module",
   "scripts": {

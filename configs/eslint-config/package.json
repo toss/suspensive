@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "type": "module",
+  "author": "Jonghyeon Ko <jonghyeon@toss.im>",
   "files": [
     "react-js.js",
     "react-ts.js",

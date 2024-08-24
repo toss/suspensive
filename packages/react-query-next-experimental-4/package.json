@@ -4,13 +4,14 @@
   "description": "React Query Next Experimental for Streaming SSR",
   "keywords": [
     "suspensive",
+    "react-query",
     "react-query-next-experimental"
   ],
   "homepage": "https://suspensive.org",
   "bugs": "https://github.com/toss/suspensive/issues",
   "repository": {
     "type": "git",
-    "url": "https://github.com/toss/suspensive.git",
+    "url": "git+https://github.com/toss/suspensive.git",
     "directory": "packages/react-query-next-experimental-4"
   },
   "license": "MIT",

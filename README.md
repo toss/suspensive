@@ -48,14 +48,16 @@ Key features: Read, useRead, Cache, useCache, CacheProvider, and more.
 
 <br/>
 
-## Contributing
+## Contributors
 
 Read our [Contributing Guide](./CONTRIBUTING.md) to familiarize yourself with Suspensive's development process, how to suggest bug fixes and improvements, and the steps for building and testing your changes.
 
-### Contributors
+<a href="https://github.com/toss/suspensive/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=toss/suspensive" />
+</a>
 
-[![contributors](https://contrib.rocks/image?repo=toss/suspensive)](https://github.com/toss/suspensive/graphs/contributors)
-
+<br/>
+<br/>
 <br/>
 
 <a title="Toss" href="https://toss.im">
