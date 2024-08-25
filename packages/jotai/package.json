@@ -56,9 +56,9 @@
     "@suspensive/eslint-config": "workspace:*",
     "@suspensive/tsconfig": "workspace:*",
     "@suspensive/tsup": "workspace:*",
-    "@types/react": "catalog:",
+    "@types/react": "catalog:react18",
     "jotai": "^2.8.4",
-    "react": "catalog:"
+    "react": "catalog:react18"
   },
   "peerDependencies": {
     "jotai": "^2",

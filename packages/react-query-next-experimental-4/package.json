@@ -57,10 +57,10 @@
     "@suspensive/eslint-config": "workspace:*",
     "@suspensive/tsconfig": "workspace:*",
     "@suspensive/tsup": "workspace:*",
-    "@tanstack/react-query": "^4.36.1",
-    "@types/react": "catalog:",
+    "@tanstack/react-query": "catalog:react-query4",
+    "@types/react": "catalog:react18",
     "next": "catalog:",
-    "react": "catalog:"
+    "react": "catalog:react18"
   },
   "peerDependencies": {
     "@tanstack/react-query": "^4",
