@@ -1,7 +1,7 @@
 import { fireEvent, render, screen } from '@testing-library/react'
-import { InView } from '../InView'
-import { defaultFallbackInView } from '../observe'
-import { intersectionMockInstance, mockAllIsIntersecting } from './test-utils'
+import { intersectionMockInstance, mockAllIsIntersecting } from './__tests__/test-utils'
+import { InView } from './InView'
+import { defaultFallbackInView } from './observe'
 
 describe('<InView/>', () => {
   it('should render <InView /> intersecting', () => {

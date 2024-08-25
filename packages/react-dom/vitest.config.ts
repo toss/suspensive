@@ -6,12 +6,11 @@ export default defineConfig({
   },
   test: {
     environment: 'jsdom',
+    dir: './src',
     globals: true,
-
+    setupFiles: './vitest.setup.ts',
     coverage: {
       provider: 'istanbul',
-      include: ['src/**'],
-      exclude: ['**/__tests__', '**/*.test.{ts,tsx}', '**/*.{story,stories}.tsx'],
     },
   },
 })

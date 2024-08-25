@@ -1,9 +1,14 @@
 import { render, screen } from '@testing-library/react'
 import React, { useCallback } from 'react'
-import { defaultFallbackInView } from '../observe'
-import type { IntersectionOptions } from '../types'
-import { useInView } from '../useInView'
-import { type Mutable, intersectionMockInstance, mockAllIsIntersecting, mockIsIntersecting } from './test-utils'
+import {
+  type Mutable,
+  intersectionMockInstance,
+  mockAllIsIntersecting,
+  mockIsIntersecting,
+} from './__tests__/test-utils'
+import { defaultFallbackInView } from './observe'
+import type { IntersectionOptions } from './types'
+import { useInView } from './useInView'
 
 const HookComponent = ({ options, unmount }: { options?: IntersectionOptions; unmount?: boolean }) => {
   const [ref, inView] = useInView(options)

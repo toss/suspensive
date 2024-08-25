@@ -60,7 +60,7 @@ afterEach(() => {
  * know which elements to trigger the event on.
  * @param mockFn The mock function to use. Defaults to `vi.fn`.
  */
-export function setupIntersectionMocking(mockFn: typeof vi.fn) {
+function setupIntersectionMocking(mockFn: typeof vi.fn) {
   global.IntersectionObserver = mockFn((cb, options = {}) => {
     const item = {
       callback: cb,
@@ -94,7 +94,7 @@ export function setupIntersectionMocking(mockFn: typeof vi.fn) {
 /**
  * Reset the IntersectionObserver mock to its initial state, and clear all the elements being observed.
  */
-export function resetIntersectionMocking() {
+function resetIntersectionMocking() {
   if (
     global.IntersectionObserver &&
     'mockClear' in global.IntersectionObserver &&
