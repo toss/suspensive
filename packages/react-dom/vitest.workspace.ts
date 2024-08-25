@@ -18,9 +18,9 @@ export default defineWorkspace([
       environment: 'node',
       browser: {
         enabled: true,
+        headless: true,
         name: 'chromium',
         provider: 'playwright',
-        headless: true,
       },
     },
   },
