@@ -3,7 +3,7 @@ import { InView } from '../InView'
 import { defaultFallbackInView } from '../observe'
 import { intersectionMockInstance, mockAllIsIntersecting } from './test-utils'
 
-describe.todo('<InView/>', () => {
+describe('<InView/>', () => {
   it('should render <InView /> intersecting', () => {
     const callback = vi.fn()
     render(<InView onChange={callback}>{({ inView, ref }) => <div ref={ref}>{inView.toString()}</div>}</InView>)

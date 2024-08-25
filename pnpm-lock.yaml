@@ -671,9 +671,15 @@ importers:
       '@types/react':
         specifier: 'catalog:'
         version: 18.3.3
+      '@types/react-dom':
+        specifier: 'catalog:'
+        version: 18.3.0
       react:
         specifier: 'catalog:'
         version: 18.3.1
+      react-dom:
+        specifier: 'catalog:'
+        version: 18.3.1(react@18.3.1)
 
   packages/react-image:
     dependencies:
