@@ -3,8 +3,7 @@ import { mockAllIsIntersecting } from './test-utils'
 
 vi.hoisted(() => {
   // Clear the `beforeEach` from global, so we can detect if this is a test env
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
+  // @ts-expect-error Property 'vi' does not exist on type 'typeof globalThis'.
   global.vi = undefined
 })
 

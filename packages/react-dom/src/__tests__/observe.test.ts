@@ -1,5 +1,5 @@
-import { intersectionMockInstance, mockIsIntersecting } from './__tests__/test-utils'
-import { observe, optionsToId } from './observe'
+import { observe, optionsToId } from '../observe'
+import { intersectionMockInstance, mockIsIntersecting } from './test-utils'
 
 test('should be able to use observe', () => {
   const element = document.createElement('div')
