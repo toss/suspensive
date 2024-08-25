@@ -1,12 +1,7 @@
 import { render, screen } from '@testing-library/react'
 import React, { useCallback } from 'react'
-import {
-  type Mutable,
-  intersectionMockInstance,
-  mockAllIsIntersecting,
-  mockIsIntersecting,
-} from './__tests__/test-utils'
 import { defaultFallbackInView } from './observe'
+import { type Mutable, intersectionMockInstance, mockAllIsIntersecting, mockIsIntersecting } from './test-utils'
 import type { IntersectionOptions } from './types'
 import { useInView } from './useInView'
 

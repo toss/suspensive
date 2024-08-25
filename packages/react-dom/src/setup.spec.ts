@@ -1,5 +1,5 @@
 import { beforeAll, expect, test, vi } from 'vitest'
-import { mockAllIsIntersecting } from './__tests__/test-utils'
+import { mockAllIsIntersecting } from './test-utils'
 
 vi.hoisted(() => {
   // Clear the `beforeEach` from global, so we can detect if this is a test env

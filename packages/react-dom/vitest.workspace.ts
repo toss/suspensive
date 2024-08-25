@@ -5,7 +5,7 @@ export default defineWorkspace([
     extends: 'vitest.config.ts',
     test: {
       include: ['**/*.{spec,test}.{ts,tsx}'],
-      exclude: ['**/browser/*.{spec,test}.{ts,tsx}'],
+      exclude: ['browser/*.{spec,test}.{ts,tsx}'],
       name: 'jsdom',
       environment: 'jsdom',
     },
@@ -13,7 +13,7 @@ export default defineWorkspace([
   {
     extends: 'vitest.config.ts',
     test: {
-      include: ['**/browser/*.{spec,test}.{ts,tsx}'],
+      include: ['browser/*.{spec,test}.{ts,tsx}'],
       name: 'browser',
       environment: 'node',
       browser: {
