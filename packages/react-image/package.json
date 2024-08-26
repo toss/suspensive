@@ -56,8 +56,8 @@
     "@suspensive/eslint-config": "workspace:*",
     "@suspensive/tsconfig": "workspace:*",
     "@suspensive/tsup": "workspace:*",
-    "@types/react": "catalog:",
-    "react": "catalog:"
+    "@types/react": "catalog:react18",
+    "react": "catalog:react18"
   },
   "peerDependencies": {
     "react": "^18"

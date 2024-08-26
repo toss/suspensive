@@ -57,9 +57,9 @@
     "@suspensive/react": "workspace:*",
     "@suspensive/tsconfig": "workspace:*",
     "@suspensive/tsup": "workspace:*",
-    "@tanstack/react-query": "^5.51.23",
-    "@types/react": "catalog:",
-    "react": "catalog:"
+    "@tanstack/react-query": "catalog:react-query5",
+    "@types/react": "catalog:react18",
+    "react": "catalog:react18"
   },
   "peerDependencies": {
     "@suspensive/react": "workspace:^2.14.0",
