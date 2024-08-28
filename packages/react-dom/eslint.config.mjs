@@ -1,11 +1,10 @@
 import path from 'path'
 import { fileURLToPath } from 'url'
-import { suspensiveTypeScriptConfig } from '@suspensive/eslint-config'
+import { suspensiveReactTypeScriptConfig } from '@suspensive/eslint-config'
 
 export default [
-  ...suspensiveTypeScriptConfig,
+  ...suspensiveReactTypeScriptConfig,
   {
-    ignores: ['dist'],
     languageOptions: {
       parserOptions: {
         tsconfigRootDir: path.dirname(fileURLToPath(import.meta.url)),

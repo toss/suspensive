@@ -143,6 +143,7 @@ describe('<ErrorBoundary/>', () => {
 
   it('should be reset by ref.reset(), and call onReset', async () => {
     const onReset = vi.fn()
+    // eslint-disable-next-line @eslint-react/no-create-ref
     const ref = createRef<ComponentRef<typeof ErrorBoundary>>()
     render(
       <ErrorBoundary ref={ref} fallback={(props) => <>{props.error.message}</>} onReset={onReset}>

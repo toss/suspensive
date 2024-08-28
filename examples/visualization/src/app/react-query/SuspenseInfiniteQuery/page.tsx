@@ -39,6 +39,7 @@ export default function Page() {
             <div>
               {data.pages.map(({ data }) =>
                 data.products.map((product) => (
+                  // eslint-disable-next-line @eslint-react/no-duplicate-key
                   <div key={product.id}>
                     <h2>title: {product.title}</h2>
                     <p>price: {product.price}</p>

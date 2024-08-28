@@ -31,7 +31,7 @@
     "prepack": "pnpm build"
   },
   "devDependencies": {
-    "@suspensive/eslint-config-ts": "workspace:*",
+    "@suspensive/eslint-config": "workspace:*",
     "@suspensive/tsconfig": "workspace:*"
   }
 }
