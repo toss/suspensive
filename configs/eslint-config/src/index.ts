@@ -18,15 +18,15 @@ import jestDom from 'eslint-plugin-jest-dom'
 
 const ignores = ['**/.next/**', '**/build/**', '**/coverage/**', '**/dist/**'] satisfies Linter.Config['ignores']
 
-export const suspensiveTypeScriptConfig: Array<Linter.Config> = [
+export const suspensiveTypeScriptConfig: ReturnType<typeof tseslint.config> = tseslint.config(
   {
     ignores,
   },
   cspellConfigs.recommended,
+  ...tseslint.configs.strictTypeChecked,
   {
     files: ['**/*.{ts,tsx}'],
     languageOptions: {
-      // @ts-expect-error TODO: remove this
       parser: tseslint.parser,
       parserOptions: {
         project: true,
@@ -35,7 +35,6 @@ export const suspensiveTypeScriptConfig: Array<Linter.Config> = [
     },
     plugins: {
       jsdoc: jsdoc,
-      // @ts-expect-error TODO: remove this
       '@typescript-eslint': tseslint.plugin,
     },
     rules: {
@@ -92,9 +91,7 @@ export const suspensiveTypeScriptConfig: Array<Linter.Config> = [
     },
     settings: { vitest: { typecheck: true } },
   },
-  {
-    ...(jestDom.configs['flat/recommended'] as unknown as Linter.Config),
-  },
+  jestDom.configs['flat/recommended'] as unknown as ReturnType<typeof tseslint.config>[number],
   {
     plugins: {
       import: importPlugin,
@@ -113,14 +110,14 @@ export const suspensiveTypeScriptConfig: Array<Linter.Config> = [
       ],
     },
   },
-  eslintPluginPrettierRecommended,
-]
+  eslintPluginPrettierRecommended as unknown as ReturnType<typeof tseslint.config>[number]
+)
 
-export const suspensiveReactTypeScriptConfig: Array<Linter.Config> = [
+export const suspensiveReactTypeScriptConfig: ReturnType<typeof tseslint.config> = tseslint.config(
   ...suspensiveTypeScriptConfig,
   {
     files: ['**/*.{ts,tsx}'],
-    ...(pluginReact.configs.recommended as unknown as Linter.Config),
+    ...(pluginReact.configs.recommended as unknown as ReturnType<typeof tseslint.config>[number]),
   },
   {
     plugins: {
@@ -140,10 +137,10 @@ export const suspensiveReactTypeScriptConfig: Array<Linter.Config> = [
         version: 'detect',
       },
     },
-  },
-]
+  }
+)
 
-export const suspensiveNextTypeScriptConfig: Array<Linter.Config> = [
+export const suspensiveNextTypeScriptConfig: ReturnType<typeof tseslint.config> = [
   ...suspensiveReactTypeScriptConfig,
   { plugins: { 'plugin:@next/next/recommended': next.configs.recommended } },
 ]

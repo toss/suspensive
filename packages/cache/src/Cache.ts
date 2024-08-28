@@ -155,6 +155,7 @@ export class Cache extends Subscribable<() => void> {
       if (cached.status === CacheStatus.Resolved) {
         return cached as ResolvedCached<TData, TCacheKey>
       }
+      // eslint-disable-next-line @typescript-eslint/only-throw-error
       throw cached.promiseToSuspend
     }
 
@@ -183,7 +184,7 @@ export class Cache extends Subscribable<() => void> {
     }
 
     this.cache.set(hashedCacheKey, newCached)
-
+    // eslint-disable-next-line @typescript-eslint/only-throw-error
     throw newCached.promiseToSuspend
   }
 

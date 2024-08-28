@@ -10,6 +10,7 @@ import { Read } from './Read'
 const errorCache = (id: number) =>
   cacheOptions({
     cacheKey: ['key', id] as const,
+    // eslint-disable-next-line @typescript-eslint/prefer-promise-reject-errors
     cacheFn: () => sleep(ms('0.1s')).then(() => Promise.reject(ERROR_MESSAGE)),
   })
 

@@ -50,12 +50,14 @@ class LoadClient {
     const loadState = this.loadCache.get(src)
 
     if (loadState?.error) {
+      // eslint-disable-next-line @typescript-eslint/only-throw-error
       throw loadState.error
     }
     if (loadState?.src) {
       return loadState as LoadState<TLoadSrc>
     }
     if (loadState?.promise) {
+      // eslint-disable-next-line @typescript-eslint/only-throw-error
       throw loadState.promise
     }
 
@@ -67,6 +69,7 @@ class LoadClient {
     }
 
     this.loadCache.set(src, newLoadState)
+    // eslint-disable-next-line @typescript-eslint/only-throw-error
     throw newLoadState.promise
   }
 

@@ -4,6 +4,7 @@ import { SetAtom } from './SetAtom'
 
 const countAtom = atom(0)
 const writeOnlyCountAtom = atom(null, (get, set) => set(countAtom, get(countAtom) + 1))
+// eslint-disable-next-line @typescript-eslint/require-await
 const asyncIncrementAtom = atom(null, async (get, set) => {
   set(countAtom, get(countAtom) + 1)
 })
