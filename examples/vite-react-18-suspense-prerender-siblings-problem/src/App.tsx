@@ -10,6 +10,7 @@ export default function App() {
       {isClicked ? (
         <Suspense fallback={<Fallback />}>
           {Array.from({ length: 10 }, (_, i) => (
+            // eslint-disable-next-line @eslint-react/no-duplicate-key
             <Suspend key={i} i={i} />
           ))}
           <Slow />

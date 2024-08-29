@@ -13,6 +13,7 @@ interface DataTransformer {
   deserialize: (object: any) => any
 }
 
+// eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
 type Serialized<TData> = unknown & {
   [serializedSymbol]: TData
 }
@@ -58,9 +59,9 @@ export interface HydrationStreamProviderProps<TShape> {
 }
 
 export function createHydrationStreamProvider<TShape>() {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
   const context = React.createContext<HydrationStreamContext<TShape>>(null as any)
   /**
-   
    * 1. (Happens on server): `useServerInsertedHTML()` is called **on the server** whenever a `Suspense`-boundary completes
    *    - This means that we might have some new entries in the cache that needs to be flushed
    *    - We pass these to the client by inserting a `<script>`-tag where we do `window[id].push(serializedVersionOfCache)`
@@ -98,7 +99,9 @@ export function createHydrationStreamProvider<TShape>() {
       () =>
         (props.transformer ?? {
           // noop
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-return
           serialize: (obj: any) => obj,
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-return
           deserialize: (obj: any) => obj,
         }) as unknown as TypedDataTransformer<TShape>
     )

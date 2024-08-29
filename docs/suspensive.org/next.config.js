@@ -1,15 +1,18 @@
-// eslint-disable-next-line @typescript-eslint/no-var-requires
+// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-var-requires
 const withNextra = require('nextra')({
   theme: 'nextra-theme-docs',
   themeConfig: './theme.config.tsx',
   defaultShowCopyCode: true,
   mdxOptions: {
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    remarkPlugins: [require('remark-sandpack').remarkSandpack],
+    remarkPlugins: [
+      // eslint-disable-next-line @typescript-eslint/no-var-requires
+      require('remark-sandpack').remarkSandpack,
+    ],
   },
 })
 
 /** @type {import('next').NextConfig} */
+// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
 module.exports = withNextra({
   i18n: {
     locales: ['en', 'ko'],

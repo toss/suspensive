@@ -21,8 +21,9 @@ describe('<ErrorBoundaryGroup/>', () => {
         <ErrorBoundaryGroup.Consumer>
           {(group) => <button onClick={group.reset}>{resetButtonText}</button>}
         </ErrorBoundaryGroup.Consumer>
-        {Array.from({ length: innerErrorBoundaryCount }).map((_, key) => (
-          <ErrorBoundary key={key} fallback={(props) => <div>{props.error.message}</div>}>
+        {Array.from({ length: innerErrorBoundaryCount }).map((_, i) => (
+          // eslint-disable-next-line @eslint-react/no-array-index-key, @eslint-react/no-duplicate-key
+          <ErrorBoundary key={i} fallback={(props) => <div>{props.error.message}</div>}>
             <Throw.Error message={ERROR_MESSAGE} after={ms('0.1s')}>
               <div>{TEXT}</div>
             </Throw.Error>
@@ -45,8 +46,9 @@ describe('<ErrorBoundaryGroup/>', () => {
         <ErrorBoundaryGroup.Consumer>
           {(group) => <button onClick={group.reset}>{resetButtonText}</button>}
         </ErrorBoundaryGroup.Consumer>
-        {Array.from({ length: innerErrorBoundaryCount }).map((_, index) => (
-          <ErrorBoundaryGroup key={index} blockOutside={index === innerErrorBoundaryCount - 1}>
+        {Array.from({ length: innerErrorBoundaryCount }).map((_, i) => (
+          // eslint-disable-next-line @eslint-react/no-array-index-key, @eslint-react/no-duplicate-key
+          <ErrorBoundaryGroup key={i} blockOutside={i === innerErrorBoundaryCount - 1}>
             <ErrorBoundary fallback={(props) => <div>{props.error.message}</div>}>
               <Throw.Error message={ERROR_MESSAGE} after={ms('0.1s')}>
                 <div>{TEXT}</div>

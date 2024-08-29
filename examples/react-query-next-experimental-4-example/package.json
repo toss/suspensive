@@ -5,7 +5,7 @@
   "author": "Jonghyeon Ko <jonghyeon@toss.im>",
   "scripts": {
     "build": "next build",
-    "ci:eslint": "next lint",
+    "ci:eslint": "eslint \"**/*.{js,jsx,cjs,mjs,ts,tsx,cts,mts}\"",
     "ci:type": "tsc --noEmit",
     "dev": "next dev -p 4100",
     "start": "next start -p 4100"
@@ -22,7 +22,6 @@
     "sharp": "catalog:"
   },
   "devDependencies": {
-    "@next/eslint-plugin-next": "catalog:",
     "@suspensive/eslint-config": "workspace:*",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",

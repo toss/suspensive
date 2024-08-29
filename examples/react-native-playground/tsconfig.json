@@ -1,6 +1,6 @@
 {
   "extends": "expo/tsconfig.base",
-  "include": [".", "./.eslintrc.cjs", "babel.config.js"],
+  "include": [".", "eslint.config.mjs", "babel.config.js"],
   "compilerOptions": {
     "strict": true
   }
