@@ -86,6 +86,7 @@ function createObserver(
 
     // Ensure we have a valid thresholds array. If not, use the threshold from the options
     thresholds =
+      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
       observer.thresholds || (Array.isArray(options.threshold) ? options.threshold : [options.threshold || 0])
 
     instance = {

@@ -15,7 +15,7 @@ describe('<InView/>', () => {
     expect(callback).toHaveBeenLastCalledWith(true, expect.objectContaining({ isIntersecting: true }))
   })
 
-  // eslint-disable-next-line @vitest/expect-expect
+  // eslint-disable-next-line vitest/expect-expect
   it('should render plain children', () => {
     render(<InView>inner</InView>)
     screen.getByText('inner')
@@ -44,7 +44,7 @@ describe('<InView/>', () => {
     expect(cb).not.toHaveBeenCalled()
   })
 
-  // eslint-disable-next-line @vitest/expect-expect
+  // eslint-disable-next-line vitest/expect-expect
   it('should handle initialInView', () => {
     const cb = vi.fn()
     render(
@@ -55,7 +55,7 @@ describe('<InView/>', () => {
     screen.getByText('InView: true')
   })
 
-  // eslint-disable-next-line @vitest/expect-expect
+  // eslint-disable-next-line vitest/expect-expect
   it('should unobserve old node', () => {
     const { rerender } = render(
       <InView>
@@ -78,7 +78,7 @@ describe('<InView/>', () => {
     mockAllIsIntersecting(true)
   })
 
-  // eslint-disable-next-line @vitest/expect-expect
+  // eslint-disable-next-line vitest/expect-expect
   it('should ensure node exists before observing and unobserving', () => {
     const { unmount } = render(<InView>{() => null}</InView>)
     unmount()
@@ -91,6 +91,7 @@ describe('<InView/>', () => {
     vi.spyOn(instance, 'unobserve')
 
     rerender(<InView threshold={0.5}>Inner</InView>)
+    // eslint-disable-next-line @typescript-eslint/unbound-method
     expect(instance.unobserve).toHaveBeenCalled()
   })
 
@@ -102,6 +103,7 @@ describe('<InView/>', () => {
 
     const root = document.createElement('div')
     rerender(<InView root={root}>Inner</InView>)
+    // eslint-disable-next-line @typescript-eslint/unbound-method
     expect(instance.unobserve).toHaveBeenCalled()
   })
 
@@ -112,6 +114,7 @@ describe('<InView/>', () => {
     vi.spyOn(instance, 'unobserve')
 
     rerender(<InView rootMargin="10px">Inner</InView>)
+    // eslint-disable-next-line @typescript-eslint/unbound-method
     expect(instance.unobserve).toHaveBeenCalled()
   })
 
@@ -121,7 +124,7 @@ describe('<InView/>', () => {
     const instance = intersectionMockInstance(container.children[0])
     vi.spyOn(instance, 'unobserve')
     mockAllIsIntersecting(true)
-
+    // eslint-disable-next-line @typescript-eslint/unbound-method
     expect(instance.unobserve).toHaveBeenCalled()
   })
 
@@ -132,7 +135,7 @@ describe('<InView/>', () => {
     vi.spyOn(instance, 'unobserve')
 
     unmount()
-
+    // eslint-disable-next-line @typescript-eslint/unbound-method
     expect(instance.unobserve).toHaveBeenCalled()
   })
 

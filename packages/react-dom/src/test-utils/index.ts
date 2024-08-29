@@ -96,6 +96,7 @@ function setupIntersectionMocking(mockFn: typeof vi.fn) {
  */
 function resetIntersectionMocking() {
   if (
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     global.IntersectionObserver &&
     'mockClear' in global.IntersectionObserver &&
     typeof global.IntersectionObserver.mockClear === 'function'
@@ -147,14 +148,19 @@ function triggerIntersection(
             toJSON() {},
           },
       isIntersecting,
-      rootBounds: observer.root instanceof Element ? observer.root?.getBoundingClientRect() : null,
+      rootBounds: observer.root instanceof Element ? observer.root.getBoundingClientRect() : null,
       target: element,
       time: Date.now() - item.created,
     })
   }
 
   // Trigger the IntersectionObserver callback with all the entries
-  if (act && getIsReactActEnvironment()) act(() => item.callback(entries, observer))
+  if (
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    act &&
+    getIsReactActEnvironment()
+  )
+    act(() => item.callback(entries, observer))
   else item.callback(entries, observer)
 }
 /**
@@ -176,7 +182,10 @@ export function mockAllIsIntersecting(isIntersecting: boolean | number) {
 export function mockIsIntersecting(element: Element, isIntersecting: boolean | number) {
   warnOnMissingSetup()
   const observer = intersectionMockInstance(element)
-  if (!observer) {
+  if (
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    !observer
+  ) {
     throw new Error('No IntersectionObserver instance found for element. Is it still mounted in the DOM?')
   }
   const item = observers.get(observer)
