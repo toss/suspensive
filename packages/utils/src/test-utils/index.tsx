@@ -15,6 +15,7 @@ export const Throw = {
   Null: ({ after, children }: PropsWithChildren<{ after: number }>) => {
     const [isNeedError, setIsNeedError] = useState(isNeedThrowGlobal.current)
     if (isNeedError) {
+      // eslint-disable-next-line @typescript-eslint/only-throw-error
       throw null
     }
     useTimeout(() => setIsNeedError(true), after)
@@ -50,6 +51,7 @@ const isNeedSuspendGlobal = { current: true }
 
 export const Suspend = ({ during, toShow }: { during: number; toShow?: ReactNode }) => {
   if (isNeedSuspendGlobal.current) {
+    // eslint-disable-next-line @typescript-eslint/only-throw-error
     throw new Promise((resolve) =>
       setTimeout(() => {
         isNeedSuspendGlobal.current = false
