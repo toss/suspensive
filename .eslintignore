@@ -1,7 +1,0 @@
-.vscode
-.yarn
-dist
-esm
-.eslintrc.js
-packlint.config.mjs
-prettier.config.mjs
