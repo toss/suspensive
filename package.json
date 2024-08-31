@@ -57,7 +57,7 @@
     "@vitest/coverage-istanbul": "^2.0.5",
     "@vitest/ui": "^2.0.5",
     "broken-link-checker": "^0.7.8",
-    "eslint": "^8.57.0",
+    "eslint": "^9.9.1",
     "husky": "^9.1.4",
     "jsdom": "^24.1.1",
     "knip": "^5.27.2",
