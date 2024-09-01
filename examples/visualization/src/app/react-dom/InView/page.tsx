@@ -1,4 +1,5 @@
 'use client'
+
 import { InView } from '@suspensive/react-dom'
 
 export default function Page() {
