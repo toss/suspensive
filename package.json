@@ -59,7 +59,7 @@
     "broken-link-checker": "^0.7.8",
     "eslint": "^9.9.1",
     "husky": "^9.1.4",
-    "jsdom": "^24.1.1",
+    "jsdom": "^25.0.0",
     "knip": "^5.27.2",
     "lint-staged": "^15.2.7",
     "ms": "3.0.0-canary.1",
