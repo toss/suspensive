@@ -1,7 +1,11 @@
 import { render, screen } from '@testing-library/react'
 import React, { useCallback } from 'react'
-import { type Mutable, intersectionMockInstance, mockAllIsIntersecting, mockIsIntersecting } from './test-utils'
+import { intersectionMockInstance, mockAllIsIntersecting, mockIsIntersecting } from './test-utils'
 import { type InViewOptions, useInView } from './useInView'
+
+type Mutable<TObject> = {
+  -readonly [TKey in keyof TObject]: TObject[TKey]
+}
 
 const HookComponent = ({ options, unmount }: { options?: InViewOptions; unmount?: boolean }) => {
   const wrapper = useInView(options)

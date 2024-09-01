@@ -54,12 +54,6 @@ afterEach(() => {
   )
 }
 
-/**
- * Create a custom IntersectionObserver mock, allowing us to intercept the `observe` and `unobserve` calls.
- * We keep track of the elements being observed, so when `mockAllIsIntersecting` is triggered it will
- * know which elements to trigger the event on.
- * @param mockFn The mock function to use. Defaults to `vi.fn`.
- */
 function setupIntersectionMocking(mockFn: typeof vi.fn) {
   global.IntersectionObserver = mockFn((cb, options = {}) => {
     const item = {
@@ -91,9 +85,6 @@ function setupIntersectionMocking(mockFn: typeof vi.fn) {
   isMocking = true
 }
 
-/**
- * Reset the IntersectionObserver mock to its initial state, and clear all the elements being observed.
- */
 function resetIntersectionMocking() {
   if (
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
@@ -104,10 +95,6 @@ function resetIntersectionMocking() {
     global.IntersectionObserver.mockClear()
   }
   observers.clear()
-}
-
-function getIsReactActEnvironment() {
-  return Boolean(global.IS_REACT_ACT_ENVIRONMENT)
 }
 
 function triggerIntersection(
@@ -158,15 +145,12 @@ function triggerIntersection(
   if (
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     act &&
-    getIsReactActEnvironment()
+    Boolean(global.IS_REACT_ACT_ENVIRONMENT)
   )
     act(() => item.callback(entries, observer))
   else item.callback(entries, observer)
 }
-/**
- * Set the `isIntersecting` on all current IntersectionObserver instances
- * @param isIntersecting {boolean | number}
- */
+
 export function mockAllIsIntersecting(isIntersecting: boolean | number) {
   warnOnMissingSetup()
   for (const [observer, item] of observers) {
@@ -174,11 +158,6 @@ export function mockAllIsIntersecting(isIntersecting: boolean | number) {
   }
 }
 
-/**
- * Set the `isIntersecting` for the IntersectionObserver of a specific element.
- * @param element {Element}
- * @param isIntersecting {boolean | number}
- */
 export function mockIsIntersecting(element: Element, isIntersecting: boolean | number) {
   warnOnMissingSetup()
   const observer = intersectionMockInstance(element)
@@ -194,13 +173,6 @@ export function mockIsIntersecting(element: Element, isIntersecting: boolean | n
   }
 }
 
-/**
- * Call the `intersectionMockInstance` method with an element, to get the (mocked)
- * `IntersectionObserver` instance. You can use this to spy on the `observe` and
- * `unobserve` methods.
- * @param element {Element}
- * @returns IntersectionObserver
- */
 export function intersectionMockInstance(element: Element): IntersectionObserver {
   warnOnMissingSetup()
   for (const [observer, item] of observers) {
@@ -210,8 +182,4 @@ export function intersectionMockInstance(element: Element): IntersectionObserver
   }
 
   throw new Error('Failed to find IntersectionObserver for element. Is it being observed?')
-}
-
-export type Mutable<TObject> = {
-  -readonly [TKey in keyof TObject]: TObject[TKey]
 }
