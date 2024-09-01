@@ -7,6 +7,27 @@ type UseAtomValueProps<TAtom extends Parameters<typeof useAtomValue>[0]> = {
   options?: Parameters<typeof useAtomValue>[1]
 }
 
+/**
+ * This hook is wrapping `useAtomValue` hook from jotai.
+ *
+ * The AtomValue component provides an interface similar to Jotai's `useAtomValue` hook as props, allowing declarative usage.
+ * @see {@link https://suspensive.org/docs/jotai/AtomValue}
+ * @example
+ * ```jsx
+ * import { AtomValue } from '@suspensive/jotai'
+ * import { atom } from "jotai";
+ *
+ * const countAtom = atom(1);
+ *
+ * const Example = () => (
+ *   <AtomValue atom={countAtom}>
+ *     {(count) => (
+ *       <>count: {count}</>
+ *     )}
+ *   </AtomValue>
+ * )
+ * ```
+ */
 export function AtomValue<TValue>({
   children,
   atom,

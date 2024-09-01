@@ -7,6 +7,30 @@ type UseSetAtomProps<TAtom> = {
   options?: Parameters<typeof useSetAtom>[1]
 }
 
+/**
+ * This Component is wrapping `useSetAtom` of jotai
+ *
+ * The SetAtom component provides an interface similar to Jotai's `useSetAtom` hook as props, allowing declarative usage.
+ * @see {@link https://suspensive.org/docs/jotai/SetAtom}
+ * @example
+ * ```jsx
+ * import { SetAtom } from '@suspensive/jotai'
+ * import { atom } from "jotai";
+ *
+ * const switchAtom = atom(false)
+ *
+ * const Example = () => (
+ *   <SetAtom atom={switchAtom}>
+ *     {(setCount) => (
+ *       <>
+ *         <button onClick={() => setCount(true)}>Set True</button>
+ *         <button onClick={() => setCount(false)}>Set False</button>
+ *       </>
+ *     )}
+ *   </SetAtom>
+ * )
+ * ```
+ */
 export function SetAtom<TValue, TArgs extends unknown[], TResult>({
   atom,
   options,
