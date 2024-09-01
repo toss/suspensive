@@ -1,5 +1,15 @@
 # @suspensive/react-query-4
 
+## 2.14.2
+
+### Patch Changes
+
+- [#1243](https://github.com/toss/suspensive/pull/1243) [`251d17b`](https://github.com/toss/suspensive/commit/251d17bf9bfc571a273e66e5c885e7250e41fd5f) Thanks [@manudeli](https://github.com/manudeli)! - fix(react-query): update tanstack query as optional peerDependency
+
+- Updated dependencies []:
+  - @suspensive/utils@2.14.2
+  - @suspensive/react@2.14.2
+
 ## 2.14.1
 
 ### Patch Changes

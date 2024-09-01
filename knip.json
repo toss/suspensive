@@ -16,8 +16,11 @@
       "ignoreDependencies": ["sharp"],
       "entry": ["src/**/*.{ts,tsx,mdx}"]
     },
-    "packages/react-query-*": {
-      "ignoreDependencies": ["@suspensive/react"]
+    "packages/react-query-4": {
+      "ignoreDependencies": ["@suspensive/react", "@tanstack/react-query"]
+    },
+    "packages/react-query-5": {
+      "ignoreDependencies": ["@suspensive/react", "@tanstack/react-query"]
     },
     "packages/react-native": {
       "ignoreDependencies": ["expo", "ts-node"],
