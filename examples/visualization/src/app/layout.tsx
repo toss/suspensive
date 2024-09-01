@@ -58,7 +58,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <details>
                 <summary>@suspensive/react-dom</summary>
                 <li>
-                  <Link href="/react-dom/InView">In View</Link>
+                  <Link href="/react-dom/InView">{`<InView/>`}</Link>
                 </li>
               </details>
             </li>
