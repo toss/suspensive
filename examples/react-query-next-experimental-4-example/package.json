@@ -17,14 +17,14 @@
     "@tanstack/react-query": "catalog:react-query4",
     "@tanstack/react-query-devtools": "catalog:react-query4",
     "next": "catalog:",
-    "react": "catalog:",
-    "react-dom": "catalog:",
+    "react": "catalog:react18",
+    "react-dom": "catalog:react18",
     "sharp": "catalog:"
   },
   "devDependencies": {
     "@suspensive/eslint-config": "workspace:*",
-    "@types/react": "catalog:",
-    "@types/react-dom": "catalog:",
+    "@types/react": "catalog:react18",
+    "@types/react-dom": "catalog:react18",
     "autoprefixer": "catalog:",
     "postcss": "catalog:",
     "prettier-plugin-tailwindcss": "catalog:",
