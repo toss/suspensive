@@ -1,5 +1,13 @@
 # @suspensive/react-query-next-experimental
 
+## 0.0.2
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @suspensive/utils@2.14.1
+  - @suspensive/react-query-next-experimental-4@0.0.2
+
 ## 0.0.1
 
 ### Patch Changes

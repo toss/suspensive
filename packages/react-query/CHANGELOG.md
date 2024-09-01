@@ -1,5 +1,15 @@
 # @suspensive/react-query
 
+## 2.14.1
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @suspensive/utils@2.14.1
+  - @suspensive/react@2.14.1
+  - @suspensive/react-query-4@2.14.1
+  - @suspensive/react-query-5@2.14.1
+
 ## 2.14.0
 
 ### Patch Changes
