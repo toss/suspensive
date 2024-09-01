@@ -19,6 +19,30 @@ type UseAtomProps<TAtom extends Parameters<typeof useAtom>[0]> = {
   options?: Parameters<typeof useAtom>[1]
 }
 
+/**
+ * This hook is wrapping `useAtom` hook from jotai.
+ *
+ * The Atom component provides an interface similar to Jotai's `useAtom` hook as props, allowing declarative usage.
+ * @see {@link https://suspensive.org/docs/jotai/Atom}
+ * @example
+ * ```jsx
+ * import { Atom } from '@suspensive/jotai'
+ * import { atom } from "jotai";
+ *
+ * const countAtom = atom(1);
+ *
+ * const Example = () => (
+ *   <Atom atom={countAtom}>
+ *     {([count, setCount]) => (
+ *       <>
+ *         <div>count: {count}</div>
+ *         <button onClick={() => setCount(count + 1)}>+1</button>
+ *       </>
+ *     )}
+ *   </Atom>
+ * )
+ * ```
+ */
 export function Atom<TValue, TArgs extends unknown[], TResult>({
   children,
   atom,
