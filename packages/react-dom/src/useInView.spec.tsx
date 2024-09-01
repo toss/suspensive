@@ -1,30 +1,28 @@
 import { render, screen } from '@testing-library/react'
 import React, { useCallback } from 'react'
-import { defaultFallbackInView } from './observe'
 import { type Mutable, intersectionMockInstance, mockAllIsIntersecting, mockIsIntersecting } from './test-utils'
-import type { IntersectionOptions } from './types'
-import { useInView } from './useInView'
+import { type InViewOptions, useInView } from './useInView'
 
-const HookComponent = ({ options, unmount }: { options?: IntersectionOptions; unmount?: boolean }) => {
-  const [ref, inView] = useInView(options)
+const HookComponent = ({ options, unmount }: { options?: InViewOptions; unmount?: boolean }) => {
+  const wrapper = useInView(options)
   return (
-    <div data-testid="wrapper" ref={!unmount ? ref : undefined}>
-      {inView.toString()}
+    <div data-testid="wrapper" ref={!unmount ? wrapper.ref : undefined}>
+      {wrapper.inView.toString()}
     </div>
   )
 }
 
-const LazyHookComponent = ({ options }: { options?: IntersectionOptions }) => {
+const LazyHookComponent = ({ options }: { options?: InViewOptions }) => {
   const [isLoading, setIsLoading] = React.useState(true)
 
   React.useEffect(() => {
     setIsLoading(false)
   }, [])
-  const [ref, inView] = useInView(options)
+  const wrapper = useInView(options)
   if (isLoading) return <div>Loading</div>
   return (
-    <div data-testid="wrapper" ref={ref}>
-      {inView.toString()}
+    <div data-testid="wrapper" ref={wrapper.ref}>
+      {wrapper.inView.toString()}
     </div>
   )
 }
@@ -168,15 +166,23 @@ const SwitchHookComponent = ({
   toggle,
   unmount,
 }: {
-  options?: IntersectionOptions
+  options?: InViewOptions
   toggle?: boolean
   unmount?: boolean
 }) => {
-  const [ref, inView] = useInView(options)
+  const wrapper = useInView(options)
   return (
     <>
-      <div data-testid="item-1" data-inview={!toggle && inView} ref={!toggle && !unmount ? ref : undefined} />
-      <div data-testid="item-2" data-inview={!!toggle && inView} ref={toggle && !unmount ? ref : undefined} />
+      <div
+        data-testid="item-1"
+        data-inview={!toggle && wrapper.inView}
+        ref={!toggle && !unmount ? wrapper.ref : undefined}
+      />
+      <div
+        data-testid="item-2"
+        data-inview={!!toggle && wrapper.inView}
+        ref={toggle && !unmount ? wrapper.ref : undefined}
+      />
     </>
   )
 }
@@ -215,16 +221,16 @@ it('should handle ref removed', () => {
   expect(item2).toHaveAttribute('data-inview', 'false')
 })
 
-const MergeRefsComponent = ({ options }: { options?: IntersectionOptions }) => {
-  const [inViewRef, inView] = useInView(options)
+const MergeRefsComponent = ({ options }: { options?: InViewOptions }) => {
+  const mergeInViewResult = useInView(options)
   const setRef = useCallback(
     (node: Element | null) => {
-      inViewRef(node)
+      mergeInViewResult.ref(node)
     },
-    [inViewRef]
+    [mergeInViewResult.ref]
   )
 
-  return <div data-testid="inview" data-inview={inView} ref={setRef} />
+  return <div data-testid="inview" data-inview={mergeInViewResult.inView} ref={setRef} />
 }
 
 it('should handle ref merged', () => {
@@ -235,30 +241,30 @@ it('should handle ref merged', () => {
   expect(getByTestId('inview')).toHaveAttribute('data-inview', 'true')
 })
 
-const MultipleHookComponent = ({ options }: { options?: IntersectionOptions }) => {
-  const [ref1, inView1] = useInView(options)
-  const [ref2, inView2] = useInView(options)
-  const [ref3, inView3] = useInView()
+const MultipleHookComponent = ({ options }: { options?: InViewOptions }) => {
+  const el1 = useInView(options)
+  const el2 = useInView(options)
+  const el3 = useInView()
 
   const mergedRefs = useCallback(
     (node: Element | null) => {
-      ref1(node)
-      ref2(node)
-      ref3(node)
+      el1.ref(node)
+      el2.ref(node)
+      el3.ref(node)
     },
-    [ref1, ref2, ref3]
+    [el1.ref, el2.ref, el3.ref]
   )
 
   return (
     <div ref={mergedRefs}>
-      <div data-testid="item-1" data-inview={inView1}>
-        {inView1}
+      <div data-testid="item-1" data-inview={el1.inView}>
+        {el1.inView}
       </div>
-      <div data-testid="item-2" data-inview={inView2}>
-        {inView2}
+      <div data-testid="item-2" data-inview={el2.inView}>
+        {el2.inView}
       </div>
-      <div data-testid="item-3" data-inview={inView3}>
-        {inView3}
+      <div data-testid="item-3" data-inview={el3.inView}>
+        {el3.inView}
       </div>
     </div>
   )
@@ -294,7 +300,7 @@ it('should handle thresholds missing on observer instance with no threshold set'
   screen.getByText('true')
 })
 
-const HookComponentWithEntry = ({ options, unmount }: { options?: IntersectionOptions; unmount?: boolean }) => {
+const HookComponentWithEntry = ({ options, unmount }: { options?: InViewOptions; unmount?: boolean }) => {
   const { ref, entry } = useInView(options)
   return (
     <div data-testid="wrapper" ref={!unmount ? ref : undefined}>
@@ -323,24 +329,6 @@ it('should handle fallback if unsupported', () => {
   expect(() => {
     vi.spyOn(console, 'error').mockImplementation(() => {})
     rerender(<HookComponent options={{ fallbackInView: undefined }} />)
-    vi.restoreAllMocks()
-  }).toThrowErrorMatchingInlineSnapshot(`[TypeError: IntersectionObserver is not a constructor]`)
-})
-
-it('should handle defaultFallbackInView if unsupported', () => {
-  ;(window as unknown as { IntersectionObserver: IntersectionObserver | undefined }).IntersectionObserver = undefined
-  defaultFallbackInView(true)
-  const { rerender } = render(<HookComponent key="true" />)
-  screen.getByText('true')
-
-  defaultFallbackInView(false)
-  rerender(<HookComponent key="false" />)
-  screen.getByText('false')
-
-  defaultFallbackInView(undefined)
-  expect(() => {
-    vi.spyOn(console, 'error').mockImplementation(() => {})
-    rerender(<HookComponent key="undefined" />)
     vi.restoreAllMocks()
   }).toThrowErrorMatchingInlineSnapshot(`[TypeError: IntersectionObserver is not a constructor]`)
 })

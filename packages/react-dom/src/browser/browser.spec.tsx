@@ -1,16 +1,15 @@
 import { cleanup, render, screen } from '@testing-library/react/pure'
-import type { IntersectionOptions } from '../types'
-import { useInView } from '../useInView'
+import { type InViewOptions, useInView } from '../useInView'
 
 afterEach(() => {
   cleanup()
 })
 
-const HookComponent = ({ options }: { options?: IntersectionOptions }) => {
-  const [ref, inView] = useInView(options)
+const HookComponent = ({ options }: { options?: InViewOptions }) => {
+  const div = useInView(options)
 
   return (
-    <div ref={ref} data-testid="wrapper" style={{ height: 200, background: 'cyan' }} data-inview={inView}>
+    <div ref={div.ref} data-testid="wrapper" style={{ height: 200, background: 'cyan' }} data-inview={div.inView}>
       InView block
     </div>
   )

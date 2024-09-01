@@ -1,36 +1,25 @@
 import { useEffect, useRef, useState } from 'react'
-import { observe } from './observe'
-import type { InViewHookResponse, IntersectionOptions } from './types'
+import { observe } from './utils/observe'
 
-type State = {
+export interface InViewOptions extends IntersectionObserverInit {
+  root?: Element | null
+  rootMargin?: string
+  threshold?: number | number[]
+  triggerOnce?: boolean
+  skip?: boolean
+  initialInView?: boolean
+  fallbackInView?: boolean
+  trackVisibility?: boolean
+  delay?: number
+  onChange?: (inView: boolean, entry: IntersectionObserverEntry) => void
+}
+
+export type InViewResult = {
+  ref: (node?: Element | null) => void
   inView: boolean
   entry?: IntersectionObserverEntry
 }
 
-/**
- * React Hooks make it easy to monitor the `inView` state of your components. Call
- * the `useInView` hook with the (optional) [options](#options) you need. It will
- * return an array containing a `ref`, the `inView` status and the current
- * [`entry`](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserverEntry).
- * Assign the `ref` to the DOM element you want to monitor, and the hook will
- * report the status.
- * @example
- * ```jsx
- * import { useInView } from 'react-intersection-observer';
- *
- * const Component = () => {
- *   const { ref, inView, entry } = useInView({
- *       threshold: 0,
- *   });
- *
- *   return (
- *     <div ref={ref}>
- *       <h2>{`Header inside viewport ${inView}.`}</h2>
- *     </div>
- *   );
- * };
- * ```
- */
 export function useInView({
   threshold,
   delay,
@@ -42,11 +31,11 @@ export function useInView({
   initialInView,
   fallbackInView,
   onChange,
-}: IntersectionOptions = {}): InViewHookResponse {
+}: InViewOptions = {}): InViewResult {
   const [ref, setRef] = useState<Element | null>(null)
-  const callback = useRef<IntersectionOptions['onChange']>()
-  const [state, setState] = useState<State>({
-    inView: !!initialInView,
+  const callback = useRef<InViewOptions['onChange']>()
+  const [state, setState] = useState<{ inView: boolean; entry?: IntersectionObserverEntry }>({
+    inView: initialInView ?? false,
     entry: undefined,
   })
 
@@ -118,12 +107,5 @@ export function useInView({
     })
   }
 
-  const result = [setRef, state.inView, state.entry] as InViewHookResponse
-
-  // Support object destructuring, by adding the specific values.
-  result.ref = result[0]
-  result.inView = result[1]
-  result.entry = result[2]
-
-  return result
+  return { ref: setRef as InViewResult['ref'], ...state }
 }

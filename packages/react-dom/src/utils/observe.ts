@@ -1,34 +1,13 @@
-import type { ObserverInstanceCallback } from './types'
+type ObserverInstanceCallback = (inView: boolean, entry: IntersectionObserverEntry) => void
 
 const observerMap = new Map<
   string,
-  {
-    id: string
-    observer: IntersectionObserver
-    elements: Map<Element, Array<ObserverInstanceCallback>>
-  }
+  { id: string; observer: IntersectionObserver; elements: Map<Element, Array<ObserverInstanceCallback>> }
 >()
 
 const RootIds: WeakMap<Element | Document, string> = new WeakMap()
 let rootId = 0
 
-let unsupportedValue: boolean | undefined = undefined
-
-/**
- * What should be the default behavior if the IntersectionObserver is unsupported?
- * Ideally the polyfill has been loaded, you can have the following happen:
- * - `undefined`: Throw an error
- * - `true` or `false`: Set the `inView` value to this regardless of intersection state
- *
- */
-export function defaultFallbackInView(inView: boolean | undefined) {
-  unsupportedValue = inView
-}
-
-/**
- * Generate a unique ID for the root element
- * @param root
- */
 function getRootId(root: IntersectionObserverInit['root']) {
   if (!root) return '0'
   if (RootIds.has(root)) return RootIds.get(root)
@@ -37,27 +16,14 @@ function getRootId(root: IntersectionObserverInit['root']) {
   return RootIds.get(root)
 }
 
-/**
- * Convert the options to a string Id, based on the values.
- * Ensures we can reuse the same observer when observing elements with the same options.
- * @param options
- */
-export function optionsToId(options: IntersectionObserverInit & { trackVisibility?: boolean; delay?: number }) {
-  return Object.keys(options)
+export const optionsToId = (options: IntersectionObserverInit & { trackVisibility?: boolean; delay?: number }) =>
+  Object.keys(options)
     .sort()
     .filter((key) => options[key as keyof IntersectionObserverInit] !== undefined)
-    .map((key) => {
-      return `${key}_${key === 'root' ? getRootId(options.root) : options[key as keyof IntersectionObserverInit]}`
-    })
+    .map((key) => `${key}_${key === 'root' ? getRootId(options.root) : options[key as keyof IntersectionObserverInit]}`)
     .toString()
-}
 
-function createObserver(
-  options: IntersectionObserverInit & {
-    trackVisibility?: boolean
-    delay?: number
-  }
-) {
+function createObserver(options: IntersectionObserverInit & { trackVisibility?: boolean; delay?: number }) {
   // Create a unique ID for this observer instance, based on the root, root margin and threshold.
   const id = optionsToId(options)
   let instance = observerMap.get(id)
@@ -101,13 +67,6 @@ function createObserver(
   return instance
 }
 
-/**
- * @param element - DOM Element to observe
- * @param callback - Callback function to trigger when intersection status changes
- * @param options - Intersection Observer options
- * @param fallbackInView - Fallback inView value.
- * @returns Function - Cleanup function that should be triggered to unregister the observer
- */
 export function observe(
   element: Element,
   callback: ObserverInstanceCallback,
@@ -115,7 +74,7 @@ export function observe(
     trackVisibility?: boolean
     delay?: number
   } = {},
-  fallbackInView = unsupportedValue
+  fallbackInView?: boolean
 ) {
   if (typeof window.IntersectionObserver === 'undefined' && fallbackInView !== undefined) {
     const bounds = element.getBoundingClientRect()
