@@ -1,5 +1,14 @@
 # @suspensive/jotai
 
+## 2.14.1
+
+### Patch Changes
+
+- [#1241](https://github.com/toss/suspensive/pull/1241) [`afbb430`](https://github.com/toss/suspensive/commit/afbb43056d89ccb7a650495758b594587a3d0728) Thanks [@gwansikk](https://github.com/gwansikk)! - feat(jotai): add jsdoc to jotai component
+
+- Updated dependencies []:
+  - @suspensive/utils@2.14.1
+
 ## 2.14.0
 
 ### Patch Changes
