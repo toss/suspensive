@@ -21875,7 +21875,7 @@ snapshots:
     dependencies:
       object-assign: 4.1.1
       react: 18.3.1
-      react-is: 17.0.2
+      react-is: 18.3.1
 
   react-test-renderer@18.2.0(react@18.3.1):
     dependencies:
