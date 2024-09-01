@@ -7,7 +7,6 @@ vi.hoisted(() => {
   global.vi = undefined
 })
 
-beforeAll(() => {})
 
 test('should warn if not running in test env', () => {
   vi.spyOn(console, 'error').mockImplementation(() => {})
