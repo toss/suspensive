@@ -1,6 +1,6 @@
 {
   "name": "@suspensive/react-query-next-experimental",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "React Query Next Experimental for Streaming SSR",
   "keywords": [
     "suspensive",
