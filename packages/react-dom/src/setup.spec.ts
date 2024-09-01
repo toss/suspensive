@@ -1,4 +1,4 @@
-import { beforeAll, expect, test, vi } from 'vitest'
+import { expect, test, vi } from 'vitest'
 import { mockAllIsIntersecting } from './test-utils'
 
 vi.hoisted(() => {
@@ -6,7 +6,6 @@ vi.hoisted(() => {
   // @ts-expect-error Property 'vi' does not exist on type 'typeof globalThis'.
   global.vi = undefined
 })
-
 
 test('should warn if not running in test env', () => {
   vi.spyOn(console, 'error').mockImplementation(() => {})
