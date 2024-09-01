@@ -1,7 +1,7 @@
-import { type InViewOptions, type InViewResult, useInView } from './useInView'
+import { type InViewOptions, useInView } from './useInView'
 
 interface InViewProps extends InViewOptions {
-  children: (inViewResult: InViewResult) => React.ReactNode
+  children: (inViewResult: ReturnType<typeof useInView>) => React.ReactNode
 }
 
 export function InView({ children, ...options }: InViewProps) {
