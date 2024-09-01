@@ -13,12 +13,12 @@
     "@suspensive/react-native": "workspace:*",
     "expo": "catalog:",
     "expo-status-bar": "catalog:",
-    "react": "catalog:",
-    "react-native": "catalog:"
+    "react": "catalog:react18",
+    "react-native": "catalog:react18"
   },
   "devDependencies": {
     "@babel/core": "^7.24.9",
     "@expo/webpack-config": "catalog:",
-    "@types/react": "catalog:"
+    "@types/react": "catalog:react18"
   }
 }

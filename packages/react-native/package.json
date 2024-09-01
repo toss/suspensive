@@ -63,7 +63,7 @@
     "jest": "catalog:",
     "jest-expo": "catalog:",
     "react": "catalog:react18",
-    "react-native": "catalog:",
+    "react-native": "catalog:react18",
     "ts-node": "^10.9.2"
   },
   "peerDependencies": {
