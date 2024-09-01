@@ -2,16 +2,9 @@ import { Component, createElement } from 'react'
 import { observe } from './observe'
 import type { IntersectionObserverProps, PlainChildrenProps } from './types'
 
-function isPlainChildren(props: IntersectionObserverProps | PlainChildrenProps): props is PlainChildrenProps {
-  return typeof props.children !== 'function'
-}
-
 export class InView extends Component<
   IntersectionObserverProps | PlainChildrenProps,
-  {
-    inView: boolean
-    entry?: IntersectionObserverEntry
-  }
+  { inView: boolean; entry?: IntersectionObserverEntry }
 > {
   node: Element | null = null
   _unobserveCb: (() => void) | null = null
@@ -93,7 +86,7 @@ export class InView extends Component<
       // If `triggerOnce` is true, we should stop observing the element.
       this.unobserve()
     }
-    if (!isPlainChildren(this.props)) {
+    if (this.props.children === 'function') {
       // Store the current State, so we can pass it to the children in the next render update
       // There's no reason to update the state for plain children, since it's not used in the rendering.
       this.setState({ inView, entry })
