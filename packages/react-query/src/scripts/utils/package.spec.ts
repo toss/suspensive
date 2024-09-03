@@ -12,6 +12,8 @@ const version4APIs = [
   'useSuspenseQuery',
   'useSuspenseQueries',
   'useSuspenseInfiniteQuery',
+  'usePrefetchQuery',
+  'usePrefetchInfiniteQuery',
   'queryOptions',
   'infiniteQueryOptions',
   'SuspenseQuery',
