@@ -33,7 +33,6 @@ export const HomePage = ({
       <div className="h-14"></div>
       <div className="flex flex-col items-start justify-between gap-8 md:flex-row">
         {items.map(({ title, desc }) => (
-          // eslint-disable-next-line @eslint-react/no-duplicate-key
           <div className="flex flex-1 flex-col items-center justify-center gap-3 text-center" key={title}>
             <div className="text-xl font-bold">{title}</div>
             <p className="text-lg">{desc}</p>

@@ -25,7 +25,6 @@ export default wrap
           <div>
             zod error:
             {error.errors.map((error) => (
-              // eslint-disable-next-line @eslint-react/no-duplicate-key
               <p key={error.code}>{error.message}</p>
             ))}
           </div>

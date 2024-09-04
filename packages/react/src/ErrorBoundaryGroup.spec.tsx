@@ -22,7 +22,6 @@ describe('<ErrorBoundaryGroup/>', () => {
           {(group) => <button onClick={group.reset}>{resetButtonText}</button>}
         </ErrorBoundaryGroup.Consumer>
         {Array.from({ length: innerErrorBoundaryCount }).map((_, i) => (
-          // eslint-disable-next-line @eslint-react/no-array-index-key, @eslint-react/no-duplicate-key
           <ErrorBoundary key={i} fallback={(props) => <div>{props.error.message}</div>}>
             <Throw.Error message={ERROR_MESSAGE} after={ms('0.1s')}>
               <div>{TEXT}</div>
@@ -47,7 +46,6 @@ describe('<ErrorBoundaryGroup/>', () => {
           {(group) => <button onClick={group.reset}>{resetButtonText}</button>}
         </ErrorBoundaryGroup.Consumer>
         {Array.from({ length: innerErrorBoundaryCount }).map((_, i) => (
-          // eslint-disable-next-line @eslint-react/no-array-index-key, @eslint-react/no-duplicate-key
           <ErrorBoundaryGroup key={i} blockOutside={i === innerErrorBoundaryCount - 1}>
             <ErrorBoundary fallback={(props) => <div>{props.error.message}</div>}>
               <Throw.Error message={ERROR_MESSAGE} after={ms('0.1s')}>
