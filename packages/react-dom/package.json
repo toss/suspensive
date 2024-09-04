@@ -57,7 +57,9 @@
     "@suspensive/tsconfig": "workspace:*",
     "@suspensive/tsup": "workspace:*",
     "@types/react": "catalog:react18",
-    "react": "catalog:react18"
+    "@types/react-dom": "catalog:react18",
+    "react": "catalog:react18",
+    "react-dom": "catalog:react18"
   },
   "peerDependencies": {
     "react": "^18"
