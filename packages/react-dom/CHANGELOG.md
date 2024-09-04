@@ -1,5 +1,11 @@
 # @suspensive/react-dom
 
+## 0.1.0
+
+### Minor Changes
+
+- [`1a881a8`](https://github.com/toss/suspensive/commit/1a881a8e137785756fcb9ba547c2ef79c1436276) Thanks [@manudeli](https://github.com/manudeli)! - feat(react-dom): add InView, useInView
+
 ## 0.0.9
 
 ### Patch Changes
