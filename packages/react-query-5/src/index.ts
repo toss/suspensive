@@ -6,6 +6,8 @@ export { useSuspenseQueries } from './useSuspenseQueries'
 export type { SuspenseQueriesOptions, SuspenseQueriesResults } from './useSuspenseQueries'
 export { useSuspenseInfiniteQuery } from './useSuspenseInfiniteQuery'
 export type { UseSuspenseInfiniteQueryOptions, UseSuspenseInfiniteQueryResult } from './useSuspenseInfiniteQuery'
+export { usePrefetchQuery } from './usePrefetchQuery'
+export { usePrefetchInfiniteQuery } from './usePrefetchInfiniteQuery'
 
 export { SuspenseQuery } from './SuspenseQuery'
 export { SuspenseQueries } from './SuspenseQueries'

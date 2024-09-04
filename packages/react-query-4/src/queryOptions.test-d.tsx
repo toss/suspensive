@@ -3,6 +3,7 @@ import { type UseQueryResult, useQueries, useQuery, useQueryClient } from '@tans
 import { describe, expectTypeOf, it } from 'vitest'
 import { queryOptions } from './queryOptions'
 import { SuspenseQuery } from './SuspenseQuery'
+import { usePrefetchQuery } from './usePrefetchQuery'
 import { useSuspenseQueries } from './useSuspenseQueries'
 import { type UseSuspenseQueryResult, useSuspenseQuery } from './useSuspenseQuery'
 
@@ -56,7 +57,6 @@ describe('queryOptions', () => {
       </SuspenseQuery>
     ))()
   })
-
   it('should be used with useQueries', () => {
     const [query1, query2, query3] = useQueries({
       queries: [
@@ -102,7 +102,12 @@ describe('queryOptions', () => {
     expectTypeOf(query3).toEqualTypeOf<UseSuspenseQueryResult<string>>()
     expectTypeOf(query3.data).toEqualTypeOf<string>()
   })
-
+  it('should be used with usePrefetchQuery', () => {
+    // eslint-disable-next-line @typescript-eslint/no-invalid-void-type
+    expectTypeOf(usePrefetchQuery(query.options1())).toMatchTypeOf<void>()
+    // eslint-disable-next-line @typescript-eslint/no-invalid-void-type
+    expectTypeOf(usePrefetchQuery({ ...query.options1() })).toMatchTypeOf<void>()
+  })
   it('should be used with useQueryClient', async () => {
     const queryClient = useQueryClient()
 

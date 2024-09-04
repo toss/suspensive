@@ -91,6 +91,8 @@ export function getTanStackReactQueryAPIs(majorVersionOfTanStackQuery: string): 
         'useSuspenseQuery',
         'useSuspenseQueries',
         'useSuspenseInfiniteQuery',
+        'usePrefetchQuery',
+        'usePrefetchInfiniteQuery',
         'queryOptions',
         'infiniteQueryOptions',
       ]

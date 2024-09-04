@@ -1,5 +1,12 @@
 # @suspensive/react-dom
 
+## 0.0.9
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @suspensive/utils@2.15.0
+
 ## 0.0.8
 
 ### Patch Changes
