@@ -3,6 +3,7 @@ import { type InfiniteData, type UseInfiniteQueryResult, useInfiniteQuery, useQu
 import { describe, expectTypeOf, it } from 'vitest'
 import { infiniteQueryOptions } from './infiniteQueryOptions'
 import { SuspenseInfiniteQuery } from './SuspenseInfiniteQuery'
+import { usePrefetchInfiniteQuery } from './usePrefetchInfiniteQuery'
 import { type UseSuspenseInfiniteQueryResult, useSuspenseInfiniteQuery } from './useSuspenseInfiniteQuery'
 
 const infiniteQuery = {
@@ -77,7 +78,12 @@ describe('infiniteQueryOptions', () => {
       </SuspenseInfiniteQuery>
     ))()
   })
-
+  it('should be used with usePrefetchInfiniteQuery', () => {
+    // eslint-disable-next-line @typescript-eslint/no-invalid-void-type
+    expectTypeOf(usePrefetchInfiniteQuery(infiniteQuery.options1())).toMatchTypeOf<void>()
+    // eslint-disable-next-line @typescript-eslint/no-invalid-void-type
+    expectTypeOf(usePrefetchInfiniteQuery({ ...infiniteQuery.options1() })).toMatchTypeOf<void>()
+  })
   it('should be used with useQueryClient', async () => {
     const queryClient = useQueryClient()
 
