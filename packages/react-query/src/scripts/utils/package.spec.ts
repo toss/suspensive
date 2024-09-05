@@ -19,6 +19,8 @@ const version4APIs = [
   'SuspenseQuery',
   'SuspenseQueries',
   'SuspenseInfiniteQuery',
+  'PrefetchQuery',
+  'PrefetchInfiniteQuery',
   'QueryErrorBoundary',
   'Mutation',
 ]
