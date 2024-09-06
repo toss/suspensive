@@ -1,5 +1,17 @@
 # @suspensive/react-query
 
+## 2.16.1
+
+### Patch Changes
+
+- [#1261](https://github.com/toss/suspensive/pull/1261) [`f599246`](https://github.com/toss/suspensive/commit/f599246078bf7ad4bcf3a7528245ce92d1a6472c) Thanks [@manudeli](https://github.com/manudeli)! - feat(react-query): remove experimental jsdoc of infiniteQueryOptions,`<Mutation/>`
+
+- Updated dependencies [[`f599246`](https://github.com/toss/suspensive/commit/f599246078bf7ad4bcf3a7528245ce92d1a6472c)]:
+  - @suspensive/react-query-4@2.16.1
+  - @suspensive/react-query-5@2.16.1
+  - @suspensive/utils@2.16.1
+  - @suspensive/react@2.16.1
+
 ## 2.16.0
 
 ### Minor Changes
