@@ -1,5 +1,19 @@
 # @suspensive/react-query
 
+## 2.16.0
+
+### Minor Changes
+
+- [#1258](https://github.com/toss/suspensive/pull/1258) [`b9c8757`](https://github.com/toss/suspensive/commit/b9c87576fc19194d1e1edcf302cedc52b6d629c5) Thanks [@manudeli](https://github.com/manudeli)! - feat(react-query): add `<PrefetchQuery/>`, `<PrefetchInfiniteQuery/>`
+
+### Patch Changes
+
+- Updated dependencies [[`b9c8757`](https://github.com/toss/suspensive/commit/b9c87576fc19194d1e1edcf302cedc52b6d629c5)]:
+  - @suspensive/react-query-4@2.16.0
+  - @suspensive/react-query-5@2.16.0
+  - @suspensive/utils@2.16.0
+  - @suspensive/react@2.16.0
+
 ## 2.15.0
 
 ### Patch Changes
