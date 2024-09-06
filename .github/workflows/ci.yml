@@ -40,5 +40,5 @@ jobs:
         with:
           build-script: 'prepack'
           pattern: 'packages/**/dist/*.{js,cjs,mjs}'
-          exclude: '{**/*.map,**/node_modules/**}'
+          exclude: '{**/*.map,**/node_modules/**,**/dist/chunk-*.{js,cjs,mjs}}'
           repo-token: ${{ secrets.GITHUB_TOKEN }}
