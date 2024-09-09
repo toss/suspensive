@@ -26,7 +26,7 @@ const config: DocsThemeConfig = {
     dismissible: true,
   },
   chat: {
-    link: 'https://discord.gg/cmz6NfrNCM',
+    link: 'https://discord.gg/vGXbVjP2nY',
   },
   logo: function Logo() {
     return (
