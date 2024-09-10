@@ -10,9 +10,9 @@
 
 @suspensive/react-query는 npm에 있습니다.
 
-2.2.0 버전 이후로는 @tanstack/react-query의 v4와 v5을 모두 지원합니다. package.json의 dependencies에 @tanstack/react-query의 버전에 따라 자동으로 알맞는 @suspensive/react-query 버전을 사용하게 됩니다.
+2.2.0 버전 이후로는 @tanstack/react-query의 v4와 v5를 모두 지원합니다. package.json의 dependencies에 @tanstack/react-query의 버전에 따라 자동으로 알맞은 @suspensive/react-query 버전을 사용하게 됩니다.
 
-@suspensive/react-query 는 npm에 있습니다. 최신 안정버전을 설치하기 위해 아래 커맨드를 실행하세요
+@suspensive/react-query 는 npm에 있습니다. 최신 안정 버전을 설치하기 위해 아래 커맨드를 실행하세요
 
 ```shell npm2yarn
 npm install @suspensive/react-query @tanstack/react-query
