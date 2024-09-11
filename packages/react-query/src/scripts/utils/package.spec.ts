@@ -23,6 +23,7 @@ const version4APIs = [
   'PrefetchQuery',
   'PrefetchInfiniteQuery',
   'Mutation',
+  'QueryClient',
 ]
 
 describe('package', () => {
