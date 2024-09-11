@@ -20,7 +20,7 @@ const version4APIs = [
   'SuspenseQueries',
   'SuspenseInfiniteQuery',
   'QueryErrorBoundary',
-  'QueryClient',
+  'QueryClientConsumer',
   'PrefetchQuery',
   'PrefetchInfiniteQuery',
   'Mutation',
