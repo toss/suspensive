@@ -20,10 +20,10 @@ const version4APIs = [
   'SuspenseQueries',
   'SuspenseInfiniteQuery',
   'QueryErrorBoundary',
+  'QueryClient',
   'PrefetchQuery',
   'PrefetchInfiniteQuery',
   'Mutation',
-  'QueryClient',
 ]
 
 describe('package', () => {
