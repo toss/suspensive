@@ -1,5 +1,17 @@
 # @suspensive/react-query-5
 
+## 2.17.0
+
+### Minor Changes
+
+- [#1269](https://github.com/toss/suspensive/pull/1269) [`0e859c9`](https://github.com/toss/suspensive/commit/0e859c977d2e6491da376337c3ea03e726d9b614) Thanks [@gwansikk](https://github.com/gwansikk)! - feat(react-query): add `<QueryClientConsumer/>`
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @suspensive/utils@2.17.0
+  - @suspensive/react@2.17.0
+
 ## 2.16.1
 
 ### Patch Changes

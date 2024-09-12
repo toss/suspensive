@@ -1,6 +1,6 @@
 {
   "name": "@suspensive/react-image",
-  "version": "0.0.35",
+  "version": "0.0.36",
   "description": "Useful image interfaces for React Suspense",
   "keywords": [
     "suspensive",
