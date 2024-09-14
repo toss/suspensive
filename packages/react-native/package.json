@@ -1,7 +1,7 @@
 {
   "name": "@suspensive/react-native",
   "version": "0.0.14",
-  "description": "Useful interfaces for React Suspense",
+  "description": "Enhances React Native with Suspense-ready components and utilities",
   "keywords": [
     "suspensive",
     "react",

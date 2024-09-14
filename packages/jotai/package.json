@@ -1,7 +1,7 @@
 {
   "name": "@suspensive/jotai",
   "version": "2.17.0",
-  "description": "Useful helpers for jotai with suspense",
+  "description": "Integrates Jotai with React Suspense, providing suspense-ready atoms",
   "keywords": [
     "suspensive",
     "react",

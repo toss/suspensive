@@ -1,7 +1,7 @@
 {
   "name": "@suspensive/react-query-next-experimental-4",
   "version": "0.0.7",
-  "description": "React Query Next Experimental for Streaming SSR",
+  "description": "Experimental integration of React Query v4 with Next.js App Router, extending streaming SSR with Suspense",
   "keywords": [
     "suspensive",
     "react-query",
