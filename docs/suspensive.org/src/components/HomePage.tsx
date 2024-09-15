@@ -21,7 +21,7 @@ export const HomePage = ({
         <Image src="/img/logo_background_star.png" alt="Suspensive with star" width={400} height={241} />
         <div className="flex flex-col items-center gap-4">
           <div className="relative text-5xl font-bold">
-            <span>{title}</span> <span className="right absolute text-sm">v{version}</span>
+            <span>{title}</span> <span className="absolute right-0 text-sm">v{version}</span>
           </div>
           <p className="text-3xl">{description}</p>
         </div>

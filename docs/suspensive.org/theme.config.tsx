@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { useRouter } from 'next/router.js'
+import { useRouter } from 'next/router'
 import { type DocsThemeConfig, useConfig } from 'nextra-theme-docs'
 
 const localeBanner = {
@@ -34,7 +34,7 @@ const config: DocsThemeConfig = {
         <Image src="/img/logo_dark.png" width={34} height={34} alt="suspensive logo" />
         <div className="relative">
           <strong>Suspensive</strong>
-          <span className="right absolute text-[8px]">v2</span>
+          <span className="absolute right-0 text-[8px]">v2</span>
         </div>
       </div>
     )
