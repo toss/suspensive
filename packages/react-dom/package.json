@@ -1,7 +1,7 @@
 {
   "name": "@suspensive/react-dom",
   "version": "0.1.3",
-  "description": "Useful interfaces for React Suspense",
+  "description": "Suspensive interfaces for react-dom",
   "keywords": [
     "suspensive",
     "react",
