@@ -1,6 +1,6 @@
 {
   "name": "@suspensive/react-image",
-  "version": "0.0.36",
+  "version": "0.0.37",
   "description": "Integrates with React Suspense for image loading and management",
   "keywords": [
     "suspensive",
