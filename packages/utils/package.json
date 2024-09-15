@@ -1,7 +1,7 @@
 {
   "name": "@suspensive/utils",
   "version": "2.17.0",
-  "description": "Utilities and interfaces for extending React Suspense implementations",
+  "description": "Internal utilities for Suspensive",
   "keywords": [
     "suspensive",
     "react",
