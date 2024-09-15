@@ -1,7 +1,7 @@
 {
   "name": "@suspensive/react-query-4",
   "version": "2.17.0",
-  "description": "Suspense-ready components and hooks for React Query v4, with backward compatibility",
+  "description": "Suspensive interfaces for @tanstack/react-query@4",
   "keywords": [
     "suspensive",
     "react",
