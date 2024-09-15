@@ -1,7 +1,7 @@
 {
   "name": "@suspensive/react-query-5",
   "version": "2.17.0",
-  "description": "Deprecated Suspense-ready tools for React Query v5, facilitating migration to TanStack Query v5",
+  "description": "Suspensive interfaces for @tanstack/react-query@5",
   "keywords": [
     "suspensive",
     "react",
