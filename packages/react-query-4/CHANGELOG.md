@@ -1,5 +1,15 @@
 # @suspensive/react-query-4
 
+## 2.17.1
+
+### Patch Changes
+
+- [#1272](https://github.com/toss/suspensive/pull/1272) [`89f5b5c`](https://github.com/toss/suspensive/commit/89f5b5c4d9b16bcbed77ef3e17bb1f34babe2921) Thanks [@love1ace](https://github.com/love1ace)! - docs(\*): update description of package.json
+
+- Updated dependencies [[`89f5b5c`](https://github.com/toss/suspensive/commit/89f5b5c4d9b16bcbed77ef3e17bb1f34babe2921)]:
+  - @suspensive/react@2.17.1
+  - @suspensive/utils@2.17.1
+
 ## 2.17.0
 
 ### Minor Changes

@@ -1,5 +1,12 @@
 # @suspensive/react-query-next-experimental
 
+## 0.0.8
+
+### Patch Changes
+
+- Updated dependencies [[`89f5b5c`](https://github.com/toss/suspensive/commit/89f5b5c4d9b16bcbed77ef3e17bb1f34babe2921)]:
+  - @suspensive/utils@2.17.1
+
 ## 0.0.7
 
 ### Patch Changes
