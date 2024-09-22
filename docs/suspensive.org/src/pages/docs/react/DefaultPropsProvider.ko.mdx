@@ -1,3 +1,5 @@
+import { Sandpack } from '@/components'
+
 # DefaultPropsProvider
 
 이 컴포넌트는 Suspensive가 제공하는 컴포넌트들(Suspense, Delay 등)의 설정을 한 번에 제어합니다.
@@ -19,3 +21,79 @@ function App() {
   return <DefaultPropsProvider defaultProps={defaultProps}>...</DefaultPropsProvider>
 }
 ```
+
+<Sandpack>
+
+```tsx Example.tsx active
+import { DefaultProps, DefaultPropsProvider, Suspense, Delay } from '@suspensive/react'
+import { SuspenseQuery } from '@suspensive/react-query'
+import { fetch1sQueryOptions } from './queries'
+
+const defaultProps = new DefaultProps({
+  Delay: {
+    ms: 1200,
+    fallback: <div style={{ padding: 10, background: 'lightyellow' }}>Loading additional content...</div>,
+  },
+  Suspense: {
+    fallback: <div style={{ padding: 10, background: 'lightblue' }}>Fetching post...</div>,
+    clientOnly: false,
+  },
+})
+
+export const Example = () => {
+  return (
+    <DefaultPropsProvider defaultProps={defaultProps}>
+      <div style={{ fontFamily: 'Arial, sans-serif', maxWidth: '300px', margin: '20px auto' }}>
+        <Suspense>
+          <SuspenseQuery {...fetch1sQueryOptions(1)}>
+            {({ data }) => (
+              <div style={{ padding: 15, background: '#f0f0f0' }}>
+                <h2>{data.title}</h2>
+                <p>ID: {data.id}</p>
+                <Delay>
+                  <div style={{ marginTop: 10, padding: 10, background: '#e0e0e0' }}>
+                    <h3>Additional Details:</h3>
+                    <p>{data.body}</p>
+                  </div>
+                </Delay>
+              </div>
+            )}
+          </SuspenseQuery>
+        </Suspense>
+      </div>
+    </DefaultPropsProvider>
+  )
+}
+```
+
+```tsx queries.ts
+import { queryOptions } from '@suspensive/react-query'
+import { fetch1s } from './api'
+
+export const fetch1sQueryOptions = (id: number) =>
+  queryOptions({
+    queryKey: ['posts', id],
+    queryFn: () => fetch1s(id),
+  })
+```
+
+```tsx api.ts
+export type Post = {
+  id: number
+  title: string
+  body: string
+}
+
+export const fetch1s = (id: number): Promise<Post> =>
+  new Promise((resolve) => {
+    setTimeout(() => {
+      resolve({
+        id: id,
+        title: `Lorem Ipsum ${id}`,
+        body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
+      });
+    }, 1000);
+  });
+```
+
+</Sandpack>
