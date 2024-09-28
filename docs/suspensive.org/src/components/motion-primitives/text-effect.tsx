@@ -1,7 +1,8 @@
 'use client'
-import { cn } from '@/utils'
-import { AnimatePresence, motion, TargetAndTransition, Variants } from 'framer-motion'
+// eslint-disable-next-line sort-imports
+import { AnimatePresence, motion, type Variants, type TargetAndTransition } from 'framer-motion'
 import React from 'react'
+import { cn } from '@/utils'
 
 type PresetType = 'blur' | 'shake' | 'scale' | 'fade' | 'slide'
 
@@ -169,8 +170,8 @@ export default function TextEffect({
     visible: {
       ...containerVariants.visible,
       transition: {
-        ...(containerVariants.visible as TargetAndTransition)?.transition,
-        staggerChildren: (containerVariants.visible as TargetAndTransition)?.transition?.staggerChildren || stagger,
+        ...(containerVariants.visible as TargetAndTransition).transition,
+        staggerChildren: (containerVariants.visible as TargetAndTransition).transition?.staggerChildren || stagger,
         delayChildren: delay,
       },
     },
