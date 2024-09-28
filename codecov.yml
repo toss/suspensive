@@ -60,10 +60,6 @@ component_management:
       name: '@suspensive/jotai'
       paths:
         - packages/jotai/**
-    - component_id: cache
-      name: '@suspensive/cache'
-      paths:
-        - packages/cache/**
     - component_id: react-image
       name: '@suspensive/react-image'
       paths:

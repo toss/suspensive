@@ -468,9 +468,6 @@ importers:
 
   examples/visualization:
     dependencies:
-      '@suspensive/cache':
-        specifier: workspace:*
-        version: link:../../packages/cache
       '@suspensive/react':
         specifier: workspace:*
         version: link:../../packages/react
@@ -569,31 +566,6 @@ importers:
       globals:
         specifier: ^15.9.0
         version: 15.9.0
-
-  packages/cache:
-    dependencies:
-      '@suspensive/utils':
-        specifier: workspace:*
-        version: link:../utils
-    devDependencies:
-      '@suspensive/eslint-config':
-        specifier: workspace:*
-        version: link:../../configs/eslint-config
-      '@suspensive/react':
-        specifier: workspace:*
-        version: link:../react
-      '@suspensive/tsconfig':
-        specifier: workspace:*
-        version: link:../../configs/tsconfig
-      '@suspensive/tsup':
-        specifier: workspace:*
-        version: link:../../configs/tsup
-      '@types/react':
-        specifier: catalog:react18
-        version: 18.3.5
-      react:
-        specifier: catalog:react18
-        version: 18.3.1
 
   packages/jotai:
     dependencies:
