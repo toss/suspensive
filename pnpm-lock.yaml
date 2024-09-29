@@ -414,58 +414,6 @@ importers:
         specifier: catalog:react18
         version: 18.3.5
 
-  examples/react-query-next-experimental-4-example:
-    dependencies:
-      '@suspensive/react':
-        specifier: workspace:*
-        version: link:../../packages/react
-      '@suspensive/react-query-4':
-        specifier: workspace:*
-        version: link:../../packages/react-query-4
-      '@suspensive/react-query-next-experimental-4':
-        specifier: workspace:*
-        version: link:../../packages/react-query-next-experimental-4
-      '@tanstack/react-query':
-        specifier: catalog:react-query4
-        version: 4.36.1(react-dom@18.3.1(react@18.3.1))(react-native@0.74.3(@babel/core@7.24.9)(@babel/preset-env@7.25.0(@babel/core@7.24.9))(@types/react@18.3.5)(react@18.3.1))(react@18.3.1)
-      '@tanstack/react-query-devtools':
-        specifier: catalog:react-query4
-        version: 4.36.1(@tanstack/react-query@4.36.1(react-dom@18.3.1(react@18.3.1))(react-native@0.74.3(@babel/core@7.24.9)(@babel/preset-env@7.25.0(@babel/core@7.24.9))(@types/react@18.3.5)(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      next:
-        specifier: 'catalog:'
-        version: 14.2.5(@babel/core@7.24.9)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      react:
-        specifier: catalog:react18
-        version: 18.3.1
-      react-dom:
-        specifier: catalog:react18
-        version: 18.3.1(react@18.3.1)
-      sharp:
-        specifier: 'catalog:'
-        version: 0.33.4
-    devDependencies:
-      '@suspensive/eslint-config':
-        specifier: workspace:*
-        version: link:../../configs/eslint-config
-      '@types/react':
-        specifier: catalog:react18
-        version: 18.3.5
-      '@types/react-dom':
-        specifier: catalog:react18
-        version: 18.3.0
-      autoprefixer:
-        specifier: 'catalog:'
-        version: 10.4.20(postcss@8.4.41)
-      postcss:
-        specifier: 'catalog:'
-        version: 8.4.41
-      prettier-plugin-tailwindcss:
-        specifier: 'catalog:'
-        version: 0.6.6(prettier@3.3.3)
-      tailwindcss:
-        specifier: 'catalog:'
-        version: 3.4.10(ts-node@10.9.2(@types/node@20.14.13)(typescript@5.5.4))
-
   examples/visualization:
     dependencies:
       '@suspensive/react':
@@ -777,65 +725,6 @@ importers:
       '@types/react':
         specifier: catalog:react18
         version: 18.3.5
-      react:
-        specifier: catalog:react18
-        version: 18.3.1
-
-  packages/react-query-next-experimental:
-    dependencies:
-      '@suspensive/react-query-next-experimental-4':
-        specifier: workspace:*
-        version: link:../react-query-next-experimental-4
-      '@suspensive/utils':
-        specifier: workspace:*
-        version: link:../utils
-      '@tanstack/react-query':
-        specifier: ^4 || ^5
-        version: 4.36.1(react-dom@18.3.1(react@18.3.1))(react-native@0.74.3(@babel/core@7.24.9)(@babel/preset-env@7.25.0(@babel/core@7.24.9))(@types/react@18.3.5)(react@18.3.1))(react@18.3.1)
-    devDependencies:
-      '@suspensive/eslint-config':
-        specifier: workspace:*
-        version: link:../../configs/eslint-config
-      '@suspensive/tsconfig':
-        specifier: workspace:*
-        version: link:../../configs/tsconfig
-      '@suspensive/tsup':
-        specifier: workspace:*
-        version: link:../../configs/tsup
-      '@types/react':
-        specifier: catalog:react18
-        version: 18.3.5
-      next:
-        specifier: 'catalog:'
-        version: 14.2.5(@babel/core@7.24.9)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      react:
-        specifier: catalog:react18
-        version: 18.3.1
-
-  packages/react-query-next-experimental-4:
-    dependencies:
-      '@suspensive/utils':
-        specifier: workspace:*
-        version: link:../utils
-    devDependencies:
-      '@suspensive/eslint-config':
-        specifier: workspace:*
-        version: link:../../configs/eslint-config
-      '@suspensive/tsconfig':
-        specifier: workspace:*
-        version: link:../../configs/tsconfig
-      '@suspensive/tsup':
-        specifier: workspace:*
-        version: link:../../configs/tsup
-      '@tanstack/react-query':
-        specifier: catalog:react-query4
-        version: 4.36.1(react-dom@18.3.1(react@18.3.1))(react-native@0.74.3(@babel/core@7.24.9)(@babel/preset-env@7.25.0(@babel/core@7.24.9))(@types/react@18.3.5)(react@18.3.1))(react@18.3.1)
-      '@types/react':
-        specifier: catalog:react18
-        version: 18.3.5
-      next:
-        specifier: 'catalog:'
-        version: 14.2.5(@babel/core@7.24.9)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react:
         specifier: catalog:react18
         version: 18.3.1
