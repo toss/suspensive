@@ -6,12 +6,6 @@
   "react": "@suspensive/react",
   "react-query": "@suspensive/react-query",
   "jotai": "@suspensive/jotai",
-  "react-image": {
-    "title": "@suspensive/react-image",
-    "theme": {
-      "collapsed": true
-    }
-  },
   "--- More": {
     "type": "separator",
     "title": "더보기"
