@@ -6,7 +6,7 @@ body:
   - type: dropdown
     id: package
     attributes:
-      label: Package Scope  
+      label: Package Scope
       description: Is this issue related to a specific package?
       multiple: true
       options:
