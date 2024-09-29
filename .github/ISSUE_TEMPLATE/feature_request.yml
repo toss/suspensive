@@ -19,7 +19,6 @@ body:
         - "@suspensive/react-query-next-experimental"
         - "@suspensive/react-query-next-experimental-4"
         - "@suspensive/jotai"
-        - "@suspensive/cache"
         - "@suspensive/react-image"
         - etc
     validations:
