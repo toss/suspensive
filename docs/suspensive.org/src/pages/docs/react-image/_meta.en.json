@@ -1,8 +1,0 @@
-{
-  "installation": { "title": "Installation" },
-  "--- API Reference": {
-    "type": "separator",
-    "title": "API Reference"
-  },
-  "SuspenseImage": { "title": "<SuspenseImage/>" }
-}

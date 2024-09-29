@@ -73,14 +73,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 </li>
               </details>
             </li>
-            <li>
-              <details>
-                <summary>@suspensive/react-image</summary>
-                <li>
-                  <Link href="/react-image/SuspenseImage">{`<SuspenseImage/>`}</Link>
-                </li>
-              </details>
-            </li>
           </ul>
           <div className="flex flex-1 items-center justify-center">{children}</div>
         </Providers>

@@ -18,8 +18,6 @@
   - "packages/react-query-next-experimental-4/**/*"
 "@suspensive/jotai":
   - "packages/jotai/**/*"
-"@suspensive/react-image":
-  - "packages/react-image/**/*"
 "suspensive.org":
   - "docs/suspensive.org/**/*"
 "examples":
