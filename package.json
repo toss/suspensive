@@ -65,7 +65,7 @@
     "lint-staged": "^15.2.9",
     "ms": "3.0.0-canary.1",
     "packlint": "^0.2.4",
-    "playwright": "^1.46.1",
+    "playwright": "^1.47.2",
     "prettier": "^3.3.3",
     "publint": "^0.2.10",
     "rimraf": "^6.0.1",
