@@ -1,6 +1,5 @@
-import type { OmitKeyof } from '@suspensive/utility-types'
+import type { OmitKeyof, RequiredKeyof } from '@suspensive/utility-types'
 import type { InfiniteData, QueryKey, UseInfiniteQueryOptions } from '@tanstack/react-query'
-import type { RequiredKeyof } from './utility-types'
 
 export type SelectedInfiniteOptions<
   TQueryFnData,
