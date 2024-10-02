@@ -4,7 +4,7 @@
   "commit": false,
   "fixed": [
     [
-      "@suspensive/utils",
+      "@suspensive/utility-types",
       "@suspensive/react",
       "@suspensive/react-query",
       "@suspensive/react-query-4",

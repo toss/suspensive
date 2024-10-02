@@ -1,5 +1,6 @@
-import type { OmitKeyof, RequiredKeyof } from '@suspensive/utils'
+import type { OmitKeyof } from '@suspensive/utility-types'
 import type { QueryKey, UseQueryOptions } from '@tanstack/react-query'
+import type { RequiredKeyof } from './utility-types'
 
 export type SelectedQueryOptions<
   TQueryFnData = unknown,

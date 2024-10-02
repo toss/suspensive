@@ -1,6 +1,6 @@
-import { queryFn, queryKey, select } from '@suspensive/utils'
 import { describe, expectTypeOf, it } from 'vitest'
 import { queryOptions } from './queryOptions'
+import { queryFn, queryKey, select } from './test-utils'
 import { useSuspenseQueries } from './useSuspenseQueries'
 import type { UseSuspenseQueryResult } from './useSuspenseQuery'
 

@@ -1,6 +1,6 @@
 {
   "extends": "@suspensive/tsconfig/react-library.json",
-  "include": [".", "eslint.config.mjs"],
+  "include": [".", "eslint.config.mjs", "../react/src/utility-types/Nullable.ts"],
   "compilerOptions": {
     "types": ["@testing-library/jest-dom/vitest", "vitest/globals"]
   }

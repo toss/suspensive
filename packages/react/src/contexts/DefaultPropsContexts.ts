@@ -1,4 +1,4 @@
-import type { OmitKeyof } from '@suspensive/utils'
+import type { OmitKeyof } from '@suspensive/utility-types'
 import { createContext } from 'react'
 import type { DelayProps, SuspenseProps } from '..'
 

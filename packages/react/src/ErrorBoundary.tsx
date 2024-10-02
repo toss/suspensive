@@ -1,4 +1,3 @@
-import type { ConstructorType, Nullable } from '@suspensive/utils'
 import {
   Component,
   type ErrorInfo,
@@ -19,7 +18,7 @@ import {
   Message_useErrorBoundary_this_hook_should_be_called_in_ErrorBoundary_props_children,
   SuspensiveError,
 } from './models/SuspensiveError'
-import type { PropsWithDevMode } from './utility-types'
+import type { ConstructorType, PropsWithDevMode } from './utility-types'
 import { hasResetKeysChanged } from './utils'
 
 export interface ErrorBoundaryFallbackProps<TError extends Error = Error> {
@@ -219,7 +218,7 @@ export const ErrorBoundary = Object.assign(
   }
 )
 
-const ErrorBoundaryContext = createContext<Nullable<{ reset: () => void } & ErrorBoundaryState>>(null)
+const ErrorBoundaryContext = createContext<({ reset: () => void } & ErrorBoundaryState) | null>(null)
 if (process.env.NODE_ENV === 'development') {
   ErrorBoundaryContext.displayName = 'ErrorBoundaryContext'
 }

@@ -1,4 +1,4 @@
-import type { OmitKeyof } from '@suspensive/utils'
+import type { OmitKeyof } from '@suspensive/utility-types'
 import type { ComponentProps, ComponentType } from 'react'
 import { Delay } from './Delay'
 import { ErrorBoundary } from './ErrorBoundary'

@@ -1,4 +1,3 @@
-import { CustomError, ERROR_MESSAGE, FALLBACK, TEXT, Throw, useTimeout } from '@suspensive/utils'
 import { act, render, screen, waitFor } from '@testing-library/react'
 import { userEvent } from '@testing-library/user-event'
 import ms from 'ms'
@@ -9,7 +8,9 @@ import {
   useErrorBoundary,
   useErrorBoundaryFallbackProps,
 } from './ErrorBoundary'
+import { useTimeout } from './hooks'
 import { SuspensiveError } from './models/SuspensiveError'
+import { CustomError, ERROR_MESSAGE, FALLBACK, TEXT, Throw } from './test-utils'
 
 describe('<ErrorBoundary/>', () => {
   beforeEach(() => Throw.reset())

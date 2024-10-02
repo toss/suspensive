@@ -1,18 +1,18 @@
 {
-  "name": "@suspensive/utils",
+  "name": "@suspensive/utility-types",
   "version": "2.17.1",
   "description": "Internal utilities for Suspensive",
   "keywords": [
     "suspensive",
     "react",
-    "utils"
+    "utility-types"
   ],
   "homepage": "https://suspensive.org",
   "bugs": "https://github.com/toss/suspensive/issues",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/toss/suspensive.git",
-    "directory": "packages/utils"
+    "directory": "packages/utility-types"
   },
   "license": "MIT",
   "author": "Jonghyeon Ko <jonghyeon@toss.im>",
@@ -52,12 +52,7 @@
   "devDependencies": {
     "@suspensive/eslint-config": "workspace:*",
     "@suspensive/tsconfig": "workspace:*",
-    "@suspensive/tsup": "workspace:*",
-    "@types/react": "catalog:react18",
-    "react": "catalog:react18"
-  },
-  "peerDependencies": {
-    "react": "^18"
+    "@suspensive/tsup": "workspace:*"
   },
   "publishConfig": {
     "access": "public"

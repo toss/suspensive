@@ -1,8 +1,8 @@
-import { queryFn, queryKey } from '@suspensive/utils'
 import type { UseSuspenseQueryResult } from '@tanstack/react-query'
 import type { ReactNode } from 'react'
 import { describe, expectTypeOf, it } from 'vitest'
 import { SuspenseQueries } from './SuspenseQueries'
+import { queryFn, queryKey } from './test-utils'
 
 describe('<SuspenseQueries/>', () => {
   it('type check', () => {

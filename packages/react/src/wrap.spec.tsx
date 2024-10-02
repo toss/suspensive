@@ -1,8 +1,8 @@
-import { ERROR_MESSAGE, FALLBACK, Suspend, TEXT, Throw } from '@suspensive/utils'
 import { render, screen, waitFor } from '@testing-library/react'
 import ms from 'ms'
 import { createElement } from 'react'
 import { useErrorBoundaryGroup } from './ErrorBoundaryGroup'
+import { ERROR_MESSAGE, FALLBACK, Suspend, TEXT, Throw } from './test-utils'
 import { wrap } from './wrap'
 
 describe('wrap.Suspense().on', () => {

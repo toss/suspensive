@@ -513,10 +513,6 @@ importers:
         version: 15.10.0
 
   packages/jotai:
-    dependencies:
-      '@suspensive/utils':
-        specifier: workspace:*
-        version: link:../utils
     devDependencies:
       '@suspensive/eslint-config':
         specifier: workspace:*
@@ -539,9 +535,9 @@ importers:
 
   packages/react:
     dependencies:
-      '@suspensive/utils':
+      '@suspensive/utility-types':
         specifier: workspace:*
-        version: link:../utils
+        version: link:../utility-types
     devDependencies:
       '@suspensive/eslint-config':
         specifier: workspace:*
@@ -560,10 +556,6 @@ importers:
         version: 18.3.1
 
   packages/react-dom:
-    dependencies:
-      '@suspensive/utils':
-        specifier: workspace:*
-        version: link:../utils
     devDependencies:
       '@suspensive/eslint-config':
         specifier: workspace:*
@@ -588,10 +580,6 @@ importers:
         version: 18.3.1(react@18.3.1)
 
   packages/react-native:
-    dependencies:
-      '@suspensive/utils':
-        specifier: workspace:*
-        version: link:../utils
     devDependencies:
       '@suspensive/eslint-config':
         specifier: workspace:*
@@ -641,9 +629,6 @@ importers:
       '@suspensive/react-query-5':
         specifier: workspace:^2.17.1
         version: link:../react-query-5
-      '@suspensive/utils':
-        specifier: workspace:*
-        version: link:../utils
       cli-table3:
         specifier: ^0.6.5
         version: 0.6.5
@@ -675,9 +660,9 @@ importers:
 
   packages/react-query-4:
     dependencies:
-      '@suspensive/utils':
+      '@suspensive/utility-types':
         specifier: workspace:*
-        version: link:../utils
+        version: link:../utility-types
     devDependencies:
       '@suspensive/eslint-config':
         specifier: workspace:*
@@ -702,10 +687,6 @@ importers:
         version: 18.3.1
 
   packages/react-query-5:
-    dependencies:
-      '@suspensive/utils':
-        specifier: workspace:*
-        version: link:../utils
     devDependencies:
       '@suspensive/eslint-config':
         specifier: workspace:*
@@ -729,7 +710,7 @@ importers:
         specifier: catalog:react18
         version: 18.3.1
 
-  packages/utils:
+  packages/utility-types:
     devDependencies:
       '@suspensive/eslint-config':
         specifier: workspace:*
@@ -740,12 +721,6 @@ importers:
       '@suspensive/tsup':
         specifier: workspace:*
         version: link:../../configs/tsup
-      '@types/react':
-        specifier: catalog:react18
-        version: 18.3.10
-      react:
-        specifier: catalog:react18
-        version: 18.3.1
 
 packages:
 

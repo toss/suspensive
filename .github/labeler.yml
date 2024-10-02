@@ -1,5 +1,5 @@
-"@suspensive/utils":
-  - "packages/utils/**/*"
+"@suspensive/utility-types":
+  - "packages/utility-types/**/*"
 "@suspensive/react":
   - "packages/react/**/*"
 "@suspensive/react-dom":

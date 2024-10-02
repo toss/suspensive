@@ -1,6 +1,6 @@
-import { queryFn, queryKey } from '@suspensive/utils'
 import type { InfiniteData } from '@tanstack/react-query'
 import { infiniteQueryOptions } from './infiniteQueryOptions'
+import { queryFn, queryKey } from './test-utils'
 import { type UseSuspenseInfiniteQueryResult, useSuspenseInfiniteQuery } from './useSuspenseInfiniteQuery'
 
 describe('useSuspenseInfiniteQuery', () => {

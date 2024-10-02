@@ -1,4 +1,4 @@
-import type { OmitKeyof } from '@suspensive/utils'
+import type { OmitKeyof } from '@suspensive/utility-types'
 import { type QueryKey, type UseQueryOptions, type UseQueryResult, useQuery } from '@tanstack/react-query'
 
 export interface UseSuspenseQueryResult<TData = unknown, TError = unknown>
@@ -7,15 +7,15 @@ export interface UseSuspenseQueryResult<TData = unknown, TError = unknown>
   status: 'success'
 }
 
-export interface UseSuspenseQueryOptions<
+export type UseSuspenseQueryOptions<
   TQueryFnData = unknown,
   TError = unknown,
   TData = TQueryFnData,
   TQueryKey extends QueryKey = QueryKey,
-> extends OmitKeyof<
-    UseQueryOptions<TQueryFnData, TError, TData, TQueryKey>,
-    'suspense' | 'useErrorBoundary' | 'enabled' | 'placeholderData'
-  > {}
+> = OmitKeyof<
+  UseQueryOptions<TQueryFnData, TError, TData, TQueryKey>,
+  'suspense' | 'useErrorBoundary' | 'enabled' | 'placeholderData'
+>
 
 /**
  * This hook is wrapping useQuery of `@tanstack/react-query` v4 with default suspense option.
