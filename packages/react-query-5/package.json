@@ -49,6 +49,9 @@
     "prepack": "pnpm build",
     "test:ui": "vitest --ui --coverage --typecheck"
   },
+  "dependencies": {
+    "@suspensive/utility-types": "workspace:*"
+  },
   "devDependencies": {
     "@suspensive/eslint-config": "workspace:*",
     "@suspensive/react": "workspace:*",

@@ -687,6 +687,10 @@ importers:
         version: 18.3.1
 
   packages/react-query-5:
+    dependencies:
+      '@suspensive/utility-types':
+        specifier: workspace:*
+        version: link:../utility-types
     devDependencies:
       '@suspensive/eslint-config':
         specifier: workspace:*
