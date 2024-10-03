@@ -1,5 +1,14 @@
 # @suspensive/react-query-4
 
+## 2.17.2
+
+### Patch Changes
+
+- [#1290](https://github.com/toss/suspensive/pull/1290) [`d84ee5c`](https://github.com/toss/suspensive/commit/d84ee5c4e635c5334b8d5e2c31f45b790df1a8ca) Thanks [@manudeli](https://github.com/manudeli)! - chore(@suspensive/utils): remove package
+
+- Updated dependencies [[`d84ee5c`](https://github.com/toss/suspensive/commit/d84ee5c4e635c5334b8d5e2c31f45b790df1a8ca)]:
+  - @suspensive/react@2.17.2
+
 ## 2.17.1
 
 ### Patch Changes
