@@ -513,10 +513,6 @@ importers:
         version: 15.10.0
 
   packages/jotai:
-    dependencies:
-      '@suspensive/utils':
-        specifier: workspace:*
-        version: link:../utils
     devDependencies:
       '@suspensive/eslint-config':
         specifier: workspace:*
@@ -538,10 +534,6 @@ importers:
         version: 18.3.1
 
   packages/react:
-    dependencies:
-      '@suspensive/utils':
-        specifier: workspace:*
-        version: link:../utils
     devDependencies:
       '@suspensive/eslint-config':
         specifier: workspace:*
@@ -560,10 +552,6 @@ importers:
         version: 18.3.1
 
   packages/react-dom:
-    dependencies:
-      '@suspensive/utils':
-        specifier: workspace:*
-        version: link:../utils
     devDependencies:
       '@suspensive/eslint-config':
         specifier: workspace:*
@@ -588,10 +576,6 @@ importers:
         version: 18.3.1(react@18.3.1)
 
   packages/react-native:
-    dependencies:
-      '@suspensive/utils':
-        specifier: workspace:*
-        version: link:../utils
     devDependencies:
       '@suspensive/eslint-config':
         specifier: workspace:*
@@ -641,9 +625,6 @@ importers:
       '@suspensive/react-query-5':
         specifier: workspace:^2.17.1
         version: link:../react-query-5
-      '@suspensive/utils':
-        specifier: workspace:*
-        version: link:../utils
       cli-table3:
         specifier: ^0.6.5
         version: 0.6.5
@@ -674,10 +655,6 @@ importers:
         version: 18.3.1
 
   packages/react-query-4:
-    dependencies:
-      '@suspensive/utils':
-        specifier: workspace:*
-        version: link:../utils
     devDependencies:
       '@suspensive/eslint-config':
         specifier: workspace:*
@@ -702,10 +679,6 @@ importers:
         version: 18.3.1
 
   packages/react-query-5:
-    dependencies:
-      '@suspensive/utils':
-        specifier: workspace:*
-        version: link:../utils
     devDependencies:
       '@suspensive/eslint-config':
         specifier: workspace:*
@@ -722,24 +695,6 @@ importers:
       '@tanstack/react-query':
         specifier: catalog:react-query5
         version: 5.59.0(react@18.3.1)
-      '@types/react':
-        specifier: catalog:react18
-        version: 18.3.10
-      react:
-        specifier: catalog:react18
-        version: 18.3.1
-
-  packages/utils:
-    devDependencies:
-      '@suspensive/eslint-config':
-        specifier: workspace:*
-        version: link:../../configs/eslint-config
-      '@suspensive/tsconfig':
-        specifier: workspace:*
-        version: link:../../configs/tsconfig
-      '@suspensive/tsup':
-        specifier: workspace:*
-        version: link:../../configs/tsup
       '@types/react':
         specifier: catalog:react18
         version: 18.3.10

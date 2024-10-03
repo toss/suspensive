@@ -1,4 +1,3 @@
-import { increase } from '@suspensive/utils'
 import {
   type PropsWithChildren,
   type ReactNode,
@@ -13,6 +12,7 @@ import {
   Message_useErrorBoundaryGroup_this_hook_should_be_called_in_ErrorBoundary_props_children,
   SuspensiveError,
 } from './models/SuspensiveError'
+import { increase } from './utils'
 
 export const ErrorBoundaryGroupContext = createContext<{ reset: () => void; resetKey: number } | undefined>(undefined)
 if (process.env.NODE_ENV === 'development') {

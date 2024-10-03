@@ -1,7 +1,7 @@
-import { FALLBACK, Suspend, TEXT } from '@suspensive/utils'
 import { render, screen, waitFor } from '@testing-library/react'
 import ms from 'ms'
 import { Suspense } from './Suspense'
+import { FALLBACK, Suspend, TEXT } from './test-utils'
 
 describe('<Suspense/>', () => {
   beforeEach(() => Suspend.reset())

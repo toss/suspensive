@@ -1,7 +1,7 @@
-import { useIsomorphicLayoutEffect } from '@suspensive/utils'
 import { renderHook } from '@testing-library/react'
 import { useState } from 'react'
 import { useIsClient } from './useIsClient'
+import { useIsomorphicLayoutEffect } from './useIsomorphicLayoutEffect'
 
 describe('useIsClient', () => {
   it('should return true in client side rendering', () => {
@@ -31,7 +31,6 @@ describe('useIsClient', () => {
     const mockUseIsClientLegacy = vi.fn(() => {
       const [isClient, setIsClient] = useState(false)
       if (!isClient) {
-        // eslint-disable-next-line react-compiler/react-compiler
         chanceIsClientToBeFalse = true
       }
       useIsomorphicLayoutEffect(() => {

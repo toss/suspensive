@@ -1,6 +1,6 @@
 import { type SuspenseProps as ReactSuspenseProps, useContext } from 'react'
 import { SuspenseDefaultPropsContext } from './contexts'
-import type { PropsWithDevMode } from './utility-types'
+import type { PropsWithDevMode } from './DevMode'
 import { defineSuspense } from './utils'
 
 export interface SuspenseProps

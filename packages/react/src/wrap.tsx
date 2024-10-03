@@ -1,9 +1,9 @@
-import type { OmitKeyof } from '@suspensive/utils'
 import type { ComponentProps, ComponentType } from 'react'
 import { Delay } from './Delay'
 import { ErrorBoundary } from './ErrorBoundary'
 import { ErrorBoundaryGroup } from './ErrorBoundaryGroup'
 import { Suspense } from './Suspense'
+import type { OmitKeyof } from './utility-types'
 
 type WrapperItem<
   TWrapperComponent extends typeof Suspense | typeof ErrorBoundary | typeof ErrorBoundaryGroup | typeof Delay,

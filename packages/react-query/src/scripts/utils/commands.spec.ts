@@ -1,8 +1,8 @@
 import fs from 'fs'
-import { noop } from '@suspensive/utils'
 import type { Mock, MockInstance } from 'vitest'
 import packageJson from '../../../package.json'
 import { fixAction, statusAction, switchAction } from './commands'
+import { noop } from './noop'
 import {
   getIndexFileContent,
   getPackageJson,

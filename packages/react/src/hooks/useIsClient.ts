@@ -1,5 +1,5 @@
-import { noop } from '@suspensive/utils'
 import { useSyncExternalStore } from 'react'
+import { noop } from '../utils/noop'
 
 const emptySubscribe = () => noop
 const getSnapshot = () => true

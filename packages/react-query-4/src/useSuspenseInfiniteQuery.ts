@@ -1,4 +1,3 @@
-import type { OmitKeyof } from '@suspensive/utils'
 import {
   type InfiniteData,
   type QueryKey,
@@ -6,6 +5,7 @@ import {
   type UseInfiniteQueryResult,
   useInfiniteQuery,
 } from '@tanstack/react-query'
+import type { OmitKeyof } from './utility-types'
 
 export interface UseSuspenseInfiniteQueryResult<TData = unknown, TError = unknown>
   extends OmitKeyof<
@@ -16,15 +16,15 @@ export interface UseSuspenseInfiniteQueryResult<TData = unknown, TError = unknow
   status: 'success'
 }
 
-export interface UseSuspenseInfiniteQueryOptions<
+export type UseSuspenseInfiniteQueryOptions<
   TQueryFnData = unknown,
   TError = unknown,
   TData = TQueryFnData,
   TQueryKey extends QueryKey = QueryKey,
-> extends OmitKeyof<
-    UseInfiniteQueryOptions<TQueryFnData, TError, TData, TQueryFnData, TQueryKey>,
-    'suspense' | 'useErrorBoundary' | 'enabled' | 'placeholderData'
-  > {}
+> = OmitKeyof<
+  UseInfiniteQueryOptions<TQueryFnData, TError, TData, TQueryFnData, TQueryKey>,
+  'suspense' | 'useErrorBoundary' | 'enabled' | 'placeholderData'
+>
 
 /**
  * This hook is wrapping useInfiniteQuery of `@tanstack/react-query` v4 with default suspense option.

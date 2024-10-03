@@ -1,6 +1,6 @@
 import fs from 'fs'
-import { noop } from '@suspensive/utils'
 import { copy } from './copy'
+import { noop } from './noop'
 
 describe('copy', () => {
   beforeEach(() => {

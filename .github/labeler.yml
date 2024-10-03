@@ -1,5 +1,3 @@
-"@suspensive/utils":
-  - "packages/utils/**/*"
 "@suspensive/react":
   - "packages/react/**/*"
 "@suspensive/react-dom":

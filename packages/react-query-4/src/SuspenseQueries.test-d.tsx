@@ -1,8 +1,8 @@
-import { queryFn, queryKey } from '@suspensive/utils'
 import type { ReactNode } from 'react'
 import { describe, expectTypeOf, it } from 'vitest'
 import { queryOptions } from './queryOptions'
 import { SuspenseQueries } from './SuspenseQueries'
+import { queryFn, queryKey } from './test-utils'
 import type { UseSuspenseQueryResult } from './useSuspenseQuery'
 
 describe('<SuspenseQueries/>', () => {

@@ -1,5 +1,5 @@
 import { type PropsWithChildren, type ReactNode, useState } from 'react'
-import { useTimeout } from '../useTimeout'
+import { useTimeout } from '../hooks/useTimeout'
 
 const isNeedThrowGlobal = { current: false }
 
@@ -30,20 +30,11 @@ export const TEXT = 'TEXT'
 export const ERROR_MESSAGE = 'ERROR_MESSAGE'
 export const FALLBACK = 'FALLBACK'
 export const sleep = (ms: number) => new Promise<undefined>((resolve) => setTimeout(() => resolve(undefined), ms))
-export const queryKey = ['key'] as const
-export const queryFn = () => sleep(10).then(() => ({ text: 'response' }))
-export const boolean = Math.random() > 0.5
-export const select = (data: Awaited<ReturnType<typeof queryFn>>) => data.text
 
 export class CustomError extends Error {
   constructor(...args: ConstructorParameters<ErrorConstructor>) {
     super(...args)
     console.error(...args)
-  }
-}
-export class CustomNotError {
-  constructor(public message?: string) {
-    console.log(message)
   }
 }
 

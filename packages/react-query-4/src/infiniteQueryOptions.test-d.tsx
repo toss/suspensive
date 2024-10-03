@@ -1,8 +1,8 @@
-import { queryKey } from '@suspensive/utils'
 import { type InfiniteData, type UseInfiniteQueryResult, useInfiniteQuery, useQueryClient } from '@tanstack/react-query'
 import { describe, expectTypeOf, it } from 'vitest'
 import { infiniteQueryOptions } from './infiniteQueryOptions'
 import { SuspenseInfiniteQuery } from './SuspenseInfiniteQuery'
+import { queryKey } from './test-utils'
 import { usePrefetchInfiniteQuery } from './usePrefetchInfiniteQuery'
 import { type UseSuspenseInfiniteQueryResult, useSuspenseInfiniteQuery } from './useSuspenseInfiniteQuery'
 

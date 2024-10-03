@@ -1,7 +1,7 @@
 import { render, renderHook, screen } from '@testing-library/react'
 import ms from 'ms'
 import { useState } from 'react'
-import { sleep } from './test-utils'
+import { sleep } from '../test-utils'
 import { useTimeout } from './useTimeout'
 
 describe('useTimeout', () => {

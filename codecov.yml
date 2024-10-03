@@ -20,10 +20,6 @@ ignore:
 
 component_management:
   individual_components:
-    - component_id: utils
-      name: '@suspensive/utils'
-      paths:
-        - packages/utils/**
     - component_id: react
       name: '@suspensive/react'
       paths:

@@ -1,4 +1,3 @@
-import { CustomError, FALLBACK, Suspend, TEXT } from '@suspensive/utils'
 import { render, screen, waitFor } from '@testing-library/react'
 import ms from 'ms'
 import { createElement, useContext } from 'react'
@@ -7,6 +6,7 @@ import { Delay, type DelayProps } from './Delay'
 import { Message_DefaultProp_delay_ms_should_be_greater_than_0, SuspensiveError } from './models/SuspensiveError'
 import { Suspense, type SuspenseProps } from './Suspense'
 import { Suspensive, SuspensiveProvider } from './Suspensive'
+import { CustomError, FALLBACK, Suspend, TEXT } from './test-utils'
 
 const FALLBACK_GLOBAL = 'FALLBACK_GLOBAL'
 

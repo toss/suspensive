@@ -1,4 +1,3 @@
-import { CustomError, ERROR_MESSAGE, TEXT, Throw } from '@suspensive/utils'
 import { fireEvent, render, screen, waitFor } from '@testing-library/react'
 import ms from 'ms'
 import { createElement } from 'react'
@@ -8,6 +7,7 @@ import {
   Message_useErrorBoundaryGroup_this_hook_should_be_called_in_ErrorBoundary_props_children,
   SuspensiveError,
 } from './models/SuspensiveError'
+import { CustomError, ERROR_MESSAGE, TEXT, Throw } from './test-utils'
 
 const innerErrorBoundaryCount = 3
 const resetButtonText = 'reset button'
