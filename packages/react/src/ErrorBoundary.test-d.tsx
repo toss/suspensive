@@ -1,7 +1,13 @@
 import type { ConstructorType } from '@suspensive/utility-types'
 import type { ComponentProps, ReactNode } from 'react'
 import { ErrorBoundary } from './ErrorBoundary'
-import { CustomError, CustomNotError } from './test-utils'
+import { CustomError } from './test-utils'
+
+class CustomNotError {
+  constructor(public message?: string) {
+    console.log(message)
+  }
+}
 
 describe('<ErrorBoundary/>', () => {
   it('should pass only boolean or ErrorConstructor or ShouldCatchCallback or ShouldCatch[]', () => {

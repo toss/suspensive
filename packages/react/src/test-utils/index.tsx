@@ -37,11 +37,6 @@ export class CustomError extends Error {
     console.error(...args)
   }
 }
-export class CustomNotError {
-  constructor(public message?: string) {
-    console.log(message)
-  }
-}
 
 const isNeedSuspendGlobal = { current: true }
 
