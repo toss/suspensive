@@ -534,10 +534,6 @@ importers:
         version: 18.3.1
 
   packages/react:
-    dependencies:
-      '@suspensive/utility-types':
-        specifier: workspace:*
-        version: link:../utility-types
     devDependencies:
       '@suspensive/eslint-config':
         specifier: workspace:*
@@ -659,10 +655,6 @@ importers:
         version: 18.3.1
 
   packages/react-query-4:
-    dependencies:
-      '@suspensive/utility-types':
-        specifier: workspace:*
-        version: link:../utility-types
     devDependencies:
       '@suspensive/eslint-config':
         specifier: workspace:*
@@ -687,10 +679,6 @@ importers:
         version: 18.3.1
 
   packages/react-query-5:
-    dependencies:
-      '@suspensive/utility-types':
-        specifier: workspace:*
-        version: link:../utility-types
     devDependencies:
       '@suspensive/eslint-config':
         specifier: workspace:*
@@ -713,18 +701,6 @@ importers:
       react:
         specifier: catalog:react18
         version: 18.3.1
-
-  packages/utility-types:
-    devDependencies:
-      '@suspensive/eslint-config':
-        specifier: workspace:*
-        version: link:../../configs/eslint-config
-      '@suspensive/tsconfig':
-        specifier: workspace:*
-        version: link:../../configs/tsconfig
-      '@suspensive/tsup':
-        specifier: workspace:*
-        version: link:../../configs/tsup
 
 packages:
 

@@ -1,6 +1,6 @@
-import type { OmitKeyof } from '@suspensive/utility-types'
 import { createContext } from 'react'
 import type { DelayProps, SuspenseProps } from '..'
+import type { OmitKeyof } from '../utility-types'
 
 export const DelayDefaultPropsContext = createContext<OmitKeyof<DelayProps, 'children'>>({
   ms: undefined,

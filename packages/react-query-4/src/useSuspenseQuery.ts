@@ -1,5 +1,5 @@
-import type { OmitKeyof } from '@suspensive/utility-types'
 import { type QueryKey, type UseQueryOptions, type UseQueryResult, useQuery } from '@tanstack/react-query'
+import type { OmitKeyof } from './utility-types'
 
 export interface UseSuspenseQueryResult<TData = unknown, TError = unknown>
   extends OmitKeyof<UseQueryResult<TData, TError>, keyof Pick<UseQueryResult, 'isPlaceholderData'>> {
