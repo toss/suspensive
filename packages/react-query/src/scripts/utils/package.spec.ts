@@ -24,6 +24,7 @@ const version4APIs = [
   'PrefetchQuery',
   'PrefetchInfiniteQuery',
   'Mutation',
+  'HydrationBoundary',
 ]
 
 describe('package', () => {
