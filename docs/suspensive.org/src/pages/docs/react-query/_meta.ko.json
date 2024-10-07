@@ -10,6 +10,7 @@
   "useSuspenseQuery": { "title": "useSuspenseQuery" },
   "useSuspenseQueries": { "title": "useSuspenseQueries" },
   "useSuspenseInfiniteQuery": { "title": "useSuspenseInfiniteQuery" },
+  "usePrefetchQuery": { "title": "usePrefetchQuery" },
   "queryOptions": { "title": "queryOptions" },
   "infiniteQueryOptions": { "title": "infiniteQueryOptions" },
   "SuspenseQuery": { "title": "<SuspenseQuery/>" },
