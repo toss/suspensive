@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
+import { useRouter } from 'nextra/hooks'
 import { type DocsThemeConfig, useConfig } from 'nextra-theme-docs'
 
 const localeBanner = {
@@ -19,7 +19,7 @@ const localeBanner = {
 const config: DocsThemeConfig = {
   banner: {
     key: 'suspensive banner',
-    text: function Text() {
+    content: function Text() {
       const { locale } = useRouter()
       return localeBanner[locale as keyof typeof localeBanner]
     },
@@ -59,20 +59,12 @@ const config: DocsThemeConfig = {
     link: 'https://github.com/toss/suspensive',
   },
   docsRepositoryBase: 'https://github.com/toss/suspensive/tree/main/docs/suspensive.org',
-  useNextSeoProps() {
-    const { asPath } = useRouter()
-    if (asPath !== '/') {
-      return {
-        titleTemplate: '%s – Suspensive',
-      }
-    }
-  },
   feedback: { content: '' },
   editLink: {
-    text: function Text() {
-      const router = useRouter()
+    content: function Text() {
+      const { locale } = useRouter()
 
-      if (router.pathname.includes('.ko')) {
+      if (locale === 'ko') {
         return <>이 페이지를 수정하기 →</>
       }
 
@@ -80,21 +72,18 @@ const config: DocsThemeConfig = {
     },
   },
   sidebar: {
-    titleComponent({ title }) {
-      return <>{title}</>
-    },
     defaultMenuCollapseLevel: 4,
     toggleButton: true,
   },
   i18n: [
-    { locale: 'en', text: 'English' },
-    { locale: 'ko', text: '한국어' },
+    { locale: 'en', name: 'English' },
+    { locale: 'ko', name: '한국어' },
   ],
   search: {
     placeholder: function Placeholder() {
       const router = useRouter()
 
-      if (router.pathname.includes('.ko')) {
+      if (router.locale === 'ko') {
         return '검색어를 입력하세요...'
       }
 
@@ -102,7 +91,7 @@ const config: DocsThemeConfig = {
     },
   },
   footer: {
-    text: 'MIT 2024 © Viva Republica, Inc.',
+    content: 'MIT 2024 © Viva Republica, Inc.',
   },
   darkMode: false,
   nextThemes: {
