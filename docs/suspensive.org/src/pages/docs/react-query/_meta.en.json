@@ -16,5 +16,6 @@
   "SuspenseQuery": { "title": "<SuspenseQuery/>" },
   "SuspenseQueries": { "title": "<SuspenseQueries/>" },
   "SuspenseInfiniteQuery": { "title": "<SuspenseInfiniteQuery/>" },
+  "PrefetchQuery": { "title": "<PrefetchQuery/>" },
   "QueryErrorBoundary": { "title": "<QueryErrorBoundary/>" }
 }
