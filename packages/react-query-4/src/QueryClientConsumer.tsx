@@ -1,5 +1,5 @@
 import { type QueryClient, useQueryClient } from '@tanstack/react-query'
-import type { ReactNode } from 'react'
+import type { Context, ReactNode } from 'react'
 
 /**
  * @experimental This is experimental feature.
@@ -9,7 +9,7 @@ export function QueryClientConsumer({
   context,
 }: {
   children: (queryClient: QueryClient) => ReactNode
-  context?: React.Context<QueryClient | undefined>
+  context?: Context<QueryClient | undefined>
 }) {
   return <>{children(useQueryClient({ context }))}</>
 }

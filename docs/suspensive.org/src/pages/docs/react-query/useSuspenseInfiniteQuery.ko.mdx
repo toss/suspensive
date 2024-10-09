@@ -22,7 +22,7 @@ const Example = () => {
 
 ```tsx Posts.tsx active
 import { useSuspenseInfiniteQuery } from '@suspensive/react-query'
-import React from 'react'
+import { useEffect, Fragment } from 'react'
 import { getPosts } from './api'
 
 export const Posts = () => {
@@ -30,42 +30,41 @@ export const Posts = () => {
     useSuspenseInfiniteQuery({
       queryKey: ['posts'],
       queryFn: ({ pageParam = 1 }) => getPosts(pageParam),
-      getNextPageParam: (lastPage, allPages) => {
-        return lastPage.skip + lastPage.limit < lastPage.total ? allPages.length + 1 : undefined
-      },
+      getNextPageParam: (lastPage, allPages) =>
+        lastPage.skip + lastPage.limit < lastPage.total ? allPages.length + 1 : undefined
     })
 
-  React.useEffect(() => {
-    if (!isFetchingNextPage && isFetched) {
-      window.scrollTo({
-        top: document.body.scrollHeight,
-        behavior: 'smooth',
-      })
-    }
-  }, [isFetchingNextPage, isFetched])
+    useEffect(() => {
+      if (!isFetchingNextPage && isFetched) {
+        window.scrollTo({
+          top: document.body.scrollHeight,
+          behavior: 'smooth',
+        })
+      }
+    }, [isFetchingNextPage, isFetched])
 
-  return (
-    <div style={{ display: 'flex', flexDirection: 'column', marginBottom: '100px' }}>
-      <ol>
-        {data.pages.map((page, i) => (
-          <React.Fragment key={i}>
-            {page.data.map((post) => (
-              <li key={post.id} style={{ marginBottom: '10px' }}>
-                {post.title}
-              </li>
-            ))}
-          </React.Fragment>
-        ))}
-      </ol>
-      <button onClick={() => fetchNextPage()} disabled={!hasNextPage || isFetchingNextPage}>
-        {isFetchingNextPage
-          ? 'Loading more...'
-          : hasNextPage
-            ? 'Load More'
-            : 'Nothing more to load'}
-      </button>
-    </div>
-  )
+    return (
+      <div style={{ display: 'flex', flexDirection: 'column', marginBottom: '100px' }}>
+        <ol>
+          {data.pages.map((page, i) => (
+            <Fragment key={i}>
+              {page.data.map((post) => (
+                <li key={post.id} style={{ marginBottom: '10px' }}>
+                  {post.title}
+                </li>
+              ))}
+            </Fragment>
+          ))}
+        </ol>
+        <button onClick={() => fetchNextPage()} disabled={!hasNextPage || isFetchingNextPage}>
+          {isFetchingNextPage
+            ? 'Loading more...'
+            : hasNextPage
+              ? 'Load More'
+              : 'Nothing more to load'}
+        </button>
+      </div>
+    )
 }
 ```
 

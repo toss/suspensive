@@ -52,7 +52,7 @@ const PostItem =
 ```tsx Example.tsx active
 import { wrap, ErrorBoundaryGroup } from '@suspensive/react'
 import { useSuspenseQuery } from '@suspensive/react-query'
-import React, { createElement } from 'react'
+import { useState, createElement } from 'react'
 
 import { getPost, getPosts } from './api'
 
@@ -93,7 +93,7 @@ const PostItem = wrap
       queryKey: ['posts', props.id],
       queryFn: () => getPost(props.id),
     })
-    const [throwError, setThrowError] = React.useState(false)
+    const [throwError, setThrowError] = useState(false)
 
     return (
       <div style={{ border: '1px solid black', padding: 10, margin: 10 }}>

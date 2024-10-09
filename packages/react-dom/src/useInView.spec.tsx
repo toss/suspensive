@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react'
-import React, { useCallback } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { intersectionMockInstance, mockAllIsIntersecting, mockIsIntersecting } from './test-utils'
 import { type InViewOptions, useInView } from './useInView'
 
@@ -17,9 +17,9 @@ const HookComponent = ({ options, unmount }: { options?: InViewOptions; unmount?
 }
 
 const LazyHookComponent = ({ options }: { options?: InViewOptions }) => {
-  const [isLoading, setIsLoading] = React.useState(true)
+  const [isLoading, setIsLoading] = useState(true)
 
-  React.useEffect(() => {
+  useEffect(() => {
     setIsLoading(false)
   }, [])
   const wrapper = useInView(options)

@@ -53,11 +53,11 @@ export const Post = ({ postId }: { postId: number }) => {
 
 ```tsx Example.tsx
 import { Suspense } from '@suspensive/react'
-import React from 'react'
+import { useState } from 'react'
 import { Post } from './Post'
 
 export const Example = () => {
-  const [postId, setPostId] = React.useState(1)
+  const [postId, setPostId] = useState(1)
 
   return (
     <div>

@@ -30,7 +30,7 @@ const PostsPage = ({ userId }) => (
 <Sandpack>
 
 ```tsx Example.tsx active
-import React from 'react'
+import { useState } from 'react'
 import { ErrorBoundary, Suspense } from '@suspensive/react'
 import { SuspenseQuery } from '@suspensive/react-query'
 import { PostListItem } from './PostListItem'
@@ -38,8 +38,8 @@ import { UserProfile } from './UserProfile'
 import { postsQueryOptions, userQueryOptions } from './queries'
 
 export const Example = () => {
-  const [userId, setUserId] = React.useState(1)
-  const [showAllPosts, setShowAllPosts] = React.useState(false)
+  const [userId, setUserId] = useState(1)
+  const [showAllPosts, setShowAllPosts] = useState(false)
 
   return (
     <ErrorBoundary fallback={({ error }) => <>{error.message}</>}>
