@@ -10,10 +10,12 @@
   "useSuspenseQuery": { "title": "useSuspenseQuery" },
   "useSuspenseQueries": { "title": "useSuspenseQueries" },
   "useSuspenseInfiniteQuery": { "title": "useSuspenseInfiniteQuery" },
+  "usePrefetchQuery": { "title": "usePrefetchQuery" },
   "queryOptions": { "title": "queryOptions" },
   "infiniteQueryOptions": { "title": "infiniteQueryOptions" },
   "SuspenseQuery": { "title": "<SuspenseQuery/>" },
   "SuspenseQueries": { "title": "<SuspenseQueries/>" },
   "SuspenseInfiniteQuery": { "title": "<SuspenseInfiniteQuery/>" },
+  "PrefetchQuery": { "title": "<PrefetchQuery/>" },
   "QueryErrorBoundary": { "title": "<QueryErrorBoundary/>" }
 }
