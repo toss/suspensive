@@ -5,48 +5,37 @@ import { Callout, Sandpack } from '@/components'
 React hook의 제약을 피해 JSX상에서도 usePrefetchQuery를 사용할 수 있게 하는 컴포넌트입니다.
 
 ```jsx /PrefetchQuery/
-import { PrefetchQuery, useSuspenseQuery, queryOptions } from '@suspensive/react-query'
+import { PrefetchQuery, useSuspenseQuery } from '@suspensive/react-query'
 import { InView } from '@suspensive/react-dom'
-import { useQuery } from '@tanstack/react-query'
 
 const PostsPage = () => {
-  const { data: posts } = useSuspenseQuery(query.posts())
+  const { data: posts } = useSuspenseQuery({
+    queryKey: ['posts'],
+    queryFn: () => getPosts(),
+  })
 
-  return posts.map(({ id, title, description }) => (
+  return posts.map((post) => (
     <InView>
-      {({ ref, isInView }) => {
-        return (
-          <>
-            {isInView ? (
-              // 🚫 React hook의 제약으로 usePrefetchQuery를 사용하지 못합니다
-              // usePrefetchQuery(query.post(post.id))
+      {({ ref, isInView }) => (
+        <>
+          {isInView ? (
+            // 🚫 React hook의 제약으로 usePrefetchQuery를 사용하지 못합니다
+            // usePrefetchQuery({
+            //   queryKey: ['posts', post.id, 'comments'],
+            //   queryFn: () => getPostComments(post.id),
+            // })
 
-              // ✅ Post 페이지에 들어가기 전에 각각의 post query에 대해 usePrefetch를 호출할 수 있습니다.
-              <PrefetchQuery {...query.post(id)} />
-            ) : null}
-            <Link to={`/post/${id}`}>
-              <div ref={ref}>
-                <h2>{title}</h2>
-                <p>{description}</p>
-              </div>
-            </Link>
-          </>
-        )
-      }}
+            // ✅ Post Comments 페이지에 들어가기 전에 각각의 post comments query에 대해 usePrefetchQuery를 호출할 수 있습니다.
+            <PrefetchQuery queryKey={['posts', post.id, 'comments']} queryFn={() => getPostComments(post.id)} />
+          ) : null}
+          <div ref={ref}>
+            <h2>{post.title}</h2>
+            <p>{post.description}</p>
+            <Link to={`/posts/${post.id}/comments`}>See comments</Link>
+          </div>
+        </>
+      )}
     </InView>
   ))
-}
-
-const query = {
-  posts: () =>
-    queryOptions({
-      queryKey: ['posts'],
-      queryFn: () => getPosts(),
-    }),
-  post: (postId) =>
-    queryOptions({
-      queryKey: ['posts', postId],
-      queryFn: () => getPost(postId),
-    }),
 }
 ```

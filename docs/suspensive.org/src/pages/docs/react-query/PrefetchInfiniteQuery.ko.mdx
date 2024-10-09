@@ -1,11 +1,11 @@
 import { Callout, Sandpack } from '@/components'
 
-# PrefetchQuery
+# PrefetchInfiniteQuery
 
-A component that allows you to use usePrefetchQuery in JSX, avoiding the limitations of React hooks.
+React hook의 제약을 피해 JSX상에서도 usePrefetchInfiniteQuery를 사용할 수 있게 하는 컴포넌트입니다.
 
-```jsx /PrefetchQuery/
-import { PrefetchQuery, useSuspenseQuery } from '@suspensive/react-query'
+```jsx /PrefetchInfiniteQuery/
+import { PrefetchInfiniteQuery, useSuspenseQuery } from '@suspensive/react-query'
 import { InView } from '@suspensive/react-dom'
 
 const PostsPage = () => {
@@ -19,14 +19,14 @@ const PostsPage = () => {
       {({ ref, isInView }) => (
         <>
           {isInView ? (
-            // 🚫 We can not invoke usePrefetchQuery like below because of React Hook rules
-            // usePrefetchQuery({
+            // 🚫 React hook의 제약으로 usePrefetchInfiniteQuery를 사용하지 못합니다
+            // usePrefetchInfiniteQuery({
             //   queryKey: ['posts', post.id, 'comments'],
             //   queryFn: () => getPostComments(post.id),
             // })
 
-            // ✅ We can invoke usePrefetchQuery for each post comments query before entering Post Comments page
-            <PrefetchQuery queryKey={['posts', post.id, 'comments']} queryFn={() => getPostComments(post.id)} />
+            // ✅ Post Comments 페이지에 들어가기 전에 각각의 post comments query에 대해 usePrefetchInfiniteQuery를 호출할 수 있습니다.
+            <PrefetchInfiniteQuery queryKey={['posts', post.id, 'comments']} queryFn={() => getPostComments(post.id)} />
           ) : null}
           <div ref={ref}>
             <h2>{post.title}</h2>

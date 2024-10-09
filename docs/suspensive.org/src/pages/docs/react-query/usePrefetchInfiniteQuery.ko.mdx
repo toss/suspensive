@@ -11,11 +11,11 @@ const PostsPage = ({ postId }) => {
   usePrefetchInfiniteQuery({
     queryKey: ['posts'],
     queryFn: () => getPosts(),
-  }) // suspense경계 전에 prefetch를 발생 시키는 데에 사용합니다
+  }) // suspense 경계 전에 prefetch를 발생 시키는 데에 사용합니다
 
   return (
     <Suspense fallback={<div>Loading...</div>}>
-      <Posts postId={postId} />
+      <Posts />
     </Suspense>
   )
 }
