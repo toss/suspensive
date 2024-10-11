@@ -1,5 +1,11 @@
 # @suspensive/react
 
+## 2.17.3
+
+### Patch Changes
+
+- [#1302](https://github.com/toss/suspensive/pull/1302) [`5044c94`](https://github.com/toss/suspensive/commit/5044c949ca5294ca453ba4b2983d526c8b5123d9) Thanks [@dayongkr](https://github.com/dayongkr)! - refactor(react): use direct `undefined` comparison for fallback in `<Delay/>` and `<Suspense/>`
+
 ## 2.17.2
 
 ### Patch Changes
