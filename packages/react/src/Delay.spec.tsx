@@ -1,5 +1,6 @@
 import { render, screen, waitFor } from '@testing-library/react'
 import ms from 'ms'
+import { DefaultProps, DefaultPropsProvider } from './DefaultProps'
 import { Delay } from './Delay'
 import { Message_Delay_ms_prop_should_be_greater_than_or_equal_to_0, SuspensiveError } from './models/SuspensiveError'
 import { CustomError, TEXT } from './test-utils'
@@ -52,5 +53,14 @@ describe('<Delay/>', () => {
       expect(error).toBeInstanceOf(Error)
       expect(error).not.toBeInstanceOf(CustomError)
     }
+  })
+  it('should use `defaultProps.fallback` if no fallback prop is passed', () => {
+    const defaultProps = new DefaultProps({ Delay: { fallback: 'defaultFallback' } })
+    render(
+      <DefaultPropsProvider defaultProps={defaultProps}>
+        <Delay ms={1}>{TEXT}</Delay>
+      </DefaultPropsProvider>
+    )
+    expect(screen.queryByText('defaultFallback')).toBeInTheDocument()
   })
 })

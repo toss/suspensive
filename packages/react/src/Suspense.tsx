@@ -33,9 +33,7 @@ export const Suspense = ({ clientOnly, children, fallback }: SuspenseProps) => {
   })
 
   return (
-    <DefinedSuspense fallback={typeof fallback === 'undefined' ? defaultProps.fallback : fallback}>
-      {children}
-    </DefinedSuspense>
+    <DefinedSuspense fallback={fallback === undefined ? defaultProps.fallback : fallback}>{children}</DefinedSuspense>
   )
 }
 if (process.env.NODE_ENV === 'development') {
