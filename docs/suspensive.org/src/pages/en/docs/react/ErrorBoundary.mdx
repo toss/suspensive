@@ -1,5 +1,5 @@
-import { Callout, Sandpack } from '@/components'
 import { Tabs } from 'nextra/components'
+import { Callout, Sandpack } from '@/components'
 
 # ErrorBoundary
 
@@ -48,7 +48,6 @@ export const Example = () => {
     </ErrorBoundary>
   )
 }
-
 ```
 
 ```tsx ErrorAfter2s.tsx
@@ -173,12 +172,7 @@ export const Example = () => {
   return (
     <>
       <button onClick={() => setResetKey((prev) => prev + 1)}>Try again</button>
-      <ErrorBoundary
-        resetKeys={[resetKey]}
-        fallback={(props) => (
-          <>{props.error.message}</>
-        )}
-      >
+      <ErrorBoundary resetKeys={[resetKey]} fallback={(props) => <>{props.error.message}</>}>
         <ErrorAfter2s />
       </ErrorBoundary>
     </>
@@ -236,7 +230,6 @@ const Example = () => (
     )}
   </QueryErrorResetBoundary>
 )
-
 ```
 
 <Sandpack>
@@ -484,28 +477,28 @@ export class CustomError extends Error {
 }
 
 export const CustomErrorAfter2s = () => {
-  const [asyncState, setAsyncState] = useState<
-    { isError: true; error: CustomError } | { isError: false; error: null }
-  >({
-    isError: false,
-    error: null
-  });
+  const [asyncState, setAsyncState] = useState<{ isError: true; error: CustomError } | { isError: false; error: null }>(
+    {
+      isError: false,
+      error: null,
+    }
+  )
 
   useEffect(() => {
     setTimeout(() => {
       setAsyncState({
         isError: true,
-        error: () => new CustomError("error made by CustomError")
-      });
-    }, 2000);
-  }, []);
+        error: () => new CustomError('error made by CustomError'),
+      })
+    }, 2000)
+  }, [])
 
   if (asyncState.isError) {
-    throw asyncState.error();
+    throw asyncState.error()
   }
 
-  return <>No error</>;
-};
+  return <>No error</>
+}
 ```
 
 </Sandpack>

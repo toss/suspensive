@@ -71,11 +71,7 @@ export const Example = () => {
 import type { Post } from './api'
 
 export const PostListItem = (props: Post) => {
-  return (
-    <li style={{ marginBottom: '10px' }}>
-      {props.title}
-    </li>
-  )
+  return <li style={{ marginBottom: '10px' }}>{props.title}</li>
 }
 ```
 

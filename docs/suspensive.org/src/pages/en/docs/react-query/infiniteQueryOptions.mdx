@@ -80,7 +80,7 @@ export const Example = () => {
             <div>
               {data.pages.map((page, index) => (
                 <div key={index}>
-                  {page.posts.map(post => (
+                  {page.posts.map((post) => (
                     <div key={post.id}>
                       <h1>{post.title}</h1>
                       <p>{post.body}</p>

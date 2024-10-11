@@ -41,7 +41,7 @@ export const Example = () => {
   const [postId, setPostId] = useState(1)
   usePrefetchQuery({
     queryKey: ['posts', postId],
-    queryFn:() => getPost(postId),
+    queryFn: () => getPost(postId),
   })
 
   return (
@@ -62,7 +62,7 @@ export const Example = () => {
 const Post = ({ postId }: { postId: number }) => {
   const { data } = useSuspenseQuery({
     queryKey: ['posts', postId],
-    queryFn:() => getPost(postId),
+    queryFn: () => getPost(postId),
   })
 
   return (

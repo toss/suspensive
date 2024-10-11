@@ -10,9 +10,9 @@ You can use Jotai's atom as is.
 
 ```tsx /Atom/
 import { Atom } from '@suspensive/jotai'
-import { atom } from "jotai";
+import { atom } from 'jotai'
 
-const countAtom = atom(1);
+const countAtom = atom(1)
 
 const Example = () => (
   <Atom atom={countAtom}>
@@ -31,7 +31,7 @@ For Async Atom, it delegates the pending state of the Promise to the parent Susp
 ```tsx /Atom/
 import { Atom } from '@suspensive/jotai'
 import { Suspense } from '@suspensive/react'
-import { atom } from "jotai";
+import { atom } from 'jotai'
 
 const countAtom = atom(1)
 const asyncDoubleCountAtom = atom(async (get) => {
@@ -40,13 +40,9 @@ const asyncDoubleCountAtom = atom(async (get) => {
 })
 
 const Example = () => (
-    <Suspense fallback={'pending...'}>
-      <Atom atom={asyncDoubleCountAtom}>
-        {([count]) => (
-          <>count: {count}</>
-        )}
-      </Atom>
-    </Suspense>
+  <Suspense fallback={'pending...'}>
+    <Atom atom={asyncDoubleCountAtom}>{([count]) => <>count: {count}</>}</Atom>
+  </Suspense>
 )
 ```
 
@@ -62,8 +58,10 @@ import { UserInfo, ShoppingCart } from '~/components'
 
 const PaymentPage = () => (
   <Suspense fallback={'pending...'}>
-    <UserInfo /> {/* It's not clear whether UserInfo internally triggers Suspense with an Async Atom. */}
-    <ShoppingCart /> {/* It's not clear whether ShoppingCart internally triggers Suspense with an Async Atom. */}
+    {/* It's not clear whether UserInfo internally triggers Suspense with an Async Atom. */}
+    <UserInfo />
+    {/* It's not clear whether ShoppingCart internally triggers Suspense with an Async Atom. */}
+    <ShoppingCart />
   </Suspense>
 )
 ```
@@ -73,7 +71,7 @@ const PaymentPage = () => (
 import { useAtomValue } from '@suspensive/jotai'
 import { Suspense } from '@suspensive/react'
 import { UserAddress } from '~/components'
-import { userAsyncAtom } from "~/atoms";
+import { userAsyncAtom } from '~/atoms'
 
 // It's not clear from the usage of this component what Atom UserInfo uses internally and whether it triggers Suspense.
 const UserInfo = () => {
@@ -87,7 +85,7 @@ const UserInfo = () => {
 // payment/components/ShoppingCart.tsx
 import { Atom } from '@suspensive/jotai'
 import { Suspense } from '@suspensive/react'
-import { shoppingCartAtom } from "~/atoms";
+import { shoppingCartAtom } from '~/atoms'
 
 // It's not clear from the usage of this component what Atom ShoppingCart uses internally and whether it triggers Suspense.
 const ShoppingCart = () => {
@@ -95,7 +93,9 @@ const ShoppingCart = () => {
 
   return (
     <>
-      {data.map(item => <ShoppingItem key={item.id} {...item} />)}
+      {data.map((item) => (
+        <ShoppingItem key={item.id} {...item} />
+      ))}
     </>
   )
 }

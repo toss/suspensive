@@ -82,9 +82,7 @@ export const Example = wrap
 const PostItem = wrap
   .ErrorBoundary({
     fallback: ({ error }) => (
-      <div style={{ border: '1px solid black', padding: 10, margin: 10, color: 'red' }}>
-        {error.message}
-      </div>
+      <div style={{ border: '1px solid black', padding: 10, margin: 10, color: 'red' }}>{error.message}</div>
     ),
   })
   .Suspense({ fallback: <div>Loading...</div> })
