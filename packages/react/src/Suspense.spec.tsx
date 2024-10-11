@@ -1,8 +1,8 @@
 import { render, screen, waitFor } from '@testing-library/react'
 import ms from 'ms'
+import { DefaultProps, DefaultPropsProvider } from './DefaultProps'
 import { Suspense } from './Suspense'
 import { FALLBACK, Suspend, TEXT } from './test-utils'
-import { DefaultProps, DefaultPropsProvider } from './DefaultProps'
 
 describe('<Suspense/>', () => {
   beforeEach(() => Suspend.reset())
