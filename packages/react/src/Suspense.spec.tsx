@@ -1,5 +1,6 @@
 import { render, screen, waitFor } from '@testing-library/react'
 import ms from 'ms'
+import { DefaultProps, DefaultPropsProvider } from './DefaultProps'
 import { Suspense } from './Suspense'
 import { FALLBACK, Suspend, TEXT } from './test-utils'
 
@@ -59,5 +60,19 @@ describe('<Suspense clientOnly/>', () => {
     )
     expect(screen.queryByText(FALLBACK)).not.toBeInTheDocument()
     expect(screen.queryByText(TEXT)).toBeInTheDocument()
+  })
+  it('should use `defaultProps.fallback` if `fallback` is not provided', () => {
+    const defaultProps = new DefaultProps({ Suspense: { fallback: 'defaultFallback' } })
+
+    render(
+      <DefaultPropsProvider defaultProps={defaultProps}>
+        <Suspense clientOnly>
+          <Suspend during={ms('0.1s')} toShow={TEXT} />
+        </Suspense>
+      </DefaultPropsProvider>
+    )
+
+    expect(screen.queryByText('defaultFallback')).toBeInTheDocument()
+    expect(screen.queryByText(TEXT)).not.toBeInTheDocument()
   })
 })
