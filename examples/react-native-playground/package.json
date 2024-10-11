@@ -11,14 +11,14 @@
   },
   "dependencies": {
     "@suspensive/react-native": "workspace:*",
-    "expo": "catalog:",
-    "expo-status-bar": "catalog:",
+    "expo": "^51.0.22",
+    "expo-status-bar": "~1.12.1",
     "react": "catalog:react18",
-    "react-native": "catalog:react18"
+    "react-native": "^0.75.4"
   },
   "devDependencies": {
     "@babel/core": "^7.24.9",
-    "@expo/webpack-config": "catalog:",
+    "@expo/webpack-config": "^19.0.1",
     "@types/react": "catalog:react18"
   }
 }
