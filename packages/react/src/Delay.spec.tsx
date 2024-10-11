@@ -3,6 +3,7 @@ import ms from 'ms'
 import { Delay } from './Delay'
 import { Message_Delay_ms_prop_should_be_greater_than_or_equal_to_0, SuspensiveError } from './models/SuspensiveError'
 import { CustomError, TEXT } from './test-utils'
+import { DefaultProps, DefaultPropsProvider } from './DefaultProps'
 
 beforeEach(() => {
   vi.useFakeTimers({ shouldAdvanceTime: true })
@@ -52,5 +53,14 @@ describe('<Delay/>', () => {
       expect(error).toBeInstanceOf(Error)
       expect(error).not.toBeInstanceOf(CustomError)
     }
+  })
+  it('should use `defaultProps.fallback` if no fallback prop is passed', () => {
+    const defaultProps = new DefaultProps({ Delay: { fallback: 'defaultFallback' } })
+    render(
+      <DefaultPropsProvider defaultProps={defaultProps}>
+        <Delay ms={1}>{TEXT}</Delay>
+      </DefaultPropsProvider>
+    )
+    expect(screen.queryByText('defaultFallback')).toBeInTheDocument()
   })
 })
