@@ -5,7 +5,6 @@ import {
   SandpackProvider,
   type SandpackProviderProps,
 } from '@codesandbox/sandpack-react'
-import { atomDark } from '@codesandbox/sandpack-themes'
 import { baseTemplate } from './baseTemplate'
 import { CustomPreset } from './CustomPreset'
 
@@ -26,7 +25,17 @@ export const Sandpack = (props: SandpackProps) => {
   return (
     <SandpackProvider
       template="react-ts"
-      theme={atomDark}
+      theme={{
+        colors: { surface1: '#000000', surface2: '#404040' },
+        syntax: {
+          keyword: '#ff7a70',
+          definition: '#8dff97',
+          tag: '#7BE183',
+          string: '#a4d6fe',
+          static: '#a4d6fe',
+          property: '#78BEFD',
+        },
+      }}
       {...props}
       files={{
         ...baseTemplate.files,
@@ -50,7 +59,7 @@ export const Sandpack = (props: SandpackProps) => {
     >
       <CustomPreset
         layoutOptions={props.layoutOptions}
-        editorOptions={props.editorOptions}
+        editorOptions={{ ...props.editorOptions, showLineNumbers: false }}
         previewOptions={props.previewOptions}
       />
     </SandpackProvider>

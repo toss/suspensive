@@ -1,6 +1,8 @@
+import { motion } from 'framer-motion'
 import Image from 'next/image'
 import { useRouter } from 'nextra/hooks'
 import { Link } from 'nextra-theme-docs'
+import '../styles/globals.css'
 
 export const HomePage = ({
   title,
@@ -28,7 +30,14 @@ export const HomePage = ({
           <p className="text-3xl">{description}</p>
         </div>
         <Link href={`/${router.locale}/docs/react/motivation`}>
-          <button className="rounded-xl bg-gray-800 px-10 py-3 text-xl font-bold">{buttonText}</button>
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            type="button"
+            className="animate-pulse rounded-xl bg-gray-800 px-10 py-3 text-xl font-bold"
+          >
+            {buttonText}
+          </motion.button>
         </Link>
       </div>
 
