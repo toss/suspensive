@@ -87,7 +87,7 @@ import type { Post } from './api'
 export const PostListItem = (props: Post) => {
   return (
     <li style={{ marginBottom: '10px' }}>
-      <span style={{ color: props.isPublic ? 'green' : 'red' }}>{props.isPublic ? 'Public' : 'Private'} Post</span>{' '}
+      <span style={{ color: props.isPublic ? 'green' : 'red' }}>{props.isPublic ? 'Public' : 'Private'} Post </span>
       {props.title}
     </li>
   )
