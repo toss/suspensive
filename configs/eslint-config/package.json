@@ -40,7 +40,7 @@
     "eslint-plugin-jest-dom": "^5.4.0",
     "eslint-plugin-jsdoc": "^50.3.1",
     "eslint-plugin-prettier": "^5.2.1",
-    "eslint-plugin-react-compiler": "0.0.0-experimental-9aef357-20240815",
+    "eslint-plugin-react-compiler": "0.0.0",
     "eslint-plugin-react-hooks": "^4.6.2",
     "typescript-eslint": "^7.18.0"
   },
