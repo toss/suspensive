@@ -23,12 +23,12 @@
   },
   "dependencies": {
     "@codesandbox/sandpack-react": "catalog:",
-    "@codesandbox/sandpack-themes": "catalog:",
     "@suspensive/react": "workspace:*",
     "@suspensive/react-query-4": "workspace:*",
     "@tanstack/react-query": "^4.36.1",
     "@tanstack/react-query-devtools": "^4.36.1",
     "d3": "^7.9.0",
+    "framer-motion": "^11.11.7",
     "next": "catalog:",
     "nextra": "catalog:",
     "nextra-theme-docs": "catalog:",

@@ -14,10 +14,10 @@ catalog:
   "@testing-library/react-native": "^12.5.2"
 
   # next
-  "@next/eslint-plugin-next": "^14.2.14"
-  "nextra": "^2.13.4"
-  "next": "^14.2.14"
-  "nextra-theme-docs": "^2.13.4"
+  "nextra": "^3.0.8"
+  "nextra-theme-docs": "^3.0.8"
+  "next": "^14.2.15"
+  "@next/eslint-plugin-next": "^14.2.15"
   "sharp": "^0.33.5"
 
   # tailwindcss
@@ -29,7 +29,6 @@ catalog:
 
   # codesandbox
   "@codesandbox/sandpack-react": "^2.19.1"
-  "@codesandbox/sandpack-themes": "^2.0.21"
   "remark-sandpack": "^0.0.5"
 
   "axios": "^1.7.7"
