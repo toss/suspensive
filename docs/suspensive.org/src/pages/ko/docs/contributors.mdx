@@ -1,17 +1,17 @@
-import { Cards, Card } from 'nextra/components'
+import { Cards } from 'nextra/components'
 import Image from 'next/image'
-import { BubbleChart } from '../../components'
+import { BubbleChart } from '../../../components'
 
-# Contributors
+# 기여자
 
-Thank you to everyone who contributed to Suspensive and we look forward to your continued support.
+Suspensive에 기여해주신 모든 분들 감사하고 앞으로도 잘 부탁드립니다.
 
 <BubbleChart />
 
-## Maintainers
+## 메인테이너
 
 <Cards num={3}>
-  <Card
+  <Cards.Card
     icon={
       <img
         src="https://github.com/manudeli.png"
@@ -23,7 +23,7 @@ Thank you to everyone who contributed to Suspensive and we look forward to your 
     title="@manudeli (Jonghyeon Ko)"
     href="https://github.com/manudeli"
   />
-  <Card
+  <Cards.Card
     icon={
       <img
         src="https://github.com/gwansikk.png"
@@ -35,7 +35,7 @@ Thank you to everyone who contributed to Suspensive and we look forward to your 
     title="@gwansikk (GwanSik Kim)"
     href="https://github.com/gwansikk"
   />
-  <Card
+  <Cards.Card
     icon={
       <img
         src="https://github.com/kangju2000.png"
@@ -47,7 +47,7 @@ Thank you to everyone who contributed to Suspensive and we look forward to your 
     title="@kangju2000 (Juhyeok Kang)"
     href="https://github.com/kangju2000"
   />
-  <Card
+  <Cards.Card
     icon={
       <img
         src="https://github.com/bigsaigon333.png"
@@ -59,7 +59,7 @@ Thank you to everyone who contributed to Suspensive and we look forward to your 
     title="@bigsaigon333 (Donghee Kim)"
     href="https://github.com/bigsaigon333"
   />
-  <Card
+  <Cards.Card
     icon={
       <img
         src="https://github.com/SEOKKAMONI.png"
@@ -71,7 +71,7 @@ Thank you to everyone who contributed to Suspensive and we look forward to your 
     title="@SEOKKAMONI (Seokjin Kim)"
     href="https://github.com/SEOKKAMONI"
   />
-  <Card
+  <Cards.Card
     className="animate-pulse opacity-10"
     icon={
       <div
@@ -93,10 +93,10 @@ Thank you to everyone who contributed to Suspensive and we look forward to your 
   />
 </Cards>
 
-### Former maintainers
+### 함께 해주셨던 메인테이너
 
 <Cards num={3}>
-  <Card
+  <Cards.Card
     className="opacity-40"
     icon={
       <img
@@ -109,7 +109,7 @@ Thank you to everyone who contributed to Suspensive and we look forward to your 
     title="@okinawaa (Chanhyuk Park)"
     href="https://github.com/okinawaa"
   />
-  <Card
+  <Cards.Card
     className="opacity-40"
     icon={
       <img

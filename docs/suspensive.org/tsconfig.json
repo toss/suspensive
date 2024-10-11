@@ -27,7 +27,7 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "eslint.config.mjs",
-    "next.config.js",
+    "next.config.mjs",
     "postcss.config.js",
     "prettier.config.mjs",
     "tailwind.config.js",
