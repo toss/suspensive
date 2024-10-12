@@ -6,19 +6,30 @@ import {
   SandpackStack,
   SandpackTests,
 } from '@codesandbox/sandpack-react'
-import { type ComponentProps, Fragment, useEffect, useRef, useState } from 'react'
+import {
+  type ComponentProps,
+  Fragment,
+  useEffect,
+  useRef,
+  useState,
+} from 'react'
 import { ConsoleCounterButton } from './ConsoleCounterButton'
 import { ErrorOverlay } from './ErrorOverlay'
 import type { Sandpack } from '.'
 
 export const CustomPreset = (
-  props: Pick<ComponentProps<typeof Sandpack>, 'layoutOptions' | 'editorOptions' | 'previewOptions'>
+  props: Pick<
+    ComponentProps<typeof Sandpack>,
+    'layoutOptions' | 'editorOptions' | 'previewOptions'
+  >
 ) => {
   const dragEventTargetRef = useRef<(EventTarget & HTMLDivElement) | null>(null)
 
   const [horizontalSize, setHorizontalSize] = useState(50)
   const [verticalSize, setVerticalSize] = useState(60)
-  const [consoleVisibility, setConsoleVisibility] = useState(props.previewOptions?.showConsole ?? false)
+  const [consoleVisibility, setConsoleVisibility] = useState(
+    props.previewOptions?.showConsole ?? false
+  )
   const [counter, setCounter] = useState(0)
 
   const mode = props.previewOptions?.layout ?? 'preview'
@@ -37,7 +48,9 @@ export const CustomPreset = (
     gap: consoleVisibility ? 1 : 0,
   }
 
-  const rightColumnProps = hasRightColumn ? { className: 'sb-preset-column', style: rightColumnStyle } : {}
+  const rightColumnProps = hasRightColumn
+    ? { className: 'sb-preset-column', style: rightColumnStyle }
+    : {}
 
   const topRowStyle = hasRightColumn
     ? {
@@ -50,7 +63,10 @@ export const CustomPreset = (
     : rightColumnStyle
 
   const actionsChildren = showConsoleButton ? (
-    <ConsoleCounterButton counter={counter} onClick={() => setConsoleVisibility((prev) => !prev)} />
+    <ConsoleCounterButton
+      counter={counter}
+      onClick={() => setConsoleVisibility((prev) => !prev)}
+    />
   ) : undefined
 
   const onDragMove = (event: MouseEvent) => {
@@ -60,11 +76,15 @@ export const CustomPreset = (
 
     if (!container) return
 
-    const direction = dragEventTargetRef.current.dataset.direction as 'horizontal' | 'vertical'
+    const direction = dragEventTargetRef.current.dataset.direction as
+      | 'horizontal'
+      | 'vertical'
     const isHorizontal = direction === 'horizontal'
 
     const { left, top, height, width } = container.getBoundingClientRect()
-    const offset = isHorizontal ? ((event.clientX - left) / width) * 100 : ((event.clientY - top) / height) * 100
+    const offset = isHorizontal
+      ? ((event.clientX - left) / width) * 100
+      : ((event.clientY - top) / height) * 100
     const boundaries = Math.min(Math.max(offset, 25), 75)
 
     if (isHorizontal) {
@@ -135,8 +155,19 @@ export const CustomPreset = (
             <ErrorOverlay />
           </SandpackPreview>
         )}
-        {mode === 'tests' && <SandpackTests actionsChildren={actionsChildren} style={topRowStyle} />}
-        {mode === 'console' && <SandpackConsole actionsChildren={actionsChildren} style={topRowStyle} standalone />}
+        {mode === 'tests' && (
+          <SandpackTests
+            actionsChildren={actionsChildren}
+            style={topRowStyle}
+          />
+        )}
+        {mode === 'console' && (
+          <SandpackConsole
+            actionsChildren={actionsChildren}
+            style={topRowStyle}
+            standalone
+          />
+        )}
 
         {(showConsoleButton || consoleVisibility) && (
           <>
@@ -159,7 +190,10 @@ export const CustomPreset = (
                 flexBasis: 0,
               }}
             >
-              <SandpackConsole onLogsChange={(logs) => setCounter(logs.length)} showHeader={false} />
+              <SandpackConsole
+                onLogsChange={(logs) => setCounter(logs.length)}
+                showHeader={false}
+              />
             </div>
           </>
         )}

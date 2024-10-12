@@ -1,5 +1,9 @@
 import { Suspense } from '@suspensive/react'
-import { QueryErrorBoundary, SuspenseQuery, queryOptions } from '@suspensive/react-query-4'
+import {
+  QueryErrorBoundary,
+  SuspenseQuery,
+  queryOptions,
+} from '@suspensive/react-query-4'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import * as d3 from 'd3'
@@ -11,7 +15,9 @@ const contributorsQueryOptions = () =>
   queryOptions({
     queryKey: ['contributors'],
     queryFn: () =>
-      fetch('https://api.github.com/repos/toss/suspensive/stats/contributors').then(async (res) => {
+      fetch(
+        'https://api.github.com/repos/toss/suspensive/stats/contributors'
+      ).then(async (res) => {
         if (res.ok) {
           const data = await res.json()
           return data as
@@ -82,7 +88,12 @@ export const BubbleChart = () => {
             {({ data }) => {
               const chartData = data
                 ?.filter(
-                  ({ author }) => !['github-actions[bot]', 'dependabot[bot]', 'renovate[bot]'].includes(author.login)
+                  ({ author }) =>
+                    ![
+                      'github-actions[bot]',
+                      'dependabot[bot]',
+                      'renovate[bot]',
+                    ].includes(author.login)
                 )
                 .map(({ author, total }) => ({
                   name: author.login,
@@ -95,16 +106,36 @@ export const BubbleChart = () => {
                 return (
                   <>
                     <div className="flex w-[100%] items-center justify-center overflow-visible sm:hidden md:hidden lg:hidden">
-                      <BubbleChartSize chartData={chartData} height={400} width={400} padding={2} />
+                      <BubbleChartSize
+                        chartData={chartData}
+                        height={400}
+                        width={400}
+                        padding={2}
+                      />
                     </div>
                     <div className="hidden w-[100%] items-center justify-center overflow-visible sm:flex md:hidden lg:hidden">
-                      <BubbleChartSize chartData={chartData} height={630} width={630} padding={6} />
+                      <BubbleChartSize
+                        chartData={chartData}
+                        height={630}
+                        width={630}
+                        padding={6}
+                      />
                     </div>
                     <div className="hidden w-[100%] items-center justify-center overflow-visible sm:hidden md:flex lg:hidden">
-                      <BubbleChartSize chartData={chartData} height={560} width={560} padding={4} />
+                      <BubbleChartSize
+                        chartData={chartData}
+                        height={560}
+                        width={560}
+                        padding={4}
+                      />
                     </div>
                     <div className="hidden w-[100%] items-center justify-center overflow-visible sm:hidden md:hidden lg:flex">
-                      <BubbleChartSize chartData={chartData} height={760} width={760} padding={8} />
+                      <BubbleChartSize
+                        chartData={chartData}
+                        height={760}
+                        width={760}
+                        padding={8}
+                      />
                     </div>
                   </>
                 )
@@ -137,7 +168,12 @@ type Node = {
   htmlUrl: string
   children?: Node[]
 }
-const BubbleChartSize = (props: { chartData: Array<Node>; width: number; height: number; padding: number }) => {
+const BubbleChartSize = (props: {
+  chartData: Array<Node>
+  width: number
+  height: number
+  padding: number
+}) => {
   const svgRef = useRef<SVGSVGElement | null>(null)
 
   useEffect(() => {
@@ -148,7 +184,10 @@ const BubbleChartSize = (props: { chartData: Array<Node>; width: number; height:
       .sum((d: Node) => (d.value < 100 ? d.value : 100) + 3)
       .sort((a, b) => (b.value ?? 0) - (a.value ?? 0))
 
-    const pack = d3.pack().size([props.width, props.height]).padding(props.padding)
+    const pack = d3
+      .pack()
+      .size([props.width, props.height])
+      .padding(props.padding)
 
     const nodes = pack(root).descendants().slice(1)
 
@@ -186,7 +225,10 @@ const BubbleChartSize = (props: { chartData: Array<Node>; width: number; height:
       .attr('width', (d) => d.r * 2)
       .attr('height', (d) => d.r * 2)
       .attr('href', (d: d3.HierarchyCircularNode<Node>) => d.data.avatar)
-      .attr('clip-path', (d) => `circle(${d.r * 1}px at ${d.r * 1}px ${d.r * 1}px)`)
+      .attr(
+        'clip-path',
+        (d) => `circle(${d.r * 1}px at ${d.r * 1}px ${d.r * 1}px)`
+      )
   }, [props.chartData, props.height, props.width, props.padding])
 
   return <svg ref={svgRef} />

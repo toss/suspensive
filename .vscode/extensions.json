@@ -1,3 +1,8 @@
 {
-  "recommendations": ["dbaeumer.vscode-eslint", "esbenp.prettier-vscode", "antfu.pnpm-catalog-lens"]
+  "recommendations": [
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+    "antfu.pnpm-catalog-lens",
+    "unifiedjs.vscode-mdx"
+  ]
 }

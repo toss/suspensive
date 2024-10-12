@@ -26,7 +26,10 @@ const PostsPage = () => {
             // })
 
             // ✅ Post Comments 페이지에 들어가기 전에 각각의 post comments query에 대해 usePrefetchQuery를 호출할 수 있습니다.
-            <PrefetchQuery queryKey={['posts', post.id, 'comments']} queryFn={() => getPostComments(post.id)} />
+            <PrefetchQuery
+              queryKey={['posts', post.id, 'comments']}
+              queryFn={() => getPostComments(post.id)}
+            />
           ) : null}
           <div ref={ref}>
             <h2>{post.title}</h2>

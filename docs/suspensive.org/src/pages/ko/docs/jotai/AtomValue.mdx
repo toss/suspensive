@@ -10,16 +10,12 @@ Jotai의 atom을 그대로 사용할 수 있습니다.
 
 ```tsx /AtomValue/
 import { AtomValue } from '@suspensive/jotai'
-import { atom } from "jotai";
+import { atom } from 'jotai'
 
-const countAtom = atom(1);
+const countAtom = atom(1)
 
 const Example = () => (
-  <AtomValue atom={countAtom}>
-    {(count) => (
-      <>count: {count}</>
-    )}
-  </AtomValue>
+  <AtomValue atom={countAtom}>{(count) => <>count: {count}</>}</AtomValue>
 )
 ```
 
@@ -28,7 +24,7 @@ Async Atom일 경우 프로미스(Promise)가 해결(resolve) 되기 전까지, 
 ```tsx /AtomValue/
 import { AtomValue } from '@suspensive/jotai'
 import { Suspense } from '@suspensive/react'
-import { atom } from "jotai";
+import { atom } from 'jotai'
 
 const countAtom = atom(1)
 const asyncDoubleCountAtom = atom(async (get) => {
@@ -39,9 +35,7 @@ const asyncDoubleCountAtom = atom(async (get) => {
 const Example = () => (
   <Suspense fallback={'pending...'}>
     <AtomValue atom={asyncDoubleCountAtom}>
-      {(count) => (
-        <>count: {count}</>
-      )}
+      {(count) => <>count: {count}</>}
     </AtomValue>
   </Suspense>
 )

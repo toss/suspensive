@@ -8,12 +8,14 @@ import './src/styles/globals.css'
 const localeBanner = {
   en: (
     <span>
-      👀 Check out the changes in Suspensive v2. <Link href="/en/docs/migrate-to-v2">read more →</Link>
+      👀 Check out the changes in Suspensive v2.{' '}
+      <Link href="/en/docs/migrate-to-v2">read more →</Link>
     </span>
   ),
   ko: (
     <span>
-      👀 Suspensive v2에서의 변경을 확인하세요. <Link href="/ko/docs/migrate-to-v2">더보기 →</Link>
+      👀 Suspensive v2에서의 변경을 확인하세요.{' '}
+      <Link href="/ko/docs/migrate-to-v2">더보기 →</Link>
     </span>
   ),
 } as const
@@ -32,9 +34,18 @@ const config: DocsThemeConfig = {
   },
   logo: function Logo() {
     return (
-      <motion.div className="flex items-center gap-1" whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+      <motion.div
+        className="flex items-center gap-1"
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
+      >
         <motion.span>
-          <Image src="/img/logo_dark.png" width={34} height={34} alt="suspensive logo" />
+          <Image
+            src="/img/logo_dark.png"
+            width={34}
+            height={34}
+            alt="suspensive logo"
+          />
         </motion.span>
         <div className="relative">
           <strong>Suspensive</strong>
@@ -46,14 +57,21 @@ const config: DocsThemeConfig = {
   head: function Head() {
     const { title, frontMatter } = useConfig()
     const { asPath, defaultLocale, locale } = useRouter()
-    const url = 'https://suspensive.org' + (defaultLocale === locale ? asPath : `/${locale}${asPath}`)
+    const url =
+      'https://suspensive.org' +
+      (defaultLocale === locale ? asPath : `/${locale}${asPath}`)
 
     return (
       <>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta property="og:title" content={title || 'Suspensive'} />
         <meta property="og:url" content={url} />
-        <meta property="og:description" content={frontMatter.description || 'Packages to use React Suspense easily'} />
+        <meta
+          property="og:description"
+          content={
+            frontMatter.description || 'Packages to use React Suspense easily'
+          }
+        />
         <meta property="og:image" content="/banner.png" />
         <link rel="icon" href="/favicon.ico" type="image/ico" />
       </>
@@ -62,7 +80,8 @@ const config: DocsThemeConfig = {
   project: {
     link: 'https://github.com/toss/suspensive',
   },
-  docsRepositoryBase: 'https://github.com/toss/suspensive/tree/main/docs/suspensive.org',
+  docsRepositoryBase:
+    'https://github.com/toss/suspensive/tree/main/docs/suspensive.org',
   feedback: { content: '' },
   editLink: {
     content: function Text() {
@@ -110,7 +129,11 @@ const config: DocsThemeConfig = {
     const router = useRouter()
 
     return (
-      <motion.div key={router.asPath} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}>
+      <motion.div
+        key={router.asPath}
+        initial={{ opacity: 0, y: 8 }}
+        animate={{ opacity: 1, y: 0 }}
+      >
         {children}
       </motion.div>
     )

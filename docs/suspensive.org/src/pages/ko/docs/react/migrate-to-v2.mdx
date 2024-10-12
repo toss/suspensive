@@ -14,7 +14,10 @@ import { useSuspenseQuery } from '@suspensive/react-query'
 
 const Example = wrap
   .ErrorBoundaryGroup({ blockOutside: false })
-  .ErrorBoundary({ fallback: ({ error }) => <>{error.message}</>, onError: logger.log })
+  .ErrorBoundary({
+    fallback: ({ error }) => <>{error.message}</>,
+    onError: logger.log,
+  })
   .Suspense({ fallback: <>loading...</>, clientOnly: true })
   .on(() => {
     const query = useSuspenseQuery({
@@ -113,7 +116,11 @@ const Example = () => {
       </ErrorBoundaryGroup.Consumer>
       <ErrorBoundary fallback={({ error }) => <>{error.message}</>}>
         <ErrorBoundary.Consumer>
-          {({ setError }) => <button onClick={() => setError(new Error('error message'))}>setError</button>}
+          {({ setError }) => (
+            <button onClick={() => setError(new Error('error message'))}>
+              setError
+            </button>
+          )}
         </ErrorBoundary.Consumer>
       </ErrorBoundary>
     </ErrorBoundaryGroup>

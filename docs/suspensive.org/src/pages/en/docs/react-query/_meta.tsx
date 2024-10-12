@@ -1,7 +1,9 @@
 export default {
   motivation: { title: 'Why need to use?' },
   installation: { title: 'Installation' },
-  'tanstack-query-compatibility': { title: 'Support both TanStack Query v4 and 5' },
+  'tanstack-query-compatibility': {
+    title: 'Support both TanStack Query v4 and 5',
+  },
   'migrate-to-v2': { title: 'Migrating to v2' },
   '--- API Reference': {
     type: 'separator',
