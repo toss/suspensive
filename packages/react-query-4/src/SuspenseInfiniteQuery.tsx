@@ -16,7 +16,7 @@ import {
  *
  * // You can use infiniteQueryOptions as props.
  * <SuspenseInfiniteQuery {...infiniteQueryOptions()}>
- *   {({ data, fetchNextPage }) => { // infiniteQueryResult can be used in children.
+ *   {({ data, fetchNextPage }) => {
  *     return <></>
  *   }}
  * </SuspenseInfiniteQuery>

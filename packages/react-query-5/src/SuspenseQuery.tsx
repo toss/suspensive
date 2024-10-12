@@ -17,7 +17,7 @@ import type { ReactNode } from 'react'
  *
  * // You can use QueryOptions as props.
  * <SuspenseQuery {...queryOptions()}>
- *   {({ data, isLoading }) => { // QueryResult can be used in children.
+ *   {({ data, isLoading }) => {
  *     return <></>
  *   }
  * </SuspenseQuery/>

@@ -10,7 +10,7 @@ import { type SuspenseQueriesOptions, type SuspenseQueriesResults, useSuspenseQu
  * import { SuspenseQueries } from '@suspensive/react-query'
  *
  * <SuspenseQueries queries={[firstQueryOptions(), secondQueryOptions()]}>
- *   {([{ data: firstQueryData }, { data: secondQueryData }]) => { // Use QueryResult from queries in the order they are provided.
+ *   {([{ data: firstQueryData }, { data: secondQueryData }]) => {
  *     return <></>
  *   }}
  * </SuspenseQueries>
