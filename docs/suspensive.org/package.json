@@ -22,19 +22,19 @@
     "start": "next start -p 4000"
   },
   "dependencies": {
-    "@codesandbox/sandpack-react": "catalog:",
+    "@codesandbox/sandpack-react": "^2.19.1",
     "@suspensive/react": "workspace:*",
     "@suspensive/react-query-4": "workspace:*",
     "@tanstack/react-query": "^4.36.1",
     "@tanstack/react-query-devtools": "^4.36.1",
     "d3": "^7.9.0",
-    "framer-motion": "^11.11.7",
+    "framer-motion": "^11.11.8",
     "next": "catalog:",
-    "nextra": "catalog:",
-    "nextra-theme-docs": "catalog:",
+    "nextra": "^3.0.8",
+    "nextra-theme-docs": "^3.0.8",
     "react": "catalog:react18",
     "react-dom": "catalog:react18",
-    "remark-sandpack": "catalog:",
+    "remark-sandpack": "^0.0.5",
     "sharp": "catalog:"
   },
   "devDependencies": {
