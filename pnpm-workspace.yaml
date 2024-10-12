@@ -38,7 +38,7 @@ catalogs:
 
   # react-native
   react-native:
-    "react-native": "^0.75.4"
+    "react-native": "0.74.3"
     "expo": "^51.0.37"
     "jest-expo": "^51.0.4"
     "@testing-library/react-native": "^12.7.2"
