@@ -10,7 +10,7 @@ You can use Jotai's atom as is.
 
 ```tsx /SetAtom/
 import { SetAtom } from '@suspensive/jotai'
-import { atom } from "jotai";
+import { atom } from 'jotai'
 
 const switchAtom = atom(false)
 
@@ -30,7 +30,7 @@ For Async Atom, it delegates the pending state of the Promise to the parent Susp
 
 ```tsx /SetAtom/
 import { SetAtom } from '@suspensive/jotai'
-import { atom } from "jotai";
+import { atom } from 'jotai'
 
 const request = async () => fetch('https://...').then((res) => res.json())
 const baseAtom = atom(0)
@@ -39,7 +39,8 @@ const Example = () => (
   <SetAtom atom={baseAtom}>
     {(setValue) => (
       <>
-        <button onClick={() => setValue(request())}>request</button> // Suspense will be triggered until the Promise resolves.
+        {/* Suspense will be triggered until the Promise resolves. */}
+        <button onClick={() => setValue(request())}>request</button>
       </>
     )}
   </SetAtom>

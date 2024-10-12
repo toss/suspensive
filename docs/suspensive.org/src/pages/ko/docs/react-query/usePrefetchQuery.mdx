@@ -41,15 +41,21 @@ export const Example = () => {
   const [postId, setPostId] = useState(1)
   usePrefetchQuery({
     queryKey: ['posts', postId],
-    queryFn:() => getPost(postId),
+    queryFn: () => getPost(postId),
   }) // suspense경계 전에 prefetch를 발생 시키는 데에 사용합니다
 
   return (
     <div>
-      <button onClick={() => setPostId((prev) => prev - 1)} disabled={postId === 1}>
+      <button
+        onClick={() => setPostId((prev) => prev - 1)}
+        disabled={postId === 1}
+      >
         Previous Post
       </button>
-      <button onClick={() => setPostId((prev) => prev + 1)} disabled={postId === 100}>
+      <button
+        onClick={() => setPostId((prev) => prev + 1)}
+        disabled={postId === 100}
+      >
         Next Post
       </button>
       <Suspense fallback={<div>Loading...</div>}>
@@ -62,7 +68,7 @@ export const Example = () => {
 const Post = ({ postId }: { postId: number }) => {
   const { data } = useSuspenseQuery({
     queryKey: ['posts', postId],
-    queryFn:() => getPost(postId),
+    queryFn: () => getPost(postId),
   })
 
   return (
@@ -74,9 +80,11 @@ const Post = ({ postId }: { postId: number }) => {
 }
 
 const getPost = (postId: number) =>
-  fetch(`https://jsonplaceholder.typicode.com/posts/${postId}`).then<{ id: number; title: string; body: string }>(
-    (res) => res.json()
-  )
+  fetch(`https://jsonplaceholder.typicode.com/posts/${postId}`).then<{
+    id: number
+    title: string
+    body: string
+  }>((res) => res.json())
 ```
 
 </Sandpack>

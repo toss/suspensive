@@ -15,6 +15,7 @@ import cspellConfigs from '@cspell/eslint-plugin/configs'
 import vitest from '@vitest/eslint-plugin'
 // @ts-expect-error TODO: remove this
 import jestDom from 'eslint-plugin-jest-dom'
+import mdx from 'eslint-plugin-mdx'
 
 const ignores = ['**/.next/**', '**/build/**', '**/coverage/**', '**/dist/**'] satisfies Linter.Config['ignores']
 
@@ -23,9 +24,14 @@ export const suspensiveTypeScriptConfig: ReturnType<typeof tseslint.config> = ts
     ignores,
   },
   cspellConfigs.recommended,
-  ...tseslint.configs.strictTypeChecked,
+  ...tseslint.configs.strictTypeChecked.map((config) => ({
+    ...config,
+    files: ['**/*.{ts,tsx,js,jsx,cjs,mjs}'],
+    ignores: ['**/*.mdx/**/*.{ts,tsx,js,jsx,cjs,mjs}'],
+  })),
   {
     files: ['**/*.{ts,tsx}'],
+    ignores: ['**/*.mdx/**/*.{ts,tsx}'],
     languageOptions: {
       parser: tseslint.parser,
       parserOptions: {
@@ -115,6 +121,7 @@ export const suspensiveReactTypeScriptConfig: ReturnType<typeof tseslint.config>
   {
     files: ['**/*.{ts,tsx}'],
     ...(pluginReact.configs.recommended as unknown as ReturnType<typeof tseslint.config>[number]),
+    ignores: ['**/*.mdx/**/*.{ts,tsx}'],
   },
   {
     plugins: {
@@ -140,4 +147,26 @@ export const suspensiveReactTypeScriptConfig: ReturnType<typeof tseslint.config>
 export const suspensiveNextTypeScriptConfig: ReturnType<typeof tseslint.config> = [
   ...suspensiveReactTypeScriptConfig,
   { plugins: { 'plugin:@next/next/recommended': next.configs.recommended } },
+]
+
+export const suspensiveMDXConfig: Linter.Config[] = [
+  mdx.configs.flat,
+  mdx.configs.flatCodeBlocks,
+  {
+    files: ['**/*.mdx'],
+    ...mdx.flat,
+    processor: mdx.createRemarkProcessor({
+      lintCodeBlocks: true,
+      languageMapper: {},
+    }),
+  },
+  {
+    files: ['**/*.mdx'],
+    ...mdx.flatCodeBlocks,
+    rules: {
+      ...mdx.flatCodeBlocks.rules,
+      'no-var': 'error',
+      'prefer-const': 'error',
+    },
+  },
 ]

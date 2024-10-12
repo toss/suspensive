@@ -11,8 +11,15 @@ export function middleware(req: NextRequest) {
     return
   }
 
-  if (!(req.nextUrl.pathname.startsWith('/en') || req.nextUrl.pathname.startsWith('/ko'))) {
-    return NextResponse.redirect(new URL(`/en${req.nextUrl.pathname}${req.nextUrl.search}`, req.url))
+  if (
+    !(
+      req.nextUrl.pathname.startsWith('/en') ||
+      req.nextUrl.pathname.startsWith('/ko')
+    )
+  ) {
+    return NextResponse.redirect(
+      new URL(`/en${req.nextUrl.pathname}${req.nextUrl.search}`, req.url)
+    )
   }
 }
 

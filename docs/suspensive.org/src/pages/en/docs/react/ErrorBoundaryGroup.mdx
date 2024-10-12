@@ -39,29 +39,29 @@ import { ErrorAfter2s } from './ErrorAfter2s'
 export const Example = () => {
   return (
     <ErrorBoundaryGroup>
-    <fieldset style={{ border: '1px solid red', padding: '10px' }}>
-      <legend>Outer ErrorBoundaryGroup</legend>
-      <ErrorBoundaryGroup.Consumer>
-        {(group) => <button onClick={group.reset}>Try again</button>}
-      </ErrorBoundaryGroup.Consumer>
-      <ErrorBoundary fallback={(props) => <>{props.error.message}</>}>
-        <ErrorAfter2s />
-      </ErrorBoundary>
+      <fieldset style={{ border: '1px solid red', padding: '10px' }}>
+        <legend>Outer ErrorBoundaryGroup</legend>
+        <ErrorBoundaryGroup.Consumer>
+          {(group) => <button onClick={group.reset}>Try again</button>}
+        </ErrorBoundaryGroup.Consumer>
+        <ErrorBoundary fallback={(props) => <>{props.error.message}</>}>
+          <ErrorAfter2s />
+        </ErrorBoundary>
 
-      <ErrorBoundaryGroup>
-        <fieldset style={{ border: '1px solid blue', padding: '10px' }}>
-          <legend>Inner ErrorBoundaryGroup</legend>
-          <ErrorBoundaryGroup.Consumer>
-            {(group) => <button onClick={group.reset}>Try again</button>}
-          </ErrorBoundaryGroup.Consumer>
+        <ErrorBoundaryGroup>
+          <fieldset style={{ border: '1px solid blue', padding: '10px' }}>
+            <legend>Inner ErrorBoundaryGroup</legend>
+            <ErrorBoundaryGroup.Consumer>
+              {(group) => <button onClick={group.reset}>Try again</button>}
+            </ErrorBoundaryGroup.Consumer>
 
-          <ErrorBoundary fallback={(props) => <>{props.error.message}</>}>
-            <ErrorAfter2s />
-          </ErrorBoundary>
-        </fieldset>
-      </ErrorBoundaryGroup>
-    </fieldset>
-  </ErrorBoundaryGroup>
+            <ErrorBoundary fallback={(props) => <>{props.error.message}</>}>
+              <ErrorAfter2s />
+            </ErrorBoundary>
+          </fieldset>
+        </ErrorBoundaryGroup>
+      </fieldset>
+    </ErrorBoundaryGroup>
   )
 }
 ```
@@ -70,14 +70,19 @@ export const Example = () => {
 import { useState, useEffect } from 'react'
 
 export const ErrorAfter2s = () => {
-  const [asyncState, setAsyncState] = useState<{ isError: true; error: Error } | { isError: false; error: null }>({
+  const [asyncState, setAsyncState] = useState<
+    { isError: true; error: Error } | { isError: false; error: null }
+  >({
     isError: false,
     error: null,
   })
 
   useEffect(() => {
     setTimeout(() => {
-      setAsyncState({ isError: true, error: { status: 401, message: 'unauthorized' } })
+      setAsyncState({
+        isError: true,
+        error: { status: 401, message: 'unauthorized' },
+      })
     }, 2000)
   }, [])
 
@@ -159,14 +164,19 @@ export const Example = () => {
 import { useState, useEffect } from 'react'
 
 export const ErrorAfter2s = () => {
-  const [asyncState, setAsyncState] = useState<{ isError: true; error: Error } | { isError: false; error: null }>({
+  const [asyncState, setAsyncState] = useState<
+    { isError: true; error: Error } | { isError: false; error: null }
+  >({
     isError: false,
     error: null,
   })
 
   useEffect(() => {
     setTimeout(() => {
-      setAsyncState({ isError: true, error: { status: 401, message: 'unauthorized' } })
+      setAsyncState({
+        isError: true,
+        error: { status: 401, message: 'unauthorized' },
+      })
     }, 2000)
   }, [])
 
@@ -227,14 +237,19 @@ export const Example = () => {
 import { useState, useEffect } from 'react'
 
 export const ErrorAfter2s = () => {
-  const [asyncState, setAsyncState] = useState<{ isError: true; error: Error } | { isError: false; error: null }>({
+  const [asyncState, setAsyncState] = useState<
+    { isError: true; error: Error } | { isError: false; error: null }
+  >({
     isError: false,
     error: null,
   })
 
   useEffect(() => {
     setTimeout(() => {
-      setAsyncState({ isError: true, error: { status: 401, message: 'unauthorized' } })
+      setAsyncState({
+        isError: true,
+        error: { status: 401, message: 'unauthorized' },
+      })
     }, 2000)
   }, [])
 

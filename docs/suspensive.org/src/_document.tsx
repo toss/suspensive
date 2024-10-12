@@ -5,7 +5,11 @@ export default function Document() {
   return (
     <Html lang="ko">
       <Head>
-        <style dangerouslySetInnerHTML={{ __html: getSandpackCssText() }} id="sandpack" key="sandpack-css" />
+        <style
+          dangerouslySetInnerHTML={{ __html: getSandpackCssText() }}
+          id="sandpack"
+          key="sandpack-css"
+        />
       </Head>
       <body>
         <Main />

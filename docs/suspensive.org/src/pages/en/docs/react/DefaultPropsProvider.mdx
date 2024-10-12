@@ -18,24 +18,39 @@ const defaultProps = new DefaultProps({
 })
 
 function App() {
-  return <DefaultPropsProvider defaultProps={defaultProps}>...</DefaultPropsProvider>
+  return (
+    <DefaultPropsProvider defaultProps={defaultProps}>...</DefaultPropsProvider>
+  )
 }
 ```
 
 <Sandpack>
 
 ```tsx Example.tsx active
-import { DefaultProps, DefaultPropsProvider, Suspense, Delay } from '@suspensive/react'
+import {
+  DefaultProps,
+  DefaultPropsProvider,
+  Suspense,
+  Delay,
+} from '@suspensive/react'
 import { SuspenseQuery } from '@suspensive/react-query'
 import { fetch1sQueryOptions } from './queries'
 
 const defaultProps = new DefaultProps({
   Delay: {
     ms: 1200,
-    fallback: <div style={{ padding: 10, background: 'lightyellow' }}>Loading additional content...</div>,
+    fallback: (
+      <div style={{ padding: 10, background: 'lightyellow' }}>
+        Loading additional content...
+      </div>
+    ),
   },
   Suspense: {
-    fallback: <div style={{ padding: 10, background: 'lightblue' }}>Fetching post...</div>,
+    fallback: (
+      <div style={{ padding: 10, background: 'lightblue' }}>
+        Fetching post...
+      </div>
+    ),
     clientOnly: false,
   },
 })
@@ -43,7 +58,13 @@ const defaultProps = new DefaultProps({
 export const Example = () => {
   return (
     <DefaultPropsProvider defaultProps={defaultProps}>
-      <div style={{ fontFamily: 'Arial, sans-serif', maxWidth: '300px', margin: '20px auto' }}>
+      <div
+        style={{
+          fontFamily: 'Arial, sans-serif',
+          maxWidth: '300px',
+          margin: '20px auto',
+        }}
+      >
         <Suspense>
           <SuspenseQuery {...fetch1sQueryOptions(1)}>
             {({ data }) => (
@@ -51,7 +72,13 @@ export const Example = () => {
                 <h2>{data.title}</h2>
                 <p>ID: {data.id}</p>
                 <Delay>
-                  <div style={{ marginTop: 10, padding: 10, background: '#e0e0e0' }}>
+                  <div
+                    style={{
+                      marginTop: 10,
+                      padding: 10,
+                      background: '#e0e0e0',
+                    }}
+                  >
                     <h3>Additional Details:</h3>
                     <p>{data.body}</p>
                   </div>
@@ -90,10 +117,10 @@ export const fetch1s = (id: number): Promise<Post> =>
       resolve({
         id: id,
         title: `Lorem Ipsum ${id}`,
-        body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
-      });
-    }, 1000);
-  });
+        body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+      })
+    }, 1000)
+  })
 ```
 
 </Sandpack>

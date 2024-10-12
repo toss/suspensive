@@ -1,5 +1,5 @@
-import { Callout, Sandpack } from '@/components'
 import { Tabs } from 'nextra/components'
+import { Callout, Sandpack } from '@/components'
 
 # ErrorBoundary
 
@@ -48,14 +48,15 @@ export const Example = () => {
     </ErrorBoundary>
   )
 }
-
 ```
 
 ```tsx ErrorAfter2s.tsx
 import { useState, useEffect } from 'react'
 
 export const ErrorAfter2s = () => {
-  const [asyncState, setAsyncState] = useState<{ isError: true; error: Error } | { isError: false; error: null }>({
+  const [asyncState, setAsyncState] = useState<
+    { isError: true; error: Error } | { isError: false; error: null }
+  >({
     isError: false,
     error: null,
   })
@@ -87,7 +88,10 @@ If you want to deliver a declared component as `<ErrorBoundary/>`'s fallback, yo
 ```tsx /ErrorBoundaryFallbackProps/
 import type { ErrorBoundaryFallbackProps } from '@suspensive/react'
 
-const ErrorBoundaryFallback = ({ reset, error }: ErrorBoundaryFallbackProps) => (
+const ErrorBoundaryFallback = ({
+  reset,
+  error,
+}: ErrorBoundaryFallbackProps) => (
   <>
     <button onClick={reset}>reset</button>
     {error.message}
@@ -175,9 +179,7 @@ export const Example = () => {
       <button onClick={() => setResetKey((prev) => prev + 1)}>Try again</button>
       <ErrorBoundary
         resetKeys={[resetKey]}
-        fallback={(props) => (
-          <>{props.error.message}</>
-        )}
+        fallback={(props) => <>{props.error.message}</>}
       >
         <ErrorAfter2s />
       </ErrorBoundary>
@@ -190,7 +192,9 @@ export const Example = () => {
 import { useState, useEffect } from 'react'
 
 export const ErrorAfter2s = () => {
-  const [asyncState, setAsyncState] = useState<{ isError: true; error: Error } | { isError: false; error: null }>({
+  const [asyncState, setAsyncState] = useState<
+    { isError: true; error: Error } | { isError: false; error: null }
+  >({
     isError: false,
     error: null,
   })
@@ -236,7 +240,6 @@ const Example = () => (
     )}
   </QueryErrorResetBoundary>
 )
-
 ```
 
 <Sandpack>
@@ -344,7 +347,9 @@ export const Example = () => {
 import { useState, useEffect } from 'react'
 
 export const ErrorAfter2s = () => {
-  const [asyncState, setAsyncState] = useState<{ isError: true; error: Error } | { isError: false; error: null }>({
+  const [asyncState, setAsyncState] = useState<
+    { isError: true; error: Error } | { isError: false; error: null }
+  >({
     isError: false,
     error: null,
   })
@@ -401,10 +406,16 @@ import { useState, useEffect, createElement } from 'react'
 
 export const Example = () => {
   return (
-    <ErrorBoundary fallback={({ error }) => <>Parent ErrorBoundary fallback: {error.message}</>}>
+    <ErrorBoundary
+      fallback={({ error }) => (
+        <>Parent ErrorBoundary fallback: {error.message}</>
+      )}
+    >
       <ErrorBoundary
         shouldCatch={CustomError}
-        fallback={({ error }) => <>Child ErrorBoundary fallback: {error.message}</>}
+        fallback={({ error }) => (
+          <>Child ErrorBoundary fallback: {error.message}</>
+        )}
       >
         <CustomErrorAfter2s />
       </ErrorBoundary>
@@ -445,10 +456,20 @@ import { useState, useEffect, createElement } from 'react'
 
 const Example = () => {
   return (
-    <ErrorBoundary fallback={({ error }) => <>Parent ErrorBoundary fallback: {error.message}</>}>
+    <ErrorBoundary
+      fallback={({ error }) => (
+        <>Parent ErrorBoundary fallback: {error.message}</>
+      )}
+    >
       <ErrorBoundary
-        shouldCatch={[false, CustomError, (error) => error instanceof CustomError]}
-        fallback={({ error }) => <>Child ErrorBoundary fallback: {error.message}</>}
+        shouldCatch={[
+          false,
+          CustomError,
+          (error) => error instanceof CustomError,
+        ]}
+        fallback={({ error }) => (
+          <>Child ErrorBoundary fallback: {error.message}</>
+        )}
       >
         <CustomErrorAfter2s />
       </ErrorBoundary>
@@ -465,10 +486,16 @@ import { useState, useEffect, createElement } from 'react'
 
 export const Example = () => {
   return (
-    <ErrorBoundary fallback={({ error }) => <>Parent ErrorBoundary fallback: {error.message}</>}>
+    <ErrorBoundary
+      fallback={({ error }) => (
+        <>Parent ErrorBoundary fallback: {error.message}</>
+      )}
+    >
       <ErrorBoundary
         shouldCatch={CustomError}
-        fallback={({ error }) => <>Child ErrorBoundary fallback: {error.message}</>}
+        fallback={({ error }) => (
+          <>Child ErrorBoundary fallback: {error.message}</>
+        )}
       >
         <CustomErrorAfter2s />
       </ErrorBoundary>
@@ -488,24 +515,24 @@ export const CustomErrorAfter2s = () => {
     { isError: true; error: CustomError } | { isError: false; error: null }
   >({
     isError: false,
-    error: null
-  });
+    error: null,
+  })
 
   useEffect(() => {
     setTimeout(() => {
       setAsyncState({
         isError: true,
-        error: () => new CustomError("error made by CustomError")
-      });
-    }, 2000);
-  }, []);
+        error: () => new CustomError('error made by CustomError'),
+      })
+    }, 2000)
+  }, [])
 
   if (asyncState.isError) {
-    throw asyncState.error();
+    throw asyncState.error()
   }
 
-  return <>No error</>;
-};
+  return <>No error</>
+}
 ```
 
 </Sandpack>
@@ -520,10 +547,16 @@ import { useState, useEffect, createElement } from 'react'
 
 export const Example = () => {
   return (
-    <ErrorBoundary fallback={({ error }) => <>Parent ErrorBoundary fallback: {error.message}</>}>
+    <ErrorBoundary
+      fallback={({ error }) => (
+        <>Parent ErrorBoundary fallback: {error.message}</>
+      )}
+    >
       <ErrorBoundary
         shouldCatch={CustomError}
-        fallback={({ error }) => <>Child ErrorBoundary fallback: {error.message}</>}
+        fallback={({ error }) => (
+          <>Child ErrorBoundary fallback: {error.message}</>
+        )}
       >
         <ErrorAfter2s />
       </ErrorBoundary>
@@ -539,7 +572,9 @@ export class CustomError extends Error {
 }
 
 export const ErrorAfter2s = () => {
-  const [asyncState, setAsyncState] = useState<{ isError: true; error: Error } | { isError: false; error: null }>({
+  const [asyncState, setAsyncState] = useState<
+    { isError: true; error: Error } | { isError: false; error: null }
+  >({
     isError: false,
     error: null,
   })

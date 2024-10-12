@@ -25,8 +25,10 @@ import { PostList } from './components/PostList'
 const PostsPage = ({ userId }) => (
   <ErrorBoundary fallback={({ error }) => <>{error.message}</>}>
     <Suspense fallback={'loading...'}>
-      <AuthorInfo userId={userId} /> {/* It is difficult to predict whether a suspension will occur internally. */}
-      <PostList userId={userId} /> {/* It is difficult to predict whether a suspension will occur internally. */}
+      <AuthorInfo userId={userId} />{' '}
+      {/* It is difficult to predict whether a suspension will occur internally. */}
+      <PostList userId={userId} />{' '}
+      {/* It is difficult to predict whether a suspension will occur internally. */}
     </Suspense>
   </ErrorBoundary>
 )
@@ -88,7 +90,10 @@ const PostsPage = ({ authorId }) => (
       <SuspenseQuery {...userQueryOptions(authorId)}>
         {({ data: author }) => <AuthorProfile {...author} />}
       </SuspenseQuery>
-      <SuspenseQuery {...postsQueryOptions(authorId)} select={(posts) => posts.filter(({ isShow }) => isShow)}>
+      <SuspenseQuery
+        {...postsQueryOptions(authorId)}
+        select={(posts) => posts.filter(({ isShow }) => isShow)}
+      >
         {({ data: posts }) => posts.map((post) => <PostListItem {...post} />)}
       </SuspenseQuery>
     </Suspense>
