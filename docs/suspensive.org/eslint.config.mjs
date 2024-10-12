@@ -1,6 +1,9 @@
 import path from 'path'
 import { fileURLToPath } from 'url'
-import { suspensiveMDXConfig, suspensiveNextTypeScriptConfig } from '@suspensive/eslint-config'
+import {
+  suspensiveMDXConfig,
+  suspensiveNextTypeScriptConfig,
+} from '@suspensive/eslint-config'
 
 export default [
   ...suspensiveNextTypeScriptConfig,

@@ -15,7 +15,9 @@ import { atom } from 'jotai'
 const countAtom = atom(1)
 
 const Example = () => {
-  return <AtomValue atom={countAtom}>{(count) => <>count: {count}</>}</AtomValue>
+  return (
+    <AtomValue atom={countAtom}>{(count) => <>count: {count}</>}</AtomValue>
+  )
 }
 ```
 
@@ -34,7 +36,9 @@ const asyncDoubleCountAtom = atom(async (get) => {
 
 const Example = () => (
   <Suspense fallback={'pending...'}>
-    <AtomValue atom={asyncDoubleCountAtom}>{(count) => <>count: {count}</>}</AtomValue>
+    <AtomValue atom={asyncDoubleCountAtom}>
+      {(count) => <>count: {count}</>}
+    </AtomValue>
   </Suspense>
 )
 ```

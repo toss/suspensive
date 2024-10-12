@@ -46,10 +46,16 @@ export const Example = () => {
 
   return (
     <div>
-      <button onClick={() => setPostId((prev) => prev - 1)} disabled={postId === 1}>
+      <button
+        onClick={() => setPostId((prev) => prev - 1)}
+        disabled={postId === 1}
+      >
         Previous Post
       </button>
-      <button onClick={() => setPostId((prev) => prev + 1)} disabled={postId === 100}>
+      <button
+        onClick={() => setPostId((prev) => prev + 1)}
+        disabled={postId === 100}
+      >
         Next Post
       </button>
       <Suspense fallback={<div>Loading...</div>}>
@@ -74,9 +80,11 @@ const Post = ({ postId }: { postId: number }) => {
 }
 
 const getPost = (postId: number) =>
-  fetch(`https://jsonplaceholder.typicode.com/posts/${postId}`).then<{ id: number; title: string; body: string }>(
-    (res) => res.json()
-  )
+  fetch(`https://jsonplaceholder.typicode.com/posts/${postId}`).then<{
+    id: number
+    title: string
+    body: string
+  }>((res) => res.json())
 ```
 
 </Sandpack>

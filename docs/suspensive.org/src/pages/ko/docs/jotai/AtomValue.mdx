@@ -14,7 +14,9 @@ import { atom } from 'jotai'
 
 const countAtom = atom(1)
 
-const Example = () => <AtomValue atom={countAtom}>{(count) => <>count: {count}</>}</AtomValue>
+const Example = () => (
+  <AtomValue atom={countAtom}>{(count) => <>count: {count}</>}</AtomValue>
+)
 ```
 
 Async Atom일 경우 프로미스(Promise)가 해결(resolve) 되기 전까지, 부모의 Suspense에게 Promise의 pending 상태를 위임합니다.
@@ -32,7 +34,9 @@ const asyncDoubleCountAtom = atom(async (get) => {
 
 const Example = () => (
   <Suspense fallback={'pending...'}>
-    <AtomValue atom={asyncDoubleCountAtom}>{(count) => <>count: {count}</>}</AtomValue>
+    <AtomValue atom={asyncDoubleCountAtom}>
+      {(count) => <>count: {count}</>}
+    </AtomValue>
   </Suspense>
 )
 ```

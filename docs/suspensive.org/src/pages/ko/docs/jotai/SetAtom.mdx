@@ -39,8 +39,8 @@ const Example = () => (
   <SetAtom atom={baseAtom}>
     {(setValue) => (
       <>
-        <button onClick={() => setValue(request())}>request</button> // 프로미스(Promise)가 해결되기 전까지 Suspend가
-        발생됩니다.
+        {/* 프로미스(Promise)가 해결되기 전까지 Suspend가 발생됩니다. */}
+        <button onClick={() => setValue(request())}>request</button>
       </>
     )}
   </SetAtom>
