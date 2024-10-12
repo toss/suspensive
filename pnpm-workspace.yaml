@@ -5,6 +5,14 @@ packages:
   - "packages/*"
 
 catalog:
+  "expo": "^51.0.22"
+  "expo-status-bar": "~1.12.1"
+  "@expo/webpack-config": "^19.0.1"
+  "babel-jest": "^29.7.0"
+  "jest": "^29.7.0"
+  "jest-expo": "^51.0.3"
+  "@testing-library/react-native": "^12.5.2"
+
   # next
   "next": "^14.2.15"
   "@next/eslint-plugin-next": "^14.2.15"
@@ -24,6 +32,7 @@ catalogs:
     "react-dom": "^18.3.1"
     "@types/react": "^18.3.11"
     "@types/react-dom": "^18.3.0"
+    "react-native": "^0.74.3"
 
   # react-query
   react-query4:
