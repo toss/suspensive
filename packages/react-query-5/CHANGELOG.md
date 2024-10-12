@@ -1,5 +1,14 @@
 # @suspensive/react-query-5
 
+## 2.17.4
+
+### Patch Changes
+
+- [#1304](https://github.com/toss/suspensive/pull/1304) [`1ac80e7`](https://github.com/toss/suspensive/commit/1ac80e717d427635addbe1e6dec6c22b93be8632) Thanks [@gwansikk](https://github.com/gwansikk)! - feat(react-query): add jsdoc react-query apis
+
+- Updated dependencies []:
+  - @suspensive/react@2.17.4
+
 ## 2.17.3
 
 ### Patch Changes
