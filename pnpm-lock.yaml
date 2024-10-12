@@ -156,6 +156,9 @@ importers:
       publint:
         specifier: ^0.2.11
         version: 0.2.11
+      react-test-renderer:
+        specifier: ^18.3.1
+        version: 18.3.1(react@18.3.1)
       rimraf:
         specifier: ^6.0.1
         version: 6.0.1
