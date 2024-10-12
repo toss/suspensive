@@ -10,7 +10,7 @@ import { type ComponentPropsWithoutRef, type ComponentRef, forwardRef } from 're
  * <QueryErrorBoundary
  *   fallback={({ reset, error }) => <></>)}
  * >
- *   <Children />
+ *   <ChildrenComponent />
  * </QueryErrorBoundary>
  * ```
  */
