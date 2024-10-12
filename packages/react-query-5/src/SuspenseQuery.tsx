@@ -20,7 +20,7 @@ import type { ReactNode } from 'react'
  *   {({ data, isLoading }) => { // QueryResult can be used in children.
  *     return <></>
  *   }
- * </SuspenseQ
+ * </SuspenseQuery/>
  */
 export const SuspenseQuery = <
   TQueryFnData = unknown,
