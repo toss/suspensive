@@ -3,8 +3,11 @@ import { usePrefetchInfiniteQuery } from './usePrefetchInfiniteQuery'
 
 /**
  * A component that allows you to use usePrefetchInfiniteQuery in JSX, avoiding the limitations of React hooks.
- *
  * @see {@link https://suspensive.org/en/docs/react-query/PrefetchInfiniteQuery Suspensive Docs}
+ * @example
+ * ```tsx
+ * <PrefetchInfiniteQuery queryKey={['queryKey']} queryFn={queryFn} />
+ * ```
  */
 export function PrefetchInfiniteQuery<
   TQueryFnData = unknown,

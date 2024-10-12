@@ -5,15 +5,16 @@ import { type UseSuspenseQueryOptions, type UseSuspenseQueryResult, useSuspenseQ
 /**
  * We provide these components to clearly express what causes suspense at the same depth.
  * `<SuspenseQuery/>` serves to make `useSuspenseQuery` easier to use in jsx.
- *
  * @see {@link https://suspensive.org/en/docs/react-query/SuspenseQuery Suspensive Docs}
- *
  * @example
  * ```tsx
  * import { SuspenseQuery } from '@suspensive/react-query'
  *
- * <SuspenseQuery {...userQueryOptions(userId)}>
- *   {({ data: user }) => <UserProfile key={user.id} {...user} />}
+ * // You can use QueryOptions as props.
+ * <SuspenseQuery {...queryOptions()}>
+ *   {({ data, isLoading }) => { // QueryResult can be used in children.
+ *     return <></>
+ *   }
  * </SuspenseQuery>
  * ```
  */

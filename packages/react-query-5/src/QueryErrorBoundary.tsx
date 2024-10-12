@@ -4,8 +4,15 @@ import { type ComponentPropsWithoutRef, type ComponentRef, forwardRef } from 're
 
 /**
  * This component wrapping QueryErrorResetBoundary of `@tanstack/react-query` with `@suspensive/react`'s ErrorBoundary. So you must install `@suspensive/react` first, then use it. with this component, You don't have to make unnecessary repetitive implementation to combine ErrorBoundary with QueryErrorResetBoundary
- *
  * @see {@link https://suspensive.org/en/docs/react-query/QueryErrorBoundary Suspensive Docs}
+ * @example
+ * ```tsx
+ * <QueryErrorBoundary
+ *   fallback={({ reset, error }) => <></>)}
+ * >
+ *   <Children />
+ * </QueryErrorBoundary>
+ * ```
  */
 export const QueryErrorBoundary = forwardRef<
   ComponentRef<typeof ErrorBoundary>,
