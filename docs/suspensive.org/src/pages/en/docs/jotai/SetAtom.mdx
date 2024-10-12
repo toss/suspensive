@@ -39,7 +39,7 @@ const Example = () => (
   <SetAtom atom={baseAtom}>
     {(setValue) => (
       <>
-        // Suspense will be triggered until the Promise resolves.
+        {/* Suspense will be triggered until the Promise resolves. */}
         <button onClick={() => setValue(request())}>request</button>
       </>
     )}
