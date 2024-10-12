@@ -59,6 +59,7 @@ export function infiniteQueryOptions<
 >(
   options: SelectedInfiniteOptions<TQueryFnData, TError, TData, TQueryKey>
 ): SelectedInfiniteOptions<TQueryFnData, TError, TData, TQueryKey>
+
 export function infiniteQueryOptions<
   TQueryFnData,
   TError = unknown,
@@ -67,6 +68,7 @@ export function infiniteQueryOptions<
 >(
   options: UnSelectedInfiniteOptions<TQueryFnData, TError, TData, TQueryKey>
 ): UnSelectedInfiniteOptions<TQueryFnData, TError, TData, TQueryKey>
+
 export function infiniteQueryOptions(options: unknown) {
   return options
 }

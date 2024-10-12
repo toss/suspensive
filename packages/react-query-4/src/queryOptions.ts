@@ -63,6 +63,7 @@ export function queryOptions<
 >(
   options: SelectedQueryOptions<TQueryFnData, TError, TData, TQueryKey>
 ): SelectedQueryOptions<TQueryFnData, TError, TData, TQueryKey>
+
 export function queryOptions<
   TQueryFnData = unknown,
   TError = unknown,
@@ -71,15 +72,7 @@ export function queryOptions<
 >(
   options: UnSelectedQueryOptions<TQueryFnData, TError, TData, TQueryKey>
 ): UnSelectedQueryOptions<TQueryFnData, TError, TData, TQueryKey>
-export function queryOptions<
-  TQueryFnData = unknown,
-  TError = unknown,
-  TData = TQueryFnData,
-  TQueryKey extends QueryKey = QueryKey,
->(
-  options:
-    | SelectedQueryOptions<TQueryFnData, TError, TData, TQueryKey>
-    | UnSelectedQueryOptions<TQueryFnData, TError, TData, TQueryKey>
-) {
+
+export function queryOptions(options: unknown) {
   return options
 }
