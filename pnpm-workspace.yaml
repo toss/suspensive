@@ -1,3 +1,4 @@
+# prettier-ignore
 packages:
   - "configs/*"
   - "docs/*"
@@ -34,3 +35,10 @@ catalogs:
     "@tanstack/react-query": "^5.59.0"
     "@tanstack/react-query-devtools": "^5.59.0"
     "@tanstack/react-query-next-experimental": "^5.59.0"
+
+  # react-native
+  react-native:
+    "react-native": "^0.75.4"
+    "expo": "^51.0.37"
+    "jest-expo": "^51.0.4"
+    "@testing-library/react-native": "^12.7.2"

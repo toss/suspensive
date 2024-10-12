@@ -11,10 +11,10 @@
   },
   "dependencies": {
     "@suspensive/react-native": "workspace:*",
-    "expo": "^51.0.22",
+    "expo": "catalog:react-native",
     "expo-status-bar": "~1.12.1",
     "react": "catalog:react18",
-    "react-native": "^0.75.4"
+    "react-native": "catalog:react-native"
   },
   "devDependencies": {
     "@babel/core": "^7.24.9",
