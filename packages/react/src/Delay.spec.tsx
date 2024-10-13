@@ -27,8 +27,13 @@ describe('<Delay/>', () => {
   })
   it('should accept 0 for ms prop', () => {
     render(<Delay ms={0}>{TEXT}</Delay>)
-
     expect(screen.queryByText(TEXT)).toBeInTheDocument()
+  })
+  it('should accept function children', async () => {
+    render(<Delay ms={1000}>{({ isDelayed }) => <>{isDelayed ? TEXT : 'not delayed'}</>}</Delay>)
+    expect(screen.queryByText('not delayed')).toBeInTheDocument()
+    vi.advanceTimersByTime(ms('1s'))
+    await waitFor(() => expect(screen.queryByText(TEXT)).toBeInTheDocument())
   })
   it('should render fallback content initially and then the actual text after the delay', async () => {
     render(
@@ -37,9 +42,7 @@ describe('<Delay/>', () => {
       </Delay>
     )
     expect(screen.queryByRole('paragraph')).toBeInTheDocument()
-
     vi.advanceTimersByTime(ms('1s'))
-
     await waitFor(() => expect(screen.queryByText(TEXT)).toBeInTheDocument())
   })
   it('should throw SuspensiveError if negative number is passed as ms prop', () => {
