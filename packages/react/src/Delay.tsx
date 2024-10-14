@@ -1,12 +1,22 @@
-import { type PropsWithChildren, type ReactNode, useContext, useState } from 'react'
+import { type ReactNode, useContext, useState } from 'react'
 import { DelayDefaultPropsContext } from './contexts'
 import { useTimeout } from './hooks'
 import { Message_Delay_ms_prop_should_be_greater_than_or_equal_to_0, SuspensiveError } from './models/SuspensiveError'
 
-export interface DelayProps extends PropsWithChildren {
-  ms?: number
-  fallback?: ReactNode
-}
+export type DelayProps =
+  | {
+      ms?: number
+      fallback?: never
+      /**
+       * @experimental This is experimental feature.
+       */
+      children?: ({ isDelayed }: { isDelayed: boolean }) => ReactNode
+    }
+  | {
+      ms?: number
+      fallback?: ReactNode
+      children?: ReactNode
+    }
 
 export const Delay = (props: DelayProps) => {
   if (process.env.NODE_ENV === 'development' && typeof props.ms === 'number') {
@@ -15,11 +25,20 @@ export const Delay = (props: DelayProps) => {
   const defaultProps = useContext(DelayDefaultPropsContext)
   const ms = props.ms ?? defaultProps.ms ?? 0
 
-  const [isDelaying, setIsDelaying] = useState(ms > 0)
-  useTimeout(() => setIsDelaying(false), ms)
+  const [isDelayed, setIsDelayed] = useState(ms <= 0)
+  useTimeout(() => setIsDelayed(true), ms)
 
-  const fallback = props.fallback === undefined ? defaultProps.fallback : props.fallback
-  return <>{isDelaying ? fallback : props.children}</>
+  if (typeof props.children === 'function') {
+    return <>{props.children({ isDelayed })}</>
+  }
+
+  if (isDelayed) {
+    return <>{props.children}</>
+  }
+  if (props.fallback === undefined) {
+    return <>{defaultProps.fallback}</>
+  }
+  return <>{props.fallback}</>
 }
 if (process.env.NODE_ENV === 'development') {
   Delay.displayName = 'Delay'
