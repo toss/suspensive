@@ -35,6 +35,22 @@ describe('<Delay/>', () => {
     vi.advanceTimersByTime(ms('1s'))
     await waitFor(() => expect(screen.queryByText(TEXT)).toBeInTheDocument())
   })
+  it('should not rerender if ms is = 0', async () => {
+    const functionChildren = vi.fn(({ isDelayed }) => <>{isDelayed ? TEXT : 'not delayed'}</>)
+    render(<Delay ms={0}>{functionChildren}</Delay>)
+    expect(functionChildren).toHaveBeenCalledTimes(1)
+    vi.advanceTimersByTime(ms('1s'))
+    await waitFor(() => expect(functionChildren).toHaveBeenCalledTimes(1))
+    await waitFor(() => expect(functionChildren).not.toHaveBeenCalledTimes(2))
+  })
+  it('should not rerender if ms is > 0', async () => {
+    const functionChildren = vi.fn(({ isDelayed }) => <>{isDelayed ? TEXT : 'not delayed'}</>)
+    render(<Delay ms={100}>{functionChildren}</Delay>)
+    expect(functionChildren).toHaveBeenCalledTimes(1)
+    vi.advanceTimersByTime(ms('1s'))
+    await waitFor(() => expect(functionChildren).not.toHaveBeenCalledTimes(1))
+    await waitFor(() => expect(functionChildren).toHaveBeenCalledTimes(2))
+  })
   it('should render fallback content initially and then the actual text after the delay', async () => {
     render(
       <Delay ms={ms('1s')} fallback={<p role="paragraph">fallback</p>}>
