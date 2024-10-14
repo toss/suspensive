@@ -1,0 +1,74 @@
+import { Callout } from '@/components'
+
+# QueryClientConsumer
+
+<Callout type='experimental'>
+
+`<QueryClientConsumer/>` is an experimental feature, and this interface is subject to change.
+
+</Callout>
+
+A component that allows the use of useQueryClient within JSX, overcoming the limitations of React hooks. This component enables declarative access to the QueryClient in legacy class components or specific environments, such as SSR or micro-frontends.
+
+```jsx /QueryClientConsumer/
+import { QueryClientConsumer, useSuspenseQuery } from '@suspensive/react-query'
+
+const PostsPage = () => {
+  const { data: posts } = useSuspenseQuery({
+    queryKey: ['posts'],
+    queryFn: () => getPosts(),
+  })
+
+  return (
+    <>
+      <QueryClientConsumer>
+        {(queryClient) => (
+          <button
+            onClick={() =>
+              queryClient.invalidateQueries({
+                queryKey: ['posts'],
+              })
+            }
+          >
+            Posts refresh
+          </button>
+        )}
+      </QueryClientConsumer>
+      {posts.map((post) => (
+        <Post key={post.id} {...post} />
+      ))}
+    </>
+  )
+}
+```
+
+### Motivation
+
+React hooks like useQueryClient can only be used within functional components. However, there are cases where features such as invalidating queries (invalidateQueries) are also needed in legacy class components. In these situations, QueryClientConsumer provides a solution to bypass such restrictions.
+
+```tsx /QueryClientConsumer/
+import React, { Component } from 'react'
+import { QueryClientConsumer } from '@suspensive/react-query'
+
+class PostsRefreshButton extends Component {
+  render() {
+    return (
+      <QueryClientConsumer>
+        {(queryClient) => (
+          <button
+            onClick={() =>
+              queryClient.invalidateQueries({
+                queryKey: ['posts'],
+              })
+            }
+          >
+            Posts refresh
+          </button>
+        )}
+      </QueryClientConsumer>
+    )
+  }
+}
+
+export default PostsRefreshButton
+```
