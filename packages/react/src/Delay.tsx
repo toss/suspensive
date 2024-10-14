@@ -1,4 +1,4 @@
-import { type ReactElement, type ReactNode, useContext, useState } from 'react'
+import { type ReactNode, useContext, useState } from 'react'
 import { DelayDefaultPropsContext } from './contexts'
 import { useTimeout } from './hooks'
 import { Message_Delay_ms_prop_should_be_greater_than_or_equal_to_0, SuspensiveError } from './models/SuspensiveError'
@@ -10,7 +10,7 @@ export type DelayProps =
       /**
        * @experimental This is experimental feature.
        */
-      children?: ({ isDelayed }: { isDelayed: boolean }) => ReactElement
+      children?: ({ isDelayed }: { isDelayed: boolean }) => ReactNode
     }
   | {
       ms?: number
