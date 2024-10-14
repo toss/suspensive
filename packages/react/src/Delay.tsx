@@ -3,10 +3,20 @@ import { DelayDefaultPropsContext } from './contexts'
 import { useTimeout } from './hooks'
 import { Message_Delay_ms_prop_should_be_greater_than_or_equal_to_0, SuspensiveError } from './models/SuspensiveError'
 
-export type DelayProps = { ms?: number } & (
-  | { fallback?: never; children?: ({ isDelayed }: { isDelayed: boolean }) => ReactElement }
-  | { fallback?: ReactNode; children?: ReactNode }
-)
+export type DelayProps =
+  | {
+      ms?: number
+      fallback?: never
+      /**
+       * @experimental This is experimental feature.
+       */
+      children?: ({ isDelayed }: { isDelayed: boolean }) => ReactElement
+    }
+  | {
+      ms?: number
+      fallback?: ReactNode
+      children?: ReactNode
+    }
 
 export const Delay = (props: DelayProps) => {
   if (process.env.NODE_ENV === 'development' && typeof props.ms === 'number') {
