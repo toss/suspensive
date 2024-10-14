@@ -13,5 +13,30 @@ describe('<Delay/>', () => {
         <></>
       </Delay>
     ).not.toEqualTypeOf<ReactNode>()
+    expectTypeOf(
+      <Delay>
+        {({ isDelayed }) => {
+          expectTypeOf(isDelayed).toEqualTypeOf<boolean>()
+          return <></>
+        }}
+      </Delay>
+    ).toEqualTypeOf<JSX.Element>()
+    expectTypeOf(
+      <Delay>
+        {({ isDelayed }) => {
+          expectTypeOf(isDelayed).toEqualTypeOf<boolean>()
+          return <></>
+        }}
+      </Delay>
+    ).not.toEqualTypeOf<ReactNode>()
+
+    expectTypeOf(
+      // @ts-expect-error no fallback prop with function children of Delay
+      <Delay fallback="delaying">
+        {({}) => {
+          return <></>
+        }}
+      </Delay>
+    ).toEqualTypeOf<JSX.Element>()
   })
 })
