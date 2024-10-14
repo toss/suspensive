@@ -45,7 +45,7 @@ describe('<DefaultPropsProvider/>', () => {
     expect(screen.queryByText(TEXT)).toBeInTheDocument()
   })
 
-  it('should accept defaultProps.suspense.fallback to setup default fallback of Suspense. If Suspense accepted no fallback, Suspense should use default fallback', () => {
+  it('should accept defaultProps.Suspense.fallback to setup default fallback of Suspense. If Suspense accepted no fallback, Suspense should use default fallback', () => {
     render(
       <DefaultPropsProvider defaultProps={new DefaultProps({ Suspense: { fallback: FALLBACK_GLOBAL } })}>
         <Suspense>
@@ -55,7 +55,7 @@ describe('<DefaultPropsProvider/>', () => {
     )
     expect(screen.queryByText(FALLBACK_GLOBAL)).toBeInTheDocument()
   })
-  it('should accept defaultProps.suspense.fallback to setup default fallback of Suspense. If Suspense accepted local fallback, Suspense should ignore default fallback and show it', () => {
+  it('should accept defaultProps.Suspense.fallback to setup default fallback of Suspense. If Suspense accepted local fallback, Suspense should ignore default fallback and show it', () => {
     render(
       <DefaultPropsProvider defaultProps={new DefaultProps({ Suspense: { fallback: FALLBACK_GLOBAL } })}>
         <Suspense fallback={FALLBACK}>
@@ -66,7 +66,7 @@ describe('<DefaultPropsProvider/>', () => {
     expect(screen.queryByText(FALLBACK_GLOBAL)).not.toBeInTheDocument()
     expect(screen.queryByText(FALLBACK)).toBeInTheDocument()
   })
-  it('should accept defaultProps.suspense.fallback to setup default fallback of Suspense. If Suspense accepted local fallback as null, Suspense should ignore default fallback. even though local fallback is nullish', () => {
+  it('should accept defaultProps.Suspense.fallback to setup default fallback of Suspense. If Suspense accepted local fallback as null, Suspense should ignore default fallback. even though local fallback is nullish', () => {
     render(
       <DefaultPropsProvider defaultProps={new DefaultProps({ Suspense: { fallback: FALLBACK_GLOBAL } })}>
         <Suspense fallback={null}>
@@ -77,7 +77,7 @@ describe('<DefaultPropsProvider/>', () => {
     expect(screen.queryByText(FALLBACK_GLOBAL)).not.toBeInTheDocument()
   })
 
-  it('should accept defaultProps.suspense.clientOnly to setup default clientOnly prop of Suspense. If Suspense accept no clientOnly, Suspense should use default fallback', () => {
+  it('should accept defaultProps.Suspense.clientOnly to setup default clientOnly prop of Suspense. If Suspense accept no clientOnly, Suspense should use default fallback', () => {
     let clientOnly1: SuspenseProps['clientOnly'] = undefined
     render(
       <DefaultPropsProvider defaultProps={new DefaultProps({ Suspense: { clientOnly: true } })}>
@@ -112,6 +112,17 @@ describe('<DefaultPropsProvider/>', () => {
     expect(clientOnly3).toBeUndefined()
   })
 
+  it('should accept defaultProps.Delay.fallback to setup default fallback of Delay. If Delay accepted local fallback as null, Delay should ignore default fallback. even though local fallback is nullish', () => {
+    render(
+      <DefaultPropsProvider defaultProps={new DefaultProps({ Delay: { fallback: FALLBACK_GLOBAL } })}>
+        <Delay fallback={null} ms={Infinity}>
+          {TEXT}
+        </Delay>
+      </DefaultPropsProvider>
+    )
+    expect(screen.queryByText(FALLBACK_GLOBAL)).not.toBeInTheDocument()
+    expect(screen.queryByText(TEXT)).not.toBeInTheDocument()
+  })
   it('should accept defaultOptions.delay.ms only positive number', () => {
     expect(() => new DefaultProps({ Delay: { ms: 0 } })).toThrow(Message_DefaultProp_delay_ms_should_be_greater_than_0)
     try {
