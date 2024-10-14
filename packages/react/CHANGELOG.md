@@ -1,5 +1,11 @@
 # @suspensive/react
 
+## 2.18.0
+
+### Minor Changes
+
+- [#1312](https://github.com/toss/suspensive/pull/1312) [`643f8bd`](https://github.com/toss/suspensive/commit/643f8bdbf513f9cb308e993c6a43db96da10ee94) Thanks [@manudeli](https://github.com/manudeli)! - feat(react): function children of Delay
+
 ## 2.17.4
 
 ## 2.17.3
