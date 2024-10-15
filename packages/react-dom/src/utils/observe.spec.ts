@@ -1,7 +1,7 @@
 import { intersectionMockInstance, mockIsIntersecting } from '../test-utils'
 import { observe, optionsToId } from './observe'
 
-test('should be able to use observe', () => {
+it('should be able to use observe', () => {
   const element = document.createElement('div')
   const cb = vi.fn()
   const unmount = observe(element, cb, { threshold: 0.1 })
@@ -16,7 +16,22 @@ test('should be able to use observe', () => {
   )
 })
 
-test('should convert options to id', () => {
+it('should be able to use observe without options', () => {
+  const element = document.createElement('div')
+  const cb = vi.fn()
+  const unmount = observe(element, cb)
+
+  mockIsIntersecting(element, true)
+  expect(cb).toHaveBeenCalled()
+
+  // should be unmounted after unmount
+  unmount()
+  expect(() => intersectionMockInstance(element)).toThrowErrorMatchingInlineSnapshot(
+    `[Error: Failed to find IntersectionObserver for element. Is it being observed?]`
+  )
+})
+
+it('should convert options to id', () => {
   expect(
     optionsToId({
       root: document.createElement('div'),
