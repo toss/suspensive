@@ -21,7 +21,7 @@ React hook의 제약을 피해 JSX 상에서 `useQueryClient`를 사용할 수 �
 import { QueryClient } from '@tanstack/react-query'
 import { QueryClientConsumer } from '@suspensive/react-query'
 
-const queryClient = new QueryClinet()
+const queryClient = new QueryClient()
 
 const PostsPage = () => {
   const { data: posts } = useSuspenseQuery({
