@@ -8,10 +8,20 @@ import { Callout } from '@/components'
 
 </Callout>
 
-React hook의 제약을 피해 JSX 상에서 useQueryClient를 사용할 수 있게 하는 컴포넌트입니다. 컴포넌트 형태를 통해 레거시 클래스 컴포넌트나 특정 환경(SSR, 마이크로 프론트엔드)에서 선언적으로 QueryClient에 접근할 수 있도록 도와줍니다.
+React hook의 제약을 피해 JSX 상에서 `useQueryClient`를 사용할 수 있게 하는 컴포넌트입니다. 컴포넌트를 통해 레거시 클래스 컴포넌트나 특정 환경(SSR, 마이크로 프론트엔드)에서 선언적으로 QueryClient에 접근할 수 있도록 도와줍니다.
 
-```jsx /QueryClientConsumer/
-import { QueryClientConsumer, useSuspenseQuery } from '@suspensive/react-query'
+사용자 환경에 설치되어 있는 `@tanstack/react-query`의 버전에 따라 props 인터페이스가 다릅니다. `@tanstack/react-query` v4 버전이 설치되어 있다면 `props.context`를 사용하고 v5버전 이면 `props.queryClient`를 사용하게 됩니다.
+
+### props.queryClient (@tanstack/react-query v5)
+
+`@tanstack/react-query` v5가 설치된 환경이라면 `props.queryClient` 사용하여 원하는 QueryClient에 접근할 수 있습니다.
+`props.queryClient`에 값을 전달하지 않는다면, 컴포넌트와 가장 가까운 QueryClient를 사용하게 됩니다.
+
+```tsx /QueryClientConsumer/
+import { QueryClient } from '@tanstack/react-query'
+import { QueryClientConsumer } from '@suspensive/react-query'
+
+const queryClient = new QueryClinet()
 
 const PostsPage = () => {
   const { data: posts } = useSuspenseQuery({
@@ -21,7 +31,8 @@ const PostsPage = () => {
 
   return (
     <>
-      <QueryClientConsumer>
+      {/* @tanstack/react-query v5을 사용하신다면 props.queryClinet를 사용할 수 있습니다. */}
+      <QueryClientConsumer queryClient={queryClient}>
         {(queryClient) => (
           <button
             onClick={() =>
@@ -42,17 +53,60 @@ const PostsPage = () => {
 }
 ```
 
-### 동기
+### props.context (@tanstack/react-query v4)
 
-React의 훅(useQueryClient)은 함수형 컴포넌트에서만 사용할 수 있습니다. 하지만 레거시 클래스 컴포넌트에서도 쿼리 무효화(invalidateQueries)와 같은 기능이 필요할 때가 있습니다. 이때 QueryClientConsumer를 사용하면 이러한 제약을 해결할 수 있습니다.
+`@tanstack/react-query` v4가 설치된 환경이라면 `props.context`를 사용하여 원하는 QueryClient에 접근할 수 있습니다.
+`props.context`에 값을 전달하지 않는다면, 컴포넌트와 가장 가까운 QueryClient를 사용하게 됩니다.
 
 ```tsx /QueryClientConsumer/
-import React, { Component } from 'react'
+import { createContext } from 'react'
+import { QueryClient } from '@tanstack/react-query'
+import { QueryClientConsumer, useSuspenseQuery } from '@suspensive/react-query'
+
+const queryClientContext = createContext<QueryClient>(new QueryClient())
+
+const PostsPage = () => {
+  const { data: posts } = useSuspenseQuery({
+    queryKey: ['posts'],
+    queryFn: () => getPosts(),
+  })
+
+  return (
+    <>
+      {/* @tanstack/react-query v4을 사용하신다면 props.context를 사용할 수 있습니다. */}
+      <QueryClientConsumer context={queryClientContext}>
+        {(queryClient) => (
+          <button
+            onClick={() =>
+              queryClient.invalidateQueries({
+                queryKey: ['posts'],
+              })
+            }
+          >
+            Posts refresh
+          </button>
+        )}
+      </QueryClientConsumer>
+      {posts.map((post) => (
+        <Post key={post.id} {...post} />
+      ))}
+    </>
+  )
+}
+```
+
+### 동기: 리액트 훅은 함수형 컴포넌트에서만 사용 가능함
+
+React의 훅(useQueryClient)은 함수형 컴포넌트에서만 사용할 수 있습니다. 하지만 레거시 클래스 컴포넌트에서도 쿼리 무효화(invalidateQueries)와 같은 기능이 필요할 때가 있습니다. 이때 `QueryClientConsumer`를 사용하면 이러한 제약을 해결할 수 있습니다.
+
+```tsx /QueryClientConsumer/
+import React from 'react'
 import { QueryClientConsumer } from '@suspensive/react-query'
 
-class PostsRefreshButton extends Component {
+class PostsRefreshButton extends React.Component {
   render() {
     return (
+      {/* ✅ 레거시 클래스 컴포넌트에서 queryClient를 접근하여 쿼리 무효화(invalidateQueries)를 할 수 있습니다. */}
       <QueryClientConsumer>
         {(queryClient) => (
           <button
