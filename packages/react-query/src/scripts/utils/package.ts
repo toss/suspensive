@@ -1,7 +1,17 @@
 import fs from 'fs'
 import path from 'path'
 import { exit } from 'process'
-import { type LoadModuleResult, loadModule } from './loadModule'
+
+type LoadModuleResult<T> = { exports: T; isSuccess: true } | { exports: undefined; isSuccess: false }
+
+export function loadModule<T>(name: string): LoadModuleResult<T> {
+  try {
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    return { exports: require(name) as T, isSuccess: true }
+  } catch (e) {
+    return { exports: undefined, isSuccess: false }
+  }
+}
 
 type PackageJson = {
   name: string
