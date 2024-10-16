@@ -6,6 +6,7 @@ import {
   getTanStackReactQueryPackageJson,
   getTargetSuspensiveReactQueryAPIs,
   getTargetSuspensiveReactQueryVersion,
+  loadModule,
 } from './package'
 
 const version4APIs = [
@@ -62,5 +63,11 @@ describe('package', () => {
 
     expect(result).toBeDefined()
     expect(result.name).toBe('@suspensive/react-query-4')
+  })
+})
+
+describe('loadModule', () => {
+  it('should return `{ exports: undefined, isSuccess: false }` if unresolved package', () => {
+    expect(loadModule('unresolved-module-to-test')).toStrictEqual({ exports: undefined, isSuccess: false })
   })
 })
