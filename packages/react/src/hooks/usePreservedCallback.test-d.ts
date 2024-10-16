@@ -16,13 +16,7 @@ describe('usePreservedCallback', () => {
     ).toEqualTypeOf<(a: number, b: string) => void>()
 
     expectTypeOf(
-      usePreservedCallback((a: number, b: string) => {
-        if (a > 0) {
-          return b
-        }
-
-        return a
-      })
+      usePreservedCallback((a: number, b: string) => Math.random() > 0.5 ? a : b)
     ).toEqualTypeOf<(a: number, b: string) => number | string>()
     expectTypeOf(
       usePreservedCallback((a) => {
