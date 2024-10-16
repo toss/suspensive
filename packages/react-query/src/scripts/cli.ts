@@ -2,6 +2,7 @@
 'use strict'
 
 import { Command } from '@commander-js/extra-typings'
+import { assert } from '../utils'
 import { fixAction, statusAction, switchAction } from './utils/commands'
 import { type PackageJson, loadModule } from './utils/package'
 
