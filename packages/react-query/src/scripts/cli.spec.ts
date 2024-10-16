@@ -1,6 +1,7 @@
 import { execFileSync } from 'child_process'
 import path from 'path'
 import packageJson from '../../package.json'
+import { assert } from '../utils'
 import { type PackageJson, loadModule } from './utils/package'
 import { getStatusTable } from './utils/table'
 

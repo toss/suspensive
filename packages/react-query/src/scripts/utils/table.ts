@@ -1,4 +1,5 @@
 import Table from 'cli-table3'
+import { assert } from '../../utils'
 import {
   type PackageJson,
   getSuspensiveReactQueryPackageJson,

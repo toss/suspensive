@@ -1,3 +1,4 @@
+import { assert } from '../../utils'
 import { type PackageJson, getTargetSuspensiveReactQueryVersion, loadModule } from './package'
 import { switchVersion } from './switchVersion'
 import { getStatusTable } from './table'

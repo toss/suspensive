@@ -1,3 +1,4 @@
+import { assert } from '../utils'
 import { type PackageJson, loadModule } from './utils/package'
 import { switchVersion } from './utils/switchVersion'
 

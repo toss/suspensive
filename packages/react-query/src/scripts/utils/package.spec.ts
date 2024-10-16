@@ -1,5 +1,6 @@
 import tanStackReactQueryPackageJson from '@tanstack/react-query/package.json'
 import packageJson from '../../../package.json'
+import { assert } from '../../utils'
 import {
   type PackageJson,
   getSuspensiveReactQueryPackageJson,
