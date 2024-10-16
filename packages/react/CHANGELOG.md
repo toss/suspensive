@@ -1,5 +1,13 @@
 # @suspensive/react
 
+## 2.18.2
+
+## 2.18.1
+
+### Patch Changes
+
+- [#1319](https://github.com/toss/suspensive/pull/1319) [`ae8bd8b`](https://github.com/toss/suspensive/commit/ae8bd8bfa91f24c178f50958926c1d718f1f2e84) Thanks [@dayongkr](https://github.com/dayongkr)! - refactor(react): update `usePreservedCallback` signature
+
 ## 2.18.0
 
 ### Minor Changes

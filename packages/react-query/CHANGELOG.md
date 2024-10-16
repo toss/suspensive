@@ -1,5 +1,25 @@
 # @suspensive/react-query
 
+## 2.18.2
+
+### Patch Changes
+
+- [#1318](https://github.com/toss/suspensive/pull/1318) [`0573fe8`](https://github.com/toss/suspensive/commit/0573fe86de0595108f4cf32ee525ac9978bafa99) Thanks [@manudeli](https://github.com/manudeli)! - test(react-query): add test case for loadModule
+
+- Updated dependencies []:
+  - @suspensive/react@2.18.2
+  - @suspensive/react-query-4@2.18.2
+  - @suspensive/react-query-5@2.18.2
+
+## 2.18.1
+
+### Patch Changes
+
+- Updated dependencies [[`ae8bd8b`](https://github.com/toss/suspensive/commit/ae8bd8bfa91f24c178f50958926c1d718f1f2e84)]:
+  - @suspensive/react@2.18.1
+  - @suspensive/react-query-4@2.18.1
+  - @suspensive/react-query-5@2.18.1
+
 ## 2.18.0
 
 ### Patch Changes
