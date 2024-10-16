@@ -13,30 +13,10 @@ export function loadModule<T>(name: string): LoadModuleResult<T> {
   }
 }
 
-type PackageJson = {
+export type PackageJson = {
   name: string
   description: string
   version: string
-}
-
-export function getPackageJson(): PackageJson {
-  const module = loadModule<PackageJson>('@suspensive/react-query/package.json')
-  if (!module.isSuccess) {
-    console.warn('@suspensive/react-query `package.json` is not found.')
-    exit(1)
-  }
-
-  return module.exports
-}
-
-export function getTanStackReactQueryPackageJson(): PackageJson {
-  const module = loadModule<PackageJson>('@tanstack/react-query/package.json')
-  if (!module.isSuccess) {
-    console.warn('@tanstack/react-query is not found. Please install @tanstack/react-query.')
-    exit(1)
-  }
-
-  return module.exports
 }
 
 export function getSuspensiveReactQueryPackageJson(targetVersion: string): PackageJson {

@@ -5,12 +5,11 @@ import { fixAction, statusAction, switchAction } from './commands'
 import { noop } from './noop'
 import {
   getIndexFileContent,
-  getPackageJson,
   getSuspensiveReactQueryPackageJson,
   getTanStackReactQueryAPIs,
-  getTanStackReactQueryPackageJson,
   getTargetSuspensiveReactQueryAPIs,
   getTargetSuspensiveReactQueryVersion,
+  loadModule,
 } from './package'
 import { switchVersion } from './switchVersion'
 import { getStatusTable } from './table'
@@ -28,12 +27,8 @@ describe('commands', () => {
     consoleLogSpy = vi.spyOn(console, 'log').mockImplementation(noop)
     consoleWarnSpy = vi.spyOn(console, 'warn').mockImplementation(noop)
 
-    const getPackageJsonMock = getPackageJson as Mock
-    getPackageJsonMock.mockReturnValue(packageJson)
     const getIndexFileContentMock = getIndexFileContent as Mock
     getIndexFileContentMock.mockReturnValue('export * from "@suspensive/react-query-4"')
-    const getTanStackReactQueryPackageJsonMock = getTanStackReactQueryPackageJson as Mock
-    getTanStackReactQueryPackageJsonMock.mockReturnValue({ version: '5.0.0' })
     const getSuspensiveReactQueryPackageJsonMock = getSuspensiveReactQueryPackageJson as Mock
     getSuspensiveReactQueryPackageJsonMock.mockReturnValue({ version: packageJson.version })
     const getTargetSuspensiveReactQueryVersionMock = getTargetSuspensiveReactQueryVersion as Mock
@@ -52,6 +47,8 @@ describe('commands', () => {
 
   describe('getSuspensiveReactQueryVersion', () => {
     it('should return the correct version', () => {
+      const loadModuleMock = loadModule as Mock
+      loadModuleMock.mockReturnValue({ isSuccess: true, exports: packageJson })
       const getTargetSuspensiveReactQueryVersionMock = getTargetSuspensiveReactQueryVersion as Mock
       getTargetSuspensiveReactQueryVersionMock.mockReturnValue('4')
 
@@ -72,6 +69,8 @@ describe('commands', () => {
 
   describe('statusAction', () => {
     it('should display the status correctly when versions are compatible (version 4)', () => {
+      const loadModuleMock = loadModule as Mock
+      loadModuleMock.mockReturnValue({ isSuccess: true, exports: packageJson })
       const getTargetSuspensiveReactQueryVersionMock = getTargetSuspensiveReactQueryVersion as Mock
       getTargetSuspensiveReactQueryVersionMock.mockReturnValue('4')
 
@@ -81,18 +80,24 @@ describe('commands', () => {
     })
 
     it('should display the status correctly when versions are compatible (version 5)', () => {
+      const loadModuleMock = loadModule as Mock
+      loadModuleMock.mockReturnValue({ isSuccess: true, exports: packageJson })
       statusAction()
 
       expect(consoleLogSpy).toHaveBeenCalledWith(getStatusTable('5'))
     })
 
     it('should display incompatible versions message (suspensive 5, tanstack 4)', () => {
+      const loadModuleMock = loadModule as Mock
+      loadModuleMock.mockReturnValue({ isSuccess: true, exports: packageJson })
       statusAction()
 
       expect(consoleLogSpy).toHaveBeenCalledWith(getStatusTable('5'))
     })
 
     it('should display incompatible versions message (suspensive 4, tanstack 5)', () => {
+      const loadModuleMock = loadModule as Mock
+      loadModuleMock.mockReturnValue({ isSuccess: true, exports: packageJson })
       const getTargetSuspensiveReactQueryVersionMock = getTargetSuspensiveReactQueryVersion as Mock
       getTargetSuspensiveReactQueryVersionMock.mockReturnValue('4')
 
@@ -104,18 +109,24 @@ describe('commands', () => {
 
   describe('switchAction', () => {
     it('should switch to version 4', () => {
+      const loadModuleMock = loadModule as Mock
+      loadModuleMock.mockReturnValue({ isSuccess: true, exports: packageJson })
       switchAction('4')
 
       expect(switchVersion).toHaveBeenCalledWith(4)
     })
 
     it('should switch to version 5', () => {
+      const loadModuleMock = loadModule as Mock
+      loadModuleMock.mockReturnValue({ isSuccess: true, exports: packageJson })
       switchAction('5')
 
       expect(switchVersion).toHaveBeenCalledWith(5)
     })
 
     it('should warn about not supported version', () => {
+      const loadModuleMock = loadModule as Mock
+      loadModuleMock.mockReturnValue({ isSuccess: true, exports: packageJson })
       switchAction('1')
 
       expect(consoleWarnSpy).toHaveBeenCalledWith('[@suspensive/react-query]', `version v1 is not supported.`)
@@ -124,6 +135,8 @@ describe('commands', () => {
 
   describe('fixAction', () => {
     it('should not switch when versions are compatible', () => {
+      const loadModuleMock = loadModule as Mock
+      loadModuleMock.mockReturnValue({ isSuccess: true, exports: { version: '5' } })
       fixAction()
 
       expect(consoleLogSpy).toHaveBeenCalledWith('[@suspensive/react-query]', `The versions are compatible.`)
@@ -131,6 +144,8 @@ describe('commands', () => {
     })
 
     it('should switch to version 5 when tanstack is 5', () => {
+      const loadModuleMock = loadModule as Mock
+      loadModuleMock.mockReturnValue({ isSuccess: true, exports: { version: '5' } })
       vi.mocked(fs.readFileSync).mockReturnValue(`export * from '@suspensive/react-query-4'`)
       const getTargetSuspensiveReactQueryVersionMock = getTargetSuspensiveReactQueryVersion as Mock
       getTargetSuspensiveReactQueryVersionMock.mockReturnValue('4')

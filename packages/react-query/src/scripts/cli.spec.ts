@@ -1,7 +1,7 @@
 import { execFileSync } from 'child_process'
 import path from 'path'
 import packageJson from '../../package.json'
-import { getTanStackReactQueryPackageJson } from './utils/package'
+import { type PackageJson, loadModule } from './utils/package'
 import { getStatusTable } from './utils/table'
 
 const cliPath = path.resolve(__dirname, '../../dist/scripts/cli.cjs')
@@ -21,10 +21,13 @@ describe('cli', () => {
 
   it('should display the status of the packages', () => {
     const result = execFileSync('node', [cliPath, 'status']).toString()
-    const tanStackReactQueryPackageJson = getTanStackReactQueryPackageJson()
-    const tanStackReactQueryMajorVersion = tanStackReactQueryPackageJson.version.split('.')[0]
 
-    expect(result).toContain(getStatusTable(tanStackReactQueryMajorVersion))
+    const tanStackReactQueryPackageJsonModule = loadModule<PackageJson>('@tanstack/react-query/package.json')
+    assert(
+      tanStackReactQueryPackageJsonModule.isSuccess,
+      '@tanstack/react-query is not found. Please install @tanstack/react-query.'
+    )
+    expect(result).toContain(getStatusTable(tanStackReactQueryPackageJsonModule.exports.version.split('.')[0]))
   })
 
   it('should switch to the specified version when using the switch command', () => {

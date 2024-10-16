@@ -1,4 +1,4 @@
-import { getTanStackReactQueryPackageJson, getTargetSuspensiveReactQueryVersion } from './package'
+import { type PackageJson, getTargetSuspensiveReactQueryVersion, loadModule } from './package'
 import { switchVersion } from './switchVersion'
 import { getStatusTable } from './table'
 
@@ -19,14 +19,18 @@ export const switchAction = (version: string) => {
 }
 
 export const fixAction = () => {
-  const tanStackReactQueryPackageJson = getTanStackReactQueryPackageJson()
+  const tanStackReactQueryPackageJsonModule = loadModule<PackageJson>('@tanstack/react-query/package.json')
+  assert(
+    tanStackReactQueryPackageJsonModule.isSuccess,
+    '@tanstack/react-query is not found. Please install @tanstack/react-query.'
+  )
+
   const suspensiveReactQueryVersion = getTargetSuspensiveReactQueryVersion()
 
-  const tanStackReactQueryMajorVersion = tanStackReactQueryPackageJson.version.split('.')[0]
-  if (suspensiveReactQueryVersion === tanStackReactQueryMajorVersion) {
+  if (suspensiveReactQueryVersion === tanStackReactQueryPackageJsonModule.exports.version.split('.')[0]) {
     console.log('[@suspensive/react-query]', `The versions are compatible.`)
   } else {
     console.log('[@suspensive/react-query]', `Switching to the compatible version...`)
-    switchVersion(Number(tanStackReactQueryMajorVersion))
+    switchVersion(Number(tanStackReactQueryPackageJsonModule.exports.version.split('.')[0]))
   }
 }

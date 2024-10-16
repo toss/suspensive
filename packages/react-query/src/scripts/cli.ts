@@ -3,9 +3,11 @@
 
 import { Command } from '@commander-js/extra-typings'
 import { fixAction, statusAction, switchAction } from './utils/commands'
-import { getPackageJson } from './utils/package'
+import { type PackageJson, loadModule } from './utils/package'
 
-const packageJson = getPackageJson()
+const module = loadModule<PackageJson>('@suspensive/react-query/package.json')
+assert(module.isSuccess, '@suspensive/react-query `package.json` is not found.')
+const packageJson = module.exports
 const program = new Command()
 
 program
