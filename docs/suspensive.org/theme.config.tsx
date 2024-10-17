@@ -3,7 +3,6 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'nextra/hooks'
 import { type DocsThemeConfig, useConfig } from 'nextra-theme-docs'
-import './src/styles/globals.css'
 
 const localeBanner = {
   en: (
@@ -55,23 +54,22 @@ const config: DocsThemeConfig = {
     )
   },
   head: function Head() {
-    const { title, frontMatter } = useConfig()
-    const { asPath, defaultLocale, locale } = useRouter()
-    const url =
-      'https://suspensive.org' +
-      (defaultLocale === locale ? asPath : `/${locale}${asPath}`)
+    const config = useConfig<{ description?: string }>()
+    const { asPath } = useRouter()
+    const url = `https://suspensive.org${asPath}`
+    const title =
+      config.title !== 'Index' ? `${config.title} - Suspensive` : 'Suspensive'
+    const description =
+      config.frontMatter.description ?? 'Packages to use React Suspense easily'
 
     return (
       <>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>{title}</title>
         <meta property="og:title" content={title || 'Suspensive'} />
+        <meta name="description" content={description} />
+        <meta property="og:description" content={description} />
         <meta property="og:url" content={url} />
-        <meta
-          property="og:description"
-          content={
-            frontMatter.description || 'Packages to use React Suspense easily'
-          }
-        />
         <meta property="og:image" content="/banner.png" />
         <link rel="icon" href="/favicon.ico" type="image/ico" />
       </>

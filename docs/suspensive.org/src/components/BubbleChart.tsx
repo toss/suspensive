@@ -9,17 +9,19 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import * as d3 from 'd3'
 import Link from 'next/link'
 import React, { useEffect, useRef, useState } from 'react'
-import '../styles/globals.css'
 
 const contributorsQueryOptions = () =>
   queryOptions({
     queryKey: ['contributors'],
     queryFn: () =>
-      fetch(
-        'https://api.github.com/repos/toss/suspensive/stats/contributors'
-      ).then(async (res) => {
+      fetch('https://api.github.com/repos/toss/suspensive/stats/contributors', {
+        headers: {
+          'X-GitHub-Api-Version': '2022-11-28',
+        },
+      }).then(async (res) => {
         if (res.ok) {
           const data = await res.json()
+
           return data as
             | {
                 author: {
