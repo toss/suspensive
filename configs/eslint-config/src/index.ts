@@ -79,7 +79,7 @@ export const suspensiveTypeScriptConfig: ReturnType<typeof tseslint.config> = ts
       '@typescript-eslint/no-unsafe-member-access': 'warn',
       '@typescript-eslint/no-floating-promises': 'warn',
       '@typescript-eslint/no-unsafe-call': 'warn',
-      '@typescript-eslint/no-throw-literal': 'warn',
+      '@typescript-eslint/only-throw-error': 'warn',
       '@typescript-eslint/no-confusing-void-expression': 'off',
       '@typescript-eslint/restrict-template-expressions': 'off',
       '@typescript-eslint/no-empty-function': 'warn',
@@ -94,7 +94,7 @@ export const suspensiveTypeScriptConfig: ReturnType<typeof tseslint.config> = ts
     rules: vitest.configs.recommended.rules,
     settings: { vitest: { typecheck: true } },
   },
-  jestDom.configs['flat/recommended'] as unknown as ReturnType<typeof tseslint.config>[number],
+  jestDom.configs['flat/recommended'],
   {
     plugins: {
       import: importPlugin,
@@ -113,14 +113,14 @@ export const suspensiveTypeScriptConfig: ReturnType<typeof tseslint.config> = ts
       ],
     },
   },
-  eslintPluginPrettierRecommended as unknown as ReturnType<typeof tseslint.config>[number]
+  eslintPluginPrettierRecommended
 )
 
 export const suspensiveReactTypeScriptConfig: ReturnType<typeof tseslint.config> = tseslint.config(
   ...suspensiveTypeScriptConfig,
   {
     files: ['**/*.{ts,tsx}'],
-    ...(pluginReact.configs.recommended as unknown as ReturnType<typeof tseslint.config>[number]),
+    ...pluginReact.configs.recommended,
     ignores: ['**/*.mdx/**/*.{ts,tsx}'],
   },
   {
