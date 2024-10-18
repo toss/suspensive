@@ -2,7 +2,6 @@ import { motion } from 'framer-motion'
 import Image from 'next/image'
 import { useRouter } from 'nextra/hooks'
 import { Link } from 'nextra-theme-docs'
-import '../styles/globals.css'
 
 export const HomePage = ({
   title,
