@@ -2,4 +2,4 @@
 "@suspensive/react": patch
 ---
 
-refactor(react): remove `useIsomorphicLayoutEffect` in `usePreservedCallback`
+refactor(react): improve Delay's performance by simplify useTimeout's code
