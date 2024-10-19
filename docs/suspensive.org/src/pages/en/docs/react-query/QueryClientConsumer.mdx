@@ -1,0 +1,121 @@
+import { Callout } from '@/components'
+
+# QueryClientConsumer
+
+<Callout type='experimental'>
+
+`<QueryClientConsumer/>` is an experimental feature, so this interface may change.
+
+</Callout>
+
+This component allows the use of `useQueryClient` within JSX to bypass the constraints of React hooks.
+
+The props interface varies depending on the version of `@tanstack/react-query` installed in the user environment. If version 4 is installed, you need to use `props.context`. For version 5, you must use `props.queryClient`.  
+If the QueryClient is not passed through props, the component will use the nearest available QueryClient.
+
+```tsx /QueryClientConsumer/
+import { useSuspenseQuery } from '@tanstack/react-query'
+import { QueryClientConsumer } from '@suspensive/react-query'
+
+const PostsPage = () => {
+  const { data: posts } = useSuspenseQuery({
+    queryKey: ['posts'],
+    queryFn: () => getPosts(),
+  })
+
+  return (
+    <>
+      <QueryClientConsumer>
+        {(queryClient) => (
+          <button
+            onClick={() =>
+              queryClient.invalidateQueries({
+                queryKey: ['posts'],
+              })
+            }
+          >
+            Posts refresh
+          </button>
+        )}
+      </QueryClientConsumer>
+      {posts.map((post) => (
+        <Post key={post.id} {...post} />
+      ))}
+    </>
+  )
+}
+```
+
+### props.queryClient (@tanstack/react-query v5)
+
+If you are using `@tanstack/react-query` version 5, you can access the desired QueryClient through `props.queryClient`.
+
+```tsx /QueryClientConsumer/
+import { QueryClient } from '@tanstack/react-query'
+import { QueryClientConsumer } from '@suspensive/react-query'
+
+const queryClient = new QueryClient()
+
+const Example = () => {
+  return (
+      {/* 5️⃣ Use props.queryClient if you are working with @tanstack/react-query v5 */}
+      <QueryClientConsumer queryClient={queryClient}>
+        {(queryClient) => (<>{/* Use the QueryClient passed via props.queryClient */}</>)}
+      </QueryClientConsumer>
+  )
+}
+```
+
+### props.context (@tanstack/react-query v4)
+
+If you are using `@tanstack/react-query` version 4, use `props.context` to access the desired QueryClient.
+
+```tsx /QueryClientConsumer/
+import { createContext } from 'react'
+import { QueryClient } from '@tanstack/react-query'
+import { QueryClientConsumer } from '@suspensive/react-query'
+
+const queryClient = new QueryClient()
+const queryClientContext = createContext<QueryClient>(queryClient)
+
+const Example = () => {
+  return (
+      {/* 4️⃣ Use props.context if you are working with @tanstack/react-query v4 */}
+      <QueryClientConsumer context={queryClientContext}>
+        {(queryClient) => (<>{/* Use the QueryClient passed via props.context */}</>)}
+      </QueryClientConsumer>
+  )
+}
+```
+
+### Motivation: React hooks can only be used in functional components
+
+React's hook (useQueryClient) can only be used within functional components. However, there are cases when you need features like invalidateQueries even within legacy class components. In such cases, `<QueryClientConsumer/>` helps you overcome these limitations.
+
+```tsx /QueryClientConsumer/
+import React from 'react'
+import { QueryClientConsumer } from '@suspensive/react-query'
+
+class PostsRefreshButton extends React.Component {
+  render() {
+    return (
+      {/* ✅ Access the queryClient to invalidate queries within a legacy class component */}
+      <QueryClientConsumer>
+        {(queryClient) => (
+          <button
+            onClick={() =>
+              queryClient.invalidateQueries({
+                queryKey: ['posts'],
+              })
+            }
+          >
+            Posts refresh
+          </button>
+        )}
+      </QueryClientConsumer>
+    )
+  }
+}
+
+export default PostsRefreshButton
+```
