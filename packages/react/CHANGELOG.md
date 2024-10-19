@@ -1,5 +1,11 @@
 # @suspensive/react
 
+## 2.18.3
+
+### Patch Changes
+
+- [#1327](https://github.com/toss/suspensive/pull/1327) [`fdd120e`](https://github.com/toss/suspensive/commit/fdd120e3c6fc7e9537a927b35a2ab4be26af3f83) Thanks [@dayongkr](https://github.com/dayongkr)! - refactor(react): improve Delay's performance by simplify useTimeout's code
+
 ## 2.18.2
 
 ## 2.18.1
