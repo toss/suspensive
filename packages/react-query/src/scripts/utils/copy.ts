@@ -18,7 +18,7 @@ export function copy(version: number) {
 
       try {
         fs.unlinkSync(dest)
-      } catch (e) {
+      } catch {
         /* empty */
       }
       fs.writeFileSync(dest, content, 'utf-8')

@@ -116,6 +116,7 @@ describe('OmitKeyof', () => {
   it("'s symbol key type check", () => {
     const symbol1 = Symbol()
     const symbol2 = Symbol()
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const symbol3 = Symbol()
 
     type A = {

@@ -24,6 +24,9 @@
     "packages/react-native": {
       "ignoreDependencies": ["expo", "ts-node"],
       "ignore": ["babel.config.cjs"]
+    },
+    "packages/react-dom": {
+      "ignoreDependencies": ["react-dom", "@types/react-dom"]
     }
   }
 }

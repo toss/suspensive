@@ -11,39 +11,42 @@ const asyncIncrementAtom = atom(null, async (get, set) => {
 
 describe('<SetAtom/>', () => {
   it('type check', () => {
-    ;() => (
+    ;(() => (
       <SetAtom atom={countAtom}>
         {(value) => {
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
           const valueOfJotai = useSetAtom(countAtom)
           expectTypeOf(value).toEqualTypeOf<typeof valueOfJotai>()
           return <></>
         }}
       </SetAtom>
-    )
-    ;() => (
+    ))()
+    ;(() => (
       <SetAtom atom={writeOnlyCountAtom}>
         {(value) => {
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
           const valueOfJotai = useSetAtom(writeOnlyCountAtom)
           expectTypeOf(value).toEqualTypeOf<typeof valueOfJotai>()
           return <></>
         }}
       </SetAtom>
-    )
-    ;() => (
+    ))()
+    ;(() => (
       <SetAtom atom={asyncIncrementAtom}>
         {(value) => {
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
           const valueOfJotai = useSetAtom(asyncIncrementAtom)
           expectTypeOf(value).toEqualTypeOf<typeof valueOfJotai>()
           return <></>
         }}
       </SetAtom>
-    )
+    ))()
 
-    expectTypeOf(<SetAtom atom={countAtom}>{() => <></>}</SetAtom>).toEqualTypeOf<JSX.Element>()
+    expectTypeOf(<SetAtom atom={countAtom}>{() => <></>}</SetAtom>).toEqualTypeOf<React.JSX.Element>()
     expectTypeOf(<SetAtom atom={countAtom}>{() => <></>}</SetAtom>).not.toEqualTypeOf<ReactNode>()
-    expectTypeOf(<SetAtom atom={writeOnlyCountAtom}>{() => <></>}</SetAtom>).toEqualTypeOf<JSX.Element>()
+    expectTypeOf(<SetAtom atom={writeOnlyCountAtom}>{() => <></>}</SetAtom>).toEqualTypeOf<React.JSX.Element>()
     expectTypeOf(<SetAtom atom={writeOnlyCountAtom}>{() => <></>}</SetAtom>).not.toEqualTypeOf<ReactNode>()
-    expectTypeOf(<SetAtom atom={asyncIncrementAtom}>{() => <></>}</SetAtom>).toEqualTypeOf<JSX.Element>()
+    expectTypeOf(<SetAtom atom={asyncIncrementAtom}>{() => <></>}</SetAtom>).toEqualTypeOf<React.JSX.Element>()
     expectTypeOf(<SetAtom atom={asyncIncrementAtom}>{() => <></>}</SetAtom>).not.toEqualTypeOf<ReactNode>()
   })
 })

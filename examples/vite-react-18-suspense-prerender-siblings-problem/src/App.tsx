@@ -50,6 +50,7 @@ const query = {
       queryKey: ['dummy', ms],
       queryFn: async () => {
         console.log({ fetch: `fetch${ms + 1}` })
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-return
         return fetch(`https://dummyjson.com/users/${ms + 1}`).then((res) => res.json())
       },
     }),

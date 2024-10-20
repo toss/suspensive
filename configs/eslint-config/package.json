@@ -24,7 +24,7 @@
   "scripts": {
     "build": "tsup",
     "ci:attw": "attw --pack",
-    "ci:eslint": "eslint \"**/*.{js,jsx,cjs,mjs,ts,tsx,cts,mts}\"",
+    "ci:eslint": "eslint \"**/*.{ts,tsx,cts,mts}\"",
     "ci:publint": "publint --strict",
     "ci:type": "tsc --noEmit",
     "clean": "rimraf ./dist && rimraf ./coverage",
@@ -43,7 +43,7 @@
     "eslint-plugin-prettier": "^5.2.1",
     "eslint-plugin-react-compiler": "0.0.0-experimental-9aef357-20240815",
     "eslint-plugin-react-hooks": "^4.6.2",
-    "typescript-eslint": "^7.18.0"
+    "typescript-eslint": "^8.9.0"
   },
   "devDependencies": {
     "@suspensive/tsconfig": "workspace:*"

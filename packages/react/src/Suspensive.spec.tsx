@@ -13,6 +13,7 @@ const FALLBACK_GLOBAL = 'FALLBACK_GLOBAL'
 describe('<SuspensiveProvider/>', () => {
   it('should provide default ms prop of Delay', async () => {
     render(
+      // eslint-disable-next-line @typescript-eslint/no-deprecated
       <SuspensiveProvider value={new Suspensive({ defaultProps: { delay: { ms: ms('0.1s') } } })}>
         <Delay>{TEXT}</Delay>
       </SuspensiveProvider>
@@ -22,6 +23,7 @@ describe('<SuspensiveProvider/>', () => {
   })
   it('should accept suspensive value with nothing about Delay', () => {
     render(
+      // eslint-disable-next-line @typescript-eslint/no-deprecated
       <SuspensiveProvider value={new Suspensive({ defaultProps: {} })}>
         <Delay>{TEXT}</Delay>
       </SuspensiveProvider>
@@ -30,6 +32,7 @@ describe('<SuspensiveProvider/>', () => {
   })
   it('should accept empty suspensive value', () => {
     render(
+      // eslint-disable-next-line @typescript-eslint/no-deprecated
       <SuspensiveProvider value={new Suspensive({})}>
         <Delay>{TEXT}</Delay>
       </SuspensiveProvider>
@@ -38,6 +41,7 @@ describe('<SuspensiveProvider/>', () => {
   })
   it('should accept no suspensive value', () => {
     render(
+      // eslint-disable-next-line @typescript-eslint/no-deprecated
       <SuspensiveProvider value={new Suspensive()}>
         <Delay>{TEXT}</Delay>
       </SuspensiveProvider>
@@ -47,6 +51,7 @@ describe('<SuspensiveProvider/>', () => {
 
   it('should accept defaultProps.suspense.fallback to setup default fallback of Suspense. If Suspense accepted no fallback, Suspense should use default fallback', () => {
     render(
+      // eslint-disable-next-line @typescript-eslint/no-deprecated
       <SuspensiveProvider value={new Suspensive({ defaultProps: { suspense: { fallback: FALLBACK_GLOBAL } } })}>
         <Suspense>
           <Suspend during={Infinity} />
@@ -57,6 +62,7 @@ describe('<SuspensiveProvider/>', () => {
   })
   it('should accept defaultProps.suspense.fallback to setup default fallback of Suspense. If Suspense accepted local fallback, Suspense should ignore default fallback and show it', () => {
     render(
+      // eslint-disable-next-line @typescript-eslint/no-deprecated
       <SuspensiveProvider value={new Suspensive({ defaultProps: { suspense: { fallback: FALLBACK_GLOBAL } } })}>
         <Suspense fallback={FALLBACK}>
           <Suspend during={Infinity} />
@@ -68,6 +74,7 @@ describe('<SuspensiveProvider/>', () => {
   })
   it('should accept defaultProps.suspense.fallback to setup default fallback of Suspense. If Suspense accepted local fallback as null, Suspense should ignore default fallback. even though local fallback is nullish', () => {
     render(
+      // eslint-disable-next-line @typescript-eslint/no-deprecated
       <SuspensiveProvider value={new Suspensive({ defaultProps: { suspense: { fallback: FALLBACK_GLOBAL } } })}>
         <Suspense fallback={null}>
           <Suspend during={Infinity} />
@@ -80,6 +87,7 @@ describe('<SuspensiveProvider/>', () => {
   it('should accept defaultProps.suspense.clientOnly to setup default clientOnly prop of Suspense. If Suspense accept no clientOnly, Suspense should use default fallback', () => {
     let clientOnly1: SuspenseProps['clientOnly'] = undefined
     render(
+      // eslint-disable-next-line @typescript-eslint/no-deprecated
       <SuspensiveProvider value={new Suspensive({ defaultProps: { suspense: { clientOnly: true } } })}>
         {createElement(() => {
           clientOnly1 = useContext(SuspenseDefaultPropsContext).clientOnly
@@ -91,6 +99,7 @@ describe('<SuspensiveProvider/>', () => {
 
     let clientOnly2: SuspenseProps['clientOnly'] = undefined
     render(
+      // eslint-disable-next-line @typescript-eslint/no-deprecated
       <SuspensiveProvider value={new Suspensive({ defaultProps: { suspense: { clientOnly: false } } })}>
         {createElement(() => {
           clientOnly2 = useContext(SuspenseDefaultPropsContext).clientOnly
@@ -102,6 +111,7 @@ describe('<SuspensiveProvider/>', () => {
 
     const clientOnly3: SuspenseProps['clientOnly'] = undefined
     render(
+      // eslint-disable-next-line @typescript-eslint/no-deprecated
       <SuspensiveProvider value={new Suspensive({ defaultProps: { suspense: {} } })}>
         {createElement(() => {
           clientOnly2 = useContext(SuspenseDefaultPropsContext).clientOnly
@@ -113,10 +123,12 @@ describe('<SuspensiveProvider/>', () => {
   })
 
   it('should accept defaultOptions.delay.ms only positive number', () => {
+    // eslint-disable-next-line @typescript-eslint/no-deprecated
     expect(() => new Suspensive({ defaultProps: { delay: { ms: 0 } } })).toThrow(
       Message_DefaultProp_delay_ms_should_be_greater_than_0
     )
     try {
+      // eslint-disable-next-line @typescript-eslint/no-deprecated
       new Suspensive({ defaultProps: { delay: { ms: 0 } } })
     } catch (error) {
       expect(error).toBeInstanceOf(SuspensiveError)
@@ -124,10 +136,12 @@ describe('<SuspensiveProvider/>', () => {
       expect(error).not.toBeInstanceOf(CustomError)
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-deprecated
     expect(() => new Suspensive({ defaultProps: { delay: { ms: -1 } } })).toThrow(
       Message_DefaultProp_delay_ms_should_be_greater_than_0
     )
     try {
+      // eslint-disable-next-line @typescript-eslint/no-deprecated
       new Suspensive({ defaultProps: { delay: { ms: -1 } } })
     } catch (error) {
       expect(error).toBeInstanceOf(SuspensiveError)
@@ -138,6 +152,7 @@ describe('<SuspensiveProvider/>', () => {
     const defaultPropsMs = 100
     let ms: DelayProps['ms'] = undefined
     render(
+      // eslint-disable-next-line @typescript-eslint/no-deprecated
       <SuspensiveProvider value={new Suspensive({ defaultProps: { delay: { ms: defaultPropsMs } } })}>
         {createElement(() => {
           ms = useContext(DelayDefaultPropsContext).ms

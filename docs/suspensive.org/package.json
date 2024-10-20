@@ -15,7 +15,7 @@
   "type": "commonjs",
   "scripts": {
     "build": "next build",
-    "ci:eslint": "eslint \"**/*.{js,jsx,cjs,mjs,ts,tsx,cts,mts,mdx}\"",
+    "ci:eslint": "eslint \"**/*.{ts,tsx,cts,mts,mdx}\"",
     "ci:type": "tsc --noEmit",
     "clean": "rimraf ./.next",
     "dev": "next dev -p 4000",

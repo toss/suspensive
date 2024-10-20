@@ -1,5 +1,4 @@
-import * as React from 'react'
-import * as DeprecatedReactTestUtils from 'react-dom/test-utils'
+import { act } from 'react'
 
 declare global {
   // eslint-disable-next-line no-var
@@ -7,8 +6,6 @@ declare global {
   // eslint-disable-next-line no-var
   var jest: { fn: typeof vi.fn } | undefined
 }
-
-const act = typeof React.act === 'function' ? React.act : DeprecatedReactTestUtils.act
 
 type Item = {
   callback: IntersectionObserverCallback

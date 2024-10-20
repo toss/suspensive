@@ -7,7 +7,7 @@ import type { UseSuspenseQueryResult } from './useSuspenseQuery'
 
 describe('<SuspenseQuery/>', () => {
   it('type check', () => {
-    ;() => (
+    ;(() => (
       <SuspenseQuery
         queryKey={queryKey}
         queryFn={queryFn}
@@ -16,8 +16,8 @@ describe('<SuspenseQuery/>', () => {
       >
         {(query) => <>{query.data.text}</>}
       </SuspenseQuery>
-    )
-    ;() => (
+    ))()
+    ;(() => (
       <SuspenseQuery
         queryKey={queryKey}
         queryFn={queryFn}
@@ -26,8 +26,8 @@ describe('<SuspenseQuery/>', () => {
       >
         {(query) => <>{query.data.text}</>}
       </SuspenseQuery>
-    )
-    ;() => (
+    ))()
+    ;(() => (
       <SuspenseQuery
         queryKey={queryKey}
         queryFn={queryFn}
@@ -36,8 +36,8 @@ describe('<SuspenseQuery/>', () => {
       >
         {(query) => <>{query.data.text}</>}
       </SuspenseQuery>
-    )
-    ;() => (
+    ))()
+    ;(() => (
       <SuspenseQuery
         queryKey={queryKey}
         queryFn={queryFn}
@@ -46,8 +46,8 @@ describe('<SuspenseQuery/>', () => {
       >
         {(query) => <>{query.data.text}</>}
       </SuspenseQuery>
-    )
-    ;() => (
+    ))()
+    ;(() => (
       <SuspenseQuery
         queryKey={queryKey}
         queryFn={queryFn}
@@ -56,8 +56,8 @@ describe('<SuspenseQuery/>', () => {
       >
         {(query) => <>{query.data.text}</>}
       </SuspenseQuery>
-    )
-    ;() => (
+    ))()
+    ;(() => (
       <SuspenseQuery queryKey={queryKey} queryFn={queryFn}>
         {(query) => {
           expectTypeOf(query).toEqualTypeOf<UseSuspenseQueryResult<{ text: string }>>()
@@ -66,8 +66,8 @@ describe('<SuspenseQuery/>', () => {
           return <></>
         }}
       </SuspenseQuery>
-    )
-    ;() => (
+    ))()
+    ;(() => (
       <SuspenseQuery queryKey={queryKey} queryFn={queryFn} select={(data) => data.text}>
         {(selectedQuery) => {
           expectTypeOf(selectedQuery).toEqualTypeOf<UseSuspenseQueryResult<string>>()
@@ -76,14 +76,14 @@ describe('<SuspenseQuery/>', () => {
           return <></>
         }}
       </SuspenseQuery>
-    )
+    ))()
 
     const options = queryOptions({
       queryKey,
       queryFn,
     })
 
-    ;() => (
+    ;(() => (
       <SuspenseQuery {...options}>
         {(query) => {
           expectTypeOf(query).toEqualTypeOf<UseSuspenseQueryResult<{ text: string }>>()
@@ -92,8 +92,8 @@ describe('<SuspenseQuery/>', () => {
           return <></>
         }}
       </SuspenseQuery>
-    )
-    ;() => (
+    ))()
+    ;(() => (
       <SuspenseQuery {...options} select={(data) => data.text}>
         {(selectedQuery) => {
           expectTypeOf(selectedQuery).toEqualTypeOf<UseSuspenseQueryResult<string>>()
@@ -102,19 +102,19 @@ describe('<SuspenseQuery/>', () => {
           return <></>
         }}
       </SuspenseQuery>
-    )
+    ))()
 
     expectTypeOf(
       <SuspenseQuery queryKey={queryKey} queryFn={queryFn}>
         {() => <></>}
       </SuspenseQuery>
-    ).toEqualTypeOf<JSX.Element>()
+    ).toEqualTypeOf<React.JSX.Element>()
     expectTypeOf(
       <SuspenseQuery queryKey={queryKey} queryFn={queryFn}>
         {() => <></>}
       </SuspenseQuery>
     ).not.toEqualTypeOf<ReactNode>()
-    expectTypeOf(<SuspenseQuery {...options}>{() => <></>}</SuspenseQuery>).toEqualTypeOf<JSX.Element>()
+    expectTypeOf(<SuspenseQuery {...options}>{() => <></>}</SuspenseQuery>).toEqualTypeOf<React.JSX.Element>()
     expectTypeOf(<SuspenseQuery {...options}>{() => <></>}</SuspenseQuery>).not.toEqualTypeOf<ReactNode>()
   })
 })

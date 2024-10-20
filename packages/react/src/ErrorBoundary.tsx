@@ -224,13 +224,13 @@ if (process.env.NODE_ENV === 'development') {
   ErrorBoundaryContext.displayName = 'ErrorBoundaryContext'
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unnecessary-type-parameters
 export const useErrorBoundary = <TError extends Error = Error>() => {
   const [state, setState] = useState<ErrorBoundaryState<TError>>({
     isError: false,
     error: null,
   })
   if (state.isError) {
-    // eslint-disable-next-line @typescript-eslint/only-throw-error
     throw state.error
   }
 
