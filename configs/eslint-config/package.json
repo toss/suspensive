@@ -41,7 +41,7 @@
     "eslint-plugin-jsdoc": "^50.3.1",
     "eslint-plugin-mdx": "^3.1.5",
     "eslint-plugin-prettier": "^5.2.1",
-    "eslint-plugin-react-compiler": "0.0.0-experimental-9aef357-20240815",
+    "eslint-plugin-react-compiler": "0.0.0-experimental-7670337-20240918",
     "eslint-plugin-react-hooks": "^4.6.2",
     "typescript-eslint": "^8.9.0"
   },
