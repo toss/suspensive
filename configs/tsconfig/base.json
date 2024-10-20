@@ -15,8 +15,7 @@
     "preserveWatchOutput": true,
     "skipLibCheck": true,
     "strict": true,
-    "resolveJsonModule": true,
-    "allowJs": true
+    "resolveJsonModule": true
   },
   "exclude": ["dist", "esm", "build", "node_modules"]
 }
