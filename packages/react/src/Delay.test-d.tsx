@@ -7,7 +7,7 @@ describe('<Delay/>', () => {
       <Delay>
         <></>
       </Delay>
-    ).toEqualTypeOf<JSX.Element>()
+    ).toEqualTypeOf<React.JSX.Element>()
     expectTypeOf(
       <Delay>
         <></>
@@ -20,7 +20,7 @@ describe('<Delay/>', () => {
           return <></>
         }}
       </Delay>
-    ).toEqualTypeOf<JSX.Element>()
+    ).toEqualTypeOf<React.JSX.Element>()
     expectTypeOf(
       <Delay>
         {({ isDelayed }) => {
@@ -37,6 +37,6 @@ describe('<Delay/>', () => {
           return <></>
         }}
       </Delay>
-    ).toEqualTypeOf<JSX.Element>()
+    ).toEqualTypeOf<React.JSX.Element>()
   })
 })

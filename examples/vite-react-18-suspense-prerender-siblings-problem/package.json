@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "build": "tsc -b && vite build",
-    "ci:eslint": "eslint .",
+    "ci:eslint": "eslint \"**/*.{ts,tsx,cts,mts}\"",
     "dev": "vite",
     "preview": "vite preview"
   },

@@ -1,6 +1,6 @@
 {
   "name": "@suspensive/jotai",
-  "version": "2.18.2",
+  "version": "2.18.3",
   "description": "Suspensive interfaces for jotai",
   "keywords": [
     "suspensive",
@@ -41,7 +41,7 @@
   "scripts": {
     "build": "tsup",
     "ci:attw": "attw --pack",
-    "ci:eslint": "eslint \"**/*.{js,jsx,cjs,mjs,ts,tsx,cts,mts}\"",
+    "ci:eslint": "eslint \"**/*.{ts,tsx,cts,mts}\"",
     "ci:publint": "publint --strict",
     "ci:test": "vitest run --coverage --typecheck",
     "ci:type": "tsc --noEmit",

@@ -2,7 +2,6 @@ import fs from 'fs'
 import type { Mock, MockInstance } from 'vitest'
 import packageJson from '../../../package.json'
 import { fixAction, statusAction, switchAction } from './commands'
-import { noop } from './noop'
 import {
   getIndexFileContent,
   getSuspensiveReactQueryPackageJson,
@@ -24,8 +23,8 @@ describe('commands', () => {
   let consoleWarnSpy: MockInstance
 
   beforeEach(() => {
-    consoleLogSpy = vi.spyOn(console, 'log').mockImplementation(noop)
-    consoleWarnSpy = vi.spyOn(console, 'warn').mockImplementation(noop)
+    consoleLogSpy = vi.spyOn(console, 'log').mockImplementation(() => {})
+    consoleWarnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {})
 
     const getIndexFileContentMock = getIndexFileContent as Mock
     getIndexFileContentMock.mockReturnValue('export * from "@suspensive/react-query-4"')
@@ -38,7 +37,7 @@ describe('commands', () => {
     const getTanStackReactQueryAPIsMock = getTanStackReactQueryAPIs as Mock
     getTanStackReactQueryAPIsMock.mockReturnValue([])
 
-    vi.mocked(switchVersion).mockImplementation(noop)
+    vi.mocked(switchVersion).mockImplementation(() => {})
   })
 
   afterEach(() => {

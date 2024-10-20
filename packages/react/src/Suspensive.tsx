@@ -27,9 +27,12 @@ export class Suspensive {
       defaultProps?: LowercaseFirstDepthFieldOf<DefaultProps>
     } = {}
   ) {
+    // eslint-disable-next-line @typescript-eslint/no-deprecated
     if (process.env.NODE_ENV === 'development' && typeof config.defaultProps?.delay?.ms === 'number') {
+      // eslint-disable-next-line @typescript-eslint/no-deprecated
       SuspensiveError.assert(config.defaultProps.delay.ms > 0, Message_DefaultProp_delay_ms_should_be_greater_than_0)
     }
+    // eslint-disable-next-line @typescript-eslint/no-deprecated
     this.defaultProps = config.defaultProps
   }
 }
@@ -41,12 +44,14 @@ interface SuspensiveProviderProps extends PropsWithChildren {
   /**
    * @deprecated Use DefaultPropsProvider instead
    */
+  // eslint-disable-next-line @typescript-eslint/no-deprecated
   value: Suspensive
 }
 
 /**
  * @deprecated Use DefaultPropsProvider instead
  */
+// eslint-disable-next-line @typescript-eslint/no-deprecated
 export const SuspensiveProvider = ({ value, children }: SuspensiveProviderProps) => {
   const defaultProps = useMemo(
     () => new DefaultProps({ Delay: value.defaultProps?.delay, Suspense: value.defaultProps?.suspense }),

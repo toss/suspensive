@@ -7,16 +7,16 @@ const mutationFn = () => Promise.resolve(5)
 
 describe('<Mutation/>', () => {
   it('type check', () => {
-    ;() => (
+    ;(() => (
       <Mutation mutationFn={mutationFn}>
         {(mutation) => {
           expectTypeOf(mutation).toEqualTypeOf<UseMutationResult<number, Error, void>>()
           return <></>
         }}
       </Mutation>
-    )
+    ))()
 
-    expectTypeOf(<Mutation mutationFn={mutationFn}>{() => <></>}</Mutation>).toEqualTypeOf<JSX.Element>()
+    expectTypeOf(<Mutation mutationFn={mutationFn}>{() => <></>}</Mutation>).toEqualTypeOf<React.JSX.Element>()
     expectTypeOf(<Mutation mutationFn={mutationFn}>{() => <></>}</Mutation>).not.toEqualTypeOf<ReactNode>()
   })
 })

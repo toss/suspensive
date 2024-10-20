@@ -1,7 +1,31 @@
 import { renderHook } from '@testing-library/react'
-import { useState } from 'react'
+import { useEffect, useLayoutEffect, useState } from 'react'
 import { useIsClient } from './useIsClient'
-import { useIsomorphicLayoutEffect } from './useIsomorphicLayoutEffect'
+
+const importUseIsomorphicLayoutEffect = () => {
+  const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect
+
+  return { useIsomorphicLayoutEffect }
+}
+describe('useIsomorphicLayoutEffect', () => {
+  const originalWindow = global.window
+  afterEach(() => vi.resetModules())
+  it('should be useEffect in server environment', () => {
+    Object.defineProperty(global, 'window', {
+      value: undefined,
+    })
+    const { useIsomorphicLayoutEffect } = importUseIsomorphicLayoutEffect()
+    expect(useIsomorphicLayoutEffect).toEqual(useEffect)
+  })
+
+  it('should be useLayoutEffect in client environment', () => {
+    Object.defineProperty(global, 'window', {
+      value: originalWindow,
+    })
+    const { useIsomorphicLayoutEffect } = importUseIsomorphicLayoutEffect()
+    expect(useIsomorphicLayoutEffect).toEqual(useLayoutEffect)
+  })
+})
 
 describe('useIsClient', () => {
   it('should return true in client side rendering', () => {
@@ -22,6 +46,7 @@ describe('useIsClient', () => {
     expect(mockUseIsClient).toBeCalledTimes(2)
   })
   it('improve legacy useIsClientOnly', () => {
+    const { useIsomorphicLayoutEffect } = importUseIsomorphicLayoutEffect()
     // check CSR environment first
     expect(typeof document !== 'undefined').toBe(true)
     let chanceIsClientToBeFalse = false
@@ -38,11 +63,15 @@ describe('useIsClient', () => {
       }, [])
       return isClient
     })
+    // eslint-disable-next-line @typescript-eslint/no-deprecated
     const { unmount } = renderHook(() => mockUseIsClientLegacy())
+    // eslint-disable-next-line @typescript-eslint/no-deprecated
     expect(mockUseIsClientLegacy).toBeCalledTimes(2)
     expect(chanceIsClientToBeFalse).toBe(true)
     unmount()
+    // eslint-disable-next-line @typescript-eslint/no-deprecated
     renderHook(() => mockUseIsClientLegacy())
+    // eslint-disable-next-line @typescript-eslint/no-deprecated
     expect(mockUseIsClientLegacy).toBeCalledTimes(4)
     expect(chanceIsClientToBeFalse).toBe(true)
   })

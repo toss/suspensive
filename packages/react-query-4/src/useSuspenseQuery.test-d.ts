@@ -31,6 +31,7 @@ describe('useSuspenseQuery', () => {
       //@ts-expect-error no placeholderData
       placeholderData: 'placeholder',
     })
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     useSuspenseQuery({
       queryKey,
       queryFn,

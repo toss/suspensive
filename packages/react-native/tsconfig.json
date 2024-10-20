@@ -1,6 +1,6 @@
 {
   "extends": "@suspensive/tsconfig/react-library.json",
-  "include": [".", "eslint.config.mjs", "./babel.config.cjs"],
+  "include": ["."],
   "compilerOptions": {
     "types": ["vitest/globals"]
   }

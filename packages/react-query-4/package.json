@@ -1,6 +1,6 @@
 {
   "name": "@suspensive/react-query-4",
-  "version": "2.18.2",
+  "version": "2.18.3",
   "description": "Suspensive interfaces for @tanstack/react-query@4",
   "keywords": [
     "suspensive",
@@ -41,7 +41,7 @@
   "scripts": {
     "build": "tsup",
     "ci:attw": "attw --pack",
-    "ci:eslint": "eslint \"**/*.{js,jsx,cjs,mjs,ts,tsx,cts,mts}\"",
+    "ci:eslint": "eslint \"**/*.{ts,tsx,cts,mts}\"",
     "ci:publint": "publint --strict",
     "ci:test": "vitest run --coverage --typecheck",
     "ci:type": "tsc --noEmit",
@@ -59,7 +59,7 @@
     "react": "catalog:react18"
   },
   "peerDependencies": {
-    "@suspensive/react": "workspace:^2.18.2",
+    "@suspensive/react": "workspace:^2.18.3",
     "@tanstack/react-query": "^4",
     "react": "^18"
   },

@@ -7,7 +7,7 @@ import type { UseSuspenseQueryResult } from './useSuspenseQuery'
 
 describe('<SuspenseQueries/>', () => {
   it('type check', () => {
-    ;() => (
+    ;(() => (
       <SuspenseQueries queries={[{ queryKey, queryFn }]}>
         {([
           query1,
@@ -22,8 +22,8 @@ describe('<SuspenseQueries/>', () => {
           return <></>
         }}
       </SuspenseQueries>
-    )
-    ;() => (
+    ))()
+    ;(() => (
       <SuspenseQueries queries={[{ queryKey, queryFn }, queryOptions({ queryKey, queryFn })]}>
         {([
           query1,
@@ -38,11 +38,11 @@ describe('<SuspenseQueries/>', () => {
           return <></>
         }}
       </SuspenseQueries>
-    )
+    ))()
 
     expectTypeOf(
       <SuspenseQueries queries={[{ queryKey, queryFn }]}>{() => <></>}</SuspenseQueries>
-    ).toEqualTypeOf<JSX.Element>()
+    ).toEqualTypeOf<React.JSX.Element>()
     expectTypeOf(
       <SuspenseQueries queries={[{ queryKey, queryFn }]}>{() => <></>}</SuspenseQueries>
     ).not.toEqualTypeOf<ReactNode>()

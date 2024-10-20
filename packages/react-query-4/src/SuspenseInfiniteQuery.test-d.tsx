@@ -8,7 +8,7 @@ import type { UseSuspenseInfiniteQueryResult } from './useSuspenseInfiniteQuery'
 
 describe('<SuspenseInfiniteQuery/>', () => {
   it('type check', () => {
-    ;() => (
+    ;(() => (
       <SuspenseInfiniteQuery
         queryKey={queryKey}
         queryFn={queryFn}
@@ -17,8 +17,8 @@ describe('<SuspenseInfiniteQuery/>', () => {
       >
         {(query) => <>{query.data.pages.filter(({ text }) => text)}</>}
       </SuspenseInfiniteQuery>
-    )
-    ;() => (
+    ))()
+    ;(() => (
       <SuspenseInfiniteQuery
         queryKey={queryKey}
         queryFn={queryFn}
@@ -27,8 +27,8 @@ describe('<SuspenseInfiniteQuery/>', () => {
       >
         {(query) => <>{query.data.pages.filter(({ text }) => text)}</>}
       </SuspenseInfiniteQuery>
-    )
-    ;() => (
+    ))()
+    ;(() => (
       <SuspenseInfiniteQuery
         queryKey={queryKey}
         queryFn={queryFn}
@@ -37,8 +37,8 @@ describe('<SuspenseInfiniteQuery/>', () => {
       >
         {(query) => <>{query.data.pages.filter(({ text }) => text)}</>}
       </SuspenseInfiniteQuery>
-    )
-    ;() => (
+    ))()
+    ;(() => (
       <SuspenseInfiniteQuery
         queryKey={queryKey}
         queryFn={queryFn}
@@ -47,8 +47,8 @@ describe('<SuspenseInfiniteQuery/>', () => {
       >
         {(query) => <>{query.data.pages.filter(({ text }) => text)}</>}
       </SuspenseInfiniteQuery>
-    )
-    ;() => (
+    ))()
+    ;(() => (
       <SuspenseInfiniteQuery
         queryKey={queryKey}
         queryFn={queryFn}
@@ -57,8 +57,8 @@ describe('<SuspenseInfiniteQuery/>', () => {
       >
         {(query) => <>{query.data.pages.filter(({ text }) => text)}</>}
       </SuspenseInfiniteQuery>
-    )
-    ;() => (
+    ))()
+    ;(() => (
       <SuspenseInfiniteQuery queryKey={queryKey} queryFn={queryFn}>
         {(query) => {
           expectTypeOf(query).toEqualTypeOf<UseSuspenseInfiniteQueryResult<{ text: string }>>()
@@ -67,8 +67,8 @@ describe('<SuspenseInfiniteQuery/>', () => {
           return <></>
         }}
       </SuspenseInfiniteQuery>
-    )
-    ;() => (
+    ))()
+    ;(() => (
       <SuspenseInfiniteQuery
         queryKey={queryKey}
         queryFn={queryFn}
@@ -84,11 +84,11 @@ describe('<SuspenseInfiniteQuery/>', () => {
           return <></>
         }}
       </SuspenseInfiniteQuery>
-    )
+    ))()
 
     const options = infiniteQueryOptions({ queryKey, queryFn })
 
-    ;() => (
+    ;(() => (
       <SuspenseInfiniteQuery {...options}>
         {(query) => {
           expectTypeOf(query).toEqualTypeOf<UseSuspenseInfiniteQueryResult<{ text: string }>>()
@@ -97,8 +97,8 @@ describe('<SuspenseInfiniteQuery/>', () => {
           return <></>
         }}
       </SuspenseInfiniteQuery>
-    )
-    ;() => (
+    ))()
+    ;(() => (
       <SuspenseInfiniteQuery
         {...options}
         select={(data) => ({
@@ -113,19 +113,21 @@ describe('<SuspenseInfiniteQuery/>', () => {
           return <></>
         }}
       </SuspenseInfiniteQuery>
-    )
+    ))()
 
     expectTypeOf(
       <SuspenseInfiniteQuery queryKey={queryKey} queryFn={queryFn}>
         {() => <></>}
       </SuspenseInfiniteQuery>
-    ).toEqualTypeOf<JSX.Element>()
+    ).toEqualTypeOf<React.JSX.Element>()
     expectTypeOf(
       <SuspenseInfiniteQuery queryKey={queryKey} queryFn={queryFn}>
         {() => <></>}
       </SuspenseInfiniteQuery>
     ).not.toEqualTypeOf<ReactNode>()
-    expectTypeOf(<SuspenseInfiniteQuery {...options}>{() => <></>}</SuspenseInfiniteQuery>).toEqualTypeOf<JSX.Element>()
+    expectTypeOf(
+      <SuspenseInfiniteQuery {...options}>{() => <></>}</SuspenseInfiniteQuery>
+    ).toEqualTypeOf<React.JSX.Element>()
     expectTypeOf(
       <SuspenseInfiniteQuery {...options}>{() => <></>}</SuspenseInfiniteQuery>
     ).not.toEqualTypeOf<ReactNode>()
