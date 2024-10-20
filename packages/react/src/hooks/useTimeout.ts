@@ -1,11 +1,11 @@
-import { useEffect } from 'react'
-import { usePreservedCallback } from './usePreservedCallback'
+import { useCallback, useEffect, useRef } from 'react'
 
 export const useTimeout = (fn: () => void, ms: number) => {
-  const preservedCallback = usePreservedCallback(fn)
-
+  const fnRef = useRef(fn)
+  fnRef.current = fn
+  const fnPreserved = useCallback(() => fnRef.current(), [])
   useEffect(() => {
-    const id = setTimeout(preservedCallback, ms)
+    const id = setTimeout(fnPreserved, ms)
     return () => clearTimeout(id)
-  }, [preservedCallback, ms])
+  }, [fnPreserved, ms])
 }
