@@ -1,6 +1,5 @@
 import type { MockInstance } from 'vitest'
 import { copy } from './copy'
-import { noop } from './noop'
 import { switchVersion } from './switchVersion'
 
 vi.mock('./copy', () => ({
@@ -12,8 +11,8 @@ describe('switchVersion', () => {
   let consoleWarnSpy: MockInstance
 
   beforeEach(() => {
-    consoleLogSpy = vi.spyOn(console, 'log').mockImplementation(noop)
-    consoleWarnSpy = vi.spyOn(console, 'warn').mockImplementation(noop)
+    consoleLogSpy = vi.spyOn(console, 'log').mockImplementation(() => {})
+    consoleWarnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {})
   })
 
   afterEach(() => {
