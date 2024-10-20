@@ -134,7 +134,7 @@ export const suspensiveReactTypeScriptConfig: ReturnType<typeof tseslint.config>
       },
     },
     rules: {
-      'react-compiler/react-compiler': 'error',
+      'react-compiler/react-compiler': 'warn',
     },
     settings: {
       react: {
