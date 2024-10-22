@@ -1,0 +1,93 @@
+import { Callout, Sandpack } from '@/components'
+
+# Mutation
+
+Similar to how [`<SuspenseQuery/>`](/docs/react-query/SuspenseQuery) allows `useSuspenseQuery` to be used at the same depth, `<Mutation/>` facilitates the use of `useMutation` at the same depth.
+
+```jsx /Mutation/
+import { Mutation } from '@suspensive/react-query'
+import { useSuspenseQuery } from '@tanstack/react-query'
+
+const PostsPage = () => {
+  const { data: posts } = useSuspenseQuery({
+    queryKey: ['posts'],
+    queryFn: () => getPosts(),
+  });
+
+  return posts.map(post => (
+    <Mutation
+      key={post.id}
+      mutationFn={({ content }: { content: string }) => api.editPost({ postId: post.id, content })}
+    >
+      {postMutation => (
+        <>
+          <div>{post.content}</div>
+          {post.comments.map(comment => (
+            <Mutation
+              key={comment.id}
+              mutationFn={({ content }: { content: string }) => api.editComment({ postId: post.id, commentId: comment.id, content })}
+            >
+              {commentMutation => (
+                <div>
+                  {postMutation.isLoading ? <Spinner/> : null}
+                  {comment.content}
+                  <textarea onChange={e => commentMutation.mutateAsync({ content: e.target.value })} />
+                </div>
+              )}
+            </Mutation>
+          ))}
+        </>
+      )}
+    </Mutation>
+  ));
+}
+```
+
+### Motivation: useMutation Creates Unnecessary Depth
+
+The existing useMutation is a hook, which leads to the creation of components like PostToUseMutation and CommentToUseMutation. This creates unnecessary depth and results in awkward component names, making the structure less flexible and harder to manage due to coupling with parent components.
+
+```jsx /useMutation/
+import { useMutation } from '@tanstack/react-query'
+
+const PostsPage = () => {
+  const posts = usePosts();
+
+  return posts.map(post => <PostToUseMutation key={post.id} post={post} />);
+};
+
+// PostToUseMutation (unnecessary name, needs to be refactored to use only useMutation)
+const PostToUseMutation = ({ post }: { post: Post }) => { // Props need to be passed to useMutation.
+  const postMutation = useMutation({
+    mutationFn: ({ content }: { content: string }) => api.editPost({ postId: post.id, content }),
+  });
+
+  if (postMutation.isLoading) {
+    return <Spinner />;
+  }
+
+  return (
+    <>
+      <div>{post.content}</div>
+      <textarea onChange={e => postMutation.mutateAsync({ content: e.target.value })} />
+      {post.comments.map(comment => (
+        <CommentToUseMutation key={comment.id} post={post} comment={comment} />
+      ))}
+    </>
+  );
+};
+
+// CommentToUseMutation (unnecessary name, needs to be refactored to use only useMutation)
+const CommentToUseMutation = ({ post, comment }: { post: Post, comment: Comment }) => { // Props need to be passed to useMutation.
+  const commentMutation = useMutation({
+    mutationFn: ({ content }: { content: string }) => api.editComment({ postId: post.id, commentId: comment.id, content }),
+  });
+
+  return (
+    <div>
+      {comment.content}
+      <textarea onChange={e => commentMutation.mutateAsync({ content: e.target.value })} />
+    </div>
+  );
+};
+```

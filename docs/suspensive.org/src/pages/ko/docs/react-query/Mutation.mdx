@@ -1,0 +1,93 @@
+import { Callout, Sandpack } from '@/components'
+
+# Mutation
+
+[`<SuspenseQuery/>`](/docs/react-query/SuspenseQuery)가 useSuspenseQuery를 같은 Depth에서 사용하게 하는 역할과 마찬가지로 `<Mutation/>`는 useMutation를 같은 Depth에서 사용하기 쉽게 하기 위한 역할을 합니다.
+
+```jsx /Mutation/
+import { Mutation } from '@suspensive/react-query'
+import { useSuspenseQuery } from '@tanstack/react-query'
+
+const PostsPage = () => {
+  const { data: posts } = useSuspenseQuery({
+    queryKey: ['posts'],
+    queryFn: () => getPosts(),
+  })
+
+  return posts.map(post => (
+    <Mutation
+      key={post.id}
+      mutationFn={({ content }: { content: string }) => api.editPost({ postId: post.id, content })}
+    >
+      {postMutation => (
+        <>
+          <div>{post.content}</div>
+          {post.comments.map(comment => (
+            <Mutation
+              key={comment.id}
+              mutationFn={({ content }: { content: string }) => api.editComment({ postId: post.id, commentId: comment.id, content })}
+            >
+              {commentMutation => (
+                <div>
+                  {postMutation.isLoading ? <Spinner/> : null}
+                  {comment.content}
+                  <textarea onChange={e => commentMutation.mutateAsync({ content: e.target.value })} />
+                </div>
+              )}
+            </Mutation>
+          ))}
+        </>
+      )}
+    </Mutation>
+  ));
+}
+```
+
+### 동기: useMutation가 불필요한 Depth를 만듦
+
+기존의 useMutation는 훅이기 때문에 PostToUseMutation, CommentToUseMutation와 같은 컴포넌트를 만들게 합니다. 이것은 불필요한 Depth를 만들고 불필요한 컴포넌트 이름, 부모 컴포넌트와 결합으로 인해 구조 변경에 유연하지 않고 어렵게 만듭니다.
+
+```jsx /useMutation/
+import { useMutation } from '@tanstack/react-query'
+
+const PostsPage = () => {
+  const posts = usePosts();
+
+  return posts.map(post => <PostToUseMutation key={post.id} post={post} />);
+};
+
+// PostToUseMutation (불필요한 이름, useMutation만 사용하도록 변경 필요)
+const PostToUseMutation = ({ post }: { post: Post }) => { // props는 useMutation을 사용하기 위해 전달되어야 합니다.
+  const postMutation = useMutation({
+    mutationFn: ({ content }: { content: string }) => api.editPost({ postId: post.id }),
+  });
+
+  if (postMutation.isLoading) {
+    return <Spinner />;
+  }
+
+  return (
+    <>
+      <div>{post.content}</div>
+      <textarea onChange={e => postMutation.mutateAsync({ content: e.target.value })} />
+      {post.comments.map(comment => (
+        <CommentToUseMutation key={comment.id} post={post} comment={comment} />
+      ))}
+    </>
+  );
+};
+
+// CommentToUseMutation (불필요한 이름, useMutation만 사용하도록 변경 필요)
+const CommentToUseMutation = ({ post, comment }: { post: Post, comment: Comment }) => { // props는 useMutation을 사용하기 위해 전달되어야 합니다.
+  const commentMutation = useMutation({
+    mutationFn: ({ content }: { content: string }) => api.editComment({ postId: post.id, commentId: comment.id, comment }),
+  });
+
+  return (
+    <div>
+      {comment.content}
+      <textarea onChange={e => commentMutation.mutateAsync({ content: e.target.value })} />
+    </div>
+  );
+};
+```

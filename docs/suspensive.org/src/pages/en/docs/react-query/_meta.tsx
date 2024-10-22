@@ -19,6 +19,7 @@ export default {
   SuspenseQuery: { title: '<SuspenseQuery/>' },
   SuspenseQueries: { title: '<SuspenseQueries/>' },
   SuspenseInfiniteQuery: { title: '<SuspenseInfiniteQuery/>' },
+  Mutation: { title: '<Mutation/>' },
   PrefetchQuery: { title: '<PrefetchQuery/>' },
   PrefetchInfiniteQuery: { title: '<PrefetchInfiniteQuery/>' },
   QueryClientConsumer: { title: '<QueryClientConsumer/>' },
