@@ -1,6 +1,6 @@
 {
   "name": "@suspensive/react-query-4",
-  "version": "2.18.3",
+  "version": "2.18.4",
   "description": "Suspensive interfaces for @tanstack/react-query@4",
   "keywords": [
     "suspensive",
@@ -59,7 +59,7 @@
     "react": "catalog:react18"
   },
   "peerDependencies": {
-    "@suspensive/react": "workspace:^2.18.3",
+    "@suspensive/react": "workspace:^2.18.4",
     "@tanstack/react-query": "^4",
     "react": "^18"
   },
