@@ -1,5 +1,11 @@
 # @suspensive/react
 
+## 2.18.4
+
+### Patch Changes
+
+- [#1336](https://github.com/toss/suspensive/pull/1336) [`91d8ae1`](https://github.com/toss/suspensive/commit/91d8ae1d63fee54f147bca9fc54bcb086d4061cf) Thanks [@dayongkr](https://github.com/dayongkr)! - fix(react): change `defineSuspense` function signature
+
 ## 2.18.3
 
 ### Patch Changes
