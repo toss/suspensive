@@ -7,35 +7,21 @@ export const SuspenseClientOnly = (props: SuspenseProps) => (
   </ClientOnly>
 )
 
-/* eslint-disable @typescript-eslint/unified-signatures */
-export function defineSuspense(options: { componentPropsClientOnly: true }): typeof SuspenseClientOnly
-export function defineSuspense(options: { defaultPropsClientOnly: true }): typeof SuspenseClientOnly
+export function defineSuspense(
+  options:
+    | {
+        componentPropsClientOnly: true
+        defaultPropsClientOnly?: boolean
+      }
+    | {
+        componentPropsClientOnly?: undefined
+        defaultPropsClientOnly: true
+      }
+): typeof SuspenseClientOnly
 export function defineSuspense(options: {
-  componentPropsClientOnly: true
-  defaultPropsClientOnly: undefined
-}): typeof SuspenseClientOnly
-export function defineSuspense(options: {
-  componentPropsClientOnly: undefined
-  defaultPropsClientOnly: true
-}): typeof SuspenseClientOnly
-export function defineSuspense(options: {
-  componentPropsClientOnly: true
-  defaultPropsClientOnly: true
-}): typeof SuspenseClientOnly
-export function defineSuspense(options: {
-  componentPropsClientOnly: true
-  defaultPropsClientOnly: false
-}): typeof SuspenseClientOnly
-export function defineSuspense(options: {
-  componentPropsClientOnly: false
-  defaultPropsClientOnly: true
-}): typeof SuspenseClientOnly
-export function defineSuspense(options: {
-  componentPropsClientOnly: false
-  defaultPropsClientOnly: false
+  componentPropsClientOnly?: boolean
+  defaultPropsClientOnly?: boolean
 }): typeof Suspense
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
-export function defineSuspense(options: {}): typeof Suspense
 export function defineSuspense({
   defaultPropsClientOnly,
   componentPropsClientOnly,

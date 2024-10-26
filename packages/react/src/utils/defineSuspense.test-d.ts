@@ -14,11 +14,11 @@ describe('defineSuspense', () => {
     expectTypeOf(defineSuspense({ defaultPropsClientOnly: true, componentPropsClientOnly: true })).toEqualTypeOf<
       typeof SuspenseClientOnly
     >()
-    expectTypeOf(defineSuspense({ defaultPropsClientOnly: true, componentPropsClientOnly: false })).toEqualTypeOf<
-      typeof SuspenseClientOnly
-    >()
     expectTypeOf(defineSuspense({ defaultPropsClientOnly: false, componentPropsClientOnly: true })).toEqualTypeOf<
       typeof SuspenseClientOnly
+    >()
+    expectTypeOf(defineSuspense({ defaultPropsClientOnly: true, componentPropsClientOnly: false })).toEqualTypeOf<
+      typeof Suspense
     >()
     expectTypeOf(defineSuspense({ defaultPropsClientOnly: false, componentPropsClientOnly: false })).toEqualTypeOf<
       typeof Suspense
