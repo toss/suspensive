@@ -18,10 +18,12 @@ export function defineSuspense(
         defaultPropsClientOnly: true
       }
 ): typeof SuspenseClientOnly
+
 export function defineSuspense(options: {
   componentPropsClientOnly?: boolean
   defaultPropsClientOnly?: boolean
 }): typeof Suspense
+
 export function defineSuspense({
   defaultPropsClientOnly,
   componentPropsClientOnly,
