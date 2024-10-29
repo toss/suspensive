@@ -1,0 +1,7 @@
+{
+  "extends": "@suspensive/tsconfig/base.json",
+  "compilerOptions": {
+    "types": ["vitest/globals"]
+  },
+  "include": ["**/*.ts"]
+}
