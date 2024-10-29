@@ -629,6 +629,9 @@ importers:
 
   packages/react-query:
     dependencies:
+      '@commander-js/extra-typings':
+        specifier: ^12.1.0
+        version: 12.1.0(commander@12.1.0)
       '@suspensive/react-query-4':
         specifier: workspace:^2.18.4
         version: link:../react-query-4
@@ -642,9 +645,6 @@ importers:
         specifier: ^12.1.0
         version: 12.1.0
     devDependencies:
-      '@commander-js/extra-typings':
-        specifier: ^12.1.0
-        version: 12.1.0(commander@12.1.0)
       '@suspensive/eslint-config':
         specifier: workspace:*
         version: link:../../configs/eslint-config
