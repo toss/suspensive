@@ -17,8 +17,8 @@ export const jscodeshiftExecutable = require.resolve('.bin/jscodeshift')
 export const transformerDirectory = join(__dirname, '../', '../', 'dist', 'transforms')
 
 export async function transformRunner(transform?: string, path?: string) {
-  let transformer = transform
-  let directory = path
+  let transformer: string = transform ?? ''
+  let directory: string = path ?? ''
 
   if (transform && !TRANSFORMER_INQUIRER_CHOICES.find((x) => x.title === transform)) {
     console.error('Invalid transform choice, pick one of:')
@@ -60,7 +60,7 @@ export async function transformRunner(transform?: string, path?: string) {
     directory = res.path as string
   }
 
-  const args = []
+  const args: Array<string> = []
 
   args.push('--no-babel')
   args.push('--ignore-pattern=**/node_modules/**')
