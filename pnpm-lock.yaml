@@ -496,6 +496,9 @@ importers:
 
   packages/codemods:
     dependencies:
+      '@commander-js/extra-typings':
+        specifier: ^12.1.0
+        version: 12.1.0(commander@12.1.0)
       commander:
         specifier: ^12.1.0
         version: 12.1.0
@@ -509,9 +512,6 @@ importers:
         specifier: ^2.4.2
         version: 2.4.2
     devDependencies:
-      '@commander-js/extra-typings':
-        specifier: ^12.1.0
-        version: 12.1.0(commander@12.1.0)
       '@suspensive/eslint-config':
         specifier: workspace:*
         version: link:../../configs/eslint-config

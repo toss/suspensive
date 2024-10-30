@@ -8,7 +8,7 @@
  */
 // Based on https://github.com/reactjs/react-codemod
 
-import { Command } from 'commander'
+import { Command } from '@commander-js/extra-typings'
 import packageJson from '../../package.json'
 import { transformRunner } from './transformRunner'
 
@@ -21,6 +21,6 @@ program
   .argument('[path]', 'Path to source directory.')
   .usage('[codemod] [path]')
   .helpOption('-h, --help', 'Display this help message.')
-  .action(transformRunner)
+  .action((codemod, path) => transformRunner(codemod, path))
 
 program.parse(process.argv)

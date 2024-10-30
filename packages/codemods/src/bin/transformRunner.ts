@@ -16,7 +16,7 @@ function onCancel() {
 export const jscodeshiftExecutable = require.resolve('.bin/jscodeshift')
 export const transformerDirectory = join(__dirname, '../', '../', 'dist', 'transforms')
 
-export async function transformRunner(transform: string, path: string) {
+export async function transformRunner(transform?: string, path?: string) {
   let transformer = transform
   let directory = path
 
