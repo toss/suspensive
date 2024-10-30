@@ -1,5 +1,5 @@
 import type j from 'jscodeshift'
-import { createParserFromPath } from '../utils'
+import { createParserFromPath } from '../utils/createParserFromPath'
 
 const IMPORT_TO_CHANGE = [
   'useSuspenseQuery',
@@ -23,7 +23,7 @@ export default function transformer(file: j.FileInfo) {
   root
     .find(j.ImportDeclaration, {
       source: {
-        value: '@suspensive/react-query',
+        value: (v: string) => /^@suspensive\/react-query(-\d+)?$/.test(v),
       },
     })
     .forEach((path) => {
@@ -45,12 +45,13 @@ export default function transformer(file: j.FileInfo) {
           (specifier) => !IMPORT_TO_CHANGE.includes(specifier.local?.name ?? '')
         )
 
-        const suspensiveReactQueryRemainImportsStatement = j.importDeclaration(
+        const suspensiveRemainImportsStatement = j.importDeclaration(
           remainingSpecifiers,
-          j.stringLiteral('@suspensive/react-query')
+          j.stringLiteral((path.node.source.value as string) || '@suspensive/react-query')
         )
-        path.insertBefore(suspensiveReactQueryRemainImportsStatement)
+        path.insertBefore(suspensiveRemainImportsStatement)
       }
+
       j(path).remove()
     })
     .toSource()

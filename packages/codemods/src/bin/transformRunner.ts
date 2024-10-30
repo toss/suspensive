@@ -1,16 +1,20 @@
 import { join } from 'node:path'
 import execa from 'execa'
 import prompts from 'prompts'
-import { jscodeshiftExecutable, onCancel } from './utils'
 
-export const TRANSFORMER_INQUIRER_CHOICES = [
+const TRANSFORMER_INQUIRER_CHOICES = [
   {
-    title: 'react-query-import',
-    description: 'Safely migrate @tanstack/react-query',
+    title: 'tanstack-query-import',
+    description: 'Migrate imports to @tanstack/react-query',
   },
 ]
 
-export const transformerDirectory = join(__dirname, '../', 'dist', 'transforms')
+function onCancel() {
+  process.exit(1)
+}
+
+export const jscodeshiftExecutable = require.resolve('.bin/jscodeshift')
+export const transformerDirectory = join(__dirname, '../', '../', 'dist', 'transforms')
 
 export async function transformRunner(transform: string, path: string) {
   let transformer = transform
@@ -56,18 +60,17 @@ export async function transformRunner(transform: string, path: string) {
     directory = res.path as string
   }
 
-  let args = []
+  const args = []
 
   args.push('--no-babel')
   args.push('--ignore-pattern=**/node_modules/**')
   args.push('--ignore-pattern=**/.next/**')
   args.push('--extensions=tsx,ts,jsx,js')
-  args.push('--parser=ts')
 
-  args = args.concat(['--transform', join(transformerDirectory, `${transformer}.cjs`)])
+  args.push('--transform', join(transformerDirectory, `${transformer}.cjs`))
   args.push(directory)
 
-  console.log(`jscodeshift ${args.join(' ')}`)
+  console.log(`Executing command: jscodeshift ${args.join(' ')}`)
 
   const execaChildProcess = execa(jscodeshiftExecutable, args, {
     env: process.stdout.isTTY ? { FORCE_COLOR: 'true' } : {},
@@ -91,7 +94,6 @@ export async function transformRunner(transform: string, path: string) {
       // Note: the stdout ends with "\n".
       // "foo\n" + "bar\n" + "baz\n" -> "\nbar\nbaz\n"
       // "\n" + "foo\n" + "bar\n" -> "\nfoo\nbar\n"
-
       for (let i = 0; i < 3; i++) {
         cutoff = lastThreeLineBreaks.lastIndexOf('\n', cutoff) - 1
       }
