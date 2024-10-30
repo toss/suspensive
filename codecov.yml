@@ -49,3 +49,7 @@ component_management:
       name: '@suspensive/jotai'
       paths:
         - packages/jotai/**
+    - component_id: codemods
+      name: '@suspensive/codemods'
+      paths:
+        - packages/codemods/**
