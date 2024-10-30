@@ -5,7 +5,7 @@ import prompts from 'prompts'
 const TRANSFORMER_INQUIRER_CHOICES = [
   {
     title: 'tanstack-query-import',
-    description: 'Migrate imports to @tanstack/react-query',
+    description: 'Migrate imports to @tanstack/react-query in @suspensive/react-query (using @tanstack/react-query@5)',
   },
 ]
 
