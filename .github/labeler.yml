@@ -12,6 +12,8 @@
   - "packages/react-query-5/**/*"
 "@suspensive/jotai":
   - "packages/jotai/**/*"
+"@suspensive/codemods":
+  - "packages/codemods/**/*"
 "suspensive.org":
   - "docs/suspensive.org/**/*"
 "examples":
