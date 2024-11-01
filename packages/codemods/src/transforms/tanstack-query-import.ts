@@ -1,4 +1,4 @@
-import type j from 'jscodeshift'
+import type { FileInfo } from 'jscodeshift'
 import { createParserFromPath } from '../utils/createParserFromPath'
 
 const IMPORT_TO_CHANGE = [
@@ -16,7 +16,7 @@ const IMPORT_TO_CHANGE = [
   'infiniteQueryOption',
 ]
 
-export default function transformer(file: j.FileInfo) {
+export default function transform(file: FileInfo): string {
   const j = createParserFromPath(file.path)
   const root = j(file.source)
 
