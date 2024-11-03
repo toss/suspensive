@@ -26,19 +26,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <details>
                 <summary>@suspensive/react</summary>
                 <li>
-                  <Link href="/react/Suspense/clientOnly">{`<Suspense clientOnly/>`}</Link>
-                </li>
-                <li>
-                  <Link href="/react/DevMode">{`<DevMode/>`}</Link>
-                </li>
-                <li>
                   <Link href="/react/Delay">{`<Delay/>`}</Link>
                 </li>
                 <li>
                   <Link href="/react/ErrorBoundary/shouldCatch">{`<ErrorBoundary/>`} shouldCatch prop</Link>
-                </li>
-                <li>
-                  <Link href="/react/SuspensiveError">SuspensiveError (internal api)</Link>
                 </li>
                 <li>
                   <Link href="/react/zodSearchParams">zod: no param</Link>

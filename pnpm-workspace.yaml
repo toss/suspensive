@@ -14,15 +14,15 @@ catalog:
   "@testing-library/react-native": "^12.5.2"
 
   # next
-  "next": "^14.2.15"
-  "@next/eslint-plugin-next": "^14.2.15"
+  "next": "^15.0.2"
+  "@next/eslint-plugin-next": "^15.0.2"
   "sharp": "^0.33.5"
 
   # tailwindcss
   "autoprefixer": "^10.4.20"
   "postcss": "^8.4.47"
-  "prettier-plugin-tailwindcss": "^0.6.6"
-  "tailwindcss": "^3.4.10"
+  "prettier-plugin-tailwindcss": "^0.6.8"
+  "tailwindcss": "^3.4.14"
   "clsx": "^2.1.1"
 
 catalogs:
@@ -30,8 +30,8 @@ catalogs:
   react18:
     "react": "^18.3.1"
     "react-dom": "^18.3.1"
-    "@types/react": "^18.3.11"
-    "@types/react-dom": "^18.3.0"
+    "@types/react": "^18.3.12"
+    "@types/react-dom": "^18.3.1"
     "react-native": "^0.74.3"
 
   # react-query
@@ -40,6 +40,6 @@ catalogs:
     "@tanstack/react-query-devtools": "^4.36.1"
 
   react-query5:
-    "@tanstack/react-query": "^5.59.0"
-    "@tanstack/react-query-devtools": "^5.59.0"
-    "@tanstack/react-query-next-experimental": "^5.59.0"
+    "@tanstack/react-query": "^5.59.16"
+    "@tanstack/react-query-devtools": "^5.59.16"
+    "@tanstack/react-query-next-experimental": "^5.59.16"

@@ -17,7 +17,7 @@
     "react-native": "catalog:react18"
   },
   "devDependencies": {
-    "@babel/core": "^7.24.9",
+    "@babel/core": "^7.26.0",
     "@expo/webpack-config": "catalog:",
     "@types/react": "catalog:react18"
   }
