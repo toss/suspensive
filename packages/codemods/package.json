@@ -14,7 +14,7 @@
     "directory": "packages/codemods"
   },
   "license": "MIT",
-  "author": "Gwansik Kim <gwansik.kim@gwansik.dev> & Jonghyeon Ko <jonghyeon@toss.im>",
+  "author": "Gwansik Kim <gwansik.kim@gwansik.dev>",
   "sideEffects": false,
   "type": "module",
   "files": [
