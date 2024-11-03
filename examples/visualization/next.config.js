@@ -1,10 +1,8 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {
+module.exports = {
   reactStrictMode: true,
   transpilePackages: ['@suspensive/react', '@suspensive/react-query'],
   experimental: {
     typedRoutes: true,
   },
 }
-
-module.exports = nextConfig
