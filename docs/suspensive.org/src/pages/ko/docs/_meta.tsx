@@ -5,7 +5,8 @@ export default {
   },
   react: { title: '@suspensive/react' },
   'react-query': { title: '@suspensive/react-query' },
-  jotai: '@suspensive/jotai',
+  jotai: { title: '@suspensive/jotai' },
+  codemods: { title: '@suspensive/codemods' },
   '--- More': {
     type: 'separator',
     title: '더보기',
