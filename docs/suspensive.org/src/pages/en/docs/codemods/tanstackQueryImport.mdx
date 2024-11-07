@@ -1,0 +1,31 @@
+import { Callout } from '@/components'
+
+# Migrate TanStack Query imports
+
+<Callout type='info'>
+
+This codemod is recommended for updating `@suspensive/react-query` & `@tanstack/react-query` from v4 to v5.
+
+</Callout>
+
+In the `@suspensive/react-query` & `@tanstack/react-query` v5 environment, Suspense Hooks and queryOptions provided by `@suspensive/react-query` are marked as deprecated. This is because `@suspensive/react-query` offers the same APIs (Suspense Hooks and queryOptions) that are available in `@tanstack/react-query` v5. The purpose is to encourage developers to use the v5 API from `@tanstack/react-query` directly.
+
+```shell
+npx @suspensive/codemods tanstack-query-import .
+```
+
+This codemod automatically transforms import paths from `@suspensive/react-query` to `@tanstack/react-query` v5.
+
+Example:
+
+```tsx
+import { queryOptions } from '@suspensive/react-query'
+import { useSuspenseQuery } from '@suspensive/react-query-5' // The versioned package is also transformed!
+```
+
+After transformation:
+
+```tsx
+import { queryOptions } from '@tanstack/react-query'
+import { useSuspenseQuery } from '@tanstack/react-query'
+```

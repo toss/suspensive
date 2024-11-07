@@ -1,0 +1,24 @@
+import { Callout } from '@/components'
+
+# 사용하기
+
+<Callout type='experimental'>
+
+`@suspensive/codemods`는 실험 기능이므로 이 인터페이스는 변경될 수 있습니다.
+
+</Callout>
+
+단 하나의 명령어로 Suspensive의 Codemods를 실행할 수 있으며, 종속성으로 설치할 필요 없이 npx로 간편하게 사용할 수 있습니다.
+
+터미널에서 프로젝트 폴더로 이동한 후 다음 명령어를 실행하세요.
+
+[![npm version](https://img.shields.io/npm/v/@suspensive/codemods?color=000&labelColor=000&logo=npm)](https://www.npmjs.com/package/@suspensive/codemods)
+
+```shell
+npx @suspensive/codemods <transform> <path>
+```
+
+Codemod를 적용하고자 하는 환경에서 맞춰서 `<transform>`과 `<path>`를 변경하세요.
+
+- `<transform>`: 실행할 Codemods의 이름
+- `<path>`: 변환할 디렉터리

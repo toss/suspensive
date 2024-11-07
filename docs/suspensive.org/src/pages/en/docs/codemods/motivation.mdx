@@ -1,0 +1,46 @@
+import { Steps } from 'nextra/components'
+import { Callout } from '@/components'
+
+# Why need to use?
+
+<Callout type='experimental'>
+
+`@suspensive/codemods` is an experimental feature, so this interface may change.
+
+</Callout>
+
+Codemods are powerful tools that automate repetitive and large-scale tasks within a codebase, making code updates more efficient. They allow for fast and safe updates without the need to manually review numerous changes.
+
+Suspensive provides codemods to help manage API updates and deprecated APIs seamlessly.
+
+<Steps>
+
+### Handle Large-Scale API Changes Quickly and Easily
+
+Projects using Suspensive packages often have these packages utilized globally across the codebase. Manually locating and modifying all usages is not only time-consuming but also prone to errors.
+
+```shell
+npx @suspensive/codemods
+✔ Which transform would you like to apply? > tanstack-query-import
+✔ On which files or directory should the codemods be applied? … .
+Processing 130 files...
+Spawning 10 workers...
+Sending 13 files to free worker...
+Sending 13 files to free worker...
+...
+All done.
+Results:
+0 errors
+31 unmodified
+0 skipped
+99 ok
+Time elapsed: 2.980 seconds
+```
+
+The log above shows the result of running the [`tanstack-query-import`](/docs/codemods/tanstackQueryImport) codemod to automatically migrate the deprecated `@suspensive/react-query` API to `@tanstack/react-query` v5 in a `@suspensive/react-query` & `@tanstack/react-query` environment. Out of 130 files, 99 were transformed in just 2.980 seconds.
+
+## Update Suspensive Packages Easily and Safely
+
+Major updates to packages often introduce breaking changes that complicate code migration. Suspensive plans to thoroughly support these breaking changes through codemods, making management simpler. By using codemods, you can upgrade to new versions and features quickly and securely.
+
+</Steps>

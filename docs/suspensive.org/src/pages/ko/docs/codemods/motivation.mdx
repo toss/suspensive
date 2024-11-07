@@ -1,0 +1,46 @@
+import { Steps } from 'nextra/components'
+import { Callout } from '@/components'
+
+# 어떤 이유로 사용하나요?
+
+<Callout type='experimental'>
+
+`@suspensive/codemods`는 실험 기능이므로 이 인터페이스는 변경될 수 있습니다.
+
+</Callout>
+
+Codemods는 코드베이스 내에서 반복적이고 대규모로 발생하는 작업을 자동화하여 코드를 효율적으로 업데이트할 수 있는 강력한 도구입니다. 이를 통해 수많은 변경 사항을 수동으로 검토할 필요 없이 빠르고 안전하게 업데이트할 수 있습니다.
+
+Suspensive는 API 업데이트나 더 이상 사용되지 않는 API를 쉽게 관리할 수 있도록 Codemods를 제공합니다.
+
+<Steps>
+
+### 대규모 API 변경을 쉽고 빠르게 처리할 수 있습니다.
+
+Suspensive 패키지를 사용하는 프로젝트에서는 패키지가 코드베이스 전역에서 활용되기 마련입니다. 이때 모든 사용처를 수동으로 찾고 수정하는 것은 많은 시간이 소요될 뿐만 아니라 실수할 가능성도 큽니다.
+
+```shell
+npx @suspensive/codemods
+✔ Which transform would you like to apply? > tanstack-query-import
+✔ On which files or directory should the codemods be applied? … .
+Processing 130 files...
+Spawning 10 workers...
+Sending 13 files to free worker...
+Sending 13 files to free worker...
+...
+All done.
+Results:
+0 errors
+31 unmodified
+0 skipped
+99 ok
+Time elapsed: 2.980 seconds
+```
+
+위 로그는 `@suspensive/react-query` & `@tanstack/react-query` v5 환경에서 deprecated된 `@suspensive/react-query` API를 자동으로 전환하기 위해 [`tanstack-query-import`](/docs/codemods/tanstackQueryImport) codemod를 실행한 결과입니다. 총 130개 파일 중 99개 파일이 단 2.980초 만에 변환되었습니다.
+
+### Suspensive 패키지를 쉽고 안전하게 업데이트할 수 있습니다.
+
+패키지의 메이저 업데이트에서는 종종 Break Change가 발생해 코드 마이그레이션이 복잡해집니다. Suspensive는 이러한 Break Change를 쉽게 관리할 수 있도록 Codemods를 통해 꼼꼼하게 지원할 예정입니다. Codemods를 사용하면 새로운 버전과 기능으로 빠르고 안전하게 업그레이드할 수 있습니다.
+
+</Steps>
