@@ -19,7 +19,7 @@ Suspensive는 API 업데이트나 더 이상 사용되지 않는 API를 쉽게 �
 
 Suspensive 패키지를 사용하는 프로젝트에서는 패키지가 코드베이스 전역에서 활용되기 마련입니다. 이때 모든 사용처를 수동으로 찾고 수정하는 것은 많은 시간이 소요될 뿐만 아니라 실수할 가능성도 큽니다.
 
-```ansi
+```shell
 npx @suspensive/codemods
 ✔ Which transform would you like to apply? > tanstack-query-import
 ✔ On which files or directory should the codemods be applied? … .
@@ -37,7 +37,7 @@ Results:
 Time elapsed: 2.980 seconds
 ```
 
-위 로그는 `@suspensive/react-query` & `@tanstack/react-query` v5 환경에서 `@deprecated`된 `@suspensive/react-query` API를 자동으로 전환하기 위해 [`tanstack-query-import`](/ko/docs/codemods/tanstackQueryImport) codemod를 실행한 결과입니다. 총 130개 파일 중 99개 파일이 단 2.980초 만에 변환되었습니다.
+위 로그는 `@suspensive/react-query` & `@tanstack/react-query` v5 환경에서 deprecated된 `@suspensive/react-query` API를 자동으로 전환하기 위해 [`tanstack-query-import`](/docs/codemods/tanstackQueryImport) codemod를 실행한 결과입니다. 총 130개 파일 중 99개 파일이 단 2.980초 만에 변환되었습니다.
 
 ### Suspensive 패키지를 쉽고 안전하게 업데이트할 수 있습니다.
 
