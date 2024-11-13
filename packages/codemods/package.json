@@ -17,6 +17,7 @@
   "author": "Gwansik Kim <gwansik.kim@gwansik.dev>",
   "sideEffects": false,
   "type": "module",
+  "bin": "dist/bin/codemods.cjs",
   "files": [
     "dist"
   ],
@@ -31,7 +32,6 @@
     "prepack": "pnpm build",
     "test:ui": "vitest --ui --coverage --typecheck"
   },
-  "bin": "dist/bin/codemods.cjs",
   "dependencies": {
     "@commander-js/extra-typings": "^12.1.0",
     "commander": "^12.1.0",

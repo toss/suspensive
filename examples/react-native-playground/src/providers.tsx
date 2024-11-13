@@ -1,5 +1,3 @@
-import { PropsWithChildren, useEffect } from 'react'
-import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context'
 import {
   NotoSansKR_300Light,
   NotoSansKR_500Medium,
@@ -7,6 +5,8 @@ import {
   useFonts,
 } from '@expo-google-fonts/noto-sans-kr'
 import * as SplashScreen from 'expo-splash-screen'
+import { type PropsWithChildren, useEffect } from 'react'
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context'
 
 export const Providers = ({ children }: PropsWithChildren) => {
   return (
