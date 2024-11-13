@@ -65,7 +65,7 @@
   },
   "peerDependencies": {
     "react": "^18",
-    "react-native": "0.74.3"
+    "react-native": "^0.76.1"
   },
   "publishConfig": {
     "access": "public"

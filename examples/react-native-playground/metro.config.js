@@ -1,7 +1,9 @@
-const { getDefaultConfig } = require('expo/metro-config')
-const { withNativeWind } = require('nativewind/metro')
-const { FileStore } = require('metro-cache')
+// eslint-disable-next-line @typescript-eslint/no-require-imports
 const path = require('node:path')
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+const { getDefaultConfig } = require('expo/metro-config')
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+const { FileStore } = require('metro-cache')
 
 const projectRoot = __dirname
 const workspaceRoot = path.resolve(projectRoot, '../..')
