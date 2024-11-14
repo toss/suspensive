@@ -21,5 +21,4 @@ export default {
   PrefetchQuery: { title: '<PrefetchQuery/>' },
   PrefetchInfiniteQuery: { title: '<PrefetchInfiniteQuery/>' },
   QueryClientConsumer: { title: '<QueryClientConsumer/>' },
-  QueryErrorBoundary: { title: '<QueryErrorBoundary/>' },
 }
