@@ -5,30 +5,10 @@
   "license": "MIT",
   "author": "Jonghyeon Ko <jonghyeon@toss.im>",
   "type": "module",
-  "exports": {
-    ".": {
-      "import": {
-        "types": "./dist/index.d.ts",
-        "default": "./dist/index.js"
-      },
-      "require": {
-        "types": "./dist/index.d.cts",
-        "default": "./dist/index.cjs"
-      }
-    },
-    "./package.json": "./package.json"
-  },
-  "main": "dist/index.cjs",
-  "module": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "index.js",
+  "module": "index.js",
   "scripts": {
-    "build": "tsup",
-    "ci:attw": "attw --pack",
-    "ci:eslint": "eslint \"**/*.{ts,tsx,cts,mts}\"",
-    "ci:publint": "publint --strict",
-    "ci:type": "tsc --noEmit",
-    "clean": "rimraf ./dist && rimraf ./coverage",
-    "prepack": "pnpm build"
+    "clean": "rimraf ./dist && rimraf ./coverage"
   },
   "dependencies": {
     "@cspell/eslint-plugin": "^8.14.4",
@@ -44,8 +24,5 @@
     "eslint-plugin-react-compiler": "0.0.0-experimental-7670337-20240918",
     "eslint-plugin-react-hooks": "^4.6.2",
     "typescript-eslint": "^8.9.0"
-  },
-  "devDependencies": {
-    "@suspensive/tsconfig": "workspace:*"
   }
 }
