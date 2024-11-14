@@ -1,25 +1,19 @@
 import pluginReact from '@eslint-react/eslint-plugin'
-import type { Linter } from 'eslint'
-// @ts-expect-error TODO: remove this
 import importPlugin from 'eslint-plugin-import'
 import jsdoc from 'eslint-plugin-jsdoc'
-// @ts-expect-error TODO: remove this
 import reactCompiler from 'eslint-plugin-react-compiler'
-// @ts-expect-error TODO: remove this
 import reactHooks from 'eslint-plugin-react-hooks'
 import tseslint from 'typescript-eslint'
 import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended'
-// @ts-expect-error TODO: remove this
 import next from '@next/eslint-plugin-next'
 import cspellConfigs from '@cspell/eslint-plugin/configs'
 import vitest from '@vitest/eslint-plugin'
-// @ts-expect-error TODO: remove this
 import jestDom from 'eslint-plugin-jest-dom'
 import mdx from 'eslint-plugin-mdx'
 
-const ignores = ['**/.next/**', '**/build/**', '**/coverage/**', '**/dist/**'] satisfies Linter.Config['ignores']
+const ignores = ['**/.next/**', '**/build/**', '**/coverage/**', '**/dist/**']
 
-export const suspensiveTypeScriptConfig: ReturnType<typeof tseslint.config> = tseslint.config(
+export const suspensiveTypeScriptConfig = tseslint.config(
   {
     ignores,
   },
@@ -116,7 +110,7 @@ export const suspensiveTypeScriptConfig: ReturnType<typeof tseslint.config> = ts
   eslintPluginPrettierRecommended
 )
 
-export const suspensiveReactTypeScriptConfig: ReturnType<typeof tseslint.config> = tseslint.config(
+export const suspensiveReactTypeScriptConfig = tseslint.config(
   ...suspensiveTypeScriptConfig,
   {
     files: ['**/*.{ts,tsx}'],
@@ -144,12 +138,12 @@ export const suspensiveReactTypeScriptConfig: ReturnType<typeof tseslint.config>
   }
 )
 
-export const suspensiveNextTypeScriptConfig: ReturnType<typeof tseslint.config> = [
+export const suspensiveNextTypeScriptConfig = [
   ...suspensiveReactTypeScriptConfig,
   { plugins: { 'plugin:@next/next/recommended': next.configs.recommended } },
 ]
 
-export const suspensiveMDXConfig: Linter.Config[] = [
+export const suspensiveMDXConfig = [
   mdx.configs.flat,
   mdx.configs.flatCodeBlocks,
   {
