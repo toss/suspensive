@@ -50,6 +50,7 @@ const contributorsQueryOptions = () =>
                   c: number // Number of commits
                 }[]
               }[]
+            | Record<never, never>
             | undefined
         }
         throw new Error('Failed to fetch contributors')
@@ -89,8 +90,12 @@ export const BubbleChart = () => {
             <Suspense clientOnly fallback={<></>}>
               <SuspenseQuery {...contributorsQueryOptions()}>
                 {({ data }) => {
+                  if (!data || !('filter' in data)) {
+                    throw new Error('Failed to fetch contributors')
+                  }
+
                   const chartData = data
-                    ?.filter(
+                    .filter(
                       ({ author }) =>
                         ![
                           'github-actions[bot]',
@@ -105,44 +110,42 @@ export const BubbleChart = () => {
                       htmlUrl: author.html_url,
                     }))
 
-                  if (chartData) {
-                    return (
-                      <>
-                        <div className="flex w-[100%] items-center justify-center overflow-visible sm:hidden md:hidden lg:hidden">
-                          <BubbleChartSize
-                            chartData={chartData}
-                            height={400}
-                            width={400}
-                            padding={2}
-                          />
-                        </div>
-                        <div className="hidden w-[100%] items-center justify-center overflow-visible sm:flex md:hidden lg:hidden">
-                          <BubbleChartSize
-                            chartData={chartData}
-                            height={630}
-                            width={630}
-                            padding={6}
-                          />
-                        </div>
-                        <div className="hidden w-[100%] items-center justify-center overflow-visible sm:hidden md:flex lg:hidden">
-                          <BubbleChartSize
-                            chartData={chartData}
-                            height={560}
-                            width={560}
-                            padding={4}
-                          />
-                        </div>
-                        <div className="hidden w-[100%] items-center justify-center overflow-visible sm:hidden md:hidden lg:flex">
-                          <BubbleChartSize
-                            chartData={chartData}
-                            height={760}
-                            width={760}
-                            padding={8}
-                          />
-                        </div>
-                      </>
-                    )
-                  }
+                  return (
+                    <>
+                      <div className="flex w-[100%] items-center justify-center overflow-visible sm:hidden md:hidden lg:hidden">
+                        <BubbleChartSize
+                          chartData={chartData}
+                          height={400}
+                          width={400}
+                          padding={2}
+                        />
+                      </div>
+                      <div className="hidden w-[100%] items-center justify-center overflow-visible sm:flex md:hidden lg:hidden">
+                        <BubbleChartSize
+                          chartData={chartData}
+                          height={630}
+                          width={630}
+                          padding={6}
+                        />
+                      </div>
+                      <div className="hidden w-[100%] items-center justify-center overflow-visible sm:hidden md:flex lg:hidden">
+                        <BubbleChartSize
+                          chartData={chartData}
+                          height={560}
+                          width={560}
+                          padding={4}
+                        />
+                      </div>
+                      <div className="hidden w-[100%] items-center justify-center overflow-visible sm:hidden md:hidden lg:flex">
+                        <BubbleChartSize
+                          chartData={chartData}
+                          height={760}
+                          width={760}
+                          padding={8}
+                        />
+                      </div>
+                    </>
+                  )
 
                   return (
                     <Link href="https://github.com/toss/suspensive/graphs/contributors">
