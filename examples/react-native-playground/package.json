@@ -1,25 +1,24 @@
 {
   "name": "@suspensive/react-native-playground",
-  "author": "Jonghyeon Ko <jonghyeon@toss.im>",
   "version": "0.0.0",
+  "private": true,
+  "author": "Jonghyeon Ko <jonghyeon@toss.im>",
   "main": "expo-router/entry",
   "scripts": {
-    "start": "expo start",
-    "reset-project": "node ./scripts/reset-project.js",
     "android": "expo start --android",
+    "ci:eslint": "eslint \"**/*.{ts,tsx,cts,mts}\"",
+    "ci:type": "tsc --noEmit",
     "ios": "expo start --ios",
-    "web": "expo start --web",
+    "reset-project": "node ./scripts/reset-project.js",
+    "start": "expo start",
     "test": "jest --watchAll",
-    "lint": "expo lint"
-  },
-  "jest": {
-    "preset": "jest-expo"
+    "web": "expo start --web"
   },
   "dependencies": {
-    "@suspensive/react-native": "workspace:*",
     "@expo/vector-icons": "^14.0.2",
     "@react-navigation/bottom-tabs": "^7.0.0",
     "@react-navigation/native": "^7.0.0",
+    "@suspensive/react-native": "workspace:*",
     "expo": "catalog:",
     "expo-blur": "~14.0.1",
     "expo-constants": "~17.0.3",
@@ -52,5 +51,7 @@
     "react-test-renderer": "18.3.1",
     "typescript": "^5.3.3"
   },
-  "private": true
+  "jest": {
+    "preset": "jest-expo"
+  }
 }
