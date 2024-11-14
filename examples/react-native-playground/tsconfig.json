@@ -3,17 +3,15 @@
   "compilerOptions": {
     "strict": true,
     "paths": {
-      "@/*": ["./*"]
+      "@/*": [
+        "./*"
+      ]
     }
   },
   "include": [
     "**/*.ts",
     "**/*.tsx",
     ".expo/types/**/*.ts",
-    "expo-env.d.ts",
-    "babel.config.js",
-    "eslint.config.mjs",
-    "index.js",
-    "metro.config.js"
+    "expo-env.d.ts"
   ]
 }

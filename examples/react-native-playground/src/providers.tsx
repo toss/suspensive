@@ -1,42 +1,21 @@
-import {
-  NotoSansKR_300Light,
-  NotoSansKR_500Medium,
-  NotoSansKR_700Bold,
-  useFonts,
-} from '@expo-google-fonts/noto-sans-kr'
-import * as SplashScreen from 'expo-splash-screen'
-import { type PropsWithChildren, useEffect } from 'react'
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context'
+import * as SplashScreen from 'expo-splash-screen'
+import { PropsWithChildren } from 'react'
+import { useEffect } from 'react'
 
 export const Providers = ({ children }: PropsWithChildren) => {
   return (
-    <FontProvider>
+    <SplashScreenProvider>
       <SafeAreaProvider>
         <SafeAreaView style={{ flex: 1 }}>{children}</SafeAreaView>
       </SafeAreaProvider>
-    </FontProvider>
+    </SplashScreenProvider>
   )
 }
 
-const FontProvider = ({ children }: PropsWithChildren) => {
-  const [loaded, error] = useFonts({
-    NotoSansKR_300Light,
-    NotoSansKR_500Medium,
-    NotoSansKR_700Bold,
-  })
-
+const SplashScreenProvider = ({ children }: PropsWithChildren) => {
   useEffect(() => {
-    if (error) throw error
-  }, [error])
-
-  useEffect(() => {
-    if (loaded) {
-      SplashScreen.hideAsync()
-    }
-  }, [loaded])
-
-  if (!loaded) {
-    return null
-  }
+    SplashScreen.hideAsync()
+  }, [])
   return children
 }
