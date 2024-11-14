@@ -1,48 +1,56 @@
 {
   "name": "@suspensive/react-native-playground",
-  "version": "0.0.0",
-  "private": true,
   "author": "Jonghyeon Ko <jonghyeon@toss.im>",
-  "main": "index.js",
+  "version": "0.0.0",
+  "main": "expo-router/entry",
   "scripts": {
-    "android": "DARK_MODE=media expo start --android",
-    "ci:eslint": "eslint \"**/*.{js,jsx,cjs,mjs,ts,tsx,cts,mts}\"",
-    "ci:type": "tsc --noEmit",
-    "ios": "DARK_MODE=media expo start --ios",
     "start": "expo start",
-    "web": "DARK_MODE=media expo start --web"
+    "reset-project": "node ./scripts/reset-project.js",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web",
+    "test": "jest --watchAll",
+    "lint": "expo lint"
+  },
+  "jest": {
+    "preset": "jest-expo"
   },
   "dependencies": {
-    "@expo-google-fonts/noto-sans-kr": "^0.2.3",
-    "@expo/html-elements": "0.11.0",
-    "@expo/vector-icons": "^14.0.4",
-    "@legendapp/motion": "^2.4.0",
-    "@react-navigation/native": "^7.0.0",
     "@suspensive/react-native": "workspace:*",
-    "babel-plugin-module-resolver": "^5.0.2",
+    "@expo/vector-icons": "^14.0.2",
+    "@react-navigation/bottom-tabs": "^7.0.0",
+    "@react-navigation/native": "^7.0.0",
     "expo": "catalog:",
+    "expo-blur": "~14.0.1",
+    "expo-constants": "~17.0.3",
     "expo-font": "~13.0.1",
+    "expo-haptics": "~14.0.0",
     "expo-linking": "~7.0.2",
     "expo-router": "catalog:",
-    "expo-splash-screen": "~0.29.7",
+    "expo-splash-screen": "~0.29.9",
     "expo-status-bar": "catalog:",
+    "expo-symbols": "~0.2.0",
     "expo-system-ui": "~4.0.2",
-    "expo-web-browser": "~14.0.0",
-    "jscodeshift": "17.1.1",
+    "expo-web-browser": "~14.0.1",
     "react": "catalog:react18",
+    "react-dom": "catalog:react18",
     "react-native": "catalog:react18",
     "react-native-gesture-handler": "~2.20.2",
     "react-native-reanimated": "~3.16.1",
     "react-native-safe-area-context": "4.12.0",
-    "react-native-screens": "4.0.0",
-    "react-native-svg": "15.8.0",
-    "react-native-web": "~0.19.13"
+    "react-native-screens": "~4.0.0",
+    "react-native-web": "~0.19.13",
+    "react-native-webview": "13.12.2"
   },
   "devDependencies": {
-    "@babel/core": "^7.20.0",
-    "@types/react": "catalog:react18"
+    "@babel/core": "^7.25.2",
+    "@types/jest": "^29.5.12",
+    "@types/react": "catalog:react18",
+    "@types/react-test-renderer": "^18.3.0",
+    "jest": "catalog:",
+    "jest-expo": "catalog:",
+    "react-test-renderer": "18.3.1",
+    "typescript": "^5.3.3"
   },
-  "jest": {
-    "preset": "jest-expo"
-  }
+  "private": true
 }
