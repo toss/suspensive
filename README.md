@@ -24,9 +24,9 @@ Key features: Suspense, ErrorBoundary, ErrorBoundaryGroup, Delay, and more.
 
 ### [@suspensive/react-query](https://suspensive.org/docs/react-query/motivation) [![npm version](https://img.shields.io/npm/v/@suspensive/react-query?color=000&labelColor=000&logo=npm&label=)](https://www.npmjs.com/package/@suspensive/react-query) [![npm](https://img.shields.io/npm/dm/@suspensive/react-query?color=000&labelColor=000)](https://www.npmjs.com/package/@suspensive/react-query) [![npm bundle size](https://img.shields.io/bundlephobia/minzip/@suspensive/react-query?color=000&labelColor=000)](https://www.npmjs.com/package/@suspensive/react-query)
 
-> This package enhances React Query with Suspense support, allowing for simpler and more declarative data fetching. It provides hooks like useSuspenseQuery and useSuspenseInfiniteQuery, which integrate seamlessly with React Suspense. Additionally, it includes QueryErrorBoundary for handling errors during data fetching.
+> This package enhances React Query with Suspense support, allowing for simpler and more declarative data fetching. It provides hooks like useSuspenseQuery and useSuspenseInfiniteQuery, which integrate seamlessly with React Suspense.
 
-Key features: useSuspenseQuery, useSuspenseQueries, useSuspenseInfiniteQuery, queryOptions, QueryErrorBoundary, Mutation, and more.
+Key features: useSuspenseQuery, useSuspenseQueries, useSuspenseInfiniteQuery, queryOptions, Mutation, and more.
 
 ### [@suspensive/jotai](https://suspensive.org/docs/jotai/motivation) [![npm version](https://img.shields.io/npm/v/@suspensive/jotai?color=000&labelColor=000&logo=npm&label=)](https://www.npmjs.com/package/@suspensive/jotai) [![npm](https://img.shields.io/npm/dm/@suspensive/jotai?color=000&labelColor=000)](https://www.npmjs.com/package/@suspensive/jotai) [![npm bundle size](https://img.shields.io/bundlephobia/minzip/@suspensive/jotai?color=000&labelColor=000)](https://www.npmjs.com/package/@suspensive/jotai)
 
