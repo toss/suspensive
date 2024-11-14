@@ -1,7 +1,7 @@
 'use client'
 
 import { ErrorBoundary, ErrorBoundaryGroup, Suspense, wrap } from '@suspensive/react'
-import { QueryErrorBoundary, SuspenseQuery, queryOptions } from '@suspensive/react-query'
+import { SuspenseQuery, queryOptions } from '@suspensive/react-query'
 import { useQueryErrorResetBoundary } from '@tanstack/react-query'
 import { Area, Box, Button, RejectedFallback, Spinner } from '~/components/uis'
 import { api } from '~/utils/api'
@@ -31,19 +31,6 @@ export default wrap.ErrorBoundaryGroup({}).on(function Page() {
             </SuspenseQuery>
           </Suspense>
         </ErrorBoundary>
-      </Area>
-
-      <Area title="QueryErrorBoundary + Suspense">
-        <QueryErrorBoundary fallback={RejectedFallback}>
-          <Suspense clientOnly fallback={<Spinner />}>
-            <SuspenseQuery {...delayQuery(3, { ms: 500, percentage: 40 })}>
-              {({ data }) => <Box.Success>{data}</Box.Success>}
-            </SuspenseQuery>
-            <SuspenseQuery {...delayQuery(4, { ms: 500, percentage: 40 })}>
-              {({ data }) => <Box.Success>{data}</Box.Success>}
-            </SuspenseQuery>
-          </Suspense>
-        </QueryErrorBoundary>
       </Area>
     </Area>
   )
