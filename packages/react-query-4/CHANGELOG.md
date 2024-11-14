@@ -1,5 +1,14 @@
 # @suspensive/react-query-4
 
+## 2.18.5
+
+### Patch Changes
+
+- [#1360](https://github.com/toss/suspensive/pull/1360) [`f7252b4`](https://github.com/toss/suspensive/commit/f7252b4fb17ebada56490fb624a01eb9fe0d1f44) Thanks [@manudeli](https://github.com/manudeli)! - fix(react-query): deprecate QueryErrorBoundary
+
+- Updated dependencies []:
+  - @suspensive/react@2.18.5
+
 ## 2.18.4
 
 ### Patch Changes
