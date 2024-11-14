@@ -1,7 +1,6 @@
-import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context'
 import * as SplashScreen from 'expo-splash-screen'
-import { PropsWithChildren } from 'react'
-import { useEffect } from 'react'
+import { type PropsWithChildren, useEffect } from 'react'
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context'
 
 export const Providers = ({ children }: PropsWithChildren) => {
   return (

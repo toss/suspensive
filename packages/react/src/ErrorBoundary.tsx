@@ -170,21 +170,9 @@ class BaseErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState
 export const ErrorBoundary = Object.assign(
   (() => {
     const ErrorBoundary = forwardRef<{ reset(): void }, ErrorBoundaryProps>(
-      (
-        {
-          fallback,
-          children,
-          // TODO: remove this line
-          // eslint-disable-next-line @typescript-eslint/unbound-method
-          onError,
-          // TODO: remove this line
-          // eslint-disable-next-line @typescript-eslint/unbound-method
-          onReset,
-          resetKeys,
-          shouldCatch,
-        },
-        ref
-      ) => {
+      // TODO: remove this line
+      // eslint-disable-next-line @typescript-eslint/unbound-method
+      ({ fallback, children, onError, onReset, resetKeys, shouldCatch }, ref) => {
         const group = useContext(ErrorBoundaryGroupContext) ?? { resetKey: 0 }
         const baseErrorBoundaryRef = useRef<BaseErrorBoundary>(null)
         useImperativeHandle(ref, () => ({
