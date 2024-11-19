@@ -57,44 +57,27 @@ class Wrap {
 }
 
 /**
- * A utility for wrapping components with Suspense, ErrorBoundary, ErrorBoundaryGroup, and Delay functionality.
- * Provides a chainable API to compose multiple wrapper components.
+ * A utility for wrapping components with Suspensive components (Suspense, ErrorBoundary, ErrorBoundaryGroup, Delay).
  *
  * @example
  * ```tsx
- * // Basic usage
- * const WrappedComponent = wrap
- *   .ErrorBoundary({
- *     fallback: ({ error }) => <ErrorDisplay message={error.message} />
- *   })
- *   .Suspense({ fallback: <LoadingSpinner /> })
- *   .on(YourComponent)
- *
- * // With TypeScript props
- * const PostItem = wrap
- *   .ErrorBoundary({ fallback: ({ error }) => <div>{error.message}</div> })
- *   .Suspense({ fallback: <div>Loading...</div> })
- *   .on<{ id: number }>((props) => {
- *     // Component implementation
- *   })
- *
- * // With ErrorBoundaryGroup
  * const Page = wrap
  *   .ErrorBoundaryGroup({ blockOutside: true })
- *   .ErrorBoundary({ fallback: ({ error }) => <PageError error={error} /> })
+ *   .ErrorBoundary({
+ *     fallback: ({ error }) => <PageErrorFallback message={error.message} />,
+ *   })
  *   .Suspense({ fallback: <PageSkeleton /> })
  *   .on(() => {
- *     // Page implementation
+ *     const { data: postList } = useSuspenseQuery({
+ *       queryKey: ['posts'],
+ *       queryFn: () => fetch('/api/posts').then(res => res.json())
+ *     })
+ *
+ *     return <PostList data={postList} />
  *   })
  * ```
  *
- * Each wrapper method returns a chainable instance that can be further composed
- * with additional wrappers before finalizing with .on()
- *
- * @see {@link Suspense}
- * @see {@link ErrorBoundary}
- * @see {@link ErrorBoundaryGroup}
- * @see {@link Delay}
+ * @see {@link https://suspensive.org/docs/react/wrap Suspensive Docs}
  */
 export const wrap = {
   Suspense: (props: OmitKeyof<ComponentProps<typeof Suspense>, 'children'> = {}) => new Wrap([[Suspense, props]]),
