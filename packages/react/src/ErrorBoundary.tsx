@@ -164,8 +164,8 @@ class BaseErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState
 }
 
 /**
- * This component provide a simple and reusable wrapper that you can use to wrap around your components. Any rendering errors in your components hierarchy can then be gracefully handled.
- * @see {@link https://suspensive.org/docs/react/ErrorBoundary}
+ * This component provides a simple and reusable wrapper that you can use to wrap around your components. Any rendering errors in your components hierarchy can then be gracefully handled.
+ * @see {@link https://suspensive.org/docs/react/ErrorBoundary Suspensive Docs}
  */
 export const ErrorBoundary = Object.assign(
   (() => {
@@ -212,6 +212,10 @@ if (process.env.NODE_ENV === 'development') {
   ErrorBoundaryContext.displayName = 'ErrorBoundaryContext'
 }
 
+/**
+ * This hook provides a simple and reusable wrapper that you can use to wrap around your components. Any rendering errors in your components hierarchy can then be gracefully handled.
+ * @see {@link https://suspensive.org/en/docs/react/ErrorBoundary#useerrorboundary Suspensive Docs}
+ */
 // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-parameters
 export const useErrorBoundary = <TError extends Error = Error>() => {
   const [state, setState] = useState<ErrorBoundaryState<TError>>({
@@ -236,6 +240,10 @@ export const useErrorBoundary = <TError extends Error = Error>() => {
   )
 }
 
+/**
+ * This hook allows you to access the reset method and error objects without prop drilling.
+ * @see {@link https://suspensive.org/en/docs/react/ErrorBoundary#useerrorboundaryfallbackprops Suspensive Docs}
+ */
 export const useErrorBoundaryFallbackProps = <TError extends Error = Error>(): ErrorBoundaryFallbackProps<TError> => {
   const errorBoundary = useContext(ErrorBoundaryContext)
   SuspensiveError.assert(

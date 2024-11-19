@@ -18,6 +18,13 @@ export type DelayProps =
       children?: ReactNode
     }
 
+/**
+ * This component delays the rendering of its children for a specified duration.
+ *
+ * The Delay component provides a way to introduce intentional delays in rendering,
+ * which can be useful for loading states or animations.
+ * @see {@link https://suspensive.org/docs/react/Delay Suspensive Docs}
+ */
 export const Delay = (props: DelayProps) => {
   if (process.env.NODE_ENV === 'development' && typeof props.ms === 'number') {
     SuspensiveError.assert(props.ms >= 0, Message_Delay_ms_prop_should_be_greater_than_or_equal_to_0)

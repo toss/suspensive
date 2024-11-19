@@ -56,6 +56,46 @@ class Wrap {
   }
 }
 
+/**
+ * A utility for wrapping components with Suspense, ErrorBoundary, ErrorBoundaryGroup, and Delay functionality.
+ * Provides a chainable API to compose multiple wrapper components.
+ *
+ * @example
+ * ```tsx
+ * // Basic usage
+ * const WrappedComponent = wrap
+ *   .ErrorBoundary({
+ *     fallback: ({ error }) => <ErrorDisplay message={error.message} />
+ *   })
+ *   .Suspense({ fallback: <LoadingSpinner /> })
+ *   .on(YourComponent)
+ *
+ * // With TypeScript props
+ * const PostItem = wrap
+ *   .ErrorBoundary({ fallback: ({ error }) => <div>{error.message}</div> })
+ *   .Suspense({ fallback: <div>Loading...</div> })
+ *   .on<{ id: number }>((props) => {
+ *     // Component implementation
+ *   })
+ *
+ * // With ErrorBoundaryGroup
+ * const Page = wrap
+ *   .ErrorBoundaryGroup({ blockOutside: true })
+ *   .ErrorBoundary({ fallback: ({ error }) => <PageError error={error} /> })
+ *   .Suspense({ fallback: <PageSkeleton /> })
+ *   .on(() => {
+ *     // Page implementation
+ *   })
+ * ```
+ *
+ * Each wrapper method returns a chainable instance that can be further composed
+ * with additional wrappers before finalizing with .on()
+ *
+ * @see {@link Suspense}
+ * @see {@link ErrorBoundary}
+ * @see {@link ErrorBoundaryGroup}
+ * @see {@link Delay}
+ */
 export const wrap = {
   Suspense: (props: OmitKeyof<ComponentProps<typeof Suspense>, 'children'> = {}) => new Wrap([[Suspense, props]]),
   ErrorBoundary: (props: OmitKeyof<ComponentProps<typeof ErrorBoundary>, 'children'>) =>
