@@ -18,7 +18,7 @@ export function FadeIn<TAs extends ElementType = 'div'>({
   timingFunction = 'linear',
   ...rest
 }: FadeInProps<TAs>) {
-  const Component = as || 'div'
+  const Component = as ?? 'div'
   const { inView, ref } = useInView()
   return (
     <Component
