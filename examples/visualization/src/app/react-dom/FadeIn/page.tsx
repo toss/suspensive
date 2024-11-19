@@ -39,7 +39,7 @@ export default function Page() {
               key={userId}
               clientOnly
               fallback={
-                <FadeIn delay={200} duration={1000}>
+                <FadeIn delay={200} duration={1000} inViewOptions={{ triggerOnce: true }}>
                   {skeleton}
                 </FadeIn>
               }

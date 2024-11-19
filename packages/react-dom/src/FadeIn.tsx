@@ -1,5 +1,5 @@
 import { type CSSProperties, type ComponentPropsWithoutRef, type ElementType } from 'react'
-import { useInView } from './useInView'
+import { type InViewOptions, useInView } from './useInView'
 
 type FadeInProps<TAs extends ElementType> = ComponentPropsWithoutRef<TAs> & {
   /**
@@ -18,6 +18,7 @@ type FadeInProps<TAs extends ElementType> = ComponentPropsWithoutRef<TAs> & {
    * The timing function of the animation.
    */
   timingFunction?: CSSProperties['animationTimingFunction']
+  inViewOptions?: InViewOptions
 }
 
 export function FadeIn<TAs extends ElementType = 'div'>({
@@ -25,10 +26,11 @@ export function FadeIn<TAs extends ElementType = 'div'>({
   delay = 0,
   duration = 200,
   timingFunction = 'linear',
+  inViewOptions,
   ...rest
 }: FadeInProps<TAs>) {
   const Component = as ?? 'div'
-  const { inView, ref } = useInView()
+  const { inView, ref } = useInView(inViewOptions)
   return (
     <Component
       {...rest}
