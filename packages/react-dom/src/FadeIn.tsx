@@ -1,7 +1,7 @@
 import { type CSSProperties, type ComponentPropsWithoutRef, type ElementType } from 'react'
 import { useInView } from './useInView'
 
-type FadInBaseProps = {
+type FadeInBaseProps = {
   delay?: number
   duration?: number
   timingFunction?: CSSProperties['animationTimingFunction']
@@ -9,7 +9,7 @@ type FadInBaseProps = {
 type FadeInProps<TAs extends ElementType> = {
   as?: TAs
 } & Omit<ComponentPropsWithoutRef<TAs>, 'as' | keyof FadInBaseProps> &
-  FadInBaseProps
+  FadeInBaseProps
 
 export function FadeIn<TAs extends ElementType = 'div'>({
   as,
