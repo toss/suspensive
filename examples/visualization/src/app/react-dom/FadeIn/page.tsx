@@ -29,40 +29,47 @@ const query = {
 }
 
 export default function Page() {
-  const userId = 1
-
   return (
-    <ErrorBoundary fallback={({ error }) => <>{error.message}</>}>
-      <Suspense
-        clientOnly
-        fallback={
-          <FadeIn delay={200} duration={1000}>
-            {skeleton}
-          </FadeIn>
-        }
-      >
-        <SuspenseQuery {...query.user(userId)}>
-          {({ data: user }) => (
-            <FadeIn duration={200} className="max-w-[344px]">
-              <h1 className="text-lg font-bold">{user.username}</h1>
-              <p className="text-xs">{user.userAgent}</p>
-              <p>{user.age}</p>
-              <p>{user.maidenName}</p>
-            </FadeIn>
-          )}
-        </SuspenseQuery>
-      </Suspense>
-    </ErrorBoundary>
+    <div>
+      <ErrorBoundary fallback={({ error }) => <>{error.message}</>}>
+        {Array.from({ length: 20 }).map((_, i) => {
+          const userId = i + 1
+          return (
+            <Suspense
+              key={userId}
+              clientOnly
+              fallback={
+                <FadeIn delay={200} duration={1000}>
+                  {skeleton}
+                </FadeIn>
+              }
+            >
+              <SuspenseQuery {...query.user(userId)}>
+                {({ data: user }) => (
+                  <FadeIn duration={200} className="max-w-[344px]">
+                    <h1 className="text-lg font-bold">{user.username}</h1>
+                    <p className="text-xs">{user.userAgent}</p>
+                    <p>{user.age}</p>
+                    <p>{user.maidenName}</p>
+                    <div className="mb-6" />
+                  </FadeIn>
+                )}
+              </SuspenseQuery>
+            </Suspense>
+          )
+        })}
+      </ErrorBoundary>
+    </div>
   )
 }
 
 const skeleton = (
-  <div role="status" className="animate-pulse space-y-2">
-    <div className="h-4 w-[42px] rounded-sm bg-gray-300 dark:bg-gray-600"></div>
-    <div className="h-2 w-[34px] rounded-sm bg-gray-300 dark:bg-gray-600"></div>
-    <div className="h-2 w-[344px] rounded-sm bg-gray-300 dark:bg-gray-600"></div>
-    <div className="h-2 w-[344px] rounded-sm bg-gray-300 dark:bg-gray-600"></div>
-    <div className="h-4 w-[42px] rounded-sm bg-gray-300 dark:bg-gray-600"></div>
-    <div className="h-4 w-[34px] rounded-sm bg-gray-300 dark:bg-gray-600"></div>
+  <div role="status" className="mb-6 animate-pulse space-y-2">
+    <div className="h-4 w-[42px] rounded-sm bg-gray-300 dark:bg-gray-600" />
+    <div className="h-2 w-[34px] rounded-sm bg-gray-300 dark:bg-gray-600" />
+    <div className="h-2 w-[344px] rounded-sm bg-gray-300 dark:bg-gray-600" />
+    <div className="h-2 w-[344px] rounded-sm bg-gray-300 dark:bg-gray-600" />
+    <div className="h-4 w-[42px] rounded-sm bg-gray-300 dark:bg-gray-600" />
+    <div className="h-4 w-[34px] rounded-sm bg-gray-300 dark:bg-gray-600" />
   </div>
 )
