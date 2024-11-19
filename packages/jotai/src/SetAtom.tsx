@@ -8,10 +8,10 @@ type UseSetAtomProps<TAtom> = {
 }
 
 /**
- * This Component is wrapping `useSetAtom` of jotai
+ * This component is wrapping `useSetAtom` of jotai.
  *
  * The SetAtom component provides an interface similar to Jotai's `useSetAtom` hook as props, allowing declarative usage.
- * @see {@link https://suspensive.org/docs/jotai/SetAtom}
+ * @see {@link https://suspensive.org/docs/jotai/SetAtom Suspensive Docs}
  * @example
  * ```jsx
  * import { SetAtom } from '@suspensive/jotai'

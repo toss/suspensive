@@ -20,10 +20,10 @@ type UseAtomProps<TAtom extends Parameters<typeof useAtom>[0]> = {
 }
 
 /**
- * This hook is wrapping `useAtom` hook from jotai.
+ * This component is wrapping `useAtom` of jotai.
  *
  * The Atom component provides an interface similar to Jotai's `useAtom` hook as props, allowing declarative usage.
- * @see {@link https://suspensive.org/docs/jotai/Atom}
+ * @see {@link https://suspensive.org/docs/jotai/Atom Suspensive Docs}
  * @example
  * ```jsx
  * import { Atom } from '@suspensive/jotai'
