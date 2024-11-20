@@ -46,7 +46,7 @@ export default function Page() {
             >
               <SuspenseQuery {...query.user(userId)}>
                 {({ data: user }) => (
-                  <FadeIn duration={200} inViewOptions={{ triggerOnce: true }} className="max-w-[344px]">
+                  <FadeIn duration={200} className="max-w-[344px]" triggerOnce>
                     <h1 className="text-lg font-bold">{user.username}</h1>
                     <p className="text-xs">{user.userAgent}</p>
                     <p>{user.age}</p>

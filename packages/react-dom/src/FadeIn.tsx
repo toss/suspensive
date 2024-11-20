@@ -4,32 +4,30 @@ import { type InViewOptions } from './useInView'
 import { type OmitKeyof, type Override } from './utility-types'
 
 type FadeInProps<TAs extends ElementType> = Override<
-  ComponentPropsWithoutRef<TAs>,
+  Override<
+    ComponentPropsWithoutRef<TAs>,
+    OmitKeyof<InViewOptions, 'fallbackInView' | 'initialInView' | 'skip' | 'onChange' | 'trackVisibility'>
+  >,
   {
     /**
      * The element type to render.
+     * @default 'div'
      */
     as?: TAs
-    /**
-     * The delay in milliseconds before the animation starts.
-     */
-    delay?: number
-    /**
-     * The duration in milliseconds of the animation.
-     */
-    duration?: number
-    /**
-     * The timing function of the animation.
-     */
-    timingFunction?: CSSProperties['animationTimingFunction']
     /**
      * The style of the element.
      */
     style?: OmitKeyof<CSSProperties, 'opacity' | 'willChange' | 'transition'>
     /**
-     * The options for the `useInView` hook.
+     * The duration in milliseconds of the animation.
+     * @default 200
      */
-    inViewOptions?: InViewOptions
+    duration?: number
+    /**
+     * The timing function of the animation.
+     * @default 'linear'
+     */
+    timingFunction?: CSSProperties['animationTimingFunction']
   }
 >
 
@@ -38,24 +36,29 @@ type FadeInProps<TAs extends ElementType> = Override<
  */
 export function FadeIn<TAs extends ElementType = 'div'>({
   as,
-  delay = 0,
+  style,
+  // fadeIn Options
   duration = 200,
   timingFunction = 'linear',
-  inViewOptions,
+  // inView options
+  delay,
+  rootMargin,
+  threshold,
+  triggerOnce,
   ...restProps
 }: FadeInProps<TAs>) {
   const Component = as ?? 'div'
   return (
-    <InView {...inViewOptions}>
+    <InView rootMargin={rootMargin} delay={delay} threshold={threshold} triggerOnce={triggerOnce}>
       {({ inView, ref }) => (
         <Component
           {...restProps}
           ref={ref}
           style={{
-            ...restProps.style,
+            ...style,
             opacity: inView ? 1 : 0,
             willChange: 'opacity',
-            transition: `opacity ${duration}ms ${timingFunction} ${delay}ms`,
+            transition: `opacity ${duration}ms ${timingFunction}`,
           }}
         />
       )}
