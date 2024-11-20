@@ -8,10 +8,10 @@ type UseAtomValueProps<TAtom extends Parameters<typeof useAtomValue>[0]> = {
 }
 
 /**
- * This hook is wrapping `useAtomValue` hook from jotai.
+ * This component is wrapping `useAtomValue` of jotai.
  *
  * The AtomValue component provides an interface similar to Jotai's `useAtomValue` hook as props, allowing declarative usage.
- * @see {@link https://suspensive.org/docs/jotai/AtomValue}
+ * @see {@link https://suspensive.org/docs/jotai/AtomValue Suspensive Docs}
  * @example
  * ```jsx
  * import { AtomValue } from '@suspensive/jotai'
