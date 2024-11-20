@@ -23,7 +23,7 @@ export interface SuspenseProps
 
 /**
  * This component is just wrapping React's Suspense. to use Suspense easily in Server-side rendering environment like Next.js
- * @see {@link https://suspensive.org/docs/react/Suspense}
+ * @see {@link https://suspensive.org/docs/react/Suspense Suspensive Docs}
  */
 export const Suspense = ({ clientOnly, children, fallback }: SuspenseProps) => {
   const defaultProps = useContext(SuspenseDefaultPropsContext)
