@@ -62,7 +62,7 @@ interface DefaultPropsProviderProps extends PropsWithChildren {
  * }
  * ```
  *
- * @see {@link https://suspensive.org/en/docs/react/DefaultPropsProvider Suspensive Docs}
+ * @see {@link https://suspensive.org/docs/react/DefaultPropsProvider Suspensive Docs}
  */
 export const DefaultPropsProvider = ({ defaultProps, children }: DefaultPropsProviderProps) => (
   <DelayDefaultPropsContext.Provider value={defaultProps.Delay ?? {}}>

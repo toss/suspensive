@@ -28,7 +28,7 @@ export type UseSuspenseInfiniteQueryOptions<
 
 /**
  * This hook is wrapping `useInfiniteQuery` of `@tanstack/react-query` v4 with default suspense option.
- * @see {@link https://suspensive.org/en/docs/react-query/useSuspenseInfiniteQuery Suspensive Docs}
+ * @see {@link https://suspensive.org/docs/react-query/useSuspenseInfiniteQuery Suspensive Docs}
  */
 export function useSuspenseInfiniteQuery<
   TQueryFnData = unknown,

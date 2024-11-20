@@ -111,7 +111,7 @@ export type SuspenseQueriesResults<
 
 /**
  * This hook is wrapping `useQueries` of `@tanstack/react-query` v4 with default suspense option.
- * @see {@link https://suspensive.org/en/docs/react-query/useSuspenseQueries Suspensive Docs}
+ * @see {@link https://suspensive.org/docs/react-query/useSuspenseQueries Suspensive Docs}
  */
 export function useSuspenseQueries<T extends any[]>({
   queries,
