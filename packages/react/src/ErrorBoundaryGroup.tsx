@@ -28,8 +28,9 @@ export interface ErrorBoundaryGroupProps extends PropsWithChildren {
 }
 
 /**
- * ErrorBoundaryGroup is Component to manage multiple ErrorBoundaries
- * @see {@link https://suspensive.org/docs/react/ErrorBoundaryGroup}
+ * ErrorBoundaryGroup is a wrapper component that allows you to manage multiple ErrorBoundaries easily.
+ * ErrorBoundaries as children of nested ErrorBoundaryGroup will also be reset by parent ErrorBoundaryGroup.Consumer.
+ * @see {@link https://suspensive.org/docs/react/ErrorBoundaryGroup Suspensive Docs}
  */
 export const ErrorBoundaryGroup = Object.assign(
   (() => {
@@ -63,7 +64,12 @@ export const ErrorBoundaryGroup = Object.assign(
   }
 )
 
-export const useErrorBoundaryGroup = () => {
+/**
+ * This hook provides the reset method for the ErrorBoundaryGroup.
+ * Must be used within an ErrorBoundaryGroup component.
+ * @see {@link https://suspensive.org/docs/react/ErrorBoundaryGroup#useerrorboundarygroup Suspensive Docs}
+ */
+export const useErrorBoundaryGroup = (): { reset: () => void } => {
   const group = useContext(ErrorBoundaryGroupContext)
   SuspensiveError.assert(
     group != null,
