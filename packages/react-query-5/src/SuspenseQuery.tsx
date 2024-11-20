@@ -15,12 +15,12 @@ import type { ReactNode } from 'react'
  * ```tsx
  * import { SuspenseQuery } from '@suspensive/react-query'
  *
- * // You can use QueryOptions as props.
+ * // You can use queryOptions as props.
  * <SuspenseQuery {...queryOptions()}>
- *   {({ data, isLoading }) => {
+ *   {({ data }) => {
  *     return <></>
- *   }
- * </SuspenseQuery/>
+ *   }}
+ * </SuspenseQuery>
  */
 export const SuspenseQuery = <
   TQueryFnData = unknown,

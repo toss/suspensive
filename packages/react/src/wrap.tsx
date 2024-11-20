@@ -56,6 +56,29 @@ class Wrap {
   }
 }
 
+/**
+ * A utility for wrapping components with Suspensive components (Suspense, ErrorBoundary, ErrorBoundaryGroup, Delay).
+ *
+ * @example
+ * ```tsx
+ * const Page = wrap
+ *   .ErrorBoundaryGroup({ blockOutside: true })
+ *   .ErrorBoundary({
+ *     fallback: ({ error }) => <PageErrorFallback message={error.message} />,
+ *   })
+ *   .Suspense({ fallback: <PageSkeleton /> })
+ *   .on(() => {
+ *     const { data: postList } = useSuspenseQuery({
+ *       queryKey: ['posts'],
+ *       queryFn: () => fetch('/api/posts').then(res => res.json())
+ *     })
+ *
+ *     return <PostList data={postList} />
+ *   })
+ * ```
+ *
+ * @see {@link https://suspensive.org/docs/react/wrap Suspensive Docs}
+ */
 export const wrap = {
   Suspense: (props: OmitKeyof<ComponentProps<typeof Suspense>, 'children'> = {}) => new Wrap([[Suspense, props]]),
   ErrorBoundary: (props: OmitKeyof<ComponentProps<typeof ErrorBoundary>, 'children'>) =>

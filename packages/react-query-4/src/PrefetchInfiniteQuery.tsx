@@ -2,7 +2,7 @@ import { type FetchInfiniteQueryOptions, type QueryKey } from '@tanstack/react-q
 import { usePrefetchInfiniteQuery } from './usePrefetchInfiniteQuery'
 
 /**
- * A component that allows you to use usePrefetchInfiniteQuery in JSX, avoiding the limitations of React hooks.
+ * A component that allows you to use `usePrefetchInfiniteQuery` in JSX, avoiding the limitations of React hooks.
  * @see {@link https://suspensive.org/en/docs/react-query/PrefetchInfiniteQuery Suspensive Docs}
  * @example
  * ```tsx
