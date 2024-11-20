@@ -10,6 +10,8 @@ describe('<FadeIn/>', () => {
     ;(() => <FadeIn as={Example1} x="string"></FadeIn>)()
     // @ts-expect-error ts(2322)
     ;(() => <FadeIn as={Example2} x="string"></FadeIn>)()
+    // @ts-expect-error ts(2353)
+    ;(() => <FadeIn style={{ opacity: 1 }}></FadeIn>)()
   })
 })
 
