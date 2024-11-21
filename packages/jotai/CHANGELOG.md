@@ -1,5 +1,13 @@
 # @suspensive/jotai
 
+## 2.18.6
+
+### Patch Changes
+
+- [#1364](https://github.com/toss/suspensive/pull/1364) [`9db2983`](https://github.com/toss/suspensive/commit/9db298363b0df84225e03e54bbbe950814c55495) Thanks [@kangju2000](https://github.com/kangju2000)! - fix(\*): fix typo in jsdoc
+
+- [#1364](https://github.com/toss/suspensive/pull/1364) [`9db2983`](https://github.com/toss/suspensive/commit/9db298363b0df84225e03e54bbbe950814c55495) Thanks [@kangju2000](https://github.com/kangju2000)! - fix(react-query, jotai, react): fix typo in jsdoc
+
 ## 2.18.5
 
 ## 2.18.4

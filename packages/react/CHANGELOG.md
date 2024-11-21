@@ -1,5 +1,17 @@
 # @suspensive/react
 
+## 2.18.6
+
+### Patch Changes
+
+- [#1368](https://github.com/toss/suspensive/pull/1368) [`30b39d9`](https://github.com/toss/suspensive/commit/30b39d9c6e8ad5cf29316eb318ecd989b8da8aa7) Thanks [@kangju2000](https://github.com/kangju2000)! - docs(react-query, react): Update jsdoc link from `en/docs` to `docs`
+
+- [#1365](https://github.com/toss/suspensive/pull/1365) [`89c1cd9`](https://github.com/toss/suspensive/commit/89c1cd9028bbdf092cdda24254a56afd003c941f) Thanks [@kangju2000](https://github.com/kangju2000)! - feat(react, react-query-4): add missing JSDoc for react and react-query-4
+
+- [#1364](https://github.com/toss/suspensive/pull/1364) [`9db2983`](https://github.com/toss/suspensive/commit/9db298363b0df84225e03e54bbbe950814c55495) Thanks [@kangju2000](https://github.com/kangju2000)! - fix(\*): fix typo in jsdoc
+
+- [#1364](https://github.com/toss/suspensive/pull/1364) [`9db2983`](https://github.com/toss/suspensive/commit/9db298363b0df84225e03e54bbbe950814c55495) Thanks [@kangju2000](https://github.com/kangju2000)! - fix(react-query, jotai, react): fix typo in jsdoc
+
 ## 2.18.5
 
 ## 2.18.4

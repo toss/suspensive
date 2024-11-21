@@ -59,7 +59,7 @@ export type UnSelectedQueryOptions<
  * Creates a reusable query options object that can be used across different query hooks.
  * Provides better type inference and easier query key management.
  *
- * @see {@link https://suspensive.org/en/docs/react-query/queryOptions Suspensive Docs}
+ * @see {@link https://suspensive.org/docs/react-query/queryOptions Suspensive Docs}
  */
 export function queryOptions<
   TQueryFnData = unknown,

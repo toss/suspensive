@@ -4,7 +4,7 @@ import { type SuspenseQueriesOptions, type SuspenseQueriesResults, useSuspenseQu
 /**
  * We provide these components to clearly express what causes suspense at the same depth.
  * `<SuspenseQueries/>` serves to make `useSuspenseQueries` easier to use in jsx.
- * @see {@link https://suspensive.org/en/docs/react-query/SuspenseQueries Suspensive Docs}
+ * @see {@link https://suspensive.org/docs/react-query/SuspenseQueries Suspensive Docs}
  * @example
  * ```tsx
  * import { SuspenseQueries } from '@suspensive/react-query'
