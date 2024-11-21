@@ -2,7 +2,7 @@ import { type FetchInfiniteQueryOptions, type QueryKey, useQueryClient } from '@
 
 /**
  * The `usePrefetchInfiniteQuery` does not return anything, it should be used just to fire a prefetch during render, before a suspense boundary that wraps a component that uses `useSuspenseInfiniteQuery`.
- * @see {@link https://suspensive.org/en/docs/react-query/usePrefetchInfiniteQuery Suspensive Docs}
+ * @see {@link https://suspensive.org/docs/react-query/usePrefetchInfiniteQuery Suspensive Docs}
  */
 export function usePrefetchInfiniteQuery<
   TQueryFnData = unknown,
