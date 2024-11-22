@@ -50,7 +50,7 @@
     "ci:test": "vitest run --coverage --typecheck",
     "ci:type": "tsc --noEmit",
     "clean": "rimraf ./dist && rimraf ./coverage",
-    "postinstall": "node dist/bin/postinstall.cjs",
+    "postinstall": "node -e \"import('./dist/bin/postinstall.cjs').catch(e => console.error(e))\"",
     "prepack": "pnpm build",
     "test:ui": "vitest --ui --coverage --typecheck"
   },
