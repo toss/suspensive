@@ -35,8 +35,8 @@
   "module": "dist/index.js",
   "types": "dist/index.d.ts",
   "bin": {
-    "suspensive-react-query": "dist/scripts/cli.cjs",
-    "srq": "dist/scripts/cli.cjs"
+    "suspensive-react-query": "dist/bin/cli.cjs",
+    "srq": "dist/bin/cli.cjs"
   },
   "files": [
     "dist",
@@ -50,7 +50,7 @@
     "ci:test": "vitest run --coverage --typecheck",
     "ci:type": "tsc --noEmit",
     "clean": "rimraf ./dist && rimraf ./coverage",
-    "postinstall": "node -e \"import('./dist/scripts/postinstall.cjs').catch(e => console.error(e))\"",
+    "postinstall": "node dist/bin/postinstall.cjs",
     "prepack": "pnpm build",
     "test:ui": "vitest --ui --coverage --typecheck"
   },
@@ -66,7 +66,6 @@
     "@suspensive/react": "workspace:*",
     "@suspensive/tsconfig": "workspace:*",
     "@suspensive/tsup": "workspace:*",
-    "@tanstack/react-query": "catalog:react-query4",
     "@types/react": "catalog:react18",
     "react": "catalog:react18"
   },
