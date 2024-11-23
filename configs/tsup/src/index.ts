@@ -11,9 +11,8 @@ export const options: Options = {
 }
 
 export const scriptOptions: Options = {
-  format: ['cjs'],
-  target: ['chrome51', 'firefox53', 'edge18', 'safari11', 'ios11', 'opera38', 'es6', 'node14'],
-  entry: ['src/scripts/*.{ts,tsx}', '!**/*.{spec,test,test-d,bench}.*'],
-  outDir: 'dist/scripts',
-  sourcemap: true,
+  format: 'cjs',
+  target: ['node18'],
+  entry: ['src/bin/*.{ts,tsx}', '!**/*.{spec,test,test-d,bench}.*'],
+  outDir: 'dist/bin',
 }

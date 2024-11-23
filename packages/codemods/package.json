@@ -1,6 +1,6 @@
 {
   "name": "@suspensive/codemods",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Codemods for @suspensive.",
   "keywords": [
     "suspensive",
@@ -42,6 +42,7 @@
   "devDependencies": {
     "@suspensive/eslint-config": "workspace:*",
     "@suspensive/tsconfig": "workspace:*",
+    "@suspensive/tsup": "workspace:*",
     "@types/jscodeshift": "^0.12.0",
     "@types/prompts": "^2.4.9"
   },

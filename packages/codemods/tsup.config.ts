@@ -1,16 +1,13 @@
+import { scriptOptions } from '@suspensive/tsup'
 import { defineConfig } from 'tsup'
 
 export default defineConfig([
   {
-    format: 'cjs',
-    target: ['node18'],
-    entry: ['src/bin/*.{ts,tsx}', '!**/*.{spec,test,test-d,bench}.*'],
-    outDir: 'dist/bin',
+    ...scriptOptions,
     external: ['.bin/jscodeshift'],
   },
   {
-    format: 'cjs',
-    target: ['node18'],
+    ...scriptOptions,
     entry: ['src/transforms/*.{ts,tsx}', '!**/*.{spec,test,test-d,bench}.*'],
     outDir: 'dist/transforms',
   },
