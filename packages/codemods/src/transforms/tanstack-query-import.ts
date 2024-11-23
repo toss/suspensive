@@ -1,5 +1,5 @@
 import type { FileInfo } from 'jscodeshift'
-import { createParserFromPath } from '../utils/createParserFromPath'
+import { createParserFromPath } from './utils/createParserFromPath'
 
 const IMPORT_TO_CHANGE = [
   'useSuspenseQuery',

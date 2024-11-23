@@ -595,6 +595,9 @@ importers:
       '@suspensive/tsconfig':
         specifier: workspace:*
         version: link:../../configs/tsconfig
+      '@suspensive/tsup':
+        specifier: workspace:*
+        version: link:../../configs/tsup
       '@types/jscodeshift':
         specifier: ^0.12.0
         version: 0.12.0
@@ -710,11 +713,14 @@ importers:
         specifier: ^12.1.0
         version: 12.1.0(commander@12.1.0)
       '@suspensive/react-query-4':
-        specifier: workspace:^2.18.6
+        specifier: workspace:^2.18.7
         version: link:../react-query-4
       '@suspensive/react-query-5':
-        specifier: workspace:^2.18.6
+        specifier: workspace:^2.18.7
         version: link:../react-query-5
+      '@tanstack/react-query':
+        specifier: ^4 || ^5
+        version: 4.36.1(react-dom@18.3.1(react@18.3.1))(react-native@0.76.1(@babel/core@7.26.0)(@babel/preset-env@7.26.0(@babel/core@7.26.0))(@types/react@18.3.12)(react@18.3.1))(react@18.3.1)
       cli-table3:
         specifier: ^0.6.5
         version: 0.6.5
@@ -734,9 +740,6 @@ importers:
       '@suspensive/tsup':
         specifier: workspace:*
         version: link:../../configs/tsup
-      '@tanstack/react-query':
-        specifier: catalog:react-query4
-        version: 4.36.1(react-dom@18.3.1(react@18.3.1))(react-native@0.76.1(@babel/core@7.26.0)(@babel/preset-env@7.26.0(@babel/core@7.26.0))(@types/react@18.3.12)(react@18.3.1))(react@18.3.1)
       '@types/react':
         specifier: catalog:react18
         version: 18.3.12
