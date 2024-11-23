@@ -22,49 +22,48 @@ import { HomePage, Scrollycoding } from '@/components'
 />
 
 <Scrollycoding>
+# !!steps If you write code without Suspense with TanStack Query, a representative library, you would write it like this.
 
-# !!steps 대표적인 라이브러리인 TanStack Query로 Suspense 없이 코드를 작성한다면 이렇게 작성합니다.
-
-이 경우 isLoading과 isError를 체크하여 로딩과 에러 상태를 처리하고 타입스크립트적으로 data에서 undefined를 제거할 수 있습니다.
+In this case, you can check isLoading and isError to handle loading and error states, and remove undefined from data in TypeScript.
 
 ```jsx ! Page.jsx
 const Page = () => {
-  const userQuery = useQuery(userQueryOptions())
-  const postsQuery = useQuery({
-    ...postsQueryOptions(),
-    select: (posts) => posts.filter(({ isPublic }) => isPublic),
-  })
-  const promotionsQuery = useQuery(promotionsQueryOptions())
+ const userQuery = useQuery(userQueryOptions())
+ const postsQuery = useQuery({
+ ...postsQueryOptions();
+ select: (posts) => posts.filter(({ isPublic }) => isPublic),
+ })
+ const promotionsQuery = useQuery(promotionsQueryOptions())
 
-  if (
-    userQuery.isLoading ||
-    postsQuery.isLoading ||
-    promotionsQuery.isLoading
-  ) {
-    return 'loading...'
-  }
+ if (
+ userQuery.isLoading ||
+ postsQuery.isLoading ||
+ promotionsQuery.isLoading
+ ) {
+ return 'loading...'
+ }
 
-  if (userQuery.isError || postsQuery.isError || promotionsQuery.isError) {
-    return 'error'
-  }
+ if (userQuery.isError || postsQuery.isError || promotionsQuery.isError) {
+ return 'error'
+ }
 
-  return (
-    <Fragment>
-      <UserProfile {...userQuery.data} />
-      {postsQuery.data.map((post) => (
-        <PostListItem key={post.id} {...post} />
-      ))}
-      {promotionsQuery.data.map((promotion) => (
-        <Promotion key={promotion.id} {...promotion} />
-      ))}
-    </Fragment>
-  )
+ return (
+ <Fragment>
+ <UserProfile {...userQuery.data} />
+ {postsQuery.data.map((post) => (
+ <PostListItem key={post.id} {...post} />
+))}
+{promotionsQuery.data.map((promotion) => (
+<Promotion key={promotion.id} {...promotion} />
+))}
+</Fragment>
+)
 }
 ```
 
-# !!steps 그런데 만약 조회해야 할 api가 더 많아진다고 가정해봅시다.
+# !!steps But let's assume that there are more APIs to query.
 
-조회해야 하는 api가 더 많아진다면 이 로딩상태와 에러상태를 처리하는 코드가 더욱 복잡해집니다.
+If there are more APIs to query, the code to handle the loading state and error state becomes more complicated.
 
 ```jsx ! Page.jsx
 const Page = () => {
@@ -74,12 +73,12 @@ const Page = () => {
     select: (posts) => posts.filter(({ isPublic }) => isPublic),
   })
   const promotionsQuery = useQuery(promotionsQueryOptions())
-  // 이 부분이 늘어날수록 코드가 복잡해집니다.
+  // The more this part increases, the more complicated the code becomes.
 
   if (
     userQuery.isLoading ||
     postsQuery.isLoading ||
-    promotionsQuery.isLoading // 이 부분에서 매번 추가해야 합니다.
+    promotionsQuery.isLoading // You have to add this every time.
   ) {
     return 'loading...'
   }
@@ -87,7 +86,7 @@ const Page = () => {
   if (
     userQuery.isError ||
     postsQuery.isError ||
-    promotionsQuery.isError // 이 부분에서 매번 추가해야 합니다.
+    promotionsQuery.isError // You have to add this every time.
   ) {
     return 'error'
   }
@@ -101,53 +100,54 @@ const Page = () => {
       {promotionsQuery.data.map((promotion) => (
         <Promotion key={promotion.id} {...promotion} />
       ))}
-      {/* 이 부분에서 매번 추가해야 합니다. */}
+      {/* You have to add this every time. */}
     </Fragment>
   )
 }
 ```
 
-# !!steps Suspense를 사용하면 타입적으로 코드가 간결해집니다. 하지만 컴포넌트의 깊이는 깊어질 수 밖에 없습니다.
+# !!steps Suspense makes the code concise in terms of type. However, the depth of the component inevitably increases.
 
-useSuspenseQuery는 Suspense와 ErrorBoundary를 사용하여 외부에서 로딩과 에러 상태를 처리할 수 있습니다.
-하지만 useSuspenseQuery는 hook이기 때문에 부모에 Suspense와 ErrorBoundary를 두기 위해 컴포넌트가 분리되어야만 하기 때문에 뎁스가 깊어지는 문제가 있습니다.
+useSuspenseQuery can handle loading and error states externally using Suspense and ErrorBoundary.
+However, since useSuspenseQuery is a hook, the component must be separated to place Suspense and ErrorBoundary in the parent, which causes the depth to increase.
 
 ```jsx ! Page.jsx
 const Page = () => (
-  <ErrorBoundary fallback="error">
-    <Suspense fallback="loading...">
-      <UserInfo userId={userId} />
-      <PostList userId={userId} />
-      <PromotionList userId={userId} />
-    </Suspense>
-  </ErrorBoundary>
+ <ErrorBoundary fallback="error">
+ <Suspense fallback="loading...">
+ <UserInfo userId={userId} />
+ <PostList userId={userId} />
+ <PromotionList userId={userId} />
+ </Suspense>
+ </ErrorBoundary>
 )
 
 const UserInfo = ({ userId }) => {
-  const { data: user } = useSuspenseQuery(userQueryOptions())
-  return <UserProfile {...user} />
+ const { data: user } = useSuspenseQuery(userQueryOptions())
+ return <UserProfile {...user} />
 }
 
 const PostList = ({ userId }) => {
-  const { data: posts } = useSuspenseQuery({
-    ...postsQueryOptions(),
-    select: (posts) => posts.filter(({ isPublic }) => isPublic),
-  })
-  return posts.map((post) => <PostListItem key={post.id} {...post} />)
+ const { data: posts } = useSuspenseQuery({
+ ...postsQueryOptions();
+ select: (posts) => posts.filter(({ isPublic }) => isPublic),
+ })
+ return posts.map((post) => <PostListItem key={post.id} {...post} />)
 }
 
 const PromotionList = ({ userId }) => {
-  const { data: promotions } = useSuspenseQuery(promotionsQueryOptions())
-  return promotions.map((promotion) => (
-    <PromotionListItem key={promotion.id} {...promotion} />
-  ))
+const { data: promotions } = useSuspenseQuery(promotionsQueryOptions())
+return promotions.map((promotion) => (
+<PromotionListItem key={promotion.id} {...promotion} />
+))
 }
 ```
 
-# !!steps Suspensive의 SuspenseQuery 컴포넌트를 사용하면 hook의 제약을 피해 같은 뎁스에서 더욱 쉽게 코드를 작성할 수 있습니다.
+# !!steps Using Suspensive's SuspenseQuery component, you can avoid the constraints of hooks and write code more easily at the same depth.
 
-1. SuspenseQuery를 사용하면 depth를 제거할 수 있습니다.
-2. UserInfo라는 컴포넌트를 제거하고 UserProfile과 같은 Presentational 컴포넌트만 남으므로 테스트하기 쉬워집니다.
+1. Using SuspenseQuery, you can remove depth.
+
+2. You remove the component called UserInfo, leaving only the presentational component like UserProfile, which makes it easier to test.
 
 ```jsx ! Page.jsx
 const Page = () => (
@@ -181,8 +181,245 @@ const Page = () => (
 
 </Scrollycoding>
 
-# 이것이 우리가 Suspensive를 만드는 이유입니다.
+## This is why we make Suspensive.
 
-더 쉬운 React Suspense를 사용하세요
+### Suspense, ClientOnly, DefaultProps
 
-## ErrorBoundaryGroup
+<Scrollycoding>
+# !!steps When using frameworks like Next.js, it can be difficult to use Suspense on the server.
+
+Or, there are times when you don't want to use Suspense on the server.
+
+```jsx ! Page.jsx
+const Page = () => (
+  <Suspense fallback={<Spinner />}>
+    <SuspenseQuery {...notNeedSEOQueryOptions()}>
+      {({ data }) => <NotNeedSEO {...data} />}
+    </SuspenseQuery>
+  </Suspense>
+)
+```
+
+# !!steps In this case, you can easily solve it by using Suspensive's ClientOnly.
+
+Just wrap ClientOnly and it will be solved.
+
+```jsx ! Page.jsx
+const Page = () => (
+  <Suspense fallback={<Spinner />}>
+    <ClientOnly fallback={<InsteadOfChildrenOnlyInServer />}>
+      <SuspenseQuery {...notNeedSEOQueryOptions()}>
+        {({ data }) => <NotNeedSEO {...data} />}
+      </SuspenseQuery>
+    </ClientOnly>
+  </Suspense>
+)
+```
+
+# !!steps or Suspense in Suspense can easily handle these cases by using the clientOnly prop.
+
+Easy, right?
+
+```jsx ! Page.jsx
+const Page = () => (
+  <Suspense fallback={<Spinner />} clientOnly>
+    <SuspenseQuery {...notNeedSEOQueryOptions()}>
+      {({ data }) => <NotNeedSEO {...data} />}
+    </SuspenseQuery>
+  </Suspense>
+)
+```
+
+# !!steps However, when developing, it is sometimes difficult to add fallbacks to Suspense one by one.
+
+Especially when working on a product like Admin, there are cases where designers do not specify each one, so you want to provide default values.
+
+In that case, try using DefaultProps.
+
+```jsx ! Page.jsx
+const defaultProps = new DefaultProps({
+  Suspense: {
+    fallback: <Spinner />,
+  },
+})
+
+const Page = () => (
+  <DefaultPropsProvider defaultProps={defaultProps}>
+    <Suspense clientOnly>
+      <SuspenseQuery {...notNeedSEOQueryOptions()}>
+        {({ data }) => <NotNeedSEO {...data} />}
+      </SuspenseQuery>
+    </Suspense>
+  </DefaultPropsProvider>
+)
+```
+
+# !!steps Sometimes, instead of the default fallback, you want to give a FadeIn-like effect.
+
+Then, how about using FadeIn?
+
+```jsx ! Page.jsx
+const defaultProps = new DefaultProps({
+  Suspense: {
+    fallback: <FadeIn>{(fadeIn) => <Spinner {...fadeIn} />}</FadeIn>,
+  },
+})
+
+const Page = () => (
+  <DefaultPropsProvider defaultProps={defaultProps}>
+    <Suspense clientOnly>
+      <SuspenseQuery {...notNeedSEOQueryOptions()}>
+        {({ data }) => <NotNeedSEO {...data} />}
+      </SuspenseQuery>
+    </Suspense>
+  </DefaultPropsProvider>
+)
+```
+
+# !!steps Of course, if you want to override the default fallback, just add it.
+
+The designer asked me to support Skeleton instead of the default Spinner in this part~! Just add it.
+
+```jsx ! Page.jsx
+const defaultProps = new DefaultProps({
+  Suspense: {
+    fallback: <FadeIn>{(fadeIn) => <Spinner {...fadeIn} />}</FadeIn>,
+  },
+})
+
+const Page = () => (
+  <DefaultPropsProvider defaultProps={defaultProps}>
+    <Suspense fallback={<Skeleton {...fadeIn} />} clientOnly>
+      <SuspenseQuery {...notNeedSEOQueryOptions()}>
+        {({ data }) => <NotNeedSEO {...data} />}
+      </SuspenseQuery>
+    </Suspense>
+  </DefaultPropsProvider>
+)
+```
+
+</Scrollycoding>
+
+### ErrorBoundaryGroup, ErrorBoundary
+
+<Scrollycoding>
+
+# !!steps ErrorBoundary의 fallback 외부에서 ErrorBoundary를 reset하고 싶을 때 resetKeys를 사용해야 합니다.
+
+이는 깊은 컴포넌트의 경우 resetKey를 전달해야 하는 문제가 있습니다. 또한 state를 만들어 resetKey를 전달해야 하는 문제가 있습니다.
+
+```jsx ! Page.jsx
+const Page = () => {
+  const [resetKey, setResetKey] = useState(0)
+
+  return (
+    <Fragment>
+      <button onClick={() => setResetKey((prev) => prev + 1)}>
+        error reset
+      </button>
+      <ErrorBoundary resetKeys={[resetKey]} fallback="error">
+        <ThrowErrorComponent />
+      </ErrorBoundary>
+      <DeepComponent resetKeys={[resetKey]} />
+    </Fragment>
+  )
+}
+
+const DeepComponent = ({ resetKeys }) => (
+  <ErrorBoundary resetKeys={resetKeys} fallback="error">
+    <ThrowErrorComponent />
+    <ErrorBoundary resetKeys={resetKeys} fallback="error">
+      <ThrowErrorComponent />
+    </ErrorBoundary>
+  </ErrorBoundary>
+)
+```
+
+# !!steps Suspensive가 제공하는 ErrorBoundary와 ErrorBoundaryGroup을 조합하면 이러한 문제를 매우 단순히 해결할 수 있습니다.
+
+ErrorBoundaryGroup을 사용해보세요.
+
+```jsx ! Page.jsx
+const Page = () => (
+  <ErrorBoundaryGroup>
+    <ErrorBoundaryGroup.Consumer>
+      {({ reset }) => <button onClick={reset}>error reset</button>}
+    </ErrorBoundaryGroup.Consumer>
+    <ErrorBoundary fallback="error">
+      <ThrowErrorComponent />
+    </ErrorBoundary>
+    <DeepComponent />
+  </ErrorBoundaryGroup>
+)
+
+const DeepComponent = () => (
+  <ErrorBoundary fallback="error">
+    <ThrowErrorComponent />
+    <ErrorBoundary fallback="error">
+      <ThrowErrorComponent />
+    </ErrorBoundary>
+  </ErrorBoundary>
+)
+```
+
+# !!steps 그런데 ErrorBoundary를 사용하다보면 특정 Error에 대해서만 처리하고 싶을 때가 있습니다.
+
+그럴 때에는 Suspensive가 제공하는 ErrorBoundary의 shouldCatch를 써보세요. 이 shouldCatch에 Error Constructor를 넣으면 해당 Error에 대해서만 처리할 수 있습니다.
+
+```jsx ! Page.jsx
+const Page = () => (
+  <ErrorBoundaryGroup>
+    <ErrorBoundaryGroup.Consumer>
+      {({ reset }) => <button onClick={reset}>error reset</button>}
+    </ErrorBoundaryGroup.Consumer>
+    <ErrorBoundary fallback="error">
+      <ThrowErrorComponent />
+    </ErrorBoundary>
+    <DeepComponent />
+  </ErrorBoundaryGroup>
+)
+
+const DeepComponent = () => (
+  <ErrorBoundary fallback="error">
+    <ThrowErrorComponent />
+    <ErrorBoundary
+      shouldCatch={ZodError}
+      fallback="this will be render on ZodError in children"
+    >
+      <ThrowZodErrorComponent />
+    </ErrorBoundary>
+  </ErrorBoundary>
+)
+```
+
+# !!steps 혹은 반대로 그 Error만 빼고 처리할 수도 있습니다.
+
+그럴 때에는 shouldCatch에 callback을 넣어서 처리할 수 있습니다.
+
+```jsx ! Page.jsx
+const Page = () => (
+  <ErrorBoundaryGroup>
+    <ErrorBoundaryGroup.Consumer>
+      {({ reset }) => <button onClick={reset}>error reset</button>}
+    </ErrorBoundaryGroup.Consumer>
+    <ErrorBoundary fallback="error">
+      <ThrowErrorComponent />
+    </ErrorBoundary>
+    <DeepComponent />
+  </ErrorBoundaryGroup>
+)
+
+const DeepComponent = () => (
+  <ErrorBoundary fallback="error">
+    <ThrowErrorComponent />
+    <ErrorBoundary
+      shouldCatch={(e) => !(e instanceof ZodError)}
+      fallback="this will be render on Error except only ZodError in children"
+    >
+      <ThrowZodErrorOrErrorComponent />
+    </ErrorBoundary>
+  </ErrorBoundary>
+)
+```
+
+</Scrollycoding>

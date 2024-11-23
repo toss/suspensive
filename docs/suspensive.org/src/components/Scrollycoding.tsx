@@ -73,37 +73,70 @@ const Schema = Block.extend({
 export function Scrollycoding(props: unknown) {
   const { steps } = parseProps(props, Schema)
   return (
-    <SelectionProvider className="my-4 mb-24 flex gap-4">
-      <div className="mb-[40vh]" style={{ flex: 1 }}>
-        {steps.map((step, i) => (
-          <Selectable
-            key={i}
-            index={i}
-            selectOn={['click', 'scroll']}
-            className="mb-56 cursor-pointer px-5 py-2 opacity-30 blur-lg transition data-[selected=true]:opacity-100 data-[selected=true]:blur-none"
-          >
-            <h2 className="mb-4 mt-4 text-lg font-bold lg:text-2xl">
-              {step.title}
-            </h2>
-            <div className="opacity-90">{step.children}</div>
-          </Selectable>
-        ))}
-      </div>
-
-      <div
-        className="rounded-xl border-2 border-[#ffffff10] bg-[#191919]"
-        style={{ flex: 2 }}
-      >
-        <div className="sticky top-16 overflow-auto">
-          <Selection
-            from={steps.map((step) => (
-              // eslint-disable-next-line @eslint-react/no-duplicate-key
-              <Code key="this key should be same" codeblock={step.code} />
-            ))}
-          />
+    <>
+      {/* only in desktop */}
+      <SelectionProvider className="my-4 mb-24 hidden gap-4 md:flex">
+        <div className="mb-[40vh]" style={{ flex: 1 }}>
+          {steps.map((step, i) => (
+            <Selectable
+              key={i}
+              index={i}
+              selectOn={['click', 'scroll']}
+              className="mb-56 cursor-pointer px-5 py-2 opacity-30 blur-lg transition data-[selected=true]:opacity-100 data-[selected=true]:blur-none"
+            >
+              <h2 className="2xl mb-4 mt-4 text-lg font-bold">{step.title}</h2>
+              <div className="opacity-90">{step.children}</div>
+            </Selectable>
+          ))}
         </div>
-      </div>
-    </SelectionProvider>
+
+        <div
+          className="rounded-xl border-2 border-[#ffffff10] bg-[#191919]"
+          style={{ flex: 2 }}
+        >
+          <div className="sticky top-16 overflow-auto">
+            <Selection
+              from={steps.map((step) => (
+                <Code
+                  // eslint-disable-next-line @eslint-react/no-duplicate-key
+                  key="this key should be same desktop"
+                  codeblock={step.code}
+                />
+              ))}
+            />
+          </div>
+        </div>
+      </SelectionProvider>
+      {/* only in mobile */}
+      <SelectionProvider className="my-4 mb-24 flex gap-2 md:hidden">
+        <div className="mb-[40vh]" style={{ flex: 1 }}>
+          {steps.map((step, i) => (
+            <Selectable
+              key={i}
+              index={i}
+              selectOn={['click', 'scroll']}
+              className="mb-20 cursor-pointer py-2 opacity-30 blur-lg transition data-[selected=true]:opacity-100 data-[selected=true]:blur-none"
+            >
+              <h2 className="mb-2 text-lg font-bold">{step.title}</h2>
+              <div className="opacity-90">{step.children}</div>
+            </Selectable>
+          ))}
+        </div>
+        <div className="-mr-6 rounded-xl" style={{ flex: 2 }}>
+          <div className="sticky top-28 overflow-auto">
+            <Selection
+              from={steps.map((step) => (
+                <CodeMobile
+                  // eslint-disable-next-line @eslint-react/no-duplicate-key
+                  key="this key should be same mobile"
+                  codeblock={step.code}
+                />
+              ))}
+            />
+          </div>
+        </div>
+      </SelectionProvider>
+    </>
   )
 }
 
@@ -134,6 +167,38 @@ function Code({ codeblock }: { codeblock: HighlightedCode }) {
       code={codeblock}
       handlers={[tokenTransitions, wordWrap]}
       className="min-h-[40rem] p-6"
+    />
+  )
+}
+
+const tokenTransitionsMobile: AnnotationHandler = {
+  name: 'token-transitions',
+  PreWithRef: SmoothPre,
+  Token: (props) => (
+    <InnerToken merge={props} style={{ display: 'inline-block' }} />
+  ),
+}
+const wordWrapMobile: AnnotationHandler = {
+  name: 'word-wrap',
+  Pre: (props) => <InnerPre merge={props} className="whitespace-pre-wrap" />,
+  Line: (props) => (
+    <InnerLine
+      merge={props}
+      style={{
+        fontSize: '0.5rem',
+        textIndent: `${-props.indentation}ch`,
+        marginLeft: `${props.indentation}ch`,
+      }}
+    />
+  ),
+  Token: (props) => <InnerToken merge={props} style={{ textIndent: 0 }} />,
+}
+function CodeMobile({ codeblock }: { codeblock: HighlightedCode }) {
+  return (
+    <Pre
+      code={codeblock}
+      handlers={[tokenTransitionsMobile, wordWrapMobile]}
+      className="min-h-[40rem] p-2"
     />
   )
 }
