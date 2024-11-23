@@ -4,7 +4,7 @@ import packageJson from '../../package.json'
 import { getTanStackReactQueryPackageJson } from './utils/package'
 import { getStatusTable } from './utils/table'
 
-const cliPath = path.resolve(__dirname, '../../dist/scripts/cli.cjs')
+const cliPath = path.resolve(__dirname, '../../dist/bin/cli.cjs')
 
 describe('cli', () => {
   it('should display the correct version when using the -v flag', () => {
