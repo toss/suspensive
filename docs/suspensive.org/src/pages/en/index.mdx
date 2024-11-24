@@ -28,36 +28,36 @@ In this case, you can check `isLoading` and `isError` to handle loading and erro
 
 ```jsx ! Page.jsx
 const Page = () => {
- const userQuery = useQuery(userQueryOptions())
- const postsQuery = useQuery({
- ...postsQueryOptions();
- select: (posts) => posts.filter(({ isPublic }) => isPublic),
- })
- const promotionsQuery = useQuery(promotionsQueryOptions())
+  const userQuery = useQuery(userQueryOptions())
+  const postsQuery = useQuery({
+    ...postsQueryOptions(),
+    select: (posts) => posts.filter(({ isPublic }) => isPublic),
+  })
+  const promotionsQuery = useQuery(promotionsQueryOptions())
 
- if (
- userQuery.isLoading ||
- postsQuery.isLoading ||
- promotionsQuery.isLoading
- ) {
- return 'loading...'
- }
+  if (
+    userQuery.isLoading ||
+    postsQuery.isLoading ||
+    promotionsQuery.isLoading
+  ) {
+    return 'loading...'
+  }
 
- if (userQuery.isError || postsQuery.isError || promotionsQuery.isError) {
- return 'error'
- }
+  if (userQuery.isError || postsQuery.isError || promotionsQuery.isError) {
+    return 'error'
+  }
 
- return (
- <Fragment>
- <UserProfile {...userQuery.data} />
- {postsQuery.data.map((post) => (
- <PostListItem key={post.id} {...post} />
-))}
-{promotionsQuery.data.map((promotion) => (
-<Promotion key={promotion.id} {...promotion} />
-))}
-</Fragment>
-)
+  return (
+    <Fragment>
+      <UserProfile {...userQuery.data} />
+      {postsQuery.data.map((post) => (
+        <PostListItem key={post.id} {...post} />
+      ))}
+      {promotionsQuery.data.map((promotion) => (
+        <Promotion key={promotion.id} {...promotion} />
+      ))}
+    </Fragment>
+  )
 }
 ```
 
@@ -113,33 +113,33 @@ However, since `useSuspenseQuery` is a hook, the component must be separated to 
 
 ```jsx ! Page.jsx
 const Page = () => (
- <ErrorBoundary fallback="error">
- <Suspense fallback="loading...">
- <UserInfo userId={userId} />
- <PostList userId={userId} />
- <PromotionList userId={userId} />
- </Suspense>
- </ErrorBoundary>
+  <ErrorBoundary fallback="error">
+    <Suspense fallback="loading...">
+      <UserInfo userId={userId} />
+      <PostList userId={userId} />
+      <PromotionList userId={userId} />
+    </Suspense>
+  </ErrorBoundary>
 )
 
 const UserInfo = ({ userId }) => {
- const { data: user } = useSuspenseQuery(userQueryOptions())
- return <UserProfile {...user} />
+  const { data: user } = useSuspenseQuery(userQueryOptions())
+  return <UserProfile {...user} />
 }
 
 const PostList = ({ userId }) => {
- const { data: posts } = useSuspenseQuery({
- ...postsQueryOptions();
- select: (posts) => posts.filter(({ isPublic }) => isPublic),
- })
- return posts.map((post) => <PostListItem key={post.id} {...post} />)
+  const { data: posts } = useSuspenseQuery({
+    ...postsQueryOptions(),
+    select: (posts) => posts.filter(({ isPublic }) => isPublic),
+  })
+  return posts.map((post) => <PostListItem key={post.id} {...post} />)
 }
 
 const PromotionList = ({ userId }) => {
-const { data: promotions } = useSuspenseQuery(promotionsQueryOptions())
-return promotions.map((promotion) => (
-<PromotionListItem key={promotion.id} {...promotion} />
-))
+  const { data: promotions } = useSuspenseQuery(promotionsQueryOptions())
+  return promotions.map((promotion) => (
+    <PromotionListItem key={promotion.id} {...promotion} />
+  ))
 }
 ```
 
