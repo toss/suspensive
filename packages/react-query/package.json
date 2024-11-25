@@ -1,6 +1,6 @@
 {
   "name": "@suspensive/react-query",
-  "version": "2.18.6",
+  "version": "2.18.7",
   "description": "Suspensive interfaces for @tanstack/react-query",
   "keywords": [
     "suspensive",
@@ -35,8 +35,8 @@
   "module": "dist/index.js",
   "types": "dist/index.d.ts",
   "bin": {
-    "suspensive-react-query": "dist/scripts/cli.cjs",
-    "srq": "dist/scripts/cli.cjs"
+    "suspensive-react-query": "dist/bin/cli.cjs",
+    "srq": "dist/bin/cli.cjs"
   },
   "files": [
     "dist",
@@ -50,14 +50,14 @@
     "ci:test": "vitest run --coverage --typecheck",
     "ci:type": "tsc --noEmit",
     "clean": "rimraf ./dist && rimraf ./coverage",
-    "postinstall": "node -e \"import('./dist/scripts/postinstall.cjs').catch(e => console.error(e))\"",
+    "postinstall": "node ./dist/bin/postinstall.cjs || echo 'please reinstall @suspensive/react-query'",
     "prepack": "pnpm build",
     "test:ui": "vitest --ui --coverage --typecheck"
   },
   "dependencies": {
     "@commander-js/extra-typings": "^12.1.0",
-    "@suspensive/react-query-4": "workspace:^2.18.6",
-    "@suspensive/react-query-5": "workspace:^2.18.6",
+    "@suspensive/react-query-4": "workspace:^2.18.7",
+    "@suspensive/react-query-5": "workspace:^2.18.7",
     "cli-table3": "^0.6.5",
     "commander": "^12.1.0"
   },
@@ -66,12 +66,11 @@
     "@suspensive/react": "workspace:*",
     "@suspensive/tsconfig": "workspace:*",
     "@suspensive/tsup": "workspace:*",
-    "@tanstack/react-query": "catalog:react-query4",
     "@types/react": "catalog:react18",
     "react": "catalog:react18"
   },
   "peerDependencies": {
-    "@suspensive/react": "workspace:^2.18.6",
+    "@suspensive/react": "workspace:^2.18.7",
     "@tanstack/react-query": "^4 || ^5",
     "react": "^18"
   },

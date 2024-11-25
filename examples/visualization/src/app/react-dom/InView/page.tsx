@@ -6,7 +6,6 @@ export default function Page() {
   return (
     <div>
       {Array.from({ length: 200 }).map((_, i) => (
-        // eslint-disable-next-line @eslint-react/no-duplicate-key
         <InView key={i} threshold={0.8} delay={200} triggerOnce initialInView>
           {({ inView, ref }) => (
             <div ref={ref}>

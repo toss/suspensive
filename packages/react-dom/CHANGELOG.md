@@ -1,5 +1,11 @@
 # @suspensive/react-dom
 
+## 0.2.0
+
+### Minor Changes
+
+- [#1362](https://github.com/toss/suspensive/pull/1362) [`244b305`](https://github.com/toss/suspensive/commit/244b305998fcf768998b9545238a64f1ed854703) Thanks [@manudeli](https://github.com/manudeli)! - feat(react-dom): add `<FadeIn/>`
+
 ## 0.1.5
 
 ### Patch Changes
