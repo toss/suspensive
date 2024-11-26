@@ -3,6 +3,7 @@ import packageJson from '../../../package.json'
 import {
   getPackageJson,
   getSuspensiveReactQueryPackageJson,
+  getTanStackReactQueryAPIs,
   getTanStackReactQueryPackageJson,
   getTargetSuspensiveReactQueryAPIs,
   getTargetSuspensiveReactQueryVersion,
@@ -63,6 +64,30 @@ describe('package', () => {
 
     expect(result).toBeDefined()
     expect(result.name).toBe('@suspensive/react-query-4')
+  })
+
+  it('should return correct APIs for version 5', () => {
+    const apis = getTanStackReactQueryAPIs('5')
+
+    expect(apis).toEqual([
+      'useSuspenseQuery',
+      'useSuspenseQueries',
+      'useSuspenseInfiniteQuery',
+      'usePrefetchQuery',
+      'usePrefetchInfiniteQuery',
+      'queryOptions',
+      'infiniteQueryOptions',
+    ])
+  })
+
+  it('should return placeholder for version 4', () => {
+    const apis = getTanStackReactQueryAPIs('4')
+
+    expect(apis).toEqual(['-'])
+  })
+
+  it('should throw error for missing version', () => {
+    expect(() => getTanStackReactQueryAPIs('')).toThrow('@tanstack/react-query version is required')
   })
 })
 
