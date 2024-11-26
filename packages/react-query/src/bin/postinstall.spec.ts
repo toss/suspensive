@@ -25,7 +25,7 @@ describe('postinstall', () => {
     vi.clearAllMocks()
   })
 
-  it('should switch to version 4 when TanStack Query v4 is installed', async () => {
+  it('should switch to @suspensive/react-query-4 when @tanstack/react-query@^4 is installed', async () => {
     await runPostInstall('4.2.3')
 
     expect(mockGetTanStackReactQueryPackageJson).toHaveBeenCalledTimes(1)
@@ -34,7 +34,7 @@ describe('postinstall', () => {
     expect(mockConsoleWarn).not.toHaveBeenCalled()
   })
 
-  it('should switch to version 5 when TanStack Query v5 is installed', async () => {
+  it('should switch to @suspensive/react-query-5 when @tanstack/react-query@^5 is installed', async () => {
     await runPostInstall('5.2.3')
 
     expect(mockGetTanStackReactQueryPackageJson).toHaveBeenCalledTimes(1)
