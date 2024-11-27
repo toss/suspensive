@@ -3,6 +3,16 @@ import Image from 'next/image'
 import { useRouter } from 'nextra/hooks'
 import { Link } from 'nextra-theme-docs'
 
+const CodeBlockClassName = 'nextra-code'
+
+const escapeHtml = (text: string) =>
+  text.replace(/</g, '&lt;').replace(/>/g, '&gt;')
+
+const backtickToCodeBlock = (text: string) =>
+  text.replace(/`([^`]+)`/g, `<code class="${CodeBlockClassName}">$1</code>`)
+
+const formatCodeBlocks = (desc: string) => backtickToCodeBlock(escapeHtml(desc))
+
 export const HomePage = ({
   title,
   description,
@@ -54,7 +64,10 @@ export const HomePage = ({
             key={title}
           >
             <div className="text-xl font-bold">{title}</div>
-            <p className="text-lg">{desc}</p>
+            <p
+              className="text-lg"
+              dangerouslySetInnerHTML={{ __html: formatCodeBlocks(desc) }}
+            ></p>
           </div>
         ))}
       </div>
