@@ -15,7 +15,15 @@ describe('<SuspenseInfiniteQuery/>', () => {
         getNextPageParam={(lastPage) => lastPage.text}
         initialPageParam="initialPageParam"
       >
-        {(query) => <>{query.data.pages.filter(({ text }) => text)}</>}
+        {(query) => (
+          <>
+            {query.data.pages
+              .filter(({ text }) => text)
+              .map((item, index) => (
+                <div key={index}>{item.text}</div>
+              ))}
+          </>
+        )}
       </SuspenseInfiniteQuery>
     ))()
     ;(() => (
@@ -27,7 +35,15 @@ describe('<SuspenseInfiniteQuery/>', () => {
         getNextPageParam={(lastPage) => lastPage.text}
         initialPageParam="initialPageParam"
       >
-        {(query) => <>{query.data.pages.filter(({ text }) => text)}</>}
+        {(query) => (
+          <>
+            {query.data.pages
+              .filter(({ text }) => text)
+              .map((item, index) => (
+                <div key={index}>{item.text}</div>
+              ))}
+          </>
+        )}
       </SuspenseInfiniteQuery>
     ))()
     ;(() => (
@@ -39,7 +55,15 @@ describe('<SuspenseInfiniteQuery/>', () => {
         getNextPageParam={(lastPage) => lastPage.text}
         initialPageParam="initialPageParam"
       >
-        {(query) => <>{query.data.pages.filter(({ text }) => text)}</>}
+        {(query) => (
+          <>
+            {query.data.pages
+              .filter(({ text }) => text)
+              .map((item, index) => (
+                <div key={index}>{item.text}</div>
+              ))}
+          </>
+        )}
       </SuspenseInfiniteQuery>
     ))()
     ;(() => (
@@ -51,7 +75,15 @@ describe('<SuspenseInfiniteQuery/>', () => {
         getNextPageParam={(lastPage) => lastPage.text}
         initialPageParam="initialPageParam"
       >
-        {(query) => <>{query.data.pages.filter(({ text }) => text)}</>}
+        {(query) => (
+          <>
+            {query.data.pages
+              .filter(({ text }) => text)
+              .map((item, index) => (
+                <div key={index}>{item.text}</div>
+              ))}
+          </>
+        )}
       </SuspenseInfiniteQuery>
     ))()
     ;(() => (
@@ -63,7 +95,15 @@ describe('<SuspenseInfiniteQuery/>', () => {
         getNextPageParam={(lastPage) => lastPage.text}
         initialPageParam="initialPageParam"
       >
-        {(query) => <>{query.data.pages.filter(({ text }) => text)}</>}
+        {(query) => (
+          <>
+            {query.data.pages
+              .filter(({ text }) => text)
+              .map((item, index) => (
+                <div key={index}>{item.text}</div>
+              ))}
+          </>
+        )}
       </SuspenseInfiniteQuery>
     ))()
     ;(() => (
@@ -77,7 +117,15 @@ describe('<SuspenseInfiniteQuery/>', () => {
           expectTypeOf(query).toEqualTypeOf<UseSuspenseInfiniteQueryResult<InfiniteData<{ text: string }>>>()
           expectTypeOf(query.data).toEqualTypeOf<InfiniteData<{ text: string }>>()
           expectTypeOf(query.status).toEqualTypeOf<'error' | 'success'>()
-          return <></>
+          return (
+            <>
+              {query.data.pages
+                .filter(({ text }) => text)
+                .map((item, index) => (
+                  <div key={index}>{item.text}</div>
+                ))}
+            </>
+          )
         }}
       </SuspenseInfiniteQuery>
     ))()
@@ -96,7 +144,15 @@ describe('<SuspenseInfiniteQuery/>', () => {
           expectTypeOf(selectedQuery).toEqualTypeOf<UseSuspenseInfiniteQueryResult<InfiniteData<string, string>>>()
           expectTypeOf(selectedQuery.data).toEqualTypeOf<InfiniteData<string, string>>()
           expectTypeOf(selectedQuery.status).toEqualTypeOf<'error' | 'success'>()
-          return <></>
+          return (
+            <>
+              {selectedQuery.data.pages
+                .filter((text) => text)
+                .map((item, index) => (
+                  <div key={index}>{item}</div>
+                ))}
+            </>
+          )
         }}
       </SuspenseInfiniteQuery>
     ))()
