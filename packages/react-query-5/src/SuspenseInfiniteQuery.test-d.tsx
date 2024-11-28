@@ -117,15 +117,7 @@ describe('<SuspenseInfiniteQuery/>', () => {
           expectTypeOf(query).toEqualTypeOf<UseSuspenseInfiniteQueryResult<InfiniteData<{ text: string }>>>()
           expectTypeOf(query.data).toEqualTypeOf<InfiniteData<{ text: string }>>()
           expectTypeOf(query.status).toEqualTypeOf<'error' | 'success'>()
-          return (
-            <>
-              {query.data.pages
-                .filter(({ text }) => text)
-                .map((item, index) => (
-                  <div key={index}>{item.text}</div>
-                ))}
-            </>
-          )
+          return <></>
         }}
       </SuspenseInfiniteQuery>
     ))()
@@ -144,15 +136,7 @@ describe('<SuspenseInfiniteQuery/>', () => {
           expectTypeOf(selectedQuery).toEqualTypeOf<UseSuspenseInfiniteQueryResult<InfiniteData<string, string>>>()
           expectTypeOf(selectedQuery.data).toEqualTypeOf<InfiniteData<string, string>>()
           expectTypeOf(selectedQuery.status).toEqualTypeOf<'error' | 'success'>()
-          return (
-            <>
-              {selectedQuery.data.pages
-                .filter((text) => text)
-                .map((item, index) => (
-                  <div key={index}>{item}</div>
-                ))}
-            </>
-          )
+          return <></>
         }}
       </SuspenseInfiniteQuery>
     ))()
