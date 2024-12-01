@@ -1,4 +1,4 @@
-import fs from 'fs'
+import fs from 'node:fs'
 import { copy } from './copy'
 
 describe('copy', () => {

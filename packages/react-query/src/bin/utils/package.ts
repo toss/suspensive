@@ -1,6 +1,6 @@
-import fs from 'fs'
-import path from 'path'
-import { exit } from 'process'
+import fs from 'node:fs'
+import path from 'node:path'
+import { exit } from 'node:process'
 
 type LoadModuleResult<T> = { exports: T; isSuccess: true } | { exports: undefined; isSuccess: false }
 

@@ -1,5 +1,5 @@
-import { execFileSync } from 'child_process'
-import path from 'path'
+import { execFileSync } from 'node:child_process'
+import path from 'node:path'
 import packageJson from '../../package.json'
 import { getTanStackReactQueryPackageJson } from './utils/package'
 import { getStatusTable } from './utils/table'

@@ -1,4 +1,4 @@
-import fs from 'fs'
+import fs from 'node:fs'
 import type { Mock, MockInstance } from 'vitest'
 import packageJson from '../../../package.json'
 import { fixAction, statusAction, switchAction } from './commands'
