@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "@expo/vector-icons": "^14.0.2",
-    "@react-navigation/bottom-tabs": "^7.0.0",
+    "@react-navigation/bottom-tabs": "^7.0.14",
     "@react-navigation/native": "^7.0.0",
     "@suspensive/react-native": "workspace:*",
     "expo": "catalog:",
