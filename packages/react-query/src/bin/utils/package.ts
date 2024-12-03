@@ -1,12 +1,11 @@
 import fs from 'node:fs'
 import path from 'node:path'
 
-type LoadModuleResult<T> = { exports: T; isSuccess: true }
-
-export function loadModule<T>(name: string): LoadModuleResult<T> {
+// eslint-disable-next-line @typescript-eslint/no-unnecessary-type-parameters
+export function loadModule<T>(name: string): T {
   try {
     // eslint-disable-next-line @typescript-eslint/no-require-imports
-    return { exports: require(name) as T, isSuccess: true }
+    return require(name) as T
   } catch {
     throw new Error(`${name} is not found.`)
   }
@@ -19,19 +18,15 @@ type PackageJson = {
 }
 
 export function getPackageJson(): PackageJson {
-  const module = loadModule<PackageJson>('@suspensive/react-query/package.json')
-
-  return module.exports
+  return loadModule<PackageJson>('@suspensive/react-query/package.json')
 }
 
 export function getTanStackReactQueryPackageJson(): PackageJson {
-  const module = loadModule<PackageJson>('@tanstack/react-query/package.json')
-
-  return module.exports
+  return loadModule<PackageJson>('@tanstack/react-query/package.json')
 }
 
 export function getSuspensiveReactQueryPackageJson(targetVersion: string): PackageJson {
-  let module: LoadModuleResult<PackageJson>
+  let module: PackageJson
 
   switch (targetVersion) {
     case '5':
@@ -44,7 +39,7 @@ export function getSuspensiveReactQueryPackageJson(targetVersion: string): Packa
       throw new Error(`@suspensive/react-query-${targetVersion} is not found.`)
   }
 
-  return module.exports
+  return module
 }
 
 export function getIndexFileContent(...paths: string[]): string {
@@ -71,8 +66,7 @@ export function getTargetSuspensiveReactQueryAPIs(): string[] {
 
   for (const [, moduleName] of modules) {
     const module = loadModule<Record<string, unknown>>(moduleName)
-
-    results.push(...Object.keys(module.exports).reverse())
+    results.push(...Object.keys(module).reverse())
   }
 
   return results
