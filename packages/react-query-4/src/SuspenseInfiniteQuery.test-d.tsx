@@ -15,7 +15,15 @@ describe('<SuspenseInfiniteQuery/>', () => {
         //@ts-expect-error no suspense
         suspense={boolean}
       >
-        {(query) => <>{query.data.pages.filter(({ text }) => text)}</>}
+        {(query) => (
+          <>
+            {query.data.pages
+              .filter(({ text }) => text)
+              .map((item, index) => (
+                <div key={index}>{item.text}</div>
+              ))}
+          </>
+        )}
       </SuspenseInfiniteQuery>
     ))()
     ;(() => (
@@ -25,7 +33,15 @@ describe('<SuspenseInfiniteQuery/>', () => {
         //@ts-expect-error no useErrorBoundary
         useErrorBoundary={boolean}
       >
-        {(query) => <>{query.data.pages.filter(({ text }) => text)}</>}
+        {(query) => (
+          <>
+            {query.data.pages
+              .filter(({ text }) => text)
+              .map((item, index) => (
+                <div key={index}>{item.text}</div>
+              ))}
+          </>
+        )}
       </SuspenseInfiniteQuery>
     ))()
     ;(() => (
@@ -35,7 +51,15 @@ describe('<SuspenseInfiniteQuery/>', () => {
         //@ts-expect-error no enabled
         enabled={boolean}
       >
-        {(query) => <>{query.data.pages.filter(({ text }) => text)}</>}
+        {(query) => (
+          <>
+            {query.data.pages
+              .filter(({ text }) => text)
+              .map((item, index) => (
+                <div key={index}>{item.text}</div>
+              ))}
+          </>
+        )}
       </SuspenseInfiniteQuery>
     ))()
     ;(() => (
@@ -45,7 +69,15 @@ describe('<SuspenseInfiniteQuery/>', () => {
         //@ts-expect-error no placeholderData
         placeholderData="placeholder"
       >
-        {(query) => <>{query.data.pages.filter(({ text }) => text)}</>}
+        {(query) => (
+          <>
+            {query.data.pages
+              .filter(({ text }) => text)
+              .map((item, index) => (
+                <div key={index}>{item.text}</div>
+              ))}
+          </>
+        )}
       </SuspenseInfiniteQuery>
     ))()
     ;(() => (
@@ -55,7 +87,15 @@ describe('<SuspenseInfiniteQuery/>', () => {
         //@ts-expect-error no placeholderData
         placeholderData="placeholder"
       >
-        {(query) => <>{query.data.pages.filter(({ text }) => text)}</>}
+        {(query) => (
+          <>
+            {query.data.pages
+              .filter(({ text }) => text)
+              .map((item, index) => (
+                <div key={index}>{item.text}</div>
+              ))}
+          </>
+        )}
       </SuspenseInfiniteQuery>
     ))()
     ;(() => (

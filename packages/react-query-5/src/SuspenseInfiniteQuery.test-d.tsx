@@ -15,7 +15,15 @@ describe('<SuspenseInfiniteQuery/>', () => {
         getNextPageParam={(lastPage) => lastPage.text}
         initialPageParam="initialPageParam"
       >
-        {(query) => <>{query.data.pages.filter(({ text }) => text)}</>}
+        {(query) => (
+          <>
+            {query.data.pages
+              .filter(({ text }) => text)
+              .map((item, index) => (
+                <div key={index}>{item.text}</div>
+              ))}
+          </>
+        )}
       </SuspenseInfiniteQuery>
     ))()
     ;(() => (
@@ -27,7 +35,15 @@ describe('<SuspenseInfiniteQuery/>', () => {
         getNextPageParam={(lastPage) => lastPage.text}
         initialPageParam="initialPageParam"
       >
-        {(query) => <>{query.data.pages.filter(({ text }) => text)}</>}
+        {(query) => (
+          <>
+            {query.data.pages
+              .filter(({ text }) => text)
+              .map((item, index) => (
+                <div key={index}>{item.text}</div>
+              ))}
+          </>
+        )}
       </SuspenseInfiniteQuery>
     ))()
     ;(() => (
@@ -39,7 +55,15 @@ describe('<SuspenseInfiniteQuery/>', () => {
         getNextPageParam={(lastPage) => lastPage.text}
         initialPageParam="initialPageParam"
       >
-        {(query) => <>{query.data.pages.filter(({ text }) => text)}</>}
+        {(query) => (
+          <>
+            {query.data.pages
+              .filter(({ text }) => text)
+              .map((item, index) => (
+                <div key={index}>{item.text}</div>
+              ))}
+          </>
+        )}
       </SuspenseInfiniteQuery>
     ))()
     ;(() => (
@@ -51,7 +75,15 @@ describe('<SuspenseInfiniteQuery/>', () => {
         getNextPageParam={(lastPage) => lastPage.text}
         initialPageParam="initialPageParam"
       >
-        {(query) => <>{query.data.pages.filter(({ text }) => text)}</>}
+        {(query) => (
+          <>
+            {query.data.pages
+              .filter(({ text }) => text)
+              .map((item, index) => (
+                <div key={index}>{item.text}</div>
+              ))}
+          </>
+        )}
       </SuspenseInfiniteQuery>
     ))()
     ;(() => (
@@ -63,7 +95,15 @@ describe('<SuspenseInfiniteQuery/>', () => {
         getNextPageParam={(lastPage) => lastPage.text}
         initialPageParam="initialPageParam"
       >
-        {(query) => <>{query.data.pages.filter(({ text }) => text)}</>}
+        {(query) => (
+          <>
+            {query.data.pages
+              .filter(({ text }) => text)
+              .map((item, index) => (
+                <div key={index}>{item.text}</div>
+              ))}
+          </>
+        )}
       </SuspenseInfiniteQuery>
     ))()
     ;(() => (
