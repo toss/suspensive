@@ -1,15 +1,14 @@
 import fs from 'node:fs'
 import path from 'node:path'
-import { exit } from 'node:process'
 
-type LoadModuleResult<T> = { exports: T; isSuccess: true } | { exports: undefined; isSuccess: false }
+type LoadModuleResult<T> = { exports: T; isSuccess: true }
 
 export function loadModule<T>(name: string): LoadModuleResult<T> {
   try {
     // eslint-disable-next-line @typescript-eslint/no-require-imports
     return { exports: require(name) as T, isSuccess: true }
   } catch {
-    return { exports: undefined, isSuccess: false }
+    throw new Error(`${name} is not found.`)
   }
 }
 
@@ -21,20 +20,12 @@ type PackageJson = {
 
 export function getPackageJson(): PackageJson {
   const module = loadModule<PackageJson>('@suspensive/react-query/package.json')
-  if (!module.isSuccess) {
-    console.warn('@suspensive/react-query `package.json` is not found.')
-    exit(1)
-  }
 
   return module.exports
 }
 
 export function getTanStackReactQueryPackageJson(): PackageJson {
   const module = loadModule<PackageJson>('@tanstack/react-query/package.json')
-  if (!module.isSuccess) {
-    console.warn('@tanstack/react-query is not found. Please install @tanstack/react-query.')
-    exit(1)
-  }
 
   return module.exports
 }
@@ -43,20 +34,14 @@ export function getSuspensiveReactQueryPackageJson(targetVersion: string): Packa
   let module: LoadModuleResult<PackageJson>
 
   switch (targetVersion) {
-    case '4':
-      module = loadModule<PackageJson>('@suspensive/react-query-4/package.json')
-      break
     case '5':
       module = loadModule<PackageJson>('@suspensive/react-query-5/package.json')
       break
+    case '4':
+      module = loadModule<PackageJson>('@suspensive/react-query-4/package.json')
+      break
     default:
-      console.warn(`@suspensive/react-query-${targetVersion} is not found.`)
-      exit(1)
-  }
-
-  if (!module.isSuccess) {
-    console.warn(`@suspensive/react-query-${targetVersion} is not found.`)
-    exit(1)
+      throw new Error(`@suspensive/react-query-${targetVersion} is not found.`)
   }
 
   return module.exports
@@ -65,28 +50,27 @@ export function getSuspensiveReactQueryPackageJson(targetVersion: string): Packa
 export function getIndexFileContent(...paths: string[]): string {
   const basePath = path.resolve(...paths, 'dist').replace(/src/, '')
 
-  return fs.readFileSync(path.join(basePath, 'index.js'), 'utf-8') || ''
+  try {
+    return fs.readFileSync(path.join(basePath, 'index.js'), 'utf-8')
+  } catch {
+    throw new Error(`no such file or directory, open '${paths}'`)
+  }
 }
 
-export function getTargetSuspensiveReactQueryVersion(): string {
+export function getTargetSuspensiveReactQueryVersion(): string | undefined {
   const indexFileContent = getIndexFileContent(__dirname, '../../')
+  const version = RegExp(/@suspensive\/react-query-(\d+)/).exec(indexFileContent)?.[1]
 
-  return (RegExp(/@suspensive\/react-query-(\d+)/).exec(indexFileContent) || [])[1] || ''
+  return version
 }
 
 export function getTargetSuspensiveReactQueryAPIs(): string[] {
   const indexFileContent = getIndexFileContent(__dirname, '../../')
-
   const modules = indexFileContent.matchAll(/export \* from ['"](@suspensive\/react-query-\d+)['"]/g)
   const results: string[] = []
 
   for (const [, moduleName] of modules) {
     const module = loadModule<Record<string, unknown>>(moduleName)
-
-    if (!module.isSuccess) {
-      console.warn('[@suspensive/react-query]', `Module ${moduleName} is not found`)
-      exit(1)
-    }
 
     results.push(...Object.keys(module.exports).reverse())
   }
