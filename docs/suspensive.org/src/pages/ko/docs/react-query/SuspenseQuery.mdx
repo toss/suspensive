@@ -4,7 +4,7 @@ import { Sandpack } from '@/components'
 
 같은 depth에서 Suspense를 발생시키는 것이 무엇인지 명확하게 표현하기 위해 이 컴포넌트들을 제공합니다.
 
-1. data-fetching만을 위한 UserInfo, PostList와 같은 depth를 제거하기 때문에 생긴 prop-drilling도 제거됩니다.
+1. data-fetching만을 위한 UserInfo, PostList와 같은 depth를 제거하기 때문에 prop-drilling도 제거됩니다.
 2. Suspense, ErrorBoundary의 범위 변경도 간단해집니다. query의 병렬처리도 더 쉽습니다.
 3. Page 컴포넌트 내에서 data-fetching을 모두 관장하기 때문에 내부의 컴포넌트는 presentational하므로 컴포넌트를 분리하기 쉽습니다.
 
