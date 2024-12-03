@@ -18,8 +18,8 @@ describe('copy', () => {
 
   it('should copy and replace files with the specified version', () => {
     vi.spyOn(fs, 'readdirSync').mockReturnValue(['v5', 'other'] as unknown as fs.Dirent[])
-    vi.spyOn(fs, 'unlinkSync').mockImplementation(() => {})
-    vi.spyOn(fs, 'writeFileSync').mockImplementation(() => {})
+    vi.spyOn(fs, 'unlinkSync').mockReturnValue()
+    vi.spyOn(fs, 'writeFileSync').mockReturnValue()
 
     expect(copy(5)).toBe(true)
     expect(fs.readdirSync).toHaveBeenCalledTimes(1)
