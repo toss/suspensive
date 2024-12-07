@@ -8,7 +8,7 @@ export default defineConfig([
   },
   {
     ...scriptOptions,
-    entry: ['src/transforms/*.{ts,tsx}', '!**/*.{spec,test,test-d,bench}.*'],
+    entry: ['src/transforms/*.{ts,tsx}', '!**/*.{spec,test,test-d}.*'],
     outDir: 'dist/transforms',
   },
 ])

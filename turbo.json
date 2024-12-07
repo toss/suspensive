@@ -9,10 +9,6 @@
     "ci:attw": {
       "dependsOn": ["prepack"]
     },
-    "ci:bench": {
-      "dependsOn": ["prepack"],
-      "outputs": ["benchmarks/**"]
-    },
     "ci:eslint": {
       "dependsOn": ["prepack"]
     },

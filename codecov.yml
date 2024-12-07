@@ -16,7 +16,6 @@ comment:
 
 ignore:
   - '**/*.test-d.*'
-  - '**/*.bench.*'
   - '**/test-utils/*'
 
 component_management:

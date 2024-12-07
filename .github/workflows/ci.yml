@@ -17,8 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        command:
-          ['prepack', 'ci:attw', 'ci:eslint', 'ci:publint', 'ci:sherif', 'ci:type', 'ci:test', 'ci:bench', 'build']
+        command: ['prepack', 'ci:attw', 'ci:eslint', 'ci:publint', 'ci:sherif', 'ci:type', 'ci:test', 'build']
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/pnpm-setup-node
@@ -30,11 +29,6 @@ jobs:
         uses: codecov/codecov-action@v4
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-      - if: matrix.command == 'ci:bench'
-        uses: CodSpeedHQ/action@v2
-        with:
-          run: pnpm ci:bench
-          token: ${{ secrets.CODSPEED_TOKEN }}
       - if: matrix.command == 'prepack'
         uses: preactjs/compressed-size-action@v2
         with:
