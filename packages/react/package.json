@@ -40,7 +40,6 @@
   "scripts": {
     "build": "tsup",
     "ci:attw": "attw --pack",
-    "ci:bench": "vitest bench --run",
     "ci:eslint": "eslint \"**/*.{ts,tsx,cts,mts}\"",
     "ci:publint": "publint --strict",
     "ci:test": "vitest run --coverage --typecheck",

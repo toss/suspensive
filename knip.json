@@ -3,7 +3,8 @@
   "ignoreWorkspaces": ["examples/**"],
   "workspaces": {
     ".": {
-      "ignore": ["packlint.config.mjs"]
+      "ignore": ["packlint.config.mjs"],
+      "ignoreDependencies": ["vite"]
     },
     "configs/eslint-config*": {
       "eslint": {
