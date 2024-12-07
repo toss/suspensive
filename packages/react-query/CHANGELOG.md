@@ -1,5 +1,16 @@
 # @suspensive/react-query
 
+## 2.18.8
+
+### Patch Changes
+
+- [#1383](https://github.com/toss/suspensive/pull/1383) [`2c06c84`](https://github.com/toss/suspensive/commit/2c06c84263f9602b67dd79d433c48114c4e5cc83) Thanks [@gwansikk](https://github.com/gwansikk)! - refactor(react-query): improve cli utils
+
+- Updated dependencies []:
+  - @suspensive/react@2.18.8
+  - @suspensive/react-query-4@2.18.8
+  - @suspensive/react-query-5@2.18.8
+
 ## 2.18.7
 
 ### Patch Changes
