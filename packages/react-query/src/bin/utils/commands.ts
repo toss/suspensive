@@ -2,13 +2,17 @@ import { getTanStackReactQueryPackageJson, getTargetSuspensiveReactQueryVersion 
 import { switchVersion } from './switchVersion'
 import { getStatusTable } from './table'
 
-export const statusAction = () => {
+export function statusAction() {
   const targetSuspensiveReactQueryVersion = getTargetSuspensiveReactQueryVersion()
+
+  if (!targetSuspensiveReactQueryVersion) {
+    return console.warn('[@suspensive/react-query]', 'The version is not found.')
+  }
 
   console.log(getStatusTable(targetSuspensiveReactQueryVersion))
 }
 
-export const switchAction = (version: string) => {
+export function switchAction(version: string) {
   if (version === '4') {
     switchVersion(4)
   } else if (version === '5') {
@@ -18,15 +22,15 @@ export const switchAction = (version: string) => {
   }
 }
 
-export const fixAction = () => {
+export function fixAction() {
   const tanStackReactQueryPackageJson = getTanStackReactQueryPackageJson()
   const suspensiveReactQueryVersion = getTargetSuspensiveReactQueryVersion()
 
   const tanStackReactQueryMajorVersion = tanStackReactQueryPackageJson.version.split('.')[0]
   if (suspensiveReactQueryVersion === tanStackReactQueryMajorVersion) {
-    console.log('[@suspensive/react-query]', `The versions are compatible.`)
+    console.log('[@suspensive/react-query]', 'The versions are compatible.')
   } else {
-    console.log('[@suspensive/react-query]', `Switching to the compatible version...`)
+    console.log('[@suspensive/react-query]', 'Switching to the compatible version...')
     switchVersion(Number(tanStackReactQueryMajorVersion))
   }
 }
