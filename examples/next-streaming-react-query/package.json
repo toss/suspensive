@@ -19,13 +19,13 @@
     "@tanstack/react-query-next-experimental": "catalog:react-query5",
     "next": "catalog:",
     "react": "catalog:react18",
-    "react-dom": "catalog:react18",
+    "react-dom": "catalog:react-dom",
     "sharp": "catalog:"
   },
   "devDependencies": {
     "@suspensive/eslint-config": "workspace:*",
     "@types/react": "catalog:react18",
-    "@types/react-dom": "catalog:react18",
+    "@types/react-dom": "catalog:react-dom",
     "autoprefixer": "catalog:",
     "postcss": "catalog:",
     "prettier-plugin-tailwindcss": "catalog:",

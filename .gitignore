@@ -39,9 +39,6 @@ esm
 # graph
 graph/
 
-# benchmark
-benchmarks/
-
 # react-native
 expo-env.d.ts
 .expo/
