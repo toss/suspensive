@@ -1,3 +1,4 @@
+import { logger } from './utils/logger'
 import { getTanStackReactQueryPackageJson } from './utils/package'
 import { switchVersion } from './utils/switchVersion'
 
@@ -8,5 +9,5 @@ if (version.startsWith('4.')) {
 } else if (version.startsWith('5.')) {
   switchVersion(5)
 } else {
-  console.warn('[@suspensive/react-query]', `version v${version} is not supported.`)
+  logger.error(`version v${version} is not supported.`)
 }
