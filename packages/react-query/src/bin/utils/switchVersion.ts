@@ -6,6 +6,6 @@ export function switchVersion(version: number) {
   if (result) {
     console.log('[@suspensive/react-query]', `switched to version v${version}`)
   } else {
-    console.warn('[@suspensive/react-query]', `not found version files.`)
+    console.warn('[@suspensive/react-query]', 'not found version files.')
   }
 }

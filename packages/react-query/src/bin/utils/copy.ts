@@ -1,5 +1,5 @@
-import fs from 'fs'
-import { join, resolve } from 'path'
+import fs from 'node:fs'
+import { join, resolve } from 'node:path'
 
 const dir = resolve(__dirname, '..')
 
@@ -10,7 +10,7 @@ export function copy(version: number) {
     return false
   }
 
-  files.forEach((file) => {
+  for (const file of files) {
     if (file.includes(`v${version}`)) {
       const src = join(dir, file)
       const dest = join(dir, file.replace(`v${version}`, 'index'))
@@ -23,7 +23,7 @@ export function copy(version: number) {
       }
       fs.writeFileSync(dest, content, 'utf-8')
     }
-  })
+  }
 
   return true
 }

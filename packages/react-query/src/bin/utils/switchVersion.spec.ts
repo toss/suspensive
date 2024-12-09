@@ -1,4 +1,3 @@
-import type { MockInstance } from 'vitest'
 import { copy } from './copy'
 import { switchVersion } from './switchVersion'
 
@@ -7,16 +6,12 @@ vi.mock('./copy', () => ({
 }))
 
 describe('switchVersion', () => {
-  let consoleLogSpy: MockInstance
-  let consoleWarnSpy: MockInstance
+  const consoleLogSpy = vi.spyOn(console, 'log').mockClear()
+  const consoleWarnSpy = vi.spyOn(console, 'warn').mockClear()
 
   beforeEach(() => {
-    consoleLogSpy = vi.spyOn(console, 'log').mockImplementation(() => {})
-    consoleWarnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {})
-  })
-
-  afterEach(() => {
-    vi.restoreAllMocks()
+    vi.resetModules()
+    vi.clearAllMocks()
   })
 
   it('should log success message when copy function returns true', () => {
