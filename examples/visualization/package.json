@@ -21,7 +21,7 @@
     "clsx": "catalog:",
     "next": "catalog:",
     "react": "catalog:react18",
-    "react-dom": "catalog:react-dom",
+    "react-dom": "catalog:react18",
     "sharp": "catalog:",
     "zod": "^3.23.8"
   },
@@ -29,7 +29,7 @@
     "@suspensive/eslint-config": "workspace:*",
     "@suspensive/tsconfig": "workspace:*",
     "@types/react": "catalog:react18",
-    "@types/react-dom": "catalog:react-dom",
+    "@types/react-dom": "catalog:react18",
     "autoprefixer": "catalog:",
     "postcss": "catalog:",
     "prettier-plugin-tailwindcss": "catalog:",

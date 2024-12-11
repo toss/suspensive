@@ -30,7 +30,7 @@ export function useInView({
   entry?: IntersectionObserverEntry
 } {
   const [ref, setRef] = useState<Element | null>(null)
-  const onChangeRef = useRef<InViewOptions['onChange']>()
+  const onChangeRef = useRef<InViewOptions['onChange']>(null)
   const [state, setState] = useState<{ inView: boolean; entry?: IntersectionObserverEntry }>({
     inView: initialInView ?? false,
     entry: undefined,
@@ -65,7 +65,7 @@ export function useInView({
     delay,
   ])
   const entryTarget = state.entry?.target
-  const previousEntryTarget = useRef<Element>()
+  const previousEntryTarget = useRef<Element>(null)
   if (!ref && entryTarget && !triggerOnce && !skip && previousEntryTarget.current !== entryTarget) {
     previousEntryTarget.current = entryTarget
     setState({ inView: initialInView ?? false, entry: undefined })

@@ -34,7 +34,7 @@
     "nextra": "^3.2.4",
     "nextra-theme-docs": "^3.2.4",
     "react": "catalog:react18",
-    "react-dom": "catalog:react-dom",
+    "react-dom": "catalog:react18",
     "remark-sandpack": "^0.0.5",
     "sharp": "catalog:",
     "zod": "^3.23.8"
@@ -43,7 +43,7 @@
     "@suspensive/eslint-config": "workspace:*",
     "@types/d3": "^7.4.3",
     "@types/react": "catalog:react18",
-    "@types/react-dom": "catalog:react-dom",
+    "@types/react-dom": "catalog:react18",
     "autoprefixer": "catalog:",
     "postcss": "catalog:",
     "prettier-plugin-tailwindcss": "catalog:",

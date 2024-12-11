@@ -14,13 +14,13 @@
     "@tanstack/react-query": "catalog:react-query5",
     "@tanstack/react-query-devtools": "catalog:react-query5",
     "react": "catalog:react18",
-    "react-dom": "catalog:react-dom"
+    "react-dom": "catalog:react18"
   },
   "devDependencies": {
     "@suspensive/eslint-config": "workspace:*",
     "@suspensive/tsconfig": "workspace:*",
     "@types/react": "catalog:react18",
-    "@types/react-dom": "catalog:react-dom",
+    "@types/react-dom": "catalog:react18",
     "@vitejs/plugin-react": "^4.3.2",
     "globals": "^15.10.0"
   }
