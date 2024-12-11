@@ -7,7 +7,7 @@ vi.mock('./copy', () => ({
 
 describe('switchVersion', () => {
   const consoleLogSpy = vi.spyOn(console, 'log').mockClear()
-  const consoleWarnSpy = vi.spyOn(console, 'warn').mockClear()
+  const consoleErrorSpy = vi.spyOn(console, 'error').mockClear()
 
   beforeEach(() => {
     vi.resetModules()
@@ -20,7 +20,7 @@ describe('switchVersion', () => {
     switchVersion(5)
 
     expect(consoleLogSpy).toHaveBeenCalledWith('[@suspensive/react-query]', 'switched to version v5')
-    expect(consoleWarnSpy).not.toHaveBeenCalled()
+    expect(consoleErrorSpy).not.toHaveBeenCalled()
   })
 
   it('should log warning message when copy function returns false', () => {
@@ -28,7 +28,7 @@ describe('switchVersion', () => {
 
     switchVersion(1)
 
-    expect(consoleWarnSpy).toHaveBeenCalledWith('[@suspensive/react-query]', 'not found version files.')
+    expect(consoleErrorSpy).toHaveBeenCalledWith('[@suspensive/react-query]', 'not found version files.')
     expect(consoleLogSpy).not.toHaveBeenCalled()
   })
 })

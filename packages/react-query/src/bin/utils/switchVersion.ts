@@ -1,11 +1,12 @@
 import { copy } from './copy'
+import { logger } from './logger'
 
 export function switchVersion(version: number) {
   const result = copy(version)
 
   if (result) {
-    console.log('[@suspensive/react-query]', `switched to version v${version}`)
+    logger.log(`switched to version v${version}`)
   } else {
-    console.warn('[@suspensive/react-query]', 'not found version files.')
+    logger.error('not found version files.')
   }
 }
