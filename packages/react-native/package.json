@@ -53,18 +53,18 @@
     "@suspensive/eslint-config": "workspace:*",
     "@suspensive/tsconfig": "workspace:*",
     "@suspensive/tsup": "workspace:*",
-    "@testing-library/react-native": "catalog:react-native",
-    "@types/react": "catalog:react18",
+    "@testing-library/react-native": "catalog:react19",
+    "@types/react": "catalog:react19",
     "babel-jest": "catalog:",
-    "expo": "catalog:react-native",
+    "expo": "catalog:react19",
     "jest": "catalog:",
-    "jest-expo": "catalog:react-native",
-    "react": "catalog:react18",
-    "react-native": "catalog:react-native",
+    "jest-expo": "catalog:react19",
+    "react": "catalog:react19",
+    "react-native": "catalog:react19",
     "ts-node": "^10.9.2"
   },
   "peerDependencies": {
-    "react": "^18",
+    "react": "^18 || ^19",
     "react-native": "^0.76.1"
   },
   "publishConfig": {

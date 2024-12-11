@@ -26,20 +26,13 @@ export function getTanStackReactQueryPackageJson(): PackageJson {
 }
 
 export function getSuspensiveReactQueryPackageJson(targetVersion: string): PackageJson {
-  let module: PackageJson
-
   switch (targetVersion) {
-    case '5':
-      module = loadModule<PackageJson>('@suspensive/react-query-5/package.json')
-      break
     case '4':
-      module = loadModule<PackageJson>('@suspensive/react-query-4/package.json')
-      break
+    case '5':
+      return loadModule<PackageJson>(`@suspensive/react-query-${targetVersion}/package.json`)
     default:
       throw new Error(`@suspensive/react-query-${targetVersion} is not found.`)
   }
-
-  return module
 }
 
 export function getIndexFileContent(...paths: string[]): string {

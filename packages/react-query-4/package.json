@@ -55,13 +55,13 @@
     "@suspensive/tsconfig": "workspace:*",
     "@suspensive/tsup": "workspace:*",
     "@tanstack/react-query": "catalog:react-query4",
-    "@types/react": "catalog:react18",
-    "react": "catalog:react18"
+    "@types/react": "catalog:react19",
+    "react": "catalog:react19"
   },
   "peerDependencies": {
     "@suspensive/react": "workspace:^2.18.9",
     "@tanstack/react-query": "^4",
-    "react": "^18"
+    "react": "^18 || ^19"
   },
   "peerDependenciesMeta": {
     "@suspensive/react": {
