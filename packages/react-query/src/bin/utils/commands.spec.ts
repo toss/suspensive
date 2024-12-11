@@ -21,6 +21,7 @@ vi.mock('./switchVersion')
 describe('commands', () => {
   const consoleLogSpy = vi.spyOn(console, 'log').mockClear()
   const consoleWarnSpy = vi.spyOn(console, 'warn').mockClear()
+  const consoleErrorSpy = vi.spyOn(console, 'error').mockClear()
 
   const mockGetPackageJson = vi.mocked(getPackageJson)
   mockGetPackageJson.mockReturnValue(packageJson)
@@ -88,7 +89,7 @@ describe('commands', () => {
 
       statusAction()
 
-      expect(consoleWarnSpy).toHaveBeenCalledWith('[@suspensive/react-query]', 'The version is not found.')
+      expect(consoleErrorSpy).toHaveBeenCalledWith('[@suspensive/react-query]', 'The version is not found.')
     })
   })
 

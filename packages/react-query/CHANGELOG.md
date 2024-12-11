@@ -1,5 +1,16 @@
 # @suspensive/react-query
 
+## 2.18.9
+
+### Patch Changes
+
+- [#1388](https://github.com/toss/suspensive/pull/1388) [`a9bff19`](https://github.com/toss/suspensive/commit/a9bff19e25d17f5773ccafe89fbbe99255b41a0a) Thanks [@gwansikk](https://github.com/gwansikk)! - feat(react-query): add cli error handling
+
+- Updated dependencies []:
+  - @suspensive/react@2.18.9
+  - @suspensive/react-query-4@2.18.9
+  - @suspensive/react-query-5@2.18.9
+
 ## 2.18.8
 
 ### Patch Changes
