@@ -3,7 +3,7 @@ import { logger } from './logger'
 describe('logger', () => {
   const LOG_PREFIX = '[@suspensive/react-query]'
   const consoleLogSpy = vi.spyOn(console, 'log').mockClear()
-  const consoleWarnSpy = vi.spyOn(console, 'warn').mockClear()
+  const consoleErrorSpy = vi.spyOn(console, 'error').mockClear()
 
   beforeEach(() => {
     vi.resetModules()
@@ -17,10 +17,10 @@ describe('logger', () => {
     expect(consoleLogSpy).toHaveBeenCalledWith(LOG_PREFIX, testMessage)
   })
 
-  it('should log a warning with console.warn', () => {
+  it('should log a error with console.warn', () => {
     const testMessage = 'error message'
     logger.error(testMessage)
 
-    expect(consoleWarnSpy).toHaveBeenCalledWith(LOG_PREFIX, testMessage)
+    expect(consoleErrorSpy).toHaveBeenCalledWith(LOG_PREFIX, testMessage)
   })
 })
