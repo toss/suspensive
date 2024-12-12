@@ -2,7 +2,8 @@
 
 import { ErrorBoundary, Suspense } from '@suspensive/react'
 import { FadeIn } from '@suspensive/react-dom'
-import { SuspenseQuery, queryOptions } from '@suspensive/react-query'
+import { SuspenseQuery } from '@suspensive/react-query-5'
+import { queryOptions } from '@tanstack/react-query'
 import axios from 'axios'
 import { delay } from '~/utils'
 

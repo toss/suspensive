@@ -1,7 +1,7 @@
 'use client'
 
 import { ErrorBoundary, Suspense } from '@suspensive/react'
-import { SuspenseInfiniteQuery } from '@suspensive/react-query'
+import { SuspenseInfiniteQuery } from '@suspensive/react-query-5'
 import axios from 'axios'
 import { Spinner } from '~/components/uis'
 
@@ -12,33 +12,25 @@ export default function Page() {
       <Suspense clientOnly fallback={<Spinner />}>
         <SuspenseInfiniteQuery
           queryKey={['users', authorId]}
-          queryFn={({ pageParam }) => {
-            const { limit, skip } = (pageParam ?? { limit: 5, skip: undefined }) as { limit: number; skip?: number }
-            return axios
+          queryFn={({ pageParam }) =>
+            axios
               .get<{
                 limit: number
                 skip: number
                 total: number
-                products: Array<{
-                  id: number
-                  title: string
-                  price: number
-                }>
-              }>(`https://dummyjson.com/products?limit=${limit}${skip ? `&skip=${skip}` : ''}&select=title,price`)
-              .then(({ data }) => ({
-                data,
-                pageParam: {
-                  limit: data.limit,
-                  skip: data.limit,
-                },
-              }))
-          }}
-          getNextPageParam={(lastPage) => lastPage.pageParam}
+                products: Array<{ id: number; title: string; price: number }>
+              }>(
+                `https://dummyjson.com/products?limit=${pageParam.limit}${pageParam.skip ? `&skip=${pageParam.skip}` : ''}&select=title,price`
+              )
+              .then(({ data }) => data)
+          }
+          initialPageParam={{ limit: 5, skip: undefined } as { limit: number; skip: number | undefined }}
+          getNextPageParam={(lastPage) => ({ limit: 5, skip: lastPage.skip + 5 })}
         >
           {({ data, fetchNextPage, hasNextPage, isFetchingNextPage }) => (
             <div>
-              {data.pages.map(({ data }) =>
-                data.products.map((product) => (
+              {data.pages.map((page) =>
+                page.products.map((product) => (
                   <div key={product.id}>
                     <h2>title: {product.title}</h2>
                     <p>price: {product.price}</p>
@@ -51,14 +43,10 @@ export default function Page() {
                   <Spinner />
                 ) : (
                   <button
+                    type="button"
                     disabled={isFetchingNextPage}
                     onClick={() => {
-                      fetchNextPage({
-                        pageParam: {
-                          limit: data.pages[data.pages.length - 1].data.limit,
-                          skip: data.pages[data.pages.length - 1].data.skip + 5,
-                        },
-                      })
+                      fetchNextPage({})
                     }}
                   >
                     load more

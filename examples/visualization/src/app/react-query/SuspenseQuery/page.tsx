@@ -1,7 +1,8 @@
 'use client'
 
 import { ErrorBoundary, Suspense } from '@suspensive/react'
-import { SuspenseQuery, queryOptions, usePrefetchQuery } from '@suspensive/react-query'
+import { SuspenseQuery } from '@suspensive/react-query-5'
+import { queryOptions, usePrefetchQuery } from '@tanstack/react-query'
 import axios from 'axios'
 import { Spinner } from '~/components/uis'
 

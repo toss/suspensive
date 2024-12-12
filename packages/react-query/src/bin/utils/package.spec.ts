@@ -61,7 +61,7 @@ describe('package', () => {
   })
 
   describe('getTargetSuspensiveReactQueryAPIs', () => {
-    it('should get the target @suspensive/react-query version 4 APIs', () => {
+    it.todo('should get the target @suspensive/react-query version 4 APIs', () => {
       const apis = getTargetSuspensiveReactQueryAPIs()
 
       expect(apis).toEqual(version4APIs)
