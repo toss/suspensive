@@ -45,10 +45,10 @@
     "@babel/core": "^7.26.0",
     "@types/jest": "^29.5.12",
     "@types/react": "catalog:react19",
-    "@types/react-test-renderer": "^18.3.0",
+    "@types/react-test-renderer": "^19.0.0",
     "jest": "catalog:",
     "jest-expo": "catalog:react19",
-    "react-test-renderer": "18.3.1",
+    "react-test-renderer": "19.0.0",
     "typescript": "^5.7.2"
   },
   "jest": {
