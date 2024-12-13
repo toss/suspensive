@@ -1,5 +1,16 @@
 # @suspensive/react-query
 
+## 2.18.10
+
+### Patch Changes
+
+- [#1389](https://github.com/toss/suspensive/pull/1389) [`d381f94`](https://github.com/toss/suspensive/commit/d381f9496913f58ee5f698b04c4a90285b8df045) Thanks [@manudeli](https://github.com/manudeli)! - feat(\*): support react 19
+
+- Updated dependencies [[`d381f94`](https://github.com/toss/suspensive/commit/d381f9496913f58ee5f698b04c4a90285b8df045)]:
+  - @suspensive/react-query-4@2.18.10
+  - @suspensive/react-query-5@2.18.10
+  - @suspensive/react@2.18.10
+
 ## 2.18.9
 
 ### Patch Changes
