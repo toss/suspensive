@@ -53,13 +53,13 @@
     "@suspensive/eslint-config": "workspace:*",
     "@suspensive/tsconfig": "workspace:*",
     "@suspensive/tsup": "workspace:*",
-    "@types/react": "catalog:react18",
+    "@types/react": "catalog:react19",
     "jotai": "^2.8.4",
-    "react": "catalog:react18"
+    "react": "catalog:react19"
   },
   "peerDependencies": {
     "jotai": "^2",
-    "react": "^18"
+    "react": "^18 || ^19"
   },
   "publishConfig": {
     "access": "public"

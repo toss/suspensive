@@ -36,8 +36,7 @@ export class SmoothPre extends Component<CustomPreProps> {
   }
 
   getSnapshotBeforeUpdate() {
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    return getStartingSnapshot(this.ref.current!)
+    return getStartingSnapshot(this.ref.current)
   }
 
   componentDidUpdate(
@@ -45,8 +44,7 @@ export class SmoothPre extends Component<CustomPreProps> {
     prevState: never,
     snapshot: TokenTransitionsSnapshot
   ) {
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    const transitions = calculateTransitions(this.ref.current!, snapshot)
+    const transitions = calculateTransitions(this.ref.current, snapshot)
     transitions.forEach(({ element, keyframes, options }) => {
       const { translateX, translateY, ...kf } = keyframes as any
       if (translateX && translateY) {

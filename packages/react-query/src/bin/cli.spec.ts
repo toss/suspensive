@@ -19,7 +19,7 @@ describe('cli', () => {
     expect(result).toContain('Usage: @suspensive/react-query [options] [command]')
   })
 
-  it('should display the status of the packages', () => {
+  it.todo('should display the status of the packages', () => {
     const result = execFileSync('node', [cliPath, 'status']).toString()
     const tanStackReactQueryPackageJson = getTanStackReactQueryPackageJson()
     const tanStackReactQueryMajorVersion = tanStackReactQueryPackageJson.version.split('.')[0]

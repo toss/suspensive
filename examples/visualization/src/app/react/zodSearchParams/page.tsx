@@ -1,7 +1,7 @@
 'use client'
 
 import { wrap } from '@suspensive/react'
-import { useSuspenseQuery } from '@suspensive/react-query'
+import { useSuspenseQuery } from '@tanstack/react-query'
 import { useSearchParams } from 'next/navigation'
 import { ZodError, z } from 'zod'
 import { Spinner } from '~/components/uis'

@@ -11,5 +11,5 @@ export function QueryClientConsumer({
   children: (queryClient: QueryClient) => ReactNode
   context?: Context<QueryClient | undefined>
 }) {
-  return <>{children(useQueryClient({ context }))}</>
+  return <>{children(useQueryClient({ context: context as any }))}</>
 }
