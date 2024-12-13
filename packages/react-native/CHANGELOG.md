@@ -1,5 +1,11 @@
 # @suspensive/react-native
 
+## 0.0.17
+
+### Patch Changes
+
+- [#1389](https://github.com/toss/suspensive/pull/1389) [`d381f94`](https://github.com/toss/suspensive/commit/d381f9496913f58ee5f698b04c4a90285b8df045) Thanks [@manudeli](https://github.com/manudeli)! - feat(\*): support react 19
+
 ## 0.0.16
 
 ### Patch Changes
