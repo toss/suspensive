@@ -73,7 +73,7 @@ export function Scrollycoding(props: unknown) {
   return (
     <>
       {/* only in desktop */}
-      <SelectionProvider className="scrollbar-none my-4 mb-24 hidden gap-4 md:flex">
+      <SelectionProvider className="my-4 mb-24 hidden gap-4 md:flex">
         <div className="mb-[40vh]" style={{ flex: 1 }}>
           {steps.map((step, i) => (
             <Selectable
