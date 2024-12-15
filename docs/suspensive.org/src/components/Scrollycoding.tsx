@@ -73,7 +73,7 @@ export function Scrollycoding(props: unknown) {
   return (
     <>
       {/* only in desktop */}
-      <SelectionProvider className="my-4 mb-24 hidden gap-4 md:flex">
+      <SelectionProvider className="scrollbar-none my-4 mb-24 hidden gap-4 md:flex">
         <div className="mb-[40vh]" style={{ flex: 1 }}>
           {steps.map((step, i) => (
             <Selectable
@@ -92,7 +92,7 @@ export function Scrollycoding(props: unknown) {
           className="rounded-xl border-2 border-[#ffffff10] bg-[#191919]"
           style={{ flex: 2 }}
         >
-          <div className="sticky top-16 overflow-auto">
+          <div className="scrollbar-none sticky top-16 overflow-auto">
             <Selection
               from={steps.map((step) => (
                 <Code
@@ -121,7 +121,7 @@ export function Scrollycoding(props: unknown) {
           ))}
         </div>
         <div className="-mr-6 rounded-xl" style={{ flex: 2 }}>
-          <div className="sticky top-28 overflow-auto">
+          <div className="scrollbar-none sticky top-28 overflow-auto">
             <Selection
               from={steps.map((step) => (
                 <CodeMobile
