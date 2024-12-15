@@ -3,7 +3,7 @@ export default {
     type: 'page',
     display: 'hidden',
     theme: {
-      layout: 'full',
+      layout: 'raw',
     },
   },
   docs: {
