@@ -1,8 +1,11 @@
-import { HomePage, Scrollycoding } from '@/components'
+import {
+  HomePage,
+  Scrollycoding,
+  SectionDescription,
+  SectionTitle,
+} from '@/components'
 
 <HomePage
-  title="Suspensive"
-  version={2}
   description="React Suspense를 위한 모든 것"
   buttonText="시작하기"
   items={[
@@ -181,9 +184,10 @@ const Page = () => (
 
 </Scrollycoding>
 
-## 이것이 우리가 Suspensive를 만드는 이유입니다.
-
-### Suspense, ClientOnly, DefaultProps
+<SectionTitle>이것이 우리가 Suspensive를 만드는 이유입니다</SectionTitle>
+<br />
+<SectionDescription>Suspense, ClientOnly, DefaultProps</SectionDescription>
+<br />
 
 <Scrollycoding>
 
@@ -300,7 +304,8 @@ const Page = () => (
 
 </Scrollycoding>
 
-### ErrorBoundaryGroup, ErrorBoundary
+<SectionDescription>ErrorBoundaryGroup, ErrorBoundary</SectionDescription>
+<br />
 
 <Scrollycoding>
 

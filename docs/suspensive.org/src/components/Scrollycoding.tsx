@@ -83,7 +83,7 @@ export function Scrollycoding(props: unknown) {
               className="mb-56 cursor-pointer px-5 py-2 opacity-30 blur-lg transition data-[selected=true]:opacity-100 data-[selected=true]:blur-none"
             >
               <h2 className="2xl mb-4 mt-4 text-lg font-bold">{step.title}</h2>
-              <div className="opacity-90">{step.children}</div>
+              <div className="opacity-75">{step.children}</div>
             </Selectable>
           ))}
         </div>

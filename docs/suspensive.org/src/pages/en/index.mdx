@@ -1,8 +1,11 @@
-import { HomePage, Scrollycoding } from '@/components'
+import {
+  HomePage,
+  Scrollycoding,
+  SectionDescription,
+  SectionTitle,
+} from '@/components'
 
 <HomePage
-  title="Suspensive"
-  version={2}
   description="All in one for React Suspense"
   buttonText="Get Started"
   items={[
@@ -19,7 +22,7 @@ import { HomePage, Scrollycoding } from '@/components'
       desc: 'Suspensive provide clientOnly that make developer can adopt React Suspense gradually in Server-side rendering environment.',
     },
   ]}
-/>
+>
 
 <Scrollycoding>
 # !!steps If you write code without Suspense with TanStack Query, a representative library, you would write it like this.
@@ -181,9 +184,10 @@ const Page = () => (
 
 </Scrollycoding>
 
-## This is why we make Suspensive.
-
-### Suspense, ClientOnly, DefaultProps
+<SectionTitle>This is why we make Suspensive</SectionTitle>
+<br />
+<SectionDescription>Suspense, ClientOnly, DefaultProps</SectionDescription>
+<br />
 
 <Scrollycoding>
 # !!steps When using frameworks like Next.js, it can be difficult to use Suspense on the server.
@@ -299,7 +303,8 @@ const Page = () => (
 
 </Scrollycoding>
 
-### ErrorBoundaryGroup, ErrorBoundary
+<SectionDescription>ErrorBoundaryGroup, ErrorBoundary</SectionDescription>
+<br />
 
 <Scrollycoding>
 
@@ -422,3 +427,5 @@ const DeepComponent = () => (
 ```
 
 </Scrollycoding>
+
+</HomePage>
