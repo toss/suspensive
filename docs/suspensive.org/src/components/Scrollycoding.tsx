@@ -83,13 +83,13 @@ export function Scrollycoding(props: unknown) {
               className="mb-56 cursor-pointer px-5 py-2 opacity-30 blur-lg transition data-[selected=true]:opacity-100 data-[selected=true]:blur-none"
             >
               <h2 className="2xl mb-4 mt-4 text-lg font-bold">{step.title}</h2>
-              <div className="opacity-90">{step.children}</div>
+              <div className="opacity-75">{step.children}</div>
             </Selectable>
           ))}
         </div>
 
         <div
-          className="rounded-xl border-2 border-[#ffffff10] bg-[#191919]"
+          className="rounded-xl border-2 border-[#ffffff08] bg-[#ffffff04]"
           style={{ flex: 2 }}
         >
           <div className="scrollbar-none sticky top-16 overflow-auto">
@@ -116,7 +116,7 @@ export function Scrollycoding(props: unknown) {
               className="mb-20 cursor-pointer py-2 opacity-30 blur-lg transition data-[selected=true]:opacity-100 data-[selected=true]:blur-none"
             >
               <h2 className="mb-2 text-lg font-bold">{step.title}</h2>
-              <div className="opacity-90">{step.children}</div>
+              <div className="opacity-75">{step.children}</div>
             </Selectable>
           ))}
         </div>
