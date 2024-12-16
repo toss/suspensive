@@ -116,7 +116,7 @@ interface Vertex {
   size: number
 }
 
-const tile = 80
+const TITLE = 80
 const OFFSET_FACTOR = 0.75
 const RANDOM_Z_FACTOR = 1
 const VELOCITY_CONSTANT = 8
