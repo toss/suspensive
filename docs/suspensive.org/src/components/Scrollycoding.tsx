@@ -115,8 +115,8 @@ export function Scrollycoding(props: unknown) {
               selectOn={['click', 'scroll']}
               className="mb-20 cursor-pointer py-2 opacity-30 blur-lg transition data-[selected=true]:opacity-100 data-[selected=true]:blur-none"
             >
-              <h2 className="mb-2 text-lg font-bold">{step.title}</h2>
-              <div className="opacity-75">{step.children}</div>
+              <h2 className="mb-2 text-sm font-bold">{step.title}</h2>
+              <div className="text-sm opacity-75">{step.children}</div>
             </Selectable>
           ))}
         </div>
