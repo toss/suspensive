@@ -2,6 +2,7 @@ import { motion } from 'motion/react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'nextra/hooks'
+import { useEffect, useRef } from 'react'
 
 const CodeBlockClassName = 'nextra-code'
 
@@ -33,8 +34,9 @@ export const HomePage = ({
       <motion.section
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        className="bg-[url('/img/homepage_background.svg')] bg-cover bg-center bg-no-repeat pb-20"
+        className="relative bg-[url('/img/homepage_background.svg')] bg-cover bg-center bg-no-repeat pb-20"
       >
+        <StarCanvas />
         <div className="flex flex-col items-center justify-center gap-8 text-center">
           <div className="flex flex-col items-center">
             <Image
@@ -104,5 +106,143 @@ export const HomePage = ({
         {children}
       </motion.section>
     </>
+  )
+}
+
+interface Vertex {
+  pos: number[]
+  velocity: number[]
+  distance: number
+  size: number
+}
+
+const TILE = 80
+const OFFSET_FACTOR = 0.75
+const RANDOM_Z_FACTOR = 1
+const VELOCITY_CONSTANT = 8
+const RANDOM_DISTANCE_MAX = 900
+const RANDOM_SIZE_FACTOR = 2
+
+const StarCanvas = () => {
+  const animationFrameIdRef = useRef<number | null>(null)
+  const resizeAnimationFrameIdRef = useRef(0)
+  const onRenderRef = useRef<VoidFunction | null>(null)
+  const canvasRef = useRef<HTMLCanvasElement>(null)
+
+  useEffect(() => {
+    const canvas = canvasRef.current
+    const parentElement = canvas?.parentElement
+    const ctx = canvas?.getContext('2d')
+    const vertexMap: Record<string, Vertex> = {}
+    const startTime = Date.now()
+
+    function onResize() {
+      const inlineSize = parentElement?.offsetWidth ?? 0
+      const blockSize = parentElement?.offsetHeight ?? 0
+
+      cancelAnimationFrame(resizeAnimationFrameIdRef.current)
+      resizeAnimationFrameIdRef.current = requestAnimationFrame(() => {
+        if (canvas) {
+          canvas.width = inlineSize
+          canvas.height = blockSize
+          canvas.style.cssText += `width: ${inlineSize}px; height: ${blockSize}px;`
+          onRenderRef.current?.()
+        }
+      })
+    }
+
+    function getVertex(sx: number, sy: number): Vertex {
+      const id = `${sx}x${sy}`
+
+      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+      if (!vertexMap[id]) {
+        const x = TILE * sx + TILE * 1.5 * Math.random() - TILE * OFFSET_FACTOR
+        const y = TILE * sy + TILE * 1.5 * Math.random() - TILE * OFFSET_FACTOR
+        const z = Math.random() * RANDOM_Z_FACTOR
+        const vx = 1 + Math.random() * VELOCITY_CONSTANT
+        const vy = 1 + Math.random() * VELOCITY_CONSTANT
+        const distance = 10 + Math.random() * RANDOM_DISTANCE_MAX
+        const size = 0.1 + Math.random() * RANDOM_SIZE_FACTOR
+
+        vertexMap[id] = {
+          pos: [x, y, z],
+          velocity: [vx, vy],
+          size,
+          distance,
+        }
+      }
+      return vertexMap[id]
+    }
+
+    function onRender() {
+      const width = canvas?.width ?? 0
+      const height = canvas?.height ?? 0
+      const distTime = Date.now() - startTime
+
+      ctx?.clearRect(0, 0, width, height)
+
+      const maxSX = Math.ceil(width / TILE)
+      const maxSY = Math.ceil(height / TILE)
+
+      for (let sx = 0; sx <= maxSX; ++sx) {
+        for (let sy = 0; sy <= maxSY; ++sy) {
+          const { velocity, distance, pos, size } = getVertex(sx, sy)
+          const scalar = Math.sqrt(
+            velocity[0] * velocity[0] + velocity[1] * velocity[1]
+          )
+          const totalDistance = (distTime * scalar) / 1000
+          const isReverse = Math.floor(totalDistance / distance) % 2 !== 0
+          let nextDistance = totalDistance % distance
+
+          if (isReverse) {
+            nextDistance = distance - nextDistance
+          }
+          const x = pos[0] + (nextDistance / scalar) * velocity[0]
+          const y = pos[1] + (nextDistance / scalar) * velocity[1]
+          const a = 1 - pos[2]
+
+          ctx?.beginPath()
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+          ctx!.fillStyle = `rgba(255, 255, 255, ${a})`
+          ctx?.arc(x, y, size, 0, 2 * Math.PI)
+          ctx?.fill()
+        }
+      }
+    }
+
+    onRenderRef.current = onRender
+    const observer = new ResizeObserver(onResize)
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+    parentElement && observer.observe(parentElement)
+
+    return () => {
+      cancelAnimationFrame(resizeAnimationFrameIdRef.current)
+      observer.disconnect()
+    }
+  }, [])
+
+  useEffect(() => {
+    const requestAnimation = () => {
+      onRenderRef.current?.()
+      animationFrameIdRef.current = requestAnimationFrame(requestAnimation)
+    }
+
+    if (animationFrameIdRef.current === null) {
+      animationFrameIdRef.current = requestAnimationFrame(requestAnimation)
+    }
+
+    return () => {
+      if (animationFrameIdRef.current !== null) {
+        cancelAnimationFrame(animationFrameIdRef.current)
+        animationFrameIdRef.current = null
+      }
+    }
+  }, [])
+
+  return (
+    <canvas
+      ref={canvasRef}
+      className="absolute bottom-0 left-0 right-0 top-0 -z-10 opacity-30"
+    />
   )
 }
