@@ -116,7 +116,7 @@ interface Vertex {
   size: number
 }
 
-const TITLE = 80
+const TILE = 80
 const OFFSET_FACTOR = 0.75
 const RANDOM_Z_FACTOR = 1
 const VELOCITY_CONSTANT = 8
@@ -156,8 +156,8 @@ const StarCanvas = () => {
 
       // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
       if (!vertexMap[id]) {
-        const x = tile * sx + tile * 1.5 * Math.random() - tile * OFFSET_FACTOR
-        const y = tile * sy + tile * 1.5 * Math.random() - tile * OFFSET_FACTOR
+        const x = TILE * sx + TILE * 1.5 * Math.random() - TILE * OFFSET_FACTOR
+        const y = TILE * sy + TILE * 1.5 * Math.random() - TILE * OFFSET_FACTOR
         const z = Math.random() * RANDOM_Z_FACTOR
         const vx = 1 + Math.random() * VELOCITY_CONSTANT
         const vy = 1 + Math.random() * VELOCITY_CONSTANT
@@ -181,8 +181,8 @@ const StarCanvas = () => {
 
       ctx?.clearRect(0, 0, width, height)
 
-      const maxSX = Math.ceil(width / tile)
-      const maxSY = Math.ceil(height / tile)
+      const maxSX = Math.ceil(width / TILE)
+      const maxSY = Math.ceil(height / TILE)
 
       for (let sx = 0; sx <= maxSX; ++sx) {
         for (let sy = 0; sy <= maxSY; ++sy) {
