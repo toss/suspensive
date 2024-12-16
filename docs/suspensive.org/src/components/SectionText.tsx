@@ -6,5 +6,5 @@ export const SectionTitle = ({ children }: { children: ReactNode }) => (
   </h3>
 )
 export const SectionDescription = ({ children }: { children: ReactNode }) => (
-  <h4 className="text-center text-4xl font-bold">{children}</h4>
+  <h4 className="text-center text-3xl font-bold md:text-4xl">{children}</h4>
 )
