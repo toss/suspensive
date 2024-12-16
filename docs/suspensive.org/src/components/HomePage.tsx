@@ -33,7 +33,7 @@ export const HomePage = ({
       <motion.section
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        className="-mx-6 bg-[url('/img/homepage_background.svg')] bg-cover bg-center bg-no-repeat pb-20"
+        className="bg-[url('/img/homepage_background.svg')] bg-cover bg-center bg-no-repeat pb-20"
       >
         <div className="flex flex-col items-center justify-center gap-8 text-center">
           <div className="flex flex-col items-center">
@@ -42,10 +42,10 @@ export const HomePage = ({
               alt="Suspensive with star"
               width={360}
               height={360}
-              className="-mb-4"
+              className="-mb-4 h-52 w-52 md:h-auto md:w-auto"
             />
             <div className="flex flex-col items-center gap-4">
-              <div className="break-keep px-4 text-5xl font-bold leading-tight md:text-6xl">
+              <div className="break-keep px-4 text-4xl font-bold leading-tight md:text-6xl">
                 <span>{description}</span>
               </div>
               <motion.p
@@ -75,7 +75,7 @@ export const HomePage = ({
         </div>
 
         <div className="h-14" />
-        <div className="container mx-auto flex flex-col items-start justify-between gap-8 px-10 md:flex-row">
+        <div className="container mx-auto flex flex-col items-start justify-between gap-8 px-4 md:flex-row">
           {items.map(({ title, desc }, index) => (
             <motion.div
               initial={{ opacity: 0 }}
