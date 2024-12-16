@@ -56,7 +56,7 @@ export const HomePage = ({
                   opacity: 0.6,
                   transition: { delay: 0.1, duration: 1 },
                 }}
-                className="rounded-full text-xl text-white"
+                className="rounded-full text-lg text-white md:text-xl"
               >
                 npm i @suspensive/react
               </motion.p>
@@ -69,7 +69,7 @@ export const HomePage = ({
               initial={{ opacity: 0 }}
               animate={{ opacity: 1, transition: { delay: 1, duration: 1 } }}
               type="button"
-              className="animate-pulse rounded-xl bg-white px-10 py-3 text-xl font-bold text-[#111111]"
+              className="animate-pulse rounded-xl bg-white px-10 py-3 text-lg font-bold text-[#111111] md:text-xl"
             >
               {buttonText}
             </motion.button>
@@ -88,9 +88,9 @@ export const HomePage = ({
               className="flex flex-1 flex-col items-center justify-center gap-3 text-center"
               key={title}
             >
-              <div className="text-xl font-bold">{title}</div>
+              <div className="text-lg font-bold md:text-xl">{title}</div>
               <p
-                className="text-lg opacity-75"
+                className="text-sm opacity-75 md:text-lg"
                 dangerouslySetInnerHTML={{ __html: formatCodeBlocks(desc) }}
               />
             </motion.div>
@@ -136,21 +136,6 @@ const StarCanvas = () => {
     const vertexMap: Record<string, Vertex> = {}
     const startTime = Date.now()
 
-    function onResize() {
-      const inlineSize = parentElement?.offsetWidth ?? 0
-      const blockSize = parentElement?.offsetHeight ?? 0
-
-      cancelAnimationFrame(resizeAnimationFrameIdRef.current)
-      resizeAnimationFrameIdRef.current = requestAnimationFrame(() => {
-        if (canvas) {
-          canvas.width = inlineSize
-          canvas.height = blockSize
-          canvas.style.cssText += `width: ${inlineSize}px; height: ${blockSize}px;`
-          onRenderRef.current?.()
-        }
-      })
-    }
-
     function getVertex(sx: number, sy: number): Vertex {
       const id = `${sx}x${sy}`
 
@@ -174,7 +159,7 @@ const StarCanvas = () => {
       return vertexMap[id]
     }
 
-    function onRender() {
+    onRenderRef.current = () => {
       const width = canvas?.width ?? 0
       const height = canvas?.height ?? 0
       const distTime = Date.now() - startTime
@@ -209,9 +194,20 @@ const StarCanvas = () => {
         }
       }
     }
+    const observer = new ResizeObserver(() => {
+      const inlineSize = parentElement?.offsetWidth ?? 0
+      const blockSize = parentElement?.offsetHeight ?? 0
 
-    onRenderRef.current = onRender
-    const observer = new ResizeObserver(onResize)
+      cancelAnimationFrame(resizeAnimationFrameIdRef.current)
+      resizeAnimationFrameIdRef.current = requestAnimationFrame(() => {
+        if (canvas) {
+          canvas.width = inlineSize
+          canvas.height = blockSize
+          canvas.style.cssText += `width: ${inlineSize}px; height: ${blockSize}px;`
+          onRenderRef.current?.()
+        }
+      })
+    })
     // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     parentElement && observer.observe(parentElement)
 
