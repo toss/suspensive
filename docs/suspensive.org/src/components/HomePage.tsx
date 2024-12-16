@@ -99,7 +99,7 @@ export const HomePage = ({
         initial={{ y: 30, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ delay: 0.5, duration: 0.2 }}
-        className="container mx-auto px-6"
+        className="container mx-auto px-4"
       >
         {children}
       </motion.section>
