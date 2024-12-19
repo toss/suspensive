@@ -36,7 +36,10 @@ export const HomePage = ({
         animate={{ opacity: 1 }}
         className="relative bg-[url('/img/homepage_background.svg')] bg-cover bg-center bg-no-repeat pb-20"
       >
-        <StarCanvas />
+        <StarCanvasClose />
+        <StarCanvasFar />
+        <div className="absolute bottom-10 h-32 w-full bg-gradient-to-t from-[#0C0C0C] to-transparent" />
+        <div className="absolute bottom-0 h-10 w-full bg-[#0C0C0C]" />
         <div className="flex flex-col items-center justify-center gap-8 text-center">
           <div className="flex flex-col items-center">
             <Image
@@ -114,16 +117,17 @@ interface Vertex {
   velocity: number[]
   distance: number
   size: number
+  blurSize: number
 }
 
 const TILE = 80
 const OFFSET_FACTOR = 0.75
-const RANDOM_Z_FACTOR = 1
+const RANDOM_Z_FACTOR = 2
 const VELOCITY_CONSTANT = 8
 const RANDOM_DISTANCE_MAX = 900
 const RANDOM_SIZE_FACTOR = 2
 
-const StarCanvas = () => {
+const StarCanvasFar = () => {
   const animationFrameIdRef = useRef<number | null>(null)
   const resizeAnimationFrameIdRef = useRef(0)
   const onRenderRef = useRef<VoidFunction | null>(null)
@@ -148,12 +152,14 @@ const StarCanvas = () => {
         const vy = 1 + Math.random() * VELOCITY_CONSTANT
         const distance = 10 + Math.random() * RANDOM_DISTANCE_MAX
         const size = 0.1 + Math.random() * RANDOM_SIZE_FACTOR
+        const blurSize = Math.random() > 0.3 ? 0 : size * Math.random() * 10
 
         vertexMap[id] = {
           pos: [x, y, z],
           velocity: [vx, vy],
           size,
           distance,
+          blurSize,
         }
       }
       return vertexMap[id]
@@ -171,7 +177,7 @@ const StarCanvas = () => {
 
       for (let sx = 0; sx <= maxSX; ++sx) {
         for (let sy = 0; sy <= maxSY; ++sy) {
-          const { velocity, distance, pos, size } = getVertex(sx, sy)
+          const { velocity, distance, pos, size, blurSize } = getVertex(sx, sy)
           const scalar = Math.sqrt(
             velocity[0] * velocity[0] + velocity[1] * velocity[1]
           )
@@ -189,6 +195,8 @@ const StarCanvas = () => {
           ctx?.beginPath()
           // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
           ctx!.fillStyle = `rgba(255, 255, 255, ${a})`
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+          ctx!.filter = `blur(${blurSize}px)`
           ctx?.arc(x, y, size, 0, 2 * Math.PI)
           ctx?.fill()
         }
@@ -238,7 +246,139 @@ const StarCanvas = () => {
   return (
     <canvas
       ref={canvasRef}
-      className="absolute bottom-0 left-0 right-0 top-0 -z-10 opacity-30"
+      className="absolute bottom-0 left-0 right-0 top-0 -z-10 opacity-70"
+    />
+  )
+}
+const TILE_2 = 300
+const OFFSET_FACTOR_2 = 0.75
+const RANDOM_Z_FACTOR_2 = 1
+const VELOCITY_CONSTANT_2 = 200
+const RANDOM_DISTANCE_MAX_2 = 9000
+const RANDOM_SIZE_FACTOR_2 = 40
+
+const StarCanvasClose = () => {
+  const animationFrameIdRef = useRef<number | null>(null)
+  const resizeAnimationFrameIdRef = useRef(0)
+  const onRenderRef = useRef<VoidFunction | null>(null)
+  const canvasRef = useRef<HTMLCanvasElement>(null)
+
+  useEffect(() => {
+    const canvas = canvasRef.current
+    const parentElement = canvas?.parentElement
+    const ctx = canvas?.getContext('2d')
+    const vertexMap: Record<string, Vertex> = {}
+    const startTime = Date.now()
+
+    function getVertex(sx: number, sy: number): Vertex {
+      const id = `${sx}x${sy}`
+
+      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+      if (!vertexMap[id]) {
+        const x =
+          TILE_2 * sx + TILE_2 * 1.5 * Math.random() - TILE_2 * OFFSET_FACTOR_2
+        const y =
+          TILE_2 * sy + TILE_2 * 1.5 * Math.random() - TILE_2 * OFFSET_FACTOR_2
+        const z = Math.random() * RANDOM_Z_FACTOR_2
+        const vx = 1 + Math.random() * VELOCITY_CONSTANT_2
+        const vy = 1 + Math.random() * VELOCITY_CONSTANT_2
+        const distance = 10 + Math.random() * RANDOM_DISTANCE_MAX_2
+        const size = 4 + Math.random() * RANDOM_SIZE_FACTOR_2
+        const blurSize = size * Math.random() * 3 + 50
+
+        vertexMap[id] = {
+          pos: [x, y, z],
+          velocity: [vx, vy],
+          size,
+          distance,
+          blurSize: blurSize,
+        }
+      }
+      return vertexMap[id]
+    }
+
+    onRenderRef.current = () => {
+      const width = canvas?.width ?? 0
+      const height = canvas?.height ?? 0
+      const distTime = Date.now() - startTime
+
+      ctx?.clearRect(0, 0, width, height)
+
+      const maxSX = Math.ceil(width / TILE_2)
+      const maxSY = Math.ceil(height / TILE_2)
+
+      for (let sx = 0; sx <= maxSX; ++sx) {
+        for (let sy = 0; sy <= maxSY; ++sy) {
+          const { velocity, distance, pos, size, blurSize } = getVertex(sx, sy)
+          const scalar = Math.sqrt(
+            velocity[0] * velocity[0] + velocity[1] * velocity[1]
+          )
+          const totalDistance = (distTime * scalar) / 1000
+          const isReverse = Math.floor(totalDistance / distance) % 2 !== 0
+          let nextDistance = totalDistance % distance
+
+          if (isReverse) {
+            nextDistance = distance - nextDistance
+          }
+          const x = pos[0] + (nextDistance / scalar) * velocity[0]
+          const y = pos[1] + (nextDistance / scalar) * velocity[1]
+          const a = 1 - pos[2]
+
+          ctx?.beginPath()
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+          ctx!.fillStyle = `rgba(255, 255, 255, ${a})`
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+          ctx!.filter = `blur(${blurSize}px)`
+          ctx?.arc(x, y, size, 0, 2 * Math.PI)
+          ctx?.fill()
+        }
+      }
+    }
+    const observer = new ResizeObserver(() => {
+      const inlineSize = parentElement?.offsetWidth ?? 0
+      const blockSize = parentElement?.offsetHeight ?? 0
+
+      cancelAnimationFrame(resizeAnimationFrameIdRef.current)
+      resizeAnimationFrameIdRef.current = requestAnimationFrame(() => {
+        if (canvas) {
+          canvas.width = inlineSize
+          canvas.height = blockSize
+          canvas.style.cssText += `width: ${inlineSize}px; height: ${blockSize}px;`
+          onRenderRef.current?.()
+        }
+      })
+    })
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+    parentElement && observer.observe(parentElement)
+
+    return () => {
+      cancelAnimationFrame(resizeAnimationFrameIdRef.current)
+      observer.disconnect()
+    }
+  }, [])
+
+  useEffect(() => {
+    const requestAnimation = () => {
+      onRenderRef.current?.()
+      animationFrameIdRef.current = requestAnimationFrame(requestAnimation)
+    }
+
+    if (animationFrameIdRef.current === null) {
+      animationFrameIdRef.current = requestAnimationFrame(requestAnimation)
+    }
+
+    return () => {
+      if (animationFrameIdRef.current !== null) {
+        cancelAnimationFrame(animationFrameIdRef.current)
+        animationFrameIdRef.current = null
+      }
+    }
+  }, [])
+
+  return (
+    <canvas
+      ref={canvasRef}
+      className="absolute bottom-0 left-0 right-0 top-0 -z-10 opacity-60"
     />
   )
 }
