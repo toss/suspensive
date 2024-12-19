@@ -119,7 +119,7 @@ export const suspensiveReactTypeScriptConfig = tseslint.config(
   },
   {
     plugins: {
-      'react-hooks': reactHooks.configs.recommended,
+      'react-hooks': reactHooks,
       'react-compiler': reactCompiler,
     },
     languageOptions: {
@@ -128,6 +128,7 @@ export const suspensiveReactTypeScriptConfig = tseslint.config(
       },
     },
     rules: {
+      ...reactHooks.configs.recommended.rules,
       'react-compiler/react-compiler': 'warn',
     },
     settings: {
