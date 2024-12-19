@@ -123,7 +123,7 @@ const config: DocsThemeConfig = {
     float: true,
   },
   navigation: true,
-  main: ({ children }) => {
+  main: function Main({ children }) {
     const router = useRouter()
 
     return (
