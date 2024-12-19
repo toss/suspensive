@@ -31,13 +31,13 @@ export const HomePage = ({
 
   return (
     <>
+      <StarCanvasClose />
+      <StarCanvasFar />
       <motion.section
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        className="relative bg-[url('/img/homepage_background.svg')] bg-cover bg-center bg-no-repeat pb-20"
+        className="bg-[url('/img/homepage_background.svg')] bg-cover bg-center bg-no-repeat pb-20"
       >
-        <StarCanvasClose />
-        <StarCanvasFar />
         <div className="flex flex-col items-center justify-center gap-8 text-center">
           <div className="flex flex-col items-center">
             <Image
@@ -254,12 +254,12 @@ const StarCanvasFar = () => {
   return (
     <canvas
       ref={canvasRef}
-      className="absolute bottom-0 left-0 right-0 top-0 -z-10 opacity-70"
+      className="fixed bottom-0 left-0 right-0 top-0 -z-10 opacity-70"
     />
   )
 }
 
-const TILE_CLOSE = 500
+const TILE_CLOSE = 600
 
 const StarCanvasClose = () => {
   const animationFrameIdRef = useRef<number | null>(null)
@@ -286,8 +286,8 @@ const StarCanvasClose = () => {
         const z = Math.random() * 1
         const vx = 1 + Math.random() * 200
         const vy = 1 + Math.random() * 200
-        const distance = 5000 + Math.random() * 9000
-        const size = 30 + Math.random() * 80
+        const distance = 3000 + Math.random() * 2000
+        const size = 100 + Math.random() * 100
 
         vertexMap[id] = {
           pos: [x, y, z],
@@ -343,7 +343,7 @@ const StarCanvasClose = () => {
         if (canvas) {
           canvas.width = inlineSize
           canvas.height = blockSize
-          canvas.style.cssText += `width: ${inlineSize}px; height: ${blockSize}px; filter: blur(70px);`
+          canvas.style.cssText += `width: ${inlineSize}px; height: ${blockSize}px; filter: blur(100px); opacity: 0.15;`
           onRenderRef.current?.()
         }
       })
@@ -378,7 +378,7 @@ const StarCanvasClose = () => {
   return (
     <canvas
       ref={canvasRef}
-      className="absolute bottom-0 left-0 right-0 top-0 -z-10 opacity-40"
+      className="fixed bottom-0 left-0 right-0 top-0 -z-10"
     />
   )
 }
