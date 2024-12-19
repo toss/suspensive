@@ -38,8 +38,6 @@ export const HomePage = ({
       >
         <StarCanvasClose />
         <StarCanvasFar />
-        <div className="absolute bottom-10 h-32 w-full bg-gradient-to-t from-[#0C0C0C] to-transparent" />
-        <div className="absolute bottom-0 h-10 w-full bg-[#0C0C0C]" />
         <div className="flex flex-col items-center justify-center gap-8 text-center">
           <div className="flex flex-col items-center">
             <Image
@@ -77,9 +75,17 @@ export const HomePage = ({
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               initial={{ opacity: 0 }}
-              animate={{ opacity: 1, transition: { delay: 1, duration: 1 } }}
+              animate={{
+                opacity: [1, 0.7, 1],
+                transition: {
+                  delay: 1,
+                  duration: 2,
+                  repeat: Infinity,
+                  ease: 'linear',
+                },
+              }}
               type="button"
-              className="animate-pulse rounded-xl bg-white px-10 py-3 text-lg font-bold text-[#111111] md:text-xl"
+              className="rounded-xl bg-white px-10 py-3 text-lg font-bold text-[#111111] md:text-xl"
             >
               {buttonText}
             </motion.button>
@@ -124,7 +130,6 @@ interface Vertex {
   velocity: number[]
   distance: number
   size: number
-  blurSize: number
 }
 
 const TILE = 80
@@ -159,14 +164,12 @@ const StarCanvasFar = () => {
         const vy = 1 + Math.random() * VELOCITY_CONSTANT
         const distance = 10 + Math.random() * RANDOM_DISTANCE_MAX
         const size = 0.1 + Math.random() * RANDOM_SIZE_FACTOR
-        const blurSize = Math.random() > 0.3 ? 0 : size * Math.random() * 10
 
         vertexMap[id] = {
           pos: [x, y, z],
           velocity: [vx, vy],
           size,
           distance,
-          blurSize,
         }
       }
       return vertexMap[id]
@@ -184,7 +187,7 @@ const StarCanvasFar = () => {
 
       for (let sx = 0; sx <= maxSX; ++sx) {
         for (let sy = 0; sy <= maxSY; ++sy) {
-          const { velocity, distance, pos, size, blurSize } = getVertex(sx, sy)
+          const { velocity, distance, pos, size } = getVertex(sx, sy)
           const scalar = Math.sqrt(
             velocity[0] * velocity[0] + velocity[1] * velocity[1]
           )
@@ -202,8 +205,6 @@ const StarCanvasFar = () => {
           ctx?.beginPath()
           // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
           ctx!.fillStyle = `rgba(255, 255, 255, ${a})`
-          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-          ctx!.filter = `blur(${blurSize}px)`
           ctx?.arc(x, y, size, 0, 2 * Math.PI)
           ctx?.fill()
         }
@@ -257,12 +258,8 @@ const StarCanvasFar = () => {
     />
   )
 }
-const TILE_2 = 300
-const OFFSET_FACTOR_2 = 0.75
-const RANDOM_Z_FACTOR_2 = 1
-const VELOCITY_CONSTANT_2 = 200
-const RANDOM_DISTANCE_MAX_2 = 9000
-const RANDOM_SIZE_FACTOR_2 = 40
+
+const TILE_CLOSE = 500
 
 const StarCanvasClose = () => {
   const animationFrameIdRef = useRef<number | null>(null)
@@ -283,22 +280,20 @@ const StarCanvasClose = () => {
       // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
       if (!vertexMap[id]) {
         const x =
-          TILE_2 * sx + TILE_2 * 1.5 * Math.random() - TILE_2 * OFFSET_FACTOR_2
+          TILE_CLOSE * sx + TILE_CLOSE * 1.5 * Math.random() - TILE_CLOSE * 0.75
         const y =
-          TILE_2 * sy + TILE_2 * 1.5 * Math.random() - TILE_2 * OFFSET_FACTOR_2
-        const z = Math.random() * RANDOM_Z_FACTOR_2
-        const vx = 1 + Math.random() * VELOCITY_CONSTANT_2
-        const vy = 1 + Math.random() * VELOCITY_CONSTANT_2
-        const distance = 10 + Math.random() * RANDOM_DISTANCE_MAX_2
-        const size = 4 + Math.random() * RANDOM_SIZE_FACTOR_2
-        const blurSize = size * Math.random() * 3 + 50
+          TILE_CLOSE * sy + TILE_CLOSE * 1.5 * Math.random() - TILE_CLOSE * 0.75
+        const z = Math.random() * 1
+        const vx = 1 + Math.random() * 200
+        const vy = 1 + Math.random() * 200
+        const distance = 5000 + Math.random() * 9000
+        const size = 30 + Math.random() * 80
 
         vertexMap[id] = {
           pos: [x, y, z],
           velocity: [vx, vy],
           size,
           distance,
-          blurSize: blurSize,
         }
       }
       return vertexMap[id]
@@ -311,12 +306,12 @@ const StarCanvasClose = () => {
 
       ctx?.clearRect(0, 0, width, height)
 
-      const maxSX = Math.ceil(width / TILE_2)
-      const maxSY = Math.ceil(height / TILE_2)
+      const maxSX = Math.ceil(width / TILE_CLOSE)
+      const maxSY = Math.ceil(height / TILE_CLOSE)
 
       for (let sx = 0; sx <= maxSX; ++sx) {
         for (let sy = 0; sy <= maxSY; ++sy) {
-          const { velocity, distance, pos, size, blurSize } = getVertex(sx, sy)
+          const { velocity, distance, pos, size } = getVertex(sx, sy)
           const scalar = Math.sqrt(
             velocity[0] * velocity[0] + velocity[1] * velocity[1]
           )
@@ -334,8 +329,6 @@ const StarCanvasClose = () => {
           ctx?.beginPath()
           // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
           ctx!.fillStyle = `rgba(255, 255, 255, ${a})`
-          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-          ctx!.filter = `blur(${blurSize}px)`
           ctx?.arc(x, y, size, 0, 2 * Math.PI)
           ctx?.fill()
         }
@@ -350,7 +343,7 @@ const StarCanvasClose = () => {
         if (canvas) {
           canvas.width = inlineSize
           canvas.height = blockSize
-          canvas.style.cssText += `width: ${inlineSize}px; height: ${blockSize}px;`
+          canvas.style.cssText += `width: ${inlineSize}px; height: ${blockSize}px; filter: blur(70px);`
           onRenderRef.current?.()
         }
       })
@@ -385,7 +378,7 @@ const StarCanvasClose = () => {
   return (
     <canvas
       ref={canvasRef}
-      className="absolute bottom-0 left-0 right-0 top-0 -z-10 opacity-60"
+      className="absolute bottom-0 left-0 right-0 top-0 -z-10 opacity-40"
     />
   )
 }
