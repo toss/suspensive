@@ -1,3 +1,4 @@
+import { ClientOnly } from '@suspensive/react'
 import { motion } from 'motion/react'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -31,8 +32,10 @@ export const HomePage = ({
 
   return (
     <>
-      <StarCanvasClose />
       <StarCanvasFar />
+      <ClientOnly>
+        <StarCanvasClose />
+      </ClientOnly>
       <motion.section
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
