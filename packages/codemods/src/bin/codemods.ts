@@ -17,7 +17,7 @@ const program = new Command(packageJson.name)
 program
   .description(packageJson.description)
   .version(packageJson.version, '-v, --version', 'Output the current version of @suspensive/codemods.')
-  .argument('[codemod]', 'Codemod slug to run. See "https://suspensive.org/ko/docs/codemods/motivation"')
+  .argument('[codemod]', 'Codemod slug to run. See "https://suspensive.org/docs/codemods/motivation"')
   .argument('[path]', 'Path to source directory.')
   .usage('[codemod] [path]')
   .helpOption('-h, --help', 'Display this help message.')
