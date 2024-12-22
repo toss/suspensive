@@ -43,20 +43,22 @@ export const HomePage = ({
       >
         <div className="flex flex-col items-center justify-center gap-8 text-center">
           <div className="flex flex-col items-center">
-            <Image
-              src="/img/homepage_logo.png"
-              alt="Suspensive with star"
-              width={360}
-              height={360}
-              className="-mb-4 hidden md:block md:h-auto md:w-auto"
-            />
-            <Image
-              src="/img/homepage_logo.png"
-              alt="Suspensive with star"
-              width={210}
-              height={210}
-              className="-mb-4 md:hidden md:h-auto md:w-auto"
-            />
+            <div className="width-[360px] height-[360px] -mb-4 hidden md:block">
+              <Image
+                src="/img/homepage_logo.png"
+                alt="Suspensive with star"
+                width={360}
+                height={360}
+              />
+            </div>
+            <div className="width-[210px] height-[210px] -mb-4 md:hidden md:h-auto md:w-auto">
+              <Image
+                src="/img/homepage_logo.png"
+                alt="Suspensive with star"
+                width={210}
+                height={210}
+              />
+            </div>
             <div className="flex flex-col items-center gap-4">
               <div className="break-keep px-4 text-4xl font-bold leading-tight md:text-6xl">
                 <span>{description}</span>
