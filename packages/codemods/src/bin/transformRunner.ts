@@ -16,13 +16,13 @@ function onCancel() {
 export const jscodeshiftExecutable = require.resolve('.bin/jscodeshift')
 export const transformerDirectory = join(__dirname, '../', '../', 'dist', 'transforms')
 
-export async function transformRunner(transform?: string, path?: string) {
+export async function transformRunner(transform?: string, path?: string, options?: { dry?: boolean; print?: boolean }) {
   let transformer: string = transform ?? ''
   let directory: string = path ?? ''
 
   if (transform && !TRANSFORMER_INQUIRER_CHOICES.find((x) => x.title === transform)) {
     console.error('Invalid transform choice, pick one of:')
-    console.error(TRANSFORMER_INQUIRER_CHOICES.map((x) => '- ' + x.title).join('\n'))
+    console.error(TRANSFORMER_INQUIRER_CHOICES.map((x) => `- ${+x.title}`).join('\n'))
     process.exit(1)
   }
 
@@ -62,9 +62,17 @@ export async function transformRunner(transform?: string, path?: string) {
 
   const args: Array<string> = []
 
+  if (options?.dry) {
+    args.push('--dry')
+  }
+  if (options?.print) {
+    args.push('--print')
+  }
   args.push('--no-babel')
+
   args.push('--ignore-pattern=**/node_modules/**')
   args.push('--ignore-pattern=**/.next/**')
+
   args.push('--extensions=tsx,ts,jsx,js')
 
   args.push('--transform', join(transformerDirectory, `${transformer}.cjs`))
