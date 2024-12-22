@@ -1,5 +1,11 @@
 # @suspensive/codemods
 
+## 0.2.0
+
+### Minor Changes
+
+- [#1401](https://github.com/toss/suspensive/pull/1401) [`9d72053`](https://github.com/toss/suspensive/commit/9d72053bd3f51cf00b7f33b58ba4dd8167a1577e) Thanks [@gwansikk](https://github.com/gwansikk)! - feat(codemods): add codemod dry, print options
+
 ## 0.1.1
 
 ### Patch Changes
