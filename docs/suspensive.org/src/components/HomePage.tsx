@@ -77,20 +77,22 @@ export const HomePage = ({
           </div>
           <Link href={`/${router.locale}/docs/react/motivation`}>
             <motion.button
-              whileHover={{ scale: 1.05 }}
+              whileHover={{
+                scale: 1.05,
+              }}
               whileTap={{ scale: 0.95 }}
               initial={{ opacity: 0 }}
               animate={{
-                opacity: [1, 0.7, 1],
+                opacity: 1,
                 transition: {
-                  delay: 1,
+                  delay: 0.8,
                   duration: 2,
-                  repeat: Infinity,
-                  ease: 'linear',
                 },
+                filter:
+                  'drop-shadow(0 0 1px rgba(255, 255, 255, 0.5)) drop-shadow(0 0 3px rgba(255, 255, 255, 0.5)) drop-shadow(0 0 10px rgba(255, 255, 255, 0.5))',
               }}
               type="button"
-              className="rounded-xl bg-white px-10 py-3 text-lg font-bold text-[#111111] md:text-xl"
+              className="rounded-xl bg-white px-8 py-3 text-lg font-bold text-[#111111] md:px-10 md:py-3 md:text-xl"
             >
               {buttonText}
             </motion.button>
