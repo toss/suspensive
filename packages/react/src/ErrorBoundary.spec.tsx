@@ -293,6 +293,28 @@ describe('<ErrorBoundary/>', () => {
       await waitFor(() => expect(screen.queryByText(errorText)).toBeInTheDocument())
     }
   )
+
+  it('should re-throw error occurred by fallback', async () => {
+    render(
+      <ErrorBoundary fallback={() => <>This is expected</>}>
+        <ErrorBoundary
+          fallback={() => (
+            <Throw.Error message={ERROR_MESSAGE} after={100}>
+              ErrorBoundary's fallback before error
+            </Throw.Error>
+          )}
+        >
+          <Throw.Error message={ERROR_MESSAGE} after={100}>
+            ErrorBoundary's children before error
+          </Throw.Error>
+        </ErrorBoundary>
+      </ErrorBoundary>
+    )
+
+    expect(screen.queryByText("ErrorBoundary's children before error")).toBeInTheDocument()
+    await waitFor(() => expect(screen.queryByText("ErrorBoundary's fallback before error")).toBeInTheDocument())
+    await waitFor(() => expect(screen.queryByText('This is expected')).toBeInTheDocument())
+  })
 })
 
 describe('<ErrorBoundary.Consumer/>', () => {
