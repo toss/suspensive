@@ -115,8 +115,8 @@ class BaseErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState
   }
 
   componentDidCatch(error: Error, info: ErrorInfo) {
-    if (error instanceof InternalFallbackError) {
-      throw error.fallbackError
+    if (error instanceof ErrorInFallback) {
+      throw error.originalError
     }
     if (error instanceof SuspensiveError) {
       throw error
@@ -152,9 +152,9 @@ class BaseErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState
 
       const Fallback = fallback
       childrenOrFallback = (
-        <InternalFallbackErrorBoundary>
+        <FallbackBoundary>
           {typeof Fallback === 'function' ? <Fallback error={error} reset={this.reset} /> : Fallback}
-        </InternalFallbackErrorBoundary>
+        </FallbackBoundary>
       )
     }
 
@@ -166,19 +166,16 @@ class BaseErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState
   }
 }
 
-class InternalFallbackError extends Error {
-  fallbackError: Error
-  constructor(error: Error) {
-    super(error.message)
-    this.fallbackError = error
+class ErrorInFallback extends Error {
+  originalError: Error
+  constructor(originalError: Error) {
+    super()
+    this.originalError = originalError
   }
 }
-class InternalFallbackErrorBoundary extends Component<{ children: ReactNode }> {
-  componentDidCatch(fallbackError: Error) {
-    if (fallbackError instanceof SuspensiveError) {
-      throw fallbackError
-    }
-    throw new InternalFallbackError(fallbackError)
+class FallbackBoundary extends Component<{ children: ReactNode }> {
+  componentDidCatch(originalError: Error) {
+    throw originalError instanceof SuspensiveError ? originalError : new ErrorInFallback(originalError)
   }
   render() {
     return this.props.children
