@@ -2,6 +2,7 @@ import { act, render, screen, waitFor } from '@testing-library/react'
 import { userEvent } from '@testing-library/user-event'
 import ms from 'ms'
 import { type ComponentRef, createElement, createRef } from 'react'
+import { ErrorBoundary as ReactErrorBoundary } from 'react-error-boundary'
 import {
   ErrorBoundary,
   type ErrorBoundaryFallbackProps,
@@ -294,7 +295,7 @@ describe('<ErrorBoundary/>', () => {
     }
   )
 
-  it('should re-throw error occurred by fallback', async () => {
+  it('should re-throw error in fallback', async () => {
     render(
       <ErrorBoundary fallback={() => <>This is expected</>}>
         <ErrorBoundary
@@ -314,6 +315,32 @@ describe('<ErrorBoundary/>', () => {
     expect(screen.queryByText("ErrorBoundary's children before error")).toBeInTheDocument()
     await waitFor(() => expect(screen.queryByText("ErrorBoundary's fallback before error")).toBeInTheDocument())
     await waitFor(() => expect(screen.queryByText('This is expected')).toBeInTheDocument())
+  })
+  it('should not re-throw error in fallback (react-error-boundary)', async () => {
+    render(
+      <ReactErrorBoundary fallbackRender={() => <>This is expected</>}>
+        <ReactErrorBoundary
+          fallbackRender={() => (
+            <Throw.Error message={ERROR_MESSAGE} after={100}>
+              ErrorBoundary(react-error-boundary)'s fallback before error
+            </Throw.Error>
+          )}
+        >
+          <Throw.Error message={ERROR_MESSAGE} after={100}>
+            ErrorBoundary(react-error-boundary)'s children before error
+          </Throw.Error>
+        </ReactErrorBoundary>
+      </ReactErrorBoundary>
+    )
+
+    expect(screen.queryByText("ErrorBoundary(react-error-boundary)'s children before error")).toBeInTheDocument()
+    await waitFor(() =>
+      expect(screen.queryByText("ErrorBoundary(react-error-boundary)'s fallback before error")).toBeInTheDocument()
+    )
+    await waitFor(() => expect(screen.queryByText('This is expected')).not.toBeInTheDocument())
+    await waitFor(() =>
+      expect(screen.queryByText("ErrorBoundary(react-error-boundary)'s fallback before error")).toBeInTheDocument()
+    )
   })
 })
 

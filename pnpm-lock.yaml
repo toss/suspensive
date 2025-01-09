@@ -707,6 +707,9 @@ importers:
       react:
         specifier: catalog:react19
         version: 19.0.0
+      react-error-boundary:
+        specifier: ^5.0.0
+        version: 5.0.0(react@19.0.0)
 
   packages/react-dom:
     devDependencies:
