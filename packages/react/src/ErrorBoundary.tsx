@@ -118,13 +118,6 @@ class BaseErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState
     if (error instanceof SuspensiveError) {
       throw error
     }
-    const { shouldCatch = true } = this.props
-    const isCatch = Array.isArray(shouldCatch)
-      ? shouldCatch.some((shouldCatch) => checkErrorBoundary(shouldCatch, error))
-      : checkErrorBoundary(shouldCatch, error)
-    if (!isCatch) {
-      throw error
-    }
     this.props.onError?.(error, info)
   }
 
@@ -134,12 +127,19 @@ class BaseErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState
   }
 
   render() {
-    const { children, fallback } = this.props
+    const { children, fallback, shouldCatch = true } = this.props
     const { isError, error } = this.state
 
     let childrenOrFallback = children
 
     if (isError) {
+      const isCatch = Array.isArray(shouldCatch)
+        ? shouldCatch.some((shouldCatch) => checkErrorBoundary(shouldCatch, error))
+        : checkErrorBoundary(shouldCatch, error)
+      if (!isCatch) {
+        throw error
+      }
+
       if (typeof fallback === 'undefined') {
         if (process.env.NODE_ENV === 'development') {
           console.error('ErrorBoundary of @suspensive/react requires a defined fallback')
