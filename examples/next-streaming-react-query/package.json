@@ -7,7 +7,7 @@
     "build": "next build",
     "ci:eslint": "eslint \"**/*.{js,jsx,cjs,mjs,ts,tsx,cts,mts}\"",
     "ci:type": "tsc --noEmit",
-    "clean": "rimraf ./.next",
+    "clean": "rimraf ./.next && rimraf ./node_modules",
     "dev": "next dev -p 4100",
     "start": "next start -p 4100"
   },

@@ -3,7 +3,7 @@
     <img src="https://github.com/toss/suspensive/blob/main/assets/logo_background_star.png?raw=true" alt="Suspensive Libraries Logo - TypeScript/JavaScript packages to use React Suspense easily." width="600" />
     <h1 align="center">Suspensive</h1>
   </a>
-  <p style="font-size:18px;">Manage asynchronous operations, timing, error handling, detecting intersection of elements, and caching easily</p>
+  <p style="font-size:18px;">All in one for React Suspense</p>
 </div>
 
 <div align="center">
