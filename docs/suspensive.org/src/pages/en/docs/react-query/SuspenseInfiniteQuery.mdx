@@ -110,13 +110,17 @@ export const PostListItem = (props: Post) => {
 ```
 
 ```tsx queries.ts
-import { queryOptions } from '@suspensive/react-query'
+import { infiniteQueryOptions } from '@suspensive/react-query'
 import { getInfinitePosts } from './api'
 
 export const postsInfiniteQueryOptions = () =>
-  queryOptions({
+  infiniteQueryOptions({
     queryKey: ['posts'],
     queryFn: ({ pageParam = 1 }) => getInfinitePosts(pageParam),
+    getNextPageParam: (lastPage, allPages) =>
+      lastPage.skip + lastPage.limit < lastPage.total
+        ? allPages.length + 1
+        : undefined,
   })
 ```
 

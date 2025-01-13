@@ -49,7 +49,7 @@
     "ci:publint": "publint --strict",
     "ci:test": "vitest run --coverage --typecheck",
     "ci:type": "tsc --noEmit",
-    "clean": "rimraf ./dist && rimraf ./coverage",
+    "clean": "rimraf ./dist && rimraf ./coverage && rimraf ./node_modules",
     "postinstall": "node ./dist/bin/postinstall.cjs || echo 'please reinstall @suspensive/react-query'",
     "prepack": "pnpm build",
     "test:ui": "vitest --ui --coverage --typecheck"

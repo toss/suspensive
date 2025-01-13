@@ -8,7 +8,7 @@
   "main": "index.js",
   "module": "index.js",
   "scripts": {
-    "clean": "rimraf ./dist && rimraf ./coverage"
+    "clean": "rimraf ./dist && rimraf ./coverage && rimraf ./node_modules"
   },
   "dependencies": {
     "@cspell/eslint-plugin": "^8.16.1",
