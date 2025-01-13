@@ -35,6 +35,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                   <Link href="/react/ErrorBoundary/ErrorInFallback">{`<ErrorBoundary/>`}'s fallback Error</Link>
                 </li>
                 <li>
+                  <Link href="/react/ErrorBoundary/shouldCatch/renderPhase">
+                    {`<ErrorBoundary/>`} shouldCatch prop render phase
+                  </Link>
+                </li>
+                <li>
                   <Link href="/react/zodSearchParams">zod: no param</Link>
                 </li>
                 <li>

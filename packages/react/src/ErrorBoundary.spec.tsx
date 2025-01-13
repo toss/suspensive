@@ -188,6 +188,26 @@ describe('<ErrorBoundary/>', () => {
     await waitFor(() => expect(screen.queryByText(`${ERROR_MESSAGE} of Parent`)).toBeInTheDocument())
   })
 
+  it('should re-throw error if not shouldCatch error in children without rendering fallback', async () => {
+    const onErrorParent = vi.fn()
+    const onErrorChild = vi.fn()
+    const Fallback = vi.fn()
+
+    render(
+      <ErrorBoundary fallback={({ error }) => <>{error.message} of Parent</>} onError={onErrorParent}>
+        <ErrorBoundary shouldCatch={false} fallback={Fallback} onError={onErrorChild}>
+          {createElement(() => {
+            throw new Error(ERROR_MESSAGE)
+          })}
+        </ErrorBoundary>
+      </ErrorBoundary>
+    )
+
+    expect(onErrorChild).toBeCalledTimes(0)
+    expect(onErrorParent).toBeCalledTimes(1)
+    await waitFor(() => expect(screen.queryByText(`${ERROR_MESSAGE} of Parent`)).toBeInTheDocument())
+  })
+
   it.each([
     {
       childCalledTimes: 0,
