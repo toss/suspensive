@@ -1,5 +1,12 @@
 # @suspensive/react-query-4
 
+## 2.18.11
+
+### Patch Changes
+
+- Updated dependencies [[`ce3cb11`](https://github.com/toss/suspensive/commit/ce3cb110eba194c77a1348afede87a83a7005d89)]:
+  - @suspensive/react@2.18.11
+
 ## 2.18.10
 
 ### Patch Changes
