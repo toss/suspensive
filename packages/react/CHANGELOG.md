@@ -1,5 +1,11 @@
 # @suspensive/react
 
+## 2.18.11
+
+### Patch Changes
+
+- [#1410](https://github.com/toss/suspensive/pull/1410) [`ce3cb11`](https://github.com/toss/suspensive/commit/ce3cb110eba194c77a1348afede87a83a7005d89) Thanks [@manudeli](https://github.com/manudeli)! - fix(react): prevent rendering fallback if not shouldCatch error
+
 ## 2.18.10
 
 ### Patch Changes
