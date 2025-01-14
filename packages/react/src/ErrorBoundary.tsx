@@ -115,9 +115,6 @@ class BaseErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState
   }
 
   componentDidCatch(error: Error, info: ErrorInfo) {
-    if (error instanceof ErrorInFallback) {
-      throw error.originalError
-    }
     if (error instanceof SuspensiveError) {
       throw error
     }
@@ -136,6 +133,9 @@ class BaseErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState
     let childrenOrFallback = children
 
     if (isError) {
+      if (error instanceof ErrorInFallback) {
+        throw error.originalError
+      }
       const isCatch = Array.isArray(shouldCatch)
         ? shouldCatch.some((shouldCatch) => checkErrorBoundary(shouldCatch, error))
         : checkErrorBoundary(shouldCatch, error)
