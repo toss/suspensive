@@ -1,5 +1,11 @@
 # @suspensive/react
 
+## 2.18.12
+
+### Patch Changes
+
+- [#1414](https://github.com/toss/suspensive/pull/1414) [`421d49d`](https://github.com/toss/suspensive/commit/421d49d6282bd375772aa898bca7b3f88b6a7ad8) Thanks [@manudeli](https://github.com/manudeli)! - fix(react): re-throw SuspensiveError before rerender
+
 ## 2.18.11
 
 ### Patch Changes
