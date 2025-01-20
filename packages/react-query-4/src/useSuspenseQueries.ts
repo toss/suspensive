@@ -121,7 +121,11 @@ export function useSuspenseQueries<T extends any[]>({
   context?: UseQueryOptions['context']
 }): SuspenseQueriesResults<T> {
   return useQueries({
-    queries: queries.map((query: typeof queries) => ({ ...query, suspense: true })),
+    queries: queries.map((query: typeof queries) => ({
+      // eslint-disable-next-line @typescript-eslint/no-misused-spread
+      ...query,
+      suspense: true,
+    })),
     context,
   }) as SuspenseQueriesResults<T>
 }
