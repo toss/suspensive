@@ -14,7 +14,7 @@
   },
   "license": "MIT",
   "author": "Jonghyeon Ko <jonghyeon@toss.im>",
-  "packageManager": "pnpm@9.12.3",
+  "packageManager": "pnpm@9.15.4",
   "type": "module",
   "scripts": {
     "blc:suspensive.org": "pnpm blc https://suspensive.org --ro --exclude='https://x.com/*' --exclude='https://codesandbox.io/api/v1/sandboxes/define?undefined&environment=create-react-app'",
@@ -71,7 +71,7 @@
     "tsup": "^8.3.5",
     "turbo": "^2.3.3",
     "typescript": "^5.7.2",
-    "vite": "^6.0.8",
+    "vite": "^6.0.9",
     "vitest": "^3.0.2"
   }
 }
