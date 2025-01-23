@@ -20,7 +20,13 @@ export const optionsToId = (options: IntersectionObserverInit & { trackVisibilit
   Object.keys(options)
     .sort()
     .filter((key) => options[key as keyof IntersectionObserverInit] !== undefined)
-    .map((key) => `${key}_${key === 'root' ? getRootId(options.root) : options[key as keyof IntersectionObserverInit]}`)
+    .map(
+      (key) =>
+        `${key}_${
+          // eslint-disable-next-line @typescript-eslint/no-base-to-string
+          key === 'root' ? getRootId(options.root) : options[key as keyof IntersectionObserverInit]
+        }`
+    )
     .toString()
 
 function createObserver(options: IntersectionObserverInit & { trackVisibility?: boolean; delay?: number }) {
