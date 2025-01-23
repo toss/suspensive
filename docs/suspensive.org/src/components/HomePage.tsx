@@ -4,7 +4,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'nextra/hooks'
 import { useEffect, useRef } from 'react'
-import { CopyButton } from './CopyButton'
+import { NpmInstallCopyButton } from './NpmInstallCopyButton'
 
 const CodeBlockClassName = 'nextra-code'
 
@@ -18,13 +18,11 @@ const formatCodeBlocks = (desc: string) => backtickToCodeBlock(escapeHtml(desc))
 
 export const HomePage = ({
   title,
-  description,
   buttonText,
   items,
   children,
 }: {
   title: string
-  description: string
   buttonText: string
   items: { title: string; desc: string }[]
   version: number
@@ -62,46 +60,32 @@ export const HomePage = ({
               />
             </div>
             <div className="flex flex-col items-center gap-4">
-              <div className="break-keep bg-gradient-to-r from-white via-white/80 to-white/30 bg-clip-text px-4 text-4xl font-bold leading-tight text-transparent md:text-6xl">
+              <div className="break-keep bg-gradient-to-r from-white via-white/80 to-white/60 bg-clip-text px-4 text-4xl font-bold leading-tight text-transparent md:text-6xl">
                 <span>{title}</span>
               </div>
-              <motion.p
-                initial={{ opacity: 0 }}
-                animate={{
-                  opacity: 0.6,
-                  transition: { delay: 0.1, duration: 1 },
-                }}
-                className="rounded-full text-lg text-white md:text-xl"
-              >
-                {description}
-              </motion.p>
             </div>
+            <NpmInstallCopyButton />
           </div>
-          <div className="flex items-center gap-4">
-            <CopyButton>npm i @suspensive/react</CopyButton>
-            <Link href={`/${router.locale}/docs/react/motivation`}>
-              <motion.button
-                whileHover={{
-                  scale: 1.05,
-                }}
-                whileTap={{ scale: 0.95 }}
-                initial={{ opacity: 0 }}
-                animate={{
-                  opacity: 1,
-                  transition: {
-                    delay: 0.8,
-                    duration: 2,
-                  },
-                  filter:
-                    'drop-shadow(0 0 1px rgba(255, 255, 255, 0.5)) drop-shadow(0 0 3px rgba(255, 255, 255, 0.5)) drop-shadow(0 0 10px rgba(255, 255, 255, 0.5))',
-                }}
-                type="button"
-                className="rounded-xl bg-white px-7 py-2 text-lg font-bold text-[#111111] md:px-9 md:py-3 md:text-xl"
-              >
-                {buttonText}
-              </motion.button>
-            </Link>
-          </div>
+          <Link href={`/${router.locale}/docs/react/motivation`}>
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              initial={{ opacity: 0 }}
+              animate={{
+                opacity: 1,
+                transition: {
+                  delay: 0.8,
+                  duration: 2,
+                },
+                filter:
+                  'drop-shadow(0 0 1px rgba(255, 255, 255, 0.5)) drop-shadow(0 0 3px rgba(255, 255, 255, 0.5)) drop-shadow(0 0 10px rgba(255, 255, 255, 0.5))',
+              }}
+              type="button"
+              className="rounded-xl bg-white px-7 py-2 text-lg font-bold text-[#111111] md:px-9 md:py-3 md:text-xl"
+            >
+              {buttonText}
+            </motion.button>
+          </Link>
         </div>
 
         <div className="h-14" />
