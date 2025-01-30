@@ -1,4 +1,4 @@
-// @ts-expect-error
+// @ts-expect-error - type definitions not available
 import { defineInlineTest } from 'jscodeshift/dist/testUtils'
 import transform from '../tanstack-query-import'
 import { getTestfixtures } from '../utils/getTestfixtures'
