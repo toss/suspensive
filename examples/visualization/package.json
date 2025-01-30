@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "author": "Jonghyeon Ko <jonghyeon@toss.im>",
+  "type": "module",
   "scripts": {
     "build": "next build",
     "ci:eslint": "eslint \"**/*.{js,jsx,cjs,mjs,ts,tsx,cts,mts}\"",
@@ -28,10 +29,9 @@
   "devDependencies": {
     "@suspensive/eslint-config": "workspace:*",
     "@suspensive/tsconfig": "workspace:*",
+    "@tailwindcss/postcss": "catalog:",
     "@types/react": "catalog:react19",
     "@types/react-dom": "catalog:react19",
-    "autoprefixer": "catalog:",
-    "postcss": "catalog:",
     "prettier-plugin-tailwindcss": "catalog:",
     "tailwindcss": "catalog:"
   }
