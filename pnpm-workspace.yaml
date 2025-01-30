@@ -13,9 +13,8 @@ catalog:
   "sharp": "^0.33.5"
 
   # tailwindcss
-  "autoprefixer": "^10.4.20"
-  "postcss": "^8.5.1"
   "prettier-plugin-tailwindcss": "^0.6.11"
+  "@tailwindcss/postcss": "^4.0.0"
   "tailwindcss": "^4.0.0"
   "clsx": "^2.1.1"
 
