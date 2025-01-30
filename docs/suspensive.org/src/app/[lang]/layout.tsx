@@ -1,4 +1,5 @@
 /* eslint-env node */
+import { GoogleAnalytics, GoogleTagManager } from '@next/third-parties/google'
 import { ClientOnly } from '@suspensive/react'
 import type { Metadata } from 'next'
 import Script from 'next/script'
@@ -90,16 +91,8 @@ export default async function RootLayout({
         >
           {children}
         </Layout>
-        <Script src="https://www.googletagmanager.com/gtag/js?id=G-NYQZGKRL0Y" />
-        <Script id="google-analytics">
-          {`
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-
-          gtag('config', 'G-NYQZGKRL0Y');
-        `}
-        </Script>
+        <GoogleTagManager gtmId="G-NYQZGKRL0Y" />
+        <GoogleAnalytics gaId="G-NYQZGKRL0Y" />
         <Script id="microsoft-clarity" type="text/javascript">
           {`
           (function(c,l,a,r,i,t,y){
