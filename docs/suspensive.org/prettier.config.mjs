@@ -4,6 +4,5 @@ import rootConfig from '../../prettier.config.mjs'
 export default {
   ...rootConfig,
   plugins: ['prettier-plugin-tailwindcss'],
-  tailwindConfig: './tailwind.config.js',
   printWidth: 80,
 }

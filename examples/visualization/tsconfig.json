@@ -27,8 +27,7 @@
     "eslint.config.mjs",
     "next.config.mjs",
     "postcss.config.js",
-    "prettier.config.mjs",
-    "tailwind.config.ts"
+    "prettier.config.mjs"
   ],
   "exclude": ["node_modules", ".next"]
 }

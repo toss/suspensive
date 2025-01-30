@@ -31,7 +31,6 @@
     "next.config.mjs",
     "postcss.config.js",
     "prettier.config.mjs",
-    "tailwind.config.ts",
     "theme.config.tsx"
   ],
   "exclude": ["node_modules"]
