@@ -28,6 +28,9 @@
     },
     "packages/react-dom": {
       "ignoreDependencies": ["react-dom", "@types/react-dom"]
+    },
+    "packages/codemods": {
+      "ignore": ["**/testfixtures/**"]
     }
   }
 }
