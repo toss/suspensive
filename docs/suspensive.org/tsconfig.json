@@ -11,7 +11,7 @@
     "incremental": true,
     "esModuleInterop": true,
     "isolatedModules": true,
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "jsx": "preserve",
     "module": "esnext",
     "resolveJsonModule": true,
@@ -31,7 +31,7 @@
     "next.config.mjs",
     "postcss.config.js",
     "prettier.config.mjs",
-    "tailwind.config.js",
+    "tailwind.config.ts",
     "theme.config.tsx"
   ],
   "exclude": ["node_modules"]

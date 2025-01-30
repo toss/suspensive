@@ -1,3 +1,5 @@
+'use client'
+
 import { ErrorBoundary, Suspense } from '@suspensive/react'
 import { SuspenseQuery, queryOptions } from '@suspensive/react-query-4'
 import {

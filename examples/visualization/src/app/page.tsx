@@ -3,7 +3,7 @@ import { Area, Box } from '~/components/uis'
 
 export default function Home() {
   return (
-    <div className="-mt-5 ml-4 mr-4 flex flex-1 justify-center">
+    <div className="-mt-5 mr-4 ml-4 flex flex-1 justify-center">
       <Area title="Check Concepts">
         <div className="flex flex-col justify-between gap-4 md:flex-row">
           <Link href="/react" className="flex-1">

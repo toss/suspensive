@@ -13,7 +13,7 @@
     },
     "docs/suspensive.org": {
       "ignore": ["theme.config.tsx"],
-      "ignoreDependencies": ["sharp", "nextra-theme-docs"],
+      "ignoreDependencies": ["sharp", "postcss", "server-only"],
       "entry": ["src/**/*.{ts,tsx,mdx}"]
     },
     "packages/react-query-4": {
@@ -23,7 +23,7 @@
       "ignoreDependencies": ["@suspensive/react", "@tanstack/react-query"]
     },
     "packages/react-native": {
-      "ignoreDependencies": ["expo", "ts-node"],
+      "ignoreDependencies": ["ts-node"],
       "ignore": ["babel.config.cjs"]
     },
     "packages/react-dom": {

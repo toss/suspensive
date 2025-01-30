@@ -1,5 +1,4 @@
 import { AnimatePresence, motion } from 'motion/react'
-import '../styles/globals.css'
 import Image from 'next/image'
 import { useState } from 'react'
 import checkSVG from '../../public/img/icons/check.svg'
