@@ -8,8 +8,8 @@
     "forceConsistentCasingInFileNames": true,
     "noEmit": true,
     "esModuleInterop": true,
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext",
+    "module": "esnext",
+    "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
@@ -25,10 +25,9 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "eslint.config.mjs",
-    "next.config.js",
+    "next.config.mjs",
     "postcss.config.js",
-    "prettier.config.mjs",
-    "tailwind.config.js"
+    "prettier.config.mjs"
   ],
   "exclude": ["node_modules", ".next"]
 }

@@ -41,7 +41,7 @@ In general, things we find useful when reviewing suggestions are:
    ```
 
 3. Please use the correct node version. You can use the version declared in [.nvmrc](https://github.com/toss/suspensive/blob/main/.nvmrc). We strongly recommend [nvm](https://github.com/nvm-sh/nvm) to control local machine's node version easily. also We recommend [nvm's deeper shell integration](https://github.com/nvm-sh/nvm#deeper-shell-integration) too.
-4. Install packages. [We use pnpm@9.12.3. Install pnpm with corepack please if you can](https://pnpm.io/installation#using-corepack). We recommend using corepack for pnpm to automatically use the version declared in the packageManager field of package.json.
+4. Install packages. [We use pnpm@9.15.4. Install pnpm with corepack please if you can](https://pnpm.io/installation#using-corepack). We recommend using corepack for pnpm to automatically use the version declared in the packageManager field of package.json.
 
    ```shell
    corepack enable && corepack prepare

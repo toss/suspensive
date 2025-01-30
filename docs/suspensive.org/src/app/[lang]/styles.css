@@ -1,0 +1,14 @@
+@import 'tailwindcss';
+@import 'nextra-theme-docs/style.css';
+
+.scrollbar-none {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+.scrollbar-none::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera*/
+}
+
+body {
+  background-color: #0c0c0c;
+}

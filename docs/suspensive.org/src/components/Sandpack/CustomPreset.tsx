@@ -1,3 +1,5 @@
+'use client'
+
 import {
   SandpackCodeEditor,
   SandpackConsole,
@@ -137,7 +139,7 @@ export const CustomPreset = (
         {...props.editorOptions}
       />
       <div
-        className="sp-resize-handler absolute bottom-0 top-0 z-[3] hidden w-[10px] cursor-ew-resize md:block"
+        className="sp-resize-handler absolute top-0 bottom-0 z-[3] hidden w-[10px] cursor-ew-resize md:block"
         data-direction="horizontal"
         onMouseDown={(event) => {
           dragEventTargetRef.current = event.currentTarget
@@ -173,7 +175,7 @@ export const CustomPreset = (
           <>
             {consoleVisibility && (
               <div
-                className="sp-resize-handler absolute left-0 right-0 z-[3] hidden h-[10px] cursor-ns-resize select-none md:block"
+                className="sp-resize-handler absolute right-0 left-0 z-[3] hidden h-[10px] cursor-ns-resize select-none md:block"
                 data-direction="vertical"
                 onMouseDown={(event): void => {
                   dragEventTargetRef.current = event.currentTarget

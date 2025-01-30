@@ -1,9 +1,11 @@
+'use client'
+
 import { ClientOnly } from '@suspensive/react'
 import { motion } from 'motion/react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useRouter } from 'nextra/hooks'
 import { useEffect, useRef } from 'react'
+import { NpmInstallCopyButton } from './NpmInstallCopyButton'
 
 const CodeBlockClassName = 'nextra-code'
 
@@ -16,30 +18,27 @@ const backtickToCodeBlock = (text: string) =>
 const formatCodeBlocks = (desc: string) => backtickToCodeBlock(escapeHtml(desc))
 
 export const HomePage = ({
-  description,
+  title,
   buttonText,
   items,
   children,
 }: {
   title: string
-  description: string
   buttonText: string
   items: { title: string; desc: string }[]
   version: number
   children?: React.ReactNode
 }) => {
-  const router = useRouter()
-
   return (
     <>
-      <StarCanvasFar />
       <ClientOnly>
+        <StarCanvasFar />
         <StarCanvasClose />
       </ClientOnly>
       <motion.section
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        className="bg-[url('/img/homepage_background.svg')] bg-cover bg-center bg-no-repeat pb-20"
+        className="-mx-12 -mt-4 bg-[url('/img/homepage_background.svg')] bg-cover bg-center bg-no-repeat px-10 pb-20"
       >
         <div className="flex flex-col items-center justify-center gap-8 text-center">
           <div className="flex flex-col items-center">
@@ -60,26 +59,15 @@ export const HomePage = ({
               />
             </div>
             <div className="flex flex-col items-center gap-4">
-              <div className="break-keep px-4 text-4xl font-bold leading-tight md:text-6xl">
-                <span>{description}</span>
+              <div className="bg-gradient-to-r from-white via-white/80 to-white/60 bg-clip-text text-4xl leading-tight font-bold break-keep text-transparent md:text-6xl">
+                <span>{title}</span>
               </div>
-              <motion.p
-                initial={{ opacity: 0 }}
-                animate={{
-                  opacity: 0.6,
-                  transition: { delay: 0.1, duration: 1 },
-                }}
-                className="rounded-full text-lg text-white md:text-xl"
-              >
-                npm i @suspensive/react
-              </motion.p>
             </div>
+            <NpmInstallCopyButton />
           </div>
-          <Link href={`/${router.locale}/docs/react/motivation`}>
+          <Link href={`/docs/react/motivation`}>
             <motion.button
-              whileHover={{
-                scale: 1.05,
-              }}
+              whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               initial={{ opacity: 0 }}
               animate={{
@@ -92,7 +80,7 @@ export const HomePage = ({
                   'drop-shadow(0 0 1px rgba(255, 255, 255, 0.5)) drop-shadow(0 0 3px rgba(255, 255, 255, 0.5)) drop-shadow(0 0 10px rgba(255, 255, 255, 0.5))',
               }}
               type="button"
-              className="rounded-xl bg-white px-8 py-3 text-lg font-bold text-[#111111] md:px-10 md:py-3 md:text-xl"
+              className="cursor-pointer rounded-xl bg-white px-7 py-2 text-lg font-bold text-[#111111] md:px-9 md:py-3 md:text-xl"
             >
               {buttonText}
             </motion.button>
@@ -124,7 +112,7 @@ export const HomePage = ({
         initial={{ y: 30, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ delay: 0.5, duration: 0.2 }}
-        className="container mx-auto px-4"
+        className="container"
       >
         {children}
       </motion.section>
@@ -261,7 +249,7 @@ const StarCanvasFar = () => {
   return (
     <canvas
       ref={canvasRef}
-      className="fixed bottom-0 left-0 right-0 top-0 -z-10 opacity-70"
+      className="fixed top-0 right-0 bottom-0 left-0 opacity-70"
     />
   )
 }
@@ -386,7 +374,7 @@ const StarCanvasClose = () => {
     <canvas
       ref={canvasRef}
       className={
-        'fixed bottom-0 left-0 right-0 top-0 -z-10 opacity-0 transition-opacity duration-100'
+        'fixed top-0 right-0 bottom-0 left-0 opacity-0 transition-opacity duration-100'
       }
     />
   )
