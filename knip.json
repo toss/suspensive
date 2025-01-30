@@ -13,7 +13,7 @@
     },
     "docs/suspensive.org": {
       "ignore": ["theme.config.tsx"],
-      "ignoreDependencies": ["sharp", "postcss", "server-only"],
+      "ignoreDependencies": ["sharp", "postcss", "server-only", "tailwindcss"],
       "entry": ["src/**/*.{ts,tsx,mdx}"]
     },
     "packages/react-query-4": {

@@ -9,6 +9,9 @@ catalogs:
     '@next/eslint-plugin-next':
       specifier: ^15.1.5
       version: 15.1.5
+    '@tailwindcss/postcss':
+      specifier: ^4.0.0
+      version: 4.0.0
     babel-jest:
       specifier: ^29.7.0
       version: 29.7.0
@@ -304,7 +307,7 @@ importers:
         specifier: workspace:*
         version: link:../../configs/eslint-config
       '@tailwindcss/postcss':
-        specifier: ^4.0.0
+        specifier: 'catalog:'
         version: 4.0.0
       '@types/d3':
         specifier: ^7.4.3
@@ -359,7 +362,7 @@ importers:
         specifier: workspace:*
         version: link:../../configs/eslint-config
       '@tailwindcss/postcss':
-        specifier: ^4.0.0
+        specifier: 'catalog:'
         version: 4.0.0
       '@types/react':
         specifier: catalog:react19
@@ -472,7 +475,7 @@ importers:
         specifier: workspace:*
         version: link:../../configs/tsconfig
       '@tailwindcss/postcss':
-        specifier: ^4.0.0
+        specifier: 'catalog:'
         version: 4.0.0
       '@types/react':
         specifier: catalog:react19

@@ -27,7 +27,7 @@
     "@suspensive/eslint-config": "workspace:*",
     "@types/react": "catalog:react19",
     "@types/react-dom": "catalog:react19",
-    "@tailwindcss/postcss": "^4.0.0",
+    "@tailwindcss/postcss": "catalog:",
     "prettier-plugin-tailwindcss": "catalog:",
     "tailwindcss": "catalog:"
   }

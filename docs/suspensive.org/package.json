@@ -42,7 +42,7 @@
   },
   "devDependencies": {
     "@suspensive/eslint-config": "workspace:*",
-    "@tailwindcss/postcss": "^4.0.0",
+    "@tailwindcss/postcss": "catalog:",
     "@types/d3": "^7.4.3",
     "@types/react": "catalog:react19",
     "@types/react-dom": "catalog:react19",
