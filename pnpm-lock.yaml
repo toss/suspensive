@@ -684,9 +684,6 @@ importers:
       '@suspensive/eslint-config':
         specifier: workspace:*
         version: link:../../configs/eslint-config
-      '@suspensive/react':
-        specifier: workspace:*
-        version: link:../react
       '@suspensive/tsconfig':
         specifier: workspace:*
         version: link:../../configs/tsconfig
@@ -705,9 +702,6 @@ importers:
       '@suspensive/eslint-config':
         specifier: workspace:*
         version: link:../../configs/eslint-config
-      '@suspensive/react':
-        specifier: workspace:*
-        version: link:../react
       '@suspensive/tsconfig':
         specifier: workspace:*
         version: link:../../configs/tsconfig
@@ -729,9 +723,6 @@ importers:
       '@suspensive/eslint-config':
         specifier: workspace:*
         version: link:../../configs/eslint-config
-      '@suspensive/react':
-        specifier: workspace:*
-        version: link:../react
       '@suspensive/tsconfig':
         specifier: workspace:*
         version: link:../../configs/tsconfig
