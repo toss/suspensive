@@ -1,5 +1,15 @@
 # @suspensive/react-query
 
+## 3.0.0-next.1
+
+### Patch Changes
+
+- [#1434](https://github.com/toss/suspensive/pull/1434) [`2be4348`](https://github.com/toss/suspensive/commit/2be434844157d63e16d5555fbb685c1757dd4fdf) Thanks [@manudeli](https://github.com/manudeli)! - remove peerDeps error
+
+- Updated dependencies [[`2be4348`](https://github.com/toss/suspensive/commit/2be434844157d63e16d5555fbb685c1757dd4fdf)]:
+  - @suspensive/react-query-4@3.0.0-next.1
+  - @suspensive/react-query-5@3.0.0-next.1
+
 ## 3.0.0-next.0
 
 ### Major Changes
