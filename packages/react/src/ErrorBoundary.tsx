@@ -136,7 +136,9 @@ class BaseErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState
     }
 
     return (
-      <ErrorBoundaryContext value={{ ...this.state, reset: this.reset }}>{childrenOrFallback}</ErrorBoundaryContext>
+      <ErrorBoundaryContext.Provider value={{ ...this.state, reset: this.reset }}>
+        {childrenOrFallback}
+      </ErrorBoundaryContext.Provider>
     )
   }
 }
