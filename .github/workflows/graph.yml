@@ -27,7 +27,7 @@ jobs:
       - name: Build with Turbo graph
         run: pnpm graph
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v2
+        uses: actions/upload-pages-artifact@v3
         with:
           path: ./graph
 
