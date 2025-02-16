@@ -1,5 +1,7 @@
 # @suspensive/react-query-4
 
+## 3.0.0-next.2
+
 ## 3.0.0-next.1
 
 ### Patch Changes

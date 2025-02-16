@@ -1,5 +1,11 @@
 # @suspensive/react
 
+## 3.0.0-next.2
+
+### Patch Changes
+
+- [#1437](https://github.com/toss/suspensive/pull/1437) [`a974e54`](https://github.com/toss/suspensive/commit/a974e540be58bacf892b8a3285eec126d9e511ef) Thanks [@manudeli](https://github.com/manudeli)! - chore(react): resolve ErrorBoundary error of @suspensive/react@3.0.0-next.1
+
 ## 3.0.0-next.1
 
 ## 3.0.0-next.0
