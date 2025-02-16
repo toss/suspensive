@@ -58,13 +58,8 @@
     "react": "catalog:react19"
   },
   "peerDependencies": {
-    "@tanstack/react-query": "^4",
+    "@tanstack/react-query": "*",
     "react": "^18 || ^19"
-  },
-  "peerDependenciesMeta": {
-    "@tanstack/react-query": {
-      "optional": true
-    }
   },
   "publishConfig": {
     "access": "public"
