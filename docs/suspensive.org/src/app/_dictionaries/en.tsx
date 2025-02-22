@@ -15,7 +15,6 @@ export default {
       <Link href="https://v3.suspensive.org/en/docs/migrate-to-v3">
         read more
       </Link>
-      🚀
     </span>
   ),
   lastUpdated: 'Last updated on',
