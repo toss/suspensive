@@ -20,7 +20,7 @@ export const Logo = () => {
       </motion.span>
       <div className="relative">
         <strong>Suspensive</strong>
-        <span className="absolute text-[8px]">v2</span>
+        <span className="absolute text-[8px]">v3</span>
       </div>
     </motion.div>
   )

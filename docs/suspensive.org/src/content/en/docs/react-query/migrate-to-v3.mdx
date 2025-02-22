@@ -1,0 +1,16 @@
+# Migrating to v3
+
+@suspensive/react-query v1 was originally [added as one of TanStack Query's community resources](https://tanstack.com/query/v4/docs/framework/react/community/suspensive-react-query) and was a library that provided `useSuspenseQuery`, `useSuspenseQueries` and `useSuspenseInfiniteQuery` to users of @tanstack/react-query v4.
+Afterwards, [as `useSuspenseQuery`, `useSuspenseQueries`, and `useSuspenseInfiniteQuery` were officially added to @tanstack/react-query v5](https://github.com/TanStack/query/pull/5739) with changes interfaces such as enabled disappeared and queryOptions were received as one.
+Therefore **we made the interface of @suspensive/react-query v2 as similar to the official interface as possible to make it easier for existing users of @suspensive/react-query v1 to migrate to @tanstack/react-query v5**.
+
+However, because of [the higher browser specifications (class private fields) required by @tanstack/react-query v5](https://tanstack.com/query/v5/docs/framework/react/installation#requirements), @tanstack/react-query v4 is still useful to many teams.
+Therefore, we will maintain support for @tanstack/react-query v4.
+
+## What's new
+
+### Draft
+
+## Handling BREAKING CHANGES
+
+### Draft
