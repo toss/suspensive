@@ -52,7 +52,9 @@ export default async function RootLayout({
         <Layout
           darkMode={false}
           banner={
-            <Banner storageKey="suspensive banner">{dictionary.banner}</Banner>
+            <Banner storageKey="suspensive-banner-0">
+              {dictionary.banner}
+            </Banner>
           }
           search={<Search placeholder={dictionary.search.placeholder} />}
           navbar={

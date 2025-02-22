@@ -20,6 +20,10 @@ export default {
         title: 'latest',
         href: 'https://suspensive.org/ko',
       },
+      v3: {
+        title: 'v3 (WIP)',
+        href: 'https://v3.suspensive.org',
+      },
       v2: {
         title: 'v2',
         href: 'https://v2.suspensive.org/ko',
