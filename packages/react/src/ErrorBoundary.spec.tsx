@@ -528,3 +528,33 @@ describe('useErrorBoundaryFallbackProps', () => {
     expect(inFallback).toHaveBeenCalledTimes(0)
   })
 })
+
+describe('ErrorBoundary.with', () => {
+  beforeEach(() => Throw.reset())
+
+  it("should render the wrapped component when there's no error", () => {
+    render(createElement(ErrorBoundary.with({ fallback: (props) => <>{props.error.message}</> }, () => <>{TEXT}</>)))
+    expect(screen.queryByText(TEXT)).toBeInTheDocument()
+  })
+
+  it('should render the fallback when there`s an error in the wrapped component', async () => {
+    render(
+      createElement(
+        ErrorBoundary.with({ fallback: (props) => <>{props.error.message}</> }, () => (
+          <Throw.Error message={ERROR_MESSAGE} after={ms('0.1s')}>
+            {TEXT}
+          </Throw.Error>
+        ))
+      )
+    )
+    expect(screen.queryByText(TEXT)).toBeInTheDocument()
+    await waitFor(() => expect(screen.queryByText(ERROR_MESSAGE)).toBeInTheDocument())
+  })
+
+  it('should set displayName based on Component.displayName', () => {
+    const Component = () => <></>
+    Component.displayName = 'Custom'
+    expect(ErrorBoundary.with({ fallback: () => <></> }, Component).displayName).toBe('ErrorBoundary.with(Custom)')
+    expect(ErrorBoundary.with({ fallback: () => <></> }, () => <></>).displayName).toBe('ErrorBoundary.with(Component)')
+  })
+})
