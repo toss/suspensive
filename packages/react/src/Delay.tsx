@@ -51,7 +51,7 @@ export const Delay = Object.assign(
   },
   {
     displayName: 'Delay',
-    wrap: <TProps extends ComponentProps<ComponentType> = Record<string, never>>(
+    with: <TProps extends ComponentProps<ComponentType> = Record<string, never>>(
       Component: ComponentType<TProps>,
       delayProps: PropsWithoutChildren<DelayProps> = {}
     ) =>
@@ -61,7 +61,7 @@ export const Delay = Object.assign(
             <Component {...props} />
           </Delay>
         ),
-        { displayName: `Delay.wrap(${Component.displayName || Component.name || 'Component'})` }
+        { displayName: `Delay.with(${Component.displayName || Component.name || 'Component'})` }
       ),
   }
 )

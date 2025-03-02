@@ -29,7 +29,7 @@ export const Suspense = Object.assign(
   },
   {
     displayName: 'Suspense',
-    wrap: <TProps extends ComponentProps<ComponentType> = Record<string, never>>(
+    with: <TProps extends ComponentProps<ComponentType> = Record<string, never>>(
       suspenseProps: PropsWithoutChildren<SuspenseProps> = {},
       Component: ComponentType<TProps>
     ) =>
@@ -39,7 +39,7 @@ export const Suspense = Object.assign(
             <Component {...props} />
           </Suspense>
         ),
-        { displayName: `ErrorBoundaryGroup.wrap(${Component.displayName || Component.name || 'Component'})` }
+        { displayName: `ErrorBoundaryGroup.with(${Component.displayName || Component.name || 'Component'})` }
       ),
   }
 )
