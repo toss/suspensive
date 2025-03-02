@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 import { createElement } from 'react'
 import { type Mock } from 'vitest'
 import { ClientOnly } from './ClientOnly'
@@ -42,7 +42,7 @@ describe('<ClientOnly/>', () => {
 })
 
 describe('ClientOnly.with', () => {
-  it('should wrap component. we can check by mocked useIsClient', async () => {
+  it('should wrap component. we can check by mocked useIsClient', () => {
     ;(useIsClient as Mock).mockReturnValue(false)
 
     render(createElement(ClientOnly.with({ fallback: 'not client' }, () => <>{TEXT}</>)))
