@@ -2,4 +2,4 @@
 "@suspensive/react": major
 ---
 
-feat(react): wrap as method
+feat(react): with as method
