@@ -1,17 +1,17 @@
-import type { Heading, NextraMetadata } from 'nextra'
+import type { $NextraMetadata, Heading } from 'nextra'
 import { generateStaticParamsFor, importPage } from 'nextra/pages'
 import { FadeIn } from './FadeIn'
 import { useMDXComponents } from '@/mdx-components'
 
 type Page = {
   toc: Array<Heading>
-  metadata: NextraMetadata
+  metadata: $NextraMetadata
   default: React.ComponentType<{ params: Awaited<PageProps['params']> }>
 }
 export const generateStaticParams = generateStaticParamsFor('mdxPath')
 
 type PageProps = Readonly<{
-  params: Promise<{ mdxPath?: string[]; lang: string }>
+  params: Promise<{ mdxPath: string[]; lang: string }>
 }>
 export const generateMetadata = async (props: PageProps) => {
   const params = await props.params
@@ -29,7 +29,7 @@ export default async function Page(props: PageProps) {
       {page.metadata.filePath.includes('index.mdx') ? (
         <page.default {...props} params={params} />
       ) : (
-        <FadeIn key={params.mdxPath?.join('/')}>
+        <FadeIn key={params.mdxPath.join('/')}>
           <page.default {...props} params={params} />
         </FadeIn>
       )}
