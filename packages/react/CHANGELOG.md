@@ -1,5 +1,11 @@
 # @suspensive/react
 
+## 3.0.0-next.3
+
+### Major Changes
+
+- [#1452](https://github.com/toss/suspensive/pull/1452) [`79cfd61`](https://github.com/toss/suspensive/commit/79cfd6169deda65fe8bad27d2162d757c9eb0b5a) Thanks [@manudeli](https://github.com/manudeli)! - feat(react): with as method
+
 ## 3.0.0-next.2
 
 ### Patch Changes
