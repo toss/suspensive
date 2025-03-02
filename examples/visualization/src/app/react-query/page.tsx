@@ -12,7 +12,7 @@ const delayQuery = (id: number, { ms, percentage }: { ms: number; percentage: nu
     queryFn: () => api.delay(ms, { percentage }),
   })
 
-export default ErrorBoundaryGroup.wrap({}, () => {
+export default ErrorBoundaryGroup.with({}, () => {
   const queryErrorResetBoundary = useQueryErrorResetBoundary()
 
   return (

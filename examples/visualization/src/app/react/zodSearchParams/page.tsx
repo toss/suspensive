@@ -16,7 +16,7 @@ const searchParamsSchema = z.object({
     .int('searchParam: id type should be integer')
     .min(1, 'searchParam: id type should be number bigger than 1'),
 })
-export default ErrorBoundary.wrap(
+export default ErrorBoundary.with(
   {
     shouldCatch: ZodError,
     fallback: ({ error }) =>
@@ -29,7 +29,7 @@ export default ErrorBoundary.wrap(
         </div>
       ) : null,
   },
-  Suspense.wrap({ fallback: <Spinner /> }, () => {
+  Suspense.with({ fallback: <Spinner /> }, () => {
     const searchParams = useSearchParams()
     const { id } = searchParamsSchema.parse(Object.fromEntries(searchParams.entries()))
     const userQuery = useSuspenseQuery({

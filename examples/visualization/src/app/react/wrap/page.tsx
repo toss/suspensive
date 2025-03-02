@@ -4,11 +4,11 @@ import { ErrorBoundary, ErrorBoundaryGroup, Suspense, useErrorBoundary } from '@
 
 const logError = (error: Error) => console.error(error)
 
-export default ErrorBoundaryGroup.wrap(
+export default ErrorBoundaryGroup.with(
   { blockOutside: false },
-  ErrorBoundary.wrap(
+  ErrorBoundary.with(
     { fallback: (props) => <div>{props.error.message}</div>, onError: logError },
-    Suspense.wrap({ clientOnly: true, fallback: 'loading...' }, ({ text }: { text: string }) => {
+    Suspense.with({ clientOnly: true, fallback: 'loading...' }, ({ text }: { text: string }) => {
       const errorBoundary = useErrorBoundary()
 
       return (
