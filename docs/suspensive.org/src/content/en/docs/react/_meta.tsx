@@ -15,5 +15,4 @@ export default {
   Delay: { title: '<Delay/>' },
   ClientOnly: { title: '<ClientOnly/>' },
   DefaultPropsProvider: { title: '<DefaultPropsProvider/>' },
-  wrap: { title: 'wrap' },
 } satisfies MetaRecord

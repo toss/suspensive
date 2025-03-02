@@ -1,5 +1,6 @@
-import { type SuspenseProps as ReactSuspenseProps, useContext } from 'react'
+import { type ComponentProps, type ComponentType, type SuspenseProps as ReactSuspenseProps, useContext } from 'react'
 import { SuspenseDefaultPropsContext } from './contexts'
+import type { PropsWithoutChildren } from './utility-types'
 import { defineSuspense } from './utils'
 
 export interface SuspenseProps extends ReactSuspenseProps {
@@ -14,17 +15,31 @@ export interface SuspenseProps extends ReactSuspenseProps {
  * This component is just wrapping React's Suspense. to use Suspense easily in Server-side rendering environment like Next.js
  * @see {@link https://suspensive.org/docs/react/Suspense Suspensive Docs}
  */
-export const Suspense = ({ clientOnly, children, fallback }: SuspenseProps) => {
-  const defaultProps = useContext(SuspenseDefaultPropsContext)
-  const DefinedSuspense = defineSuspense({
-    defaultPropsClientOnly: defaultProps.clientOnly,
-    componentPropsClientOnly: clientOnly,
-  })
+export const Suspense = Object.assign(
+  ({ clientOnly, children, fallback }: SuspenseProps) => {
+    const defaultProps = useContext(SuspenseDefaultPropsContext)
+    const DefinedSuspense = defineSuspense({
+      defaultPropsClientOnly: defaultProps.clientOnly,
+      componentPropsClientOnly: clientOnly,
+    })
 
-  return (
-    <DefinedSuspense fallback={fallback === undefined ? defaultProps.fallback : fallback}>{children}</DefinedSuspense>
-  )
-}
-if (process.env.NODE_ENV === 'development') {
-  Suspense.displayName = 'Suspense'
-}
+    return (
+      <DefinedSuspense fallback={fallback === undefined ? defaultProps.fallback : fallback}>{children}</DefinedSuspense>
+    )
+  },
+  {
+    displayName: 'Suspense',
+    with: <TProps extends ComponentProps<ComponentType> = Record<string, never>>(
+      suspenseProps: PropsWithoutChildren<SuspenseProps> = {},
+      Component: ComponentType<TProps>
+    ) =>
+      Object.assign(
+        (props: TProps) => (
+          <Suspense {...suspenseProps}>
+            <Component {...props} />
+          </Suspense>
+        ),
+        { displayName: `ErrorBoundaryGroup.with(${Component.displayName || Component.name || 'Component'})` }
+      ),
+  }
+)
