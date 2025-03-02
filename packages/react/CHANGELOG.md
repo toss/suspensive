@@ -1,5 +1,11 @@
 # @suspensive/react
 
+## 3.0.0-next.4
+
+### Patch Changes
+
+- [#1455](https://github.com/toss/suspensive/pull/1455) [`05a9759`](https://github.com/toss/suspensive/commit/05a9759a00582ecd418bb7fe20f015045369e109) Thanks [@manudeli](https://github.com/manudeli)! - fix(react): fix wrong interface of with method
+
 ## 3.0.0-next.3
 
 ### Major Changes
