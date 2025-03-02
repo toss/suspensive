@@ -249,7 +249,7 @@ const StarCanvasFar = () => {
   return (
     <canvas
       ref={canvasRef}
-      className="fixed top-0 right-0 bottom-0 left-0 opacity-70"
+      className="pointer-events-none fixed top-0 right-0 bottom-0 left-0 opacity-70"
     />
   )
 }
@@ -374,7 +374,7 @@ const StarCanvasClose = () => {
     <canvas
       ref={canvasRef}
       className={
-        'fixed top-0 right-0 bottom-0 left-0 opacity-0 transition-opacity duration-100'
+        'pointer-events-none fixed top-0 right-0 bottom-0 left-0 opacity-0 transition-opacity duration-100'
       }
     />
   )
