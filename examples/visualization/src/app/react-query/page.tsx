@@ -1,6 +1,6 @@
 'use client'
 
-import { ErrorBoundary, ErrorBoundaryGroup, Suspense, wrap } from '@suspensive/react'
+import { ErrorBoundary, ErrorBoundaryGroup, Suspense } from '@suspensive/react'
 import { SuspenseQuery } from '@suspensive/react-query-5'
 import { queryOptions, useQueryErrorResetBoundary } from '@tanstack/react-query'
 import { Area, Box, Button, RejectedFallback, Spinner } from '~/components/uis'
@@ -12,7 +12,7 @@ const delayQuery = (id: number, { ms, percentage }: { ms: number; percentage: nu
     queryFn: () => api.delay(ms, { percentage }),
   })
 
-export default wrap.ErrorBoundaryGroup({}).on(function Page() {
+export default ErrorBoundaryGroup.wrap({}, () => {
   const queryErrorResetBoundary = useQueryErrorResetBoundary()
 
   return (

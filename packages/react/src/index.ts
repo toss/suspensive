@@ -3,7 +3,6 @@ export { Suspense } from './Suspense'
 export { ErrorBoundary, useErrorBoundary, useErrorBoundaryFallbackProps } from './ErrorBoundary'
 export { ErrorBoundaryGroup, useErrorBoundaryGroup } from './ErrorBoundaryGroup'
 export { Delay } from './Delay'
-export { wrap } from './wrap'
 export { ClientOnly } from './ClientOnly'
 
 export type { SuspenseProps } from './Suspense'

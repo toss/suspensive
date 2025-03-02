@@ -1,5 +1,7 @@
 import {
   Component,
+  type ComponentProps,
+  type ComponentType,
   type ErrorInfo,
   type FunctionComponent,
   type PropsWithChildren,
@@ -18,7 +20,7 @@ import {
   Message_useErrorBoundary_this_hook_should_be_called_in_ErrorBoundary_props_children,
   SuspensiveError,
 } from './models/SuspensiveError'
-import type { ConstructorType } from './utility-types'
+import type { ConstructorType, PropsWithoutChildren } from './utility-types'
 import { hasResetKeysChanged } from './utils'
 
 export interface ErrorBoundaryFallbackProps<TError extends Error = Error> {
@@ -164,49 +166,53 @@ class FallbackBoundary extends Component<{ children: ReactNode }> {
  * @see {@link https://suspensive.org/docs/react/ErrorBoundary Suspensive Docs}
  */
 export const ErrorBoundary = Object.assign(
-  (() => {
-    const ErrorBoundary = forwardRef<{ reset(): void }, ErrorBoundaryProps>(
-      // TODO: remove this line
-      // eslint-disable-next-line @typescript-eslint/unbound-method
-      ({ fallback, children, onError, onReset, resetKeys, shouldCatch }, ref) => {
-        const group = useContext(ErrorBoundaryGroupContext) ?? { resetKey: 0 }
-        const baseErrorBoundaryRef = useRef<BaseErrorBoundary>(null)
-        useImperativeHandle(ref, () => ({
-          reset: () => baseErrorBoundaryRef.current?.reset(),
-        }))
+  forwardRef<{ reset(): void }, ErrorBoundaryProps>(
+    // TODO: remove this line
+    // eslint-disable-next-line @typescript-eslint/unbound-method
+    ({ fallback, children, onError, onReset, resetKeys, shouldCatch }, ref) => {
+      const group = useContext(ErrorBoundaryGroupContext) ?? { resetKey: 0 }
+      const baseErrorBoundaryRef = useRef<BaseErrorBoundary>(null)
+      useImperativeHandle(ref, () => ({
+        reset: () => baseErrorBoundaryRef.current?.reset(),
+      }))
 
-        return (
-          <BaseErrorBoundary
-            shouldCatch={shouldCatch}
-            fallback={fallback}
-            onError={onError}
-            onReset={onReset}
-            resetKeys={[group.resetKey, ...(resetKeys || [])]}
-            ref={baseErrorBoundaryRef}
-          >
-            {children}
-          </BaseErrorBoundary>
-        )
-      }
-    )
-
-    if (process.env.NODE_ENV === 'development') {
-      ErrorBoundary.displayName = 'ErrorBoundary'
+      return (
+        <BaseErrorBoundary
+          shouldCatch={shouldCatch}
+          fallback={fallback}
+          onError={onError}
+          onReset={onReset}
+          resetKeys={[group.resetKey, ...(resetKeys || [])]}
+          ref={baseErrorBoundaryRef}
+        >
+          {children}
+        </BaseErrorBoundary>
+      )
     }
-
-    return ErrorBoundary
-  })(),
+  ),
   {
+    displayName: 'ErrorBoundary',
+    wrap: <TProps extends ComponentProps<ComponentType> = Record<string, never>>(
+      errorBoundaryProps: PropsWithoutChildren<ErrorBoundaryProps> = { fallback: undefined },
+      Component: ComponentType<TProps>
+    ) =>
+      Object.assign(
+        (props: TProps) => (
+          <ErrorBoundary {...errorBoundaryProps}>
+            <Component {...props} />
+          </ErrorBoundary>
+        ),
+        { displayName: `ErrorBoundary.wrap(${Component.displayName || Component.name || 'Component'})` }
+      ),
     Consumer: ({ children }: { children: (errorBoundary: ReturnType<typeof useErrorBoundary>) => ReactNode }) => (
       <>{children(useErrorBoundary())}</>
     ),
   }
 )
 
-const ErrorBoundaryContext = createContext<({ reset: () => void } & ErrorBoundaryState) | null>(null)
-if (process.env.NODE_ENV === 'development') {
-  ErrorBoundaryContext.displayName = 'ErrorBoundaryContext'
-}
+const ErrorBoundaryContext = Object.assign(createContext<({ reset: () => void } & ErrorBoundaryState) | null>(null), {
+  displayName: 'ErrorBoundaryContext',
+})
 
 /**
  * This hook provides a simple and reusable wrapper that you can use to wrap around your components. Any rendering errors in your components hierarchy can then be gracefully handled.
