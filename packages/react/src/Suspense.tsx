@@ -39,7 +39,7 @@ export const Suspense = Object.assign(
             <Component {...props} />
           </Suspense>
         ),
-        { displayName: `ErrorBoundaryGroup.with(${Component.displayName || Component.name || 'Component'})` }
+        { displayName: `Suspense.with(${Component.displayName || Component.name || 'Component'})` }
       ),
   }
 )
