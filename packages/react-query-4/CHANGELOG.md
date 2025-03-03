@@ -1,5 +1,11 @@
 # @suspensive/react-query-4
 
+## 3.0.0-next.5
+
+### Major Changes
+
+- [#1458](https://github.com/toss/suspensive/pull/1458) [`c78cbfd`](https://github.com/toss/suspensive/commit/c78cbfd1f2cf95720f6cb1e5963178e51b041c2b) Thanks [@gwansikk](https://github.com/gwansikk)! - feat(react-query-4): set network mode to always
+
 ## 3.0.0-next.4
 
 ## 3.0.0-next.3
