@@ -6,6 +6,7 @@ export default {
     display: 'hidden',
     theme: {
       layout: 'full',
+      toc: false,
     },
   },
   docs: {

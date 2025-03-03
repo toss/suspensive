@@ -22,23 +22,23 @@
     "start": "next start -p 4000"
   },
   "dependencies": {
-    "@codesandbox/sandpack-react": "^2.19.10",
-    "@next/third-parties": "^15.1.6",
+    "@codesandbox/sandpack-react": "^2.20.0",
+    "@next/third-parties": "^15.2.0",
     "@suspensive/react": "workspace:*",
     "@suspensive/react-query-4": "workspace:*",
     "@tanstack/react-query": "^4.36.1",
     "@tanstack/react-query-devtools": "^4.36.1",
     "codehike": "^1.0.4",
     "d3": "^7.9.0",
-    "motion": "^11.13.5",
+    "motion": "^12.4.7",
     "next": "catalog:",
-    "nextra": "^4.1.0",
-    "nextra-theme-docs": "^4.1.0",
+    "nextra": "^4.2.13",
+    "nextra-theme-docs": "^4.2.13",
     "react": "catalog:react19",
     "react-dom": "catalog:react19",
     "remark-sandpack": "^0.0.5",
     "sharp": "catalog:",
-    "zod": "^3.24.1"
+    "zod": "^3.24.2"
   },
   "devDependencies": {
     "@suspensive/eslint-config": "workspace:*",
