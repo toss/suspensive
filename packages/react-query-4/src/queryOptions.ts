@@ -22,6 +22,7 @@ export type SelectedQueryOptions<
     | 'enabled'
     | 'refetchInterval'
     | 'initialData'
+    | 'networkMode'
   >,
   'queryKey' | 'queryFn'
 > & {
@@ -49,6 +50,7 @@ export type UnSelectedQueryOptions<
     | 'enabled'
     | 'refetchInterval'
     | 'initialData'
+    | 'networkMode'
   >,
   'queryKey' | 'queryFn'
 > & {

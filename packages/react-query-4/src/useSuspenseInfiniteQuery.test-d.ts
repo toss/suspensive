@@ -38,6 +38,12 @@ describe('useSuspenseInfiniteQuery', () => {
       queryFn,
       // @ts-expect-error no isPlaceholderData
     }).isPlaceholderData
+    useSuspenseInfiniteQuery({
+      queryKey,
+      queryFn,
+      //@ts-expect-error no networkMode
+      networkMode: 'always',
+    })
 
     const infiniteQuery = useSuspenseInfiniteQuery({ queryKey, queryFn })
     expectTypeOf(infiniteQuery).toEqualTypeOf<UseSuspenseInfiniteQueryResult<{ text: string }>>()
