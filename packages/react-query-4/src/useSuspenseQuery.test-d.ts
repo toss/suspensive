@@ -37,6 +37,12 @@ describe('useSuspenseQuery', () => {
       queryFn,
       //@ts-expect-error no isPlaceholderData
     }).isPlaceholderData
+    useSuspenseQuery({
+      queryKey,
+      queryFn,
+      //@ts-expect-error no networkMode
+      networkMode: 'always',
+    })
 
     const result = useSuspenseQuery({ queryKey, queryFn })
     expectTypeOf(result).toEqualTypeOf<UseSuspenseQueryResult<{ text: string }>>()
