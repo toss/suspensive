@@ -2,6 +2,9 @@ import { type CSSProperties, useMemo } from 'react'
 import { type InViewOptions, useInView } from './useInView'
 import type { OmitKeyof } from './utility-types'
 
+/**
+ * @experimental This is experimental feature.
+ */
 export type FadeInOptions = OmitKeyof<
   InViewOptions,
   'fallbackInView' | 'initialInView' | 'skip' | 'onChange' | 'trackVisibility'
@@ -24,6 +27,9 @@ type FadeInResult = Pick<ReturnType<typeof useInView>, 'ref'> & {
     transition: `opacity ${number}ms ${Required<CSSProperties>['transitionTimingFunction']}`
   }
 }
+/**
+ * @experimental This is experimental feature.
+ */
 export function useFadeIn({
   duration = 200,
   timingFunction = 'linear',
@@ -43,6 +49,6 @@ export function useFadeIn({
         transition: `opacity ${duration}ms ${timingFunction}` as const,
       },
     }),
-    [inView, duration, timingFunction]
+    [inView, duration, timingFunction, ref]
   )
 }

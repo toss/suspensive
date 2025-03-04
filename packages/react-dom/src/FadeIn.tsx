@@ -6,6 +6,7 @@ type FadeInProps = FadeInOptions & {
 }
 /**
  * A component that fades in when it comes into view.
+ * @experimental This is experimental feature.
  */
 export function FadeIn({
   duration = 200,
