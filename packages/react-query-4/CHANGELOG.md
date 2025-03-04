@@ -1,5 +1,7 @@
 # @suspensive/react-query-4
 
+## 3.0.0-next.6
+
 ## 3.0.0-next.5
 
 ### Major Changes

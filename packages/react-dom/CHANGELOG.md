@@ -1,5 +1,11 @@
 # @suspensive/react-dom
 
+## 3.0.0-next.6
+
+### Major Changes
+
+- [#1467](https://github.com/toss/suspensive/pull/1467) [`f1fa810`](https://github.com/toss/suspensive/commit/f1fa8101a17285dc343f4e342d372a1cac40d29f) Thanks [@manudeli](https://github.com/manudeli)! - feat(react-dom): v3.0.0
+
 ## 0.2.1
 
 ### Patch Changes
