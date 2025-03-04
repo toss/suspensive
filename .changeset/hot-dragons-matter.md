@@ -2,4 +2,4 @@
 "@suspensive/react-dom": major
 ---
 
-feat(react-dom): 3.0.0
+feat(react-dom): v3.0.0
