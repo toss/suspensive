@@ -8,49 +8,49 @@ codecov:
           target: 100%
           threshold: 30%
 
-  comment:
-    layout: 'header, reach, diff, flags, components'
-    behavior: default
-    require_changes: false
-    require_base: false
-    require_head: true
-    hide_project_coverage: false
+comment:
+  layout: 'header, reach, diff, flags, components'
+  behavior: default
+  require_changes: false
+  require_base: false
+  require_head: true
+  hide_project_coverage: false
 
-  ignore:
-    - '**/*.test-d.*'
-    - '**/test-utils/*'
+ignore:
+  - '**/*.test-d.*'
+  - '**/test-utils/*'
 
-  component_management:
-    individual_components:
-      - component_id: react
-        name: '@suspensive/react'
-        paths:
-          - packages/react/**
-      - component_id: react-dom
-        name: '@suspensive/react-dom'
-        paths:
-          - packages/react-dom/**
-      - component_id: react-native
-        name: '@suspensive/react-native'
-        paths:
-          - packages/react-native/**
-      - component_id: react-query
-        name: '@suspensive/react-query'
-        paths:
-          - packages/react-query/**
-      - component_id: react-query-4
-        name: '@suspensive/react-query-4'
-        paths:
-          - packages/react-query-4/**
-      - component_id: react-query-5
-        name: '@suspensive/react-query-5'
-        paths:
-          - packages/react-query-5/**
-      - component_id: jotai
-        name: '@suspensive/jotai'
-        paths:
-          - packages/jotai/**
-      - component_id: codemods
-        name: '@suspensive/codemods'
-        paths:
-          - packages/codemods/**
+component_management:
+  individual_components:
+    - component_id: react
+      name: '@suspensive/react'
+      paths:
+        - packages/react/**
+    - component_id: react-dom
+      name: '@suspensive/react-dom'
+      paths:
+        - packages/react-dom/**
+    - component_id: react-native
+      name: '@suspensive/react-native'
+      paths:
+        - packages/react-native/**
+    - component_id: react-query
+      name: '@suspensive/react-query'
+      paths:
+        - packages/react-query/**
+    - component_id: react-query-4
+      name: '@suspensive/react-query-4'
+      paths:
+        - packages/react-query-4/**
+    - component_id: react-query-5
+      name: '@suspensive/react-query-5'
+      paths:
+        - packages/react-query-5/**
+    - component_id: jotai
+      name: '@suspensive/jotai'
+      paths:
+        - packages/jotai/**
+    - component_id: codemods
+      name: '@suspensive/codemods'
+      paths:
+        - packages/codemods/**
