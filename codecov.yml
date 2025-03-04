@@ -1,12 +1,10 @@
-codecov:
-  max_report_age: 12h
-  coverage:
-    status:
-      patch: off
-      project:
-        default:
-          target: 100%
-          threshold: 30%
+coverage:
+  status:
+    patch: off
+    project:
+      default:
+        target: 100%
+        threshold: 30%
 
 comment:
   layout: 'header, reach, diff, flags, components'
