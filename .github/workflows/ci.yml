@@ -24,7 +24,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/pnpm-setup-node
-      - run: pnpm install --frozen-lockfile
+      - run: pnpm install
       - if: matrix.command == 'ci:test'
         run: pnpm playwright install
       - run: pnpm ${{ matrix.command }}
