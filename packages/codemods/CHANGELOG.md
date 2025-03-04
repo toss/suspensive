@@ -1,5 +1,11 @@
 # @suspensive/codemods
 
+## 3.0.0-next.6
+
+### Major Changes
+
+- [#1461](https://github.com/toss/suspensive/pull/1461) [`9e1c24d`](https://github.com/toss/suspensive/commit/9e1c24dc93b70856c93f44d8b1871a0f10452a8b) Thanks [@manudeli](https://github.com/manudeli)! - feat(codemods): fixed version like other suspensive libraries
+
 ## 0.2.0
 
 ### Minor Changes

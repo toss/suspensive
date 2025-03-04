@@ -1,5 +1,39 @@
 # @suspensive/react
 
+## 3.0.0-next.6
+
+## 3.0.0-next.5
+
+## 3.0.0-next.4
+
+### Patch Changes
+
+- [#1455](https://github.com/toss/suspensive/pull/1455) [`05a9759`](https://github.com/toss/suspensive/commit/05a9759a00582ecd418bb7fe20f015045369e109) Thanks [@manudeli](https://github.com/manudeli)! - fix(react): fix wrong interface of with method
+
+## 3.0.0-next.3
+
+### Major Changes
+
+- [#1452](https://github.com/toss/suspensive/pull/1452) [`79cfd61`](https://github.com/toss/suspensive/commit/79cfd6169deda65fe8bad27d2162d757c9eb0b5a) Thanks [@manudeli](https://github.com/manudeli)! - feat(react): with as method
+
+## 3.0.0-next.2
+
+### Patch Changes
+
+- [#1437](https://github.com/toss/suspensive/pull/1437) [`a974e54`](https://github.com/toss/suspensive/commit/a974e540be58bacf892b8a3285eec126d9e511ef) Thanks [@manudeli](https://github.com/manudeli)! - chore(react): resolve ErrorBoundary error of @suspensive/react@3.0.0-next.1
+
+## 3.0.0-next.1
+
+## 3.0.0-next.0
+
+### Major Changes
+
+- [#1424](https://github.com/toss/suspensive/pull/1424) [`59a809d`](https://github.com/toss/suspensive/commit/59a809d8e91e92ef7b1dd0a874d65c0707bf371e) Thanks [@manudeli](https://github.com/manudeli)! - feat(v3): remove deprecated interfaces
+
+### Minor Changes
+
+- [#1409](https://github.com/toss/suspensive/pull/1409) [`124238c`](https://github.com/toss/suspensive/commit/124238c66056fd036765a2725ea3383236d19fec) Thanks [@manudeli](https://github.com/manudeli)! - feat(react): prevent recursive expose fallback when fallback throw error
+
 ## 2.18.12
 
 ### Patch Changes
