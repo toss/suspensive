@@ -2,9 +2,9 @@ import { QueryClient } from '@tanstack/react-query'
 import { QueryClientConsumer } from '@suspensive/react-query'
 
 const queryClient = new QueryClient()
-const queryClientContext = createContext<QueryClient>(queryClient)
+const queryClientContext = createContext(queryClient)
 
-const Test = () => {
+const PostRefreshButton = () => {
   return (
     <QueryClientConsumer context={queryClientContext}>
       {(queryClient) => (

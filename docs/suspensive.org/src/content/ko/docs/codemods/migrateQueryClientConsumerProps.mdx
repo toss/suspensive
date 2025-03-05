@@ -1,0 +1,62 @@
+import { Callout } from '@/components'
+
+# `<QueryClientConsumer/>` Props 변환
+
+<Callout type='info'>
+
+해당 codemod는 `@suspensive/react-query` & `@tanstack/react-query` v4 환경에서 `@tanstack/react-query`를 v5로 업데이트하는 경우 추천합니다.
+
+</Callout>
+
+`@suspensive/react-query` & `@tanstack/react-query` v5 환경에서는 `@suspensive/react-query`가 제공하는 `<QueryClientConsumer/>` 컴포넌트의 `context` props가 `queryClient`로 변경되었습니다.
+
+```shell
+npx @suspensive/codemods migrate-query-client-consumer-props .
+```
+
+이 codemod를 통해 변경된 `context` props를 `queryClient`로 변환할 수 있습니다.
+
+예:
+
+```tsx
+const PostRefreshButton = () => {
+  return (
+    <QueryClientConsumer context={queryClientContext}>
+      {(queryClient) => (
+        <button
+          onClick={() =>
+            queryClient.invalidateQueries({
+              queryKey: ['posts'],
+            })
+          }
+        >
+          Posts refresh
+        </button>
+      )}
+    </QueryClientConsumer>
+  )
+}
+```
+
+변환 후:
+
+```tsx
+const PostRefreshButton = () => {
+  return (
+    {/** 'context' Props가 'queryClient'로 변환됩니다! */}
+    <QueryClientConsumer queryClient={queryClient}>
+      {(queryClient) => (
+        <button
+          onClick={() =>
+            queryClient.invalidateQueries({
+              queryKey: ['posts'],
+            })
+          }
+        >
+          Posts refresh
+        </button>
+      )}
+    </QueryClientConsumer>
+  )
+}
+```
