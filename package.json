@@ -21,7 +21,7 @@
     "build": "turbo run build",
     "changeset": "changeset",
     "changeset:publish": "pnpm run prepack && changeset publish",
-    "changeset:version": "changeset version && pnpm i --lockfile-only",
+    "changeset:version": "changeset version && pnpm install --lockfile-only",
     "ci:all": "pnpm run ci:attw && pnpm run ci:eslint && pnpm run ci:publint && pnpm run ci:sherif && pnpm run ci:type && pnpm run ci:test && pnpm run ci:knip && pnpm run build",
     "ci:attw": "turbo run ci:attw",
     "ci:eslint": "turbo run ci:eslint",
