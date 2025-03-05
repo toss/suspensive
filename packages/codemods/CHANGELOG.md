@@ -1,5 +1,11 @@
 # @suspensive/codemods
 
+## 0.3.0
+
+### Minor Changes
+
+- [#1469](https://github.com/toss/suspensive/pull/1469) [`40e4b3d`](https://github.com/toss/suspensive/commit/40e4b3d8e8292583df6b2409330fbee831c95961) Thanks [@gwansikk](https://github.com/gwansikk)! - feat(codemods): add migrate-query-client-consumer-props transform
+
 ## 0.2.0
 
 ### Minor Changes
