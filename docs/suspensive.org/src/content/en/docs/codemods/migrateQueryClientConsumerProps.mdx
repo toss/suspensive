@@ -1,0 +1,62 @@
+import { Callout } from '@/components'
+
+# Migrate `<QueryClientConsumer/>` Props
+
+<Callout type='info'>
+
+This codemod is recommended for updating @suspensive/react-query & @tanstack/react-query from v4 to v5.
+
+</Callout>
+
+In the `@suspensive/react-query` & `@tanstack/react-query` v5 environment, the `context` prop of the `<QueryClientConsumer/>` component provided by `@suspensive/react-query` has been changed to `queryClient`.
+
+```shell
+npx @suspensive/codemods migrate-query-client-consumer-props .
+```
+
+Using this codemod, you can automatically transform the `context` prop into `queryClient`.
+
+For example:
+
+```tsx
+const PostRefreshButton = () => {
+  return (
+    <QueryClientConsumer context={queryClientContext}>
+      {(queryClient) => (
+        <button
+          onClick={() =>
+            queryClient.invalidateQueries({
+              queryKey: ['posts'],
+            })
+          }
+        >
+          Posts refresh
+        </button>
+      )}
+    </QueryClientConsumer>
+  )
+}
+```
+
+Transforms into:
+
+```tsx
+const PostRefreshButton = () => {
+  return (
+    {/** The 'context' prop is now transformed into 'queryClient'! */}
+    <QueryClientConsumer queryClient={queryClient}>
+      {(queryClient) => (
+        <button
+          onClick={() =>
+            queryClient.invalidateQueries({
+              queryKey: ['posts'],
+            })
+          }
+        >
+          Posts refresh
+        </button>
+      )}
+    </QueryClientConsumer>
+  )
+}
+```
