@@ -51,7 +51,7 @@
     "ci:type": "tsc --noEmit",
     "clean": "rimraf ./dist && rimraf ./coverage && rimraf ./node_modules",
     "postinstall": "node ./dist/bin/postinstall.cjs || echo 'please reinstall @suspensive/react-query'",
-    "prepack": "pnpm build",
+    "prepack": "pnpm run build",
     "test:ui": "vitest --ui --coverage --typecheck"
   },
   "dependencies": {
