@@ -28,7 +28,7 @@
     "ci:publint": "publint --strict",
     "ci:type": "tsc --noEmit",
     "clean": "rimraf ./dist && rimraf ./coverage && rimraf ./node_modules",
-    "prepack": "pnpm build"
+    "prepack": "pnpm run build"
   },
   "devDependencies": {
     "@suspensive/eslint-config": "workspace:*",

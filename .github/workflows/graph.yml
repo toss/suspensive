@@ -25,7 +25,7 @@ jobs:
       - name: Install dependencies
         run: pnpm install
       - name: Build with Turbo graph
-        run: pnpm graph
+        run: pnpm run graph
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:

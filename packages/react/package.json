@@ -45,7 +45,7 @@
     "ci:test": "vitest run --coverage --typecheck",
     "ci:type": "tsc --noEmit",
     "clean": "rimraf ./dist && rimraf ./coverage && rimraf ./node_modules",
-    "prepack": "pnpm build",
+    "prepack": "pnpm run build",
     "test:ui": "vitest --ui --coverage --typecheck"
   },
   "devDependencies": {
