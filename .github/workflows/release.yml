@@ -23,8 +23,8 @@ jobs:
         with:
           title: 'chore: version packages'
           commit: 'chore: version packages'
-          version: pnpm changeset:version
-          publish: pnpm changeset:publish
+          version: pnpm run changeset:version
+          publish: pnpm run changeset:publish
           setupGitUser: false
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}

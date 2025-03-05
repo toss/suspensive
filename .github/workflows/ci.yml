@@ -27,7 +27,7 @@ jobs:
       - run: pnpm install
       - if: matrix.command == 'ci:test'
         run: pnpm playwright install
-      - run: pnpm ${{ matrix.command }}
+      - run: pnpm run ${{ matrix.command }}
       - if: matrix.command == 'ci:test'
         uses: codecov/codecov-action@v4
         env:

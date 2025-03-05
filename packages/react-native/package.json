@@ -46,7 +46,7 @@
     "ci:test": "jest --coverage",
     "ci:type": "tsc --noEmit",
     "clean": "rimraf ./dist && rimraf ./coverage && rimraf ./node_modules",
-    "prepack": "pnpm build",
+    "prepack": "pnpm run build",
     "test:ui": "jest --watchAll --coverage"
   },
   "devDependencies": {
