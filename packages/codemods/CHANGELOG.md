@@ -6,6 +6,12 @@
 
 - [#1461](https://github.com/toss/suspensive/pull/1461) [`9e1c24d`](https://github.com/toss/suspensive/commit/9e1c24dc93b70856c93f44d8b1871a0f10452a8b) Thanks [@manudeli](https://github.com/manudeli)! - feat(codemods): fixed version like other suspensive libraries
 
+## 0.3.0
+
+### Minor Changes
+
+- [#1469](https://github.com/toss/suspensive/pull/1469) [`40e4b3d`](https://github.com/toss/suspensive/commit/40e4b3d8e8292583df6b2409330fbee831c95961) Thanks [@gwansikk](https://github.com/gwansikk)! - feat(codemods): add migrate-query-client-consumer-props transform
+
 ## 0.2.0
 
 ### Minor Changes
