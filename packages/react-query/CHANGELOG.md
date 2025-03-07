@@ -1,5 +1,67 @@
 # @suspensive/react-query
 
+## 3.0.0-next.6
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @suspensive/react-query-4@3.0.0-next.6
+  - @suspensive/react-query-5@3.0.0-next.6
+
+## 3.0.0-next.5
+
+### Patch Changes
+
+- Updated dependencies [[`c78cbfd`](https://github.com/toss/suspensive/commit/c78cbfd1f2cf95720f6cb1e5963178e51b041c2b)]:
+  - @suspensive/react-query-4@3.0.0-next.5
+  - @suspensive/react-query-5@3.0.0-next.5
+
+## 3.0.0-next.4
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @suspensive/react-query-4@3.0.0-next.4
+  - @suspensive/react-query-5@3.0.0-next.4
+
+## 3.0.0-next.3
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @suspensive/react-query-4@3.0.0-next.3
+  - @suspensive/react-query-5@3.0.0-next.3
+
+## 3.0.0-next.2
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @suspensive/react-query-4@3.0.0-next.2
+  - @suspensive/react-query-5@3.0.0-next.2
+
+## 3.0.0-next.1
+
+### Patch Changes
+
+- [#1434](https://github.com/toss/suspensive/pull/1434) [`2be4348`](https://github.com/toss/suspensive/commit/2be434844157d63e16d5555fbb685c1757dd4fdf) Thanks [@manudeli](https://github.com/manudeli)! - remove peerDeps error
+
+- Updated dependencies [[`2be4348`](https://github.com/toss/suspensive/commit/2be434844157d63e16d5555fbb685c1757dd4fdf)]:
+  - @suspensive/react-query-4@3.0.0-next.1
+  - @suspensive/react-query-5@3.0.0-next.1
+
+## 3.0.0-next.0
+
+### Major Changes
+
+- [#1424](https://github.com/toss/suspensive/pull/1424) [`59a809d`](https://github.com/toss/suspensive/commit/59a809d8e91e92ef7b1dd0a874d65c0707bf371e) Thanks [@manudeli](https://github.com/manudeli)! - feat(v3): remove deprecated interfaces
+
+### Patch Changes
+
+- Updated dependencies [[`59a809d`](https://github.com/toss/suspensive/commit/59a809d8e91e92ef7b1dd0a874d65c0707bf371e)]:
+  - @suspensive/react-query-4@3.0.0-next.0
+  - @suspensive/react-query-5@3.0.0-next.0
+
 ## 2.18.12
 
 ### Patch Changes

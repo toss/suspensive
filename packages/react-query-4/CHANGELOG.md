@@ -1,5 +1,31 @@
 # @suspensive/react-query-4
 
+## 3.0.0-next.6
+
+## 3.0.0-next.5
+
+### Major Changes
+
+- [#1458](https://github.com/toss/suspensive/pull/1458) [`c78cbfd`](https://github.com/toss/suspensive/commit/c78cbfd1f2cf95720f6cb1e5963178e51b041c2b) Thanks [@gwansikk](https://github.com/gwansikk)! - feat(react-query-4): set network mode to always
+
+## 3.0.0-next.4
+
+## 3.0.0-next.3
+
+## 3.0.0-next.2
+
+## 3.0.0-next.1
+
+### Patch Changes
+
+- [#1434](https://github.com/toss/suspensive/pull/1434) [`2be4348`](https://github.com/toss/suspensive/commit/2be434844157d63e16d5555fbb685c1757dd4fdf) Thanks [@manudeli](https://github.com/manudeli)! - remove peerDeps error
+
+## 3.0.0-next.0
+
+### Major Changes
+
+- [#1424](https://github.com/toss/suspensive/pull/1424) [`59a809d`](https://github.com/toss/suspensive/commit/59a809d8e91e92ef7b1dd0a874d65c0707bf371e) Thanks [@manudeli](https://github.com/manudeli)! - feat(v3): remove deprecated interfaces
+
 ## 2.18.12
 
 ### Patch Changes
