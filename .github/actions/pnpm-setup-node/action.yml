@@ -6,6 +6,5 @@ runs:
     - uses: pnpm/action-setup@v4
     - uses: actions/setup-node@v4
       with:
-        cache: 'pnpm'
-        cache-dependency-path: 'pnpm-lock.yaml'
         node-version-file: '.nvmrc'
+        cache: 'pnpm'
