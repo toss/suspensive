@@ -136,24 +136,24 @@ We removed `<AsyncBoundary/>` in v2. [#295](https://github.com/toss/suspensive/i
 
 Because `<AsyncBoundary/>` uses `<ErrorBoundary/>` internally, it can be used with `useErrorBoundary` and is affected by `<ErrorBoundaryGroup/>`. We decided to remove this component from v2, believing that it would be better for maintainability and interface unification for library users.
 
-`<AsyncBoundary/>`'s feature is just wrap two component(`<Suspense/>`, `<Errorboundry/>`) by one.
+`<AsyncBoundary/>`'s feature is just wrap two component(`<Suspense/>`, `<Errorboundary/>`) by one.
 So, you can split by two like this.
 
 ```diff
-+ import { Suspense, Errorboundry } from '@suspensive/react'
++ import { Suspense, Errorboundary } from '@suspensive/react'
 - import { AsyncBoundary } from '@suspensive/react'
 
-+ <Errorboundry fallback={<Error />} onError={onError} onReset={onReset}>
++ <Errorboundary fallback={<Error />} onError={onError} onReset={onReset}>
 +   <Suspense fallback={<Loading />}>
 +     <Children />
 +   </Suspense>
-+ </Errorboundry>
++ </Errorboundary>
 - <AsyncBoundary pendingFallback={<Loading />} rejectedFallback={<Error />} onError={onError} onReset={onReset}>
 -   <Children />
 - </AsyncBoundary>
 ```
 
-### Removed `withSuspense`, `withDelay`, `withErrorboundry`, `withErrorBoundaryGroup`
+### Removed `withSuspense`, `withDelay`, `withErrorboundary`, `withErrorBoundaryGroup`
 
 These all hocs can be replaced beautifully by new hoc builder [`wrap`](/docs/react/wrap) in v2.
 
@@ -265,7 +265,7 @@ const Example = () => {
 -   <Suspense.CSROnly fallback={<>loading...</>}>
 +   <Suspense clientOnly fallback={<>loading...</>}>
       <>children</>
-    </Suspense.CSROnly>
+    </Suspense>
   )
 }
 ```
