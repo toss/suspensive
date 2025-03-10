@@ -1,0 +1,38 @@
+name: Publish to JSR after npm publish
+
+on:
+  pull_request:
+    types: [closed]
+    branches: [main, beta, next]
+  workflow_dispatch:
+
+jobs:
+  publish-jsr:
+    if: >-
+      github.event_name == 'workflow_dispatch' || 
+      (github.event_name == 'pull_request' && 
+       github.event.pull_request.merged == true && 
+       contains(github.event.pull_request.title, 'chore: version packages'))
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js and pnpm
+        uses: ./.github/actions/pnpm-setup-node
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Sync JSR versions
+        run: node ./.github/scripts/sync-jsr-versions.js
+
+      - name: Dry-run JSR publish
+        run: pnpm run jsr:dry-run
+
+      - name: Publish to JSR
+        run: pnpm run jsr:publish
