@@ -1,0 +1,30 @@
+import { Steps } from 'nextra/components'
+
+# 어떤 이유로 사용하나요?
+
+@suspensive/react는 아래와 같은 동기로 사용됩니다.
+
+<Steps>
+
+### React Suspense는 때에 따라 서버사이드 렌더링을 피할 필요가 있습니다.
+
+React Suspense를 Next.js와 같은 서버사이드 렌더링 환경에서 사용해본 적이 있다면 아마 종종 아래 사진과 같은 에러를 겪게 된 적이 있을 겁니다.
+![Example banner](/img/suspense-in-ssr-error.png)
+
+이것이 [`<Suspense/>`](/docs/react/Suspense)의 clientOnly를 이 라이브러리에 추가한 이유입니다.
+
+### ErrorBoundary를 더욱 단순하게 사용하고 싶습니다.
+
+[bvaughn/react-error-boundary](https://github.com/bvaughn/react-error-boundary)는 React의 Error Boundary개념을 선언적으로 제공하는 인기있는 라이브러리입니다. bvaughn/react-error-boundary의 ErrorBoundary는 fallback prop을 위해 FallbackComponent, fallbackRender, fallback와 같은 다양한 이름으로 이를 제공합니다. 기존 ErrorBoundary의 다소 복잡한 fallback interface를 @suspensive/react의 `<ErrorBoundary/>`와 같이 더 단순하게 사용하고 싶었습니다.
+
+이것이 [`<ErrorBoundary/>`](/docs/react/ErrorBoundary)를 이 라이브러리에 추가한 이유입니다.
+
+### `<ErrorBoundary/>`의 fallback 외부에서 다수의 `<ErrorBoundary/>`를 reset하고 싶습니다.
+
+`<ErrorBoundary/>`를 reset하려면 `<ErrorBoundary/>`의 fallback에 주어지는 reset을 사용하면 됩니다.
+
+그러나 fallback 외부에서 다수의 `<ErrorBoundary/>`을 reset하려면 각 `<ErrorBoundary/>`의 props인 resetKeys에 새 resetKey를 제공해야 합니다. 하지만 @suspensive/react가 제공하는 `<ErrorBoundaryGroup/>`을 사용하면 이렇게 번거롭게 reset할 필요가 없습니다. `<ErrorBoundaryGroup/>`은 여러 `<ErrorBoundary/>`를 쉽게 재설정합니다.
+
+이것이 [`<ErrorBoundaryGroup/>`](/docs/react/ErrorBoundaryGroup)를 이 라이브러리에 추가한 이유입니다.
+
+</Steps>
