@@ -1,0 +1,10 @@
+{
+  "$schema": "https://jsr.io/schema/config-file.v1.json",
+  "name": "@suspensive/react-native",
+  "version": "0.0.17",
+  "exports": "./src/index.ts",
+  "publish": {
+    "include": ["LICENSE", "package.json", "src/**/*"],
+    "exclude": ["src/**/*.spec*"]
+  }
+}

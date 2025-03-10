@@ -34,6 +34,8 @@
     "dev": "turbo watch ci:test",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "graph": "rimraf ./graph && mkdir graph && turbo run build --graph=graph/index.html",
+    "jsr:publish": "find packages -name \"jsr.json\" -type f -exec sh -c 'cd $(dirname \"{}\") && echo \"\\n\\n===== Publishing JSR in $(basename $(pwd)) =====\" && npx jsr publish --allow-slow-types' \\;",
+    "jsr:dry-run": "find packages -name \"jsr.json\" -type f -exec sh -c 'cd $(dirname \"{}\") && echo \"\\n\\n===== Testing JSR in $(basename $(pwd)) =====\" && npx jsr publish --dry-run --allow-slow-types --allow-dirty' \\;",
     "packlint": "packlint sort -R",
     "preinstall": "corepack enable",
     "prepack": "turbo run prepack",
