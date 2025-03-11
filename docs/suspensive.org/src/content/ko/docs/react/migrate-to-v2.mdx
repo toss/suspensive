@@ -136,24 +136,24 @@ v2에서는 `<AsyncBoundary/>`를 제거했습니다. [#295](https://github.com/
 
 `<AsyncBoundary/>`는 내부적으로 `<ErrorBoundary/>`를 사용하기 때문에 `useErrorBoundary`와 함께 사용할 수 있으며 `<ErrorBoundaryGroup/>`의 영향을 받습니다. 우리는 라이브러리 사용자를 위한 유지 관리 및 인터페이스 통합에 더 좋을 것이라고 믿고 이 구성 요소를 v2에서 제거하기로 결정했습니다.
 
-`<AsyncBoundary/>`의 기능은 두 컴포넌트(`<Suspense/>`, `<Errorboundry/>`)를 하나씩 래핑하는 것입니다.
+`<AsyncBoundary/>`의 기능은 두 컴포넌트(`<Suspense/>`, `<Errorboundary/>`)를 하나씩 래핑하는 것입니다.
 그러면 이렇게 2개로 나눌 수 있습니다.
 
 ```diff
-+ import { Suspense, Errorboundry } from '@suspensive/react'
++ import { Suspense, Errorboundary } from '@suspensive/react'
 - import { AsyncBoundary } from '@suspensive/react'
 
-+ <Errorboundry fallback={<Error />} onError={onError} onReset={onReset}>
++ <Errorboundary fallback={<Error />} onError={onError} onReset={onReset}>
 +   <Suspense fallback={<Loading />}>
 +     <Children />
 +   </Suspense>
-+ </Errorboundry>
++ </Errorboundary>
 - <AsyncBoundary pendingFallback={<Loading />} rejectedFallback={<Error />} onError={onError} onReset={onReset}>
 -   <Children />
 - </AsyncBoundary>
 ```
 
-### `withSuspense`, `withDelay`, `withErrorboundry`, `withErrorBoundaryGroup` 제거
+### `withSuspense`, `withDelay`, `withErrorboundary`, `withErrorBoundaryGroup` 제거
 
 이러한 모든 hoc는 v2의 새로운 hoc 빌더 `wrap`으로 아름답게 대체될 수 있습니다.
 
@@ -265,7 +265,7 @@ const Example = () => {
 -   <Suspense.CSROnly fallback={<>loading...</>}>
 +   <Suspense clientOnly fallback={<>loading...</>}>
       <>children</>
-    </Suspense.CSROnly>
+    </Suspense>
   )
 }
 ```
