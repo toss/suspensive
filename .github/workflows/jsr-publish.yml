@@ -21,18 +21,13 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-
       - name: Setup Node.js and pnpm
         uses: ./.github/actions/pnpm-setup-node
-
       - name: Install dependencies
         run: pnpm install
-
       - name: Sync JSR versions
-        run: node ./.github/scripts/sync-jsr-versions.js
-
+        run: pnpm run jsr:sync-versions
       - name: Dry-run JSR publish
         run: pnpm run jsr:dry-run
-
       - name: Publish to JSR
         run: pnpm run jsr:publish
