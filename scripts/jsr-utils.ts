@@ -56,6 +56,9 @@ export function writeResultsToLog(results: JsrResult[], isDryRun: boolean): void
       .forEach((result) => {
         console.log(`FAILED: ${result.packageName}`)
       })
+
+    console.error('\nJSR command failed for one or more packages. Exiting with error code 1.')
+    process.exit(1)
   } else {
     console.log('All packages processed successfully!')
   }
