@@ -19,21 +19,21 @@ export async function executeJsrCommand(packagePath: string, isDryRun: boolean):
   console.log(`\n===== ${isDryRun ? 'Testing' : 'Publishing'} JSR in ${packageName} =====`)
 
   try {
-    const args = ['jsr', 'publish']
-
+    const args = ['dlx', 'jsr', 'publish']
     if (isDryRun) {
       args.push('--dry-run', '--allow-slow-types', '--allow-dirty')
     } else {
       args.push('--allow-slow-types')
     }
 
-    await execa('npx', args, {
+    await execa('pnpm', args, {
       cwd: packageDir,
       stdio: 'inherit',
     })
 
     return { packageName, success: true }
   } catch (error) {
+    console.error(`Error in ${packageName}:`, error.message || error)
     return { packageName, success: false }
   }
 }
