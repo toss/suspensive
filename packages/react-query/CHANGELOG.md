@@ -1,5 +1,15 @@
 # @suspensive/react-query
 
+## 3.0.0-next.8
+
+### Patch Changes
+
+- [#1479](https://github.com/toss/suspensive/pull/1479) [`ae72a0f`](https://github.com/toss/suspensive/commit/ae72a0f4a33021404ed720e37c98b70bff1af5b9) Thanks [@kangju2000](https://github.com/kangju2000)! - fix: resolve issues in JSR publish action
+
+- Updated dependencies []:
+  - @suspensive/react-query-4@3.0.0-next.8
+  - @suspensive/react-query-5@3.0.0-next.8
+
 ## 3.0.0-next.7
 
 ### Patch Changes
