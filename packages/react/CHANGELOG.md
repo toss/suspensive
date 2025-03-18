@@ -1,5 +1,13 @@
 # @suspensive/react
 
+## 3.0.0-next.10
+
+### Patch Changes
+
+- [#1484](https://github.com/toss/suspensive/pull/1484) [`2884bdd`](https://github.com/toss/suspensive/commit/2884bdd431602a13c89f1e55b9099968e23c8c3a) Thanks [@kangju2000](https://github.com/kangju2000)! - fix: add contents write permission to release workflow
+
+- [#1483](https://github.com/toss/suspensive/pull/1483) [`88112ad`](https://github.com/toss/suspensive/commit/88112adb52da59b4904bf933699492c8eaf50dec) Thanks [@kangju2000](https://github.com/kangju2000)! - fix: configure JSR publishing with GitHub Actions OIDC
+
 ## 3.0.0-next.9
 
 ### Patch Changes
