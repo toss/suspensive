@@ -1,5 +1,13 @@
 # @suspensive/react-query
 
+## 3.0.0-next.11
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @suspensive/react-query-4@3.0.0-next.11
+  - @suspensive/react-query-5@3.0.0-next.11
+
 ## 3.0.0-next.10
 
 ### Patch Changes

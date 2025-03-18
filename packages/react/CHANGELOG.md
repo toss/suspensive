@@ -1,5 +1,11 @@
 # @suspensive/react
 
+## 3.0.0-next.11
+
+### Patch Changes
+
+- [#1486](https://github.com/toss/suspensive/pull/1486) [`df3f1ea`](https://github.com/toss/suspensive/commit/df3f1eae7ca501cc7825855c2ec66ee6c5f14d23) Thanks [@kangju2000](https://github.com/kangju2000)! - chore: triggers a release via changeset
+
 ## 3.0.0-next.10
 
 ### Patch Changes
