@@ -1,5 +1,11 @@
 # @suspensive/react
 
+## 3.0.0-next.9
+
+### Patch Changes
+
+- [#1481](https://github.com/toss/suspensive/pull/1481) [`ed78333`](https://github.com/toss/suspensive/commit/ed78333f93e91fa89950efbe33420c23e84aad77) Thanks [@kangju2000](https://github.com/kangju2000)! - fix: ensure JSR version sync during Changeset versioning
+
 ## 3.0.0-next.8
 
 ## 3.0.0-next.7
