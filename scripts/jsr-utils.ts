@@ -1,8 +1,7 @@
 import execa from 'execa'
-import * as fs from 'fs'
 import * as path from 'path'
 
-interface JsrResult {
+export interface JsrResult {
   packageName: string
   success: boolean
 }
@@ -12,7 +11,13 @@ export async function findJsrPackages(): Promise<string[]> {
   return stdout.trim().split('\n')
 }
 
-export async function executeJsrCommand(packagePath: string, isDryRun: boolean): Promise<JsrResult> {
+export async function executeJsrCommand({
+  packagePath,
+  isDryRun,
+}: {
+  packagePath: string
+  isDryRun: boolean
+}): Promise<JsrResult> {
   const packageDir = path.dirname(packagePath)
   const packageName = path.basename(packageDir)
 
