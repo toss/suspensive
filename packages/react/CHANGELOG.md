@@ -1,5 +1,11 @@
 # @suspensive/react
 
+## 3.0.0-next.12
+
+### Patch Changes
+
+- [#1488](https://github.com/toss/suspensive/pull/1488) [`71f8259`](https://github.com/toss/suspensive/commit/71f8259d40ce0cce8ab7074f38416163a9d94837) Thanks [@kangju2000](https://github.com/kangju2000)! - fix: fix JSR publish failures by changing execution flow from parallel to sequential
+
 ## 3.0.0-next.11
 
 ### Patch Changes
