@@ -1,9 +1,13 @@
-import { findJsrPackages, executeJsrCommand, writeResultsToLog } from './jsr-utils'
+import { findJsrPackages, executeJsrCommand, writeResultsToLog, JsrResult } from './jsr-utils'
 
 async function main() {
   const packages = await findJsrPackages()
-  const resultPromises = packages.map((pkg) => executeJsrCommand(pkg, true))
-  const results = await Promise.all(resultPromises)
+  const results: JsrResult[] = []
+
+  for (const pkg of packages) {
+    const result = await executeJsrCommand({ packagePath: pkg, isDryRun: true })
+    results.push(result)
+  }
   writeResultsToLog(results, true)
 }
 
