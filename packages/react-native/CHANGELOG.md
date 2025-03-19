@@ -1,5 +1,11 @@
 # @suspensive/react-native
 
+## 0.0.18-next.0
+
+### Patch Changes
+
+- [#1475](https://github.com/toss/suspensive/pull/1475) [`c44994b`](https://github.com/toss/suspensive/commit/c44994b3510d6c41ed09504cb74999a99dd99253) Thanks [@kangju2000](https://github.com/kangju2000)! - feat: add JSR support and publishing workflow
+
 ## 0.0.17
 
 ### Patch Changes
