@@ -1,6 +1,6 @@
 {
   "name": "@suspensive/react-query",
-  "version": "3.0.0-next.12",
+  "version": "3.0.0-next.13",
   "description": "Suspensive interfaces for @tanstack/react-query",
   "keywords": [
     "suspensive",
@@ -56,8 +56,8 @@
   },
   "dependencies": {
     "@commander-js/extra-typings": "^13.0.0",
-    "@suspensive/react-query-4": "workspace:^3.0.0-next.12",
-    "@suspensive/react-query-5": "workspace:^3.0.0-next.12",
+    "@suspensive/react-query-4": "workspace:^3.0.0-next.13",
+    "@suspensive/react-query-5": "workspace:^3.0.0-next.13",
     "cli-table3": "^0.6.5",
     "commander": "^13.0.0"
   },
