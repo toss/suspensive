@@ -1,5 +1,11 @@
 # @suspensive/react-query-4
 
+## 3.0.0-next.13
+
+### Minor Changes
+
+- [#1490](https://github.com/toss/suspensive/pull/1490) [`a37dd3d`](https://github.com/toss/suspensive/commit/a37dd3dd2f10f3f997fed81147f38cdb944dbd7a) Thanks [@gwansikk](https://github.com/gwansikk)! - feat(react-query): add `mutationOptions`
+
 ## 3.0.0-next.12
 
 ## 3.0.0-next.11
