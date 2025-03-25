@@ -3,6 +3,9 @@
   "name": "@suspensive/react",
   "version": "3.0.0-next.13",
   "exports": "./src/index.ts",
+  "imports": {
+    "react": "npm:react@^19.0.0"
+  },
   "publish": {
     "include": ["LICENSE", "package.json", "src/**/*"],
     "exclude": ["src/**/*.test*", "src/**/*.spec*", "src/test-utils"]
