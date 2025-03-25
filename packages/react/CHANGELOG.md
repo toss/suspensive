@@ -1,5 +1,11 @@
 # @suspensive/react
 
+## 3.0.0-next.14
+
+### Patch Changes
+
+- [#1494](https://github.com/toss/suspensive/pull/1494) [`d13bd42`](https://github.com/toss/suspensive/commit/d13bd429828135dddf2b50a3bd6d675c63977198) Thanks [@kangju2000](https://github.com/kangju2000)! - fix: Add React import to jsr.json
+
 ## 3.0.0-next.13
 
 ## 3.0.0-next.12
