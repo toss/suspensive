@@ -1,5 +1,25 @@
 # @suspensive/jotai
 
+## 3.0.0-next.14
+
+## 3.0.0-next.13
+
+## 3.0.0-next.12
+
+## 3.0.0-next.11
+
+## 3.0.0-next.10
+
+## 3.0.0-next.9
+
+## 3.0.0-next.8
+
+## 3.0.0-next.7
+
+### Patch Changes
+
+- [#1475](https://github.com/toss/suspensive/pull/1475) [`c44994b`](https://github.com/toss/suspensive/commit/c44994b3510d6c41ed09504cb74999a99dd99253) Thanks [@kangju2000](https://github.com/kangju2000)! - feat: add JSR support and publishing workflow
+
 ## 3.0.0-next.6
 
 ## 3.0.0-next.5
