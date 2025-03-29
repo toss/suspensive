@@ -1,10 +1,10 @@
 {
   "$schema": "https://jsr.io/schema/config-file.v1.json",
   "name": "@suspensive/react-query-5",
-  "version": "3.0.0-next.15",
+  "version": "3.0.0-next.16",
   "exports": "./src/index.ts",
   "imports": {
-    "@tanstack/react-query": "npm:@tanstack/react-query@^5",
+    "@tanstack/react-query": "npm:@tanstack/react-query@latest",
     "react": "npm:react@^19"
   },
   "publish": {
