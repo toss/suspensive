@@ -35,7 +35,6 @@
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "graph": "rimraf ./graph && mkdir graph && turbo run build --graph=graph/index.html",
     "jsr:publish": "tsx ./scripts/jsr-publish.ts",
-    "jsr:dry-run": "tsx ./scripts/jsr-dry-run.ts",
     "jsr:sync-versions": "tsx ./scripts/jsr-sync-versions.ts",
     "packlint": "packlint sort -R",
     "preinstall": "corepack enable",
