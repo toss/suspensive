@@ -58,6 +58,16 @@ describe('<SuspenseQuery/>', () => {
       </SuspenseQuery>
     ))()
     ;(() => (
+      <SuspenseQuery
+        queryKey={queryKey}
+        queryFn={queryFn}
+        //@ts-expect-error no networkMode
+        networkMode="always"
+      >
+        {(query) => <>{query.data.text}</>}
+      </SuspenseQuery>
+    ))()
+    ;(() => (
       <SuspenseQuery queryKey={queryKey} queryFn={queryFn}>
         {(query) => {
           expectTypeOf(query).toEqualTypeOf<UseSuspenseQueryResult<{ text: string }>>()

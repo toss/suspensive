@@ -99,6 +99,24 @@ describe('<SuspenseInfiniteQuery/>', () => {
       </SuspenseInfiniteQuery>
     ))()
     ;(() => (
+      <SuspenseInfiniteQuery
+        queryKey={queryKey}
+        queryFn={queryFn}
+        //@ts-expect-error no networkMode
+        networkMode="always"
+      >
+        {(query) => (
+          <>
+            {query.data.pages
+              .filter(({ text }) => text)
+              .map((item, index) => (
+                <div key={index}>{item.text}</div>
+              ))}
+          </>
+        )}
+      </SuspenseInfiniteQuery>
+    ))()
+    ;(() => (
       <SuspenseInfiniteQuery queryKey={queryKey} queryFn={queryFn}>
         {(query) => {
           expectTypeOf(query).toEqualTypeOf<UseSuspenseInfiniteQueryResult<{ text: string }>>()

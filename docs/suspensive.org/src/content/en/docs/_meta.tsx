@@ -13,6 +13,9 @@ export default {
     type: 'separator',
     title: 'More',
   },
+  'migrate-to-v3': {
+    title: 'Migrating to v3',
+  },
   'migrate-to-v2': {
     title: 'Migrating to v2',
   },

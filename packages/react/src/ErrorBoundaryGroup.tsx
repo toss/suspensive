@@ -1,4 +1,6 @@
 import {
+  type ComponentProps,
+  type ComponentType,
   type PropsWithChildren,
   type ReactNode,
   createContext,
@@ -12,6 +14,7 @@ import {
   Message_useErrorBoundaryGroup_this_hook_should_be_called_in_ErrorBoundary_props_children,
   SuspensiveError,
 } from './models/SuspensiveError'
+import type { PropsWithoutChildren } from './utility-types'
 import { increase } from './utils'
 
 export const ErrorBoundaryGroupContext = createContext<{ reset: () => void; resetKey: number } | undefined>(undefined)
@@ -33,29 +36,35 @@ export interface ErrorBoundaryGroupProps extends PropsWithChildren {
  * @see {@link https://suspensive.org/docs/react/ErrorBoundaryGroup Suspensive Docs}
  */
 export const ErrorBoundaryGroup = Object.assign(
-  (() => {
-    const ErrorBoundaryGroup = ({ blockOutside = false, children }: ErrorBoundaryGroupProps) => {
-      const [resetKey, reset] = useReducer(increase, 0)
-      const parentGroup = useContext(ErrorBoundaryGroupContext)
-      const isParentGroupResetKeyChanged = useIsChanged(parentGroup?.resetKey)
+  ({ blockOutside = false, children }: ErrorBoundaryGroupProps) => {
+    const [resetKey, reset] = useReducer(increase, 0)
+    const parentGroup = useContext(ErrorBoundaryGroupContext)
+    const isParentGroupResetKeyChanged = useIsChanged(parentGroup?.resetKey)
 
-      useEffect(() => {
-        if (!blockOutside && isParentGroupResetKeyChanged) {
-          reset()
-        }
-      }, [isParentGroupResetKeyChanged, blockOutside])
+    useEffect(() => {
+      if (!blockOutside && isParentGroupResetKeyChanged) {
+        reset()
+      }
+    }, [isParentGroupResetKeyChanged, blockOutside])
 
-      const value = useMemo(() => ({ reset, resetKey }), [resetKey])
+    const value = useMemo(() => ({ reset, resetKey }), [resetKey])
 
-      return <ErrorBoundaryGroupContext.Provider value={value}>{children}</ErrorBoundaryGroupContext.Provider>
-    }
-    if (process.env.NODE_ENV === 'development') {
-      ErrorBoundaryGroup.displayName = 'ErrorBoundaryGroup'
-    }
-
-    return ErrorBoundaryGroup
-  })(),
+    return <ErrorBoundaryGroupContext.Provider value={value}>{children}</ErrorBoundaryGroupContext.Provider>
+  },
   {
+    displayName: 'ErrorBoundaryGroup',
+    with: <TProps extends ComponentProps<ComponentType> = Record<string, never>>(
+      errorBoundaryGroupProps: PropsWithoutChildren<ErrorBoundaryGroupProps> = {},
+      Component: ComponentType<TProps>
+    ) =>
+      Object.assign(
+        (props: TProps) => (
+          <ErrorBoundaryGroup {...errorBoundaryGroupProps}>
+            <Component {...props} />
+          </ErrorBoundaryGroup>
+        ),
+        { displayName: `ErrorBoundaryGroup.with(${Component.displayName || Component.name || 'Component'})` }
+      ),
     Consumer: ({
       children,
     }: {
