@@ -1,0 +1,62 @@
+import { Callout } from '@/components'
+
+# Suspense
+
+@suspensive/react의 `<Suspense/>`는 [React의 Suspense](https://react.dev/reference/react/Suspense)가 됩니다.
+
+### props.fallback
+
+fallback은 react의 Suspense의 fallback와 동일하게 동작합니다.
+
+```tsx /Suspense/
+import { Suspense } from '@suspensive/react'
+
+const Example = () => (
+  <Suspense fallback={<Loading />}>
+    <Children />
+  </Suspense>
+)
+```
+
+<Callout>
+
+Default fallback
+
+`<Suspense/>`는 `<DefaultPropsProvider/>`와 함께 사용할 때 더욱 강력해집니다. `<DefaultPropsProvider/>`를 사용하여 여러 `<Suspense/>`의 default fallback를 제어합니다. 자세한 내용은 [`<DefaultPropsProvider/>` 페이지](/docs/react/DefaultPropsProvider)에 소개되어 있습니다.
+
+</Callout>
+
+### 서버사이드 렌더링을 피하기 (clientOnly)
+
+clientOnly prop을 사용하면 `<Suspense/>`는 서버에서는 fallback을 반환합니다. mount 후(클라이언트에서는) children을 반환합니다. mount는 클라이언트에서만 일어나기 때문에 서버사이드 렌더링을 피할 수 있습니다.
+
+```tsx /clientOnly/
+import { Suspense } from '@suspensive/react'
+
+const Example = () => (
+  <Suspense clientOnly fallback={<Loading />}>
+    <Children />
+  </Suspense>
+)
+```
+
+clientOnly prop을 사용하면 내부적으로 useIsClient훅을 사용하고 useIsClient는 useSyncExternalStore의 getSnapshot와 getServerSnapshot을 활용해 client임을 보장하고 있습니다.
+
+```tsx /useIsClient/
+const useIsClient = () =>
+  useSyncExternalStore(emptySubscribe, getSnapshot, getServerSnapshot)
+
+const emptySubscribe = () => noop
+const getSnapshot = () => true
+const getServerSnapshot = () => false
+```
+
+https://x.com/TkDodo/status/1741068994981826947?t=XmG17etMUL2m0JFim03vqw&s=19
+
+<Callout type='info'>
+
+SSR을 지원하도록 점진적으로 마이그레이션하기 (`<Suspense clientOnly/>` -> `<Suspense/>`)
+
+React.Suspense를 SSR과 CSR에서 모두 사용하고 싶다면 `<Suspense clientOnly/>`에서 `<Suspense/>`로 점진적으로 마이그레이션하면 쉽게 적용할 수 있습니다.
+
+</Callout>
