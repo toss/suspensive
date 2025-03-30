@@ -1,3 +1,5 @@
+import { Callout } from '@/components'
+
 # v3로 마이그레이션하기
 
 ## 새로운 기능
@@ -6,4 +8,38 @@
 
 ## BREAKING CHANGES 처리하기
 
-### Draft
+### `@tanstack/react-query` v4의 queryOptions, Suspense 훅에서 `networkMode` 기본값을 `'always'`로 변경되었습니다.
+
+<Callout type='info'>
+
+이 브레이킹 체인지는 `@tanstack/react-query` v4와 `@suspensive/react-query`를 함께 사용하는 사용자에게 영향을 미칩니다.
+
+</Callout>
+
+기존에는 `navigator.onLine` API를 통해 온라인 상태를 판단했으나, 크로미움 기반 브라우저에서 실제 네트워크 상태와 다르게 판단되는 버그가 있었습니다. 브라우저 환경에 따라 동작이 일관되지 않다는 점을 고려하여, `@suspensive/react-query` v4에서는 Suspense 훅 사용 시 `networkMode`의 기본값을 `'always'`로 설정했습니다.
+
+이는 React Query v5의 기본 동작과도 일치하며, 런타임 환경에서 Suspense 훅이 `fetchStatus: 'paused'`로 시작하는 문제를 방지합니다.
+
+- 참고: [Default networkMode configuration and fetchStatus = "paused"](https://github.com/TanStack/query/discussions/4753), [navigator.onLine returning false value even network is available.](https://issues.chromium.org/issues/338514113)
+
+```diff
+import { useSuspenseQuery } from '@suspensive/react-query'
+
+// queryOptions, infiniteQueryOptions에도 동일하게 적용됐습니다.
+const QueryOptionsExample = () => {
+  const options = queryOptions({
+    queryKey: ['key'],
+    queryFn: () => api()
+-   networkMode: 'always'
+  })
+}
+
+// useSuspenseQuery, useSuspenseInfiniteQuery, SuspenseQuery, SuspenseInfiniteQuery에도 동일하게 적용됐습니다.
+const SuspenseQueryExample = () => {
+  const query = useSuspenseQuery({
+    queryKey: ['key'],
+    queryFn: () => api()
+-   networkMode: 'always'
+  })
+}
+```
