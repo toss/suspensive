@@ -1,5 +1,35 @@
 # @suspensive/react-query-5
 
+## 3.0.0-next.15
+
+### Patch Changes
+
+- [#1497](https://github.com/toss/suspensive/pull/1497) [`e400035`](https://github.com/toss/suspensive/commit/e4000352b7d3e42f0164983cca2bcde9fd24751c) Thanks [@kangju2000](https://github.com/kangju2000)! - chore: improve JSR imports sync with consistent dependency formatting
+
+## 3.0.0-next.14
+
+## 3.0.0-next.13
+
+### Minor Changes
+
+- [#1490](https://github.com/toss/suspensive/pull/1490) [`a37dd3d`](https://github.com/toss/suspensive/commit/a37dd3dd2f10f3f997fed81147f38cdb944dbd7a) Thanks [@gwansikk](https://github.com/gwansikk)! - feat(react-query): add `mutationOptions`
+
+## 3.0.0-next.12
+
+## 3.0.0-next.11
+
+## 3.0.0-next.10
+
+## 3.0.0-next.9
+
+## 3.0.0-next.8
+
+## 3.0.0-next.7
+
+### Patch Changes
+
+- [#1475](https://github.com/toss/suspensive/pull/1475) [`c44994b`](https://github.com/toss/suspensive/commit/c44994b3510d6c41ed09504cb74999a99dd99253) Thanks [@kangju2000](https://github.com/kangju2000)! - feat: add JSR support and publishing workflow
+
 ## 3.0.0-next.6
 
 ## 3.0.0-next.5

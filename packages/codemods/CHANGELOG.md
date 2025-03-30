@@ -1,5 +1,27 @@
 # @suspensive/codemods
 
+## 3.0.0-next.15
+
+### Patch Changes
+
+- [#1497](https://github.com/toss/suspensive/pull/1497) [`e400035`](https://github.com/toss/suspensive/commit/e4000352b7d3e42f0164983cca2bcde9fd24751c) Thanks [@kangju2000](https://github.com/kangju2000)! - chore: improve JSR imports sync with consistent dependency formatting
+
+## 3.0.0-next.14
+
+## 3.0.0-next.13
+
+## 3.0.0-next.12
+
+## 3.0.0-next.11
+
+## 3.0.0-next.10
+
+## 3.0.0-next.9
+
+## 3.0.0-next.8
+
+## 3.0.0-next.7
+
 ## 3.0.0-next.6
 
 ### Major Changes
