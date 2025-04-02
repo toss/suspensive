@@ -15,7 +15,7 @@ Therefore, we will maintain support for @tanstack/react-query v4.
 
 ## Handling BREAKING CHANGES
 
-### The default `networkMode` is now set to `'always'` in `queryOptions` and Suspense hooks of `@tanstack/react-query` v4
+### The default `networkMode` is now set to `'always'` in `useSuspenseQuery`, `useSuspenseQueries`, `useSuspenseInfiniteQuery` of `@tanstack/react-query` v4
 
 <Callout type='info'>
 
@@ -31,7 +31,7 @@ This change aligns with the default behavior in React Query v5 and prevents Susp
 - Reference: [Default networkMode configuration and fetchStatus = "paused"](https://github.com/TanStack/query/discussions/4753), [navigator.onLine returning false value even network is available](https://issues.chromium.org/issues/338514113)
 
 ```diff
-import { useSuspenseQuery } from '@suspensive/react-query'
+import { queryOptions, useSuspenseQuery } from '@suspensive/react-query'
 
 // Applies the same to queryOptions and infiniteQueryOptions as well.
 const QueryOptionsExample = () => {

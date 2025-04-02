@@ -8,7 +8,7 @@ import { Callout } from '@/components'
 
 ## BREAKING CHANGES 처리하기
 
-### `@tanstack/react-query` v4의 queryOptions, Suspense 훅에서 `networkMode` 기본값을 `'always'`로 변경되었습니다.
+### `@tanstack/react-query` v4의 `useSuspenseQuery`, `useSuspenseQueries`, `useSuspenseInfiniteQuery`에서 `networkMode` 기본값을 `'always'`로 변경되었습니다.
 
 <Callout type='info'>
 
@@ -23,7 +23,7 @@ import { Callout } from '@/components'
 - 참고: [Default networkMode configuration and fetchStatus = "paused"](https://github.com/TanStack/query/discussions/4753), [navigator.onLine returning false value even network is available.](https://issues.chromium.org/issues/338514113)
 
 ```diff
-import { useSuspenseQuery } from '@suspensive/react-query'
+import { queryOptions, useSuspenseQuery } from '@suspensive/react-query'
 
 // queryOptions, infiniteQueryOptions에도 동일하게 적용됐습니다.
 const QueryOptionsExample = () => {
