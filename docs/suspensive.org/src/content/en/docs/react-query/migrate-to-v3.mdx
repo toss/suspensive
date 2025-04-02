@@ -15,7 +15,7 @@ Therefore, we will maintain support for @tanstack/react-query v4.
 
 ## Handling BREAKING CHANGES
 
-### The default `networkMode` is now set to `'always'` in `useSuspenseQuery`, `useSuspenseQueries`, `useSuspenseInfiniteQuery` of `@tanstack/react-query` v4
+### `networkMode` is now fixed to `'always'` in `useSuspenseQuery`, `useSuspenseQueries`, `useSuspenseInfiniteQuery` of `@suspensive/react-query`
 
 <Callout type='info'>
 
@@ -24,7 +24,7 @@ This breaking change affects users who use both `@tanstack/react-query` v4 and `
 </Callout>
 
 Previously, online status was determined using the `navigator.onLine` API. However, Chromium-based browsers have a known issue where this API may return incorrect values, falsely reporting the device as offline even when it is connected.  
-To ensure consistent behavior across all environments, `@suspensive/react-query` v4 now sets the default `networkMode` to `'always'` when using Suspense hooks.
+To ensure consistent behavior across all environments, `@suspensive/react-query` now sets the default `networkMode` to `'always'` when using Suspense hooks.
 
 This change aligns with the default behavior in React Query v5 and prevents Suspense hooks from starting with `fetchStatus: 'paused'` during runtime.
 
