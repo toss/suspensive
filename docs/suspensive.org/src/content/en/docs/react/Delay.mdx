@@ -2,7 +2,14 @@ import { Callout, Sandpack } from '@/components'
 
 # Delay
 
+This component can be used in two ways:
+
+1. Delay the exposure of children.
+2. If children is a render prop, it passes a flag at the delayed time.
+
 ### props.ms
+
+#### 1. Delay the exposure of children
 
 This component delays the exposure of children by ms. In the code below, exposure of children is delayed by 200ms.
 
@@ -27,6 +34,54 @@ export const Example = () => (
       1s delayed Text
     </div>
   </Delay>
+)
+```
+
+</Sandpack>
+
+#### 2. Pass a delayed flag to children
+
+If children is a render prop, it passes a flag instead of controlling the exposure. In the code below, `isDelayed` is passed as true after 200ms.
+
+```tsx /ms/
+import { Delay } from '@suspensive/react'
+
+export const Example = () => {
+  return (
+    <Delay ms={200}>
+      {({ isDelayed }) => (
+        <div
+          style={{
+            opacity: isDelayed ? 1 : 0,
+            transition: 'opacity 1500ms',
+          }}
+        ></div>
+      )}
+    </Delay>
+  )
+}
+```
+
+<Sandpack>
+
+```tsx Example.tsx active
+import { Delay } from '@suspensive/react'
+
+export const Example = () => (
+  <div style={{ backgroundColor: 'lightblue' }}>
+    <Delay ms={1500}>
+      {({ isDelayed }) => (
+        <div
+          style={{
+            opacity: isDelayed ? 1 : 0,
+            transition: 'opacity 1500ms',
+          }}
+        >
+          1500ms opacity trigger
+        </div>
+      )}
+    </Delay>
+  </div>
 )
 ```
 
