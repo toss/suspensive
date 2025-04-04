@@ -1,5 +1,11 @@
 # @suspensive/react-query-4
 
+## 3.0.0-next.16
+
+### Patch Changes
+
+- [#1499](https://github.com/toss/suspensive/pull/1499) [`56ae4eb`](https://github.com/toss/suspensive/commit/56ae4eb378fbdb150ecb1508a659411ce0e84bc8) Thanks [@manudeli](https://github.com/manudeli)! - ci(\*): sort by dependencies graph
+
 ## 3.0.0-next.15
 
 ### Patch Changes
