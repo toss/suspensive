@@ -8,4 +8,4 @@
 "@suspensive/react": patch
 ---
 
-chore: remove JSR support and related files
+chore(*): remove JSR support and related files
