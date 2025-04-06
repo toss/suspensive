@@ -1,11 +1,16 @@
 {
   "$schema": "https://jsr.io/schema/config-file.v1.json",
   "name": "@suspensive/react-query",
-  "version": "3.0.0-next.14",
+  "version": "3.0.0-next.15",
   "exports": "./src/index.ts",
   "imports": {
-    "@suspensive/react-query-4": "../react-query-4/src/index.ts",
-    "@suspensive/react": "../react/src/index.ts"
+    "@commander-js/extra-typings": "npm:@commander-js/extra-typings@^13.0.0",
+    "@suspensive/react-query-4": "jsr:@suspensive/react-query-4@^3.0.0-next.15",
+    "@suspensive/react-query-5": "jsr:@suspensive/react-query-5@^3.0.0-next.15",
+    "cli-table3": "npm:cli-table3@^0.6.5",
+    "commander": "npm:commander@^13.0.0",
+    "@tanstack/react-query": "npm:@tanstack/react-query@^5",
+    "react": "npm:react@^19"
   },
   "publish": {
     "include": ["LICENSE", "package.json", "src/**/*"],

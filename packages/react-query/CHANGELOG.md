@@ -1,5 +1,15 @@
 # @suspensive/react-query
 
+## 3.0.0-next.15
+
+### Patch Changes
+
+- [#1497](https://github.com/toss/suspensive/pull/1497) [`e400035`](https://github.com/toss/suspensive/commit/e4000352b7d3e42f0164983cca2bcde9fd24751c) Thanks [@kangju2000](https://github.com/kangju2000)! - chore: improve JSR imports sync with consistent dependency formatting
+
+- Updated dependencies [[`e400035`](https://github.com/toss/suspensive/commit/e4000352b7d3e42f0164983cca2bcde9fd24751c)]:
+  - @suspensive/react-query-4@3.0.0-next.15
+  - @suspensive/react-query-5@3.0.0-next.15
+
 ## 3.0.0-next.14
 
 ### Patch Changes

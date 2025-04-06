@@ -1,11 +1,18 @@
-import { findJsrPackages, executeJsrCommand, writeResultsToLog, JsrResult } from './jsr-utils'
+import { executeJsrCommand, writeResultsToLog, JsrResult, loadPackages, sortPackages } from './jsr-utils'
+import { fileURLToPath } from 'url'
+import path from 'path'
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
+const workspaceRoot = path.resolve(__dirname, '../packages')
 
 async function main() {
-  const packages = await findJsrPackages()
+  const packageInfos = loadPackages(workspaceRoot)
   const results: JsrResult[] = []
 
-  for (const pkg of packages) {
-    const result = await executeJsrCommand({ packagePath: pkg, isDryRun: false })
+  const sortedPackages = sortPackages(packageInfos)
+
+  for (const { dir } of sortedPackages) {
+    const result = await executeJsrCommand({ packagePath: dir, isDryRun: false })
     results.push(result)
   }
   writeResultsToLog(results, false)

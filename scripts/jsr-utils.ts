@@ -1,14 +1,71 @@
 import execa from 'execa'
 import * as path from 'path'
+import * as fs from 'fs'
 
 export interface JsrResult {
   packageName: string
   success: boolean
 }
 
-export async function findJsrPackages(): Promise<string[]> {
-  const { stdout } = await execa('find', ['packages', '-name', 'jsr.json', '-type', 'f'])
-  return stdout.trim().split('\n')
+type PackageInfo = {
+  name: string
+  dir: string
+  dependencies: string[]
+}
+export function loadPackages(workspaceRoot: string): PackageInfo[] {
+  const packages: PackageInfo[] = []
+
+  const dirs = fs
+    .readdirSync(workspaceRoot, { withFileTypes: true })
+    .filter((dirent) => dirent.isDirectory())
+    .map((dirent) => path.join(workspaceRoot, dirent.name))
+
+  for (const dir of dirs) {
+    const filePath = path.join(dir, 'jsr.json')
+    if (!fs.existsSync(filePath)) continue
+
+    const json = JSON.parse(fs.readFileSync(filePath, 'utf-8'))
+    const name = json.name as string
+    const imports = json.imports ?? {}
+
+    const dependencies = Object.keys(imports).filter((dep) => dep.startsWith(name.split('/')[0]))
+
+    packages.push({ name, dir, dependencies })
+  }
+
+  return packages
+}
+
+export function sortPackages(packages: PackageInfo[]): PackageInfo[] {
+  const nameToPkg = new Map(packages.map((p) => [p.name, p]))
+  const visited = new Set<string>()
+  const temp = new Set<string>()
+  const result: PackageInfo[] = []
+
+  function visit(name: string) {
+    if (visited.has(name)) return
+    if (temp.has(name)) throw new Error(`Cycle detected: ${name}`)
+    temp.add(name)
+
+    const pkg = nameToPkg.get(name)
+    if (!pkg) throw new Error(`Unknown package: ${name}`)
+
+    for (const dep of pkg.dependencies) {
+      if (nameToPkg.has(dep)) {
+        visit(dep)
+      }
+    }
+
+    temp.delete(name)
+    visited.add(name)
+    result.push(pkg)
+  }
+
+  for (const pkg of packages) {
+    visit(pkg.name)
+  }
+
+  return result
 }
 
 export async function executeJsrCommand({
