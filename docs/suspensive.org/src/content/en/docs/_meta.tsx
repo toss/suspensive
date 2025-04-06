@@ -6,6 +6,7 @@ export default {
     title: 'Packages',
   },
   react: { title: '@suspensive/react' },
+  'react-dom': { title: '@suspensive/react-dom' },
   'react-query': { title: '@suspensive/react-query' },
   jotai: { title: '@suspensive/jotai' },
   codemods: { title: '@suspensive/codemods' },

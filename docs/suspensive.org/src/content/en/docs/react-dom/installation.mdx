@@ -30,13 +30,16 @@ Suspensive Libraries are optimized for modern browsers. It is compatible with th
 
 > Depending on your environment, you might need to add polyfills. If you want to support older browsers, you need to transpile the library from node_modules yourselves.
 
-### Check supported react version
+### Check supported react, react-dom version
 
 <br />
 
 <table>
   <tbody>
-    {[{ library: 'react', version: '^18 || ^19' }].map((item) => (
+    {[
+      { library: 'react', version: '^18 || ^19' },
+      { library: 'react-dom', version: '^18 || ^19' },
+    ].map((item) => (
       <tr key={item.library}>
         <td>{item.library}</td>
         <td className="text-center">{item.version}</td>
@@ -47,12 +50,12 @@ Suspensive Libraries are optimized for modern browsers. It is compatible with th
 
 ### Add as Dependencies
 
-@suspensive/react lives in npm. To install the latest stable version, run the following command.
+@suspensive/react-dom lives in npm. To install the latest stable version, run the following command.
 
-[![npm version](https://img.shields.io/npm/v/@suspensive/react?color=000&labelColor=000&logo=npm&label=)](https://www.npmjs.com/package/@suspensive/react)
+[![npm version](https://img.shields.io/npm/v/@suspensive/react-dom?color=000&labelColor=000&logo=npm&label=)](https://www.npmjs.com/package/@suspensive/react-dom)
 
 ```shell npm2yarn
-npm install @suspensive/react
+npm install @suspensive/react-dom
 ```
 
 </Steps>

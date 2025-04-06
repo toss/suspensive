@@ -30,7 +30,7 @@ Suspensive 라이브러리는 모던 브라우저를 위해 최적화되었습�
 
 > 당신의 환경에 따라, polyfills추가가 필요할 수도 있습니다. 더 오래된 브라우저를 지원하려면, 스스로 node_modules에서 라이브러리를 transpile할 필요가 있습니다.
 
-### react, jotai 버전 확인하기
+### react, react-dom 버전 확인하기
 
 <br />
 
@@ -38,7 +38,7 @@ Suspensive 라이브러리는 모던 브라우저를 위해 최적화되었습�
   <tbody>
     {[
       { library: 'react', version: '^18 || ^19' },
-      { library: 'jotai', version: '^2' },
+      { library: 'react-dom', version: '^18 || ^19' },
     ].map((item) => (
       <tr key={item.library}>
         <td>{item.library}</td>
@@ -50,12 +50,12 @@ Suspensive 라이브러리는 모던 브라우저를 위해 최적화되었습�
 
 ### 의존성 추가
 
-@suspensive/jotai는 npm에 있습니다. 최신 안정버전을 설치하기 위해 아래 커맨드를 실행하세요.
+@suspensive/react-dom는 npm에 있습니다. 최신 안정버전을 설치하기 위해 아래 커맨드를 실행하세요.
 
-[![npm version](https://img.shields.io/npm/v/@suspensive/jotai?color=000&labelColor=000&logo=npm&label=)](https://www.npmjs.com/package/@suspensive/jotai)
+[![npm version](https://img.shields.io/npm/v/@suspensive/react-dom?color=000&labelColor=000&logo=npm&label=)](https://www.npmjs.com/package/@suspensive/react-dom)
 
 ```shell npm2yarn
-npm install @suspensive/jotai
+npm install @suspensive/react-dom
 ```
 
 </Steps>
