@@ -147,9 +147,6 @@ importers:
       eslint:
         specifier: ^9.21.0
         version: 9.21.0(jiti@2.4.2)
-      execa:
-        specifier: ^5.1.1
-        version: 5.1.1
       husky:
         specifier: ^9.1.7
         version: 9.1.7
@@ -186,9 +183,6 @@ importers:
       tsup:
         specifier: ^8.4.0
         version: 8.4.0(jiti@2.4.2)(postcss@8.5.3)(tsx@4.19.3)(typescript@5.7.2)(yaml@2.7.0)
-      tsx:
-        specifier: ^4.19.3
-        version: 4.19.3
       turbo:
         specifier: ^2.4.4
         version: 2.4.4
@@ -678,10 +672,10 @@ importers:
         specifier: ^13.0.0
         version: 13.0.0(commander@13.0.0)
       '@suspensive/react-query-4':
-        specifier: workspace:^3.0.0-next.15
+        specifier: workspace:^3.0.0-next.16
         version: link:../react-query-4
       '@suspensive/react-query-5':
-        specifier: workspace:^3.0.0-next.15
+        specifier: workspace:^3.0.0-next.16
         version: link:../react-query-5
       '@tanstack/react-query':
         specifier: ^4 || ^5
@@ -17862,6 +17856,7 @@ snapshots:
   get-tsconfig@4.10.0:
     dependencies:
       resolve-pkg-maps: 1.0.0
+    optional: true
 
   getenv@1.0.0: {}
 
@@ -21664,7 +21659,8 @@ snapshots:
 
   resolve-from@5.0.0: {}
 
-  resolve-pkg-maps@1.0.0: {}
+  resolve-pkg-maps@1.0.0:
+    optional: true
 
   resolve-workspace-root@2.0.0: {}
 
@@ -22680,6 +22676,7 @@ snapshots:
       get-tsconfig: 4.10.0
     optionalDependencies:
       fsevents: 2.3.3
+    optional: true
 
   tunnel-agent@0.6.0:
     dependencies:
