@@ -1,12 +1,12 @@
 import { Steps } from 'nextra/components'
 
-# 설치하기
+# Installation
 
 <Steps>
 
-### 지원 브라우저 확인하기
+### Check supported browsers
 
-Suspensive 라이브러리는 모던 브라우저를 위해 최적화되었습니다. 아래 브라우저에 호환되도록 설정되어 있습니다.
+Suspensive Libraries are optimized for modern browsers. It is compatible with the following browsers config.
 
 <br />
 
@@ -28,15 +28,18 @@ Suspensive 라이브러리는 모던 브라우저를 위해 최적화되었습�
   </tbody>
 </table>
 
-> 당신의 환경에 따라, polyfills추가가 필요할 수도 있습니다. 더 오래된 브라우저를 지원하려면, 스스로 node_modules에서 라이브러리를 transpile할 필요가 있습니다.
+> Depending on your environment, you might need to add polyfills. If you want to support older browsers, you need to transpile the library from node_modules yourselves.
 
-### React 버전 확인하기
+### Check supported react, react-dom version
 
 <br />
 
 <table>
   <tbody>
-    {[{ library: 'React', version: '^18' }].map((item) => (
+    {[
+      { library: 'react', version: '^18 || ^19' },
+      { library: 'react-dom', version: '^18 || ^19' },
+    ].map((item) => (
       <tr key={item.library}>
         <td>{item.library}</td>
         <td className="text-center">{item.version}</td>
@@ -45,14 +48,14 @@ Suspensive 라이브러리는 모던 브라우저를 위해 최적화되었습�
   </tbody>
 </table>
 
-### 의존성 추가
+### Add as Dependencies
 
-@suspensive/react는 npm에 있습니다. 최신 안정버전을 설치하기 위해 아래 커맨드를 실행하세요.
+@suspensive/react-dom lives in npm. To install the latest stable version, run the following command.
 
-[![npm version](https://img.shields.io/npm/v/@suspensive/react?color=000&labelColor=000&logo=npm&label=)](https://www.npmjs.com/package/@suspensive/react)
+[![npm version](https://img.shields.io/npm/v/@suspensive/react-dom?color=000&labelColor=000&logo=npm&label=)](https://www.npmjs.com/package/@suspensive/react-dom)
 
 ```shell npm2yarn
-npm install @suspensive/react
+npm install @suspensive/react-dom
 ```
 
 </Steps>

@@ -1,62 +1,177 @@
-import { Callout } from '@/components'
+import { Callout, Sandpack } from '@/components'
 
-# Suspense
+# InView
 
-@suspensive/react의 `<Suspense/>`는 [React의 Suspense](https://react.dev/reference/react/Suspense)가 됩니다.
+This is a component that uses IntersectionObserver to check whether something is within the viewport.
 
-### props.fallback
+```tsx
+import { PrefetchQuery } from '@suspensive/react-query'
+import { InView } from '@suspensive/react-dom'
 
-fallback은 react의 Suspense의 fallback와 동일하게 동작합니다.
+const PostsPage = ({ posts }: { posts: Post[] }) => (
+  <div>
+    <h1>Posts</h1>
+    {posts.map((post) => (
+      <InView>
+        {({ ref, isInView }) => (
+          <div ref={ref}>
+            {isInView ? (
+              // 🚫 Due to the limitations of React hooks, we cannot use usePrefetchQuery here
+              // usePrefetchQuery({
+              //   queryKey: ['posts', post.id, 'comments'],
+              //   queryFn: () => getPostComments(post.id),
+              // })
 
-```tsx /Suspense/
-import { Suspense } from '@suspensive/react'
-
-const Example = () => (
-  <Suspense fallback={<Loading />}>
-    <Children />
-  </Suspense>
+              // ✅ Before entering the Post Comments page, we can call usePrefetchQuery for each post comments query.
+              <PrefetchQuery
+                queryKey={['posts', post.id, 'comments']}
+                queryFn={() => getPostComments(post.id)}
+              />
+            ) : null}
+            <h2>{post.title}</h2>
+            <p>{post.description}</p>
+            <Link to={`/posts/${post.id}/comments`}>See comments</Link>
+          </div>
+        )}
+      </InView>
+    ))}
+  </div>
 )
 ```
 
-<Callout>
+## props.threshold
 
-Default fallback
+`threshold` sets the threshold for the IntersectionObserver.
 
-`<Suspense/>`는 `<DefaultPropsProvider/>`와 함께 사용할 때 더욱 강력해집니다. `<DefaultPropsProvider/>`를 사용하여 여러 `<Suspense/>`의 default fallback를 제어합니다. 자세한 내용은 [`<DefaultPropsProvider/>` 페이지](/docs/react/DefaultPropsProvider)에 소개되어 있습니다.
+<Sandpack>
 
-</Callout>
+```tsx Example.tsx active
+import { InView } from '@suspensive/react-dom'
 
-### 서버사이드 렌더링을 피하기 (clientOnly)
+export const Example = () =>
+  Array.from({ length: 100 }).map((_, index) => (
+    <InView threshold={0.5}>
+      {({ ref, inView }) => (
+        <div
+          key={index}
+          ref={ref}
+          style={{
+            backgroundColor: inView ? 'lightblue' : 'orange',
+            border: '1px solid',
+            padding: 50,
+            textAlign: 'center',
+          }}
+        >
+          {inView ? 'In View' : 'Out of View'}
+        </div>
+      )}
+    </InView>
+  ))
+```
 
-clientOnly prop을 사용하면 `<Suspense/>`는 서버에서는 fallback을 반환합니다. mount 후(클라이언트에서는) children을 반환합니다. mount는 클라이언트에서만 일어나기 때문에 서버사이드 렌더링을 피할 수 있습니다.
+</Sandpack>
 
-```tsx /clientOnly/
-import { Suspense } from '@suspensive/react'
+## props.triggerOnce
 
-const Example = () => (
-  <Suspense clientOnly fallback={<Loading />}>
-    <Children />
-  </Suspense>
+`triggerOnce` is a boolean that determines whether the callback should be triggered only once. If set to `true`, the callback will only be triggered once when the element enters the viewport.
+
+<Sandpack>
+
+```tsx Example.tsx active
+import { InView } from '@suspensive/react-dom'
+
+export const Example = () =>
+  Array.from({ length: 100 }).map((_, index) => (
+    <InView triggerOnce>
+      {({ ref, inView }) => (
+        <div
+          key={index}
+          ref={ref}
+          style={{
+            backgroundColor: inView ? 'lightblue' : 'orange',
+            border: '1px solid',
+            padding: 50,
+            textAlign: 'center',
+          }}
+        >
+          {inView ? 'In View' : 'Out of View'}
+        </div>
+      )}
+    </InView>
+  ))
+```
+
+</Sandpack>
+
+## props.skip
+
+`skip` is a boolean that determines whether the callback should be skipped. If set to `true`, the callback will not be triggered.
+
+<Sandpack>
+
+```tsx Example.tsx active
+import { Delay } from '@suspensive/react'
+import { InView } from '@suspensive/react-dom'
+
+export const Example = () => (
+  <Delay ms={2000}>
+    {({ isDelayed }) => (
+      <div>
+        <h1>skip: {isDelayed ? 'true' : 'false'}</h1>
+        {Array.from({ length: 100 }).map((_, index) => (
+          <InView skip={isDelayed}>
+            {({ ref, inView }) => (
+              <div
+                key={index}
+                ref={ref}
+                style={{
+                  backgroundColor: inView ? 'lightblue' : 'orange',
+                  border: '1px solid',
+                  padding: 50,
+                  textAlign: 'center',
+                }}
+              >
+                {inView ? 'In View' : 'Out of View'}
+              </div>
+            )}
+          </InView>
+        ))}
+      </div>
+    )}
+  </Delay>
 )
 ```
 
-clientOnly prop을 사용하면 내부적으로 useIsClient훅을 사용하고 useIsClient는 useSyncExternalStore의 getSnapshot와 getServerSnapshot을 활용해 client임을 보장하고 있습니다.
+</Sandpack>
 
-```tsx /useIsClient/
-const useIsClient = () =>
-  useSyncExternalStore(emptySubscribe, getSnapshot, getServerSnapshot)
+## props.delay
 
-const emptySubscribe = () => noop
-const getSnapshot = () => true
-const getServerSnapshot = () => false
+`delay` is a number that sets the delay for the IntersectionObserver. It is used to debounce the callback.
+
+<Sandpack>
+
+```tsx Example.tsx active
+import { InView } from '@suspensive/react-dom'
+
+export const Example = () =>
+  Array.from({ length: 100 }).map((_, index) => (
+    <InView delay={500}>
+      {({ ref, inView }) => (
+        <div
+          key={index}
+          ref={ref}
+          style={{
+            backgroundColor: inView ? 'lightblue' : 'orange',
+            border: '1px solid',
+            padding: 50,
+            textAlign: 'center',
+          }}
+        >
+          {inView ? 'In View' : 'Out of View'}
+        </div>
+      )}
+    </InView>
+  ))
 ```
 
-https://x.com/TkDodo/status/1741068994981826947?t=XmG17etMUL2m0JFim03vqw&s=19
-
-<Callout type='info'>
-
-SSR을 지원하도록 점진적으로 마이그레이션하기 (`<Suspense clientOnly/>` -> `<Suspense/>`)
-
-React.Suspense를 SSR과 CSR에서 모두 사용하고 싶다면 `<Suspense clientOnly/>`에서 `<Suspense/>`로 점진적으로 마이그레이션하면 쉽게 적용할 수 있습니다.
-
-</Callout>
+</Sandpack>

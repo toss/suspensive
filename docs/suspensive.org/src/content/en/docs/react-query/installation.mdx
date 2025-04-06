@@ -31,13 +31,16 @@ Suspensive Libraries are optimized for modern browsers. It is compatible with th
 
 > Depending on your environment, you might need to add polyfills. If you want to support older browsers, you need to transpile the library from node_modules yourselves.
 
-### Check supported react version
+### Check supported react, @tanstack/react-query version
 
 <br />
 
 <table>
   <tbody>
-    {[{ library: 'React', version: '^18' }].map((item) => (
+    {[
+      { library: 'react', version: '^18 || ^19' },
+      { library: '@tanstack/react-query', version: '^4 || ^5' },
+    ].map((item) => (
       <tr key={item.library}>
         <td>{item.library}</td>
         <td className="text-center">{item.version}</td>
