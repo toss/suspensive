@@ -5,19 +5,14 @@ import { Callout } from '@/components'
 IntersectionObserver를 활용해서 뷰포트내에 있는지 여부를 확인하는 컴포넌트입니다.
 
 ```tsx
-import { PrefetchQuery, useSuspenseQuery } from '@suspensive/react-query'
+import { PrefetchQuery } from '@suspensive/react-query'
 import { InView } from '@suspensive/react-dom'
 
-const PostsPage = () => {
-  const { data: posts } = useSuspenseQuery({
-    queryKey: ['posts'],
-    queryFn: () => getPosts(),
-  })
-
-  return posts.map((post) => (
+const PostsPage = ({ posts }: { posts: Post[] }) =>
+  posts.map((post) => (
     <InView>
       {({ ref, isInView }) => (
-        <>
+        <div ref={ref}>
           {isInView ? (
             // 🚫 React hook의 제약으로 usePrefetchQuery를 사용하지 못합니다
             // usePrefetchQuery({
@@ -31,16 +26,13 @@ const PostsPage = () => {
               queryFn={() => getPostComments(post.id)}
             />
           ) : null}
-          <div ref={ref}>
-            <h2>{post.title}</h2>
-            <p>{post.description}</p>
-            <Link to={`/posts/${post.id}/comments`}>See comments</Link>
-          </div>
-        </>
+          <h2>{post.title}</h2>
+          <p>{post.description}</p>
+          <Link to={`/posts/${post.id}/comments`}>See comments</Link>
+        </div>
       )}
     </InView>
   ))
-}
 ```
 
 ### props.fallback
