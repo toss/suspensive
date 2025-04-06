@@ -1,5 +1,11 @@
 # @suspensive/jotai
 
+## 3.0.0-next.16
+
+### Patch Changes
+
+- [#1511](https://github.com/toss/suspensive/pull/1511) [`3f87359`](https://github.com/toss/suspensive/commit/3f873592847e40170252e04b267911dee6559c7e) Thanks [@kangju2000](https://github.com/kangju2000)! - chore(\*): remove JSR support and related files
+
 ## 3.0.0-next.15
 
 ### Patch Changes
