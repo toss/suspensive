@@ -147,9 +147,6 @@ importers:
       eslint:
         specifier: ^9.21.0
         version: 9.21.0(jiti@2.4.2)
-      execa:
-        specifier: ^5.1.1
-        version: 5.1.1
       husky:
         specifier: ^9.1.7
         version: 9.1.7
@@ -186,9 +183,6 @@ importers:
       tsup:
         specifier: ^8.4.0
         version: 8.4.0(jiti@2.4.2)(postcss@8.5.3)(tsx@4.19.3)(typescript@5.7.2)(yaml@2.7.0)
-      tsx:
-        specifier: ^4.19.3
-        version: 4.19.3
       turbo:
         specifier: ^2.4.4
         version: 2.4.4
@@ -2245,7 +2239,7 @@ packages:
 
   '@expo/bunyan@4.0.1':
     resolution: {integrity: sha512-+Lla7nYSiHZirgK+U/uYzsLv/X+HaJienbD5AKX1UQZHYfWaP+9uuQluRB4GrEVWF0GZ7vEVp/jzaOT9k/SQlg==}
-    engines: {node: '>=0.10.0'}
+    engines: {'0': node >=0.10.0}
 
   '@expo/cli@0.22.8':
     resolution: {integrity: sha512-MpHrfPKcHL+b1wwx+WiniEL5n33tl964tN8EW1K4okW3/tAPgbu3R00NZs6OExH9PZGQP8OKhCXhZttbK2jUnA==}
@@ -17862,6 +17856,7 @@ snapshots:
   get-tsconfig@4.10.0:
     dependencies:
       resolve-pkg-maps: 1.0.0
+    optional: true
 
   getenv@1.0.0: {}
 
@@ -21664,7 +21659,8 @@ snapshots:
 
   resolve-from@5.0.0: {}
 
-  resolve-pkg-maps@1.0.0: {}
+  resolve-pkg-maps@1.0.0:
+    optional: true
 
   resolve-workspace-root@2.0.0: {}
 
@@ -22680,6 +22676,7 @@ snapshots:
       get-tsconfig: 4.10.0
     optionalDependencies:
       fsevents: 2.3.3
+    optional: true
 
   tunnel-agent@0.6.0:
     dependencies:
