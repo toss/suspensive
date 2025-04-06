@@ -15,6 +15,7 @@ export default {
   },
   queryOptions: { title: 'queryOptions' },
   infiniteQueryOptions: { title: 'infiniteQueryOptions' },
+  mutationOptions: { title: 'mutationOptions' },
   useSuspenseQuery: { title: 'useSuspenseQuery' },
   useSuspenseQueries: { title: 'useSuspenseQueries' },
   useSuspenseInfiniteQuery: { title: 'useSuspenseInfiniteQuery' },
