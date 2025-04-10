@@ -112,6 +112,7 @@ export const suspensiveTypeScriptConfig = tseslint.config(
 
 export const suspensiveReactTypeScriptConfig = tseslint.config(
   ...suspensiveTypeScriptConfig,
+  reactHooks.configs['recommended-latest'],
   {
     files: ['**/*.{ts,tsx}'],
     ...pluginReact.configs.recommended,
@@ -119,7 +120,6 @@ export const suspensiveReactTypeScriptConfig = tseslint.config(
   },
   {
     plugins: {
-      'react-hooks': reactHooks,
       'react-compiler': reactCompiler,
     },
     languageOptions: {
@@ -128,7 +128,6 @@ export const suspensiveReactTypeScriptConfig = tseslint.config(
       },
     },
     rules: {
-      ...reactHooks.configs.recommended.rules,
       'react-compiler/react-compiler': 'warn',
       '@eslint-react/no-use-context': 'off',
       '@eslint-react/no-forward-ref': 'off',
