@@ -103,10 +103,8 @@ describe('queryOptions', () => {
     expectTypeOf(query3.data).toEqualTypeOf<string>()
   })
   it('should be used with usePrefetchQuery', () => {
-    // eslint-disable-next-line @typescript-eslint/no-invalid-void-type
-    expectTypeOf(usePrefetchQuery(query.options1())).toMatchTypeOf<void>()
-    // eslint-disable-next-line @typescript-eslint/no-invalid-void-type
-    expectTypeOf(usePrefetchQuery({ ...query.options1() })).toMatchTypeOf<void>()
+    expectTypeOf(usePrefetchQuery(query.options1())).toBeVoid()
+    expectTypeOf(usePrefetchQuery({ ...query.options1() })).toBeVoid()
   })
   it('should be used with useQueryClient', async () => {
     const queryClient = useQueryClient()
