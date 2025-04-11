@@ -129,7 +129,9 @@ export const suspensiveReactTypeScriptConfig = tseslint.config(
     },
     rules: {
       'react-compiler/react-compiler': 'warn',
+      '@eslint-react/no-use-context': 'off',
       '@eslint-react/no-forward-ref': 'off',
+      '@eslint-react/no-context-provider': 'off',
     },
     settings: {
       react: {

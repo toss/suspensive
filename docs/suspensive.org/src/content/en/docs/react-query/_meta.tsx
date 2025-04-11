@@ -6,6 +6,7 @@ export default {
   'tanstack-query-compatibility': {
     title: 'Support both TanStack Query v4 and 5',
   },
+  'migrate-to-v3': { title: 'Migrating to v3' },
   'migrate-to-v2': { title: 'Migrating to v2' },
   '--- API Reference': {
     type: 'separator',
@@ -13,6 +14,7 @@ export default {
   },
   queryOptions: { title: 'queryOptions' },
   infiniteQueryOptions: { title: 'infiniteQueryOptions' },
+  mutationOptions: { title: 'mutationOptions' },
   useSuspenseQuery: { title: 'useSuspenseQuery' },
   useSuspenseQueries: { title: 'useSuspenseQueries' },
   useSuspenseInfiniteQuery: { title: 'useSuspenseInfiniteQuery' },

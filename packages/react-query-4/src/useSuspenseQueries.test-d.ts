@@ -34,6 +34,13 @@ describe('useSuspenseQueries', () => {
           enabled: true,
           select,
         },
+        {
+          queryKey: [...queryKey, 4] as const,
+          queryFn,
+          // @ts-expect-error no networkMode
+          networkMode: 'always',
+          select,
+        },
         queryOptions({
           queryKey: [...queryKey, 4] as const,
           queryFn: () => Promise.resolve({ field: 'success' }),

@@ -31,13 +31,16 @@ Suspensive 라이브러리는 모던 브라우저를 위해 최적화되었습�
 
 > 당신의 환경에 따라, polyfills추가가 필요할 수도 있습니다. 더 오래된 브라우저를 지원하려면, 스스로 node_modules에서 라이브러리를 transpile할 필요가 있습니다.
 
-### React 버전 확인하기
+### react, @tanstack/react-query 버전 확인하기
 
 <br />
 
 <table>
   <tbody>
-    {[{ library: 'React', version: '^18' }].map((item) => (
+    {[
+      { library: 'react', version: '^18 || ^19' },
+      { library: '@tanstack/react-query', version: '^4 || ^5' },
+    ].map((item) => (
       <tr key={item.library}>
         <td>{item.library}</td>
         <td className="text-center">{item.version}</td>

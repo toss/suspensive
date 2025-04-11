@@ -190,6 +190,38 @@ export const ErrorAfter2s = () => {
 
 </Sandpack>
 
+## ErrorBoundaryGroup.with
+
+`ErrorBoundaryGroup.with` is a higher-order component that wraps the component with `<ErrorBoundaryGroup/>`.
+`ErrorBoundaryGroup.with` makes it easy to wrap a component.
+
+```tsx /ErrorBoundaryGroup.with/
+import { ErrorBoundaryGroup } from '@suspensive/react'
+
+const Example = ErrorBoundaryGroup.with({}, () => {
+  return <>...</>
+})
+```
+
+## ErrorBoundaryGroup.Consumer
+
+`ErrorBoundaryGroup.Consumer` is a consumer of `<ErrorBoundaryGroup/>`. You can use `ErrorBoundaryGroup.Consumer` to use reset of `<ErrorBoundaryGroup/>`.
+
+```tsx /ErrorBoundaryGroup.Consumer/
+import { ErrorBoundaryGroup } from '@suspensive/react'
+
+const Example = () => (
+  <ErrorBoundaryGroup>
+    <ErrorBoundaryGroup.Consumer>
+      {(group) => <button onClick={group.reset}>Try again</button>}
+    </ErrorBoundaryGroup.Consumer>
+    <ErrorBoundary>
+      <ErrorAfter2s />
+    </ErrorBoundary>
+  </ErrorBoundaryGroup>
+)
+```
+
 ## useErrorBoundaryGroup
 
 If you use useErrorBoundaryGroup, you can get a function to reset `<ErrorBoundary/>`s in `<ErrorBoundaryGroup/>`.

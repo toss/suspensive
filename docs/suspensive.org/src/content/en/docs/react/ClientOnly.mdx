@@ -11,3 +11,16 @@ const Example = () => (
   </ClientOnly>
 )
 ```
+
+## ClientOnly.with
+
+`ClientOnly.with` is a higher-order component (HOC) that wraps a component using `ClientOnly`.
+`ClientOnly.with` makes it easy to wrap a component.
+
+```tsx /ClientOnly.with/
+import { ClientOnly } from '@suspensive/react'
+
+const Example = ClientOnly.with({ fallback: <>server</> }, () => {
+  return <>client</>
+})
+```
