@@ -148,3 +148,16 @@ export const Example = () => {
 ```
 
 </Sandpack>
+
+## Delay.with
+
+`Delay.with`는 `Delay`를 사용하여 컴포넌트를 래핑하는 HOC입니다.
+`Delay.with`를 사용하면 컴포넌트를 쉽게 래핑할 수 있습니다.
+
+```tsx /Delay.with/
+import { Delay } from '@suspensive/react'
+
+const Example = Delay.with({ ms: 2000 }, () => {
+  return <>...</>
+})
+```
