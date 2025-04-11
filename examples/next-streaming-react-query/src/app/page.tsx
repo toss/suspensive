@@ -2,11 +2,17 @@
 
 import { Suspense } from '@suspensive/react'
 import { SuspenseQuery } from '@suspensive/react-query-5'
-import { useQueryClient } from '@tanstack/react-query'
+import { useQueryClient, useSuspenseQuery } from '@tanstack/react-query'
 import Link from 'next/link'
-import { Text } from '~/app/components/Text'
-import { Text2 } from '~/app/components/Text2'
+import type { ReactNode } from 'react'
 import { query } from '~/query'
+
+const Text = ({ ms }: { ms: number }) => {
+  const { data } = useSuspenseQuery(query.text(ms))
+  return <p>result: {data}</p>
+}
+
+const Text2 = ({ children }: { children: ReactNode }) => <p>result: {children}</p>
 
 export default function Page() {
   const queryClient = useQueryClient()
@@ -72,7 +78,6 @@ export default function Page() {
       </fieldset>
 
       <pre>{`Proposal: <SuspenseQuery /> Component`}</pre>
-      {/* Need to proposal */}
       <ul>
         <Suspense>
           <SuspenseQuery {...query.text(1100)}>{({ data }) => <Text2>{data}</Text2>}</SuspenseQuery>
