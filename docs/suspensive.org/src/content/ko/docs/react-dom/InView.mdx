@@ -13,9 +13,9 @@ const PostsPage = ({ posts }: { posts: Post[] }) => (
     <h1>Posts</h1>
     {posts.map((post) => (
       <InView triggerOnce>
-        {({ ref, isInView }) => (
+        {({ ref, inView }) => (
           <div ref={ref}>
-            {isInView ? (
+            {inView ? (
               // 🚫 React hook의 제약으로 usePrefetchQuery를 사용하지 못합니다
               // usePrefetchQuery({
               //   queryKey: ['posts', post.id, 'comments'],
@@ -38,6 +38,54 @@ const PostsPage = ({ posts }: { posts: Post[] }) => (
   </div>
 )
 ```
+
+## props.onInView, onInViewEnd
+
+`onInView`는 요소가 뷰포트에 들어올 때 호출되는 콜백 함수입니다.
+`onInViewEnd`는 요소가 뷰포트에서 나갈 때 호출되는 콜백 함수입니다.
+
+<Sandpack>
+
+```tsx Example.tsx active
+import { InView } from '@suspensive/react-dom'
+import { useState } from 'react'
+
+export const Example = () => {
+  const [inViewIndexes, setInViewIndexes] = useState([])
+  return (
+    <>
+      {Array.from({ length: 100 }).map((_, index) => (
+        <InView
+          onInView={() => setInViewIndexes((prev) => [...prev, index])}
+          onInViewEnd={() =>
+            setInViewIndexes((prev) => prev.filter((i) => i !== index))
+          }
+        >
+          {({ ref, inView }) => (
+            <div
+              key={index}
+              ref={ref}
+              style={{
+                backgroundColor: inView ? 'lightblue' : 'orange',
+                border: '1px solid',
+                padding: 50,
+                textAlign: 'center',
+              }}
+            >
+              {inView ? 'In View' : 'Out of View'}
+            </div>
+          )}
+        </InView>
+      ))}
+      <div style={{ position: 'fixed', top: 0, backgroundColor: 'red' }}>
+        inViewIndexes: {inViewIndexes.join(', ')}
+      </div>
+    </>
+  )
+}
+```
+
+</Sandpack>
 
 ## props.threshold
 
