@@ -4,16 +4,7 @@ import type { FadeIn } from './FadeIn'
 describe('<FadeIn/>', () => {
   it('type check', () => {
     expectTypeOf<keyof ComponentProps<typeof FadeIn>>().toEqualTypeOf<
-      | 'root'
-      | 'rootMargin'
-      | 'threshold'
-      | 'triggerOnce'
-      | 'delay'
-      | 'children'
-      | 'duration'
-      | 'timingFunction'
-      | 'onInView'
-      | 'onInViewEnd'
+      'root' | 'rootMargin' | 'threshold' | 'triggerOnce' | 'delay' | 'children' | 'duration' | 'timingFunction'
     >()
   })
 })
