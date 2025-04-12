@@ -12,7 +12,7 @@ export default {
   banner: (
     <span>
       We're preparing Suspensive v3 🚀{' '}
-      <Link href="https://v3.suspensive.org/en/docs/migrate-to-v3">
+      <Link href="https://v3.suspensive.org/en/docs/migration/migrate-to-v3">
         read more
       </Link>
     </span>

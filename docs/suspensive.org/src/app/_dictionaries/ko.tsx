@@ -13,7 +13,9 @@ export default {
   banner: (
     <span>
       Suspensive v3를 준비하고 있습니다. 🚀{' '}
-      <Link href="https://v3.suspensive.org/ko/docs/migrate-to-v3">더보기</Link>
+      <Link href="https://v3.suspensive.org/ko/docs/migration/migrate-to-v3">
+        더보기
+      </Link>
     </span>
   ),
   lastUpdated: '수정된 날짜:',
