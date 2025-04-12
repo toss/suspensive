@@ -6,8 +6,7 @@ export default {
   'tanstack-query-compatibility': {
     title: 'Support both TanStack Query v4 and 5',
   },
-  'migrate-to-v3': { title: 'Migrating to v3' },
-  'migrate-to-v2': { title: 'Migrating to v2' },
+  migration: { title: 'Migration guide' },
   '--- API Reference': {
     type: 'separator',
     title: 'API Reference',
