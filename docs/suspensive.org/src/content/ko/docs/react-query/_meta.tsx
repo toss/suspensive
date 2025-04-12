@@ -7,8 +7,7 @@ export default {
   'tanstack-query-compatibility': {
     title: 'TanStack Query v4, 5를 모두 지원',
   },
-  'migrate-to-v3': { title: 'v3로 마이그레이션하기' },
-  'migrate-to-v2': { title: 'v2로 마이그레이션하기' },
+  migration: { title: '마이그레이션 가이드' },
   '--- API Reference': {
     type: 'separator',
     title: 'API 문서',

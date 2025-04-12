@@ -1,0 +1,40 @@
+import { Cards, Steps } from 'nextra/components'
+import { Callout } from '@/components'
+
+# Migrating to Suspensive v3
+
+Suspensive v3 introduces several important changes to improve stability and add new features.
+
+### Stabilized experimental Suspensive packages
+
+- [@suspensive/react-dom](../react-dom/installation)
+- [@suspensive/jotai](../jotai/motivation)
+- [@suspensive/codemods](../codemods/motivation)
+
+### Prevent infinite loop when an error occurs in the ErrorBoundary fallback
+
+The way errors are handled in the `fallback` of `ErrorBoundary` in @suspensive/react has changed.
+
+### Removed peerDependency of @suspensive/react-query
+
+We no longer depend on @suspensive/react as a peerDependency. It was only used to provide `QueryErrorBoundary`.
+This simplifies the usage of @suspensive/react-query, ensuring that users do not need to use any additional libraries other than @tanstack/react-query.
+
+### Migration guide
+
+<Cards num={2}>
+  <Cards.Card
+    title="See @suspensive/react v3"
+    href="/docs/react/migration/migrate-to-v3"
+  />
+  <Cards.Card
+    title="See @suspensive/react-query v3"
+    href="/docs/react-query/migration/migrate-to-v3"
+  />
+</Cards>
+
+## Thanks to all Suspensive contributors
+
+We were able to release v3 because of Suspensive's contributors. Thank you to everyone who worked together to make it a better library, and we look forward to your continued support.
+
+[![contributors](https://contrib.rocks/image?repo=toss/suspensive)](https://github.com/toss/suspensive/graphs/contributors)
