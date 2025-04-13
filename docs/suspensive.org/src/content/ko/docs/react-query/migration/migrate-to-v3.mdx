@@ -4,7 +4,37 @@ import { Callout } from '@/components'
 
 ## 새로운 기능
 
-### Draft
+### 새로운 `mutationOptions` [#1490](https://github.com/toss/suspensive/pull/1490)
+
+`mutationOptions`는 Mutation에서 옵션 객체를 쉽게 재사용하고 일관성 있게 관리할 수 있도록 도와줍니다. 이는 [`queryOptions`](/docs/react-query/queryOptions)가 사용되는 이유와 유사한 장점을 제공합니다.
+
+```jsx /mutationOptions/
+import { mutationOptions, useMutation, Mutation } from '@suspensive/react-query'
+
+
+const editPostMutationOptions = (postId: number) =>
+  mutationOptions({
+    mutationFn: (content: string) => fetch(`https://example.com/posts/${postId}`, {
+      method: 'PATCH',
+      body: JSON.stringify({ content }),
+    }).then(res => res.json()),
+  })
+
+// 커스텀 Mutation 훅을 만들 필요 없이 mutationOptions를 직접 활용할 수 있습니다.
+const editPostMutation = useMutation(editPostMutationOptions(1))
+
+// <Mutation />에서 직접 mutationOptions를 활용할 수 있습니다.
+const Example = () => (
+  <Mutation {...editPostMutationOptions(1)}>
+    {({ mutate, isLoading }) => (
+      <div>
+        <p>{isLoading ? 'Updating...' : 'Latest updated'}</p>
+        <textarea onBlur={(e) => mutate(e.target.value)} disabled={isLoading} />
+      </div>
+    )}
+  </Mutation>
+)
+```
 
 ## BREAKING CHANGES 처리하기
 

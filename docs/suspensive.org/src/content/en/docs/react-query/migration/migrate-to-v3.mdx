@@ -11,7 +11,36 @@ Therefore, we will maintain support for @tanstack/react-query v4.
 
 ## What's new
 
-### Draft
+### New `mutationOptions` [#1490](https://github.com/toss/suspensive/pull/1490)
+
+`mutationOptions` helps you easily reuse and consistently manage option objects for Mutations. This provides similar benefits to the ones offered by [`queryOptions`](/docs/react-query/queryOptions).
+
+```jsx /mutationOptions/
+import { mutationOptions, useMutation, Mutation } from '@suspensive/react-query'
+
+const editPostMutationOptions = (postId: number) =>
+  mutationOptions({
+    mutationFn: (content: string) => fetch(`https://example.com/posts/${postId}`, {
+      method: 'PATCH',
+      body: JSON.stringify({ content }),
+    }).then(res => res.json()),
+  })
+
+// You can directly use mutationOptions without creating custom mutation hooks.
+const editPostMutation = useMutation(editPostMutationOptions(1))
+
+// Directly use mutationOptions with <Mutation />.
+const Example = () => (
+  <Mutation {...editPostMutationOptions(1)}>
+    {({ mutate, isLoading }) => (
+      <div>
+        <p>{isLoading ? 'Updating...' : 'Latest updated'}</p>
+        <textarea onBlur={(e) => mutate(e.target.value)} disabled={isLoading} />
+      </div>
+    )}
+  </Mutation>
+)
+```
 
 ## Handling BREAKING CHANGES
 
