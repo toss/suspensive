@@ -1,0 +1,40 @@
+import { Cards, Steps } from 'nextra/components'
+import { Callout } from '@/components'
+
+# Suspensive v3로 마이그레이션하기
+
+Suspensive v3에서는 새로운 기능을 도입하고 안정성을 높이기 위해서 몇 가지 중요한 변경을 진행했습니다.
+
+### 실험 버전의 Suspensive 패키지들을 안정화했습니다.
+
+- [@suspensive/react-dom](../react-dom/installation)
+- [@suspensive/jotai](../jotai/motivation)
+- [@suspensive/codemods](../codemods/motivation)
+
+### ErrorBoundary fallback내 에러 발생 시 무한 루프를 방지합니다.
+
+@suspensive/react의 ErrorBoundary의 fallback내 에러를 처리하는 방식이 변경되었습니다.
+
+### @suspensive/react-query의 peerDependency을 제거했습니다.
+
+@suspensive/react를 더 이상 peerDependency로 의존하지 않습니다. 오직 QueryErrorBoundary를 제공하기 위해 의존했었습니다.
+따라서 @suspensive/react-query의 사용자가 @tanstack/react-query외에 다른 라이브러리를 추가로 반드시 사용하지 않도록 단순화하는 작업을 진행했습니다.
+
+### 마이그레이션 가이드
+
+<Cards num={2}>
+  <Cards.Card
+    title="@suspensive/react v3 보기"
+    href="/docs/react/migration/migrate-to-v3"
+  />
+  <Cards.Card
+    title="@suspensive/react-query v3 보기"
+    href="/docs/react-query/migration/migrate-to-v3"
+  />
+</Cards>
+
+## 모든 Suspensive 기여자분들께 감사를 전합니다.
+
+Suspensive의 기여자가 있어서 이렇게 v3를 출시할 수 있었던 것 같습니다. 더 나은 라이브러리로 만들기 위해 함께 노력해주신 모든 분들 감사하고 앞으로도 잘 부탁드립니다.
+
+[![contributors](https://contrib.rocks/image?repo=toss/suspensive)](https://github.com/toss/suspensive/graphs/contributors)

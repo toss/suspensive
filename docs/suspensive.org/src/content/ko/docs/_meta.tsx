@@ -15,12 +15,7 @@ export default {
     type: 'separator',
     title: '더보기',
   },
-  'migrate-to-v3': {
-    title: 'v3로 마이그레이션하기',
-  },
-  'migrate-to-v2': {
-    title: 'v2로 마이그레이션하기',
-  },
+  migration: { title: '마이그레이션 가이드' },
   changelogs: {
     title: 'Changelogs',
   },
