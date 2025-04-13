@@ -4,7 +4,7 @@ import { ClientOnly } from '@suspensive/react'
 import { motion } from 'motion/react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useEffect, useRef } from 'react'
+import { type ReactNode, useEffect, useRef } from 'react'
 import { NpmInstallCopyButton } from './NpmInstallCopyButton'
 
 const CodeBlockClassName = 'nextra-code'
@@ -27,7 +27,7 @@ export const HomePage = ({
   buttonText: string
   items: { title: string; desc: string }[]
   version: number
-  children?: React.ReactNode
+  children?: ReactNode
 }) => {
   return (
     <>
