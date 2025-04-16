@@ -9,8 +9,14 @@ export default function Page() {
     <div>
       {Array.from({ length: 200 }).map((_, index) => (
         <InView
-          onInView={() => setInViewIndexes((prev) => [...prev, index])}
-          onInViewEnd={() => setInViewIndexes((prev) => prev.filter((i) => i !== index))}
+          onInView={() => {
+            console.log('onInView', index)
+            setInViewIndexes((prev) => [...prev, index])
+          }}
+          onInViewEnd={() => {
+            console.log('onInViewEnd', index)
+            setInViewIndexes((prev) => prev.filter((i) => i !== index))
+          }}
           key={index}
           threshold={0.8}
           delay={200}
@@ -18,9 +24,11 @@ export default function Page() {
           {({ inView, ref }) => (
             <div ref={ref}>
               {inView ? (
-                <div className="mt-2 h-14 w-96 bg-white" />
+                <div className="mt-2 flex h-14 w-96 items-center justify-center bg-white text-black">{index}</div>
               ) : (
-                <div className="mt-2 h-14 w-96 animate-pulse bg-[#ffffff80]" />
+                <div className="mt-2 flex h-14 w-96 animate-pulse items-center justify-center bg-[#ffffff80] text-black">
+                  {index}
+                </div>
               )}
             </div>
           )}
