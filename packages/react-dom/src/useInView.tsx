@@ -7,42 +7,42 @@ export interface InViewOptions extends IntersectionObserverInit {
   threshold?: number | number[]
   triggerOnce?: boolean
   skip?: boolean
-  initialInView?: boolean
-  fallbackInView?: boolean
+  initialIsInView?: boolean
+  fallbackIsInView?: boolean
   trackVisibility?: boolean
-  delay?: number
-  onChange?: (inView: boolean, entry: IntersectionObserverEntry) => void
+  delayMs?: number
+  onChange?: (param: { isInView: boolean; entry: IntersectionObserverEntry }) => void
   onInView?: (entry: IntersectionObserverEntry) => void
   onInViewEnd?: (entry: IntersectionObserverEntry) => void
 }
 export function useInView({
   threshold,
-  delay,
+  delayMs,
   trackVisibility,
   rootMargin,
   root,
   triggerOnce,
   skip,
-  initialInView,
-  fallbackInView,
+  initialIsInView,
+  fallbackIsInView,
   onChange,
   onInView,
   onInViewEnd,
 }: InViewOptions = {}): {
   ref: (node?: Element | null) => void
-  inView: boolean
+  isInView: boolean
   entry?: IntersectionObserverEntry
 } {
-  const hasBeenInViewRef = useRef(initialInView ?? false)
+  const hasBeenInViewRef = useRef(initialIsInView ?? false)
   const [elementRef, setElementRef] = useState<Element | null>(null)
   const onChangeRef = useRef<InViewOptions['onChange']>(null)
-  const [state, setState] = useState<{ inView: boolean; entry?: IntersectionObserverEntry }>({
-    inView: initialInView ?? false,
+  const [state, setState] = useState<{ isInView: boolean; entry?: IntersectionObserverEntry }>({
+    isInView: initialIsInView ?? false,
     entry: undefined,
   })
-  onChangeRef.current = (inView: boolean, entry: IntersectionObserverEntry) => {
-    onChange?.(inView, entry)
-    if (inView) {
+  onChangeRef.current = ({ isInView, entry }: { isInView: boolean; entry: IntersectionObserverEntry }) => {
+    onChange?.({ isInView, entry })
+    if (isInView) {
       hasBeenInViewRef.current = true
       onInView?.(entry)
     } else if (hasBeenInViewRef.current) {
@@ -55,17 +55,17 @@ export function useInView({
     let unobserve: (() => void) | undefined
     unobserve = observe(
       elementRef,
-      (inView, entry) => {
-        setState({ inView, entry })
-        onChangeRef.current?.(inView, entry)
+      (isInView, entry) => {
+        setState({ isInView, entry })
+        onChangeRef.current?.({ isInView, entry })
 
         if (entry.isIntersecting && triggerOnce && unobserve) {
           unobserve()
           unobserve = undefined
         }
       },
-      { root, rootMargin, threshold, trackVisibility, delay },
-      fallbackInView
+      { root, rootMargin, threshold, trackVisibility, delayMs },
+      fallbackIsInView
     )
     return unobserve
   }, [
@@ -76,14 +76,14 @@ export function useInView({
     triggerOnce,
     skip,
     trackVisibility,
-    fallbackInView,
-    delay,
+    fallbackIsInView,
+    delayMs,
   ])
   const entryTarget = state.entry?.target
   const previousEntryTarget = useRef<Element>(null)
   if (!elementRef && entryTarget && !triggerOnce && !skip && previousEntryTarget.current !== entryTarget) {
     previousEntryTarget.current = entryTarget
-    setState({ inView: initialInView ?? false, entry: undefined })
+    setState({ isInView: initialIsInView ?? false, entry: undefined })
   }
   return Object.assign(state, { ref: useCallback((node?: Element | null) => setElementRef(node ?? null), []) })
 }

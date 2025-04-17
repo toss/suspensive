@@ -50,9 +50,9 @@ it('should convert options to id', () => {
     optionsToId({
       threshold: 0,
       trackVisibility: true,
-      delay: 500,
+      delayMs: 500,
     })
-  ).toMatchInlineSnapshot(`"delay_500,threshold_0,trackVisibility_true"`)
+  ).toMatchInlineSnapshot(`"delayMs_500,threshold_0,trackVisibility_true"`)
   expect(
     optionsToId({
       threshold: 0,

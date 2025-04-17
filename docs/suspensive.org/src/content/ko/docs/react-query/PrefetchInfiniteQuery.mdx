@@ -19,9 +19,9 @@ const PostsPage = () => {
 
   return posts.map((post) => (
     <InView>
-      {({ ref, inView }) => (
+      {({ ref, isInView }) => (
         <>
-          {inView ? (
+          {isInView ? (
             // 🚫 React hook의 제약으로 usePrefetchInfiniteQuery를 사용하지 못합니다
             // usePrefetchInfiniteQuery({
             //   queryKey: ['posts', post.id, 'comments'],

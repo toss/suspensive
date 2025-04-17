@@ -40,7 +40,7 @@ export default function Page() {
               key={userId}
               clientOnly
               fallback={
-                <FadeIn delay={200} duration={1000}>
+                <FadeIn delayMs={200} duration={1000}>
                   {(fadeIn) => (
                     <div {...fadeIn}>
                       <div role="status" className="mb-6 animate-pulse space-y-2">
