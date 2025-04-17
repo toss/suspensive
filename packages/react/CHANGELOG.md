@@ -1,5 +1,11 @@
 # @suspensive/react
 
+## 3.0.0-next.17
+
+### Minor Changes
+
+- [#1524](https://github.com/toss/suspensive/pull/1524) [`3b2aae8`](https://github.com/toss/suspensive/commit/3b2aae8f3460345ee36c857ace05aa6bccba3512) Thanks [@manudeli](https://github.com/manudeli)! - feat(react): Delay children render prop
+
 ## 3.0.0-next.16
 
 ### Patch Changes
