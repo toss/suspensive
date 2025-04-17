@@ -94,7 +94,9 @@ describe('Delay.with', () => {
   it('renders the children after the delay with component', async () => {
     render(createElement(Delay.with({ ms: ms('0.1s') }, () => <>{TEXT}</>)))
     expect(screen.queryByText(TEXT)).not.toBeInTheDocument()
-    await waitFor(() => expect(screen.queryByText(TEXT)).toBeInTheDocument())
+    await vi.advanceTimersByTimeAsync(ms('0.1s'))
+    await vi.advanceTimersByTimeAsync(0)
+    await vi.waitFor(() => expect(screen.queryByText(TEXT)).toBeInTheDocument())
   })
 
   it('should set displayName based on Component.displayName', () => {
