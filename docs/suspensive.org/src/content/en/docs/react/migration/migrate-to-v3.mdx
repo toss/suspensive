@@ -62,6 +62,35 @@ const Throw = {
 }
 ```
 
+### Now `Delay`'s children render prop can use the isDelayed flag.
+
+The `Delay` component now allows you to use the `isDelayed` flag in the render prop of its children. This flag can be used to check if the delay has ended.
+When we use Skeleton UI for Suspense's fallback, it is better to give a delay of about 200ms and make the skeleton fade-in rather than showing it right away.
+At this time we can use the `isDelayed` flag to control the opacity of the skeleton. This allows us to reduce layout shifts while improving user experience.
+
+```tsx
+import { Delay } from '@suspensive/react'
+
+const Example = () => (
+  <Suspense
+    fallback={
+      <Delay ms={200}>
+        {({ isDelayed }) => (
+          <Skeleton
+            style={{
+              opacity: isDelayed ? 1 : 0,
+              transition: 'opacity 0.2s ease-in-out',
+            }}
+          />
+        )}
+      </Delay>
+    }
+  >
+    <SuspendingComponent />
+  </Suspense>
+)
+```
+
 ## Handling BREAKING CHANGES
 
 ### Remove `wrap` & Add `with`
