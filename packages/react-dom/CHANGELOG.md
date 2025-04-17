@@ -1,5 +1,11 @@
 # @suspensive/react-dom
 
+## 3.0.0-next.19
+
+### Major Changes
+
+- [#1528](https://github.com/toss/suspensive/pull/1528) [`5739fd8`](https://github.com/toss/suspensive/commit/5739fd84b2cb16196eb1ac9d47e0c21ee9e9dcf4) Thanks [@manudeli](https://github.com/manudeli)! - feat(react-dom): is prefix, for InView
+
 ## 3.0.0-next.18
 
 ### Minor Changes

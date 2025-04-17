@@ -1,5 +1,7 @@
 # @suspensive/react-query-5
 
+## 3.0.0-next.19
+
 ## 3.0.0-next.18
 
 ## 3.0.0-next.17
