@@ -1,5 +1,11 @@
 # @suspensive/react-dom
 
+## 3.0.0-next.18
+
+### Minor Changes
+
+- [#1518](https://github.com/toss/suspensive/pull/1518) [`9a00852`](https://github.com/toss/suspensive/commit/9a008524ec69b35a59ca735e3d60379c4d350030) Thanks [@manudeli](https://github.com/manudeli)! - feat(react-dom): onInView, onInViewEnd
+
 ## 3.0.0-next.17
 
 ## 3.0.0-next.16
