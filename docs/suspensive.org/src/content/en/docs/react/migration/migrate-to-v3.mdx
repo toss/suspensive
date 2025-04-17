@@ -74,7 +74,7 @@ import { Delay } from '@suspensive/react'
 const Example = () => (
   <Suspense
     fallback={
-      <Delay delay={200}>
+      <Delay ms={200}>
         {({ isDelayed }) => (
           <Skeleton
             style={{
