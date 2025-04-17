@@ -12,6 +12,8 @@ export interface InViewOptions extends IntersectionObserverInit {
   trackVisibility?: boolean
   delay?: number
   onChange?: (inView: boolean, entry: IntersectionObserverEntry) => void
+  onInView?: (entry: IntersectionObserverEntry) => void
+  onInViewEnd?: (entry: IntersectionObserverEntry) => void
 }
 export function useInView({
   threshold,
@@ -24,26 +26,39 @@ export function useInView({
   initialInView,
   fallbackInView,
   onChange,
+  onInView,
+  onInViewEnd,
 }: InViewOptions = {}): {
   ref: (node?: Element | null) => void
   inView: boolean
   entry?: IntersectionObserverEntry
 } {
-  const [ref, setRef] = useState<Element | null>(null)
+  const hasBeenInViewRef = useRef(initialInView ?? false)
+  const [elementRef, setElementRef] = useState<Element | null>(null)
   const onChangeRef = useRef<InViewOptions['onChange']>(null)
   const [state, setState] = useState<{ inView: boolean; entry?: IntersectionObserverEntry }>({
     inView: initialInView ?? false,
     entry: undefined,
   })
-  onChangeRef.current = onChange
+  onChangeRef.current = (inView: boolean, entry: IntersectionObserverEntry) => {
+    onChange?.(inView, entry)
+    if (inView) {
+      hasBeenInViewRef.current = true
+      onInView?.(entry)
+    } else if (hasBeenInViewRef.current) {
+      onInViewEnd?.(entry)
+    }
+  }
+
   useEffect(() => {
-    if (skip || !ref) return
+    if (skip || !elementRef) return
     let unobserve: (() => void) | undefined
     unobserve = observe(
-      ref,
+      elementRef,
       (inView, entry) => {
         setState({ inView, entry })
         onChangeRef.current?.(inView, entry)
+
         if (entry.isIntersecting && triggerOnce && unobserve) {
           unobserve()
           unobserve = undefined
@@ -55,7 +70,7 @@ export function useInView({
     return unobserve
   }, [
     Array.isArray(threshold) ? threshold.toString() : threshold,
-    ref,
+    elementRef,
     root,
     rootMargin,
     triggerOnce,
@@ -66,9 +81,9 @@ export function useInView({
   ])
   const entryTarget = state.entry?.target
   const previousEntryTarget = useRef<Element>(null)
-  if (!ref && entryTarget && !triggerOnce && !skip && previousEntryTarget.current !== entryTarget) {
+  if (!elementRef && entryTarget && !triggerOnce && !skip && previousEntryTarget.current !== entryTarget) {
     previousEntryTarget.current = entryTarget
     setState({ inView: initialInView ?? false, entry: undefined })
   }
-  return Object.assign(state, { ref: useCallback((node?: Element | null) => setRef(node ?? null), []) })
+  return Object.assign(state, { ref: useCallback((node?: Element | null) => setElementRef(node ?? null), []) })
 }

@@ -16,9 +16,9 @@ const PostsPage = () => {
 
   return posts.map((post) => (
     <InView>
-      {({ ref, isInView }) => (
+      {({ ref, inView }) => (
         <>
-          {isInView ? (
+          {inView ? (
             // 🚫 React hook의 제약으로 usePrefetchQuery를 사용하지 못합니다
             // usePrefetchQuery({
             //   queryKey: ['posts', post.id, 'comments'],
