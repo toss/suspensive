@@ -156,13 +156,13 @@ it('inView should be false when component is unmounted', () => {
 
 // eslint-disable-next-line vitest/expect-expect
 it('should handle trackVisibility', () => {
-  render(<HookComponent options={{ trackVisibility: true, delayMs: 100 }} />)
+  render(<HookComponent options={{ trackVisibility: true, delay: 100 }} />)
   mockAllIsIntersecting(true)
 })
 
 // eslint-disable-next-line vitest/expect-expect
 it('should handle trackVisibility when unsupported', () => {
-  render(<HookComponent options={{ trackVisibility: true, delayMs: 100 }} />)
+  render(<HookComponent options={{ trackVisibility: true, delay: 100 }} />)
 })
 
 const SwitchHookComponent = ({

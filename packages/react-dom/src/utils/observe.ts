@@ -16,7 +16,7 @@ function getRootId(root: IntersectionObserverInit['root']) {
   return RootIds.get(root)
 }
 
-export const optionsToId = (options: IntersectionObserverInit & { trackVisibility?: boolean; delayMs?: number }) =>
+export const optionsToId = (options: IntersectionObserverInit & { trackVisibility?: boolean; delay?: number }) =>
   Object.keys(options)
     .sort()
     .filter((key) => options[key as keyof IntersectionObserverInit] !== undefined)
@@ -29,7 +29,7 @@ export const optionsToId = (options: IntersectionObserverInit & { trackVisibilit
     )
     .toString()
 
-function createObserver(options: IntersectionObserverInit & { trackVisibility?: boolean; delayMs?: number }) {
+function createObserver(options: IntersectionObserverInit & { trackVisibility?: boolean; delay?: number }) {
   // Create a unique ID for this observer instance, based on the root, root margin and threshold.
   const id = optionsToId(options)
   let instance = observerMap.get(id)
@@ -78,7 +78,7 @@ export function observe(
   callback: ObserverInstanceCallback,
   options: IntersectionObserverInit & {
     trackVisibility?: boolean
-    delayMs?: number
+    delay?: number
   } = {},
   fallbackInView?: boolean
 ) {

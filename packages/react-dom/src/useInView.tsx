@@ -10,14 +10,14 @@ export interface InViewOptions extends IntersectionObserverInit {
   initialIsInView?: boolean
   fallbackIsInView?: boolean
   trackVisibility?: boolean
-  delayMs?: number
+  delay?: number
   onChange?: (param: { isInView: boolean; entry: IntersectionObserverEntry }) => void
   onInView?: (entry: IntersectionObserverEntry) => void
   onInViewEnd?: (entry: IntersectionObserverEntry) => void
 }
 export function useInView({
   threshold,
-  delayMs,
+  delay,
   trackVisibility,
   rootMargin,
   root,
@@ -64,7 +64,7 @@ export function useInView({
           unobserve = undefined
         }
       },
-      { root, rootMargin, threshold, trackVisibility, delayMs },
+      { root, rootMargin, threshold, trackVisibility, delay },
       fallbackIsInView
     )
     return unobserve
@@ -77,7 +77,7 @@ export function useInView({
     skip,
     trackVisibility,
     fallbackIsInView,
-    delayMs,
+    delay,
   ])
   const entryTarget = state.entry?.target
   const previousEntryTarget = useRef<Element>(null)

@@ -19,7 +19,7 @@ export default function Page() {
           }}
           key={index}
           threshold={0.8}
-          delayMs={200}
+          delay={200}
         >
           {({ isInView, ref }) => (
             <div ref={ref}>

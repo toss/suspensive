@@ -9,7 +9,7 @@ describe('<FadeIn/>', () => {
       | 'rootMargin'
       | 'threshold'
       | 'triggerOnce'
-      | 'delayMs'
+      | 'delay'
       | 'children'
       | 'duration'
       | 'timingFunction'

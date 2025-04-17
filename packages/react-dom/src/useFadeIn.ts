@@ -33,13 +33,13 @@ type FadeInResult = Pick<ReturnType<typeof useInView>, 'ref'> & {
 export function useFadeIn({
   duration = 200,
   timingFunction = 'linear',
-  delayMs,
+  delay,
   root,
   rootMargin,
   threshold,
   triggerOnce,
 }: FadeInOptions): FadeInResult {
-  const { isInView, ref } = useInView({ delayMs, root, rootMargin, threshold, triggerOnce })
+  const { isInView, ref } = useInView({ delay, root, rootMargin, threshold, triggerOnce })
   return useMemo<FadeInResult>(
     () => ({
       ref,
