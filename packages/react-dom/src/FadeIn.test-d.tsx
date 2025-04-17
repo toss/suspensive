@@ -3,7 +3,8 @@ import type { FadeIn } from './FadeIn'
 
 describe('<FadeIn/>', () => {
   it('type check', () => {
-    expectTypeOf<keyof ComponentProps<typeof FadeIn>>().toEqualTypeOf<
+    type A = keyof ComponentProps<typeof FadeIn>
+    expectTypeOf<A>().toEqualTypeOf<
       | 'root'
       | 'rootMargin'
       | 'threshold'

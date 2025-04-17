@@ -7,7 +7,7 @@ import type { OmitKeyof } from './utility-types'
  */
 export type FadeInOptions = OmitKeyof<
   InViewOptions,
-  'fallbackInView' | 'initialInView' | 'skip' | 'onChange' | 'trackVisibility'
+  'fallbackIsInView' | 'initialIsInView' | 'skip' | 'onChange' | 'trackVisibility'
 > & {
   /**
    * The duration in milliseconds of the animation.
@@ -39,16 +39,16 @@ export function useFadeIn({
   threshold,
   triggerOnce,
 }: FadeInOptions): FadeInResult {
-  const { inView, ref } = useInView({ delay, root, rootMargin, threshold, triggerOnce })
+  const { isInView, ref } = useInView({ delay, root, rootMargin, threshold, triggerOnce })
   return useMemo<FadeInResult>(
     () => ({
       ref,
       style: {
-        opacity: inView ? 1 : 0,
+        opacity: isInView ? 1 : 0,
         willChange: 'opacity',
         transition: `opacity ${duration}ms ${timingFunction}` as const,
       },
     }),
-    [inView, duration, timingFunction, ref]
+    [isInView, duration, timingFunction, ref]
   )
 }

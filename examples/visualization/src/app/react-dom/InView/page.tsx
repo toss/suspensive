@@ -21,9 +21,9 @@ export default function Page() {
           threshold={0.8}
           delay={200}
         >
-          {({ inView, ref }) => (
+          {({ isInView, ref }) => (
             <div ref={ref}>
-              {inView ? (
+              {isInView ? (
                 <div className="mt-2 flex h-14 w-96 items-center justify-center bg-white text-black">{index}</div>
               ) : (
                 <div className="mt-2 flex h-14 w-96 animate-pulse items-center justify-center bg-[#ffffff80] text-black">

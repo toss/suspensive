@@ -13,9 +13,9 @@ const PostsPage = ({ posts }: { posts: Post[] }) => (
     <h1>Posts</h1>
     {posts.map((post) => (
       <InView>
-        {({ ref, inView }) => (
+        {({ ref, isInView }) => (
           <div ref={ref}>
-            {inView ? (
+            {isInView ? (
               // 🚫 Due to the limitations of React hooks, we cannot use usePrefetchQuery here
               // usePrefetchQuery({
               //   queryKey: ['posts', post.id, 'comments'],
@@ -61,18 +61,18 @@ export const Example = () => {
             setInViewIndexes((prev) => prev.filter((i) => i !== index))
           }
         >
-          {({ ref, inView }) => (
+          {({ ref, isInView }) => (
             <div
               key={index}
               ref={ref}
               style={{
-                backgroundColor: inView ? 'lightblue' : 'orange',
+                backgroundColor: isInView ? 'lightblue' : 'orange',
                 border: '1px solid',
                 padding: 50,
                 textAlign: 'center',
               }}
             >
-              {inView ? 'In View' : 'Out of View'}
+              {isInView ? 'In View' : 'Out of View'}
             </div>
           )}
         </InView>
@@ -99,18 +99,18 @@ import { InView } from '@suspensive/react-dom'
 export const Example = () =>
   Array.from({ length: 100 }).map((_, index) => (
     <InView threshold={0.5}>
-      {({ ref, inView }) => (
+      {({ ref, isInView }) => (
         <div
           key={index}
           ref={ref}
           style={{
-            backgroundColor: inView ? 'lightblue' : 'orange',
+            backgroundColor: isInView ? 'lightblue' : 'orange',
             border: '1px solid',
             padding: 50,
             textAlign: 'center',
           }}
         >
-          {inView ? 'In View' : 'Out of View'}
+          {isInView ? 'In View' : 'Out of View'}
         </div>
       )}
     </InView>
@@ -131,18 +131,18 @@ import { InView } from '@suspensive/react-dom'
 export const Example = () =>
   Array.from({ length: 100 }).map((_, index) => (
     <InView triggerOnce>
-      {({ ref, inView }) => (
+      {({ ref, isInView }) => (
         <div
           key={index}
           ref={ref}
           style={{
-            backgroundColor: inView ? 'lightblue' : 'orange',
+            backgroundColor: isInView ? 'lightblue' : 'orange',
             border: '1px solid',
             padding: 50,
             textAlign: 'center',
           }}
         >
-          {inView ? 'In View' : 'Out of View'}
+          {isInView ? 'In View' : 'Out of View'}
         </div>
       )}
     </InView>
@@ -168,18 +168,18 @@ export const Example = () => (
         <h1>skip: {isDelayed ? 'true' : 'false'}</h1>
         {Array.from({ length: 100 }).map((_, index) => (
           <InView skip={isDelayed}>
-            {({ ref, inView }) => (
+            {({ ref, isInView }) => (
               <div
                 key={index}
                 ref={ref}
                 style={{
-                  backgroundColor: inView ? 'lightblue' : 'orange',
+                  backgroundColor: isInView ? 'lightblue' : 'orange',
                   border: '1px solid',
                   padding: 50,
                   textAlign: 'center',
                 }}
               >
-                {inView ? 'In View' : 'Out of View'}
+                {isInView ? 'In View' : 'Out of View'}
               </div>
             )}
           </InView>
@@ -204,18 +204,18 @@ import { InView } from '@suspensive/react-dom'
 export const Example = () =>
   Array.from({ length: 100 }).map((_, index) => (
     <InView delay={500}>
-      {({ ref, inView }) => (
+      {({ ref, isInView }) => (
         <div
           key={index}
           ref={ref}
           style={{
-            backgroundColor: inView ? 'lightblue' : 'orange',
+            backgroundColor: isInView ? 'lightblue' : 'orange',
             border: '1px solid',
             padding: 50,
             textAlign: 'center',
           }}
         >
-          {inView ? 'In View' : 'Out of View'}
+          {isInView ? 'In View' : 'Out of View'}
         </div>
       )}
     </InView>
