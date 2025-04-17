@@ -62,6 +62,35 @@ const Throw = {
 }
 ```
 
+### 이제 `Delay`의 children에 render prop에서 isDelayed flag를 사용할 수 있습니다.
+
+`Delay`의 children에 render prop으로 callback을 전달하여 isDelayed flag를 사용할 수 있습니다. 이 flag는 delay가 끝났는지 확인하는데 사용됩니다.
+Suspense의 fallback으로 스켈레톤 UI를 사용할 때 처음부터 바로 나오기보다는 200ms 정도의 delay를 주고 스켈레톤이 fade-in되도록 하는 것이 좋습니다.
+이때 스켈레톤의 크기는 유지하면서 opacity를 조절하여 fade-in 효과를 줄 수 있습니다. 이를 통해 레이아웃 시프트를 줄이면서도 사용자 경험을 개선할 수 있습니다.
+
+```tsx
+import { Delay } from '@suspensive/react'
+
+const Example = () => (
+  <Suspense
+    fallback={
+      <Delay delay={200}>
+        {({ isDelayed }) => (
+          <Skeleton
+            style={{
+              opacity: isDelayed ? 1 : 0,
+              transition: 'opacity 0.2s ease-in-out',
+            }}
+          />
+        )}
+      </Delay>
+    }
+  >
+    <SuspendingComponent />
+  </Suspense>
+)
+```
+
 ## BREAKING CHANGES 처리하기
 
 ### `wrap` 제거 & `with` 추가
