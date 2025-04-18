@@ -25,29 +25,38 @@ describe('postinstall', () => {
     vi.clearAllMocks()
   })
 
-  it('should switch to @suspensive/react-query-4 when @tanstack/react-query@^4 is installed', async () => {
-    await runPostInstall('4.2.3')
+  it.each(['^4.2.3', '4.2.3', '^4', '4', '4.1', '^4.2.3-next.3'] as const)(
+    'should switch to @suspensive/react-query-4 when @tanstack/react-query@^4 is installed',
+    async (packageJsonVersion) => {
+      await runPostInstall(packageJsonVersion)
 
-    expect(mockGetTanStackReactQueryPackageJson).toHaveBeenCalledTimes(1)
-    expect(mockSwitchVersion).toHaveBeenCalledWith(4)
-    expect(mockSwitchVersion).toHaveBeenCalledTimes(1)
-    expect(mockConsoleError).not.toHaveBeenCalled()
-  })
+      expect(mockGetTanStackReactQueryPackageJson).toHaveBeenCalledTimes(1)
+      expect(mockSwitchVersion).toHaveBeenCalledWith(4)
+      expect(mockSwitchVersion).toHaveBeenCalledTimes(1)
+      expect(mockConsoleError).not.toHaveBeenCalled()
+    }
+  )
 
-  it('should switch to @suspensive/react-query-5 when @tanstack/react-query@^5 is installed', async () => {
-    await runPostInstall('5.2.3')
+  it.each(['^5.2.3', '5.2.3', '^5', '5', '5.1', '^5.2.3-next.3'])(
+    'should switch to @suspensive/react-query-5 when @tanstack/react-query@^5 is installed',
+    async (packageJsonVersion) => {
+      await runPostInstall(packageJsonVersion)
 
-    expect(mockGetTanStackReactQueryPackageJson).toHaveBeenCalledTimes(1)
-    expect(mockSwitchVersion).toHaveBeenCalledWith(5)
-    expect(mockSwitchVersion).toHaveBeenCalledTimes(1)
-    expect(mockConsoleError).not.toHaveBeenCalled()
-  })
+      expect(mockGetTanStackReactQueryPackageJson).toHaveBeenCalledTimes(1)
+      expect(mockSwitchVersion).toHaveBeenCalledWith(5)
+      expect(mockSwitchVersion).toHaveBeenCalledTimes(1)
+      expect(mockConsoleError).not.toHaveBeenCalled()
+    }
+  )
 
   it('should show warning when unsupported version is installed', async () => {
     await runPostInstall('3.3.4')
 
     expect(mockGetTanStackReactQueryPackageJson).toHaveBeenCalledTimes(1)
     expect(mockSwitchVersion).not.toHaveBeenCalled()
-    expect(mockConsoleError).toHaveBeenCalledWith('[@suspensive/react-query]', 'version v3.3.4 is not supported.')
+    expect(mockConsoleError).toHaveBeenCalledWith(
+      '[@suspensive/react-query]',
+      '@tanstack/react-query@3.3.4 is not supported.'
+    )
   })
 })
