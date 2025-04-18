@@ -1,5 +1,6 @@
 import { renderHook } from '@testing-library/react'
 import { useEffect, useLayoutEffect, useState } from 'react'
+import reactDomServer from 'react-dom/server'
 import { useIsClient } from './useIsClient'
 
 const importUseIsomorphicLayoutEffect = () => {
@@ -34,6 +35,10 @@ describe('useIsClient', () => {
     returnedFirst.unmount()
     const returnedSecond = renderHook(() => useIsClient())
     expect(returnedSecond.result.current).toBe(true)
+  })
+  it('should return false in server side rendering', () => {
+    const TestComponent = () => useIsClient().toString()
+    expect(reactDomServer.renderToString(<TestComponent />)).toBe('false')
   })
   it("'s comparison with legacy useIsClientOnly", () => {
     // check CSR environment first
