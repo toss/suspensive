@@ -393,7 +393,7 @@ importers:
         version: 52.0.24(@babel/core@7.26.0)(@babel/preset-env@7.26.0(@babel/core@7.26.0))(@expo/metro-runtime@4.0.0(react-native@0.76.6(@babel/core@7.26.0)(@babel/preset-env@7.26.0(@babel/core@7.26.0))(@types/react@19.1.0)(react@19.1.0)))(graphql@16.9.0)(react-native-webview@13.12.5(react-native@0.76.6(@babel/core@7.26.0)(@babel/preset-env@7.26.0(@babel/core@7.26.0))(@types/react@19.1.0)(react@19.1.0))(react@19.1.0))(react-native@0.76.6(@babel/core@7.26.0)(@babel/preset-env@7.26.0(@babel/core@7.26.0))(@types/react@19.1.0)(react@19.1.0))(react@19.1.0)
       expo-router:
         specifier: catalog:react19
-        version: 4.0.16(qgywtrd3uqpot66aec4nydq7ly)
+        version: 4.0.16(39bdb9b89af9ddfb9d62cbcd96167c5c)
       react:
         specifier: catalog:react19
         version: 19.1.0
@@ -596,9 +596,15 @@ importers:
       '@types/react':
         specifier: catalog:react19
         version: 19.1.0
+      '@types/react-dom':
+        specifier: catalog:react19
+        version: 19.1.2(@types/react@19.1.0)
       react:
         specifier: catalog:react19
         version: 19.1.0
+      react-dom:
+        specifier: catalog:react19
+        version: 19.1.0(react@19.1.0)
 
   packages/react-dom:
     devDependencies:
@@ -17608,7 +17614,7 @@ snapshots:
     dependencies:
       invariant: 2.2.4
 
-  expo-router@4.0.16(qgywtrd3uqpot66aec4nydq7ly):
+  expo-router@4.0.16(39bdb9b89af9ddfb9d62cbcd96167c5c):
     dependencies:
       '@expo/metro-runtime': 4.0.0(react-native@0.76.6(@babel/core@7.26.0)(@babel/preset-env@7.26.0(@babel/core@7.26.0))(@types/react@19.1.0)(react@19.1.0))
       '@expo/server': 0.5.0(typescript@5.7.3)
