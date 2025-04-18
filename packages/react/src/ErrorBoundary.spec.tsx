@@ -176,15 +176,15 @@ describe('<ErrorBoundary/>', () => {
           onError={onErrorChild}
         >
           {createElement(() => {
-            throw new CustomError(ERROR_MESSAGE)
+            throw new Error(ERROR_MESSAGE)
           })}
         </ErrorBoundary>
       </ErrorBoundary>
     )
 
-    expect(onErrorChild).toBeCalledTimes(1)
-    expect(onErrorParent).toBeCalledTimes(0)
-    await waitFor(() => expect(screen.queryByText(`${ERROR_MESSAGE} of Child`)).toBeInTheDocument())
+    expect(onErrorChild).toBeCalledTimes(0)
+    expect(onErrorParent).toBeCalledTimes(1)
+    await waitFor(() => expect(screen.queryByText(`${ERROR_MESSAGE} of Parent`)).toBeInTheDocument())
   })
 
   it('should re-throw error if not shouldCatch error in children without rendering fallback', async () => {
