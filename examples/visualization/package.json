@@ -18,7 +18,7 @@
     "@suspensive/react-query-5": "workspace:*",
     "@tanstack/react-query": "catalog:react-query5",
     "@tanstack/react-query-devtools": "catalog:react-query5",
-    "axios": "^1.7.9",
+    "axios": "^1.8.2",
     "clsx": "catalog:",
     "next": "catalog:",
     "react": "catalog:react19",
