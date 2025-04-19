@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/react'
 import ms from 'ms'
+import { createElement } from 'react'
 import { DefaultProps, DefaultPropsProvider } from './DefaultProps'
 import { Delay } from './Delay'
 import { Message_Delay_ms_prop_should_be_greater_than_or_equal_to_0, SuspensiveError } from './models/SuspensiveError'
@@ -86,5 +87,22 @@ describe('<Delay/>', () => {
       </DefaultPropsProvider>
     )
     expect(screen.queryByText('defaultFallback')).toBeInTheDocument()
+  })
+})
+
+describe('Delay.with', () => {
+  it('renders the children after the delay with component', async () => {
+    render(createElement(Delay.with({ ms: ms('0.1s') }, () => <>{TEXT}</>)))
+    expect(screen.queryByText(TEXT)).not.toBeInTheDocument()
+    await vi.advanceTimersByTimeAsync(ms('0.1s'))
+    await vi.advanceTimersByTimeAsync(0)
+    await vi.waitFor(() => expect(screen.queryByText(TEXT)).toBeInTheDocument())
+  })
+
+  it('should set displayName based on Component.displayName', () => {
+    const Component = () => <></>
+    Component.displayName = 'Custom'
+    expect(Delay.with({}, Component).displayName).toBe('Delay.with(Custom)')
+    expect(Delay.with({}, () => <></>).displayName).toBe('Delay.with(Component)')
   })
 })

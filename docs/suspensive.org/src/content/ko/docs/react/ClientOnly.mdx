@@ -11,3 +11,16 @@ const Example = () => (
   </ClientOnly>
 )
 ```
+
+## ClientOnly.with
+
+`ClientOnly.with`는 ClientOnly를 사용하여 컴포넌트를 래핑하는 HOC입니다.
+`ClientOnly.with`를 사용하면 컴포넌트를 쉽게 래핑할 수 있습니다.
+
+```tsx /ClientOnly.with/
+import { ClientOnly } from '@suspensive/react'
+
+const Example = ClientOnly.with({ fallback: <>server</> }, () => {
+  return <>client</>
+})
+```

@@ -9,7 +9,7 @@ const HookComponent = ({ options }: { options?: InViewOptions }) => {
   const div = useInView(options)
 
   return (
-    <div ref={div.ref} data-testid="wrapper" style={{ height: 200, background: 'cyan' }} data-inview={div.inView}>
+    <div ref={div.ref} data-testid="wrapper" style={{ height: 200, background: 'cyan' }} data-inview={div.isInView}>
       InView block
     </div>
   )

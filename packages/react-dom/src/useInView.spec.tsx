@@ -11,7 +11,7 @@ const HookComponent = ({ options, unmount }: { options?: InViewOptions; unmount?
   const wrapper = useInView(options)
   return (
     <div data-testid="wrapper" ref={!unmount ? wrapper.ref : undefined}>
-      {wrapper.inView.toString()}
+      {wrapper.isInView.toString()}
     </div>
   )
 }
@@ -26,7 +26,7 @@ const LazyHookComponent = ({ options }: { options?: InViewOptions }) => {
   if (isLoading) return <div>Loading</div>
   return (
     <div data-testid="wrapper" ref={wrapper.ref}>
-      {wrapper.inView.toString()}
+      {wrapper.isInView.toString()}
     </div>
   )
 }
@@ -76,7 +76,7 @@ it('should mock thresholds', () => {
 
 // eslint-disable-next-line vitest/expect-expect
 it('should create a hook with initialInView', () => {
-  const { getByText } = render(<HookComponent options={{ initialInView: true }} />)
+  const { getByText } = render(<HookComponent options={{ initialIsInView: true }} />)
   getByText('true')
   mockAllIsIntersecting(false)
   getByText('false')
@@ -104,16 +104,16 @@ it('should trigger onChange', () => {
   render(<HookComponent options={{ onChange }} />)
 
   mockAllIsIntersecting(true)
-  expect(onChange).toHaveBeenLastCalledWith(
-    true,
-    expect.objectContaining({ intersectionRatio: 1, isIntersecting: true })
-  )
+  expect(onChange).toHaveBeenLastCalledWith({
+    isInView: true,
+    entry: expect.objectContaining({ intersectionRatio: 1, isIntersecting: true }),
+  })
 
   mockAllIsIntersecting(false)
-  expect(onChange).toHaveBeenLastCalledWith(
-    false,
-    expect.objectContaining({ intersectionRatio: 0, isIntersecting: false })
-  )
+  expect(onChange).toHaveBeenLastCalledWith({
+    isInView: false,
+    entry: expect.objectContaining({ intersectionRatio: 0, isIntersecting: false }),
+  })
 })
 
 // eslint-disable-next-line vitest/expect-expect
@@ -179,12 +179,12 @@ const SwitchHookComponent = ({
     <>
       <div
         data-testid="item-1"
-        data-inview={!toggle && wrapper.inView}
+        data-inview={!toggle && wrapper.isInView}
         ref={!toggle && !unmount ? wrapper.ref : undefined}
       />
       <div
         data-testid="item-2"
-        data-inview={!!toggle && wrapper.inView}
+        data-inview={!!toggle && wrapper.isInView}
         ref={toggle && !unmount ? wrapper.ref : undefined}
       />
     </>
@@ -234,7 +234,7 @@ const MergeRefsComponent = ({ options }: { options?: InViewOptions }) => {
     [mergeInViewResult.ref]
   )
 
-  return <div data-testid="inview" data-inview={mergeInViewResult.inView} ref={setRef} />
+  return <div data-testid="inview" data-inview={mergeInViewResult.isInView} ref={setRef} />
 }
 
 it('should handle ref merged', () => {
@@ -261,14 +261,14 @@ const MultipleHookComponent = ({ options }: { options?: InViewOptions }) => {
 
   return (
     <div ref={mergedRefs}>
-      <div data-testid="item-1" data-inview={el1.inView}>
-        {el1.inView}
+      <div data-testid="item-1" data-inview={el1.isInView}>
+        {el1.isInView}
       </div>
-      <div data-testid="item-2" data-inview={el2.inView}>
-        {el2.inView}
+      <div data-testid="item-2" data-inview={el2.isInView}>
+        {el2.isInView}
       </div>
-      <div data-testid="item-3" data-inview={el3.inView}>
-        {el3.inView}
+      <div data-testid="item-3" data-inview={el3.isInView}>
+        {el3.isInView}
       </div>
     </div>
   )
@@ -324,15 +324,15 @@ it('should set intersection ratio as the largest threshold smaller than trigger'
 
 it('should handle fallback if unsupported', () => {
   ;(window as unknown as { IntersectionObserver: IntersectionObserver | undefined }).IntersectionObserver = undefined
-  const { rerender } = render(<HookComponent options={{ fallbackInView: true }} />)
+  const { rerender } = render(<HookComponent options={{ fallbackIsInView: true }} />)
   screen.getByText('true')
 
-  rerender(<HookComponent options={{ fallbackInView: false }} />)
+  rerender(<HookComponent options={{ fallbackIsInView: false }} />)
   screen.getByText('false')
 
   expect(() => {
     vi.spyOn(console, 'error').mockImplementation(() => {})
-    rerender(<HookComponent options={{ fallbackInView: undefined }} />)
+    rerender(<HookComponent options={{ fallbackIsInView: undefined }} />)
     vi.restoreAllMocks()
   }).toThrowErrorMatchingInlineSnapshot(`[TypeError: IntersectionObserver is not a constructor]`)
 })

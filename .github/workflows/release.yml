@@ -2,7 +2,7 @@ name: Changesets PR or Publish
 
 on:
   push:
-    branches: [main, beta]
+    branches: [main, beta, next]
 env:
   TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
   TURBO_TEAM: ${{ vars.TURBO_TEAM }}
@@ -10,6 +10,9 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: write
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/pnpm-setup-node

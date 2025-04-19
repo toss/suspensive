@@ -1,9 +1,10 @@
 import type { MetaRecord } from 'nextra'
+import type MetaEn from '../../../en/docs/react/_meta'
 
 export default {
   motivation: { title: '어떤 이유로 사용하나요?' },
   installation: { title: '설치하기' },
-  'migrate-to-v2': { title: 'v2로 마이그레이션하기' },
+  migration: { title: '마이그레이션 가이드' },
   '--- API Reference': {
     type: 'separator',
     title: 'API 문서',
@@ -14,5 +15,4 @@ export default {
   Delay: { title: '<Delay/>' },
   ClientOnly: { title: '<ClientOnly/>' },
   DefaultPropsProvider: { title: '<DefaultPropsProvider/>' },
-  wrap: { title: 'wrap' },
-} satisfies MetaRecord
+} satisfies typeof MetaEn satisfies MetaRecord

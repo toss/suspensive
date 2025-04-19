@@ -60,3 +60,18 @@ SSR을 지원하도록 점진적으로 마이그레이션하기 (`<Suspense clie
 React.Suspense를 SSR과 CSR에서 모두 사용하고 싶다면 `<Suspense clientOnly/>`에서 `<Suspense/>`로 점진적으로 마이그레이션하면 쉽게 적용할 수 있습니다.
 
 </Callout>
+
+## Suspense.with
+
+`Suspense.with`는 Suspense를 사용하여 컴포넌트를 래핑하는 HOC입니다.
+`Suspense.with`를 사용하면 컴포넌트를 쉽게 래핑할 수 있습니다.
+
+```tsx /Suspense.with/
+import { Suspense } from '@suspensive/react'
+
+const Example = Suspense.with({ fallback: <Spinner /> }, () => {
+  // code make suspending
+
+  return <>...</>
+})
+```

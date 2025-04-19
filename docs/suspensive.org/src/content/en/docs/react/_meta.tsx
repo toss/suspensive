@@ -3,7 +3,7 @@ import type { MetaRecord } from 'nextra'
 export default {
   motivation: { title: 'Why need to use?' },
   installation: { title: 'Installation' },
-  'migrate-to-v2': { title: 'Migrating to v2' },
+  migration: { title: 'Migration guide' },
   '--- API Reference': {
     type: 'separator',
     title: 'API Reference',
@@ -14,5 +14,4 @@ export default {
   Delay: { title: '<Delay/>' },
   ClientOnly: { title: '<ClientOnly/>' },
   DefaultPropsProvider: { title: '<DefaultPropsProvider/>' },
-  wrap: { title: 'wrap' },
 } satisfies MetaRecord

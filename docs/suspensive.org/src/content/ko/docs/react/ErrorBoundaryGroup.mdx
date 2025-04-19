@@ -191,6 +191,38 @@ export const ErrorAfter2s = () => {
 
 </Sandpack>
 
+## ErrorBoundaryGroup.with
+
+`ErrorBoundaryGroup.with` ErrorBoundaryGroup을 사용하여 컴포넌트를 래핑하는 HOC입니다.
+`ErrorBoundaryGroup.with`를 사용하면 컴포넌트를 쉽게 래핑할 수 있습니다.
+
+```tsx /ErrorBoundaryGroup.with/
+import { ErrorBoundaryGroup } from '@suspensive/react'
+
+const Example = ErrorBoundaryGroup.with({}, () => {
+  return <>...</>
+})
+```
+
+## ErrorBoundaryGroup.Consumer
+
+`ErrorBoundaryGroup.Consumer`는 ErrorBoundaryGroup의 Consumer입니다. ErrorBoundaryGroup.Consumer를 사용하면 ErrorBoundaryGroup의 reset을 사용할 수 있습니다.
+
+```tsx /ErrorBoundaryGroup.Consumer/
+import { ErrorBoundaryGroup } from '@suspensive/react'
+
+const Example = () => (
+  <ErrorBoundaryGroup>
+    <ErrorBoundaryGroup.Consumer>
+      {(group) => <button onClick={group.reset}>Try again</button>}
+    </ErrorBoundaryGroup.Consumer>
+    <ErrorBoundary>
+      <ErrorAfter2s />
+    </ErrorBoundary>
+  </ErrorBoundaryGroup>
+)
+```
+
 ## useErrorBoundaryGroup
 
 useErrorBoundaryGroup을 사용하면 `<ErrorBoundaryGroup/>`내의 `<ErrorBoundary/>`들을 reset하는 함수를 얻을 수 있습니다.

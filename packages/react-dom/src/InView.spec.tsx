@@ -5,21 +5,27 @@ import { mockAllIsIntersecting } from './test-utils'
 describe('<InView/>', () => {
   it('should render <InView /> intersecting', () => {
     const callback = vi.fn()
-    render(<InView onChange={callback}>{({ inView, ref }) => <div ref={ref}>{inView.toString()}</div>}</InView>)
+    render(<InView onChange={callback}>{({ isInView, ref }) => <div ref={ref}>{isInView.toString()}</div>}</InView>)
 
     mockAllIsIntersecting(false)
-    expect(callback).toHaveBeenLastCalledWith(false, expect.objectContaining({ isIntersecting: false }))
+    expect(callback).toHaveBeenLastCalledWith({
+      isInView: false,
+      entry: expect.objectContaining({ isIntersecting: false }),
+    })
 
     mockAllIsIntersecting(true)
-    expect(callback).toHaveBeenLastCalledWith(true, expect.objectContaining({ isIntersecting: true }))
+    expect(callback).toHaveBeenLastCalledWith({
+      isInView: true,
+      entry: expect.objectContaining({ isIntersecting: true }),
+    })
   })
 
   // eslint-disable-next-line vitest/expect-expect
-  it('should handle initialInView', () => {
+  it('should handle initialIsInView', () => {
     const cb = vi.fn()
     render(
-      <InView initialInView onChange={cb}>
-        {({ inView }) => <span>InView: {inView.toString()}</span>}
+      <InView initialIsInView onChange={cb}>
+        {({ isInView }) => <span>InView: {isInView.toString()}</span>}
       </InView>
     )
     screen.getByText('InView: true')
@@ -29,18 +35,18 @@ describe('<InView/>', () => {
   it('should unobserve old node', () => {
     const { rerender } = render(
       <InView>
-        {({ inView, ref }) => (
+        {({ isInView, ref }) => (
           <div key="1" ref={ref}>
-            Inview: {inView.toString()}
+            Inview: {isInView.toString()}
           </div>
         )}
       </InView>
     )
     rerender(
       <InView>
-        {({ inView, ref }) => (
+        {({ isInView, ref }) => (
           <div key="2" ref={ref}>
-            Inview: {inView.toString()}
+            Inview: {isInView.toString()}
           </div>
         )}
       </InView>

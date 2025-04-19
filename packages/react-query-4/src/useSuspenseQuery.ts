@@ -14,7 +14,7 @@ export type UseSuspenseQueryOptions<
   TQueryKey extends QueryKey = QueryKey,
 > = OmitKeyof<
   UseQueryOptions<TQueryFnData, TError, TData, TQueryKey>,
-  'suspense' | 'useErrorBoundary' | 'enabled' | 'placeholderData'
+  'suspense' | 'useErrorBoundary' | 'enabled' | 'placeholderData' | 'networkMode'
 >
 
 /**
@@ -32,5 +32,6 @@ export function useSuspenseQuery<
     enabled: true,
     useErrorBoundary: true,
     suspense: true,
+    networkMode: 'always',
   }) as UseSuspenseQueryResult<TData, TError>
 }

@@ -1,9 +1,61 @@
+import { Steps } from 'nextra/components'
+
 # Installation
 
-@suspensive/jotai package lives in npm. To install the latest stable version, run the following command.
+<Steps>
 
-[![npm version](https://img.shields.io/npm/v/@suspensive/jotai?color=000&labelColor=000&logo=npm)](https://www.npmjs.com/package/@suspensive/jotai)
+### Check supported browsers
+
+Suspensive Libraries are optimized for modern browsers. It is compatible with the following browsers config.
+
+<br />
+
+<table>
+  <tbody>
+    {[
+      { browser: 'Chrome', version: '>= 51' },
+      { browser: 'Firefox', version: '>= 53' },
+      { browser: 'Edge', version: '>= 18' },
+      { browser: 'Safari', version: '>= 11' },
+      { browser: 'iOS', version: '>= 11' },
+      { browser: 'Opera', version: '>= 38' },
+    ].map((item) => (
+      <tr key={item.browser}>
+        <td>{item.browser}</td>
+        <td className="text-center">{item.version}</td>
+      </tr>
+    ))}
+  </tbody>
+</table>
+
+> Depending on your environment, you might need to add polyfills. If you want to support older browsers, you need to transpile the library from node_modules yourselves.
+
+### Check supported react, jotai version
+
+<br />
+
+<table>
+  <tbody>
+    {[
+      { library: 'react', version: '^18 || ^19' },
+      { library: 'jotai', version: '^2' },
+    ].map((item) => (
+      <tr key={item.library}>
+        <td>{item.library}</td>
+        <td className="text-center">{item.version}</td>
+      </tr>
+    ))}
+  </tbody>
+</table>
+
+### Add as Dependencies
+
+@suspensive/jotai lives in npm. To install the latest stable version, run the following command.
+
+[![npm version](https://img.shields.io/npm/v/@suspensive/jotai?color=000&labelColor=000&logo=npm&label=)](https://www.npmjs.com/package/@suspensive/jotai)
 
 ```shell npm2yarn
 npm install @suspensive/jotai
 ```
+
+</Steps>

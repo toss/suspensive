@@ -1,5 +1,179 @@
 # @suspensive/react-query
 
+## 3.0.0-next.19
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @suspensive/react-query-4@3.0.0-next.19
+  - @suspensive/react-query-5@3.0.0-next.19
+
+## 3.0.0-next.18
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @suspensive/react-query-4@3.0.0-next.18
+  - @suspensive/react-query-5@3.0.0-next.18
+
+## 3.0.0-next.17
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @suspensive/react-query-4@3.0.0-next.17
+  - @suspensive/react-query-5@3.0.0-next.17
+
+## 3.0.0-next.16
+
+### Patch Changes
+
+- [#1511](https://github.com/toss/suspensive/pull/1511) [`3f87359`](https://github.com/toss/suspensive/commit/3f873592847e40170252e04b267911dee6559c7e) Thanks [@kangju2000](https://github.com/kangju2000)! - chore(\*): remove JSR support and related files
+
+- Updated dependencies [[`3f87359`](https://github.com/toss/suspensive/commit/3f873592847e40170252e04b267911dee6559c7e), [`56ae4eb`](https://github.com/toss/suspensive/commit/56ae4eb378fbdb150ecb1508a659411ce0e84bc8)]:
+  - @suspensive/react-query-4@3.0.0-next.16
+  - @suspensive/react-query-5@3.0.0-next.16
+
+## 3.0.0-next.15
+
+### Patch Changes
+
+- [#1497](https://github.com/toss/suspensive/pull/1497) [`e400035`](https://github.com/toss/suspensive/commit/e4000352b7d3e42f0164983cca2bcde9fd24751c) Thanks [@kangju2000](https://github.com/kangju2000)! - chore: improve JSR imports sync with consistent dependency formatting
+
+- Updated dependencies [[`e400035`](https://github.com/toss/suspensive/commit/e4000352b7d3e42f0164983cca2bcde9fd24751c)]:
+  - @suspensive/react-query-4@3.0.0-next.15
+  - @suspensive/react-query-5@3.0.0-next.15
+
+## 3.0.0-next.14
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @suspensive/react-query-4@3.0.0-next.14
+  - @suspensive/react-query-5@3.0.0-next.14
+
+## 3.0.0-next.13
+
+### Patch Changes
+
+- Updated dependencies [[`a37dd3d`](https://github.com/toss/suspensive/commit/a37dd3dd2f10f3f997fed81147f38cdb944dbd7a)]:
+  - @suspensive/react-query-4@3.0.0-next.13
+  - @suspensive/react-query-5@3.0.0-next.13
+
+## 3.0.0-next.12
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @suspensive/react-query-4@3.0.0-next.12
+  - @suspensive/react-query-5@3.0.0-next.12
+
+## 3.0.0-next.11
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @suspensive/react-query-4@3.0.0-next.11
+  - @suspensive/react-query-5@3.0.0-next.11
+
+## 3.0.0-next.10
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @suspensive/react-query-4@3.0.0-next.10
+  - @suspensive/react-query-5@3.0.0-next.10
+
+## 3.0.0-next.9
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @suspensive/react-query-4@3.0.0-next.9
+  - @suspensive/react-query-5@3.0.0-next.9
+
+## 3.0.0-next.8
+
+### Patch Changes
+
+- [#1479](https://github.com/toss/suspensive/pull/1479) [`ae72a0f`](https://github.com/toss/suspensive/commit/ae72a0f4a33021404ed720e37c98b70bff1af5b9) Thanks [@kangju2000](https://github.com/kangju2000)! - fix: resolve issues in JSR publish action
+
+- Updated dependencies []:
+  - @suspensive/react-query-4@3.0.0-next.8
+  - @suspensive/react-query-5@3.0.0-next.8
+
+## 3.0.0-next.7
+
+### Patch Changes
+
+- [#1475](https://github.com/toss/suspensive/pull/1475) [`c44994b`](https://github.com/toss/suspensive/commit/c44994b3510d6c41ed09504cb74999a99dd99253) Thanks [@kangju2000](https://github.com/kangju2000)! - feat: add JSR support and publishing workflow
+
+- Updated dependencies [[`c44994b`](https://github.com/toss/suspensive/commit/c44994b3510d6c41ed09504cb74999a99dd99253)]:
+  - @suspensive/react-query-4@3.0.0-next.7
+  - @suspensive/react-query-5@3.0.0-next.7
+
+## 3.0.0-next.6
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @suspensive/react-query-4@3.0.0-next.6
+  - @suspensive/react-query-5@3.0.0-next.6
+
+## 3.0.0-next.5
+
+### Patch Changes
+
+- Updated dependencies [[`c78cbfd`](https://github.com/toss/suspensive/commit/c78cbfd1f2cf95720f6cb1e5963178e51b041c2b)]:
+  - @suspensive/react-query-4@3.0.0-next.5
+  - @suspensive/react-query-5@3.0.0-next.5
+
+## 3.0.0-next.4
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @suspensive/react-query-4@3.0.0-next.4
+  - @suspensive/react-query-5@3.0.0-next.4
+
+## 3.0.0-next.3
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @suspensive/react-query-4@3.0.0-next.3
+  - @suspensive/react-query-5@3.0.0-next.3
+
+## 3.0.0-next.2
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @suspensive/react-query-4@3.0.0-next.2
+  - @suspensive/react-query-5@3.0.0-next.2
+
+## 3.0.0-next.1
+
+### Patch Changes
+
+- [#1434](https://github.com/toss/suspensive/pull/1434) [`2be4348`](https://github.com/toss/suspensive/commit/2be434844157d63e16d5555fbb685c1757dd4fdf) Thanks [@manudeli](https://github.com/manudeli)! - remove peerDeps error
+
+- Updated dependencies [[`2be4348`](https://github.com/toss/suspensive/commit/2be434844157d63e16d5555fbb685c1757dd4fdf)]:
+  - @suspensive/react-query-4@3.0.0-next.1
+  - @suspensive/react-query-5@3.0.0-next.1
+
+## 3.0.0-next.0
+
+### Major Changes
+
+- [#1424](https://github.com/toss/suspensive/pull/1424) [`59a809d`](https://github.com/toss/suspensive/commit/59a809d8e91e92ef7b1dd0a874d65c0707bf371e) Thanks [@manudeli](https://github.com/manudeli)! - feat(v3): remove deprecated interfaces
+
+### Patch Changes
+
+- Updated dependencies [[`59a809d`](https://github.com/toss/suspensive/commit/59a809d8e91e92ef7b1dd0a874d65c0707bf371e)]:
+  - @suspensive/react-query-4@3.0.0-next.0
+  - @suspensive/react-query-5@3.0.0-next.0
+
 ## 2.18.12
 
 ### Patch Changes
