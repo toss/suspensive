@@ -1,5 +1,15 @@
 # @suspensive/codemods
 
+## 3.0.0
+
+### Major Changes
+
+- [#1461](https://github.com/toss/suspensive/pull/1461) [`9e1c24d`](https://github.com/toss/suspensive/commit/9e1c24dc93b70856c93f44d8b1871a0f10452a8b) Thanks [@manudeli](https://github.com/manudeli)! - feat(codemods): fixed version like other suspensive libraries
+
+### Patch Changes
+
+- [#1497](https://github.com/toss/suspensive/pull/1497) [`e400035`](https://github.com/toss/suspensive/commit/e4000352b7d3e42f0164983cca2bcde9fd24751c) Thanks [@kangju2000](https://github.com/kangju2000)! - chore: improve JSR imports sync with consistent dependency formatting
+
 ## 3.0.0-next.19
 
 ## 3.0.0-next.18
