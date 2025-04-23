@@ -73,3 +73,45 @@ const SuspenseQueryExample = () => {
   })
 }
 ```
+
+### `<QueryErrorBoundary/>` is removed
+
+In `@suspensive/react-query` v2, `QueryErrorBoundary` was provided as a peer dependency of `@suspensive/react`.
+However, this approach complicated user dependencies for the sake of a simple implementation.
+Therefore, it has been removed to simplify the library.
+
+You can implement your own `QueryErrorBoundary` as shown below.
+
+```diff
+- import { QueryErrorBoundary } from '@suspensive/react-query'
++ import { ErrorBoundary } from '@suspensive/react'
++ import { useQueryErrorResetBoundary } from '@tanstack/react-query'
++ import {
++   type ComponentPropsWithoutRef,
++   type ComponentRef,
++   forwardRef,
++ } from 'react'
+
++ const QueryErrorBoundary = forwardRef<
++   ComponentRef<typeof ErrorBoundary>,
++   ComponentPropsWithoutRef<typeof ErrorBoundary>
++ >(({ onReset, ...props }, resetRef) => {
++   const { reset } = useQueryErrorResetBoundary()
++   return (
++     <ErrorBoundary
++       {...props}
++       onReset={() => {
++         onReset?.()
++         reset()
++       }}
++       ref={resetRef}
++     />
++   )
++ })
+
+const Example = () => (
+  <QueryErrorBoundary>
+    <SuspenseQuery />
+  </QueryErrorBoundary>
+)
+```
