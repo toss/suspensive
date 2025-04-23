@@ -12,30 +12,6 @@
 
 </div>
 
-<br/>
-
-## Available Packages
-
-### [@suspensive/react](https://suspensive.org/docs/react/motivation) [![npm version](https://img.shields.io/npm/v/@suspensive/react?color=000&labelColor=000&logo=npm&label=)](https://www.npmjs.com/package/@suspensive/react) [![npm](https://img.shields.io/npm/dm/@suspensive/react?color=000&labelColor=000)](https://www.npmjs.com/package/@suspensive/react) [![npm bundle size](https://img.shields.io/bundlephobia/minzip/@suspensive/react?color=000&labelColor=000)](https://www.npmjs.com/package/@suspensive/react)
-
-> This package offers components that leverage React Suspense to handle asynchronous operations gracefully. It includes components like Suspense, ErrorBoundary, and ErrorBoundaryGroup, along with utilities like Delay for managing timing in your React applications.
-
-Key features: Suspense, ErrorBoundary, ErrorBoundaryGroup, Delay, and more.
-
-### [@suspensive/react-query](https://suspensive.org/docs/react-query/motivation) [![npm version](https://img.shields.io/npm/v/@suspensive/react-query?color=000&labelColor=000&logo=npm&label=)](https://www.npmjs.com/package/@suspensive/react-query) [![npm](https://img.shields.io/npm/dm/@suspensive/react-query?color=000&labelColor=000)](https://www.npmjs.com/package/@suspensive/react-query) [![npm bundle size](https://img.shields.io/bundlephobia/minzip/@suspensive/react-query?color=000&labelColor=000)](https://www.npmjs.com/package/@suspensive/react-query)
-
-> This package enhances React Query with Suspense support, allowing for simpler and more declarative data fetching. It provides hooks like useSuspenseQuery and useSuspenseInfiniteQuery, which integrate seamlessly with React Suspense.
-
-Key features: useSuspenseQuery, useSuspenseQueries, useSuspenseInfiniteQuery, queryOptions, Mutation, and more.
-
-### [@suspensive/jotai](https://suspensive.org/docs/jotai/motivation) [![npm version](https://img.shields.io/npm/v/@suspensive/jotai?color=000&labelColor=000&logo=npm&label=)](https://www.npmjs.com/package/@suspensive/jotai) [![npm](https://img.shields.io/npm/dm/@suspensive/jotai?color=000&labelColor=000)](https://www.npmjs.com/package/@suspensive/jotai) [![npm bundle size](https://img.shields.io/bundlephobia/minzip/@suspensive/jotai?color=000&labelColor=000)](https://www.npmjs.com/package/@suspensive/jotai)
-
-> This package builds on the Jotai state management library, adding features that work well with React Suspense. It provides utilities for managing state using atoms, which can be easily integrated into Suspense-based workflows.
-
-Key features: Atom, AtomValue, SetAtom, and more.
-
-<br/>
-
 ## Visit [suspensive.org](https://suspensive.org) for docs, guides, API and more!
 
 [English](https://suspensive.org/en) | [한국어](https://suspensive.org/ko)
