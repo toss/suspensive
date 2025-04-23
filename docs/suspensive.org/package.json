@@ -31,8 +31,8 @@
     "clsx": "catalog:",
     "codehike": "^1.0.5",
     "d3": "^7.9.0",
-    "lucide-react": "^0.488.0",
-    "motion": "^12.6.3",
+    "lucide-react": "^0.503.0",
+    "motion": "^12.7.4",
     "next": "catalog:",
     "nextra": "^4.2.17",
     "nextra-theme-docs": "^4.2.17",
@@ -40,7 +40,7 @@
     "react-dom": "catalog:react19",
     "remark-sandpack": "^0.0.5",
     "sharp": "catalog:",
-    "zod": "^3.24.2"
+    "zod": "^3.24.3"
   },
   "devDependencies": {
     "@suspensive/eslint-config": "workspace:*",
