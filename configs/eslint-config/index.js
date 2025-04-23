@@ -9,7 +9,7 @@ import next from '@next/eslint-plugin-next'
 import cspellConfigs from '@cspell/eslint-plugin/configs'
 import vitest from '@vitest/eslint-plugin'
 import jestDom from 'eslint-plugin-jest-dom'
-import mdx from 'eslint-plugin-mdx'
+import * as mdx from 'eslint-plugin-mdx'
 
 const ignores = ['**/.next/**', '**/build/**', '**/coverage/**', '**/dist/**']
 

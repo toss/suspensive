@@ -1,6 +1,8 @@
 {
   "$schema": "https://unpkg.com/knip@5/schema.json",
   "ignoreWorkspaces": ["examples/**"],
+  "ignore": ["**/test-utils/**"],
+  "ignoreDependencies": ["ms", "@testing-library/user-event"],
   "workspaces": {
     ".": {
       "ignore": ["packlint.config.mjs"],
@@ -20,11 +22,18 @@
       "ignoreDependencies": ["ts-node"],
       "ignore": ["babel.config.cjs"]
     },
+    "packages/react": {
+      "ignoreDependencies": ["react-dom", "@types/react-dom", "react-error-boundary"]
+    },
     "packages/react-dom": {
-      "ignoreDependencies": ["react-dom", "@types/react-dom"]
+      "ignoreDependencies": ["react-dom", "@types/react-dom"],
+      "ignore": ["**/utils/observe.ts"]
+    },
+    "packages/react-query": {
+      "ignore": ["**/bin/utils/package.ts"]
     },
     "packages/codemods": {
-      "ignore": ["**/testfixtures/**"]
+      "ignore": ["**/testfixtures/**", "**/getTestfixtures.ts"]
     }
   }
 }
