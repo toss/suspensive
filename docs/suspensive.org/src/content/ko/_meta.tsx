@@ -22,7 +22,7 @@ export default {
         href: 'https://suspensive.org/ko',
       },
       v3: {
-        title: 'v3 (WIP)',
+        title: 'v3',
         href: 'https://v3.suspensive.org',
       },
       v2: {

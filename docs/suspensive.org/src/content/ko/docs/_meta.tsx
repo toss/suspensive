@@ -1,4 +1,5 @@
 import type { MetaRecord } from 'nextra'
+import type MetaEn from '../../en/docs/_meta'
 
 export default {
   '--- Packages': {
@@ -6,6 +7,7 @@ export default {
     title: '패키지',
   },
   react: { title: '@suspensive/react' },
+  'react-dom': { title: '@suspensive/react-dom' },
   'react-query': { title: '@suspensive/react-query' },
   jotai: { title: '@suspensive/jotai' },
   codemods: { title: '@suspensive/codemods' },
@@ -13,8 +15,14 @@ export default {
     type: 'separator',
     title: '더보기',
   },
-  'migrate-to-v2': 'v2로 마이그레이션하기',
-  changelogs: 'Changelogs',
-  contributors: '기여자',
-  links: '관련 링크',
-} satisfies MetaRecord
+  migration: { title: '마이그레이션 가이드' },
+  changelogs: {
+    title: 'Changelogs',
+  },
+  contributors: {
+    title: '기여자',
+  },
+  links: {
+    title: '관련 링크',
+  },
+} satisfies typeof MetaEn satisfies MetaRecord

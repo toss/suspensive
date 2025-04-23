@@ -1,5 +1,6 @@
 import { render, screen, waitFor } from '@testing-library/react'
 import ms from 'ms'
+import { createElement } from 'react'
 import { DefaultProps, DefaultPropsProvider } from './DefaultProps'
 import { Suspense } from './Suspense'
 import { FALLBACK, Suspend, TEXT } from './test-utils'
@@ -74,5 +75,24 @@ describe('<Suspense clientOnly/>', () => {
 
     expect(screen.queryByText('defaultFallback')).toBeInTheDocument()
     expect(screen.queryByText(TEXT)).not.toBeInTheDocument()
+  })
+})
+describe('Suspense.with', () => {
+  beforeEach(() => Suspend.reset())
+
+  it('should wrap component by Suspense', async () => {
+    render(createElement(Suspense.with({ fallback: FALLBACK }, () => <Suspend during={ms('0.1s')} toShow={TEXT} />)))
+    expect(screen.queryByText(FALLBACK)).toBeInTheDocument()
+    expect(screen.queryByText(TEXT)).not.toBeInTheDocument()
+    await waitFor(() => expect(screen.queryByText(FALLBACK)).not.toBeInTheDocument())
+    expect(screen.queryByText(TEXT)).toBeInTheDocument()
+    expect(screen.queryByText(FALLBACK)).not.toBeInTheDocument()
+  })
+
+  it('should set displayName based on Component.displayName', () => {
+    const Component = () => <></>
+    Component.displayName = 'Custom'
+    expect(Suspense.with({}, Component).displayName).toBe('Suspense.with(Custom)')
+    expect(Suspense.with({}, () => <></>).displayName).toBe('Suspense.with(Component)')
   })
 })

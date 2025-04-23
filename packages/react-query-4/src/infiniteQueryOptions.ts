@@ -20,6 +20,7 @@ export type SelectedInfiniteOptions<
     | 'enabled'
     | 'refetchInterval'
     | 'initialData'
+    | 'networkMode'
   >,
   'queryKey' | 'queryFn'
 > & {
@@ -45,6 +46,7 @@ export type UnSelectedInfiniteOptions<
     | 'enabled'
     | 'refetchInterval'
     | 'initialData'
+    | 'networkMode'
   >,
   'queryKey' | 'queryFn'
 > & {

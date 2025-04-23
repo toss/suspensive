@@ -61,3 +61,18 @@ Migration support SSR gradually (`<Suspense clientOnly/>` -> `<Suspense/>`)
 If you want to use Suspense working in both SSR/CSR, You can change `<Suspense clientOnly/>` to `<Suspense/>` gradually.
 
 </Callout>
+
+## Suspense.with
+
+`Suspense.with` is a higher-order component (HOC) that allows you to wrap a component with a Suspense boundary.
+`Suspense.with` makes it easy to wrap a component.
+
+```tsx /Suspense.with/
+import { Suspense } from '@suspensive/react'
+
+const Example = Suspense.with({ fallback: <Spinner /> }, () => {
+  // code make suspending
+
+  return <>...</>
+})
+```

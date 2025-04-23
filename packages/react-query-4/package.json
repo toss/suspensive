@@ -1,6 +1,6 @@
 {
   "name": "@suspensive/react-query-4",
-  "version": "2.18.12",
+  "version": "3.0.0-next.19",
   "description": "Suspensive interfaces for @tanstack/react-query@4",
   "keywords": [
     "suspensive",
@@ -51,7 +51,6 @@
   },
   "devDependencies": {
     "@suspensive/eslint-config": "workspace:*",
-    "@suspensive/react": "workspace:*",
     "@suspensive/tsconfig": "workspace:*",
     "@suspensive/tsup": "workspace:*",
     "@tanstack/react-query": "catalog:react-query4",
@@ -59,17 +58,8 @@
     "react": "catalog:react19"
   },
   "peerDependencies": {
-    "@suspensive/react": "workspace:^2.18.12",
-    "@tanstack/react-query": "^4",
+    "@tanstack/react-query": "*",
     "react": "^18 || ^19"
-  },
-  "peerDependenciesMeta": {
-    "@suspensive/react": {
-      "optional": true
-    },
-    "@tanstack/react-query": {
-      "optional": true
-    }
   },
   "publishConfig": {
     "access": "public"

@@ -25,9 +25,9 @@
   },
   "devDependencies": {
     "@suspensive/eslint-config": "workspace:*",
+    "@tailwindcss/postcss": "catalog:",
     "@types/react": "catalog:react19",
     "@types/react-dom": "catalog:react19",
-    "@tailwindcss/postcss": "catalog:",
     "prettier-plugin-tailwindcss": "catalog:",
     "tailwindcss": "catalog:"
   }

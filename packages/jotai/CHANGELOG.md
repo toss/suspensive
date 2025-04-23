@@ -1,5 +1,57 @@
 # @suspensive/jotai
 
+## 3.0.0-next.19
+
+## 3.0.0-next.18
+
+## 3.0.0-next.17
+
+## 3.0.0-next.16
+
+### Patch Changes
+
+- [#1511](https://github.com/toss/suspensive/pull/1511) [`3f87359`](https://github.com/toss/suspensive/commit/3f873592847e40170252e04b267911dee6559c7e) Thanks [@kangju2000](https://github.com/kangju2000)! - chore(\*): remove JSR support and related files
+
+## 3.0.0-next.15
+
+### Patch Changes
+
+- [#1497](https://github.com/toss/suspensive/pull/1497) [`e400035`](https://github.com/toss/suspensive/commit/e4000352b7d3e42f0164983cca2bcde9fd24751c) Thanks [@kangju2000](https://github.com/kangju2000)! - chore: improve JSR imports sync with consistent dependency formatting
+
+## 3.0.0-next.14
+
+## 3.0.0-next.13
+
+## 3.0.0-next.12
+
+## 3.0.0-next.11
+
+## 3.0.0-next.10
+
+## 3.0.0-next.9
+
+## 3.0.0-next.8
+
+## 3.0.0-next.7
+
+### Patch Changes
+
+- [#1475](https://github.com/toss/suspensive/pull/1475) [`c44994b`](https://github.com/toss/suspensive/commit/c44994b3510d6c41ed09504cb74999a99dd99253) Thanks [@kangju2000](https://github.com/kangju2000)! - feat: add JSR support and publishing workflow
+
+## 3.0.0-next.6
+
+## 3.0.0-next.5
+
+## 3.0.0-next.4
+
+## 3.0.0-next.3
+
+## 3.0.0-next.2
+
+## 3.0.0-next.1
+
+## 3.0.0-next.0
+
 ## 2.18.12
 
 ## 2.18.11

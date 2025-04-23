@@ -595,6 +595,21 @@ export const ErrorAfter2s = () => {
 
 </Sandpack>
 
+## ErrorBoundary.with
+
+`ErrorBoundary.with` is a higher-order component that wraps the component with `<ErrorBoundary/>`.
+`ErrorBoundary.with` makes it easy to wrap a component.
+
+```tsx /ErrorBoundary.with/
+import { ErrorBoundary } from '@suspensive/react'
+
+const Example = ErrorBoundary.with({ fallback: ErrorBoundaryFallback }, () => {
+  const errorBoundary = useErrorBoundary()
+
+  return <>...</>
+})
+```
+
 ## useErrorBoundary
 
 ### useErrorBoundary().setError
