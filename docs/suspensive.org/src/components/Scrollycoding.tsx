@@ -122,7 +122,7 @@ export function Scrollycoding(props: unknown) {
             </Selectable>
           ))}
         </div>
-        <div className="-mr-6 rounded-xl" style={{ flex: 2 }}>
+        <div className="rounded-xl md:-mr-6" style={{ flex: 2 }}>
           <div className="scrollbar-none sticky top-28 overflow-auto">
             <Selection
               from={steps.map((step) => (
