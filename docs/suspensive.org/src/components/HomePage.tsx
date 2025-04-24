@@ -46,7 +46,7 @@ export const HomePage = ({
       <motion.section
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        className="-mx-12 -mt-4 bg-[url('/img/homepage_background.svg')] bg-cover bg-center bg-no-repeat px-10 pb-20"
+        className="-mx-4 -mt-4 bg-[url('/img/homepage_background.svg')] bg-cover bg-center bg-no-repeat pb-20 md:-mx-12"
       >
         <div className="flex flex-col items-center justify-center gap-8 text-center">
           <div className="flex flex-col items-center">
