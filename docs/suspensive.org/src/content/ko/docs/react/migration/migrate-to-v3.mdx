@@ -62,7 +62,7 @@ const Throw = {
 }
 ```
 
-### 이제 `Delay`의 children에 render prop에서 isDelayed flag를 사용할 수 있습니다.
+### 이제 `Delay`의 children에 render prop에서 isDelayed flag를 사용할 수 있습니다. [#1312](https://github.com/toss/suspensive/pull/1312)
 
 `Delay`의 children에 render prop으로 callback을 전달하여 isDelayed flag를 사용할 수 있습니다. 이 flag는 delay가 끝났는지 확인하는데 사용됩니다.
 Suspense의 fallback으로 스켈레톤 UI를 사용할 때 처음부터 바로 나오기보다는 200ms 정도의 delay를 주고 스켈레톤이 fade-in되도록 하는 것이 좋습니다.
@@ -93,7 +93,7 @@ const Example = () => (
 
 ## BREAKING CHANGES 처리하기
 
-### `wrap` 제거 & `with` 추가
+### `wrap` 제거 & `with` 추가 [#1452](https://github.com/toss/suspensive/pull/1452)
 
 v3에서 `wrap`을 제거했습니다. wrap의 기능을 대체할 수 있는 `with` 메소드를 각 컴포넌트에 모두 추가해두었습니다.
 

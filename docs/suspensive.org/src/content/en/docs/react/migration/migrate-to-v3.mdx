@@ -62,7 +62,7 @@ const Throw = {
 }
 ```
 
-### Now `Delay`'s children render prop can use the isDelayed flag.
+### Now `Delay`'s children render prop can use the isDelayed flag. [#1312](https://github.com/toss/suspensive/pull/1312)
 
 The `Delay` component now allows you to use the `isDelayed` flag in the render prop of its children. This flag can be used to check if the delay has ended.
 When we use Skeleton UI for Suspense's fallback, it is better to give a delay of about 200ms and make the skeleton fade-in rather than showing it right away.
@@ -93,7 +93,7 @@ const Example = () => (
 
 ## Handling BREAKING CHANGES
 
-### Remove `wrap` & Add `with`
+### Remove `wrap` & Add `with` [#1452](https://github.com/toss/suspensive/pull/1452)
 
 `wrap` has been removed in v3. We added a `with` method to each component that can replace the functionality of wrap.
 

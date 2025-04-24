@@ -38,7 +38,7 @@ const Example = () => (
 
 ## BREAKING CHANGES 처리하기
 
-### `@suspensive/react-query`의 `useSuspenseQuery`, `useSuspenseQueries`, `useSuspenseInfiniteQuery`에서 `networkMode`를 `'always'`로 고정하고 수정할 수 없습니다.
+### `@suspensive/react-query`의 `useSuspenseQuery`, `useSuspenseQueries`, `useSuspenseInfiniteQuery`에서 `networkMode`를 `'always'`로 고정하고 수정할 수 없습니다. [#1458](https://github.com/toss/suspensive/pull/1458)
 
 <Callout type='info'>
 
@@ -74,7 +74,7 @@ const SuspenseQueryExample = () => {
 }
 ```
 
-### `<QueryErrorBoundary/>`를 제거합니다.
+### `<QueryErrorBoundary/>`를 제거합니다. [#1424](https://github.com/toss/suspensive/pull/1424)
 
 @suspensive/react-query v2에서는 @suspensive/react를 peerDependency로 활용해 QueryErrorBoundary를 제공하고 있었습니다.
 하지만 이 방식은 간단한 구현을 위해서 사용자의 의존성을 복잡하게 할 수 있다는 이유로 삭제하고 단순화합니다.
