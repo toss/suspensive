@@ -54,7 +54,7 @@
     "@suspensive/tsconfig": "workspace:*",
     "@suspensive/tsup": "workspace:*",
     "@types/react": "catalog:react19",
-    "jotai": "^2.8.4",
+    "jotai": "^2.12.3",
     "react": "catalog:react19"
   },
   "peerDependencies": {
