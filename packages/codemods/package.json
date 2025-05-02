@@ -35,7 +35,7 @@
   "dependencies": {
     "@commander-js/extra-typings": "^13.0.0",
     "commander": "^13.0.0",
-    "execa": "^5.1.1",
+    "execa": "^9.5.2",
     "jscodeshift": "^17.0.0",
     "prompts": "^2.4.2"
   },
