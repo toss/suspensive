@@ -1,4 +1,3 @@
-
 import { wrap } from '@suspensive/react'
 import { useSuspenseQuery } from '@suspensive/react-query'
 
