@@ -1,5 +1,11 @@
 # @suspensive/codemods
 
+## 3.1.0
+
+### Minor Changes
+
+- [#1551](https://github.com/toss/suspensive/pull/1551) [`d51679a`](https://github.com/toss/suspensive/commit/d51679a774fe3da63acd34c72af2668945a880db) Thanks [@gwansikk](https://github.com/gwansikk)! - feat(codemods): add migrate with api codemod
+
 ## 3.0.0
 
 ### Major Changes
