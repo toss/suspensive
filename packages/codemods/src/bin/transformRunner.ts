@@ -5,7 +5,15 @@ import prompts from 'prompts'
 const TRANSFORMER_INQUIRER_CHOICES = [
   {
     title: 'tanstack-query-import',
-    description: 'Migrate imports to @tanstack/react-query in @suspensive/react-query (using @tanstack/react-query@5)',
+    description: 'Migrate imports to @tanstack/react-query in @suspensive/react-query',
+  },
+  {
+    title: 'migrate-query-client-consumer-props',
+    description: 'Migrate QueryClientConsumer context prop to queryClient',
+  },
+  {
+    title: 'migrate-with-api',
+    description: 'Migrate wrap API to with API for Suspensive v3',
   },
 ]
 
