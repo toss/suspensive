@@ -1,0 +1,56 @@
+import { Callout } from '@/components'
+
+# Migrate `with` API
+
+<Callout type='info'>
+
+This codemod is recommended when upgrading `@suspensive/react` from v2 to v3.
+
+</Callout>
+
+In `@suspensive/react` v3, the `wrap` API has been removed and replaced with the new `with` API, which is provided on each component such as `<ErrorBoundaryGroup/>`, `<ErrorBoundary/>`, and `<Suspense/>`.
+
+For more details about this breaking change, refer to the [Migrating to v3](/docs/react/migration/migrate-to-v3).
+
+```shell
+npx @suspensive/codemods migrate-with-api .
+```
+
+This codemod automatically transforms the `wrap` builder pattern into the new `with` API on each component.
+
+For example:
+
+```tsx /wrap/
+import { wrap } from '@suspensive/react'
+
+export const Example = wrap
+  .ErrorBoundaryGroup({ blockOutside: false })
+  .ErrorBoundary({
+    fallback: ({ error }) => <>{error.message}</>,
+    onError: logger.log,
+  })
+  .Suspense({ fallback: <>loading...</>, clientOnly: true })
+  .on(() => {
+    return <>Example</>
+  })
+```
+
+Transforms into:
+
+```tsx /with/
+import { ErrorBoundaryGroup, ErrorBoundary, Suspense } from '@suspensive/react'
+import { useSuspenseQuery } from '@suspensive/react-query'
+
+export const Example = ErrorBoundaryGroup.with(
+  { blockOutside: false },
+  ErrorBoundary.with(
+    {
+      fallback: ({ error }) => <>{error.message}</>,
+      onError: logger.log,
+    },
+    Suspense.with({ fallback: <>loading...</>, clientOnly: true }, () => {
+      return <>Example</>
+    })
+  )
+)
+```

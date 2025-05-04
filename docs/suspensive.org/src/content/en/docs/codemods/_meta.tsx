@@ -8,4 +8,8 @@ export default {
     title: 'Codemods',
   },
   tanstackQueryImport: { title: 'Migrate TanStack Query imports' },
+  migrateQueryClientConsumerProps: {
+    title: 'Migrate <QueryClientConsumer/> Props',
+  },
+  migrateWithAPI: { title: 'Migrate with API' },
 } satisfies MetaRecord
