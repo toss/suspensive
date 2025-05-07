@@ -90,7 +90,7 @@ export const HomePage = ({
                 <GlowEffect />
                 <Magnetic intensity={0.3} springOptions={{ bounce: 0.1 }}>
                   <Tilt rotationFactor={10} isReverse>
-                    <Link href={`/docs/react/motivation`}>
+                    <Link href={`/docs/introduction`}>
                       <motion.button
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}

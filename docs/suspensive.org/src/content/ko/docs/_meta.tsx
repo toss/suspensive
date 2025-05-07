@@ -2,6 +2,7 @@ import type { MetaRecord } from 'nextra'
 import type MetaEn from '../../en/docs/_meta'
 
 export default {
+  introduction: { title: 'Suspensive가 무엇인가요?' },
   '--- Packages': {
     type: 'separator',
     title: '패키지',

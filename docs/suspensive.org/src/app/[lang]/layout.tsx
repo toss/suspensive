@@ -77,7 +77,7 @@ export default async function RootLayout({
             { locale: 'ko', name: '한국어' },
           ]}
           sidebar={{
-            defaultMenuCollapseLevel: 1,
+            defaultMenuCollapseLevel: 2,
             autoCollapse: true,
             toggleButton: true,
           }}

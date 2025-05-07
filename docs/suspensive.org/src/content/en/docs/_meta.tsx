@@ -1,6 +1,7 @@
 import type { MetaRecord } from 'nextra'
 
 export default {
+  introduction: { title: 'What is Suspensive?' },
   '--- Packages': {
     type: 'separator',
     title: 'Packages',
