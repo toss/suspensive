@@ -1,5 +1,11 @@
 # @suspensive/react
 
+## 3.1.1
+
+### Patch Changes
+
+- [#1553](https://github.com/toss/suspensive/pull/1553) [`f33045b`](https://github.com/toss/suspensive/commit/f33045bc442a5fcc3adbc05b614e899dd83ba72d) Thanks [@kangju2000](https://github.com/kangju2000)! - refactor(react): change ErrorBoundary prop types to arrow functions and remove eslint-disable
+
 ## 3.1.0
 
 ## 3.0.0
