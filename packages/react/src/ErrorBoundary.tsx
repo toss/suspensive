@@ -166,7 +166,7 @@ class FallbackBoundary extends Component<{ children: ReactNode }> {
  * @see {@link https://suspensive.org/docs/react/ErrorBoundary Suspensive Docs}
  */
 export const ErrorBoundary = Object.assign(
-  forwardRef<{ reset(): void }, ErrorBoundaryProps>(
+  forwardRef<{ reset: () => void }, ErrorBoundaryProps>(
     ({ fallback, children, onError, onReset, resetKeys, shouldCatch }, ref) => {
       const group = useContext(ErrorBoundaryGroupContext) ?? { resetKey: 0 }
       const baseErrorBoundaryRef = useRef<BaseErrorBoundary>(null)
