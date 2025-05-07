@@ -54,11 +54,11 @@ export type ErrorBoundaryProps = PropsWithChildren<{
   /**
    * when ErrorBoundary is reset by resetKeys or fallback's props.reset, onReset will be triggered
    */
-  onReset?(): void
+  onReset?: () => void
   /**
    * when ErrorBoundary catch error, onError will be triggered
    */
-  onError?(error: Error, info: ErrorInfo): void
+  onError?: (error: Error, info: ErrorInfo) => void
   /**
    * when ErrorBoundary catch error, fallback will be render instead of children
    */
@@ -166,9 +166,7 @@ class FallbackBoundary extends Component<{ children: ReactNode }> {
  * @see {@link https://suspensive.org/docs/react/ErrorBoundary Suspensive Docs}
  */
 export const ErrorBoundary = Object.assign(
-  forwardRef<{ reset(): void }, ErrorBoundaryProps>(
-    // TODO: remove this line
-    // eslint-disable-next-line @typescript-eslint/unbound-method
+  forwardRef<{ reset: () => void }, ErrorBoundaryProps>(
     ({ fallback, children, onError, onReset, resetKeys, shouldCatch }, ref) => {
       const group = useContext(ErrorBoundaryGroupContext) ?? { resetKey: 0 }
       const baseErrorBoundaryRef = useRef<BaseErrorBoundary>(null)
