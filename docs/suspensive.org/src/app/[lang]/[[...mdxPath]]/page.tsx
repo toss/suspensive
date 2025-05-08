@@ -1,38 +1,45 @@
+import type { Metadata } from 'next'
 import type { $NextraMetadata, Heading } from 'nextra'
 import { generateStaticParamsFor, importPage } from 'nextra/pages'
-import { FadeIn } from './FadeIn'
-import { useMDXComponents } from '@/mdx-components'
+import { MDXContent } from './MDXContent'
 
 type Page = {
   toc: Array<Heading>
   metadata: $NextraMetadata
-  default: React.ComponentType<{ params: Awaited<PageProps['params']> }>
+  default: React.ComponentType<{ params: PageParams }>
 }
+
+type PageParams = {
+  mdxPath: string[]
+  lang: string
+}
+
+type PageProps = {
+  params: PageParams
+}
+
 export const generateStaticParams = generateStaticParamsFor('mdxPath')
 
-type PageProps = Readonly<{
-  params: Promise<{ mdxPath: string[]; lang: string }>
-}>
-export const generateMetadata = async (props: PageProps) => {
-  const params = await props.params
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
   const page = (await importPage(params.mdxPath, params.lang)) as Page
-  return page.metadata
+  return page.metadata as unknown as Metadata
 }
-// eslint-disable-next-line react-hooks/rules-of-hooks
-const Wrapper = useMDXComponents().wrapper
-export default async function Page(props: PageProps) {
-  const params = await props.params
+
+export default async function Page({ params }: PageProps) {
   const page = (await importPage(params.mdxPath, params.lang)) as Page
+  const Content = page.default
+  const isIndexPage = page.metadata.filePath.includes('index.mdx')
 
   return (
-    <Wrapper toc={page.toc} metadata={page.metadata}>
-      {page.metadata.filePath.includes('index.mdx') ? (
-        <page.default {...props} params={params} />
-      ) : (
-        <FadeIn key={params.mdxPath.join('/')}>
-          <page.default {...props} params={params} />
-        </FadeIn>
-      )}
-    </Wrapper>
+    <MDXContent
+      toc={page.toc}
+      metadata={page.metadata}
+      isIndexPage={isIndexPage}
+      mdxPath={params.mdxPath}
+    >
+      <Content params={params} />
+    </MDXContent>
   )
 }
