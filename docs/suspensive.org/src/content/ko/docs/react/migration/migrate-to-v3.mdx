@@ -1,0 +1,135 @@
+import { Callout } from '@/components'
+
+# v3로 마이그레이션하기
+
+## 새로운 기능
+
+### 이제 `ErrorBoundary` fallback에서 thrown error 발생시 부모로 전달됩니다 [#1409](https://github.com/toss/suspensive/pull/1409)
+
+fallback의 에러에 의해 fallback을 재귀적으로 노출하는 것은 개발자가 의도한 것이 아니기 때문에 이를 방지하기 위해 v3에서는 fallback에서 throw된 에러를 부모 ErrorBoundary에 의해 잡히도록 변경되었습니다.
+따라서 이것은 새로운 멘탈모델이자 BREAKING CHANGE이므로 새 동작방식을 이해하고 사용하시기 바랍니다.
+
+<Callout>
+
+AS-IS v2 ErrorBoundary의 fallback에서 throw된 error는 부모 ErrorBoundary에서 처리할 수 없고 스스로 catch하고 폴백을 재귀적으로 노출되었었습니다
+
+> 이는 [react-error-boundary](https://github.com/bvaughn/react-error-boundary)에서도 아래와 같이 fallback이 재귀적으로 노출되도록 동작합니다.
+
+1.  children is exposed
+2.  fallback is exposed
+3.  fallback is exposed
+4.  fallback is exposed
+5.  ... 재귀적으로 fallback is exposed을 노출했습니다
+
+</Callout>
+
+`ErrorBoundary`의 fallback에서 throw된 error는 부모 ErrorBoundary에 의해 잡힙니다. 따라서 아래처럼 동작하게 됩니다.
+
+1. children is exposed
+2. fallback is exposed
+3. This is expected
+
+```tsx /This is expected/ /fallback is exposed/ /children is exposed/
+const Example = () => (
+  <ErrorBoundary fallback={() => <>This is expected</>}>
+    <ErrorBoundary
+      fallback={() => (
+        <Throw.Error message={ERROR_MESSAGE} after={100}>
+          fallback is exposed
+        </Throw.Error>
+      )}
+    >
+      <Throw.Error message={ERROR_MESSAGE} after={100}>
+        children is exposed
+      </Throw.Error>
+    </ErrorBoundary>
+  </ErrorBoundary>
+)
+
+const Throw = {
+  Error: ({
+    message,
+    after = 0,
+    children,
+  }: PropsWithChildren<{ message: string; after?: number }>) => {
+    const [isNeedThrow, setIsNeedThrow] = useState(after === 0)
+    if (isNeedThrow) {
+      throw new Error(message)
+    }
+    useTimeout(() => setIsNeedThrow(true), after)
+    return <>{children}</>
+  },
+}
+```
+
+### 이제 `Delay`의 children에 render prop에서 isDelayed flag를 사용할 수 있습니다. [#1312](https://github.com/toss/suspensive/pull/1312)
+
+`Delay`의 children에 render prop으로 callback을 전달하여 isDelayed flag를 사용할 수 있습니다. 이 flag는 delay가 끝났는지 확인하는데 사용됩니다.
+Suspense의 fallback으로 스켈레톤 UI를 사용할 때 처음부터 바로 나오기보다는 200ms 정도의 delay를 주고 스켈레톤이 fade-in되도록 하는 것이 좋습니다.
+이때 스켈레톤의 크기는 유지하면서 opacity를 조절하여 fade-in 효과를 줄 수 있습니다. 이를 통해 레이아웃 시프트를 줄이면서도 사용자 경험을 개선할 수 있습니다.
+
+```tsx
+import { Delay } from '@suspensive/react'
+
+const Example = () => (
+  <Suspense
+    fallback={
+      <Delay ms={200}>
+        {({ isDelayed }) => (
+          <Skeleton
+            style={{
+              opacity: isDelayed ? 1 : 0,
+              transition: 'opacity 0.2s ease-in-out',
+            }}
+          />
+        )}
+      </Delay>
+    }
+  >
+    <SuspendingComponent />
+  </Suspense>
+)
+```
+
+## BREAKING CHANGES 처리하기
+
+### `wrap` 제거 & `with` 추가 [#1452](https://github.com/toss/suspensive/pull/1452)
+
+v3에서 `wrap`을 제거했습니다. wrap의 기능을 대체할 수 있는 `with` 메소드를 각 컴포넌트에 모두 추가해두었습니다.
+
+1. wrap에서 사용하는 builder 패턴을 이해하지 않아도 됩니다.
+2. wrap은 내부적으로 모든 컴포넌트를 포함하고 있기 때문에 빌드 사이즈가 커집니다. v3에서는 필요한 컴포넌트만 import하여 사용할 수 있습니다.
+
+```diff
++ import { ErrorBoundaryGroup, ErrorBoundary, Suspense } from '@suspensive/react'
+- import { wrap } from '@suspensive/react'
+  import { useSuspenseQuery } from '@suspensive/react-query'
+
++ const Example = ErrorBoundaryGroup.with(
++   { blockOutside: false },
++   ErrorBoundary.with(
++     { fallback: ({ error }) => <>{error.message}</>, onError: logger.log },
++     Suspense.with({ fallback: <>loading...</>, clientOnly: true }, () => {
++       const query = useSuspenseQuery({
++         queryKey: ['key'],
++         queryFn: () => api.text(),
++       })
++       return <>{query.data.text}</>
++     })
++   )
++ )
+- const Example = wrap
+-   .ErrorBoundaryGroup({ blockOutside: false })
+-   .ErrorBoundary({
+-     fallback: ({ error }) => <>{error.message}</>,
+-     onError: logger.log,
+-   })
+-   .Suspense({ fallback: <>loading...</>, clientOnly: true })
+-   .on(() => {
+-     const query = useSuspenseQuery({
+-       queryKey: ['key'],
+-       queryFn: () => api.text(),
+-     })
+-     return <>{query.data.text}</>
+-   })
+```

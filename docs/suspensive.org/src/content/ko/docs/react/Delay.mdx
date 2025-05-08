@@ -2,7 +2,14 @@ import { Callout, Sandpack } from '@/components'
 
 # Delay
 
+이 컴포넌트는 두 가지 방식으로 사용할 수 있습니다.
+
+1. children에 delay를 적용하여 노출 시점을 지연시키거나,
+2. children이 render prop일 경우 delay된 시점에 플래그를 전달합니다.
+
 ### props.ms
+
+#### 1. children이 노출되는 시점을 지연
 
 이 컴포넌트는 children이 노출되는 시점을 ms만큼 지연시킵니다. 아래와 같은 코드에서는 200ms만큼 children 노출이 지연됩니다.
 
@@ -29,6 +36,54 @@ export const Example = () => (
       1s delayed Text
     </div>
   </Delay>
+)
+```
+
+</Sandpack>
+
+#### 2. children에 지연된 플래그를 전달하기
+
+children이 render prop이라면 노출을 제어하지 않고 플래그를 전달합니다. 아래와 같은 코드에서는 200ms 뒤에 `isDelayed`가 true로 전달됩니다.
+
+```tsx /ms/
+import { Delay } from '@suspensive/react'
+
+export const Example = () => {
+  return (
+    <Delay ms={200}>
+      {({ isDelayed }) => (
+        <div
+          style={{
+            opacity: isDelayed ? 1 : 0,,
+            transition: 'opacity 1500ms',
+          }}
+        ></div>
+      )}
+    </Delay>
+  )
+}
+```
+
+<Sandpack>
+
+```tsx Example.tsx active
+import { Delay } from '@suspensive/react'
+
+export const Example = () => (
+  <div style={{ backgroundColor: 'lightblue' }}>
+    <Delay ms={1500}>
+      {({ isDelayed }) => (
+        <div
+          style={{
+            opacity: isDelayed ? 1 : 0,
+            transition: 'opacity 1500ms',
+          }}
+        >
+          1500ms opacity trigger
+        </div>
+      )}
+    </Delay>
+  </div>
 )
 ```
 
@@ -95,3 +150,16 @@ export const Example = () => {
 ```
 
 </Sandpack>
+
+## Delay.with
+
+`Delay.with`는 `Delay`를 사용하여 컴포넌트를 래핑하는 HOC입니다.
+`Delay.with`를 사용하면 컴포넌트를 쉽게 래핑할 수 있습니다.
+
+```tsx /Delay.with/
+import { Delay } from '@suspensive/react'
+
+const Example = Delay.with({ ms: 2000 }, () => {
+  return <>...</>
+})
+```

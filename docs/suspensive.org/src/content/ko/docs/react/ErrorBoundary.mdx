@@ -598,6 +598,21 @@ export const ErrorAfter2s = () => {
 
 </Sandpack>
 
+## ErrorBoundary.with
+
+`ErrorBoundary.with`는 `<ErrorBoundary/>`의 props를 설정할 수 있는 HOC입니다.
+`ErrorBoundary.with`를 사용하면 컴포넌트를 쉽게 래핑할 수 있습니다.
+
+```tsx /ErrorBoundary.with/
+import { ErrorBoundary, useErrorBoundary } from '@suspensive/react'
+
+const Example = ErrorBoundary.with({ fallback: ErrorBoundaryFallback }, () => {
+  const errorBoundary = useErrorBoundary()
+
+  return <>...</>
+})
+```
+
 ## useErrorBoundary
 
 ### useErrorBoundary().setError

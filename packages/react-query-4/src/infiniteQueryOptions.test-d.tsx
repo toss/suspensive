@@ -79,10 +79,8 @@ describe('infiniteQueryOptions', () => {
     ))()
   })
   it('should be used with usePrefetchInfiniteQuery', () => {
-    // eslint-disable-next-line @typescript-eslint/no-invalid-void-type
-    expectTypeOf(usePrefetchInfiniteQuery(infiniteQuery.options1())).toMatchTypeOf<void>()
-    // eslint-disable-next-line @typescript-eslint/no-invalid-void-type
-    expectTypeOf(usePrefetchInfiniteQuery({ ...infiniteQuery.options1() })).toMatchTypeOf<void>()
+    expectTypeOf(usePrefetchInfiniteQuery(infiniteQuery.options1())).toBeVoid()
+    expectTypeOf(usePrefetchInfiniteQuery({ ...infiniteQuery.options1() })).toBeVoid()
   })
   it('should be used with useQueryClient', async () => {
     const queryClient = useQueryClient()

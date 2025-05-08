@@ -1,0 +1,135 @@
+import { Callout } from '@/components'
+
+# Migrating to v3
+
+## What's new
+
+### Now thrown error in `ErrorBoundary` fallback will be passed to parent [#1409](https://github.com/toss/suspensive/pull/1409)
+
+It is not the developer's intention to expose fallbacks recursively due to fallback errors, in v3, errors thrown from fallbacks are caught by the parent ErrorBoundary.
+So this is a new mental model and a BREAKING CHANGE, please understand and use the new behavior.
+
+<Callout>
+
+Errors thrown from the fallback of AS-IS v2 ErrorBoundary cannot be handled by the parent ErrorBoundary, so they are caught by themselves and fallbacks are exposed recursively.
+
+> This is also the case in [react-error-boundary](https://github.com/bvaughn/react-error-boundary) where fallbacks are exposed recursively as follows.
+
+1. children is exposed
+2. fallback is exposed
+3. fallback is exposed
+4. fallback is exposed
+5. ... recursively exposed fallback is exposed
+
+</Callout>
+
+Now, errors thrown from the fallback of ErrorBoundary are caught by the parent ErrorBoundary. Therefore, the behavior is as follows.
+
+1. children are exposed
+2. fallback is exposed
+3. This is expected
+
+```tsx /This is expected/ /fallback is exposed/ /children is exposed/
+const Example = () => (
+  <ErrorBoundary fallback={() => <>This is expected</>}>
+    <ErrorBoundary
+      fallback={() => (
+        <Throw.Error message={ERROR_MESSAGE} after={100}>
+          fallback is exposed
+        </Throw.Error>
+      )}
+    >
+      <Throw.Error message={ERROR_MESSAGE} after={100}>
+        children is exposed
+      </Throw.Error>
+    </ErrorBoundary>
+  </ErrorBoundary>
+)
+
+const Throw = {
+  Error: ({
+    message,
+    after = 0,
+    children,
+  }: PropsWithChildren<{ message: string; after?: number }>) => {
+    const [isNeedThrow, setIsNeedThrow] = useState(after === 0)
+    if (isNeedThrow) {
+      throw new Error(message)
+    }
+    useTimeout(() => setIsNeedThrow(true), after)
+    return <>{children}</>
+  },
+}
+```
+
+### Now `Delay`'s children render prop can use the isDelayed flag. [#1312](https://github.com/toss/suspensive/pull/1312)
+
+The `Delay` component now allows you to use the `isDelayed` flag in the render prop of its children. This flag can be used to check if the delay has ended.
+When we use Skeleton UI for Suspense's fallback, it is better to give a delay of about 200ms and make the skeleton fade-in rather than showing it right away.
+At this time we can use the `isDelayed` flag to control the opacity of the skeleton. This allows us to reduce layout shifts while improving user experience.
+
+```tsx
+import { Delay } from '@suspensive/react'
+
+const Example = () => (
+  <Suspense
+    fallback={
+      <Delay ms={200}>
+        {({ isDelayed }) => (
+          <Skeleton
+            style={{
+              opacity: isDelayed ? 1 : 0,
+              transition: 'opacity 0.2s ease-in-out',
+            }}
+          />
+        )}
+      </Delay>
+    }
+  >
+    <SuspendingComponent />
+  </Suspense>
+)
+```
+
+## Handling BREAKING CHANGES
+
+### Remove `wrap` & Add `with` [#1452](https://github.com/toss/suspensive/pull/1452)
+
+`wrap` has been removed in v3. We added a `with` method to each component that can replace the functionality of wrap.
+
+1. You don't need to understand the builder pattern used in wrap.
+2. Since wrap includes all components internally, the build size increases. In v3, you can import and use only the components you need.
+
+```diff
++ import { ErrorBoundaryGroup, ErrorBoundary, Suspense } from '@suspensive/react'
+- import { wrap } from '@suspensive/react'
+  import { useSuspenseQuery } from '@suspensive/react-query'
+
++ const Example = ErrorBoundaryGroup.with(
++   { blockOutside: false },
++   ErrorBoundary.with(
++     { fallback: ({ error }) => <>{error.message}</>, onError: logger.log },
++     Suspense.with({ fallback: <>loading...</>, clientOnly: true }, () => {
++       const query = useSuspenseQuery({
++         queryKey: ['key'],
++         queryFn: () => api.text(),
++       })
++       return <>{query.data.text}</>
++     })
++   )
++ )
+- const Example = wrap
+-   .ErrorBoundaryGroup({ blockOutside: false })
+-   .ErrorBoundary({
+-     fallback: ({ error }) => <>{error.message}</>,
+-     onError: logger.log,
+-   })
+-   .Suspense({ fallback: <>loading...</>, clientOnly: true })
+-   .on(() => {
+-     const query = useSuspenseQuery({
+-       queryKey: ['key'],
+-       queryFn: () => api.text(),
+-     })
+-     return <>{query.data.text}</>
+-   })
+```

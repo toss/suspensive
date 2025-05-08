@@ -23,7 +23,7 @@ export type UseSuspenseInfiniteQueryOptions<
   TQueryKey extends QueryKey = QueryKey,
 > = OmitKeyof<
   UseInfiniteQueryOptions<TQueryFnData, TError, TData, TQueryFnData, TQueryKey>,
-  'suspense' | 'useErrorBoundary' | 'enabled' | 'placeholderData'
+  'suspense' | 'useErrorBoundary' | 'enabled' | 'placeholderData' | 'networkMode'
 >
 
 /**
@@ -43,5 +43,6 @@ export function useSuspenseInfiniteQuery<
     enabled: true,
     suspense: true,
     useErrorBoundary: true,
+    networkMode: 'always',
   }) as UseSuspenseInfiniteQueryResult<TData, TError>
 }

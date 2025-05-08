@@ -1,5 +1,149 @@
 # @suspensive/react
 
+## 3.1.1
+
+### Patch Changes
+
+- [#1553](https://github.com/toss/suspensive/pull/1553) [`f33045b`](https://github.com/toss/suspensive/commit/f33045bc442a5fcc3adbc05b614e899dd83ba72d) Thanks [@kangju2000](https://github.com/kangju2000)! - refactor(react): change ErrorBoundary prop types to arrow functions and remove eslint-disable
+
+## 3.1.0
+
+## 3.0.0
+
+### Major Changes
+
+- [#1424](https://github.com/toss/suspensive/pull/1424) [`59a809d`](https://github.com/toss/suspensive/commit/59a809d8e91e92ef7b1dd0a874d65c0707bf371e) Thanks [@manudeli](https://github.com/manudeli)! - feat(v3): remove deprecated interfaces
+
+- [#1452](https://github.com/toss/suspensive/pull/1452) [`79cfd61`](https://github.com/toss/suspensive/commit/79cfd6169deda65fe8bad27d2162d757c9eb0b5a) Thanks [@manudeli](https://github.com/manudeli)! - feat(react): with as method
+
+### Minor Changes
+
+- [#1409](https://github.com/toss/suspensive/pull/1409) [`124238c`](https://github.com/toss/suspensive/commit/124238c66056fd036765a2725ea3383236d19fec) Thanks [@manudeli](https://github.com/manudeli)! - feat(react): prevent recursive expose fallback when fallback throw error
+
+- [#1524](https://github.com/toss/suspensive/pull/1524) [`3b2aae8`](https://github.com/toss/suspensive/commit/3b2aae8f3460345ee36c857ace05aa6bccba3512) Thanks [@manudeli](https://github.com/manudeli)! - feat(react): Delay children render prop
+
+### Patch Changes
+
+- [#1437](https://github.com/toss/suspensive/pull/1437) [`a974e54`](https://github.com/toss/suspensive/commit/a974e540be58bacf892b8a3285eec126d9e511ef) Thanks [@manudeli](https://github.com/manudeli)! - chore(react): resolve ErrorBoundary error of @suspensive/react@3.0.0-next.1
+
+- [#1484](https://github.com/toss/suspensive/pull/1484) [`2884bdd`](https://github.com/toss/suspensive/commit/2884bdd431602a13c89f1e55b9099968e23c8c3a) Thanks [@kangju2000](https://github.com/kangju2000)! - fix: add contents write permission to release workflow
+
+- [#1494](https://github.com/toss/suspensive/pull/1494) [`d13bd42`](https://github.com/toss/suspensive/commit/d13bd429828135dddf2b50a3bd6d675c63977198) Thanks [@kangju2000](https://github.com/kangju2000)! - fix: Add React import to jsr.json
+
+- [#1455](https://github.com/toss/suspensive/pull/1455) [`05a9759`](https://github.com/toss/suspensive/commit/05a9759a00582ecd418bb7fe20f015045369e109) Thanks [@manudeli](https://github.com/manudeli)! - fix(react): fix wrong interface of with method
+
+- [#1488](https://github.com/toss/suspensive/pull/1488) [`71f8259`](https://github.com/toss/suspensive/commit/71f8259d40ce0cce8ab7074f38416163a9d94837) Thanks [@kangju2000](https://github.com/kangju2000)! - fix: fix JSR publish failures by changing execution flow from parallel to sequential
+
+- [#1481](https://github.com/toss/suspensive/pull/1481) [`ed78333`](https://github.com/toss/suspensive/commit/ed78333f93e91fa89950efbe33420c23e84aad77) Thanks [@kangju2000](https://github.com/kangju2000)! - fix: ensure JSR version sync during Changeset versioning
+
+- [#1483](https://github.com/toss/suspensive/pull/1483) [`88112ad`](https://github.com/toss/suspensive/commit/88112adb52da59b4904bf933699492c8eaf50dec) Thanks [@kangju2000](https://github.com/kangju2000)! - fix: configure JSR publishing with GitHub Actions OIDC
+
+- [#1497](https://github.com/toss/suspensive/pull/1497) [`e400035`](https://github.com/toss/suspensive/commit/e4000352b7d3e42f0164983cca2bcde9fd24751c) Thanks [@kangju2000](https://github.com/kangju2000)! - chore: improve JSR imports sync with consistent dependency formatting
+
+- [#1511](https://github.com/toss/suspensive/pull/1511) [`3f87359`](https://github.com/toss/suspensive/commit/3f873592847e40170252e04b267911dee6559c7e) Thanks [@kangju2000](https://github.com/kangju2000)! - chore(\*): remove JSR support and related files
+
+- [#1475](https://github.com/toss/suspensive/pull/1475) [`c44994b`](https://github.com/toss/suspensive/commit/c44994b3510d6c41ed09504cb74999a99dd99253) Thanks [@kangju2000](https://github.com/kangju2000)! - feat: add JSR support and publishing workflow
+
+- [#1486](https://github.com/toss/suspensive/pull/1486) [`df3f1ea`](https://github.com/toss/suspensive/commit/df3f1eae7ca501cc7825855c2ec66ee6c5f14d23) Thanks [@kangju2000](https://github.com/kangju2000)! - chore: triggers a release via changeset
+
+## 3.0.0-next.19
+
+## 3.0.0-next.18
+
+## 3.0.0-next.17
+
+### Minor Changes
+
+- [#1524](https://github.com/toss/suspensive/pull/1524) [`3b2aae8`](https://github.com/toss/suspensive/commit/3b2aae8f3460345ee36c857ace05aa6bccba3512) Thanks [@manudeli](https://github.com/manudeli)! - feat(react): Delay children render prop
+
+## 3.0.0-next.16
+
+### Patch Changes
+
+- [#1511](https://github.com/toss/suspensive/pull/1511) [`3f87359`](https://github.com/toss/suspensive/commit/3f873592847e40170252e04b267911dee6559c7e) Thanks [@kangju2000](https://github.com/kangju2000)! - chore(\*): remove JSR support and related files
+
+## 3.0.0-next.15
+
+### Patch Changes
+
+- [#1497](https://github.com/toss/suspensive/pull/1497) [`e400035`](https://github.com/toss/suspensive/commit/e4000352b7d3e42f0164983cca2bcde9fd24751c) Thanks [@kangju2000](https://github.com/kangju2000)! - chore: improve JSR imports sync with consistent dependency formatting
+
+## 3.0.0-next.14
+
+### Patch Changes
+
+- [#1494](https://github.com/toss/suspensive/pull/1494) [`d13bd42`](https://github.com/toss/suspensive/commit/d13bd429828135dddf2b50a3bd6d675c63977198) Thanks [@kangju2000](https://github.com/kangju2000)! - fix: Add React import to jsr.json
+
+## 3.0.0-next.13
+
+## 3.0.0-next.12
+
+### Patch Changes
+
+- [#1488](https://github.com/toss/suspensive/pull/1488) [`71f8259`](https://github.com/toss/suspensive/commit/71f8259d40ce0cce8ab7074f38416163a9d94837) Thanks [@kangju2000](https://github.com/kangju2000)! - fix: fix JSR publish failures by changing execution flow from parallel to sequential
+
+## 3.0.0-next.11
+
+### Patch Changes
+
+- [#1486](https://github.com/toss/suspensive/pull/1486) [`df3f1ea`](https://github.com/toss/suspensive/commit/df3f1eae7ca501cc7825855c2ec66ee6c5f14d23) Thanks [@kangju2000](https://github.com/kangju2000)! - chore: triggers a release via changeset
+
+## 3.0.0-next.10
+
+### Patch Changes
+
+- [#1484](https://github.com/toss/suspensive/pull/1484) [`2884bdd`](https://github.com/toss/suspensive/commit/2884bdd431602a13c89f1e55b9099968e23c8c3a) Thanks [@kangju2000](https://github.com/kangju2000)! - fix: add contents write permission to release workflow
+
+- [#1483](https://github.com/toss/suspensive/pull/1483) [`88112ad`](https://github.com/toss/suspensive/commit/88112adb52da59b4904bf933699492c8eaf50dec) Thanks [@kangju2000](https://github.com/kangju2000)! - fix: configure JSR publishing with GitHub Actions OIDC
+
+## 3.0.0-next.9
+
+### Patch Changes
+
+- [#1481](https://github.com/toss/suspensive/pull/1481) [`ed78333`](https://github.com/toss/suspensive/commit/ed78333f93e91fa89950efbe33420c23e84aad77) Thanks [@kangju2000](https://github.com/kangju2000)! - fix: ensure JSR version sync during Changeset versioning
+
+## 3.0.0-next.8
+
+## 3.0.0-next.7
+
+### Patch Changes
+
+- [#1475](https://github.com/toss/suspensive/pull/1475) [`c44994b`](https://github.com/toss/suspensive/commit/c44994b3510d6c41ed09504cb74999a99dd99253) Thanks [@kangju2000](https://github.com/kangju2000)! - feat: add JSR support and publishing workflow
+
+## 3.0.0-next.6
+
+## 3.0.0-next.5
+
+## 3.0.0-next.4
+
+### Patch Changes
+
+- [#1455](https://github.com/toss/suspensive/pull/1455) [`05a9759`](https://github.com/toss/suspensive/commit/05a9759a00582ecd418bb7fe20f015045369e109) Thanks [@manudeli](https://github.com/manudeli)! - fix(react): fix wrong interface of with method
+
+## 3.0.0-next.3
+
+### Major Changes
+
+- [#1452](https://github.com/toss/suspensive/pull/1452) [`79cfd61`](https://github.com/toss/suspensive/commit/79cfd6169deda65fe8bad27d2162d757c9eb0b5a) Thanks [@manudeli](https://github.com/manudeli)! - feat(react): with as method
+
+## 3.0.0-next.2
+
+### Patch Changes
+
+- [#1437](https://github.com/toss/suspensive/pull/1437) [`a974e54`](https://github.com/toss/suspensive/commit/a974e540be58bacf892b8a3285eec126d9e511ef) Thanks [@manudeli](https://github.com/manudeli)! - chore(react): resolve ErrorBoundary error of @suspensive/react@3.0.0-next.1
+
+## 3.0.0-next.1
+
+## 3.0.0-next.0
+
+### Major Changes
+
+- [#1424](https://github.com/toss/suspensive/pull/1424) [`59a809d`](https://github.com/toss/suspensive/commit/59a809d8e91e92ef7b1dd0a874d65c0707bf371e) Thanks [@manudeli](https://github.com/manudeli)! - feat(v3): remove deprecated interfaces
+
+### Minor Changes
+
+- [#1409](https://github.com/toss/suspensive/pull/1409) [`124238c`](https://github.com/toss/suspensive/commit/124238c66056fd036765a2725ea3383236d19fec) Thanks [@manudeli](https://github.com/manudeli)! - feat(react): prevent recursive expose fallback when fallback throw error
+
 ## 2.18.12
 
 ### Patch Changes

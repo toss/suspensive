@@ -1,11 +1,13 @@
 import type { MetaRecord } from 'nextra'
 
 export default {
+  introduction: { title: 'What is Suspensive?' },
   '--- Packages': {
     type: 'separator',
     title: 'Packages',
   },
   react: { title: '@suspensive/react' },
+  'react-dom': { title: '@suspensive/react-dom' },
   'react-query': { title: '@suspensive/react-query' },
   jotai: { title: '@suspensive/jotai' },
   codemods: { title: '@suspensive/codemods' },
@@ -13,8 +15,8 @@ export default {
     type: 'separator',
     title: 'More',
   },
-  'migrate-to-v2': {
-    title: 'Migrating to v2',
+  migration: {
+    title: 'Migration guide',
   },
   changelogs: {
     title: 'Changelogs',

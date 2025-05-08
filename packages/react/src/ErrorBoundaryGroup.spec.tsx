@@ -105,3 +105,24 @@ describe('useErrorBoundaryGroup', () => {
     }
   })
 })
+
+describe('ErrorBoundaryGroup.with', () => {
+  it('should wrap component. we can check by useErrorBoundaryGroup', () => {
+    const rendered = render(
+      createElement(
+        ErrorBoundaryGroup.with({}, () => {
+          useErrorBoundaryGroup()
+          return <>{TEXT}</>
+        })
+      )
+    )
+    expect(rendered.queryByText(TEXT)).toBeInTheDocument()
+  })
+
+  it('should set displayName based on Component.displayName', () => {
+    const Component = () => <></>
+    Component.displayName = 'Custom'
+    expect(ErrorBoundaryGroup.with({}, Component).displayName).toBe('ErrorBoundaryGroup.with(Custom)')
+    expect(ErrorBoundaryGroup.with({}, () => <></>).displayName).toBe('ErrorBoundaryGroup.with(Component)')
+  })
+})

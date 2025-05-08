@@ -1,5 +1,97 @@
 # @suspensive/react-query-5
 
+## 3.1.1
+
+## 3.1.0
+
+## 3.0.0
+
+### Major Changes
+
+- [#1424](https://github.com/toss/suspensive/pull/1424) [`59a809d`](https://github.com/toss/suspensive/commit/59a809d8e91e92ef7b1dd0a874d65c0707bf371e) Thanks [@manudeli](https://github.com/manudeli)! - feat(v3): remove deprecated interfaces
+
+### Minor Changes
+
+- [#1490](https://github.com/toss/suspensive/pull/1490) [`a37dd3d`](https://github.com/toss/suspensive/commit/a37dd3dd2f10f3f997fed81147f38cdb944dbd7a) Thanks [@gwansikk](https://github.com/gwansikk)! - feat(react-query): add `mutationOptions`
+
+### Patch Changes
+
+- [#1434](https://github.com/toss/suspensive/pull/1434) [`2be4348`](https://github.com/toss/suspensive/commit/2be434844157d63e16d5555fbb685c1757dd4fdf) Thanks [@manudeli](https://github.com/manudeli)! - remove peerDeps error
+
+- [#1497](https://github.com/toss/suspensive/pull/1497) [`e400035`](https://github.com/toss/suspensive/commit/e4000352b7d3e42f0164983cca2bcde9fd24751c) Thanks [@kangju2000](https://github.com/kangju2000)! - chore: improve JSR imports sync with consistent dependency formatting
+
+- [#1511](https://github.com/toss/suspensive/pull/1511) [`3f87359`](https://github.com/toss/suspensive/commit/3f873592847e40170252e04b267911dee6559c7e) Thanks [@kangju2000](https://github.com/kangju2000)! - chore(\*): remove JSR support and related files
+
+- [#1475](https://github.com/toss/suspensive/pull/1475) [`c44994b`](https://github.com/toss/suspensive/commit/c44994b3510d6c41ed09504cb74999a99dd99253) Thanks [@kangju2000](https://github.com/kangju2000)! - feat: add JSR support and publishing workflow
+
+- [#1499](https://github.com/toss/suspensive/pull/1499) [`56ae4eb`](https://github.com/toss/suspensive/commit/56ae4eb378fbdb150ecb1508a659411ce0e84bc8) Thanks [@manudeli](https://github.com/manudeli)! - ci(\*): sort by dependencies graph
+
+## 3.0.0-next.19
+
+## 3.0.0-next.18
+
+## 3.0.0-next.17
+
+## 3.0.0-next.16
+
+### Patch Changes
+
+- [#1511](https://github.com/toss/suspensive/pull/1511) [`3f87359`](https://github.com/toss/suspensive/commit/3f873592847e40170252e04b267911dee6559c7e) Thanks [@kangju2000](https://github.com/kangju2000)! - chore(\*): remove JSR support and related files
+
+- [#1499](https://github.com/toss/suspensive/pull/1499) [`56ae4eb`](https://github.com/toss/suspensive/commit/56ae4eb378fbdb150ecb1508a659411ce0e84bc8) Thanks [@manudeli](https://github.com/manudeli)! - ci(\*): sort by dependencies graph
+
+## 3.0.0-next.15
+
+### Patch Changes
+
+- [#1497](https://github.com/toss/suspensive/pull/1497) [`e400035`](https://github.com/toss/suspensive/commit/e4000352b7d3e42f0164983cca2bcde9fd24751c) Thanks [@kangju2000](https://github.com/kangju2000)! - chore: improve JSR imports sync with consistent dependency formatting
+
+## 3.0.0-next.14
+
+## 3.0.0-next.13
+
+### Minor Changes
+
+- [#1490](https://github.com/toss/suspensive/pull/1490) [`a37dd3d`](https://github.com/toss/suspensive/commit/a37dd3dd2f10f3f997fed81147f38cdb944dbd7a) Thanks [@gwansikk](https://github.com/gwansikk)! - feat(react-query): add `mutationOptions`
+
+## 3.0.0-next.12
+
+## 3.0.0-next.11
+
+## 3.0.0-next.10
+
+## 3.0.0-next.9
+
+## 3.0.0-next.8
+
+## 3.0.0-next.7
+
+### Patch Changes
+
+- [#1475](https://github.com/toss/suspensive/pull/1475) [`c44994b`](https://github.com/toss/suspensive/commit/c44994b3510d6c41ed09504cb74999a99dd99253) Thanks [@kangju2000](https://github.com/kangju2000)! - feat: add JSR support and publishing workflow
+
+## 3.0.0-next.6
+
+## 3.0.0-next.5
+
+## 3.0.0-next.4
+
+## 3.0.0-next.3
+
+## 3.0.0-next.2
+
+## 3.0.0-next.1
+
+### Patch Changes
+
+- [#1434](https://github.com/toss/suspensive/pull/1434) [`2be4348`](https://github.com/toss/suspensive/commit/2be434844157d63e16d5555fbb685c1757dd4fdf) Thanks [@manudeli](https://github.com/manudeli)! - remove peerDeps error
+
+## 3.0.0-next.0
+
+### Major Changes
+
+- [#1424](https://github.com/toss/suspensive/pull/1424) [`59a809d`](https://github.com/toss/suspensive/commit/59a809d8e91e92ef7b1dd0a874d65c0707bf371e) Thanks [@manudeli](https://github.com/manudeli)! - feat(v3): remove deprecated interfaces
+
 ## 2.18.12
 
 ### Patch Changes

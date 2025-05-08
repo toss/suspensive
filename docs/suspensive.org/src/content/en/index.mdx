@@ -2,6 +2,8 @@
 title: All in one for Suspense
 ---
 
+import Image from 'next/image'
+import Link from 'next/link'
 import {
   HomePage,
   Scrollycoding,
@@ -27,6 +29,13 @@ import {
     },
   ]}
 >
+
+<SectionTitle>Best practices to use Suspense</SectionTitle>
+<br />
+<SectionDescription>
+  Focus on success case, not on the error, loading case.
+</SectionDescription>
+<br />
 
 <Scrollycoding>
 # !!steps If you write code without Suspense with TanStack Query, a representative library, you would write it like this.
@@ -431,5 +440,28 @@ const DeepComponent = () => (
 ```
 
 </Scrollycoding>
+
+<SectionTitle>Thank you for contributing to Suspensive</SectionTitle>
+<br />
+<SectionDescription>Driven by the Community</SectionDescription>
+<br />
+
+<div
+  style={{
+    textAlign: 'center',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  }}
+>
+  <div style={{ height: 20 }} />
+  <Link
+    href="https://github.com/toss/suspensive/graphs/contributors"
+    target="_blank"
+    style={{ textAlign: 'center' }}
+  >
+    <img src="https://contrib.rocks/image?repo=toss/suspensive" alt="" />
+  </Link>
+</div>
 
 </HomePage>

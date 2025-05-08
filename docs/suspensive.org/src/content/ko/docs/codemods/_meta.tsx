@@ -8,4 +8,8 @@ export default {
     title: 'Codemods',
   },
   tanstackQueryImport: { title: 'TanStack Query로 import 경로 변경' },
+  migrateQueryClientConsumerProps: {
+    title: '<QueryClientConsumer/> Props 변환',
+  },
+  migrateWithAPI: { title: 'with API로 변환' },
 } satisfies MetaRecord

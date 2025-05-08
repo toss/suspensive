@@ -25,7 +25,7 @@ export const metadata = {
     default: 'Suspensive',
   },
   description: 'All in one for React Suspense',
-  metadataBase: new URL('https://swr.vercel.app'),
+  metadataBase: new URL('https://suspensive.org'),
   openGraph: { images: '/img/banner.png' },
   icons: '/img/favicon.ico',
 } satisfies Metadata
@@ -77,7 +77,7 @@ export default async function RootLayout({
             { locale: 'ko', name: '한국어' },
           ]}
           sidebar={{
-            defaultMenuCollapseLevel: 4,
+            defaultMenuCollapseLevel: 2,
             autoCollapse: true,
             toggleButton: true,
           }}

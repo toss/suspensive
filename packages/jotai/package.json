@@ -1,6 +1,6 @@
 {
   "name": "@suspensive/jotai",
-  "version": "2.18.12",
+  "version": "3.1.1",
   "description": "Suspensive interfaces for jotai",
   "keywords": [
     "suspensive",
@@ -54,7 +54,7 @@
     "@suspensive/tsconfig": "workspace:*",
     "@suspensive/tsup": "workspace:*",
     "@types/react": "catalog:react19",
-    "jotai": "^2.8.4",
+    "jotai": "^2.12.3",
     "react": "catalog:react19"
   },
   "peerDependencies": {

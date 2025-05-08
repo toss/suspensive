@@ -2,6 +2,7 @@ import { act, render, screen, waitFor } from '@testing-library/react'
 import { userEvent } from '@testing-library/user-event'
 import ms from 'ms'
 import { type ComponentRef, createElement, createRef } from 'react'
+import { ErrorBoundary as ReactErrorBoundary } from 'react-error-boundary'
 import {
   ErrorBoundary,
   type ErrorBoundaryFallbackProps,
@@ -176,15 +177,15 @@ describe('<ErrorBoundary/>', () => {
           onError={onErrorChild}
         >
           {createElement(() => {
-            throw new Error(ERROR_MESSAGE)
+            throw new CustomError(ERROR_MESSAGE)
           })}
         </ErrorBoundary>
       </ErrorBoundary>
     )
 
-    expect(onErrorChild).toBeCalledTimes(0)
-    expect(onErrorParent).toBeCalledTimes(1)
-    await waitFor(() => expect(screen.queryByText(`${ERROR_MESSAGE} of Parent`)).toBeInTheDocument())
+    expect(onErrorChild).toBeCalledTimes(1)
+    expect(onErrorParent).toBeCalledTimes(0)
+    await waitFor(() => expect(screen.queryByText(`${ERROR_MESSAGE} of Child`)).toBeInTheDocument())
   })
 
   it('should re-throw error if not shouldCatch error in children without rendering fallback', async () => {
@@ -313,6 +314,54 @@ describe('<ErrorBoundary/>', () => {
       await waitFor(() => expect(screen.queryByText(errorText)).toBeInTheDocument())
     }
   )
+
+  it('should re-throw error in fallback', async () => {
+    render(
+      <ErrorBoundary fallback={() => <>This is expected</>}>
+        <ErrorBoundary
+          fallback={() => (
+            <Throw.Error message={ERROR_MESSAGE} after={100}>
+              ErrorBoundary's fallback before error
+            </Throw.Error>
+          )}
+        >
+          <Throw.Error message={ERROR_MESSAGE} after={100}>
+            ErrorBoundary's children before error
+          </Throw.Error>
+        </ErrorBoundary>
+      </ErrorBoundary>
+    )
+
+    expect(screen.queryByText("ErrorBoundary's children before error")).toBeInTheDocument()
+    await waitFor(() => expect(screen.queryByText("ErrorBoundary's fallback before error")).toBeInTheDocument())
+    await waitFor(() => expect(screen.queryByText('This is expected')).toBeInTheDocument())
+  })
+  it('should not re-throw error in fallback (react-error-boundary)', async () => {
+    render(
+      <ReactErrorBoundary fallbackRender={() => <>This is expected</>}>
+        <ReactErrorBoundary
+          fallbackRender={() => (
+            <Throw.Error message={ERROR_MESSAGE} after={100}>
+              ErrorBoundary(react-error-boundary)'s fallback before error
+            </Throw.Error>
+          )}
+        >
+          <Throw.Error message={ERROR_MESSAGE} after={100}>
+            ErrorBoundary(react-error-boundary)'s children before error
+          </Throw.Error>
+        </ReactErrorBoundary>
+      </ReactErrorBoundary>
+    )
+
+    expect(screen.queryByText("ErrorBoundary(react-error-boundary)'s children before error")).toBeInTheDocument()
+    await waitFor(() =>
+      expect(screen.queryByText("ErrorBoundary(react-error-boundary)'s fallback before error")).toBeInTheDocument()
+    )
+    await waitFor(() => expect(screen.queryByText('This is expected')).not.toBeInTheDocument())
+    await waitFor(() =>
+      expect(screen.queryByText("ErrorBoundary(react-error-boundary)'s fallback before error")).toBeInTheDocument()
+    )
+  })
 })
 
 describe('<ErrorBoundary.Consumer/>', () => {
@@ -477,5 +526,35 @@ describe('useErrorBoundaryFallbackProps', () => {
       )
     ).toThrow(SuspensiveError)
     expect(inFallback).toHaveBeenCalledTimes(0)
+  })
+})
+
+describe('ErrorBoundary.with', () => {
+  beforeEach(() => Throw.reset())
+
+  it("should render the wrapped component when there's no error", () => {
+    render(createElement(ErrorBoundary.with({ fallback: (props) => <>{props.error.message}</> }, () => <>{TEXT}</>)))
+    expect(screen.queryByText(TEXT)).toBeInTheDocument()
+  })
+
+  it('should render the fallback when there`s an error in the wrapped component', async () => {
+    render(
+      createElement(
+        ErrorBoundary.with({ fallback: (props) => <>{props.error.message}</> }, () => (
+          <Throw.Error message={ERROR_MESSAGE} after={ms('0.1s')}>
+            {TEXT}
+          </Throw.Error>
+        ))
+      )
+    )
+    expect(screen.queryByText(TEXT)).toBeInTheDocument()
+    await waitFor(() => expect(screen.queryByText(ERROR_MESSAGE)).toBeInTheDocument())
+  })
+
+  it('should set displayName based on Component.displayName', () => {
+    const Component = () => <></>
+    Component.displayName = 'Custom'
+    expect(ErrorBoundary.with({ fallback: () => <></> }, Component).displayName).toBe('ErrorBoundary.with(Custom)')
+    expect(ErrorBoundary.with({ fallback: () => <></> }, () => <></>).displayName).toBe('ErrorBoundary.with(Component)')
   })
 })

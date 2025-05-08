@@ -18,13 +18,14 @@
     "@suspensive/react-query-5": "workspace:*",
     "@tanstack/react-query": "catalog:react-query5",
     "@tanstack/react-query-devtools": "catalog:react-query5",
-    "axios": "^1.7.9",
+    "axios": "^1.8.4",
     "clsx": "catalog:",
     "next": "catalog:",
     "react": "catalog:react19",
     "react-dom": "catalog:react19",
+    "react-error-boundary": "^5.0.0",
     "sharp": "catalog:",
-    "zod": "^3.24.1"
+    "zod": "^3.24.3"
   },
   "devDependencies": {
     "@suspensive/eslint-config": "workspace:*",

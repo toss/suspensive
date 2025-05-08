@@ -1,11 +1,18 @@
 'use client'
 
-import { ClientOnly } from '@suspensive/react'
+import { ClientOnly, Delay } from '@suspensive/react'
+import { ArrowRight } from 'lucide-react'
 import { motion } from 'motion/react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useEffect, useRef } from 'react'
+import { type ReactNode, useEffect, useRef } from 'react'
+import { BorderTrail } from './BorderTrail'
+import { GlowEffect } from './GlowEffect'
+import { Magnetic } from './Magnetic'
 import { NpmInstallCopyButton } from './NpmInstallCopyButton'
+import { Spotlight } from './Spotlight'
+import { TextShimmer } from './TextShimmer'
+import { Tilt } from './Tilt'
 
 const CodeBlockClassName = 'nextra-code'
 
@@ -27,7 +34,7 @@ export const HomePage = ({
   buttonText: string
   items: { title: string; desc: string }[]
   version: number
-  children?: React.ReactNode
+  children?: ReactNode
 }) => {
   return (
     <>
@@ -35,10 +42,11 @@ export const HomePage = ({
         <StarCanvasFar />
         <StarCanvasClose />
       </ClientOnly>
+
       <motion.section
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        className="-mx-12 -mt-4 bg-[url('/img/homepage_background.svg')] bg-cover bg-center bg-no-repeat px-10 pb-20"
+        className="-mx-4 -mt-4 bg-[url('/img/homepage_background.svg')] bg-cover bg-center bg-no-repeat pb-20 md:-mx-12"
       >
         <div className="flex flex-col items-center justify-center gap-8 text-center">
           <div className="flex flex-col items-center">
@@ -59,32 +67,69 @@ export const HomePage = ({
               />
             </div>
             <div className="flex flex-col items-center gap-4">
-              <div className="bg-gradient-to-r from-white via-white/80 to-white/60 bg-clip-text text-4xl leading-tight font-bold break-keep text-transparent md:text-6xl">
-                <span>{title}</span>
+              <div className="text-4xl leading-tight font-bold break-keep text-transparent md:text-6xl">
+                <TextShimmer spread={8} duration={3}>
+                  {title}
+                </TextShimmer>
               </div>
             </div>
-            <NpmInstallCopyButton />
+            <Magnetic intensity={0.4} springOptions={{ bounce: 0.1 }}>
+              <NpmInstallCopyButton />
+            </Magnetic>
           </div>
-          <Link href={`/docs/react/motivation`}>
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              initial={{ opacity: 0 }}
-              animate={{
-                opacity: 1,
-                transition: {
-                  delay: 0.8,
-                  duration: 2,
-                },
-                filter:
-                  'drop-shadow(0 0 1px rgba(255, 255, 255, 0.5)) drop-shadow(0 0 3px rgba(255, 255, 255, 0.5)) drop-shadow(0 0 10px rgba(255, 255, 255, 0.5))',
-              }}
-              type="button"
-              className="cursor-pointer rounded-xl bg-white px-7 py-2 text-lg font-bold text-[#111111] md:px-9 md:py-3 md:text-xl"
-            >
-              {buttonText}
-            </motion.button>
-          </Link>
+
+          <Delay ms={600}>
+            {({ isDelayed }) => (
+              <div
+                className="relative"
+                style={{
+                  opacity: isDelayed ? 1 : 0,
+                  transition: 'opacity 200ms ease-in-out',
+                }}
+              >
+                <GlowEffect />
+                <Magnetic intensity={0.3} springOptions={{ bounce: 0.1 }}>
+                  <Tilt rotationFactor={10} isReverse>
+                    <Link href={`/docs/introduction`}>
+                      <motion.button
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        animate={{ scale: 1.01 }}
+                        type="button"
+                        className="cursor-pointer rounded-xl bg-[#000000] px-7 py-2 text-lg font-semibold text-[ffffff80] md:px-7 md:py-3 md:text-xl"
+                      >
+                        <BorderTrail
+                          size={200}
+                          style={{
+                            boxShadow:
+                              '0px 0px 60px 30px rgb(255 255 255 / 50%), 0 0 100px 60px rgb(0 0 0 / 50%), 0 0 140px 90px rgb(0 0 0 / 50%)',
+                          }}
+                        />
+                        <Spotlight
+                          className="blur-4xl bg-zinc-700"
+                          size={64}
+                          springOptions={{
+                            bounce: 0.3,
+                            duration: 0.1,
+                          }}
+                        />
+                        <Magnetic
+                          intensity={0.04}
+                          springOptions={{ bounce: 0.1 }}
+                          actionArea="global"
+                          range={300}
+                        >
+                          <span className="flex items-center gap-2">
+                            {buttonText} <ArrowRight className="h4 w-4" />
+                          </span>
+                        </Magnetic>
+                      </motion.button>
+                    </Link>
+                  </Tilt>
+                </Magnetic>
+              </div>
+            )}
+          </Delay>
         </div>
 
         <div className="h-14" />
