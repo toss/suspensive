@@ -148,18 +148,6 @@ export const BubbleChart = () => {
                       </div>
                     </>
                   )
-
-                  return (
-                    <Link href="https://github.com/toss/suspensive/graphs/contributors">
-                      <br />
-                      <img
-                        src="https://contrib.rocks/image?repo=toss/suspensive"
-                        alt="contributors"
-                        data-canonical-src="https://contrib.rocks/image?repo=toss/suspensive"
-                        style={{ maxWidth: '100%' }}
-                      />
-                    </Link>
-                  )
                 }}
               </SuspenseQuery>
             </Suspense>
