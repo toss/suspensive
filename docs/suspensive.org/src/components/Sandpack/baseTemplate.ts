@@ -24,10 +24,10 @@ export default function App() {
     },
   },
   dependencies: {
-    '@tanstack/react-query': '^4',
-    '@suspensive/react': '^3.0.0-next',
-    '@suspensive/react-dom': '^3.0.0-next',
-    '@suspensive/react-query': '^3.0.0-next',
+    '@tanstack/react-query': '^4.36.1',
+    '@suspensive/react': 'workspace:*',
+    '@suspensive/react-dom': 'workspace:*',
+    '@suspensive/react-query-4': 'workspace:*',
   },
   devDependencies: {},
 }
