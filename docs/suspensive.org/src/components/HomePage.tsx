@@ -33,7 +33,6 @@ export const HomePage = ({
   title: string
   buttonText: string
   items: { title: string; desc: string }[]
-  version: number
   children?: ReactNode
 }) => {
   return (
