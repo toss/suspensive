@@ -25,9 +25,9 @@ export default function App() {
   },
   dependencies: {
     '@tanstack/react-query': '^4',
-    '@suspensive/react': '^3.0.0-next',
-    '@suspensive/react-dom': '^3.0.0-next',
-    '@suspensive/react-query': '^3.0.0-next',
+    '@suspensive/react': '^3',
+    '@suspensive/react-dom': '^3',
+    '@suspensive/react-query': '^3',
   },
   devDependencies: {},
 }
