@@ -25,9 +25,9 @@ export default function App() {
   },
   dependencies: {
     '@tanstack/react-query': '^4',
-    '@suspensive/react': 'workspace:*',
-    '@suspensive/react-dom': 'workspace:*',
-    '@suspensive/react-query-4': 'workspace:*',
+    '@suspensive/react': '^3',
+    '@suspensive/react-dom': '^3',
+    '@suspensive/react-query': '^3',
   },
   devDependencies: {},
 }
