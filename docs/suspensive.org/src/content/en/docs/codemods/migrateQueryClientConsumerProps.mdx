@@ -4,13 +4,13 @@ import { Callout } from '@/components'
 
 <Callout type='info'>
 
-This codemod is recommended for updating @suspensive/react-query & @tanstack/react-query from v4 to v5.
+This codemod is recommended for updating `@suspensive/react-query` & `@tanstack/react-query@4` to `@tanstack/react-query@5`.
 
 </Callout>
 
-In the `@suspensive/react-query` & `@tanstack/react-query` v5 environment, the `context` prop of the `<QueryClientConsumer/>` component provided by `@suspensive/react-query` has been changed to `queryClient`.
+In the `@suspensive/react-query` & `@tanstack/react-query@5` environment, the `context` prop of the `<QueryClientConsumer/>` component provided by `@suspensive/react-query` has been changed to `queryClient`.
 
-```shell
+```bash filename="Terminal"
 npx @suspensive/codemods migrate-query-client-consumer-props .
 ```
 
@@ -18,7 +18,7 @@ Using this codemod, you can automatically transform the `context` prop into `que
 
 For example:
 
-```tsx
+```tsx /context/
 const PostRefreshButton = () => {
   return (
     <QueryClientConsumer context={queryClientContext}>
@@ -40,7 +40,7 @@ const PostRefreshButton = () => {
 
 Transforms into:
 
-```tsx
+```tsx /queryClient/
 const PostRefreshButton = () => {
   return (
     {/** The 'context' prop is now transformed into 'queryClient'! */}

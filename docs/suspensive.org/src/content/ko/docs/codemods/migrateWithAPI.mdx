@@ -23,7 +23,7 @@ npx @suspensive/codemods migrate-with-api .
 ```tsx /wrap/
 import { wrap } from '@suspensive/react'
 
-export const Example = wrap
+const Example = wrap
   .ErrorBoundaryGroup({ blockOutside: false })
   .ErrorBoundary({
     fallback: ({ error }) => <>{error.message}</>,
@@ -41,7 +41,7 @@ export const Example = wrap
 import { ErrorBoundaryGroup, ErrorBoundary, Suspense } from '@suspensive/react'
 import { useSuspenseQuery } from '@suspensive/react-query'
 
-export const Example = ErrorBoundaryGroup.with(
+const Example = ErrorBoundaryGroup.with(
   { blockOutside: false },
   ErrorBoundary.with(
     {
