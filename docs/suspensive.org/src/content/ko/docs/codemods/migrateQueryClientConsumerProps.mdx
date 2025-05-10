@@ -4,21 +4,21 @@ import { Callout } from '@/components'
 
 <Callout type='info'>
 
-해당 codemod는 `@suspensive/react-query` & `@tanstack/react-query` v4 환경에서 `@tanstack/react-query`를 v5로 업데이트하는 경우 추천합니다.
+`@suspensive/react-query` & `@tanstack/react-query@4` 환경에서 `@tanstack/react-query@5`로 업데이트하는 경우 추천합니다.
 
 </Callout>
 
-`@suspensive/react-query` & `@tanstack/react-query` v5 환경에서는 `@suspensive/react-query`가 제공하는 `<QueryClientConsumer/>` 컴포넌트의 `context` props가 `queryClient`로 변경되었습니다.
+`@suspensive/react-query` & `@tanstack/react-query@5` 환경에서는 `@suspensive/react-query`가 제공하는 `<QueryClientConsumer/>` 컴포넌트의 `context` props가 `queryClient`로 변경되었습니다.
 
-```shell
+```bash filename="Terminal"
 npx @suspensive/codemods migrate-query-client-consumer-props .
 ```
 
-이 codemod를 통해 변경된 `context` props를 `queryClient`로 변환할 수 있습니다.
+`context` props를 `queryClient`로 변환할 수 있습니다.
 
 예:
 
-```tsx
+```tsx /context/
 const PostRefreshButton = () => {
   return (
     <QueryClientConsumer context={queryClientContext}>
@@ -40,10 +40,9 @@ const PostRefreshButton = () => {
 
 변환 후:
 
-```tsx
+```tsx /queryClient/
 const PostRefreshButton = () => {
   return (
-    {/** 'context' Props가 'queryClient'로 변환됩니다! */}
     <QueryClientConsumer queryClient={queryClient}>
       {(queryClient) => (
         <button
