@@ -4,28 +4,29 @@ import { Callout } from '@/components'
 
 <Callout type='info'>
 
-해당 codemod는 `@suspensive/react-query` & `@tanstack/react-query` v4 환경에서 `@tanstack/react-query`를 v5로 업데이트 하는 경우 추천합니다.
+`@suspensive/react-query` & `@tanstack/react-query@4` 환경에서 `@tanstack/react-query@5`로 업데이트 하는 경우 추천합니다.
 
 </Callout>
 
-`@suspensive/react-query` & `@tanstack/react-query` v5 환경에서는 `@suspensive/react-query`가 제공하는 Suspense Hooks와 queryOptions가 deprecated로 표시됩니다. 이는 `@tanstack/react-query` v5에 동일한 API인 Suspense Hooks와 queryOptions를 `@suspensive/react-query`가 제공하고 있어, 개발자가 `@tanstack/react-query`의 v5 API를 우선적으로 사용하도록 유도하기 위함입니다.
+`@suspensive/react-query` & `@tanstack/react-query@5` 환경에서는 `@suspensive/react-query`가 제공하는 Suspense Hooks와 `queryOptions`가 `deprecated`로 표시됩니다.  
+이는 `@tanstack/react-query@5`에 동일한 API인 Suspense Hooks와 `queryOptions`를 `@suspensive/react-query`가 제공하고 있어, 개발자가 `@tanstack/react-query@5`의 API를 우선적으로 사용하도록 유도하기 위함입니다.
 
-```shell
+```bash filename="Terminal"
 npx @suspensive/codemods tanstack-query-import .
 ```
 
-이 codemod를 통해 `@suspensive/react-query`에서 `@tanstack/react-query` v5로 import 경로를 자동 변환할 수 있습니다.
+`@suspensive/react-query`에서 `@tanstack/react-query@5`로 import 경로를 자동 변환할 수 있습니다.
 
 예:
 
-```tsx
+```tsx /@suspensive/
 import { queryOptions } from '@suspensive/react-query'
 import { useSuspenseQuery } from '@suspensive/react-query-5' // 버전 패키지도 변환됩니다!
 ```
 
 변환 후:
 
-```tsx
+```tsx /@tanstack/
 import { queryOptions } from '@tanstack/react-query'
 import { useSuspenseQuery } from '@tanstack/react-query'
 ```
