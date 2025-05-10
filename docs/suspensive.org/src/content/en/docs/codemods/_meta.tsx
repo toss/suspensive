@@ -12,4 +12,5 @@ export default {
     title: 'Migrate <QueryClientConsumer/> Props',
   },
   migrateWithAPI: { title: 'Migrate with API' },
+  removeNetworkmode: { title: 'Remove NetworkMode' },
 } satisfies MetaRecord
