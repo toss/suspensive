@@ -12,4 +12,5 @@ export default {
     title: '<QueryClientConsumer/> Props 변환',
   },
   migrateWithAPI: { title: 'with API로 변환' },
+  removeNetworkmode: { title: 'networkMode 제거' },
 } satisfies MetaRecord

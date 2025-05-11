@@ -15,6 +15,10 @@ const TRANSFORMER_INQUIRER_CHOICES = [
     title: 'migrate-with-api',
     description: 'Migrate wrap API to with API for Suspensive v3',
   },
+  {
+    title: 'remove-networkmode',
+    description: 'Remove networkMode from Suspense API',
+  },
 ]
 
 function onCancel() {
