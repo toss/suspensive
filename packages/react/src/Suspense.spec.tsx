@@ -13,6 +13,7 @@ describe('<Suspense/>', () => {
     expect(screen.queryByText(TEXT)).toBeInTheDocument()
     expect(screen.queryByText(FALLBACK)).not.toBeInTheDocument()
   })
+
   it('should render the fallback if something to suspend in children', () => {
     render(
       <Suspense fallback={FALLBACK}>
@@ -22,6 +23,7 @@ describe('<Suspense/>', () => {
     expect(screen.queryByText(FALLBACK)).toBeInTheDocument()
     expect(screen.queryByText(TEXT)).not.toBeInTheDocument()
   })
+
   it('should render the children after suspending', async () => {
     render(
       <Suspense>
@@ -32,6 +34,7 @@ describe('<Suspense/>', () => {
     await waitFor(() => expect(screen.queryByText(TEXT)).toBeInTheDocument())
   })
 })
+
 describe('<Suspense clientOnly/>', () => {
   beforeEach(() => Suspend.reset())
 
@@ -44,6 +47,7 @@ describe('<Suspense clientOnly/>', () => {
     expect(screen.queryByText(FALLBACK)).toBeInTheDocument()
     expect(screen.queryByText(TEXT)).not.toBeInTheDocument()
   })
+
   it('should render the children after the suspending', async () => {
     render(
       <Suspense clientOnly fallback={FALLBACK}>
@@ -53,6 +57,7 @@ describe('<Suspense clientOnly/>', () => {
     await waitFor(() => expect(screen.queryByText(TEXT)).toBeInTheDocument())
     expect(screen.queryByText(FALLBACK)).not.toBeInTheDocument()
   })
+
   it('should render the children if nothing to suspend in children', () => {
     render(
       <Suspense clientOnly fallback={FALLBACK}>
@@ -62,6 +67,7 @@ describe('<Suspense clientOnly/>', () => {
     expect(screen.queryByText(FALLBACK)).not.toBeInTheDocument()
     expect(screen.queryByText(TEXT)).toBeInTheDocument()
   })
+
   it('should use `defaultProps.fallback` if `fallback` is not provided', () => {
     const defaultProps = new DefaultProps({ Suspense: { fallback: 'defaultFallback' } })
 
@@ -77,6 +83,7 @@ describe('<Suspense clientOnly/>', () => {
     expect(screen.queryByText(TEXT)).not.toBeInTheDocument()
   })
 })
+
 describe('Suspense.with', () => {
   beforeEach(() => Suspend.reset())
 
@@ -87,6 +94,13 @@ describe('Suspense.with', () => {
     await waitFor(() => expect(screen.queryByText(FALLBACK)).not.toBeInTheDocument())
     expect(screen.queryByText(TEXT)).toBeInTheDocument()
     expect(screen.queryByText(FALLBACK)).not.toBeInTheDocument()
+  })
+
+  it('should use default suspenseProps when undefined is provided', () => {
+    const Component = () => <div>{TEXT}</div>
+    const Wrapped = Suspense.with(undefined, Component)
+    render(<Wrapped />)
+    expect(screen.getByText(TEXT)).toBeInTheDocument()
   })
 
   it('should set displayName based on Component.displayName', () => {
