@@ -1,5 +1,11 @@
 # @suspensive/codemods
 
+## 3.2.0
+
+### Minor Changes
+
+- [#1564](https://github.com/toss/suspensive/pull/1564) [`8fdea9f`](https://github.com/toss/suspensive/commit/8fdea9f6d2d9e90c9d986d0a1b518428a8ab87f6) Thanks [@gwansikk](https://github.com/gwansikk)! - feat(codemods): add remove-networkmode codemod for v3 migration
+
 ## 3.1.1
 
 ## 3.1.0
