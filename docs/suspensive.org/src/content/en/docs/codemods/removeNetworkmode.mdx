@@ -1,0 +1,42 @@
+import { Callout } from '@/components'
+
+# Remove `networkMode`
+
+<Callout type='info'>
+
+We recommend running this when upgrading from `@suspensive/react-query` v2 & `@tanstack/react-query@4` to `@suspensive/react-query` v3.
+
+</Callout>
+
+In `@suspensive/react-query` v3, the Suspense API has `networkMode` hardcoded as `'always'` and it can no longer be modified.
+
+For full details on the breaking changes that this codemod helps with, refer to [Migrating to v3](/docs/react-query/migration/migrate-to-v3).
+
+```bash filename="Terminal"
+npx @suspensive/codemods remove-networkmode .
+```
+
+This codemod safely and easily removes unnecessary `networkMode` properties from Suspense API usage.
+
+For example:
+
+```tsx /networkMode/
+import { queryOptions } from '@tanstack/react-query'
+
+const options = queryOptions({
+  queryKey: ['key'],
+  queryFn: () => Promise.resolve('data'),
+  networkMode: 'always',
+})
+```
+
+Transforms into:
+
+```tsx /networkMode/
+import { queryOptions } from '@tanstack/react-query'
+
+const options = queryOptions({
+  queryKey: ['key'],
+  queryFn: () => Promise.resolve('data'),
+})
+```
