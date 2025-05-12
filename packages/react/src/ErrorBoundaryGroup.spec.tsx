@@ -119,6 +119,18 @@ describe('ErrorBoundaryGroup.with', () => {
     expect(rendered.queryByText(TEXT)).toBeInTheDocument()
   })
 
+  it('should use default errorBoundaryGroupProps when undefined is provided', () => {
+    const rendered = render(
+      createElement(
+        ErrorBoundaryGroup.with(undefined, () => {
+          useErrorBoundaryGroup()
+          return <>{TEXT}</>
+        })
+      )
+    )
+    expect(rendered.queryByText(TEXT)).toBeInTheDocument()
+  })
+
   it('should set displayName based on Component.displayName', () => {
     const Component = () => <></>
     Component.displayName = 'Custom'
