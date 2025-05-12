@@ -19,7 +19,11 @@ describe('<ErrorBoundaryGroup/>', () => {
     render(
       <ErrorBoundaryGroup>
         <ErrorBoundaryGroup.Consumer>
-          {(group) => <button onClick={group.reset}>{resetButtonText}</button>}
+          {(group) => (
+            <button type="button" onClick={group.reset}>
+              {resetButtonText}
+            </button>
+          )}
         </ErrorBoundaryGroup.Consumer>
         {Array.from({ length: innerErrorBoundaryCount }).map((_, i) => (
           <ErrorBoundary key={i} fallback={(props) => <div>{props.error.message}</div>}>
@@ -43,7 +47,11 @@ describe('<ErrorBoundaryGroup/>', () => {
     render(
       <ErrorBoundaryGroup>
         <ErrorBoundaryGroup.Consumer>
-          {(group) => <button onClick={group.reset}>{resetButtonText}</button>}
+          {(group) => (
+            <button type="button" onClick={group.reset}>
+              {resetButtonText}
+            </button>
+          )}
         </ErrorBoundaryGroup.Consumer>
         {Array.from({ length: innerErrorBoundaryCount }).map((_, i) => (
           <ErrorBoundaryGroup key={i} blockOutside={i === innerErrorBoundaryCount - 1}>
