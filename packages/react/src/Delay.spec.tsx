@@ -107,7 +107,7 @@ describe('Delay.with', () => {
     await vi.waitFor(() => expect(screen.queryByText(TEXT)).toBeInTheDocument())
   })
 
-  it('should work with Delay.with() even if delayProps is not provided', () => {
+  it('should use default delayProps when undefined is provided', () => {
     const Component = () => <>{TEXT}</>
     const Wrapped = Delay.with(undefined, Component)
     render(<Wrapped />)
