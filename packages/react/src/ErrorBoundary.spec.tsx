@@ -372,7 +372,9 @@ describe('<ErrorBoundary.Consumer/>', () => {
       <ErrorBoundary fallback={({ error }) => <div>{error.message}</div>}>
         <ErrorBoundary.Consumer>
           {(errorBoundary) => (
-            <button onClick={() => errorBoundary.setError(new Error(ERROR_MESSAGE))}>error maker</button>
+            <button type="button" onClick={() => errorBoundary.setError(new Error(ERROR_MESSAGE))}>
+              error maker
+            </button>
           )}
         </ErrorBoundary.Consumer>
       </ErrorBoundary>
