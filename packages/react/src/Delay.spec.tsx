@@ -23,14 +23,17 @@ describe('<Delay/>', () => {
     await vi.advanceTimersByTimeAsync(0)
     expect(screen.queryByText(TEXT)).toBeInTheDocument()
   })
+
   it('should render the children directly if no ms prop', () => {
     render(<Delay>{TEXT}</Delay>)
     expect(screen.queryByText(TEXT)).toBeInTheDocument()
   })
+
   it('should accept 0 for ms prop', () => {
     render(<Delay ms={0}>{TEXT}</Delay>)
     expect(screen.queryByText(TEXT)).toBeInTheDocument()
   })
+
   it('should accept function children', async () => {
     render(<Delay ms={1000}>{({ isDelayed }) => <>{isDelayed ? TEXT : 'not delayed'}</>}</Delay>)
     expect(screen.queryByText('not delayed')).toBeInTheDocument()
@@ -38,6 +41,7 @@ describe('<Delay/>', () => {
     await vi.advanceTimersByTimeAsync(0)
     expect(screen.queryByText(TEXT)).toBeInTheDocument()
   })
+
   it('should not rerender if ms is = 0', async () => {
     const functionChildren = vi.fn(({ isDelayed }) => <>{isDelayed ? TEXT : 'not delayed'}</>)
     render(<Delay ms={0}>{functionChildren}</Delay>)
@@ -47,6 +51,7 @@ describe('<Delay/>', () => {
     expect(functionChildren).toHaveBeenCalledTimes(1)
     expect(functionChildren).not.toHaveBeenCalledTimes(2)
   })
+
   it('should not rerender if ms is > 0', async () => {
     const functionChildren = vi.fn(({ isDelayed }) => <>{isDelayed ? TEXT : 'not delayed'}</>)
     render(<Delay ms={100}>{functionChildren}</Delay>)
@@ -56,6 +61,7 @@ describe('<Delay/>', () => {
     expect(functionChildren).not.toHaveBeenCalledTimes(1)
     expect(functionChildren).toHaveBeenCalledTimes(2)
   })
+
   it('should render fallback content initially and then the actual text after the delay', async () => {
     render(
       <Delay ms={ms('1s')} fallback={<p role="paragraph">fallback</p>}>
@@ -67,6 +73,7 @@ describe('<Delay/>', () => {
     await vi.advanceTimersByTimeAsync(0)
     expect(screen.queryByText(TEXT)).toBeInTheDocument()
   })
+
   it('should throw SuspensiveError if negative number is passed as ms prop', () => {
     expect(() => render(<Delay ms={-1}>{TEXT}</Delay>)).toThrow(
       Message_Delay_ms_prop_should_be_greater_than_or_equal_to_0
@@ -79,6 +86,7 @@ describe('<Delay/>', () => {
       expect(error).not.toBeInstanceOf(CustomError)
     }
   })
+
   it('should use `defaultProps.fallback` if no fallback prop is passed', () => {
     const defaultProps = new DefaultProps({ Delay: { fallback: 'defaultFallback' } })
     render(
@@ -97,6 +105,13 @@ describe('Delay.with', () => {
     await vi.advanceTimersByTimeAsync(ms('0.1s'))
     await vi.advanceTimersByTimeAsync(0)
     await vi.waitFor(() => expect(screen.queryByText(TEXT)).toBeInTheDocument())
+  })
+
+  it('should work with Delay.with() even if delayProps is not provided', () => {
+    const Component = () => <>{TEXT}</>
+    const Wrapped = Delay.with(undefined, Component)
+    render(<Wrapped />)
+    expect(screen.queryByText(TEXT)).toBeInTheDocument()
   })
 
   it('should set displayName based on Component.displayName', () => {
