@@ -21,4 +21,22 @@ describe('<FadeIn/>', () => {
     expect(child).toHaveStyle({ opacity: '1', willChange: 'opacity', transition: 'opacity 300ms ease-in' })
     expect(mockChild).toHaveBeenCalledWith({ opacity: 1, willChange: 'opacity', transition: 'opacity 300ms ease-in' })
   })
+
+  it('renders with default styles when duration and timingFunction are not provided', () => {
+    const mockChild = vi.fn()
+    render(
+      <FadeIn>
+        {(fadeIn) => (
+          <div {...fadeIn} data-testid="fade-in-default">
+            {mockChild(fadeIn.style)}
+          </div>
+        )}
+      </FadeIn>
+    )
+    expect(mockChild).toHaveBeenCalledWith({
+      opacity: 0,
+      willChange: 'opacity',
+      transition: 'opacity 200ms linear',
+    })
+  })
 })
