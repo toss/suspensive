@@ -27,7 +27,7 @@
     "ci:eslint": "eslint \"**/*.{ts,tsx,cts,mts}\"",
     "ci:publint": "publint --strict",
     "ci:type": "tsc --noEmit",
-    "clean": "rimraf ./dist && rimraf ./coverage && rimraf ./node_modules",
+    "clean": "rimraf ./dist ./coverage ./node_modules",
     "prepack": "pnpm run build"
   },
   "devDependencies": {
