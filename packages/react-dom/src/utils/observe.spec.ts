@@ -65,6 +65,35 @@ it('should convert options to id', () => {
   ).toMatchInlineSnapshot(`"threshold_0,0.5,1"`)
 })
 
+it('should use fallback intersectionRatio when IntersectionObserver is undefined', () => {
+  const element = document.createElement('div')
+  const cb = vi.fn()
+  const originalObserver = window.IntersectionObserver
+
+  Object.defineProperty(window, 'IntersectionObserver', {
+    configurable: true,
+    writable: true,
+    value: undefined,
+  })
+
+  const unmount = observe(element, cb, { threshold: 0.75 }, true)
+
+  expect(cb).toHaveBeenCalledWith(
+    true,
+    expect.objectContaining({
+      intersectionRatio: 0.75,
+    })
+  )
+
+  unmount()
+
+  Object.defineProperty(window, 'IntersectionObserver', {
+    configurable: true,
+    writable: true,
+    value: originalObserver,
+  })
+})
+
 it('should reuse root ID if already set', () => {
   const root = document.createElement('div')
   const element1 = document.createElement('div')
