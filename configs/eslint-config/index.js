@@ -1,7 +1,6 @@
 import pluginReact from '@eslint-react/eslint-plugin'
 import importPlugin from 'eslint-plugin-import'
 import jsdoc from 'eslint-plugin-jsdoc'
-import reactCompiler from 'eslint-plugin-react-compiler'
 import reactHooks from 'eslint-plugin-react-hooks'
 import tseslint from 'typescript-eslint'
 import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended'
@@ -119,16 +118,13 @@ export const suspensiveReactTypeScriptConfig = tseslint.config(
     ignores: ['**/*.mdx/**/*.{ts,tsx}'],
   },
   {
-    plugins: {
-      'react-compiler': reactCompiler,
-    },
     languageOptions: {
       globals: {
         JSX: true,
       },
     },
     rules: {
-      'react-compiler/react-compiler': 'warn',
+      'react-hooks/react-compiler': 'warn',
       '@eslint-react/no-use-context': 'off',
       '@eslint-react/no-forward-ref': 'off',
       '@eslint-react/no-context-provider': 'off',
