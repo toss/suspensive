@@ -157,3 +157,51 @@ it('should fallback to [0] when observer.thresholds is undefined and threshold i
   unobserve()
   globalThis.IntersectionObserver = originalObserver
 })
+
+it('should use fallback intersectionRatio when IntersectionObserver is undefined', () => {
+  const element = document.createElement('div')
+  const cb = vi.fn()
+  const originalObserver = window.IntersectionObserver
+
+  Object.defineProperty(window, 'IntersectionObserver', {
+    configurable: true,
+    writable: true,
+    value: undefined,
+  })
+
+  const unmount = observe(element, cb, { threshold: 0.75 }, true)
+
+  expect(cb).toHaveBeenCalledWith(
+    true,
+    expect.objectContaining({
+      intersectionRatio: 0.75,
+    })
+  )
+
+  unmount()
+
+  Object.defineProperty(window, 'IntersectionObserver', {
+    configurable: true,
+    writable: true,
+    value: originalObserver,
+  })
+})
+
+it('should reuse root ID if already set', () => {
+  const root = document.createElement('div')
+  const element1 = document.createElement('div')
+  const element2 = document.createElement('div')
+  const cb1 = vi.fn()
+  const cb2 = vi.fn()
+
+  const unmount1 = observe(element1, cb1, { root })
+  const firstId = optionsToId({ root })
+
+  const unmount2 = observe(element2, cb2, { root })
+  const secondId = optionsToId({ root })
+
+  expect(firstId).toEqual(secondId)
+
+  unmount1()
+  unmount2()
+})
