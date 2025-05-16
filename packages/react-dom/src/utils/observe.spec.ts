@@ -64,3 +64,22 @@ it('should convert options to id', () => {
     })
   ).toMatchInlineSnapshot(`"threshold_0,0.5,1"`)
 })
+
+it('should reuse root ID if already set', () => {
+  const root = document.createElement('div')
+  const element1 = document.createElement('div')
+  const element2 = document.createElement('div')
+  const cb1 = vi.fn()
+  const cb2 = vi.fn()
+
+  const unmount1 = observe(element1, cb1, { root })
+  const firstId = optionsToId({ root })
+
+  const unmount2 = observe(element2, cb2, { root })
+  const secondId = optionsToId({ root })
+
+  expect(firstId).toEqual(secondId)
+
+  unmount1()
+  unmount2()
+})
