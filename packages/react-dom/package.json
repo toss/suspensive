@@ -1,6 +1,6 @@
 {
   "name": "@suspensive/react-dom",
-  "version": "3.1.1",
+  "version": "3.2.0",
   "description": "Suspensive interfaces for react-dom",
   "keywords": [
     "suspensive",
@@ -45,7 +45,7 @@
     "ci:publint": "publint --strict",
     "ci:test": "vitest run --coverage --typecheck",
     "ci:type": "tsc --noEmit",
-    "clean": "rimraf ./dist && rimraf ./coverage && rimraf ./node_modules",
+    "clean": "rimraf ./dist ./coverage ./node_modules",
     "prepack": "pnpm run build",
     "test:ui": "vitest --ui --coverage --typecheck"
   },

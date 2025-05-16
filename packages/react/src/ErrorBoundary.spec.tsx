@@ -336,6 +336,7 @@ describe('<ErrorBoundary/>', () => {
     await waitFor(() => expect(screen.queryByText("ErrorBoundary's fallback before error")).toBeInTheDocument())
     await waitFor(() => expect(screen.queryByText('This is expected')).toBeInTheDocument())
   })
+
   it('should not re-throw error in fallback (react-error-boundary)', async () => {
     render(
       <ReactErrorBoundary fallbackRender={() => <>This is expected</>}>
@@ -371,7 +372,9 @@ describe('<ErrorBoundary.Consumer/>', () => {
       <ErrorBoundary fallback={({ error }) => <div>{error.message}</div>}>
         <ErrorBoundary.Consumer>
           {(errorBoundary) => (
-            <button onClick={() => errorBoundary.setError(new Error(ERROR_MESSAGE))}>error maker</button>
+            <button type="button" onClick={() => errorBoundary.setError(new Error(ERROR_MESSAGE))}>
+              error maker
+            </button>
           )}
         </ErrorBoundary.Consumer>
       </ErrorBoundary>
@@ -498,6 +501,7 @@ describe('useErrorBoundaryFallbackProps', () => {
     ).toThrow(SuspensiveError)
     expect(inFallback).toHaveBeenCalledTimes(0)
   })
+
   it('should be prevented to be called outside fallback of ErrorBoundary', () => {
     expect(() =>
       render(
@@ -508,6 +512,7 @@ describe('useErrorBoundaryFallbackProps', () => {
       )
     ).toThrow(SuspensiveError)
   })
+
   it("should be prevented to be called in children of ErrorBoundary (ErrorBoundary shouldn't catch SuspensiveError)", () => {
     const inFallback = vi.fn()
     expect(() =>
@@ -534,6 +539,11 @@ describe('ErrorBoundary.with', () => {
 
   it("should render the wrapped component when there's no error", () => {
     render(createElement(ErrorBoundary.with({ fallback: (props) => <>{props.error.message}</> }, () => <>{TEXT}</>)))
+    expect(screen.queryByText(TEXT)).toBeInTheDocument()
+  })
+
+  it('should use default errorBoundaryProps when undefined is provided', () => {
+    render(createElement(ErrorBoundary.with(undefined, () => <>{TEXT}</>)))
     expect(screen.queryByText(TEXT)).toBeInTheDocument()
   })
 

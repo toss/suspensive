@@ -4,26 +4,26 @@ import { Callout } from '@/components'
 
 <Callout type='info'>
 
-해당 codemod는 `@suspensive/react` v2 환경에서 `@suspensive/react` v3로 업데이트하는 경우 추천합니다.
+`@suspensive/react` v2 환경에서 `@suspensive/react` v3로 업데이트하는 경우 추천합니다.
 
 </Callout>
 
 `@suspensive/react` v3에서는 `wrap` API를 제거하고, `wrap`을 대체할 수 있는 `with` API를 제공합니다. 이는 각 컴포넌트 `<ErrorBoundaryGroup/>`, `<ErrorBoundary/>`, `<Suspense/>`에 추가되었습니다.
 
-브레이킹 체인지에 대해 자세한 내용은 [v3로 마이그레이션하기](/docs/react/migration/migrate-to-v3)에서 확인할 수 있습니다.
+해당 Codemod가 도움이 될 수 있는 v3 브레이킹 체인지에 대해 자세한 내용은 [v3로 마이그레이션하기](/docs/react/migration/migrate-to-v3)에서 확인할 수 있습니다.
 
-```shell
+```bash filename="Terminal"
 npx @suspensive/codemods migrate-with-api .
 ```
 
-이 codemod를 통해 `wrap` builder 패턴을 각 컴포넌트의 `with` API로 변환할 수 있습니다.
+`wrap` builder 패턴을 각 컴포넌트의 `with` API로 변환할 수 있습니다.
 
 예:
 
 ```tsx /wrap/
 import { wrap } from '@suspensive/react'
 
-export const Example = wrap
+const Example = wrap
   .ErrorBoundaryGroup({ blockOutside: false })
   .ErrorBoundary({
     fallback: ({ error }) => <>{error.message}</>,
@@ -41,7 +41,7 @@ export const Example = wrap
 import { ErrorBoundaryGroup, ErrorBoundary, Suspense } from '@suspensive/react'
 import { useSuspenseQuery } from '@suspensive/react-query'
 
-export const Example = ErrorBoundaryGroup.with(
+const Example = ErrorBoundaryGroup.with(
   { blockOutside: false },
   ErrorBoundary.with(
     {
