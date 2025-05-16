@@ -65,6 +65,99 @@ it('should convert options to id', () => {
   ).toMatchInlineSnapshot(`"threshold_0,0.5,1"`)
 })
 
+it('should fallback to [threshold] when observer.thresholds is undefined and threshold is a number', () => {
+  const element = document.createElement('div')
+  const cb = vi.fn()
+  const mockObserve = vi.fn()
+  const mockUnobserve = vi.fn()
+  const mockDisconnect = vi.fn()
+
+  let recordedThresholds: number[] | undefined
+
+  class FakeObserver {
+    thresholds?: undefined
+    constructor(_: IntersectionObserverCallback, options?: IntersectionObserverInit) {
+      recordedThresholds = Array.isArray(options?.threshold) ? options.threshold : [options?.threshold ?? 0]
+    }
+    observe = mockObserve
+    unobserve = mockUnobserve
+    disconnect = mockDisconnect
+  }
+
+  const originalObserver = globalThis.IntersectionObserver
+  globalThis.IntersectionObserver = FakeObserver as unknown as typeof IntersectionObserver
+
+  const unobserve = observe(element, cb, { threshold: 0.7 })
+
+  expect(recordedThresholds).toEqual([0.7])
+  expect(mockObserve).toHaveBeenCalledWith(element)
+
+  unobserve()
+  globalThis.IntersectionObserver = originalObserver
+})
+
+it('should fallback to [threshold] when observer.thresholds is undefined and threshold is an array', () => {
+  const element = document.createElement('div')
+  const cb = vi.fn()
+  const mockObserve = vi.fn()
+  const mockUnobserve = vi.fn()
+  const mockDisconnect = vi.fn()
+
+  let recordedThresholds: number[] | undefined
+
+  class FakeObserver {
+    thresholds?: undefined
+    constructor(_: IntersectionObserverCallback, options?: IntersectionObserverInit) {
+      recordedThresholds = Array.isArray(options?.threshold) ? options.threshold : [options?.threshold ?? 0]
+    }
+    observe = mockObserve
+    unobserve = mockUnobserve
+    disconnect = mockDisconnect
+  }
+
+  const originalObserver = globalThis.IntersectionObserver
+  globalThis.IntersectionObserver = FakeObserver as unknown as typeof IntersectionObserver
+
+  const unobserve = observe(element, cb, { threshold: [0.1, 0.5, 0.9] })
+
+  expect(recordedThresholds).toEqual([0.1, 0.5, 0.9])
+  expect(mockObserve).toHaveBeenCalledWith(element)
+
+  unobserve()
+  globalThis.IntersectionObserver = originalObserver
+})
+
+it('should fallback to [0] when observer.thresholds is undefined and threshold is not set', () => {
+  const element = document.createElement('div')
+  const cb = vi.fn()
+  const mockObserve = vi.fn()
+  const mockUnobserve = vi.fn()
+  const mockDisconnect = vi.fn()
+
+  let recordedThresholds: number[] | undefined
+
+  class FakeObserver {
+    thresholds?: undefined
+    constructor(_: IntersectionObserverCallback, options?: IntersectionObserverInit) {
+      recordedThresholds = Array.isArray(options?.threshold) ? options.threshold : [options?.threshold ?? 0]
+    }
+    observe = mockObserve
+    unobserve = mockUnobserve
+    disconnect = mockDisconnect
+  }
+
+  const originalObserver = globalThis.IntersectionObserver
+  globalThis.IntersectionObserver = FakeObserver as unknown as typeof IntersectionObserver
+
+  const unobserve = observe(element, cb)
+
+  expect(recordedThresholds).toEqual([0])
+  expect(mockObserve).toHaveBeenCalledWith(element)
+
+  unobserve()
+  globalThis.IntersectionObserver = originalObserver
+})
+
 it('should use fallback intersectionRatio when IntersectionObserver is undefined', () => {
   const element = document.createElement('div')
   const cb = vi.fn()
