@@ -8,7 +8,7 @@
     "android": "expo start --android",
     "ci:eslint": "eslint \"**/*.{ts,tsx,cts,mts}\"",
     "ci:type": "tsc --noEmit",
-    "clean": "rimraf ./.expo && rimraf ./node_modules && rimraf ./expo-env.d.ts",
+    "clean": "rimraf ./.expo ./node_modules ./expo-env.d.ts",
     "ios": "expo start --ios",
     "reset-project": "node ./scripts/reset-project.js",
     "start": "expo start",
