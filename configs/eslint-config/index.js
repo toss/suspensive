@@ -111,7 +111,7 @@ export const suspensiveTypeScriptConfig = tseslint.config(
 
 export const suspensiveReactTypeScriptConfig = tseslint.config(
   ...suspensiveTypeScriptConfig,
-  reactHooks.configs['recommended-latest'],
+  reactHooks.configs.recommended,
   {
     files: ['**/*.{ts,tsx}'],
     ...pluginReact.configs.recommended,
