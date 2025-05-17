@@ -1,5 +1,15 @@
 # @suspensive/react-query
 
+## 3.2.1
+
+### Patch Changes
+
+- [#1574](https://github.com/toss/suspensive/pull/1574) [`aed5a4c`](https://github.com/toss/suspensive/commit/aed5a4c63e4929ac17d9dbe5337f7d4a68eb2062) Thanks [@gwansikk](https://github.com/gwansikk)! - fix(react-query): replace wildcard exports with named exports
+
+- Updated dependencies []:
+  - @suspensive/react-query-4@3.2.1
+  - @suspensive/react-query-5@3.2.1
+
 ## 3.2.0
 
 ### Patch Changes
