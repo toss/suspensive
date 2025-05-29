@@ -7,9 +7,6 @@ export type DelayProps =
   | {
       ms?: number
       fallback?: never
-      /**
-       * @experimental This is experimental feature.
-       */
       children?: ({ isDelayed }: { isDelayed: boolean }) => ReactNode
     }
   | {
