@@ -1,5 +1,11 @@
 # @suspensive/react-native
 
+## 0.0.19
+
+### Patch Changes
+
+- [#1590](https://github.com/toss/suspensive/pull/1590) [`cd72194`](https://github.com/toss/suspensive/commit/cd72194871b6b330e6b05d442a0ba1e7d52c6891) Thanks [@manudeli](https://github.com/manudeli)! - chore(\*): npm tag as latest
+
 ## 0.0.18
 
 ### Patch Changes

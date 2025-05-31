@@ -1,5 +1,15 @@
 # @suspensive/react-query
 
+## 3.2.2
+
+### Patch Changes
+
+- [#1590](https://github.com/toss/suspensive/pull/1590) [`cd72194`](https://github.com/toss/suspensive/commit/cd72194871b6b330e6b05d442a0ba1e7d52c6891) Thanks [@manudeli](https://github.com/manudeli)! - chore(\*): npm tag as latest
+
+- Updated dependencies [[`cd72194`](https://github.com/toss/suspensive/commit/cd72194871b6b330e6b05d442a0ba1e7d52c6891)]:
+  - @suspensive/react-query-4@3.2.2
+  - @suspensive/react-query-5@3.2.2
+
 ## 3.2.1
 
 ### Patch Changes
