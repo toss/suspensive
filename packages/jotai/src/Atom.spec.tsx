@@ -1,5 +1,6 @@
-import { fireEvent, render, screen } from '@testing-library/react'
+import { act, fireEvent, render, screen, waitFor } from '@testing-library/react'
 import { atom } from 'jotai'
+import { Suspense } from 'react'
 import { Atom } from './Atom'
 import type { SetAtom } from './utility-types'
 
@@ -79,5 +80,23 @@ describe('<Atom />', () => {
 
     expect(children).toHaveBeenCalled()
     expect(screen.getByText('Test')).toBeInTheDocument()
+  })
+
+  it('should render with an async atom and show resolved value', async () => {
+    const asyncAtom = atom(async () => {
+      await new Promise((resolve) => setTimeout(resolve, 100))
+      return 'hello'
+    })
+
+    await act(() =>
+      render(
+        <Suspense fallback={<div>loading...</div>}>
+          <Atom atom={asyncAtom}>{([value]) => <div>value: {value}</div>}</Atom>
+        </Suspense>
+      )
+    )
+
+    expect(screen.getByText('loading...')).toBeInTheDocument()
+    await waitFor(() => expect(screen.getByText('value: hello')).toBeInTheDocument())
   })
 })
