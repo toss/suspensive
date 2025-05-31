@@ -8,4 +8,4 @@
 '@suspensive/react-query-5': patch
 ---
 
-chore(\*): npm tag as latest
+chore(*): npm tag as latest
