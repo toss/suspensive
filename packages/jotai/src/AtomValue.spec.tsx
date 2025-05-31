@@ -1,0 +1,42 @@
+import { act, render, screen, waitFor } from '@testing-library/react'
+import { atom } from 'jotai'
+import { Suspense } from 'react'
+import { AtomValue } from './AtomValue'
+
+describe('<AtomValue />', () => {
+  it('should render with a primitive atom', () => {
+    const countAtom = atom(10)
+
+    render(<AtomValue atom={countAtom}>{(count) => <div>count: {count}</div>}</AtomValue>)
+
+    expect(screen.getByText('count: 10')).toBeInTheDocument()
+  })
+
+  it('should call children with correct value', () => {
+    const testAtom = atom('abc')
+    const children = vi.fn(() => <div>Test</div>)
+
+    render(<AtomValue atom={testAtom}>{children}</AtomValue>)
+
+    expect(children).toHaveBeenCalledWith('abc')
+    expect(screen.getByText('Test')).toBeInTheDocument()
+  })
+
+  it('should render with an async atom and resolve the value', async () => {
+    const asyncAtom = atom(async () => {
+      await new Promise((resolve) => setTimeout(resolve, 100))
+      return 'hello'
+    })
+
+    await act(() =>
+      render(
+        <Suspense fallback={<div>loading...</div>}>
+          <AtomValue atom={asyncAtom}>{(value) => <div>value: {value}</div>}</AtomValue>
+        </Suspense>
+      )
+    )
+
+    expect(screen.getByText('loading...')).toBeInTheDocument()
+    await waitFor(() => expect(screen.getByText('value: hello')).toBeInTheDocument())
+  })
+})
