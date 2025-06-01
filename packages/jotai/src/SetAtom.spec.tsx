@@ -1,5 +1,6 @@
-import { fireEvent, render, screen } from '@testing-library/react'
+import { act, fireEvent, render, screen, waitFor } from '@testing-library/react'
 import { atom } from 'jotai'
+import { Suspense } from 'react'
 import { AtomValue } from './AtomValue'
 import { SetAtom } from './SetAtom'
 
@@ -63,5 +64,42 @@ describe('<SetAtom />', () => {
 
     expect(children).toHaveBeenCalled()
     expect(screen.getByText('Test')).toBeInTheDocument()
+  })
+
+  it('should read and update an async atom using Suspense with proper loading state', async () => {
+    const baseAtom = atom(0)
+    const asyncReadableAtom = atom(async (get) => {
+      await new Promise((resolve) => setTimeout(resolve, 100))
+      return get(baseAtom)
+    })
+    const asyncWritableAtom = atom(
+      (get) => get(asyncReadableAtom),
+      async (_get, set, newValue: number) => {
+        await new Promise((resolve) => setTimeout(resolve, 100))
+        set(baseAtom, newValue)
+      }
+    )
+
+    await act(() =>
+      render(
+        <Suspense fallback={<div>loading...</div>}>
+          <AtomValue atom={asyncWritableAtom}>{(value) => <div>value: {value}</div>}</AtomValue>
+          <SetAtom atom={asyncWritableAtom}>
+            {(setValue) => (
+              // eslint-disable-next-line @typescript-eslint/no-misused-promises
+              <button type="button" onClick={() => setValue(100)}>
+                Set to 100
+              </button>
+            )}
+          </SetAtom>
+        </Suspense>
+      )
+    )
+
+    expect(screen.getByText('loading...')).toBeInTheDocument()
+    await waitFor(() => expect(screen.getByText('value: 0')).toBeInTheDocument())
+    fireEvent.click(screen.getByText('Set to 100'))
+    await waitFor(() => expect(screen.getByText('loading...')).toBeInTheDocument())
+    await waitFor(() => expect(screen.getByText('value: 100')).toBeInTheDocument())
   })
 })
