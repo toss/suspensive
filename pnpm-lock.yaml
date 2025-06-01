@@ -48,8 +48,8 @@ catalogs:
       specifier: ^5.75.0
       version: 5.75.0
     '@tanstack/react-query-next-experimental':
-      specifier: ^5.75.0
-      version: 5.75.0
+      specifier: ^5.79.0
+      version: 5.79.0
   react18:
     '@types/react':
       specifier: 18.3.12
@@ -350,7 +350,7 @@ importers:
         version: 5.75.0(@tanstack/react-query@5.75.0(react@19.1.0))(react@19.1.0)
       '@tanstack/react-query-next-experimental':
         specifier: catalog:react-query5
-        version: 5.75.0(@tanstack/react-query@5.75.0(react@19.1.0))(next@15.3.1(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react@19.1.0)
+        version: 5.79.0(@tanstack/react-query@5.75.0(react@19.1.0))(next@15.3.1(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react@19.1.0)
       next:
         specifier: 'catalog:'
         version: 15.3.1(@babel/core@7.27.1)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
@@ -3451,10 +3451,10 @@ packages:
       '@tanstack/react-query': ^5.75.0
       react: ^18 || ^19
 
-  '@tanstack/react-query-next-experimental@5.75.0':
-    resolution: {integrity: sha512-MaGS1/hOin8NwKn4uNk1N0xFVNIbjm/2cQJK0xK1Eq+SWgdgQhextPk6W6ak71HOAT/MolF3BGbQJpnN8HDSww==}
+  '@tanstack/react-query-next-experimental@5.79.0':
+    resolution: {integrity: sha512-uzbLajqx8/j9k7P8aDXsLtdk4lPvG6mrWoANt/JhSyPWvBhW1RSgQFHcyk08Qe1jWrScmkkeuIJ1SmaC7Z+2Xg==}
     peerDependencies:
-      '@tanstack/react-query': ^5.75.0
+      '@tanstack/react-query': ^5.79.0
       next: ^13 || ^14 || ^15
       react: ^18 || ^19
 
@@ -14514,7 +14514,7 @@ snapshots:
       '@tanstack/react-query': 5.75.0(react@19.1.0)
       react: 19.1.0
 
-  '@tanstack/react-query-next-experimental@5.75.0(@tanstack/react-query@5.75.0(react@19.1.0))(next@15.3.1(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react@19.1.0)':
+  '@tanstack/react-query-next-experimental@5.79.0(@tanstack/react-query@5.75.0(react@19.1.0))(next@15.3.1(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react@19.1.0)':
     dependencies:
       '@tanstack/react-query': 5.75.0(react@19.1.0)
       next: 15.3.1(@babel/core@7.27.1)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
