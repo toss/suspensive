@@ -1,4 +1,4 @@
-import { act, render, screen, waitFor } from '@testing-library/react'
+import { act, render, screen } from '@testing-library/react'
 import { atom } from 'jotai'
 import { Suspense } from 'react'
 import { AtomValue } from './AtomValue'
@@ -46,6 +46,6 @@ describe('<AtomValue />', () => {
     )
 
     expect(screen.getByText('loading...')).toBeInTheDocument()
-    await waitFor(() => expect(screen.getByText('value: hello')).toBeInTheDocument())
+    expect(await screen.findByText('value: hello')).toBeInTheDocument()
   })
 })
