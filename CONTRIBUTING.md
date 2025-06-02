@@ -62,6 +62,6 @@ All commit message and title of your Pull Request should match the following for
 [optional footer(s)]
 ```
 
-> We adhere [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/). We check your commits on pre-commit(git-hook) by husky with our rules. please follow it.
+> We adhere [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/).
 
 Several predefined GitHub Workflows will check qualities. If you fail our checks, please check the error message and update the Pull Request.
