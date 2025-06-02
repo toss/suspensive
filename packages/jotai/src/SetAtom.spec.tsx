@@ -1,4 +1,4 @@
-import { act, fireEvent, render, screen, waitFor } from '@testing-library/react'
+import { act, fireEvent, render, screen } from '@testing-library/react'
 import { atom } from 'jotai'
 import { Suspense } from 'react'
 import { AtomValue } from './AtomValue'
@@ -97,9 +97,9 @@ describe('<SetAtom />', () => {
     )
 
     expect(screen.getByText('loading...')).toBeInTheDocument()
-    await waitFor(() => expect(screen.getByText('value: 0')).toBeInTheDocument())
+    expect(await screen.findByText('value: 0')).toBeInTheDocument()
     fireEvent.click(screen.getByText('Set to 100'))
-    await waitFor(() => expect(screen.getByText('loading...')).toBeInTheDocument())
-    await waitFor(() => expect(screen.getByText('value: 100')).toBeInTheDocument())
+    expect(await screen.findByText('loading...')).toBeInTheDocument()
+    expect(await screen.findByText('value: 100')).toBeInTheDocument()
   })
 })
