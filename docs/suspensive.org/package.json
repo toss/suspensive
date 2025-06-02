@@ -26,13 +26,13 @@
     "@next/third-parties": "catalog:",
     "@suspensive/react": "workspace:*",
     "@suspensive/react-query-4": "workspace:*",
-    "@tanstack/react-query": "^4.36.1",
-    "@tanstack/react-query-devtools": "^4.36.1",
+    "@tanstack/react-query": "catalog:react-query4",
+    "@tanstack/react-query-devtools": "catalog:react-query4",
     "clsx": "catalog:",
-    "codehike": "^1.0.5",
+    "codehike": "^1.0.7",
     "d3": "^7.9.0",
-    "lucide-react": "^0.503.0",
-    "motion": "^12.7.4",
+    "lucide-react": "^0.511.0",
+    "motion": "^12.15.0",
     "next": "catalog:",
     "nextra": "^4.2.17",
     "nextra-theme-docs": "^4.2.17",
@@ -40,7 +40,7 @@
     "react-dom": "catalog:react19",
     "remark-sandpack": "^0.0.5",
     "sharp": "catalog:",
-    "zod": "^3.24.3"
+    "zod": "^3.25.47"
   },
   "devDependencies": {
     "@suspensive/eslint-config": "workspace:*",

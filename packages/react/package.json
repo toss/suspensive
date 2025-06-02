@@ -56,7 +56,7 @@
     "@types/react-dom": "catalog:react19",
     "react": "catalog:react19",
     "react-dom": "catalog:react19",
-    "react-error-boundary": "^5.0.0"
+    "react-error-boundary": "^6.0.0"
   },
   "peerDependencies": {
     "react": "^18 || ^19"
