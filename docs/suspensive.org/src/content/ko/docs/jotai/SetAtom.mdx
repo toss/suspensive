@@ -30,20 +30,23 @@ Async Atom일 경우 프로미스(Promise)가 해결(resolve) 되기 전까지, 
 
 ```tsx /SetAtom/
 import { SetAtom } from '@suspensive/jotai'
+import { Suspense } from '@suspensive/react'
 import { atom } from 'jotai'
 
 const request = async () => fetch('https://...').then((res) => res.json())
 const baseAtom = atom(0)
 
 const Example = () => (
-  <SetAtom atom={baseAtom}>
-    {(setValue) => (
-      <>
-        {/* 프로미스(Promise)가 해결되기 전까지 Suspend가 발생됩니다. */}
-        <button onClick={() => setValue(request())}>request</button>
-      </>
-    )}
-  </SetAtom>
+  <Suspense fallback={'pending...'}>
+    <SetAtom atom={baseAtom}>
+      {(setValue) => (
+        <>
+          {/* 프로미스(Promise)가 해결되기 전까지 Suspend가 발생됩니다. */}
+          <button onClick={() => setValue(request())}>request</button>
+        </>
+      )}
+    </SetAtom>
+  </Suspense>
 )
 ```
 
