@@ -72,6 +72,33 @@ describe('<Atom />', () => {
     expect(screen.getByText('value: 123')).toBeInTheDocument()
   })
 
+  it('should render with a writable derived atom and update base atom', () => {
+    const baseAtom = atom(100)
+    const derivedAtom = atom(
+      (get) => get(baseAtom),
+      (get, set, value: number) => {
+        set(baseAtom, get(baseAtom) + value)
+      }
+    )
+
+    render(
+      <Atom atom={derivedAtom}>
+        {([value, setValue]) => (
+          <div>
+            <div>value: {value}</div>
+            <button type="button" onClick={() => setValue(200)}>
+              Set to 300
+            </button>
+          </div>
+        )}
+      </Atom>
+    )
+
+    expect(screen.getByText('value: 100')).toBeInTheDocument()
+    fireEvent.click(screen.getByText('Set to 300'))
+    expect(screen.getByText('value: 300')).toBeInTheDocument()
+  })
+
   it('should call children render prop with correct values', () => {
     const testAtom = atom(123)
     const children = vi.fn(() => <div>Test</div>)
