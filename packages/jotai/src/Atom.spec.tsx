@@ -8,7 +8,7 @@ describe('<Atom />', () => {
   it('should render with a PrimitiveAtom and update value', () => {
     const countAtom = atom(0)
 
-    const { getByText } = render(
+    render(
       <Atom atom={countAtom}>
         {([count, setCount]) => (
           <>
@@ -21,9 +21,9 @@ describe('<Atom />', () => {
       </Atom>
     )
 
-    expect(getByText('count: 0')).toBeInTheDocument()
-    fireEvent.click(getByText('Increment'))
-    expect(getByText('count: 1')).toBeInTheDocument()
+    expect(screen.getByText('count: 0')).toBeInTheDocument()
+    fireEvent.click(screen.getByText('Increment'))
+    expect(screen.getByText('count: 1')).toBeInTheDocument()
   })
 
   it('should render with a WritableAtom with custom args and call set', () => {
@@ -35,7 +35,7 @@ describe('<Atom />', () => {
       set(baseAtom, value)
     })
 
-    const { getByText } = render(
+    render(
       <Atom atom={writeAtom}>
         {([value, setValue]) => (
           <>
@@ -48,7 +48,7 @@ describe('<Atom />', () => {
       </Atom>
     )
 
-    fireEvent.click(getByText('Set 5'))
+    fireEvent.click(screen.getByText('Set 5'))
     expect(log).toHaveBeenCalledWith(5)
   })
 
