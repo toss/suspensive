@@ -12,6 +12,15 @@ describe('<AtomValue />', () => {
     expect(screen.getByText('count: 10')).toBeInTheDocument()
   })
 
+  it('should render with a readable derived atom', () => {
+    const baseAtom = atom(10)
+    const derivedAtom = atom((get) => get(baseAtom) * 2)
+
+    render(<AtomValue atom={derivedAtom}>{(value) => <div>value: {value}</div>}</AtomValue>)
+
+    expect(screen.getByText('value: 20')).toBeInTheDocument()
+  })
+
   it('should call children with correct value', () => {
     const testAtom = atom('abc')
     const children = vi.fn(() => <div>Test</div>)
