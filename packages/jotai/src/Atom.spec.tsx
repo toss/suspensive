@@ -5,7 +5,7 @@ import { Atom } from './Atom'
 import type { SetAtom } from './utility-types'
 
 describe('<Atom />', () => {
-  it('should render with a PrimitiveAtom and update value', () => {
+  it('should render with a primitive writable atom and update its value', () => {
     const countAtom = atom(0)
 
     render(
@@ -13,8 +13,11 @@ describe('<Atom />', () => {
         {([count, setCount]) => (
           <>
             <div>count: {count}</div>
-            <button type="button" onClick={() => setCount(count + 1)}>
-              Increment
+            <button type="button" onClick={() => setCount(10)}>
+              Set 10
+            </button>
+            <button type="button" onClick={() => setCount((prevCount) => prevCount + 10)}>
+              Plus 10
             </button>
           </>
         )}
@@ -22,8 +25,12 @@ describe('<Atom />', () => {
     )
 
     expect(screen.getByText('count: 0')).toBeInTheDocument()
-    fireEvent.click(screen.getByText('Increment'))
-    expect(screen.getByText('count: 1')).toBeInTheDocument()
+    fireEvent.click(screen.getByText('Set 10'))
+    expect(screen.getByText('count: 10')).toBeInTheDocument()
+    fireEvent.click(screen.getByText('Plus 10'))
+    expect(screen.getByText('count: 20')).toBeInTheDocument()
+    fireEvent.click(screen.getByText('Plus 10'))
+    expect(screen.getByText('count: 30')).toBeInTheDocument()
   })
 
   it('should render with a WritableAtom with custom args and call set', () => {

@@ -5,7 +5,7 @@ import { AtomValue } from './AtomValue'
 import { SetAtom } from './SetAtom'
 
 describe('<SetAtom />', () => {
-  it('should render and set value to a primitive writable atom', () => {
+  it('should render with a primitive writable atom and update its value', () => {
     const countAtom = atom(0)
 
     render(
@@ -13,9 +13,14 @@ describe('<SetAtom />', () => {
         <AtomValue atom={countAtom}>{(count) => <div>count: {count}</div>}</AtomValue>
         <SetAtom atom={countAtom}>
           {(setCount) => (
-            <button type="button" onClick={() => setCount(10)}>
-              Set 10
-            </button>
+            <>
+              <button type="button" onClick={() => setCount(10)}>
+                Set 10
+              </button>
+              <button type="button" onClick={() => setCount((prevCount) => prevCount + 10)}>
+                Plus 10
+              </button>
+            </>
           )}
         </SetAtom>
       </>
@@ -24,6 +29,10 @@ describe('<SetAtom />', () => {
     expect(screen.getByText('count: 0')).toBeInTheDocument()
     fireEvent.click(screen.getByText('Set 10'))
     expect(screen.getByText('count: 10')).toBeInTheDocument()
+    fireEvent.click(screen.getByText('Plus 10'))
+    expect(screen.getByText('count: 20')).toBeInTheDocument()
+    fireEvent.click(screen.getByText('Plus 10'))
+    expect(screen.getByText('count: 30')).toBeInTheDocument()
   })
 
   it('should call custom write logic with arguments', () => {
