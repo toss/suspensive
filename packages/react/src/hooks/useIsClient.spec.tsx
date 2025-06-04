@@ -1,30 +1,34 @@
 import { renderHook } from '@testing-library/react'
-import { useEffect, useLayoutEffect, useState } from 'react'
+import { useLayoutEffect, useState } from 'react'
 import reactDomServer from 'react-dom/server'
+import { noop } from '../utils/noop'
 import { useIsClient } from './useIsClient'
 
-const importUseIsomorphicLayoutEffect = () => {
-  const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect
+const importUseClientLayoutEffect = () => {
+  const useClientLayoutEffect = typeof document !== 'undefined' ? useLayoutEffect : noop
 
-  return { useIsomorphicLayoutEffect }
+  return { useClientLayoutEffect }
 }
-describe('useIsomorphicLayoutEffect', () => {
-  const originalWindow = global.window
+
+describe('useClientLayoutEffect', () => {
+  const originalDocument = global.document
+
   afterEach(() => vi.resetModules())
-  it('should be useEffect in server environment', () => {
-    Object.defineProperty(global, 'window', {
+
+  it('should be noop in server environment', () => {
+    Object.defineProperty(global, 'document', {
       value: undefined,
     })
-    const { useIsomorphicLayoutEffect } = importUseIsomorphicLayoutEffect()
-    expect(useIsomorphicLayoutEffect).toEqual(useEffect)
+    const { useClientLayoutEffect } = importUseClientLayoutEffect()
+    expect(useClientLayoutEffect).toEqual(noop)
   })
 
   it('should be useLayoutEffect in client environment', () => {
-    Object.defineProperty(global, 'window', {
-      value: originalWindow,
+    Object.defineProperty(global, 'document', {
+      value: originalDocument,
     })
-    const { useIsomorphicLayoutEffect } = importUseIsomorphicLayoutEffect()
-    expect(useIsomorphicLayoutEffect).toEqual(useLayoutEffect)
+    const { useClientLayoutEffect } = importUseClientLayoutEffect()
+    expect(useClientLayoutEffect).toEqual(useLayoutEffect)
   })
 })
 
@@ -51,7 +55,7 @@ describe('useIsClient', () => {
     expect(mockUseIsClient).toBeCalledTimes(2)
   })
   it('improve legacy useIsClientOnly', () => {
-    const { useIsomorphicLayoutEffect } = importUseIsomorphicLayoutEffect()
+    const { useClientLayoutEffect } = importUseClientLayoutEffect()
     // check CSR environment first
     expect(typeof document !== 'undefined').toBe(true)
     let chanceIsClientToBeFalse = false
@@ -63,7 +67,7 @@ describe('useIsClient', () => {
       if (!isClient) {
         chanceIsClientToBeFalse = true
       }
-      useIsomorphicLayoutEffect(() => {
+      useClientLayoutEffect(() => {
         setIsClient(true)
       }, [])
       return isClient
