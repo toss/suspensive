@@ -1,4 +1,4 @@
-import { Steps } from 'nextra/components'
+import { Steps, Table } from 'nextra/components'
 import { Callout } from '@/components'
 
 # 어떤 이유로 사용하나요?
@@ -34,13 +34,13 @@ import { Callout } from '@/components'
 
 <br />
 
-<table>
+<Table>
   <thead>
-    <tr>
-      <th>TanStack Query 지원 브라우저</th>
-      <th>v4</th>
-      <th>v5</th>
-    </tr>
+    <Table.Tr>
+      <Table.Th>TanStack Query 지원 브라우저</Table.Th>
+      <Table.Th>v4</Table.Th>
+      <Table.Th>v5</Table.Th>
+    </Table.Tr>
   </thead>
   <tbody>
     {[
@@ -51,14 +51,14 @@ import { Callout } from '@/components'
       { browser: 'iOS', version4: '>= 12.2', version5: '>= 15' },
       { browser: 'Opera', version4: '>= 53', version5: '>= 77' },
     ].map((item) => (
-      <tr key={item.browser}>
-        <td>{item.browser}</td>
-        <td className="text-center">{item.version4}</td>
-        <td className="text-center">{item.version5}</td>
-      </tr>
+      <Table.Tr key={item.browser}>
+        <Table.Td>{item.browser}</Table.Td>
+        <Table.Td className="text-center">{item.version4}</Table.Td>
+        <Table.Td className="text-center">{item.version5}</Table.Td>
+      </Table.Tr>
     ))}
   </tbody>
-</table>
+</Table>
 
 ### 이 라이브러리는 현재 [TanStack Query의 커뮤니티 리소스](https://tanstack.com/query/v4/docs/framework/react/community/suspensive-react-query)입니다.
 

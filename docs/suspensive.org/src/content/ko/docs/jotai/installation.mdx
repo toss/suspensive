@@ -1,4 +1,4 @@
-import { Steps } from 'nextra/components'
+import { Steps, Table } from 'nextra/components'
 
 # 설치하기
 
@@ -10,7 +10,7 @@ Suspensive 라이브러리는 모던 브라우저를 위해 최적화되었습�
 
 <br />
 
-<table>
+<Table>
   <tbody>
     {[
       { browser: 'Chrome', version: '>= 51' },
@@ -20,13 +20,13 @@ Suspensive 라이브러리는 모던 브라우저를 위해 최적화되었습�
       { browser: 'iOS', version: '>= 11' },
       { browser: 'Opera', version: '>= 38' },
     ].map((item) => (
-      <tr key={item.browser}>
-        <td>{item.browser}</td>
-        <td className="text-center">{item.version}</td>
-      </tr>
+      <Table.Tr key={item.browser}>
+        <Table.Td>{item.browser}</Table.Td>
+        <Table.Td className="text-center">{item.version}</Table.Td>
+      </Table.Tr>
     ))}
   </tbody>
-</table>
+</Table>
 
 > 당신의 환경에 따라, polyfills추가가 필요할 수도 있습니다. 더 오래된 브라우저를 지원하려면, 스스로 node_modules에서 라이브러리를 transpile할 필요가 있습니다.
 
@@ -34,19 +34,19 @@ Suspensive 라이브러리는 모던 브라우저를 위해 최적화되었습�
 
 <br />
 
-<table>
+<Table>
   <tbody>
     {[
       { library: 'react', version: '^18 || ^19' },
       { library: 'jotai', version: '^2' },
     ].map((item) => (
-      <tr key={item.library}>
-        <td>{item.library}</td>
-        <td className="text-center">{item.version}</td>
-      </tr>
+      <Table.Tr key={item.library}>
+        <Table.Td>{item.library}</Table.Td>
+        <Table.Td className="text-center">{item.version}</Table.Td>
+      </Table.Tr>
     ))}
   </tbody>
-</table>
+</Table>
 
 ### 의존성 추가
 

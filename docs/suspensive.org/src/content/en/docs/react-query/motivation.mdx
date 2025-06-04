@@ -1,4 +1,4 @@
-import { Steps } from 'nextra/components'
+import { Steps, Table } from 'nextra/components'
 import { Callout } from '@/components'
 
 # Why need to use?
@@ -34,13 +34,13 @@ In this case, @suspensive/react-query can be a good alternative to use with @tan
 
 <br />
 
-<table>
+<Table>
   <thead>
-    <tr>
-      <th>TanStack Query Browser Requirements</th>
-      <th>v4</th>
-      <th>v5</th>
-    </tr>
+    <Table.Tr>
+      <Table.Th>TanStack Query Browser Requirements</Table.Th>
+      <Table.Th>v4</Table.Th>
+      <Table.Th>v5</Table.Th>
+    </Table.Tr>
   </thead>
   <tbody>
     {[
@@ -51,14 +51,14 @@ In this case, @suspensive/react-query can be a good alternative to use with @tan
       { browser: 'iOS', version4: '>= 12.2', version5: '>= 15' },
       { browser: 'Opera', version4: '>= 53', version5: '>= 77' },
     ].map((item) => (
-      <tr key={item.browser}>
-        <td>{item.browser}</td>
-        <td className="text-center">{item.version4}</td>
-        <td className="text-center">{item.version5}</td>
-      </tr>
+      <Table.Tr key={item.browser}>
+        <Table.Td>{item.browser}</Table.Td>
+        <Table.Td className="text-center">{item.version4}</Table.Td>
+        <Table.Td className="text-center">{item.version5}</Table.Td>
+      </Table.Tr>
     ))}
   </tbody>
-</table>
+</Table>
 
 ### This library is currently [a community resource for TanStack Query](https://tanstack.com/query/v4/docs/framework/react/community/suspensive-react-query).
 
