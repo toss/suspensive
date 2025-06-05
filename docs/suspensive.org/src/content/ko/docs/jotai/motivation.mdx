@@ -10,7 +10,7 @@ import { Steps } from 'nextra/components'
 
 Jotai의 atom은 비동기 읽기/쓰기를 지원합니다. 비동기 atom은 비동기 흐름을 처리하기 위해 Suspense를 활용하고 있으며, atom이 비동기 동작을 시작하게 되면 부모의 Suspense에게 Promise의 pending 상태를 위임합니다.
 
-@suspensive/jotai의 `<Atom/>`의 Props는 Jotai의 `useAtom`의 인터페이스와 동일하게 사용할 수 있습니다. `<Atom/>`을 사용하면 내부적으로 어떤 atom을 사용하는지, `<Suspense/>`와 같은 depth에서 suspense를 발생시키는 것이 무엇인지 직관적으로 보여줄 수 있게 됩니다.
+@suspensive/jotai의 `<Atom />`의 Props는 Jotai의 `useAtom`의 인터페이스와 동일하게 사용할 수 있습니다. `<Atom />`을 사용하면 내부적으로 어떤 atom을 사용하는지, `<Suspense />`와 같은 depth에서 suspense를 발생시키는 것이 무엇인지 직관적으로 보여줄 수 있게 됩니다.
 
 ```tsx
 import { Atom } from '@suspensive/jotai'
@@ -29,7 +29,7 @@ const MyPage = () => (
 
 ### Jotai의 확장 라이브러리(Extension Library)와 함께 사용할 수 있습니다.
 
-Jotai에는 [tRPC](https://jotai.org/docs/extensions/trpc), [Query](https://jotai.org/docs/extensions/query), [Cache](https://jotai.org/docs/extensions/cache) 등 다양한 확장 라이브러리가 있습니다. 확장 라이브러리의 atom도 @suspensive/jotai의 `<Atom/>`, `<SetAtom/>`, `<AtomValue/>`와 모두 호환됩니다.
+Jotai에는 [tRPC](https://jotai.org/docs/extensions/trpc), [Query](https://jotai.org/docs/extensions/query), [Cache](https://jotai.org/docs/extensions/cache) 등 다양한 확장 라이브러리가 있습니다. 확장 라이브러리의 atom도 @suspensive/jotai의 `<Atom />`, `<SetAtom />`, `<AtomValue />`와 모두 호환됩니다.
 
 아래 예시는 [Query](https://jotai.org/docs/extensions/query#suspense)에서 소개된 확장 라이브러리인 [jotai-tanstack-query](https://github.com/jotaijs/jotai-tanstack-query)를 활용한 예시입니다.
 

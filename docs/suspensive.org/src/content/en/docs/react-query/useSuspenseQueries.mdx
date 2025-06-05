@@ -2,7 +2,7 @@ import { Callout, Sandpack } from '@/components'
 
 # useSuspenseQueries
 
-There is no isLoading or isError in the return type of this hook. This is because `<Suspense/>` and `<ErrorBoundary/>` guarantee the data of this hook. Also, in the options of this hook, suspense is set to true by default. You can use @tanstack/react-query's [useQueries](https://tanstack.com/query/v4/docs/react/reference/useQueries) for the new options you need.
+There is no isLoading or isError in the return type of this hook. This is because `<Suspense />` and `<ErrorBoundary />` guarantee the data of this hook. Also, in the options of this hook, suspense is set to true by default. You can use @tanstack/react-query's [useQueries](https://tanstack.com/query/v4/docs/react/reference/useQueries) for the new options you need.
 
 ```tsx /useSuspenseQueries/
 import { useSuspenseQueries } from '@suspensive/react-query'
@@ -129,7 +129,7 @@ export const getComments = async (postId: number): Promise<Comment[]> => {
 
 ### Motivation
 
-You can use [useQueries](https://tanstack.com/query/v4/docs/react/reference/useQueries) with `<Suspense/>` and `<ErrorBoundary/>` by using the suspense option of @tanstack/react-query useQueries.
+You can use [useQueries](https://tanstack.com/query/v4/docs/react/reference/useQueries) with `<Suspense />` and `<ErrorBoundary />` by using the suspense option of @tanstack/react-query useQueries.
 
 ```tsx /useQueries/
 import { useQueries } from '@tanstack/react-query'
@@ -154,7 +154,7 @@ const Example = () => {
 }
 ```
 
-The return type of useQueries (query1.data, query2.data) will always be a success case thanks to this component's parents, `<Suspense/>` and `<ErrorBoundary/>`.
+The return type of useQueries (query1.data, query2.data) will always be a success case thanks to this component's parents, `<Suspense />` and `<ErrorBoundary />`.
 But @tanstack/react-query doesn't express this typologically.
 
 That's why @suspensive/react-query provides **useSuspenseQueries**.

@@ -9,7 +9,7 @@
 
 ## 새로운 기능
 
-### 새로운 `<SuspenseQuery/>`, `<SuspenseInfiniteQuery/>` [#775](https://github.com/toss/suspensive/pull/775)
+### 새로운 `<SuspenseQuery />`, `<SuspenseInfiniteQuery />` [#775](https://github.com/toss/suspensive/pull/775)
 
 기존의 useSuspenseQuery는 훅이기 때문에 부모에 Suspense, ErrorBoundary를 배치하기 위해 AuthorInfo, PostList와 같은 이름을 가진 컴포넌트를 만들게 합니다.
 이것은 AuthorInfo, PostList 내부에서 던져질 suspense와 error가 있을지 예측하기 어렵게 만듭니다.
@@ -71,7 +71,7 @@ const PostList = ({ userId }) => {
 }
 ```
 
-#### 해결법: `<SuspenseQuery/>`로 suspense가 발생됨을 드러내자
+#### 해결법: `<SuspenseQuery />`로 suspense가 발생됨을 드러내자
 
 따라서 같은 depth에서 Suspense를 발생시키는 것이 무엇인지 명확하게 표현하기 위해 이 컴포넌트들을 제공합니다.
 

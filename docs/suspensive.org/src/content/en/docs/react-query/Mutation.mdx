@@ -2,7 +2,7 @@ import { Callout, Sandpack } from '@/components'
 
 # Mutation
 
-Similar to how [`<SuspenseQuery/>`](/docs/react-query/SuspenseQuery) allows `useSuspenseQuery` to be used at the same depth, `<Mutation/>` facilitates the use of `useMutation` at the same depth.
+Similar to how [`<SuspenseQuery />`](/docs/react-query/SuspenseQuery) allows `useSuspenseQuery` to be used at the same depth, `<Mutation />` facilitates the use of `useMutation` at the same depth.
 
 ```jsx /Mutation/
 import { Mutation } from '@suspensive/react-query'
@@ -29,7 +29,7 @@ const PostsPage = () => {
             >
               {commentMutation => (
                 <div>
-                  {postMutation.isLoading ? <Spinner/> : null}
+                  {postMutation.isLoading ? <Spinner /> : null}
                   {comment.content}
                   <textarea onChange={e => commentMutation.mutateAsync({ content: e.target.value })} />
                 </div>
