@@ -1,8 +1,9 @@
 import { act, fireEvent, render, screen } from '@testing-library/react'
-import { atom } from 'jotai'
+import { type WritableAtom, atom } from 'jotai'
 import { Suspense } from 'react'
 import { AtomValue } from './AtomValue'
 import { SetAtom } from './SetAtom'
+import type { SetAtom as TSetAtom } from './utility-types'
 
 describe('<SetAtom />', () => {
   it('should render with a primitive writable atom and update its value', () => {
@@ -63,6 +64,29 @@ describe('<SetAtom />', () => {
     fireEvent.click(screen.getByText('Custom Set'))
     expect(log).toHaveBeenCalledWith(5)
     expect(screen.getByText('base: 10')).toBeInTheDocument()
+  })
+
+  it('should render with a read-only atom and setAtom throws an error when called', () => {
+    const testAtom = atom(() => 123)
+
+    render(
+      <SetAtom atom={testAtom as WritableAtom<unknown, unknown[], unknown>}>
+        {(setValue) => {
+          expect(setValue).toMatchInlineSnapshot('[Function]')
+          expect(() => {
+            ;(setValue as TSetAtom<[value: number], void>)(246)
+          }).toThrowError('not writable atom')
+
+          return (
+            <button type="button" onClick={() => setValue(246)}>
+              Set 246
+            </button>
+          )
+        }}
+      </SetAtom>
+    )
+
+    expect(screen.getByText('Set 246')).toBeInTheDocument()
   })
 
   it('should call children with correct set function', () => {
