@@ -7,5 +7,5 @@ export default {
     type: 'separator',
     title: 'API 문서',
   },
-  InView: { title: '<InView/>' },
+  InView: { title: '<InView />' },
 } satisfies typeof MetaEn satisfies MetaRecord

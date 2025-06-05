@@ -7,7 +7,7 @@ export default {
     type: 'separator',
     title: 'API 문서',
   },
-  Atom: { title: '<Atom/>' },
-  AtomValue: { title: '<AtomValue/>' },
-  SetAtom: { title: '<SetAtom/>' },
+  Atom: { title: '<Atom />' },
+  AtomValue: { title: '<AtomValue />' },
+  SetAtom: { title: '<SetAtom />' },
 } satisfies MetaRecord

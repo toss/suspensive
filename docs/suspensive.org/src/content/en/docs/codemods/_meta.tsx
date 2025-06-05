@@ -9,7 +9,7 @@ export default {
   },
   tanstackQueryImport: { title: 'Migrate TanStack Query imports' },
   migrateQueryClientConsumerProps: {
-    title: 'Migrate <QueryClientConsumer/> Props',
+    title: 'Migrate <QueryClientConsumer /> Props',
   },
   migrateWithAPI: { title: 'Migrate with API' },
   removeNetworkmode: { title: 'Remove NetworkMode' },

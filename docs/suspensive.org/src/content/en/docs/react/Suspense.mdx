@@ -2,7 +2,7 @@ import { Callout } from '@/components'
 
 # Suspense
 
-@suspensive/react's `<Suspense/>` will be just [Suspense of original React](https://react.dev/reference/react/Suspense).
+@suspensive/react's `<Suspense />` will be just [Suspense of original React](https://react.dev/reference/react/Suspense).
 
 ### props.fallback
 
@@ -22,14 +22,14 @@ const Example = () => (
 
 Default fallback
 
-`<Suspense/>` are more powerful when used with `<DefaultPropsProvider/>`.
-Control multiple `<Suspense/>`s default fallback with `<DefaultPropsProvider/>`. Details are introduced in [`<DefaultPropsProvider/>` page](/docs/react/DefaultPropsProvider).
+`<Suspense />` are more powerful when used with `<DefaultPropsProvider />`.
+Control multiple `<Suspense />`s default fallback with `<DefaultPropsProvider />`. Details are introduced in [`<DefaultPropsProvider />` page](/docs/react/DefaultPropsProvider).
 
 </Callout>
 
 ### Avoid Server side rendering (clientOnly)
 
-If you use clientOnly prop, `<Suspense/>` will return fallback in server and return children in client.
+If you use clientOnly prop, `<Suspense />` will return fallback in server and return children in client.
 
 ```tsx /clientOnly/
 import { Suspense } from '@suspensive/react'
@@ -56,9 +56,9 @@ https://x.com/TkDodo/status/1741068994981826947?t=XmG17etMUL2m0JFim03vqw&s=19
 
 <Callout type='info'>
 
-Migration support SSR gradually (`<Suspense clientOnly/>` -> `<Suspense/>`)
+Migration support SSR gradually (`<Suspense clientOnly />` -> `<Suspense />`)
 
-If you want to use Suspense working in both SSR/CSR, You can change `<Suspense clientOnly/>` to `<Suspense/>` gradually.
+If you want to use Suspense working in both SSR/CSR, You can change `<Suspense clientOnly />` to `<Suspense />` gradually.
 
 </Callout>
 

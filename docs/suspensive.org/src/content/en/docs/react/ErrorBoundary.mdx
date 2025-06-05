@@ -7,7 +7,7 @@ this component can handle any errors in children.
 
 ### props.fallback
 
-If there is any thrown error in children of `<ErrorBoundary/>`, Error will be caught and then fallback will be rendered.
+If there is any thrown error in children of `<ErrorBoundary />`, Error will be caught and then fallback will be rendered.
 
 ```tsx /fallback/
 import { ErrorBoundary } from '@suspensive/react'
@@ -79,11 +79,11 @@ export const ErrorAfter2s = () => {
 
 <Callout type='info'>
 
-Define component as `<ErrorBoundary/>`'s fallback
+Define component as `<ErrorBoundary />`'s fallback
 
 #### ErrorBoundaryFallbackProps
 
-If you want to deliver a declared component as `<ErrorBoundary/>`'s fallback, you can use the `ErrorBoundaryFallbackProps` type to declare the component easily.
+If you want to deliver a declared component as `<ErrorBoundary />`'s fallback, you can use the `ErrorBoundaryFallbackProps` type to declare the component easily.
 
 ```tsx /ErrorBoundaryFallbackProps/
 import type { ErrorBoundaryFallbackProps } from '@suspensive/react'
@@ -109,7 +109,7 @@ const Example = () => (
 
 <Callout>
 
-Use `<ErrorBoundary/>` fallback props without prop drilling
+Use `<ErrorBoundary />` fallback props without prop drilling
 
 #### useErrorBoundaryFallbackProps
 
@@ -144,7 +144,7 @@ const Example = () => (
 
 ### props.resetKeys
 
-If you want to reset `<ErrorBoundary/>` by component where is outside of `<ErrorBoundary/>`'s fallback. Inject any resetKey in resetKeys. resetKeys work only when at least one element of array is changed. you don't need to worry about provide new array as resetKeys like how useEffect's dependency array work.
+If you want to reset `<ErrorBoundary />` by component where is outside of `<ErrorBoundary />`'s fallback. Inject any resetKey in resetKeys. resetKeys work only when at least one element of array is changed. you don't need to worry about provide new array as resetKeys like how useEffect's dependency array work.
 
 ```tsx /resetKeys/
 import { ErrorBoundary } from '@suspensive/react'
@@ -217,7 +217,7 @@ export const ErrorAfter2s = () => {
 
 ### props.onReset
 
-This is a callback that is called first when `<ErrorBoundary/>` reset. It can be used with @tanstack/react-query as follows.
+This is a callback that is called first when `<ErrorBoundary />` reset. It can be used with @tanstack/react-query as follows.
 
 ```tsx /onReset/
 import { ErrorBoundary } from '@suspensive/react'
@@ -300,7 +300,7 @@ export const fetchSomething = () => {
 
 ### props.onError
 
-This is a callback called when `<ErrorBoundary/>` catches an error.
+This is a callback called when `<ErrorBoundary />` catches an error.
 
 ```tsx /onError/
 import { ErrorBoundary } from '@suspensive/react'
@@ -372,7 +372,7 @@ export const ErrorAfter2s = () => {
 
 ### props.shouldCatch
 
-shouldCatch determines whether `<ErrorBoundary/>` should catch errors based on conditions.
+shouldCatch determines whether `<ErrorBoundary />` should catch errors based on conditions.
 
 It accepts three criteria: Boolean, ErrorConstructor, and Callback, and defaults to true.
 
@@ -597,7 +597,7 @@ export const ErrorAfter2s = () => {
 
 ## ErrorBoundary.with
 
-`ErrorBoundary.with` is a higher-order component that wraps the component with `<ErrorBoundary/>`.
+`ErrorBoundary.with` is a higher-order component that wraps the component with `<ErrorBoundary />`.
 `ErrorBoundary.with` makes it easy to wrap a component.
 
 ```tsx /ErrorBoundary.with/
@@ -614,7 +614,7 @@ const Example = ErrorBoundary.with({ fallback: ErrorBoundaryFallback }, () => {
 
 ### useErrorBoundary().setError
 
-In children of `<ErrorBoundary/>`, we can use useErrorBoundary().setError to make `<ErrorBoundary/>` aware of the Error without throw.
+In children of `<ErrorBoundary />`, we can use useErrorBoundary().setError to make `<ErrorBoundary />` aware of the Error without throw.
 
 ```tsx /useErrorBoundary/
 import { ErrorBoundary, useErrorBoundary } from '@suspensive/react'
@@ -693,9 +693,9 @@ export const fetchSomething = () => {
 
 <Callout>
 
-Controlling multiple `<ErrorBoundary/>`s
+Controlling multiple `<ErrorBoundary />`s
 
-`<ErrorBoundary/>` is more powerful when used with `<ErrorBoundaryGroup/>`. Control multiple `<ErrorBoundary/>`s with `<ErrorBoundaryGroup/>`.  
-Details are introduced in [`<ErrorBoundaryGroup/>` page](/docs/react/ErrorBoundaryGroup).
+`<ErrorBoundary />` is more powerful when used with `<ErrorBoundaryGroup />`. Control multiple `<ErrorBoundary />`s with `<ErrorBoundaryGroup />`.  
+Details are introduced in [`<ErrorBoundaryGroup />` page](/docs/react/ErrorBoundaryGroup).
 
 </Callout>

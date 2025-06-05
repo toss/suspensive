@@ -4,9 +4,9 @@
 
 ### New [`wrap`](/docs/react/wrap) builder [#270](https://github.com/toss/suspensive/pull/270)
 
-A new feature that wraps a component in `<Suspense/>`, `<ErrorBoundary/>`, and `<ErrorBoundaryGroup/>` all at once.
+A new feature that wraps a component in `<Suspense />`, `<ErrorBoundary />`, and `<ErrorBoundaryGroup />` all at once.
 
-For `<Suspense/>`, `<ErrorBoundary/>`, `<ErrorBoundaryGroup/>`, etc. many people use hoc to wrap these around a component. This is because these components require some processing on their children. So, in order to not unnecessarily divide components and create depth, we use the hocs for each interface, withErrorBoundary, withErrorBoundaryGroup, and withSuspense, but as we often use each hoc in combination, we also need to improve readability. To improve this, we decided to provide wrap.
+For `<Suspense />`, `<ErrorBoundary />`, `<ErrorBoundaryGroup />`, etc. many people use hoc to wrap these around a component. This is because these components require some processing on their children. So, in order to not unnecessarily divide components and create depth, we use the hocs for each interface, withErrorBoundary, withErrorBoundaryGroup, and withSuspense, but as we often use each hoc in combination, we also need to improve readability. To improve this, we decided to provide wrap.
 
 ```jsx
 import { wrap } from '@suspensive/react'
@@ -28,9 +28,9 @@ const Example = wrap
   })
 ```
 
-### New `shouldCatch` prop of `<ErrorBoundary/>` [#569](https://github.com/toss/suspensive/pull/569)
+### New `shouldCatch` prop of `<ErrorBoundary />` [#569](https://github.com/toss/suspensive/pull/569)
 
-Suspensive's `<ErrorBoundary/>` can catch all thrown errors that occur in children. However, because it catches all thrown errors, when using `<ErrorBoundary/>`, I thought about placing `<ErrorBoundary/>` in a narrower position.
+Suspensive's `<ErrorBoundary />` can catch all thrown errors that occur in children. However, because it catches all thrown errors, when using `<ErrorBoundary />`, I thought about placing `<ErrorBoundary />` in a narrower position.
 For this reason, we added a new prop called shouldCatch to ErrorBoundary, which allows you to set which Error should be caught.
 
 ![ErrorBoundary shouldCatch example](/img/errorBoundary-shouldcatch-prop.png)
@@ -130,13 +130,13 @@ const Example = () => {
 
 ## Handling BREAKING CHANGES
 
-### Removed `<AsyncBoundary/>`
+### Removed `<AsyncBoundary />`
 
-We removed `<AsyncBoundary/>` in v2. [#295](https://github.com/toss/suspensive/issues/295)
+We removed `<AsyncBoundary />` in v2. [#295](https://github.com/toss/suspensive/issues/295)
 
-Because `<AsyncBoundary/>` uses `<ErrorBoundary/>` internally, it can be used with `useErrorBoundary` and is affected by `<ErrorBoundaryGroup/>`. We decided to remove this component from v2, believing that it would be better for maintainability and interface unification for library users.
+Because `<AsyncBoundary />` uses `<ErrorBoundary />` internally, it can be used with `useErrorBoundary` and is affected by `<ErrorBoundaryGroup />`. We decided to remove this component from v2, believing that it would be better for maintainability and interface unification for library users.
 
-`<AsyncBoundary/>`'s feature is just wrap two component(`<Suspense/>`, `<Errorboundary/>`) by one.
+`<AsyncBoundary />`'s feature is just wrap two component(`<Suspense />`, `<Errorboundary />`) by one.
 So, you can split by two like this.
 
 ```diff

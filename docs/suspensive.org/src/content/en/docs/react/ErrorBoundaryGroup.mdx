@@ -2,9 +2,9 @@ import { Callout, Sandpack } from '@/components'
 
 # ErrorBoundaryGroup
 
-This is a component for managing multiple `<ErrorBoundary/>`s easily.
+This is a component for managing multiple `<ErrorBoundary />`s easily.
 
-`<ErrorBoundary/>`s as children of nested `<ErrorBoundaryGroup/>` will also be reset by parent `<ErrorBoundaryGroup.Consumer/>`.
+`<ErrorBoundary />`s as children of nested `<ErrorBoundaryGroup />` will also be reset by parent `<ErrorBoundaryGroup.Consumer />`.
 
 ```jsx /ErrorBoundaryGroup/
 import { ErrorBoundaryGroup, ErrorBoundary } from '@suspensive/react'
@@ -98,7 +98,7 @@ export const ErrorAfter2s = () => {
 
 ### props.blockOutside
 
-If you want to block resetting nested `<ErrorBoundaryGroup/>` by parent `<ErrorBoundaryGroup/>`, Use blockOutside.
+If you want to block resetting nested `<ErrorBoundaryGroup />` by parent `<ErrorBoundaryGroup />`, Use blockOutside.
 
 ```jsx /blockOutside/
 import { ErrorBoundaryGroup, ErrorBoundary } from '@suspensive/react'
@@ -192,7 +192,7 @@ export const ErrorAfter2s = () => {
 
 ## ErrorBoundaryGroup.with
 
-`ErrorBoundaryGroup.with` is a higher-order component that wraps the component with `<ErrorBoundaryGroup/>`.
+`ErrorBoundaryGroup.with` is a higher-order component that wraps the component with `<ErrorBoundaryGroup />`.
 `ErrorBoundaryGroup.with` makes it easy to wrap a component.
 
 ```tsx /ErrorBoundaryGroup.with/
@@ -205,7 +205,7 @@ const Example = ErrorBoundaryGroup.with({}, () => {
 
 ## ErrorBoundaryGroup.Consumer
 
-`ErrorBoundaryGroup.Consumer` is a consumer of `<ErrorBoundaryGroup/>`. You can use `ErrorBoundaryGroup.Consumer` to use reset of `<ErrorBoundaryGroup/>`.
+`ErrorBoundaryGroup.Consumer` is a consumer of `<ErrorBoundaryGroup />`. You can use `ErrorBoundaryGroup.Consumer` to use reset of `<ErrorBoundaryGroup />`.
 
 ```tsx /ErrorBoundaryGroup.Consumer/
 import { ErrorBoundaryGroup } from '@suspensive/react'
@@ -224,7 +224,7 @@ const Example = () => (
 
 ## useErrorBoundaryGroup
 
-If you use useErrorBoundaryGroup, you can get a function to reset `<ErrorBoundary/>`s in `<ErrorBoundaryGroup/>`.
+If you use useErrorBoundaryGroup, you can get a function to reset `<ErrorBoundary />`s in `<ErrorBoundaryGroup />`.
 
 ```tsx /useErrorBoundaryGroup/
 import { useErrorBoundaryGroup } from '@suspensive/react'

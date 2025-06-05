@@ -4,7 +4,7 @@ import { Callout } from '@/components'
 
 <Callout type='experimental'>
 
-`<QueryClientConsumer/>`는 실험 기능이므로 이 인터페이스는 변경될 수 있습니다.
+`<QueryClientConsumer />`는 실험 기능이므로 이 인터페이스는 변경될 수 있습니다.
 
 </Callout>
 
@@ -90,7 +90,7 @@ const Example = () => {
 
 ### 동기: 리액트 훅은 함수형 컴포넌트에서만 사용 가능함
 
-React의 훅(useQueryClient)은 함수형 컴포넌트에서만 사용할 수 있습니다. 하지만 레거시 클래스 컴포넌트에서도 쿼리 무효화(invalidateQueries)와 같은 기능이 필요할 때가 있습니다. 이때 `<QueryClientConsumer/>`를 사용하면 이러한 제약을 해결할 수 있습니다.
+React의 훅(useQueryClient)은 함수형 컴포넌트에서만 사용할 수 있습니다. 하지만 레거시 클래스 컴포넌트에서도 쿼리 무효화(invalidateQueries)와 같은 기능이 필요할 때가 있습니다. 이때 `<QueryClientConsumer />`를 사용하면 이러한 제약을 해결할 수 있습니다.
 
 ```tsx /QueryClientConsumer/
 import React from 'react'

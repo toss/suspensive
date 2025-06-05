@@ -4,9 +4,9 @@
 
 ### 새로운 [`wrap`](/docs/react/wrap) 빌더 [#270](https://github.com/toss/suspensive/pull/270)
 
-컴포넌트를 `<Suspense/>`, `<ErrorBoundary/>`, `<ErrorBoundaryGroup/>`으로 한번에 래핑하는 새로운 기능입니다.
+컴포넌트를 `<Suspense />`, `<ErrorBoundary />`, `<ErrorBoundaryGroup />`으로 한번에 래핑하는 새로운 기능입니다.
 
-`<Suspense/>`, `<ErrorBoundary/>`, `<ErrorBoundaryGroup/>` 등의 경우 많은 사람들이 hoc를 사용하여 이러한 구성 요소를 구성 요소 주위에 래핑합니다. 이 컴포넌트들은 children에 어떤 처리를 요하기 때문입니다. 그래서 컴포넌트를 불필요하게 나누지 않고 depth를 만들지 않기 위해 각 interface를 위한 hoc인 withErrorBoundary, withErrorBoundaryGroup, withSuspense를 사용하지만 각 hoc를 조합해서 사용하는 경우도 자주 발생하면서 가독성 또한 개선할 필요가 있었습니다. 이를 개선하기 위해 wrap을 제공하기로 했습니다.
+`<Suspense />`, `<ErrorBoundary />`, `<ErrorBoundaryGroup />` 등의 경우 많은 사람들이 hoc를 사용하여 이러한 구성 요소를 구성 요소 주위에 래핑합니다. 이 컴포넌트들은 children에 어떤 처리를 요하기 때문입니다. 그래서 컴포넌트를 불필요하게 나누지 않고 depth를 만들지 않기 위해 각 interface를 위한 hoc인 withErrorBoundary, withErrorBoundaryGroup, withSuspense를 사용하지만 각 hoc를 조합해서 사용하는 경우도 자주 발생하면서 가독성 또한 개선할 필요가 있었습니다. 이를 개선하기 위해 wrap을 제공하기로 했습니다.
 
 ```jsx
 import { wrap } from '@suspensive/react'
@@ -28,9 +28,9 @@ const Example = wrap
   })
 ```
 
-### 새로운 `<ErrorBoundary/>`의 `shouldCatch` prop [#569](https://github.com/toss/suspensive/pull/569)
+### 새로운 `<ErrorBoundary />`의 `shouldCatch` prop [#569](https://github.com/toss/suspensive/pull/569)
 
-Suspensive의 `<ErrorBoundary/>`는 children에서 발생된 모든 thrown error를 잡아낼 수 있습니다. 하지만 모든 thrown error를 잡아내기 때문에 `<ErrorBoundary/>`를 사용할 때 더 좁은 위치에 `<ErrorBoundary/>`를 놓는 것을 고민하게 되었습니다.
+Suspensive의 `<ErrorBoundary />`는 children에서 발생된 모든 thrown error를 잡아낼 수 있습니다. 하지만 모든 thrown error를 잡아내기 때문에 `<ErrorBoundary />`를 사용할 때 더 좁은 위치에 `<ErrorBoundary />`를 놓는 것을 고민하게 되었습니다.
 이 때문에 어떤 Error를 잡아내야 할지 설정할 수 있는 shouldCatch라는 새 prop을 ErrorBoundary에 추가하게 되었습니다.
 
 ![ErrorBoundary shouldCatch example](/img/errorBoundary-shouldcatch-prop.png)
@@ -130,13 +130,13 @@ const Example = () => {
 
 ## BREAKING CHANGES 처리하기
 
-### `<AsyncBoundary/>` 제거
+### `<AsyncBoundary />` 제거
 
-v2에서는 `<AsyncBoundary/>`를 제거했습니다. [#295](https://github.com/toss/suspensive/issues/295)
+v2에서는 `<AsyncBoundary />`를 제거했습니다. [#295](https://github.com/toss/suspensive/issues/295)
 
-`<AsyncBoundary/>`는 내부적으로 `<ErrorBoundary/>`를 사용하기 때문에 `useErrorBoundary`와 함께 사용할 수 있으며 `<ErrorBoundaryGroup/>`의 영향을 받습니다. 우리는 라이브러리 사용자를 위한 유지 관리 및 인터페이스 통합에 더 좋을 것이라고 믿고 이 구성 요소를 v2에서 제거하기로 결정했습니다.
+`<AsyncBoundary />`는 내부적으로 `<ErrorBoundary />`를 사용하기 때문에 `useErrorBoundary`와 함께 사용할 수 있으며 `<ErrorBoundaryGroup />`의 영향을 받습니다. 우리는 라이브러리 사용자를 위한 유지 관리 및 인터페이스 통합에 더 좋을 것이라고 믿고 이 구성 요소를 v2에서 제거하기로 결정했습니다.
 
-`<AsyncBoundary/>`의 기능은 두 컴포넌트(`<Suspense/>`, `<Errorboundary/>`)를 하나씩 래핑하는 것입니다.
+`<AsyncBoundary />`의 기능은 두 컴포넌트(`<Suspense />`, `<Errorboundary />`)를 하나씩 래핑하는 것입니다.
 그러면 이렇게 2개로 나눌 수 있습니다.
 
 ```diff

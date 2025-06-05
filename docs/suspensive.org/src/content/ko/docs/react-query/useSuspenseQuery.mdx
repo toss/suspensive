@@ -2,7 +2,7 @@ import { Callout, Sandpack } from '@/components'
 
 # useSuspenseQuery
 
-이 hook의 return 타입에는 isLoading, isError이 없습니다. `<Suspense/>`와 `<ErrorBoundary/>`가 이 hook의 data를 보장해주기 때문입니다. 또한, 이 hook의 options에는 기본적으로 suspense가 true입니다. 필요한 새 options는 @tanstack/react-query의 [useQuery](https://tanstack.com/query/v4/docs/react/reference/useQuery)처럼 사용하면 됩니다.
+이 hook의 return 타입에는 isLoading, isError이 없습니다. `<Suspense />`와 `<ErrorBoundary />`가 이 hook의 data를 보장해주기 때문입니다. 또한, 이 hook의 options에는 기본적으로 suspense가 true입니다. 필요한 새 options는 @tanstack/react-query의 [useQuery](https://tanstack.com/query/v4/docs/react/reference/useQuery)처럼 사용하면 됩니다.
 
 ```tsx /useSuspenseQuery/
 import { useSuspenseQuery } from '@suspensive/react-query'
@@ -96,7 +96,7 @@ export const getPost = async (id: number): Promise<Post> => {
 
 ### 동기
 
-@tanstack/react-query에서 suspense 옵션을 사용하면, [useQuery](https://tanstack.com/query/v4/docs/react/reference/useQuery)를 `<Suspense/>` and `<ErrorBoundary/>`와 함께 사용할 수 있습니다.
+@tanstack/react-query에서 suspense 옵션을 사용하면, [useQuery](https://tanstack.com/query/v4/docs/react/reference/useQuery)를 `<Suspense />` and `<ErrorBoundary />`와 함께 사용할 수 있습니다.
 
 ```tsx /useQuery/
 import { useQuery } from '@tanstack/react-query'
@@ -116,7 +116,7 @@ const Example = () => {
 }
 ```
 
-useQuery의 return 타입(query.data)은 이 컴포넌트의 부모인 `<Suspense/>`와 `<ErrorBoundary/>` 덕분에 항상 성공한 경우일 것입니다.
+useQuery의 return 타입(query.data)은 이 컴포넌트의 부모인 `<Suspense />`와 `<ErrorBoundary />` 덕분에 항상 성공한 경우일 것입니다.
 하지만 @tanstack/react-query는 타입스크립트 타입적으로 이것을 표현하지 않습니다.
 
 이것이 @suspensive/react-query가 **useSuspenseQuery**를 제공하는 이유입니다.

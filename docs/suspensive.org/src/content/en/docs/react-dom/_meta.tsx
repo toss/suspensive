@@ -6,5 +6,5 @@ export default {
     type: 'separator',
     title: 'API Reference',
   },
-  InView: { title: '<InView/>' },
+  InView: { title: '<InView />' },
 } satisfies MetaRecord

@@ -9,7 +9,7 @@ Therefore, we will maintain support for @tanstack/react-query v4.
 
 ## What's new
 
-### New `<SuspenseQuery/>`, `<SuspenseInfiniteQuery/>` [#775](https://github.com/toss/suspensive/pull/775)
+### New `<SuspenseQuery />`, `<SuspenseInfiniteQuery />` [#775](https://github.com/toss/suspensive/pull/775)
 
 Because the existing useSuspenseQuery is a hook, it creates components with names such as AuthorInfo and PostList to place Suspense and ErrorBoundary on the parent.
 This makes it difficult to predict what suspense and errors will be thrown inside AuthorInfo and PostList.
@@ -71,7 +71,7 @@ const PostList = ({ userId }) => {
 }
 ```
 
-#### Solution: Let's reveal that suspense occurs with `<SuspenseQuery/>`
+#### Solution: Let's reveal that suspense occurs with `<SuspenseQuery />`
 
 Therefore, we provide these components to clearly express what causes suspension at the same depth.
 

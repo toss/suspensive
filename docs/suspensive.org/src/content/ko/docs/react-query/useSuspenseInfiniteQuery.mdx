@@ -2,7 +2,7 @@ import { Callout, Sandpack } from '@/components'
 
 # useSuspenseInfiniteQuery
 
-이 hook의 return 타입에는 isLoading, isError이 없습니다. `<Suspense/>` and `<ErrorBoundary/>`가 이 hook의 data를 보장해주기 때문입니다. 또한, 이 hook의 options에는 기본적으로 suspense가 true입니다. 필요한 새 options는 @tanstack/react-query의 [useInfiniteQuery](https://tanstack.com/query/v4/docs/react/reference/useInfiniteQuery)처럼 사용하면 됩니다.
+이 hook의 return 타입에는 isLoading, isError이 없습니다. `<Suspense />` and `<ErrorBoundary />`가 이 hook의 data를 보장해주기 때문입니다. 또한, 이 hook의 options에는 기본적으로 suspense가 true입니다. 필요한 새 options는 @tanstack/react-query의 [useInfiniteQuery](https://tanstack.com/query/v4/docs/react/reference/useInfiniteQuery)처럼 사용하면 됩니다.
 
 ```tsx /useSuspenseInfiniteQuery/
 import { useSuspenseInfiniteQuery } from '@suspensive/react-query'
@@ -133,7 +133,7 @@ export const getPosts = async (
 
 ### 동기
 
-@tanstack/react-query에서 suspense 옵션을 사용하면, [useInfiniteQuery](https://tanstack.com/query/v4/docs/react/reference/useInfiniteQuery)를 `<Suspense/>`, `<ErrorBoundary/>`와 함께 사용할 수 있습니다.
+@tanstack/react-query에서 suspense 옵션을 사용하면, [useInfiniteQuery](https://tanstack.com/query/v4/docs/react/reference/useInfiniteQuery)를 `<Suspense />`, `<ErrorBoundary />`와 함께 사용할 수 있습니다.
 
 ```tsx /useInfiniteQuery/
 import { useInfiniteQuery } from '@tanstack/react-query'
@@ -153,7 +153,7 @@ const Example = () => {
 }
 ```
 
-하지만 useInfiniteQuery의 return 타입(query.data)은 이 컴포넌트의 부모인 `<Suspense/>` 덕분에 항상 성공한 경우일 것입니다.
+하지만 useInfiniteQuery의 return 타입(query.data)은 이 컴포넌트의 부모인 `<Suspense />` 덕분에 항상 성공한 경우일 것입니다.
 
 이것이 @suspensive/react-query가 **useSuspenseInfiniteQuery**를 제공하는 이유입니다.
 

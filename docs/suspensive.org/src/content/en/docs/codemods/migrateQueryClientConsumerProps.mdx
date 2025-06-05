@@ -1,6 +1,6 @@
 import { Callout } from '@/components'
 
-# Migrate `<QueryClientConsumer/>` Props
+# Migrate `<QueryClientConsumer />` Props
 
 <Callout type='info'>
 
@@ -8,7 +8,7 @@ This codemod is recommended for updating `@suspensive/react-query` & `@tanstack/
 
 </Callout>
 
-In the `@suspensive/react-query` & `@tanstack/react-query@5` environment, the `context` prop of the `<QueryClientConsumer/>` component provided by `@suspensive/react-query` has been changed to `queryClient`.
+In the `@suspensive/react-query` & `@tanstack/react-query@5` environment, the `context` prop of the `<QueryClientConsumer />` component provided by `@suspensive/react-query` has been changed to `queryClient`.
 
 ```bash filename="Terminal"
 npx @suspensive/codemods migrate-query-client-consumer-props .

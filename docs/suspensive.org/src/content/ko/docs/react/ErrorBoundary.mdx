@@ -7,7 +7,7 @@ import { Callout, Sandpack } from '@/components'
 
 ### props.fallback
 
-`<ErrorBoundary/>`의 children에 error가 발생하면 error는 잡히고 fallback이 렌더링됩니다.
+`<ErrorBoundary />`의 children에 error가 발생하면 error는 잡히고 fallback이 렌더링됩니다.
 
 ```tsx /fallback/
 import { ErrorBoundary } from '@suspensive/react'
@@ -79,11 +79,11 @@ export const ErrorAfter2s = () => {
 
 <Callout type='info'>
 
-`<ErrorBoundary/>`의 fallback으로 전달할 컴포넌트 정의하기
+`<ErrorBoundary />`의 fallback으로 전달할 컴포넌트 정의하기
 
 #### ErrorBoundaryFallbackProps
 
-`<ErrorBoundary/>`의 fallback으로 컴포넌트를 전달하고 싶다면 `ErrorBoundaryFallbackProps` 타입을 활용해 쉽게 컴포넌트를 선언할 수 있습니다.
+`<ErrorBoundary />`의 fallback으로 컴포넌트를 전달하고 싶다면 `ErrorBoundaryFallbackProps` 타입을 활용해 쉽게 컴포넌트를 선언할 수 있습니다.
 
 ```tsx /ErrorBoundaryFallbackProps/
 import type { ErrorBoundaryFallbackProps } from '@suspensive/react'
@@ -109,7 +109,7 @@ const Example = () => (
 
 <Callout>
 
-`<ErrorBoundary/>` fallback props을 prop drilling 없이 사용하기
+`<ErrorBoundary />` fallback props을 prop drilling 없이 사용하기
 
 #### useErrorBoundaryFallbackProps
 
@@ -144,7 +144,7 @@ const Example = () => (
 
 ### props.resetKeys
 
-`<ErrorBoundary/>`의 fallback 외부에 있는 컴포넌트가 `<ErrorBoundary/>`를 reset하려면 resetKeys배열에 resetKey를 할당하면 됩니다. resetKeys는 배열의 하나 이상의 요소가 변경된 경우에만 작동합니다. useEffect의 종속성 배열이 작동하는 방식과 같이 resetKeys로 매 렌더링마다 새 배열을 주입하는 것을 걱정할 필요도 없습니다.
+`<ErrorBoundary />`의 fallback 외부에 있는 컴포넌트가 `<ErrorBoundary />`를 reset하려면 resetKeys배열에 resetKey를 할당하면 됩니다. resetKeys는 배열의 하나 이상의 요소가 변경된 경우에만 작동합니다. useEffect의 종속성 배열이 작동하는 방식과 같이 resetKeys로 매 렌더링마다 새 배열을 주입하는 것을 걱정할 필요도 없습니다.
 
 ```tsx /resetKeys/
 import { ErrorBoundary } from '@suspensive/react'
@@ -220,7 +220,7 @@ export const ErrorAfter2s = () => {
 
 ### props.onReset
 
-`<ErrorBoundary/>`가 reset할 때 먼저 호출되는 callback입니다. @tanstack/react-query와는 아래와 같이 사용할 수 있습니다.
+`<ErrorBoundary />`가 reset할 때 먼저 호출되는 callback입니다. @tanstack/react-query와는 아래와 같이 사용할 수 있습니다.
 
 ```tsx /onReset/
 import { ErrorBoundary } from '@suspensive/react'
@@ -303,7 +303,7 @@ export const fetchSomething = () => {
 
 ### props.onError
 
-`<ErrorBoundary/>`가 error를 잡을 때 호출되는 callback입니다.
+`<ErrorBoundary />`가 error를 잡을 때 호출되는 callback입니다.
 
 ```tsx /onError/
 import { ErrorBoundary } from '@suspensive/react'
@@ -375,7 +375,7 @@ export const ErrorAfter2s = () => {
 
 ### props.shouldCatch
 
-shouldCatch는 조건에 따라 `<ErrorBoundary/>`가 에러를 잡을지 결정합니다.
+shouldCatch는 조건에 따라 `<ErrorBoundary />`가 에러를 잡을지 결정합니다.
 
 Boolean, ErrorConstructor, Callback의 3가지 기준을 받으며 기본값은 `true`입니다.
 
@@ -600,7 +600,7 @@ export const ErrorAfter2s = () => {
 
 ## ErrorBoundary.with
 
-`ErrorBoundary.with`는 `<ErrorBoundary/>`의 props를 설정할 수 있는 HOC입니다.
+`ErrorBoundary.with`는 `<ErrorBoundary />`의 props를 설정할 수 있는 HOC입니다.
 `ErrorBoundary.with`를 사용하면 컴포넌트를 쉽게 래핑할 수 있습니다.
 
 ```tsx /ErrorBoundary.with/
@@ -617,7 +617,7 @@ const Example = ErrorBoundary.with({ fallback: ErrorBoundaryFallback }, () => {
 
 ### useErrorBoundary().setError
 
-`<ErrorBoundary/>`의 children에서 useErrorBoundary().setError을 사용해 throw 없이도 `<ErrorBoundary/>`에서 Error를 알도록 할 수 있습니다.
+`<ErrorBoundary />`의 children에서 useErrorBoundary().setError을 사용해 throw 없이도 `<ErrorBoundary />`에서 Error를 알도록 할 수 있습니다.
 
 ```tsx /useErrorBoundary/
 import { ErrorBoundary, useErrorBoundary } from '@suspensive/react'
@@ -696,9 +696,9 @@ export const fetchSomething = () => {
 
 <Callout>
 
-다수의 `<ErrorBoundary/>`를 제어하기
+다수의 `<ErrorBoundary />`를 제어하기
 
-`<ErrorBoundary/>`은 `<ErrorBoundaryGroup/>`과 사용하면 더 강력하게 사용할 수 있습니다. `<ErrorBoundaryGroup/>`로 다수의 `<ErrorBoundary/>`를 제어하세요.  
-자세한 내용은 [`<ErrorBoundaryGroup/>`페이지](/docs/react/ErrorBoundaryGroup)에서 소개합니다.
+`<ErrorBoundary />`은 `<ErrorBoundaryGroup />`과 사용하면 더 강력하게 사용할 수 있습니다. `<ErrorBoundaryGroup />`로 다수의 `<ErrorBoundary />`를 제어하세요.  
+자세한 내용은 [`<ErrorBoundaryGroup />`페이지](/docs/react/ErrorBoundaryGroup)에서 소개합니다.
 
 </Callout>
