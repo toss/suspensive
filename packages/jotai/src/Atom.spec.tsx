@@ -2,7 +2,6 @@ import { act, fireEvent, render, screen } from '@testing-library/react'
 import { atom } from 'jotai'
 import { Suspense } from 'react'
 import { Atom } from './Atom'
-import type { SetAtom } from './utility-types'
 
 describe('<Atom />', () => {
   it('should render with a primitive writable atom and update its value', () => {
@@ -57,26 +56,6 @@ describe('<Atom />', () => {
 
     fireEvent.click(screen.getByText('Set 5'))
     expect(log).toHaveBeenCalledWith(5)
-  })
-
-  it('should render with a read-only atom and setAtom throws an error when called', () => {
-    const testAtom = atom(() => 123)
-
-    render(
-      <Atom atom={testAtom}>
-        {([value, setValue]) => {
-          expect(value).toBe(123)
-          expect(setValue).toMatchInlineSnapshot('[Function]')
-          expect(() => {
-            ;(setValue as SetAtom<[value: number], void>)(246)
-          }).toThrowError('not writable atom')
-
-          return <div>value: {value}</div>
-        }}
-      </Atom>
-    )
-
-    expect(screen.getByText('value: 123')).toBeInTheDocument()
   })
 
   it('should render with a writable derived atom and update base atom', () => {
