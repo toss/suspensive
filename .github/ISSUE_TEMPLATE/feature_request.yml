@@ -1,7 +1,7 @@
 name: Feature Request
 description: Suggest an idea
 labels: [feature]
-title: "[Feature]:"
+title: '[Feature]:'
 body:
   - type: dropdown
     id: package
@@ -10,14 +10,14 @@ body:
       description: Is this issue related to a specific package?
       multiple: true
       options:
-        - "@suspensive/react"
-        - "@suspensive/react-dom"
-        - "@suspensive/react-native"
-        - "@suspensive/react-query"
-        - "@suspensive/react-query-4"
-        - "@suspensive/react-query-5"
-        - "@suspensive/jotai"
-        - "@suspensive/codemods"
+        - '@suspensive/react'
+        - '@suspensive/react-dom'
+        - '@suspensive/react-native'
+        - '@suspensive/react-query'
+        - '@suspensive/react-query-4'
+        - '@suspensive/react-query-5'
+        - '@suspensive/jotai'
+        - '@suspensive/codemods'
         - etc
     validations:
       required: true
