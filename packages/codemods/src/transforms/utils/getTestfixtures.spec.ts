@@ -40,6 +40,24 @@ describe('getTestfixtures', () => {
     expect(mockReadFileSync).toHaveBeenCalledWith(outputPath, 'utf8')
   })
 
+  it('should correctly read input and output fixture files with default "js" extension', () => {
+    mockReadFileSync.mockImplementation((filePath: string) => {
+      if (filePath === inputPath) return mockInput
+      if (filePath === outputPath) return mockOutput
+      return ''
+    })
+
+    const result = getTestfixtures(transformName)
+
+    expect(result).toEqual({
+      input: mockInput,
+      expectedOutput: mockOutput,
+      testName: transformName,
+    })
+    expect(mockReadFileSync).toHaveBeenCalledWith(inputPath, 'utf8')
+    expect(mockReadFileSync).toHaveBeenCalledWith(outputPath, 'utf8')
+  })
+
   it('should throw an error if input file is missing', () => {
     mockReadFileSync.mockImplementation((filePath: string) => {
       if (filePath === outputPath) return mockOutput
