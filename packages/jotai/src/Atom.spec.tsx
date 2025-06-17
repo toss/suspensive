@@ -96,7 +96,7 @@ describe('<Atom />', () => {
   })
 
   it('should read an async atom using Suspense with proper loading state', async () => {
-    vi.useFakeTimers({ toFake: ['queueMicrotask'] })
+    vi.useFakeTimers()
 
     const asyncAtom = atom(async () => {
       await new Promise((resolve) => setTimeout(resolve, 100))
@@ -112,13 +112,14 @@ describe('<Atom />', () => {
     )
 
     expect(screen.getByText('loading...')).toBeInTheDocument()
+    await act(() => vi.advanceTimersByTimeAsync(100))
     await vi.waitFor(() => expect(screen.getByText('value: hello')).toBeInTheDocument())
 
     vi.useRealTimers()
   })
 
   it('should read and update an async atom using Suspense with proper loading state', async () => {
-    vi.useFakeTimers({ toFake: ['queueMicrotask'] })
+    vi.useFakeTimers()
 
     const baseAtom = atom(0)
     const asyncReadableAtom = atom(async (get) => {
@@ -152,9 +153,11 @@ describe('<Atom />', () => {
     )
 
     expect(screen.getByText('loading...')).toBeInTheDocument()
+    await act(() => vi.advanceTimersByTimeAsync(100))
     await vi.waitFor(() => expect(screen.getByText('value: 0')).toBeInTheDocument())
     fireEvent.click(screen.getByText('Set to 100'))
     await vi.waitFor(() => expect(screen.getByText('loading...')).toBeInTheDocument())
+    await act(() => vi.advanceTimersByTimeAsync(100))
     await vi.waitFor(() => expect(screen.getByText('value: 100')).toBeInTheDocument())
 
     vi.useRealTimers()
