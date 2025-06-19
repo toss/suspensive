@@ -96,6 +96,8 @@ describe('<Atom />', () => {
   })
 
   it('should read an async atom using Suspense with proper loading state', async () => {
+    vi.useFakeTimers()
+
     const asyncAtom = atom(async () => {
       await new Promise((resolve) => setTimeout(resolve, 100))
       return 'hello'
@@ -110,10 +112,15 @@ describe('<Atom />', () => {
     )
 
     expect(screen.getByText('loading...')).toBeInTheDocument()
-    expect(await screen.findByText('value: hello')).toBeInTheDocument()
+    await act(() => vi.advanceTimersByTimeAsync(100))
+    expect(screen.getByText('value: hello')).toBeInTheDocument()
+
+    vi.useRealTimers()
   })
 
   it('should read and update an async atom using Suspense with proper loading state', async () => {
+    vi.useFakeTimers()
+
     const baseAtom = atom(0)
     const asyncReadableAtom = atom(async (get) => {
       await new Promise((resolve) => setTimeout(resolve, 100))
@@ -146,9 +153,14 @@ describe('<Atom />', () => {
     )
 
     expect(screen.getByText('loading...')).toBeInTheDocument()
-    expect(await screen.findByText('value: 0')).toBeInTheDocument()
+    await act(() => vi.advanceTimersByTimeAsync(100))
+    expect(screen.getByText('value: 0')).toBeInTheDocument()
     fireEvent.click(screen.getByText('Set to 100'))
-    expect(await screen.findByText('loading...')).toBeInTheDocument()
-    expect(await screen.findByText('value: 100')).toBeInTheDocument()
+    await act(() => vi.advanceTimersByTimeAsync(100))
+    expect(screen.getByText('loading...')).toBeInTheDocument()
+    await act(() => vi.advanceTimersByTimeAsync(100))
+    expect(screen.getByText('value: 100')).toBeInTheDocument()
+
+    vi.useRealTimers()
   })
 })

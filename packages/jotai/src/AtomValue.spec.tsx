@@ -32,6 +32,8 @@ describe('<AtomValue />', () => {
   })
 
   it('should render with an async atom and resolve the value', async () => {
+    vi.useFakeTimers()
+
     const asyncAtom = atom(async () => {
       await new Promise((resolve) => setTimeout(resolve, 100))
       return 'hello'
@@ -46,6 +48,9 @@ describe('<AtomValue />', () => {
     )
 
     expect(screen.getByText('loading...')).toBeInTheDocument()
-    expect(await screen.findByText('value: hello')).toBeInTheDocument()
+    await act(() => vi.advanceTimersByTimeAsync(100))
+    expect(screen.getByText('value: hello')).toBeInTheDocument()
+
+    vi.useRealTimers()
   })
 })
