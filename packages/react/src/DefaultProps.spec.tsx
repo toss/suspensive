@@ -1,5 +1,4 @@
 import { render, screen, waitFor } from '@testing-library/react'
-import ms from 'ms'
 import { createElement, useContext } from 'react'
 import { DelayDefaultPropsContext, SuspenseDefaultPropsContext } from './contexts'
 import { DefaultProps, DefaultPropsProvider } from './DefaultProps'
@@ -13,7 +12,7 @@ const FALLBACK_GLOBAL = 'FALLBACK_GLOBAL'
 describe('<DefaultPropsProvider/>', () => {
   it('should provide default ms prop of Delay', async () => {
     render(
-      <DefaultPropsProvider defaultProps={new DefaultProps({ Delay: { ms: ms('0.1s') } })}>
+      <DefaultPropsProvider defaultProps={new DefaultProps({ Delay: { ms: 100 } })}>
         <Delay>{TEXT}</Delay>
       </DefaultPropsProvider>
     )

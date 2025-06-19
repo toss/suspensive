@@ -1,5 +1,4 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react'
-import ms from 'ms'
 import { createElement } from 'react'
 import { ErrorBoundary } from './ErrorBoundary'
 import { ErrorBoundaryGroup, useErrorBoundaryGroup } from './ErrorBoundaryGroup'
@@ -27,7 +26,7 @@ describe('<ErrorBoundaryGroup/>', () => {
         </ErrorBoundaryGroup.Consumer>
         {Array.from({ length: innerErrorBoundaryCount }).map((_, i) => (
           <ErrorBoundary key={i} fallback={(props) => <div>{props.error.message}</div>}>
-            <Throw.Error message={ERROR_MESSAGE} after={ms('0.1s')}>
+            <Throw.Error message={ERROR_MESSAGE} after={100}>
               <div>{TEXT}</div>
             </Throw.Error>
           </ErrorBoundary>
@@ -56,7 +55,7 @@ describe('<ErrorBoundaryGroup/>', () => {
         {Array.from({ length: innerErrorBoundaryCount }).map((_, i) => (
           <ErrorBoundaryGroup key={i} blockOutside={i === innerErrorBoundaryCount - 1}>
             <ErrorBoundary fallback={(props) => <div>{props.error.message}</div>}>
-              <Throw.Error message={ERROR_MESSAGE} after={ms('0.1s')}>
+              <Throw.Error message={ERROR_MESSAGE} after={100}>
                 <div>{TEXT}</div>
               </Throw.Error>
             </ErrorBoundary>

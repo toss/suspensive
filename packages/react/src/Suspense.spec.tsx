@@ -1,5 +1,4 @@
 import { render, screen, waitFor } from '@testing-library/react'
-import ms from 'ms'
 import { createElement } from 'react'
 import { DefaultProps, DefaultPropsProvider } from './DefaultProps'
 import { Suspense } from './Suspense'
@@ -27,7 +26,7 @@ describe('<Suspense/>', () => {
   it('should render the children after suspending', async () => {
     render(
       <Suspense>
-        <Suspend during={ms('0.1s')} toShow={TEXT} />
+        <Suspend during={100} toShow={TEXT} />
       </Suspense>
     )
     expect(screen.queryByText(TEXT)).not.toBeInTheDocument()
@@ -51,7 +50,7 @@ describe('<Suspense clientOnly/>', () => {
   it('should render the children after the suspending', async () => {
     render(
       <Suspense clientOnly fallback={FALLBACK}>
-        <Suspend during={ms('0.1s')} toShow={TEXT} />
+        <Suspend during={100} toShow={TEXT} />
       </Suspense>
     )
     await waitFor(() => expect(screen.queryByText(TEXT)).toBeInTheDocument())
@@ -74,7 +73,7 @@ describe('<Suspense clientOnly/>', () => {
     render(
       <DefaultPropsProvider defaultProps={defaultProps}>
         <Suspense clientOnly>
-          <Suspend during={ms('0.1s')} toShow={TEXT} />
+          <Suspend during={100} toShow={TEXT} />
         </Suspense>
       </DefaultPropsProvider>
     )
@@ -88,7 +87,7 @@ describe('Suspense.with', () => {
   beforeEach(() => Suspend.reset())
 
   it('should wrap component by Suspense', async () => {
-    render(createElement(Suspense.with({ fallback: FALLBACK }, () => <Suspend during={ms('0.1s')} toShow={TEXT} />)))
+    render(createElement(Suspense.with({ fallback: FALLBACK }, () => <Suspend during={100} toShow={TEXT} />)))
     expect(screen.queryByText(FALLBACK)).toBeInTheDocument()
     expect(screen.queryByText(TEXT)).not.toBeInTheDocument()
     await waitFor(() => expect(screen.queryByText(FALLBACK)).not.toBeInTheDocument())

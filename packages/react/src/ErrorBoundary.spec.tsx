@@ -1,6 +1,5 @@
 import { act, render, screen, waitFor } from '@testing-library/react'
 import { userEvent } from '@testing-library/user-event'
-import ms from 'ms'
 import { type ComponentRef, createElement, createRef } from 'react'
 import { ErrorBoundary as ReactErrorBoundary } from 'react-error-boundary'
 import {
@@ -20,7 +19,7 @@ describe('<ErrorBoundary/>', () => {
     const onError = vi.fn()
     render(
       <ErrorBoundary onError={onError} fallback={<>{FALLBACK}</>}>
-        <Throw.Error message={ERROR_MESSAGE} after={ms('0.1s')}>
+        <Throw.Error message={ERROR_MESSAGE} after={100}>
           {TEXT}
         </Throw.Error>
       </ErrorBoundary>
@@ -36,7 +35,7 @@ describe('<ErrorBoundary/>', () => {
   it('should show children if no error but if error in children, catch it and show fallback component', async () => {
     render(
       <ErrorBoundary fallback={(props) => <>{props.error.message}</>}>
-        <Throw.Error message={ERROR_MESSAGE} after={ms('0.1s')}>
+        <Throw.Error message={ERROR_MESSAGE} after={100}>
           {TEXT}
         </Throw.Error>
       </ErrorBoundary>
@@ -61,7 +60,7 @@ describe('<ErrorBoundary/>', () => {
     const onError = vi.fn()
     render(
       <ErrorBoundary onError={onError} fallback={<>{FALLBACK}</>}>
-        <Throw.Null after={ms('0.1s')}>{TEXT}</Throw.Null>
+        <Throw.Null after={100}>{TEXT}</Throw.Null>
       </ErrorBoundary>
     )
     expect(screen.queryByText(TEXT)).toBeInTheDocument()
@@ -76,7 +75,7 @@ describe('<ErrorBoundary/>', () => {
     const onReset = vi.fn()
     const { rerender } = render(
       <ErrorBoundary resetKeys={[0]} fallback={(props) => props.error.message} onReset={onReset}>
-        <Throw.Error message={ERROR_MESSAGE} after={ms('0.1s')}>
+        <Throw.Error message={ERROR_MESSAGE} after={100}>
           {TEXT}
         </Throw.Error>
       </ErrorBoundary>
@@ -88,7 +87,7 @@ describe('<ErrorBoundary/>', () => {
     expect(onReset).toHaveBeenCalledTimes(0)
     rerender(
       <ErrorBoundary resetKeys={[1]} fallback={(props) => props.error.message} onReset={onReset}>
-        <Throw.Error message={ERROR_MESSAGE} after={ms('0.1s')}>
+        <Throw.Error message={ERROR_MESSAGE} after={100}>
           {TEXT}
         </Throw.Error>
       </ErrorBoundary>
@@ -101,7 +100,7 @@ describe('<ErrorBoundary/>', () => {
     const onReset = vi.fn()
     const { rerender } = render(
       <ErrorBoundary resetKeys={[0]} fallback={(props) => props.error.message} onReset={onReset}>
-        <Throw.Error message={ERROR_MESSAGE} after={ms('0.1s')}>
+        <Throw.Error message={ERROR_MESSAGE} after={100}>
           {TEXT}
         </Throw.Error>
       </ErrorBoundary>
@@ -113,7 +112,7 @@ describe('<ErrorBoundary/>', () => {
     expect(onReset).toHaveBeenCalledTimes(0)
     rerender(
       <ErrorBoundary resetKeys={[0, 1]} fallback={(props) => props.error.message} onReset={onReset}>
-        <Throw.Error message={ERROR_MESSAGE} after={ms('0.1s')}>
+        <Throw.Error message={ERROR_MESSAGE} after={100}>
           {TEXT}
         </Throw.Error>
       </ErrorBoundary>
@@ -127,7 +126,7 @@ describe('<ErrorBoundary/>', () => {
     const fallbackFn = vi.fn<(props: ErrorBoundaryFallbackProps) => undefined>()
     render(
       <ErrorBoundary fallback={fallbackFn} onReset={onReset}>
-        <Throw.Error message={ERROR_MESSAGE} after={ms('0.1s')}>
+        <Throw.Error message={ERROR_MESSAGE} after={100}>
           {TEXT}
         </Throw.Error>
       </ErrorBoundary>
@@ -149,7 +148,7 @@ describe('<ErrorBoundary/>', () => {
     const ref = createRef<ComponentRef<typeof ErrorBoundary>>()
     render(
       <ErrorBoundary ref={ref} fallback={(props) => <>{props.error.message}</>} onReset={onReset}>
-        <Throw.Error message={ERROR_MESSAGE} after={ms('0.1s')}>
+        <Throw.Error message={ERROR_MESSAGE} after={100}>
           {TEXT}
         </Throw.Error>
       </ErrorBoundary>
@@ -394,13 +393,13 @@ describe('useErrorBoundary', () => {
         onError={onError}
         fallback={function ErrorBoundaryFallback() {
           const props = useErrorBoundaryFallbackProps()
-          useTimeout(props.reset, ms('0.1s'))
+          useTimeout(props.reset, 100)
           return <>{props.error.message}</>
         }}
       >
         {createElement(() => {
           const errorBoundary = useErrorBoundary()
-          useTimeout(() => errorBoundary.setError(new Error(ERROR_MESSAGE)), ms('0.1s'))
+          useTimeout(() => errorBoundary.setError(new Error(ERROR_MESSAGE)), 100)
           return <>{TEXT}</>
         })}
       </ErrorBoundary>
@@ -459,12 +458,12 @@ describe('useErrorBoundaryFallbackProps', () => {
         onReset={onReset}
         fallback={function ErrorBoundaryFallback() {
           const props = useErrorBoundaryFallbackProps()
-          useTimeout(props.reset, ms('0.1s'))
+          useTimeout(props.reset, 100)
 
           return <>{props.error.message}</>
         }}
       >
-        <Throw.Error message={ERROR_MESSAGE} after={ms('0.1s')}>
+        <Throw.Error message={ERROR_MESSAGE} after={100}>
           {TEXT}
         </Throw.Error>
       </ErrorBoundary>
@@ -551,7 +550,7 @@ describe('ErrorBoundary.with', () => {
     render(
       createElement(
         ErrorBoundary.with({ fallback: (props) => <>{props.error.message}</> }, () => (
-          <Throw.Error message={ERROR_MESSAGE} after={ms('0.1s')}>
+          <Throw.Error message={ERROR_MESSAGE} after={100}>
             {TEXT}
           </Throw.Error>
         ))
