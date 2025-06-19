@@ -49,7 +49,7 @@ describe('<AtomValue />', () => {
 
     expect(screen.getByText('loading...')).toBeInTheDocument()
     await act(() => vi.advanceTimersByTimeAsync(100))
-    await vi.waitFor(() => expect(screen.getByText('value: hello')).toBeInTheDocument())
+    expect(screen.getByText('value: hello')).toBeInTheDocument()
 
     vi.useRealTimers()
   })
