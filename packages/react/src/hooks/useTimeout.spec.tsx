@@ -1,5 +1,4 @@
 import { render, renderHook, screen } from '@testing-library/react'
-import ms from 'ms'
 import { useState } from 'react'
 import { sleep } from '../test-utils'
 import { useTimeout } from './useTimeout'
@@ -7,12 +6,12 @@ import { useTimeout } from './useTimeout'
 describe('useTimeout', () => {
   it('should run given function once after given timeout', async () => {
     const spy = vi.fn()
-    const result = renderHook(() => useTimeout(spy, ms('0.1s')))
+    const result = renderHook(() => useTimeout(spy, 100))
     expect(spy).toHaveBeenCalledTimes(0)
-    await sleep(ms('0.1s'))
+    await sleep(100)
     expect(spy).toHaveBeenCalledTimes(1)
-    result.rerender(() => useTimeout(spy, ms('0.1s')))
-    await sleep(ms('0.1s'))
+    result.rerender(() => useTimeout(spy, 100))
+    await sleep(100)
     expect(spy).toHaveBeenCalledTimes(1)
   })
 
@@ -20,7 +19,7 @@ describe('useTimeout', () => {
     const timeoutMockFn1 = vi.fn()
     const timeoutMockFn2 = vi.fn()
 
-    const { rerender } = renderHook(({ fn }) => useTimeout(fn, ms('0.1s')), {
+    const { rerender } = renderHook(({ fn }) => useTimeout(fn, 100), {
       initialProps: { fn: timeoutMockFn1 },
     })
 
@@ -29,7 +28,7 @@ describe('useTimeout', () => {
     expect(timeoutMockFn1).toHaveBeenCalledTimes(0)
     expect(timeoutMockFn2).toHaveBeenCalledTimes(0)
 
-    await sleep(ms('0.1s'))
+    await sleep(100)
 
     expect(timeoutMockFn1).toHaveBeenCalledTimes(0)
     expect(timeoutMockFn2).toHaveBeenCalledTimes(1)
@@ -41,14 +40,14 @@ describe('useTimeout', () => {
 
       useTimeout(() => {
         setNumber(number + 1)
-      }, ms('0.1s'))
+      }, 100)
 
       return <div>{number}</div>
     }
 
     const result = render(<TestComponent />)
     expect(screen.getByText('0')).toBeInTheDocument()
-    await sleep(ms('0.1s'))
+    await sleep(100)
     expect(screen.getByText('1')).toBeInTheDocument()
     result.rerender(<TestComponent />)
     expect(screen.getByText('1')).toBeInTheDocument()

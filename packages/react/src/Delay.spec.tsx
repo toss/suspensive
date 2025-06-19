@@ -1,5 +1,4 @@
 import { render, screen } from '@testing-library/react'
-import ms from 'ms'
 import { createElement } from 'react'
 import { DefaultProps, DefaultPropsProvider } from './DefaultProps'
 import { Delay } from './Delay'
@@ -17,9 +16,9 @@ afterEach(() => {
 
 describe('<Delay/>', () => {
   it('should render the children after the delay', async () => {
-    render(<Delay ms={ms('0.5s')}>{TEXT}</Delay>)
+    render(<Delay ms={500}>{TEXT}</Delay>)
     expect(screen.queryByText(TEXT)).not.toBeInTheDocument()
-    await vi.advanceTimersByTimeAsync(ms('0.5s'))
+    await vi.advanceTimersByTimeAsync(500)
     await vi.advanceTimersByTimeAsync(0)
     expect(screen.queryByText(TEXT)).toBeInTheDocument()
   })
@@ -37,7 +36,7 @@ describe('<Delay/>', () => {
   it('should accept function children', async () => {
     render(<Delay ms={1000}>{({ isDelayed }) => <>{isDelayed ? TEXT : 'not delayed'}</>}</Delay>)
     expect(screen.queryByText('not delayed')).toBeInTheDocument()
-    await vi.advanceTimersByTimeAsync(ms('1s'))
+    await vi.advanceTimersByTimeAsync(1000)
     await vi.advanceTimersByTimeAsync(0)
     expect(screen.queryByText(TEXT)).toBeInTheDocument()
   })
@@ -46,7 +45,7 @@ describe('<Delay/>', () => {
     const functionChildren = vi.fn(({ isDelayed }) => <>{isDelayed ? TEXT : 'not delayed'}</>)
     render(<Delay ms={0}>{functionChildren}</Delay>)
     expect(functionChildren).toHaveBeenCalledTimes(1)
-    await vi.advanceTimersByTimeAsync(ms('1s'))
+    await vi.advanceTimersByTimeAsync(1000)
     await vi.advanceTimersByTimeAsync(0)
     expect(functionChildren).toHaveBeenCalledTimes(1)
     expect(functionChildren).not.toHaveBeenCalledTimes(2)
@@ -56,7 +55,7 @@ describe('<Delay/>', () => {
     const functionChildren = vi.fn(({ isDelayed }) => <>{isDelayed ? TEXT : 'not delayed'}</>)
     render(<Delay ms={100}>{functionChildren}</Delay>)
     expect(functionChildren).toHaveBeenCalledTimes(1)
-    await vi.advanceTimersByTimeAsync(ms('1s'))
+    await vi.advanceTimersByTimeAsync(1000)
     await vi.advanceTimersByTimeAsync(0)
     expect(functionChildren).not.toHaveBeenCalledTimes(1)
     expect(functionChildren).toHaveBeenCalledTimes(2)
@@ -64,12 +63,12 @@ describe('<Delay/>', () => {
 
   it('should render fallback content initially and then the actual text after the delay', async () => {
     render(
-      <Delay ms={ms('1s')} fallback={<p role="paragraph">fallback</p>}>
+      <Delay ms={1000} fallback={<p role="paragraph">fallback</p>}>
         {TEXT}
       </Delay>
     )
     expect(screen.queryByRole('paragraph')).toBeInTheDocument()
-    await vi.advanceTimersByTimeAsync(ms('1s'))
+    await vi.advanceTimersByTimeAsync(1000)
     await vi.advanceTimersByTimeAsync(0)
     expect(screen.queryByText(TEXT)).toBeInTheDocument()
   })
@@ -100,9 +99,9 @@ describe('<Delay/>', () => {
 
 describe('Delay.with', () => {
   it('renders the children after the delay with component', async () => {
-    render(createElement(Delay.with({ ms: ms('0.1s') }, () => <>{TEXT}</>)))
+    render(createElement(Delay.with({ ms: 100 }, () => <>{TEXT}</>)))
     expect(screen.queryByText(TEXT)).not.toBeInTheDocument()
-    await vi.advanceTimersByTimeAsync(ms('0.1s'))
+    await vi.advanceTimersByTimeAsync(100)
     await vi.advanceTimersByTimeAsync(0)
     await vi.waitFor(() => expect(screen.queryByText(TEXT)).toBeInTheDocument())
   })
