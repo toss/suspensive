@@ -43,6 +43,7 @@ export default function Page() {
       </Suspense>
 
       <button
+        type="button"
         onClick={() => {
           queryClient.resetQueries()
         }}
@@ -51,6 +52,7 @@ export default function Page() {
       </button>
 
       <button
+        type="button"
         onClick={() => {
           queryClient.invalidateQueries(query.text(500))
         }}
@@ -59,6 +61,7 @@ export default function Page() {
       </button>
 
       <button
+        type="button"
         onClick={() => {
           queryClient.invalidateQueries(query.text(200))
         }}

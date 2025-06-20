@@ -6,7 +6,9 @@ export default function App() {
   const [isClicked, setIsClicked] = useState(false)
   return (
     <>
-      <button onClick={() => setIsClicked(true)}>click to render</button>
+      <button type="button" onClick={() => setIsClicked(true)}>
+        click to render
+      </button>
       {isClicked ? (
         <Suspense fallback={<Fallback />}>
           {Array.from({ length: 10 }, (_, i) => (

@@ -11,7 +11,11 @@ import { type PropsWithChildren, useEffect, useState } from 'react'
 function ErrorBoundaryFallback({ error }: ErrorBoundaryFallbackProps) {
   const props = useErrorBoundaryFallbackProps()
 
-  return <button onClick={props.reset}>reset: {error.message}</button>
+  return (
+    <button type="button" onClick={props.reset}>
+      reset: {error.message}
+    </button>
+  )
 }
 
 function ErrorComponent() {
@@ -20,7 +24,7 @@ function ErrorComponent() {
   return (
     <ThrowError message="error message set by ThrowError" after={2000}>
       No Error{' '}
-      <button onClick={() => errorBoundary.setError(new Error('error message set by useErrorBoundary'))}>
+      <button type="button" onClick={() => errorBoundary.setError(new Error('error message set by useErrorBoundary'))}>
         setError by useErrorBoundary
       </button>
     </ThrowError>

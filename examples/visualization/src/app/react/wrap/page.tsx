@@ -13,7 +13,10 @@ export default ErrorBoundaryGroup.with(
 
       return (
         <div>
-          <button onClick={() => errorBoundary.setError(new Error('trigger error by useErrorBoundary().setError'))}>
+          <button
+            type="button"
+            onClick={() => errorBoundary.setError(new Error('trigger error by useErrorBoundary().setError'))}
+          >
             trigger error by useErrorBoundary().setError
           </button>
           {text}
