@@ -15,10 +15,18 @@ export default function Page() {
     <div>
       <div>State: {state}</div>
 
-      <button onClick={() => store.set(1)}>1</button>
-      <button onClick={() => store.set(2)}>2</button>
-      <button onClick={() => store.set(3)}>3</button>
-      <button onClick={() => store.set(4)}>4</button>
+      <button type="button" onClick={() => store.set(1)}>
+        1
+      </button>
+      <button type="button" onClick={() => store.set(2)}>
+        2
+      </button>
+      <button type="button" onClick={() => store.set(3)}>
+        3
+      </button>
+      <button type="button" onClick={() => store.set(4)}>
+        4
+      </button>
     </div>
   )
 }
