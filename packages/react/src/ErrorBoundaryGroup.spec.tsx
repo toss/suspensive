@@ -1,4 +1,4 @@
-import { fireEvent, render, screen, waitFor } from '@testing-library/react'
+import { act, fireEvent, render, screen } from '@testing-library/react'
 import { createElement } from 'react'
 import { ErrorBoundary } from './ErrorBoundary'
 import { ErrorBoundaryGroup, useErrorBoundaryGroup } from './ErrorBoundaryGroup'
@@ -15,6 +15,8 @@ describe('<ErrorBoundaryGroup/>', () => {
   beforeEach(() => Throw.reset())
 
   it('should reset all ErrorBoundaries in children', async () => {
+    vi.useFakeTimers()
+
     render(
       <ErrorBoundaryGroup>
         <ErrorBoundaryGroup.Consumer>
@@ -35,14 +37,18 @@ describe('<ErrorBoundaryGroup/>', () => {
     )
 
     expect(screen.getAllByText(TEXT).length).toBe(innerErrorBoundaryCount)
-    await waitFor(() => expect(screen.getAllByText(ERROR_MESSAGE).length).toBe(innerErrorBoundaryCount))
-
+    await act(() => vi.advanceTimersByTime(100))
+    expect(screen.getAllByText(ERROR_MESSAGE).length).toBe(innerErrorBoundaryCount)
     fireEvent.click(screen.getByRole('button', { name: resetButtonText }))
     expect(screen.getAllByText(TEXT).length).toBe(innerErrorBoundaryCount)
     expect(screen.queryByText(ERROR_MESSAGE)).not.toBeInTheDocument()
+
+    vi.useRealTimers()
   })
 
   it('should reset all ErrorBoundaries in children even if it is nested, but if use blockOutside, can block reset by outside', async () => {
+    vi.useFakeTimers()
+
     render(
       <ErrorBoundaryGroup>
         <ErrorBoundaryGroup.Consumer>
@@ -65,11 +71,13 @@ describe('<ErrorBoundaryGroup/>', () => {
     )
 
     expect(screen.getAllByText(TEXT).length).toBe(innerErrorBoundaryCount)
-    await waitFor(() => expect(screen.getAllByText(ERROR_MESSAGE).length).toBe(innerErrorBoundaryCount))
-
+    await act(() => vi.advanceTimersByTime(100))
+    expect(screen.getAllByText(ERROR_MESSAGE).length).toBe(innerErrorBoundaryCount)
     fireEvent.click(screen.getByRole('button', { name: resetButtonText }))
     expect(screen.getAllByText(TEXT).length).toBe(innerErrorBoundaryCount - 1)
     expect(screen.getAllByText(ERROR_MESSAGE).length).toBe(1)
+
+    vi.useRealTimers()
   })
 })
 
@@ -123,6 +131,7 @@ describe('ErrorBoundaryGroup.with', () => {
         })
       )
     )
+
     expect(rendered.queryByText(TEXT)).toBeInTheDocument()
   })
 
@@ -135,12 +144,14 @@ describe('ErrorBoundaryGroup.with', () => {
         })
       )
     )
+
     expect(rendered.queryByText(TEXT)).toBeInTheDocument()
   })
 
   it('should set displayName based on Component.displayName', () => {
     const Component = () => <></>
     Component.displayName = 'Custom'
+
     expect(ErrorBoundaryGroup.with({}, Component).displayName).toBe('ErrorBoundaryGroup.with(Custom)')
     expect(ErrorBoundaryGroup.with({}, () => <></>).displayName).toBe('ErrorBoundaryGroup.with(Component)')
   })
