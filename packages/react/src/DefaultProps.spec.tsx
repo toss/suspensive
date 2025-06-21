@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from '@testing-library/react'
+import { act, render, screen } from '@testing-library/react'
 import { createElement, useContext } from 'react'
 import { DelayDefaultPropsContext, SuspenseDefaultPropsContext } from './contexts'
 import { DefaultProps, DefaultPropsProvider } from './DefaultProps'
@@ -11,36 +11,48 @@ const FALLBACK_GLOBAL = 'FALLBACK_GLOBAL'
 
 describe('<DefaultPropsProvider/>', () => {
   it('should provide default ms prop of Delay', async () => {
+    vi.useFakeTimers()
+
     render(
       <DefaultPropsProvider defaultProps={new DefaultProps({ Delay: { ms: 100 } })}>
         <Delay>{TEXT}</Delay>
       </DefaultPropsProvider>
     )
+
     expect(screen.queryByText(TEXT)).not.toBeInTheDocument()
-    await waitFor(() => expect(screen.queryByText(TEXT)).toBeInTheDocument())
+    await act(() => vi.advanceTimersByTime(100))
+    expect(screen.queryByText(TEXT)).toBeInTheDocument()
+
+    vi.useRealTimers()
   })
+
   it('should accept defaultProps with nothing about Delay', () => {
     render(
       <DefaultPropsProvider defaultProps={new DefaultProps({})}>
         <Delay>{TEXT}</Delay>
       </DefaultPropsProvider>
     )
+
     expect(screen.queryByText(TEXT)).toBeInTheDocument()
   })
+
   it('should accept empty defaultProps', () => {
     render(
       <DefaultPropsProvider defaultProps={new DefaultProps({})}>
         <Delay>{TEXT}</Delay>
       </DefaultPropsProvider>
     )
+
     expect(screen.queryByText(TEXT)).toBeInTheDocument()
   })
+
   it('should accept no defaultProps', () => {
     render(
       <DefaultPropsProvider defaultProps={new DefaultProps()}>
         <Delay>{TEXT}</Delay>
       </DefaultPropsProvider>
     )
+
     expect(screen.queryByText(TEXT)).toBeInTheDocument()
   })
 
@@ -52,8 +64,10 @@ describe('<DefaultPropsProvider/>', () => {
         </Suspense>
       </DefaultPropsProvider>
     )
+
     expect(screen.queryByText(FALLBACK_GLOBAL)).toBeInTheDocument()
   })
+
   it('should accept defaultProps.Suspense.fallback to setup default fallback of Suspense. If Suspense accepted local fallback, Suspense should ignore default fallback and show it', () => {
     render(
       <DefaultPropsProvider defaultProps={new DefaultProps({ Suspense: { fallback: FALLBACK_GLOBAL } })}>
@@ -62,6 +76,7 @@ describe('<DefaultPropsProvider/>', () => {
         </Suspense>
       </DefaultPropsProvider>
     )
+
     expect(screen.queryByText(FALLBACK_GLOBAL)).not.toBeInTheDocument()
     expect(screen.queryByText(FALLBACK)).toBeInTheDocument()
   })
@@ -73,6 +88,7 @@ describe('<DefaultPropsProvider/>', () => {
         </Suspense>
       </DefaultPropsProvider>
     )
+
     expect(screen.queryByText(FALLBACK_GLOBAL)).not.toBeInTheDocument()
   })
 
@@ -86,6 +102,7 @@ describe('<DefaultPropsProvider/>', () => {
         })}
       </DefaultPropsProvider>
     )
+
     expect(clientOnly1).toBe(true)
 
     let clientOnly2: SuspenseProps['clientOnly'] = undefined
@@ -97,6 +114,7 @@ describe('<DefaultPropsProvider/>', () => {
         })}
       </DefaultPropsProvider>
     )
+
     expect(clientOnly2).toBe(false)
 
     const clientOnly3: SuspenseProps['clientOnly'] = undefined
@@ -108,6 +126,7 @@ describe('<DefaultPropsProvider/>', () => {
         })}
       </DefaultPropsProvider>
     )
+
     expect(clientOnly3).toBeUndefined()
   })
 
@@ -119,11 +138,14 @@ describe('<DefaultPropsProvider/>', () => {
         </Delay>
       </DefaultPropsProvider>
     )
+
     expect(screen.queryByText(FALLBACK_GLOBAL)).not.toBeInTheDocument()
     expect(screen.queryByText(TEXT)).not.toBeInTheDocument()
   })
+
   it('should accept defaultOptions.delay.ms only positive number', () => {
     expect(() => new DefaultProps({ Delay: { ms: 0 } })).toThrow(Message_DefaultProp_delay_ms_should_be_greater_than_0)
+
     try {
       new DefaultProps({ Delay: { ms: 0 } })
     } catch (error) {
@@ -133,6 +155,7 @@ describe('<DefaultPropsProvider/>', () => {
     }
 
     expect(() => new DefaultProps({ Delay: { ms: -1 } })).toThrow(Message_DefaultProp_delay_ms_should_be_greater_than_0)
+
     try {
       new DefaultProps({ Delay: { ms: -1 } })
     } catch (error) {
@@ -143,6 +166,7 @@ describe('<DefaultPropsProvider/>', () => {
 
     const defaultPropsMs = 100
     let ms: DelayProps['ms'] = undefined
+
     render(
       <DefaultPropsProvider defaultProps={new DefaultProps({ Delay: { ms: defaultPropsMs } })}>
         {createElement(() => {
@@ -151,6 +175,7 @@ describe('<DefaultPropsProvider/>', () => {
         })}
       </DefaultPropsProvider>
     )
+
     expect(ms).toBe(defaultPropsMs)
   })
 })
