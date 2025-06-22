@@ -12,11 +12,14 @@ const innerErrorBoundaryCount = 3
 const resetButtonText = 'reset button'
 
 describe('<ErrorBoundaryGroup/>', () => {
-  beforeEach(() => Throw.reset())
+  beforeEach(() => vi.useFakeTimers())
+
+  afterEach(() => {
+    vi.useRealTimers()
+    Throw.reset()
+  })
 
   it('should reset all ErrorBoundaries in children', async () => {
-    vi.useFakeTimers()
-
     render(
       <ErrorBoundaryGroup>
         <ErrorBoundaryGroup.Consumer>
@@ -42,13 +45,9 @@ describe('<ErrorBoundaryGroup/>', () => {
     fireEvent.click(screen.getByRole('button', { name: resetButtonText }))
     expect(screen.getAllByText(TEXT).length).toBe(innerErrorBoundaryCount)
     expect(screen.queryByText(ERROR_MESSAGE)).not.toBeInTheDocument()
-
-    vi.useRealTimers()
   })
 
   it('should reset all ErrorBoundaries in children even if it is nested, but if use blockOutside, can block reset by outside', async () => {
-    vi.useFakeTimers()
-
     render(
       <ErrorBoundaryGroup>
         <ErrorBoundaryGroup.Consumer>
@@ -76,8 +75,6 @@ describe('<ErrorBoundaryGroup/>', () => {
     fireEvent.click(screen.getByRole('button', { name: resetButtonText }))
     expect(screen.getAllByText(TEXT).length).toBe(innerErrorBoundaryCount - 1)
     expect(screen.getAllByText(ERROR_MESSAGE).length).toBe(1)
-
-    vi.useRealTimers()
   })
 })
 
