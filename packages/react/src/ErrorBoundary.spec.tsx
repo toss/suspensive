@@ -101,6 +101,7 @@ describe('<ErrorBoundary/>', () => {
     expect(screen.queryByText(ERROR_MESSAGE)).toBeInTheDocument()
     expect(screen.queryByText(TEXT)).not.toBeInTheDocument()
     expect(onReset).toHaveBeenCalledTimes(0)
+
     rerender(
       <ErrorBoundary resetKeys={[1]} fallback={(props) => props.error.message} onReset={onReset}>
         <Throw.Error message={ERROR_MESSAGE} after={100}>
@@ -108,6 +109,7 @@ describe('<ErrorBoundary/>', () => {
         </Throw.Error>
       </ErrorBoundary>
     )
+
     expect(screen.queryByText(TEXT)).toBeInTheDocument()
     expect(onReset).toHaveBeenCalledTimes(1)
   })
@@ -129,6 +131,7 @@ describe('<ErrorBoundary/>', () => {
     expect(screen.queryByText(ERROR_MESSAGE)).toBeInTheDocument()
     expect(screen.queryByText(TEXT)).not.toBeInTheDocument()
     expect(onReset).toHaveBeenCalledTimes(0)
+
     rerender(
       <ErrorBoundary resetKeys={[0, 1]} fallback={(props) => props.error.message} onReset={onReset}>
         <Throw.Error message={ERROR_MESSAGE} after={100}>
@@ -136,6 +139,7 @@ describe('<ErrorBoundary/>', () => {
         </Throw.Error>
       </ErrorBoundary>
     )
+
     expect(screen.queryByText(TEXT)).toBeInTheDocument()
     expect(onReset).toHaveBeenCalledTimes(1)
   })
@@ -166,9 +170,9 @@ describe('<ErrorBoundary/>', () => {
 
   it('should be reset by ref.reset(), and call onReset', async () => {
     const onReset = vi.fn()
-
     // eslint-disable-next-line @eslint-react/no-create-ref
     const ref = createRef<ComponentRef<typeof ErrorBoundary>>()
+
     render(
       <ErrorBoundary ref={ref} fallback={(props) => <>{props.error.message}</>} onReset={onReset}>
         <Throw.Error message={ERROR_MESSAGE} after={100}>
@@ -409,11 +413,14 @@ describe('<ErrorBoundary.Consumer/>', () => {
 })
 
 describe('useErrorBoundary', () => {
-  beforeEach(() => Throw.reset())
+  beforeEach(() => vi.useFakeTimers())
+
+  afterEach(() => {
+    vi.useRealTimers()
+    Throw.reset()
+  })
 
   it('should supply setError to set Error of ErrorBoundary manually', async () => {
-    vi.useFakeTimers()
-
     const onError = vi.fn()
 
     render(
@@ -440,8 +447,6 @@ describe('useErrorBoundary', () => {
     expect(screen.queryByText(ERROR_MESSAGE)).toBeInTheDocument()
     expect(screen.queryByText(TEXT)).not.toBeInTheDocument()
     expect(onError).toHaveBeenCalledTimes(1)
-
-    vi.useRealTimers()
   })
 
   it('should guarantee hook calling position is in children of ErrorBoundary', () => {
@@ -479,12 +484,16 @@ describe('useErrorBoundary', () => {
 })
 
 describe('useErrorBoundaryFallbackProps', () => {
-  beforeEach(() => Throw.reset())
+  beforeEach(() => vi.useFakeTimers())
+
+  afterEach(() => {
+    vi.useRealTimers()
+    Throw.reset()
+  })
 
   it('should supply reset function and error to reset in fallback of ErrorBoundary', async () => {
-    vi.useFakeTimers()
-
     const onReset = vi.fn()
+
     render(
       <ErrorBoundary
         onReset={onReset}
@@ -512,12 +521,11 @@ describe('useErrorBoundaryFallbackProps', () => {
     expect(screen.queryByText(TEXT)).toBeInTheDocument()
     expect(screen.queryByText(ERROR_MESSAGE)).not.toBeInTheDocument()
     expect(onReset).toHaveBeenCalledTimes(1)
-
-    vi.useRealTimers()
   })
 
   it('should guarantee hook calling position is in fallback of ErrorBoundary', () => {
     const inFallback = vi.fn()
+
     expect(() =>
       render(
         <ErrorBoundary
@@ -549,6 +557,7 @@ describe('useErrorBoundaryFallbackProps', () => {
 
   it("should be prevented to be called in children of ErrorBoundary (ErrorBoundary shouldn't catch SuspensiveError)", () => {
     const inFallback = vi.fn()
+
     expect(() =>
       render(
         <ErrorBoundary
@@ -569,7 +578,12 @@ describe('useErrorBoundaryFallbackProps', () => {
 })
 
 describe('ErrorBoundary.with', () => {
-  beforeEach(() => Throw.reset())
+  beforeEach(() => vi.useFakeTimers())
+
+  afterEach(() => {
+    vi.useRealTimers()
+    Throw.reset()
+  })
 
   it("should render the wrapped component when there's no error", () => {
     render(createElement(ErrorBoundary.with({ fallback: (props) => <>{props.error.message}</> }, () => <>{TEXT}</>)))
@@ -584,8 +598,6 @@ describe('ErrorBoundary.with', () => {
   })
 
   it('should render the fallback when there`s an error in the wrapped component', async () => {
-    vi.useFakeTimers()
-
     render(
       createElement(
         ErrorBoundary.with({ fallback: (props) => <>{props.error.message}</> }, () => (
@@ -599,8 +611,6 @@ describe('ErrorBoundary.with', () => {
     expect(screen.queryByText(TEXT)).toBeInTheDocument()
     await act(() => vi.advanceTimersByTime(100))
     expect(screen.queryByText(ERROR_MESSAGE)).toBeInTheDocument()
-
-    vi.useRealTimers()
   })
 
   it('should set displayName based on Component.displayName', () => {
