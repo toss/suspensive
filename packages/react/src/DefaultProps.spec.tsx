@@ -10,9 +10,11 @@ import { CustomError, FALLBACK, Suspend, TEXT } from './test-utils'
 const FALLBACK_GLOBAL = 'FALLBACK_GLOBAL'
 
 describe('<DefaultPropsProvider/>', () => {
-  it('should provide default ms prop of Delay', async () => {
-    vi.useFakeTimers()
+  beforeEach(() => vi.useFakeTimers())
 
+  afterEach(() => vi.useRealTimers())
+
+  it('should provide default ms prop of Delay', async () => {
     render(
       <DefaultPropsProvider defaultProps={new DefaultProps({ Delay: { ms: 100 } })}>
         <Delay>{TEXT}</Delay>
@@ -22,8 +24,6 @@ describe('<DefaultPropsProvider/>', () => {
     expect(screen.queryByText(TEXT)).not.toBeInTheDocument()
     await act(() => vi.advanceTimersByTime(100))
     expect(screen.queryByText(TEXT)).toBeInTheDocument()
-
-    vi.useRealTimers()
   })
 
   it('should accept defaultProps with nothing about Delay', () => {
@@ -80,6 +80,7 @@ describe('<DefaultPropsProvider/>', () => {
     expect(screen.queryByText(FALLBACK_GLOBAL)).not.toBeInTheDocument()
     expect(screen.queryByText(FALLBACK)).toBeInTheDocument()
   })
+
   it('should accept defaultProps.Suspense.fallback to setup default fallback of Suspense. If Suspense accepted local fallback as null, Suspense should ignore default fallback. even though local fallback is nullish', () => {
     render(
       <DefaultPropsProvider defaultProps={new DefaultProps({ Suspense: { fallback: FALLBACK_GLOBAL } })}>
