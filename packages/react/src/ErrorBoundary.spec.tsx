@@ -13,12 +13,12 @@ import { SuspensiveError } from './models/SuspensiveError'
 import { CustomError, ERROR_MESSAGE, FALLBACK, TEXT, Throw } from './test-utils'
 
 describe('<ErrorBoundary/>', () => {
-  beforeEach(() => {
-    vi.useFakeTimers()
+  beforeEach(() => vi.useFakeTimers())
+
+  afterEach(() => {
+    vi.useRealTimers()
     Throw.reset()
   })
-
-  afterEach(() => vi.useRealTimers())
 
   it('should show children if no error but if error in children, catch it and show fallback and call onError', async () => {
     const onError = vi.fn()
