@@ -4,6 +4,10 @@ import { Suspense } from 'react'
 import { AtomValue } from './AtomValue'
 
 describe('<AtomValue />', () => {
+  beforeEach(() => vi.useFakeTimers())
+
+  afterEach(() => vi.useRealTimers())
+
   it('should render with a primitive atom', () => {
     const countAtom = atom(10)
 
@@ -32,8 +36,6 @@ describe('<AtomValue />', () => {
   })
 
   it('should render with an async atom and resolve the value', async () => {
-    vi.useFakeTimers()
-
     const asyncAtom = atom(async () => {
       await new Promise((resolve) => setTimeout(resolve, 100))
       return 'hello'
@@ -50,7 +52,5 @@ describe('<AtomValue />', () => {
     expect(screen.getByText('loading...')).toBeInTheDocument()
     await act(() => vi.advanceTimersByTimeAsync(100))
     expect(screen.getByText('value: hello')).toBeInTheDocument()
-
-    vi.useRealTimers()
   })
 })
