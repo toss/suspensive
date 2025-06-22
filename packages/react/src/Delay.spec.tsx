@@ -99,16 +99,16 @@ describe('<Delay/>', () => {
 })
 
 describe('Delay.with', () => {
-  it('renders the children after the delay with component', async () => {
-    vi.useFakeTimers()
+  beforeEach(() => vi.useFakeTimers())
 
+  afterEach(() => vi.useRealTimers())
+
+  it('renders the children after the delay with component', async () => {
     render(createElement(Delay.with({ ms: 100 }, () => <>{TEXT}</>)))
 
     expect(screen.queryByText(TEXT)).not.toBeInTheDocument()
     await act(() => vi.advanceTimersByTime(100))
-    await vi.waitFor(() => expect(screen.queryByText(TEXT)).toBeInTheDocument())
-
-    vi.useRealTimers()
+    expect(screen.queryByText(TEXT)).toBeInTheDocument()
   })
 
   it('should use default delayProps when undefined is provided', () => {
