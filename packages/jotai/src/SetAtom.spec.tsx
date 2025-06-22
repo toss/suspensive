@@ -5,6 +5,10 @@ import { AtomValue } from './AtomValue'
 import { SetAtom } from './SetAtom'
 
 describe('<SetAtom />', () => {
+  beforeEach(() => vi.useFakeTimers())
+
+  afterEach(() => vi.useRealTimers())
+
   it('should render with a primitive writable atom and update its value', () => {
     const countAtom = atom(0)
 
@@ -76,8 +80,6 @@ describe('<SetAtom />', () => {
   })
 
   it('should read and update an async atom using Suspense with proper loading state', async () => {
-    vi.useFakeTimers()
-
     const baseAtom = atom(0)
     const asyncReadableAtom = atom(async (get) => {
       await new Promise((resolve) => setTimeout(resolve, 100))
@@ -115,7 +117,5 @@ describe('<SetAtom />', () => {
     expect(screen.getByText('loading...')).toBeInTheDocument()
     await act(() => vi.advanceTimersByTimeAsync(100))
     expect(screen.getByText('value: 100')).toBeInTheDocument()
-
-    vi.useRealTimers()
   })
 })
