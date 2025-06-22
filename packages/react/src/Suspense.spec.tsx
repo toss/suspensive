@@ -5,7 +5,12 @@ import { Suspense } from './Suspense'
 import { FALLBACK, Suspend, TEXT } from './test-utils'
 
 describe('<Suspense/>', () => {
-  beforeEach(() => Suspend.reset())
+  beforeEach(() => vi.useFakeTimers())
+
+  afterEach(() => {
+    vi.useRealTimers()
+    Suspend.reset()
+  })
 
   it('should render the children if nothing to suspend', () => {
     render(<Suspense fallback={FALLBACK}>{TEXT}</Suspense>)
@@ -26,8 +31,6 @@ describe('<Suspense/>', () => {
   })
 
   it('should render the children after suspending', async () => {
-    vi.useFakeTimers()
-
     render(
       <Suspense>
         <Suspend during={100} toShow={TEXT} />
@@ -37,13 +40,16 @@ describe('<Suspense/>', () => {
     expect(screen.queryByText(TEXT)).not.toBeInTheDocument()
     await act(() => vi.advanceTimersByTime(100))
     expect(screen.queryByText(TEXT)).toBeInTheDocument()
-
-    vi.useRealTimers()
   })
 })
 
 describe('<Suspense clientOnly/>', () => {
-  beforeEach(() => Suspend.reset())
+  beforeEach(() => vi.useFakeTimers())
+
+  afterEach(() => {
+    vi.useRealTimers()
+    Suspend.reset()
+  })
 
   it('should render the fallback during suspending', () => {
     render(
@@ -57,8 +63,6 @@ describe('<Suspense clientOnly/>', () => {
   })
 
   it('should render the children after the suspending', async () => {
-    vi.useFakeTimers()
-
     render(
       <Suspense clientOnly fallback={FALLBACK}>
         <Suspend during={100} toShow={TEXT} />
@@ -68,8 +72,6 @@ describe('<Suspense clientOnly/>', () => {
     await act(() => vi.advanceTimersByTime(100))
     expect(screen.queryByText(TEXT)).toBeInTheDocument()
     expect(screen.queryByText(FALLBACK)).not.toBeInTheDocument()
-
-    vi.useRealTimers()
   })
 
   it('should render the children if nothing to suspend in children', () => {
@@ -100,11 +102,14 @@ describe('<Suspense clientOnly/>', () => {
 })
 
 describe('Suspense.with', () => {
-  beforeEach(() => Suspend.reset())
+  beforeEach(() => vi.useFakeTimers())
+
+  afterEach(() => {
+    vi.useRealTimers()
+    Suspend.reset()
+  })
 
   it('should wrap component by Suspense', async () => {
-    vi.useFakeTimers()
-
     render(createElement(Suspense.with({ fallback: FALLBACK }, () => <Suspend during={100} toShow={TEXT} />)))
 
     expect(screen.queryByText(FALLBACK)).toBeInTheDocument()
@@ -113,8 +118,6 @@ describe('Suspense.with', () => {
     expect(screen.queryByText(FALLBACK)).not.toBeInTheDocument()
     expect(screen.queryByText(TEXT)).toBeInTheDocument()
     expect(screen.queryByText(FALLBACK)).not.toBeInTheDocument()
-
-    vi.useRealTimers()
   })
 
   it('should use default suspenseProps when undefined is provided', () => {
