@@ -44,6 +44,7 @@ describe('<Delay/>', () => {
     render(<Delay ms={0}>{functionChildren}</Delay>)
 
     expect(functionChildren).toHaveBeenCalledTimes(1)
+    await act(() => vi.advanceTimersByTime(100))
     expect(functionChildren).toHaveBeenCalledTimes(1)
     expect(functionChildren).not.toHaveBeenCalledTimes(2)
   })
