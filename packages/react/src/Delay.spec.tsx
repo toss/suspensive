@@ -38,7 +38,7 @@ describe('<Delay/>', () => {
     expect(screen.queryByText(TEXT)).toBeInTheDocument()
   })
 
-  it('should not rerender if ms is = 0', () => {
+  it('should not rerender if ms is = 0', async () => {
     const functionChildren = vi.fn(({ isDelayed }) => <>{isDelayed ? TEXT : 'not delayed'}</>)
 
     render(<Delay ms={0}>{functionChildren}</Delay>)
