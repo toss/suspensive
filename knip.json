@@ -2,7 +2,7 @@
   "$schema": "https://unpkg.com/knip@5/schema.json",
   "ignoreWorkspaces": ["examples/**"],
   "ignore": ["**/test-utils/**"],
-  "ignoreDependencies": ["ms", "@testing-library/user-event"],
+  "ignoreDependencies": ["@testing-library/user-event"],
   "workspaces": {
     ".": {
       "ignore": ["packlint.config.mjs"],
