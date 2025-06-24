@@ -5,6 +5,7 @@ import { mockAllIsIntersecting } from './test-utils'
 describe('<InView/>', () => {
   it('should render <InView /> intersecting', () => {
     const callback = vi.fn()
+
     render(<InView onChange={callback}>{({ isInView, ref }) => <div ref={ref}>{isInView.toString()}</div>}</InView>)
 
     mockAllIsIntersecting(false)
@@ -12,7 +13,6 @@ describe('<InView/>', () => {
       isInView: false,
       entry: expect.objectContaining({ isIntersecting: false }),
     })
-
     mockAllIsIntersecting(true)
     expect(callback).toHaveBeenLastCalledWith({
       isInView: true,
@@ -20,18 +20,18 @@ describe('<InView/>', () => {
     })
   })
 
-  // eslint-disable-next-line vitest/expect-expect
   it('should handle initialIsInView', () => {
-    const cb = vi.fn()
+    const callback = vi.fn()
+
     render(
-      <InView initialIsInView onChange={cb}>
+      <InView initialIsInView onChange={callback}>
         {({ isInView }) => <span>InView: {isInView.toString()}</span>}
       </InView>
     )
-    screen.getByText('InView: true')
+
+    expect(screen.getByText('InView: true')).toBeInTheDocument()
   })
 
-  // eslint-disable-next-line vitest/expect-expect
   it('should unobserve old node', () => {
     const { rerender } = render(
       <InView>
@@ -42,6 +42,9 @@ describe('<InView/>', () => {
         )}
       </InView>
     )
+
+    expect(screen.getByText('Inview: false')).toBeInTheDocument()
+
     rerender(
       <InView>
         {({ isInView, ref }) => (
@@ -51,12 +54,18 @@ describe('<InView/>', () => {
         )}
       </InView>
     )
+
     mockAllIsIntersecting(true)
+    expect(screen.getByText('Inview: true')).toBeInTheDocument()
   })
 
-  // eslint-disable-next-line vitest/expect-expect
   it('should ensure node exists before observing and unobserving', () => {
-    const { unmount } = render(<InView>{() => null}</InView>)
+    const callback = vi.fn()
+
+    const { unmount } = render(<InView onChange={callback}>{() => null}</InView>)
+
     unmount()
+
+    expect(callback).not.toHaveBeenCalled()
   })
 })
