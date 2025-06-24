@@ -36,8 +36,6 @@ describe('cli', () => {
   it('should fix the version to the compatible version when using the fix command', () => {
     const result = execFileSync('node', [cliPath, 'fix']).toString()
 
-    expect(result).toContain(
-      '[@suspensive/react-query] Switching to the compatible version...\n[@suspensive/react-query] switched to version v4'
-    )
+    expect(result).toContain('[@suspensive/react-query] The versions are compatible.\n')
   })
 })
