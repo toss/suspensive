@@ -4,27 +4,27 @@ import { mockAllIsIntersecting } from './test-utils'
 
 describe('<InView/>', () => {
   it('should render <InView /> intersecting', () => {
-    const callback = vi.fn()
+    const onChange = vi.fn()
 
-    render(<InView onChange={callback}>{({ isInView, ref }) => <div ref={ref}>{isInView.toString()}</div>}</InView>)
+    render(<InView onChange={onChange}>{({ isInView, ref }) => <div ref={ref}>{isInView.toString()}</div>}</InView>)
 
     mockAllIsIntersecting(false)
-    expect(callback).toHaveBeenLastCalledWith({
+    expect(onChange).toHaveBeenLastCalledWith({
       isInView: false,
       entry: expect.objectContaining({ isIntersecting: false }),
     })
     mockAllIsIntersecting(true)
-    expect(callback).toHaveBeenLastCalledWith({
+    expect(onChange).toHaveBeenLastCalledWith({
       isInView: true,
       entry: expect.objectContaining({ isIntersecting: true }),
     })
   })
 
   it('should handle initialIsInView', () => {
-    const callback = vi.fn()
+    const onChange = vi.fn()
 
     render(
-      <InView initialIsInView onChange={callback}>
+      <InView initialIsInView onChange={onChange}>
         {({ isInView }) => <span>InView: {isInView.toString()}</span>}
       </InView>
     )
@@ -60,12 +60,12 @@ describe('<InView/>', () => {
   })
 
   it('should ensure node exists before observing and unobserving', () => {
-    const callback = vi.fn()
+    const onChange = vi.fn()
 
-    const { unmount } = render(<InView onChange={callback}>{() => null}</InView>)
+    const { unmount } = render(<InView onChange={onChange}>{() => null}</InView>)
 
     unmount()
 
-    expect(callback).not.toHaveBeenCalled()
+    expect(onChange).not.toHaveBeenCalled()
   })
 })
