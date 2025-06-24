@@ -1,5 +1,11 @@
 # @suspensive/react-dom
 
+## 3.2.3
+
+### Patch Changes
+
+- [#1631](https://github.com/toss/suspensive/pull/1631) [`9ba127e`](https://github.com/toss/suspensive/commit/9ba127ee1e7e21b626e7dca8ad2ad56a0c3ee2dc) Thanks [@sukvvon](https://github.com/sukvvon)! - feat(react-dom): add JSDoc comments explaining IntersectionObserver usage
+
 ## 3.2.2
 
 ### Patch Changes
