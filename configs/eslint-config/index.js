@@ -41,7 +41,7 @@ export const suspensiveTypeScriptConfig = tseslint.config(
         'warn',
         {
           cspell: {
-            words: ['packlint', 'codecov', 'tsup', 'nextra', 'Sandpack', 'codemod', 'codemods'],
+            words: ['packlint', 'codecov', 'tsup', 'nextra', 'Sandpack', 'codemod', 'codemods', 'jscodeshift'],
           },
         },
       ],
