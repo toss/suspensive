@@ -6,8 +6,7 @@ export default defineConfig({
     name: packageJson.name,
     dir: './src',
     globals: true,
-    coverage: {
-      provider: 'istanbul',
-    },
+    coverage: { enabled: true, provider: 'istanbul' },
+    typecheck: { enabled: true },
   },
 })
