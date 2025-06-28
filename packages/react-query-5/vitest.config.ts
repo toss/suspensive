@@ -8,8 +8,7 @@ export default defineConfig({
     environment: 'jsdom',
     globals: true,
     setupFiles: './vitest.setup.ts',
-    coverage: {
-      provider: 'istanbul',
-    },
+    coverage: { enabled: true, provider: 'istanbul' },
+    typecheck: { enabled: true },
   },
 })
