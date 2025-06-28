@@ -4,103 +4,6 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
-catalogs:
-  default:
-    '@next/eslint-plugin-next':
-      specifier: ^15.3.3
-      version: 15.3.3
-    '@next/third-parties':
-      specifier: ^15.3.3
-      version: 15.3.3
-    '@tailwindcss/postcss':
-      specifier: ^4.1.8
-      version: 4.1.8
-    babel-jest:
-      specifier: ^29.7.0
-      version: 29.7.0
-    clsx:
-      specifier: ^2.1.1
-      version: 2.1.1
-    jest:
-      specifier: ^29.7.0
-      version: 29.7.0
-    next:
-      specifier: ^15.3.3
-      version: 15.3.3
-    prettier-plugin-tailwindcss:
-      specifier: ^0.6.12
-      version: 0.6.12
-    sharp:
-      specifier: ^0.34.2
-      version: 0.34.2
-    tailwindcss:
-      specifier: ^4.1.8
-      version: 4.1.8
-  react-query4:
-    '@tanstack/react-query':
-      specifier: ^4.39.1
-      version: 4.39.1
-    '@tanstack/react-query-devtools':
-      specifier: ^4.39.1
-      version: 4.39.1
-  react-query5:
-    '@tanstack/react-query':
-      specifier: ^5.79.0
-      version: 5.79.0
-    '@tanstack/react-query-devtools':
-      specifier: ^5.79.0
-      version: 5.79.0
-    '@tanstack/react-query-next-experimental':
-      specifier: ^5.79.0
-      version: 5.79.0
-  react18:
-    '@types/react':
-      specifier: 18.3.12
-      version: 18.3.12
-    '@types/react-dom':
-      specifier: 18.3.1
-      version: 18.3.1
-    react:
-      specifier: 18.3.1
-      version: 18.3.1
-    react-dom:
-      specifier: 18.3.1
-      version: 18.3.1
-  react19:
-    '@react-navigation/native':
-      specifier: ^7.0.14
-      version: 7.0.14
-    '@testing-library/react-native':
-      specifier: ^12.9.0
-      version: 12.9.0
-    '@types/react':
-      specifier: ^19.1.6
-      version: 19.1.6
-    '@types/react-dom':
-      specifier: ^19.1.2
-      version: 19.1.2
-    expo:
-      specifier: ^52.0.24
-      version: 52.0.24
-    expo-router:
-      specifier: ^4.0.16
-      version: 4.0.16
-    jest-expo:
-      specifier: ^52.0.2
-      version: 52.0.2
-    react:
-      specifier: ^19.1.0
-      version: 19.1.0
-    react-dom:
-      specifier: ^19.1.0
-      version: 19.1.0
-    react-native:
-      specifier: ^0.76.6
-      version: 0.76.6
-    react-native-web:
-      specifier: ^0.19.13
-      version: 0.19.13
-
 importers:
 
   .:
@@ -135,9 +38,6 @@ importers:
       '@vitest/coverage-istanbul':
         specifier: ^3.1.4
         version: 3.1.4(vitest@3.1.4)
-      '@vitest/coverage-v8':
-        specifier: ^3.1.4
-        version: 3.1.4(@vitest/browser@3.1.4)(vitest@3.1.4)
       '@vitest/ui':
         specifier: ^3.1.4
         version: 3.1.4(vitest@3.1.4)
@@ -1566,10 +1466,6 @@ packages:
 
   '@bcoe/v8-coverage@0.2.3':
     resolution: {integrity: sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==}
-
-  '@bcoe/v8-coverage@1.0.2':
-    resolution: {integrity: sha512-6zABk/ECA/QYSCQ1NGiVwwbQerUCZ+TQbp64Q3AgmfNvurHH0j8TtXa1qbShXA6qqkpAj4V5W8pP6mLe1mcMqA==}
-    engines: {node: '>=18'}
 
   '@braidai/lang@1.1.0':
     resolution: {integrity: sha512-xyJYkiyNQtTyCLeHxZmOs7rnB94D+N1IjKNArQIh8+8lTBOY7TFgwEV+Ow5a1uaBi5j2w9fLbWcJFTWLDItl5g==}
@@ -3890,15 +3786,6 @@ packages:
     resolution: {integrity: sha512-WcGed2Bad8T96tSPr7zLsLS8SBiGuTnoEUAf/wLeA2rOTTFo9N2Mrxr6//v4qleXsYh+o2nd+gZ63KcNB8fgjg==}
     peerDependencies:
       vitest: 3.1.4
-
-  '@vitest/coverage-v8@3.1.4':
-    resolution: {integrity: sha512-G4p6OtioySL+hPV7Y6JHlhpsODbJzt1ndwHAFkyk6vVjpK03PFsKnauZIzcd0PrK4zAbc5lc+jeZ+eNGiMA+iw==}
-    peerDependencies:
-      '@vitest/browser': 3.1.4
-      vitest: 3.1.4
-    peerDependenciesMeta:
-      '@vitest/browser':
-        optional: true
 
   '@vitest/eslint-plugin@1.1.43':
     resolution: {integrity: sha512-OLoUMO67Yg+kr7E6SjF5+Qvl2f6uNJ7ImQYnXT8WgnPiZE41ZQBsnzn70jehXrhFVadphHs2smk+yl0TFKLV5Q==}
@@ -11865,8 +11752,6 @@ snapshots:
 
   '@bcoe/v8-coverage@0.2.3': {}
 
-  '@bcoe/v8-coverage@1.0.2': {}
-
   '@braidai/lang@1.1.0': {}
 
   '@braintree/sanitize-url@7.1.0': {}
@@ -14910,26 +14795,6 @@ snapshots:
       test-exclude: 7.0.1
       tinyrainbow: 2.0.0
       vitest: 3.1.4(@types/debug@4.1.12)(@types/node@22.14.1)(@vitest/browser@3.1.4)(@vitest/ui@3.1.4)(jiti@2.4.2)(jsdom@26.1.0)(lightningcss@1.30.1)(msw@2.7.3(@types/node@22.14.1)(typescript@5.8.3))(terser@5.37.0)(tsx@4.19.3)(yaml@2.8.0)
-    transitivePeerDependencies:
-      - supports-color
-
-  '@vitest/coverage-v8@3.1.4(@vitest/browser@3.1.4)(vitest@3.1.4)':
-    dependencies:
-      '@ampproject/remapping': 2.3.0
-      '@bcoe/v8-coverage': 1.0.2
-      debug: 4.4.0
-      istanbul-lib-coverage: 3.2.2
-      istanbul-lib-report: 3.0.1
-      istanbul-lib-source-maps: 5.0.6
-      istanbul-reports: 3.1.7
-      magic-string: 0.30.17
-      magicast: 0.3.5
-      std-env: 3.9.0
-      test-exclude: 7.0.1
-      tinyrainbow: 2.0.0
-      vitest: 3.1.4(@types/debug@4.1.12)(@types/node@22.14.1)(@vitest/browser@3.1.4)(@vitest/ui@3.1.4)(jiti@2.4.2)(jsdom@26.1.0)(lightningcss@1.30.1)(msw@2.7.3(@types/node@22.14.1)(typescript@5.8.3))(terser@5.37.0)(tsx@4.19.3)(yaml@2.8.0)
-    optionalDependencies:
-      '@vitest/browser': 3.1.4(msw@2.7.3(@types/node@22.14.1)(typescript@5.8.3))(playwright@1.52.0)(vite@6.3.5(@types/node@22.14.1)(jiti@2.4.2)(lightningcss@1.30.1)(terser@5.37.0)(tsx@4.19.3)(yaml@2.8.0))(vitest@3.1.4)
     transitivePeerDependencies:
       - supports-color
 
