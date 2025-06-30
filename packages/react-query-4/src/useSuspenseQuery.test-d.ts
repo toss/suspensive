@@ -1,7 +1,6 @@
+import { type UseSuspenseQueryResult, queryOptions, useSuspenseQuery } from '@tanstack/react-query'
 import { describe, expectTypeOf, it } from 'vitest'
-import { queryOptions } from './queryOptions'
 import { queryFn, queryKey } from './test-utils'
-import { type UseSuspenseQueryResult, useSuspenseQuery } from './useSuspenseQuery'
 
 describe('useSuspenseQuery', () => {
   it('type check', () => {
@@ -47,12 +46,12 @@ describe('useSuspenseQuery', () => {
     const result = useSuspenseQuery({ queryKey, queryFn })
     expectTypeOf(result).toEqualTypeOf<UseSuspenseQueryResult<{ text: string }>>()
     expectTypeOf(result.data).toEqualTypeOf<{ text: string }>()
-    expectTypeOf(result.status).toEqualTypeOf<'success'>()
+    expectTypeOf(result.status).toEqualTypeOf<'error' | 'success'>()
 
     const selectedResult = useSuspenseQuery({ queryKey, queryFn, select: (data) => data.text })
     expectTypeOf(selectedResult).toEqualTypeOf<UseSuspenseQueryResult<string>>()
     expectTypeOf(selectedResult.data).toEqualTypeOf<string>()
-    expectTypeOf(selectedResult.status).toEqualTypeOf<'success'>()
+    expectTypeOf(selectedResult.status).toEqualTypeOf<'error' | 'success'>()
 
     const options = queryOptions({
       queryKey,
@@ -62,7 +61,7 @@ describe('useSuspenseQuery', () => {
     const resultWithOptions = useSuspenseQuery(options)
     expectTypeOf(resultWithOptions).toEqualTypeOf<UseSuspenseQueryResult<{ text: string }>>()
     expectTypeOf(resultWithOptions.data).toEqualTypeOf<{ text: string }>()
-    expectTypeOf(resultWithOptions.status).toEqualTypeOf<'success'>()
+    expectTypeOf(resultWithOptions.status).toEqualTypeOf<'error' | 'success'>()
 
     const selectedResultWithOptions = useSuspenseQuery({
       ...options,
@@ -70,6 +69,6 @@ describe('useSuspenseQuery', () => {
     })
     expectTypeOf(selectedResultWithOptions).toEqualTypeOf<UseSuspenseQueryResult<string>>()
     expectTypeOf(selectedResultWithOptions.data).toEqualTypeOf<string>()
-    expectTypeOf(selectedResultWithOptions.status).toEqualTypeOf<'success'>()
+    expectTypeOf(selectedResultWithOptions.status).toEqualTypeOf<'error' | 'success'>()
   })
 })

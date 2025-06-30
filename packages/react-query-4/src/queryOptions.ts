@@ -1,6 +1,9 @@
-import type { QueryKey, UseQueryOptions } from '@tanstack/react-query'
+import { type QueryKey, type UseQueryOptions, queryOptions as original_queryOptions } from '@tanstack/react-query'
 import type { OmitKeyof, RequiredKeyof } from './utility-types'
 
+/**
+ * @deprecated There is no `SelectedQueryOptions` in \@tanstack/react-query@^4.40.0.
+ */
 export type SelectedQueryOptions<
   TQueryFnData = unknown,
   TError = unknown,
@@ -29,6 +32,9 @@ export type SelectedQueryOptions<
   select: (data: TQueryFnData) => TData
 }
 
+/**
+ * @deprecated There is no `UnSelectedQueryOptions` in \@tanstack/react-query@^4.40.0.
+ */
 export type UnSelectedQueryOptions<
   TQueryFnData = unknown,
   TError = unknown,
@@ -58,29 +64,12 @@ export type UnSelectedQueryOptions<
 }
 
 /**
- * Creates a reusable query options object that can be used across different query hooks.
- * Provides better type inference and easier query key management.
- *
- * @see {@link https://suspensive.org/docs/react-query/queryOptions Suspensive Docs}
+ * This feature is officially supported in \@tanstack/react-query@^4.40.0, You can proceed with the migration.
+ * @deprecated Use `queryOptions` from \@tanstack/react-query@^4.40.0
+ * @example
+ * ```diff
+ * - import { queryOptions } from '@suspensive/react-query'
+ * + import { queryOptions } from '@tanstack/react-query'
+ * ```
  */
-export function queryOptions<
-  TQueryFnData = unknown,
-  TError = unknown,
-  TData = TQueryFnData,
-  TQueryKey extends QueryKey = QueryKey,
->(
-  options: SelectedQueryOptions<TQueryFnData, TError, TData, TQueryKey>
-): SelectedQueryOptions<TQueryFnData, TError, TData, TQueryKey>
-
-export function queryOptions<
-  TQueryFnData = unknown,
-  TError = unknown,
-  TData = TQueryFnData,
-  TQueryKey extends QueryKey = QueryKey,
->(
-  options: UnSelectedQueryOptions<TQueryFnData, TError, TData, TQueryKey>
-): UnSelectedQueryOptions<TQueryFnData, TError, TData, TQueryKey>
-
-export function queryOptions(options: unknown) {
-  return options
-}
+export const queryOptions = original_queryOptions

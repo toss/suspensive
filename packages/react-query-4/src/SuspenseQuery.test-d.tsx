@@ -1,9 +1,8 @@
+import { type UseSuspenseQueryResult, queryOptions } from '@tanstack/react-query'
 import type { ReactNode } from 'react'
 import { describe, expectTypeOf, it } from 'vitest'
-import { queryOptions } from './queryOptions'
 import { SuspenseQuery } from './SuspenseQuery'
 import { queryFn, queryKey } from './test-utils'
-import type { UseSuspenseQueryResult } from './useSuspenseQuery'
 
 describe('<SuspenseQuery/>', () => {
   it('type check', () => {
@@ -72,7 +71,7 @@ describe('<SuspenseQuery/>', () => {
         {(query) => {
           expectTypeOf(query).toEqualTypeOf<UseSuspenseQueryResult<{ text: string }>>()
           expectTypeOf(query.data).toEqualTypeOf<{ text: string }>()
-          expectTypeOf(query.status).toEqualTypeOf<'success'>()
+          expectTypeOf(query.status).toEqualTypeOf<'success' | 'error'>()
           return <></>
         }}
       </SuspenseQuery>
@@ -82,7 +81,7 @@ describe('<SuspenseQuery/>', () => {
         {(selectedQuery) => {
           expectTypeOf(selectedQuery).toEqualTypeOf<UseSuspenseQueryResult<string>>()
           expectTypeOf(selectedQuery.data).toEqualTypeOf<string>()
-          expectTypeOf(selectedQuery.status).toEqualTypeOf<'success'>()
+          expectTypeOf(selectedQuery.status).toEqualTypeOf<'error' | 'success'>()
           return <></>
         }}
       </SuspenseQuery>
@@ -98,7 +97,7 @@ describe('<SuspenseQuery/>', () => {
         {(query) => {
           expectTypeOf(query).toEqualTypeOf<UseSuspenseQueryResult<{ text: string }>>()
           expectTypeOf(query.data).toEqualTypeOf<{ text: string }>()
-          expectTypeOf(query.status).toEqualTypeOf<'success'>()
+          expectTypeOf(query.status).toEqualTypeOf<'error' | 'success'>()
           return <></>
         }}
       </SuspenseQuery>
@@ -108,7 +107,7 @@ describe('<SuspenseQuery/>', () => {
         {(selectedQuery) => {
           expectTypeOf(selectedQuery).toEqualTypeOf<UseSuspenseQueryResult<string>>()
           expectTypeOf(selectedQuery.data).toEqualTypeOf<string>()
-          expectTypeOf(selectedQuery.status).toEqualTypeOf<'success'>()
+          expectTypeOf(selectedQuery.status).toEqualTypeOf<'error' | 'success'>()
           return <></>
         }}
       </SuspenseQuery>
