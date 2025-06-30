@@ -1,4 +1,4 @@
-import { queryOptions } from './queryOptions'
+import { queryOptions } from '@tanstack/react-query'
 import { queryFn, queryKey } from './test-utils'
 import { usePrefetchQuery } from './usePrefetchQuery'
 
