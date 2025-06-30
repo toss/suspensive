@@ -4,4 +4,4 @@
 "@suspensive/react-query": minor
 ---
 
-chore: update react-query dependencies to version 4.40.0 and deprecate old options
+fix(react-query): update peerDependency, @tanstack/react-query to version 4.40.0 and deprecate old options
