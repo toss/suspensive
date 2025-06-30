@@ -14,7 +14,7 @@ catalog:
   "sharp": "^0.34.2"
 
   # tailwindcss
-  "prettier-plugin-tailwindcss": "^0.6.12"
+  "prettier-plugin-tailwindcss": "^0.6.13"
   "@tailwindcss/postcss": "^4.1.8"
   "tailwindcss": "^4.1.8"
   "clsx": "^2.1.1"

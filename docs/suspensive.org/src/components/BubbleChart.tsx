@@ -1,11 +1,12 @@
 'use client'
 
 import { ErrorBoundary, Suspense } from '@suspensive/react'
-import { SuspenseQuery, queryOptions } from '@suspensive/react-query-4'
+import { SuspenseQuery } from '@suspensive/react-query-4'
 import {
   QueryClient,
   QueryClientProvider,
   QueryErrorResetBoundary,
+  queryOptions,
 } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import * as d3 from 'd3'
