@@ -1,5 +1,7 @@
 # @suspensive/react-dom
 
+## 3.3.0
+
 ## 3.2.3
 
 ### Patch Changes

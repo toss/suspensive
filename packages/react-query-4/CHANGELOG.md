@@ -1,5 +1,11 @@
 # @suspensive/react-query-4
 
+## 3.3.0
+
+### Minor Changes
+
+- [#1639](https://github.com/toss/suspensive/pull/1639) [`0f20895`](https://github.com/toss/suspensive/commit/0f20895511dda9bd95dfdcacb694ff3ce456eb3f) Thanks [@manudeli](https://github.com/manudeli)! - fix(react-query): update peerDependency, @tanstack/react-query to version 4.40.0 and deprecate old options
+
 ## 3.2.3
 
 ## 3.2.2
