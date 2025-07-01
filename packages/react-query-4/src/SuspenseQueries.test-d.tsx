@@ -1,9 +1,8 @@
+import { type UseSuspenseQueryResult, queryOptions } from '@tanstack/react-query'
 import type { ReactNode } from 'react'
 import { describe, expectTypeOf, it } from 'vitest'
-import { queryOptions } from './queryOptions'
 import { SuspenseQueries } from './SuspenseQueries'
 import { queryFn, queryKey } from './test-utils'
-import type { UseSuspenseQueryResult } from './useSuspenseQuery'
 
 describe('<SuspenseQueries/>', () => {
   it('type check', () => {
@@ -27,7 +26,6 @@ describe('<SuspenseQueries/>', () => {
       <SuspenseQueries queries={[{ queryKey, queryFn }, queryOptions({ queryKey, queryFn })]}>
         {([
           query1,
-
           query2,
           // @ts-expect-error Tuple type '[UseSuspenseQueryResult<{ text: string; }, unknown>]' of length '1' has no element at index '2'.
           query3,

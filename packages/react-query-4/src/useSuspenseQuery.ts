@@ -1,37 +1,38 @@
-import { type QueryKey, type UseQueryOptions, type UseQueryResult, useQuery } from '@tanstack/react-query'
-import type { OmitKeyof } from './utility-types'
-
-export interface UseSuspenseQueryResult<TData = unknown, TError = unknown>
-  extends OmitKeyof<UseQueryResult<TData, TError>, keyof Pick<UseQueryResult, 'isPlaceholderData'>> {
-  data: TData
-  status: 'success'
-}
-
-export type UseSuspenseQueryOptions<
-  TQueryFnData = unknown,
-  TError = unknown,
-  TData = TQueryFnData,
-  TQueryKey extends QueryKey = QueryKey,
-> = OmitKeyof<
-  UseQueryOptions<TQueryFnData, TError, TData, TQueryKey>,
-  'suspense' | 'useErrorBoundary' | 'enabled' | 'placeholderData' | 'networkMode'
->
+import {
+  type UseSuspenseQueryOptions as original_UseSuspenseQueryOptions,
+  type UseSuspenseQueryResult as original_UseSuspenseQueryResult,
+  useSuspenseQuery as original_useSuspenseQuery,
+} from '@tanstack/react-query'
 
 /**
- * This hook is wrapping `useQuery` of `@tanstack/react-query` v4 with default suspense option.
- * @see {@link https://suspensive.org/docs/react-query/useSuspenseQuery Suspensive Docs}
+ * This feature is officially supported in \@tanstack/react-query@^4.40.0, You can proceed with the migration.
+ * @deprecated Use `UseSuspenseQueryOptions` from \@tanstack/react-query@^4.40.0
+ * @example
+ * ```diff
+ * - import type { UseSuspenseQueryOptions } from '@suspensive/react-query'
+ * + import type { UseSuspenseQueryOptions } from '@tanstack/react-query'
+ * ```
  */
-export function useSuspenseQuery<
-  TQueryFnData = unknown,
-  TError = unknown,
-  TData = TQueryFnData,
-  TQueryKey extends QueryKey = QueryKey,
->(options: UseSuspenseQueryOptions<TQueryFnData, TError, TData, TQueryKey>) {
-  return useQuery<TQueryFnData, TError, TData, TQueryKey>({
-    ...options,
-    enabled: true,
-    useErrorBoundary: true,
-    suspense: true,
-    networkMode: 'always',
-  }) as UseSuspenseQueryResult<TData, TError>
-}
+export type UseSuspenseQueryOptions = original_UseSuspenseQueryOptions
+
+/**
+ * This feature is officially supported in \@tanstack/react-query@^4.40.0, You can proceed with the migration.
+ * @deprecated Use `UseSuspenseQueryResult` from \@tanstack/react-query@^4.40.0
+ * @example
+ * ```diff
+ * - import type { UseSuspenseQueryResult } from '@suspensive/react-query'
+ * + import type { UseSuspenseQueryResult } from '@tanstack/react-query'
+ * ```
+ */
+export type UseSuspenseQueryResult = original_UseSuspenseQueryResult
+
+/**
+ * This feature is officially supported in \@tanstack/react-query@^4.40.0, You can proceed with the migration.
+ * @deprecated Use `useSuspenseQuery` from \@tanstack/react-query@^4.40.0
+ * @example
+ * ```diff
+ * - import { useSuspenseQuery } from '@suspensive/react-query'
+ * + import { useSuspenseQuery } from '@tanstack/react-query'
+ * ```
+ */
+export const useSuspenseQuery = original_useSuspenseQuery

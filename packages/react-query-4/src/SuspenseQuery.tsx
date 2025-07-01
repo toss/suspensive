@@ -1,6 +1,10 @@
-import type { QueryKey } from '@tanstack/react-query'
+import {
+  type QueryKey,
+  type UseSuspenseQueryOptions,
+  type UseSuspenseQueryResult,
+  useSuspenseQuery,
+} from '@tanstack/react-query'
 import type { ReactNode } from 'react'
-import { type UseSuspenseQueryOptions, type UseSuspenseQueryResult, useSuspenseQuery } from './useSuspenseQuery'
 
 /**
  * We provide these components to clearly express what causes suspense at the same depth.

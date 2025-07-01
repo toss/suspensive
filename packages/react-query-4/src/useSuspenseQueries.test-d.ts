@@ -1,8 +1,6 @@
+import { type UseSuspenseQueryResult, queryOptions, useSuspenseQueries } from '@tanstack/react-query'
 import { describe, expectTypeOf, it } from 'vitest'
-import { queryOptions } from './queryOptions'
 import { queryFn, queryKey, select } from './test-utils'
-import { useSuspenseQueries } from './useSuspenseQueries'
-import type { UseSuspenseQueryResult } from './useSuspenseQuery'
 
 describe('useSuspenseQueries', () => {
   it('type check', () => {
@@ -66,15 +64,15 @@ describe('useSuspenseQueries', () => {
     })
 
     expectTypeOf(query).toEqualTypeOf<UseSuspenseQueryResult<{ text: string }>>()
-    expectTypeOf(query.status).toEqualTypeOf<`success`>()
+    expectTypeOf(query.status).toEqualTypeOf<'error' | 'success'>()
     expectTypeOf(query.data).toEqualTypeOf<{ text: string }>()
 
     expectTypeOf(selectedQuery).toEqualTypeOf<UseSuspenseQueryResult<string>>()
-    expectTypeOf(selectedQuery.status).toEqualTypeOf<`success`>()
+    expectTypeOf(selectedQuery.status).toEqualTypeOf<'error' | 'success'>()
     expectTypeOf(selectedQuery.data).toEqualTypeOf<string>()
 
     expectTypeOf(selectedQueryByQueryOptions).toEqualTypeOf<UseSuspenseQueryResult<string>>()
-    expectTypeOf(selectedQueryByQueryOptions.status).toEqualTypeOf<`success`>()
+    expectTypeOf(selectedQueryByQueryOptions.status).toEqualTypeOf<'error' | 'success'>()
     expectTypeOf(selectedQueryByQueryOptions.data).toEqualTypeOf<string>()
   })
 })
