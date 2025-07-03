@@ -47,7 +47,7 @@ describe('<ErrorBoundaryGroup/>', () => {
     expect(screen.queryByText(ERROR_MESSAGE)).not.toBeInTheDocument()
   })
 
-  it('should reset all ErrorBoundaries in children even if it is nested, but if use blockOutside, can block reset by outside', async () => {
+  it('should reset all nested ErrorBoundaries, but blockOutside should prevent reset from outside group', async () => {
     render(
       <ErrorBoundaryGroup>
         <ErrorBoundaryGroup.Consumer>

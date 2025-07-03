@@ -11,7 +11,7 @@ const importUseIsomorphicLayoutEffect = () => {
 describe('useIsomorphicLayoutEffect', () => {
   const originalWindow = global.window
   afterEach(() => vi.resetModules())
-  it('should be useEffect in server environment', () => {
+  it('should use useEffect in server environment', () => {
     Object.defineProperty(global, 'window', {
       value: undefined,
     })
@@ -19,7 +19,7 @@ describe('useIsomorphicLayoutEffect', () => {
     expect(useIsomorphicLayoutEffect).toEqual(useEffect)
   })
 
-  it('should be useLayoutEffect in client environment', () => {
+  it('should use useLayoutEffect in client environment', () => {
     Object.defineProperty(global, 'window', {
       value: originalWindow,
     })
@@ -29,18 +29,18 @@ describe('useIsomorphicLayoutEffect', () => {
 })
 
 describe('useIsClient', () => {
-  it('should return true in client side rendering', () => {
+  it('should return true in client-side rendering', () => {
     const returnedFirst = renderHook(() => useIsClient())
     expect(returnedFirst.result.current).toBe(true)
     returnedFirst.unmount()
     const returnedSecond = renderHook(() => useIsClient())
     expect(returnedSecond.result.current).toBe(true)
   })
-  it('should return false in server side rendering', () => {
+  it('should return false in server-side rendering', () => {
     const TestComponent = () => useIsClient().toString()
     expect(reactDomServer.renderToString(<TestComponent />)).toBe('false')
   })
-  it("'s comparison with legacy useIsClientOnly", () => {
+  it('should match behavior of legacy useIsClientOnly', () => {
     // check CSR environment first
     expect(typeof document !== 'undefined').toBe(true)
     const mockUseIsClient = vi.fn(useIsClient)
@@ -50,7 +50,7 @@ describe('useIsClient', () => {
     renderHook(() => mockUseIsClient())
     expect(mockUseIsClient).toBeCalledTimes(2)
   })
-  it('improve legacy useIsClientOnly', () => {
+  it('should improve legacy useIsClientOnly', () => {
     const { useIsomorphicLayoutEffect } = importUseIsomorphicLayoutEffect()
     // check CSR environment first
     expect(typeof document !== 'undefined').toBe(true)

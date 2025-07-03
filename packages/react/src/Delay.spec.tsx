@@ -104,7 +104,7 @@ describe('Delay.with', () => {
 
   afterEach(() => vi.useRealTimers())
 
-  it('renders the children after the delay with component', async () => {
+  it('should render the children after the delay with component', async () => {
     render(createElement(Delay.with({ ms: 100 }, () => <>{TEXT}</>)))
 
     expect(screen.queryByText(TEXT)).not.toBeInTheDocument()

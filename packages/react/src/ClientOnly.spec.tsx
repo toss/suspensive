@@ -14,7 +14,7 @@ afterEach(() => {
 })
 
 describe('<ClientOnly/>', () => {
-  it('renders children when isClient is true', () => {
+  it('should render children when isClient is true', () => {
     ;(useIsClient as Mock).mockReturnValue(true)
 
     render(
@@ -27,7 +27,7 @@ describe('<ClientOnly/>', () => {
     expect(screen.queryByText('Loading...')).not.toBeInTheDocument()
   })
 
-  it('renders fallback when isClient is false', () => {
+  it('should render fallback when isClient is false', () => {
     ;(useIsClient as Mock).mockReturnValue(false)
 
     render(
@@ -42,7 +42,7 @@ describe('<ClientOnly/>', () => {
 })
 
 describe('ClientOnly.with', () => {
-  it('should wrap component. we can check by mocked useIsClient', () => {
+  it('should wrap component as verified by mocked useIsClient', () => {
     ;(useIsClient as Mock).mockReturnValue(false)
 
     render(createElement(ClientOnly.with({ fallback: 'not client' }, () => <>{TEXT}</>)))
