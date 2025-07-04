@@ -56,7 +56,7 @@ describe('<ErrorBoundary/>', () => {
     expect(screen.queryByText(TEXT)).not.toBeInTheDocument()
   })
 
-  it('requires fallback is set, if fallback is undefined, ErrorBoundary will rethrow error', () => {
+  it('should require fallback is set, if fallback is undefined, ErrorBoundary will rethrow error', () => {
     expect(() =>
       render(
         <ErrorBoundary fallback={undefined}>
@@ -544,7 +544,7 @@ describe('useErrorBoundaryFallbackProps', () => {
     expect(inFallback).toHaveBeenCalledTimes(0)
   })
 
-  it('should be prevented to be called outside fallback of ErrorBoundary', () => {
+  it('should prevent being called outside fallback of ErrorBoundary', () => {
     expect(() =>
       render(
         createElement(() => {
@@ -555,7 +555,7 @@ describe('useErrorBoundaryFallbackProps', () => {
     ).toThrow(SuspensiveError)
   })
 
-  it("should be prevented to be called in children of ErrorBoundary (ErrorBoundary shouldn't catch SuspensiveError)", () => {
+  it("should prevent being called in children of ErrorBoundary (ErrorBoundary shouldn't catch SuspensiveError)", () => {
     const inFallback = vi.fn()
 
     expect(() =>
