@@ -27,9 +27,6 @@ catalogs:
     next:
       specifier: ^15.3.3
       version: 15.3.3
-    prettier-plugin-tailwindcss:
-      specifier: ^0.6.13
-      version: 0.6.13
     sharp:
       specifier: ^0.34.2
       version: 0.34.2
@@ -165,6 +162,9 @@ importers:
       prettier:
         specifier: ^3.5.3
         version: 3.5.3
+      prettier-plugin-tailwindcss:
+        specifier: ^0.6.13
+        version: 0.6.13(prettier@3.5.3)
       publint:
         specifier: ^0.3.12
         version: 0.3.12
@@ -318,9 +318,6 @@ importers:
       pagefind:
         specifier: ^1.3.0
         version: 1.3.0
-      prettier-plugin-tailwindcss:
-        specifier: 'catalog:'
-        version: 0.6.13(prettier@3.5.3)
       tailwindcss:
         specifier: 'catalog:'
         version: 4.1.8
@@ -367,9 +364,6 @@ importers:
       '@types/react-dom':
         specifier: catalog:react19
         version: 19.1.2(@types/react@19.1.6)
-      prettier-plugin-tailwindcss:
-        specifier: 'catalog:'
-        version: 0.6.13(prettier@3.5.3)
       tailwindcss:
         specifier: 'catalog:'
         version: 4.1.8
@@ -421,7 +415,7 @@ importers:
         version: 29.7.0(@types/node@22.14.1)(ts-node@10.9.2(@types/node@22.14.1)(typescript@5.8.3))
       jest-expo:
         specifier: catalog:react19
-        version: 52.0.2(@babel/core@7.27.1)(expo@52.0.24(@babel/core@7.27.1)(@babel/preset-env@7.26.0(@babel/core@7.27.1))(@expo/metro-runtime@4.0.0(react-native@0.76.6(@babel/core@7.27.1)(@babel/preset-env@7.26.0(@babel/core@7.27.1))(@types/react@19.1.6)(react@19.1.0)))(graphql@16.9.0)(react-native-webview@13.12.5(react-native@0.76.6(@babel/core@7.27.1)(@babel/preset-env@7.26.0(@babel/core@7.27.1))(@types/react@19.1.6)(react@19.1.0))(react@19.1.0))(react-native@0.76.6(@babel/core@7.27.1)(@babel/preset-env@7.26.0(@babel/core@7.27.1))(@types/react@19.1.6)(react@19.1.0))(react@19.1.0))(jest@29.7.0(@types/node@22.14.1)(ts-node@10.9.2(@types/node@22.14.1)(typescript@5.8.3)))(react-dom@19.1.0(react@19.1.0))(react-native@0.76.6(@babel/core@7.27.1)(@babel/preset-env@7.26.0(@babel/core@7.27.1))(@types/react@19.1.6)(react@19.1.0))(react@19.1.0)(webpack@5.96.1(esbuild@0.25.0))
+        version: 52.0.2(@babel/core@7.27.1)(expo@52.0.24(@babel/core@7.27.1)(@babel/preset-env@7.26.0(@babel/core@7.27.1))(@expo/metro-runtime@4.0.0(react-native@0.76.6(@babel/core@7.27.1)(@babel/preset-env@7.26.0(@babel/core@7.27.1))(@types/react@19.1.6)(react@19.1.0)))(graphql@16.9.0)(react-native-webview@13.12.5(react-native@0.76.6(@babel/core@7.27.1)(@babel/preset-env@7.26.0(@babel/core@7.27.1))(@types/react@19.1.6)(react@19.1.0))(react@19.1.0))(react-native@0.76.6(@babel/core@7.27.1)(@babel/preset-env@7.26.0(@babel/core@7.27.1))(@types/react@19.1.6)(react@19.1.0))(react@19.1.0))(jest@29.7.0(@types/node@22.14.1))(react-dom@19.1.0(react@19.1.0))(react-native@0.76.6(@babel/core@7.27.1)(@babel/preset-env@7.26.0(@babel/core@7.27.1))(@types/react@19.1.6)(react@19.1.0))(react@19.1.0)(webpack@5.96.1(esbuild@0.25.0))
       react-test-renderer:
         specifier: 19.0.0
         version: 19.0.0(react@19.1.0)
@@ -486,9 +480,6 @@ importers:
       '@types/react-dom':
         specifier: catalog:react19
         version: 19.1.2(@types/react@19.1.6)
-      prettier-plugin-tailwindcss:
-        specifier: 'catalog:'
-        version: 0.6.13(prettier@3.5.3)
       tailwindcss:
         specifier: 'catalog:'
         version: 4.1.8
@@ -661,7 +652,7 @@ importers:
         version: 29.7.0(@types/node@22.14.1)(ts-node@10.9.2(@types/node@22.14.1)(typescript@5.8.3))
       jest-expo:
         specifier: catalog:react19
-        version: 52.0.2(@babel/core@7.27.1)(expo@52.0.24(@babel/core@7.27.1)(@babel/preset-env@7.26.0(@babel/core@7.27.1))(@expo/metro-runtime@4.0.0(react-native@0.76.6(@babel/core@7.27.1)(@babel/preset-env@7.26.0(@babel/core@7.27.1))(@types/react@19.1.6)(react@19.1.0)))(graphql@16.9.0)(react-native-webview@13.12.5(react-native@0.76.6(@babel/core@7.27.1)(@babel/preset-env@7.26.0(@babel/core@7.27.1))(@types/react@19.1.6)(react@19.1.0))(react@19.1.0))(react-native@0.76.6(@babel/core@7.27.1)(@babel/preset-env@7.26.0(@babel/core@7.27.1))(@types/react@19.1.6)(react@19.1.0))(react@19.1.0))(jest@29.7.0(@types/node@22.14.1)(ts-node@10.9.2(@types/node@22.14.1)(typescript@5.8.3)))(react-dom@19.1.0(react@19.1.0))(react-native@0.76.6(@babel/core@7.27.1)(@babel/preset-env@7.26.0(@babel/core@7.27.1))(@types/react@19.1.6)(react@19.1.0))(react@19.1.0)(webpack@5.96.1(esbuild@0.25.0))
+        version: 52.0.2(@babel/core@7.27.1)(expo@52.0.24(@babel/core@7.27.1)(@babel/preset-env@7.26.0(@babel/core@7.27.1))(@expo/metro-runtime@4.0.0(react-native@0.76.6(@babel/core@7.27.1)(@babel/preset-env@7.26.0(@babel/core@7.27.1))(@types/react@19.1.6)(react@19.1.0)))(graphql@16.9.0)(react-native-webview@13.12.5(react-native@0.76.6(@babel/core@7.27.1)(@babel/preset-env@7.26.0(@babel/core@7.27.1))(@types/react@19.1.6)(react@19.1.0))(react@19.1.0))(react-native@0.76.6(@babel/core@7.27.1)(@babel/preset-env@7.26.0(@babel/core@7.27.1))(@types/react@19.1.6)(react@19.1.0))(react@19.1.0))(jest@29.7.0(@types/node@22.14.1))(react-dom@19.1.0(react@19.1.0))(react-native@0.76.6(@babel/core@7.27.1)(@babel/preset-env@7.26.0(@babel/core@7.27.1))(@types/react@19.1.6)(react@19.1.0))(react@19.1.0)(webpack@5.96.1(esbuild@0.25.0))
       react:
         specifier: catalog:react19
         version: 19.1.0
@@ -18455,7 +18446,7 @@ snapshots:
       jest-mock: 29.7.0
       jest-util: 29.7.0
 
-  jest-expo@52.0.2(@babel/core@7.27.1)(expo@52.0.24(@babel/core@7.27.1)(@babel/preset-env@7.26.0(@babel/core@7.27.1))(@expo/metro-runtime@4.0.0(react-native@0.76.6(@babel/core@7.27.1)(@babel/preset-env@7.26.0(@babel/core@7.27.1))(@types/react@19.1.6)(react@19.1.0)))(graphql@16.9.0)(react-native-webview@13.12.5(react-native@0.76.6(@babel/core@7.27.1)(@babel/preset-env@7.26.0(@babel/core@7.27.1))(@types/react@19.1.6)(react@19.1.0))(react@19.1.0))(react-native@0.76.6(@babel/core@7.27.1)(@babel/preset-env@7.26.0(@babel/core@7.27.1))(@types/react@19.1.6)(react@19.1.0))(react@19.1.0))(jest@29.7.0(@types/node@22.14.1)(ts-node@10.9.2(@types/node@22.14.1)(typescript@5.8.3)))(react-dom@19.1.0(react@19.1.0))(react-native@0.76.6(@babel/core@7.27.1)(@babel/preset-env@7.26.0(@babel/core@7.27.1))(@types/react@19.1.6)(react@19.1.0))(react@19.1.0)(webpack@5.96.1(esbuild@0.25.0)):
+  jest-expo@52.0.2(@babel/core@7.27.1)(expo@52.0.24(@babel/core@7.27.1)(@babel/preset-env@7.26.0(@babel/core@7.27.1))(@expo/metro-runtime@4.0.0(react-native@0.76.6(@babel/core@7.27.1)(@babel/preset-env@7.26.0(@babel/core@7.27.1))(@types/react@19.1.6)(react@19.1.0)))(graphql@16.9.0)(react-native-webview@13.12.5(react-native@0.76.6(@babel/core@7.27.1)(@babel/preset-env@7.26.0(@babel/core@7.27.1))(@types/react@19.1.6)(react@19.1.0))(react@19.1.0))(react-native@0.76.6(@babel/core@7.27.1)(@babel/preset-env@7.26.0(@babel/core@7.27.1))(@types/react@19.1.6)(react@19.1.0))(react@19.1.0))(jest@29.7.0(@types/node@22.14.1))(react-dom@19.1.0(react@19.1.0))(react-native@0.76.6(@babel/core@7.27.1)(@babel/preset-env@7.26.0(@babel/core@7.27.1))(@types/react@19.1.6)(react@19.1.0))(react@19.1.0)(webpack@5.96.1(esbuild@0.25.0)):
     dependencies:
       '@expo/config': 10.0.7
       '@expo/json-file': 9.0.0
@@ -18468,7 +18459,7 @@ snapshots:
       jest-environment-jsdom: 29.7.0
       jest-snapshot: 29.7.0
       jest-watch-select-projects: 2.0.0
-      jest-watch-typeahead: 2.2.1(jest@29.7.0(@types/node@22.14.1)(ts-node@10.9.2(@types/node@22.14.1)(typescript@5.8.3)))
+      jest-watch-typeahead: 2.2.1(jest@29.7.0(@types/node@22.14.1))
       json5: 2.2.3
       lodash: 4.17.21
       react-native: 0.76.6(@babel/core@7.27.1)(@babel/preset-env@7.26.0(@babel/core@7.27.1))(@types/react@19.1.6)(react@19.1.0)
@@ -18663,7 +18654,7 @@ snapshots:
       chalk: 3.0.0
       prompts: 2.4.2
 
-  jest-watch-typeahead@2.2.1(jest@29.7.0(@types/node@22.14.1)(ts-node@10.9.2(@types/node@22.14.1)(typescript@5.8.3))):
+  jest-watch-typeahead@2.2.1(jest@29.7.0(@types/node@22.14.1)):
     dependencies:
       ansi-escapes: 6.2.1
       chalk: 4.1.2
