@@ -33,7 +33,6 @@
     "@tailwindcss/postcss": "catalog:",
     "@types/react": "catalog:react19",
     "@types/react-dom": "catalog:react19",
-    "prettier-plugin-tailwindcss": "catalog:",
     "tailwindcss": "catalog:"
   }
 }

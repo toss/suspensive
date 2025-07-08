@@ -49,7 +49,6 @@
     "@types/react": "catalog:react19",
     "@types/react-dom": "catalog:react19",
     "pagefind": "^1.3.0",
-    "prettier-plugin-tailwindcss": "catalog:",
     "tailwindcss": "catalog:"
   }
 }
