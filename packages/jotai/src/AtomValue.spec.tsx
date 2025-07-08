@@ -2,6 +2,7 @@ import { act, render, screen } from '@testing-library/react'
 import { atom } from 'jotai'
 import { Suspense } from 'react'
 import { AtomValue } from './AtomValue'
+import { sleep } from './test-utils'
 
 describe('<AtomValue />', () => {
   beforeEach(() => vi.useFakeTimers())
@@ -37,7 +38,7 @@ describe('<AtomValue />', () => {
 
   it('should render with an async atom and resolve the value', async () => {
     const asyncAtom = atom(async () => {
-      await new Promise((resolve) => setTimeout(resolve, 100))
+      await sleep(100)
       return 'hello'
     })
 
