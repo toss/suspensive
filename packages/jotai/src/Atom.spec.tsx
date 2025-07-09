@@ -2,6 +2,7 @@ import { act, fireEvent, render, screen } from '@testing-library/react'
 import { atom } from 'jotai'
 import { Suspense } from 'react'
 import { Atom } from './Atom'
+import { sleep } from './test-utils'
 
 describe('<Atom />', () => {
   beforeEach(() => vi.useFakeTimers())
@@ -101,7 +102,7 @@ describe('<Atom />', () => {
 
   it('should read an async atom using Suspense with proper loading state', async () => {
     const asyncAtom = atom(async () => {
-      await new Promise((resolve) => setTimeout(resolve, 100))
+      await sleep(100)
       return 'hello'
     })
 
@@ -121,13 +122,13 @@ describe('<Atom />', () => {
   it('should read and update an async atom using Suspense with proper loading state', async () => {
     const baseAtom = atom(0)
     const asyncReadableAtom = atom(async (get) => {
-      await new Promise((resolve) => setTimeout(resolve, 100))
+      await sleep(100)
       return get(baseAtom)
     })
     const asyncWritableAtom = atom(
       (get) => get(asyncReadableAtom),
       async (_get, set, newValue: number) => {
-        await new Promise((resolve) => setTimeout(resolve, 100))
+        await sleep(100)
         set(baseAtom, newValue)
       }
     )

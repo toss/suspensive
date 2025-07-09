@@ -3,6 +3,7 @@ import { atom } from 'jotai'
 import { Suspense } from 'react'
 import { AtomValue } from './AtomValue'
 import { SetAtom } from './SetAtom'
+import { sleep } from './test-utils'
 
 describe('<SetAtom />', () => {
   beforeEach(() => vi.useFakeTimers())
@@ -82,13 +83,13 @@ describe('<SetAtom />', () => {
   it('should read and update an async atom using Suspense with proper loading state', async () => {
     const baseAtom = atom(0)
     const asyncReadableAtom = atom(async (get) => {
-      await new Promise((resolve) => setTimeout(resolve, 100))
+      await sleep(100)
       return get(baseAtom)
     })
     const asyncWritableAtom = atom(
       (get) => get(asyncReadableAtom),
       async (_get, set, newValue: number) => {
-        await new Promise((resolve) => setTimeout(resolve, 100))
+        await sleep(100)
         set(baseAtom, newValue)
       }
     )
