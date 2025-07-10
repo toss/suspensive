@@ -1,8 +1,8 @@
 # lazy
 
-> **⚠️ Experimental**: This is a VERY experimental feature. Use with caution in production environments.
+> **⚠️ Experimental**: This is a experimental feature. Use with caution in production environments.
 
-The `lazy` function is a safe wrapper around React's `lazy` function that provides automatic error recovery when component loading fails. It attempts to load a component, and if the loading fails, it will reload the page once to try again, providing a better user experience during network issues or temporary loading failures.
+The `lazy` function is a safe wrapper around React's `lazy` function that provides automatic error recovery when component loading fails.
 
 ## Import
 
@@ -16,40 +16,75 @@ import { lazy } from '@suspensive/react'
 const MyComponent = lazy(() => import('./MyComponent'))
 ```
 
-## How it Works
+## API
 
-1. **First Attempt**: When a component fails to load for the first time, `lazy`:
+### `lazy<T>(load, options?)`
 
-   - Sets a flag in `sessionStorage` to track the failure
-   - Reloads the page to attempt a fresh load
-   - Returns a null component to prevent rendering errors
+Creates a lazy-loaded component with optional error recovery.
 
-2. **Second Attempt**: If the component fails to load again after the page reload:
-   - Throws the original error
-   - No further recovery attempts are made
+#### Parameters
 
-## Behavior
+- `load`: `() => Promise<{ default: T }>` - Import function
+- `options`: `{ safe?: boolean }` - Options object
+  - `safe`: When `true`, enables automatic error recovery with page reload
 
-- **Success**: Component loads normally, just like `React.lazy`
-- **First Failure**: Page reloads automatically, user sees a brief refresh
-- **Second Failure**: Error is thrown, allowing your error boundary to handle it
+#### Returns
+
+- `LazyExoticComponent<T> & { load: () => Promise<void> }` - React lazy component with additional `load` method
+
+## Features
+
+### Load Method
+
+The returned component includes a `load` method for manual loading:
+
+```tsx
+const Component = lazy(() => import('./Component'))
+Component.load() // Manually trigger the import
+```
+
+### Safe Mode
+
+Enable automatic error recovery with the `safe` option:
+
+```tsx
+const Component = lazy(() => import('./Component'), { safe: true })
+```
+
+When `safe: true`:
+
+- First failure: Reloads the page and retries
+- Second failure: Throws the original error
 
 ## Examples
 
-### Basic Component Loading
+### Basic Usage
 
 ```tsx
-import { lazy } from '@suspensive/react'
-
-const UserProfile = lazy(() => import('./UserProfile'), { safe: true })
+const UserProfile = lazy(() => import('./UserProfile'))
 
 function App() {
-  return (
-    <div>
-      <UserProfile />
-    </div>
-  )
+  return <UserProfile />
 }
+```
+
+### With Safe Mode
+
+```tsx
+const Dashboard = lazy(() => import('./Dashboard'), { safe: true })
+
+function App() {
+  return <Dashboard />
+}
+```
+
+### Manual Loading
+
+```tsx
+const Component = lazy(() => import('./Component'))
+
+// Preload the component
+await Component.load()
 ```
 
 ### With Error Boundary
@@ -68,75 +103,11 @@ function App() {
 }
 ```
 
-### Multiple Components
-
-```tsx
-import { lazy } from '@suspensive/react'
-
-const Header = lazy(() => import('./Header'), { safe: true })
-const Sidebar = lazy(() => import('./Sidebar'), { safe: true })
-const MainContent = lazy(() => import('./MainContent'), { safe: true })
-
-function App() {
-  return (
-    <div>
-      <Header />
-      <Sidebar />
-      <MainContent />
-    </div>
-  )
-}
-```
-
-## API Reference
-
-### `lazy<T>(importFunction)`
-
-Creates a lazy-loaded component with automatic error recovery.
-
-#### Parameters
-
-- `importFunction`: `() => Promise<{ default: T }>` - A function that returns a promise resolving to a module with a default export
-
-#### Returns
-
-- `LazyExoticComponent<T>` - A React lazy component that can be rendered like any other component
-
-#### Type Parameters
-
-- `T`: `ComponentType<any>` - The type of the component being loaded
-
-## Storage Key
-
-The function uses `sessionStorage` to track loading failures. The storage key is generated from the `importFunction.toString()`, which means:
-
-- Different import functions will have different storage keys
-- The same import function will share the same storage key across renders
-- Storage is cleared when the session ends
-
 ## Limitations
 
 - **Browser Only**: Requires `window.sessionStorage` and `window.location`
-- **Session Storage**: Recovery state is tied to the browser session
-- **Page Reload**: The recovery mechanism involves a full page reload
+- **Page Reload**: Safe mode involves a full page reload
 - **Experimental**: This feature is still experimental and may change
-
-## When to Use
-
-Use `lazy` when you want to:
-
-- Provide automatic recovery from temporary network issues
-- Improve user experience during component loading failures
-- Handle cases where component loading might fail due to external factors
-
-## When Not to Use
-
-Avoid `lazy` when:
-
-- You need fine-grained control over error handling
-- Page reloads are not acceptable in your use case
-- You're in a server-side rendering environment
-- You need to support browsers without sessionStorage
 
 ## Migration from React.lazy
 
@@ -144,8 +115,8 @@ Avoid `lazy` when:
 // Before
 const Component = lazy(() => import('./Component'))
 
-// After
+// After (identical API)
 const Component = lazy(() => import('./Component'))
 ```
 
-The API is identical to `React.lazy`, so you can easily replace existing lazy components with `lazy` for automatic error recovery.
+The API is identical to `React.lazy`, so you can easily replace existing lazy components.
