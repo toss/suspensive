@@ -1,24 +1,24 @@
-# safeLazy
+# lazy
 
 > **⚠️ Experimental**: This is a VERY experimental feature. Use with caution in production environments.
 
-The `safeLazy` function is a safe wrapper around React's `lazy` function that provides automatic error recovery when component loading fails. It attempts to load a component, and if the loading fails, it will reload the page once to try again, providing a better user experience during network issues or temporary loading failures.
+The `lazy` function is a safe wrapper around React's `lazy` function that provides automatic error recovery when component loading fails. It attempts to load a component, and if the loading fails, it will reload the page once to try again, providing a better user experience during network issues or temporary loading failures.
 
 ## Import
 
 ```tsx
-import { safeLazy } from '@suspensive/react'
+import { lazy } from '@suspensive/react'
 ```
 
 ## Basic Usage
 
 ```tsx
-const MyComponent = safeLazy(() => import('./MyComponent'))
+const MyComponent = lazy(() => import('./MyComponent'))
 ```
 
 ## How it Works
 
-1. **First Attempt**: When a component fails to load for the first time, `safeLazy`:
+1. **First Attempt**: When a component fails to load for the first time, `lazy`:
 
    - Sets a flag in `sessionStorage` to track the failure
    - Reloads the page to attempt a fresh load
@@ -39,9 +39,9 @@ const MyComponent = safeLazy(() => import('./MyComponent'))
 ### Basic Component Loading
 
 ```tsx
-import { safeLazy } from '@suspensive/react'
+import { lazy } from '@suspensive/react'
 
-const UserProfile = safeLazy(() => import('./UserProfile'))
+const UserProfile = lazy(() => import('./UserProfile'), { safe: true })
 
 function App() {
   return (
@@ -55,10 +55,9 @@ function App() {
 ### With Error Boundary
 
 ```tsx
-import { safeLazy } from '@suspensive/react'
-import { ErrorBoundary } from 'react-error-boundary'
+import { lazy, ErrorBoundary } from '@suspensive/react'
 
-const Dashboard = safeLazy(() => import('./Dashboard'))
+const Dashboard = lazy(() => import('./Dashboard'), { safe: true })
 
 function App() {
   return (
@@ -72,11 +71,11 @@ function App() {
 ### Multiple Components
 
 ```tsx
-import { safeLazy } from '@suspensive/react'
+import { lazy } from '@suspensive/react'
 
-const Header = safeLazy(() => import('./Header'))
-const Sidebar = safeLazy(() => import('./Sidebar'))
-const MainContent = safeLazy(() => import('./MainContent'))
+const Header = lazy(() => import('./Header'), { safe: true })
+const Sidebar = lazy(() => import('./Sidebar'), { safe: true })
+const MainContent = lazy(() => import('./MainContent'), { safe: true })
 
 function App() {
   return (
@@ -91,7 +90,7 @@ function App() {
 
 ## API Reference
 
-### `safeLazy<T>(importFunction)`
+### `lazy<T>(importFunction)`
 
 Creates a lazy-loaded component with automatic error recovery.
 
@@ -124,7 +123,7 @@ The function uses `sessionStorage` to track loading failures. The storage key is
 
 ## When to Use
 
-Use `safeLazy` when you want to:
+Use `lazy` when you want to:
 
 - Provide automatic recovery from temporary network issues
 - Improve user experience during component loading failures
@@ -132,7 +131,7 @@ Use `safeLazy` when you want to:
 
 ## When Not to Use
 
-Avoid `safeLazy` when:
+Avoid `lazy` when:
 
 - You need fine-grained control over error handling
 - Page reloads are not acceptable in your use case
@@ -146,7 +145,7 @@ Avoid `safeLazy` when:
 const Component = lazy(() => import('./Component'))
 
 // After
-const Component = safeLazy(() => import('./Component'))
+const Component = lazy(() => import('./Component'))
 ```
 
-The API is identical to `React.lazy`, so you can easily replace existing lazy components with `safeLazy` for automatic error recovery.
+The API is identical to `React.lazy`, so you can easily replace existing lazy components with `lazy` for automatic error recovery.
