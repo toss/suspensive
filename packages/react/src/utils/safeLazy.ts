@@ -1,10 +1,9 @@
-import { type ComponentType, lazy, type LazyExoticComponent } from 'react'
+import { type ComponentType, type LazyExoticComponent, lazy } from 'react'
 
 /**
- * @experimental This is VERY experimental feature.
+ * A safe wrapper around React.lazy that handles component loading failures gracefully
  *
- * Try to load the component.
- * If the component fails to load, it will reload the page.
+ * @experimental This is VERY experimental feature.
  *
  * @example
  * ```tsx
@@ -14,6 +13,7 @@ import { type ComponentType, lazy, type LazyExoticComponent } from 'react'
  * @param importFunction
  * @returns
  */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const safeLazy = <T extends ComponentType<any>>(
   importFunction: () => Promise<{ default: T }>
 ): LazyExoticComponent<T> => {
