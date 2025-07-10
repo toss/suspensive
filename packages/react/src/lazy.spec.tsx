@@ -1,6 +1,7 @@
 import { act, render } from '@testing-library/react'
 import { afterEach, beforeAll, describe, expect, it, vi } from 'vitest'
-import { safeLazy } from './safeLazy'
+import { lazy } from './lazy'
+import { sleep } from './test-utils'
 
 class MockStorage {
   private items = new Map<string, string>()
@@ -43,10 +44,10 @@ afterEach(() => {
   vi.clearAllMocks()
 })
 
-describe('default `safeLazy` function', () => {
+describe('default `lazy` function', () => {
   it('should not retry importing the component if it fails to load', async () => {
     const importFunction = vi.fn().mockRejectedValue(new Error('Failed to load component'))
-    const Component = safeLazy(importFunction)
+    const Component = lazy(importFunction, { safe: true })
     const { container } = await act(() => render(<Component />))
 
     expect(container.childNodes).toHaveLength(0)
@@ -57,8 +58,8 @@ describe('default `safeLazy` function', () => {
     const importFunction = vi.fn().mockRejectedValue(new Error('Failed to load component'))
     // eslint-disable-next-line @typescript-eslint/unbound-method
     const reloadFunction = window.location.reload
-    const Component = safeLazy(importFunction)
-    const Component2 = safeLazy(importFunction)
+    const Component = lazy(importFunction, { safe: true })
+    const Component2 = lazy(importFunction, { safe: true })
     await expect(async () => {
       await act(() =>
         render(
@@ -78,15 +79,20 @@ describe('default `safeLazy` function', () => {
     const importFunction = vi.fn().mockRejectedValue(new Error('Failed to load component'))
     // eslint-disable-next-line @typescript-eslint/unbound-method
     const reloadFunction = window.location.reload
-    const Component = safeLazy(importFunction)
+    const Component = lazy(importFunction, { safe: true })
     await act(() => render(<Component />))
 
-    const Component2 = safeLazy(importFunction)
+    const Component2 = lazy(importFunction, { safe: true })
     await expect(async () => {
       await act(() => render(<Component2 />))
     }).rejects.toThrow('Failed to load component')
 
     expect(importFunction).toHaveBeenCalledTimes(2)
     expect(reloadFunction).toHaveBeenCalledTimes(1)
+  })
+  it('should reload the page only once if the dd fails to load', () => {
+    const importFunction = () => sleep(10).then(() => ({ default: () => 'hihihih' }))
+    const Component = lazy(importFunction, { safe: true })
+    expect(() => act(() => render(<Component />))).not.toThrow()
   })
 })
