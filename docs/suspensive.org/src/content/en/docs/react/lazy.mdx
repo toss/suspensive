@@ -4,15 +4,11 @@
 
 The `lazy` function is a safe wrapper around React's `lazy` function that provides automatic error recovery when component loading fails.
 
-## Import
-
-```tsx
-import { lazy } from '@suspensive/react'
-```
-
 ## Basic Usage
 
 ```tsx
+import { lazy } from '@suspensive/react'
+
 const MyComponent = lazy(() => import('./MyComponent'))
 ```
 
@@ -39,6 +35,8 @@ Creates a lazy-loaded component with optional error recovery.
 The returned component includes a `load` method for manual loading:
 
 ```tsx
+import { lazy } from '@suspensive/react'
+
 const Component = lazy(() => import('./Component'))
 Component.load() // Manually trigger the import
 ```
@@ -48,6 +46,8 @@ Component.load() // Manually trigger the import
 Enable automatic error recovery with the `safe` option:
 
 ```tsx
+import { lazy } from '@suspensive/react'
+
 const Component = lazy(() => import('./Component'), { safe: true })
 ```
 
@@ -61,6 +61,8 @@ When `safe: true`:
 ### Basic Usage
 
 ```tsx
+import { lazy } from '@suspensive/react'
+
 const UserProfile = lazy(() => import('./UserProfile'))
 
 function App() {
@@ -81,6 +83,8 @@ function App() {
 ### Manual Loading
 
 ```tsx
+import { lazy } from '@suspensive/react'
+
 const Component = lazy(() => import('./Component'))
 
 // Preload the component
@@ -111,11 +115,10 @@ function App() {
 
 ## Migration from React.lazy
 
-```tsx
-// Before
-const Component = lazy(() => import('./Component'))
+```diff
+- import { lazy } from 'react'
++ import { lazy } from '@suspensive/react'
 
-// After (identical API)
 const Component = lazy(() => import('./Component'))
 ```
 

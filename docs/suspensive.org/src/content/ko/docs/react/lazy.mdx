@@ -4,15 +4,11 @@
 
 `lazy` 함수는 컴포넌트 로딩이 실패할 때 자동 오류 복구를 제공하는 React의 `lazy` 함수의 안전한 래퍼입니다.
 
-## Import
-
-```tsx
-import { lazy } from '@suspensive/react'
-```
-
 ## 기본 사용법
 
 ```tsx
+import { lazy } from '@suspensive/react'
+
 const MyComponent = lazy(() => import('./MyComponent'))
 ```
 
@@ -39,6 +35,8 @@ const MyComponent = lazy(() => import('./MyComponent'))
 반환된 컴포넌트에는 수동 로딩을 위한 `load` 메서드가 포함됩니다:
 
 ```tsx
+import { lazy } from '@suspensive/react'
+
 const Component = lazy(() => import('./Component'))
 Component.load() // 수동으로 import 트리거
 ```
@@ -48,6 +46,8 @@ Component.load() // 수동으로 import 트리거
 `safe` 옵션으로 자동 오류 복구를 활성화합니다:
 
 ```tsx
+import { lazy } from '@suspensive/react'
+
 const Component = lazy(() => import('./Component'), { safe: true })
 ```
 
@@ -61,6 +61,8 @@ const Component = lazy(() => import('./Component'), { safe: true })
 ### 기본 사용법
 
 ```tsx
+import { lazy } from '@suspensive/react'
+
 const UserProfile = lazy(() => import('./UserProfile'))
 
 function App() {
@@ -71,6 +73,8 @@ function App() {
 ### Safe 모드와 함께
 
 ```tsx
+import { lazy } from '@suspensive/react'
+
 const Dashboard = lazy(() => import('./Dashboard'), { safe: true })
 
 function App() {
@@ -111,11 +115,10 @@ function App() {
 
 ## React.lazy에서 마이그레이션
 
-```tsx
-// 이전
-const Component = lazy(() => import('./Component'))
+```diff
+- import { lazy } from 'react'
++ import { lazy } from '@suspensive/react'
 
-// 이후 (동일한 API)
 const Component = lazy(() => import('./Component'))
 ```
 
