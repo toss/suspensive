@@ -3,7 +3,7 @@
 import { Suspense, lazy } from '@suspensive/react'
 import React, { useState } from 'react'
 
-const Comp = lazy(() => import('./Comp'), { safe: true })
+const Comp = lazy(() => import('./Comp'), { reload: 3 })
 
 export default function Page() {
   const [isShow, setIsShow] = useState(false)
