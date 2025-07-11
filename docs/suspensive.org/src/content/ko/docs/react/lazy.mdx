@@ -1,8 +1,8 @@
 # lazy
 
-> **⚠️ 실험적**: 이것은 실험적인 기능입니다. 프로덕션 환경에서 사용할 때 주의하세요.
+> **⚠️ 실험적**: 이것은 매우 실험적인 기능입니다. 프로덕션 환경에서 사용할 때 주의하세요.
 
-`lazy` 함수는 컴포넌트 로딩이 실패할 때 자동 오류 복구를 제공하는 React의 `lazy` 함수의 안전한 래퍼입니다.
+`lazy` 함수는 컴포넌트 로딩이 실패할 때 자동 오류 복구를 제공하는 React의 `lazy` 함수의 안전한 래퍼입니다. 컴포넌트를 로드하려고 시도하고, 로딩이 실패하면 설정된 횟수만큼 페이지를 새로고침하여 네트워크 문제나 일시적인 로딩 실패 시 더 나은 사용자 경험을 제공합니다.
 
 ## 기본 사용법
 
@@ -12,114 +12,104 @@ import { lazy } from '@suspensive/react'
 const MyComponent = lazy(() => import('./MyComponent'))
 ```
 
-## API
+## 작동 방식
 
-### `lazy<T>(load, options?)`
+1. **첫 번째 시도**: 컴포넌트가 처음 로드에 실패할 때, `lazy`는:
 
-선택적 오류 복구 기능이 있는 지연 로드 컴포넌트를 생성합니다.
+   - 실패를 추적하기 위해 `sessionStorage`에 플래그를 설정
+   - 즉시 페이지를 새로고침하여 새로운 로드를 시도
+   - 렌더링 오류를 방지하기 위해 null 컴포넌트를 반환
 
-#### 매개변수
+2. **새로고침**: 설정된 새로고침 횟수만큼 반복하여 컴포넌트 로드를 시도
+3. **최종 실패**: 모든 새로고침이 실패하면 원래 오류를 던짐
 
-- `load`: `() => Promise<{ default: T }>` - Import 함수
-- `options`: `{ safe?: boolean }` - 옵션 객체
-  - `safe`: `true`일 때, 페이지 새로고침을 통한 자동 오류 복구를 활성화
+## 동작
 
-#### 반환값
-
-- `LazyExoticComponent<T> & { load: () => Promise<void> }` - 추가 `load` 메서드가 있는 React 지연 컴포넌트
-
-## 기능
-
-### Load 메서드
-
-반환된 컴포넌트에는 수동 로딩을 위한 `load` 메서드가 포함됩니다:
-
-```tsx
-import { lazy } from '@suspensive/react'
-
-const Component = lazy(() => import('./Component'))
-Component.load() // 수동으로 import 트리거
-```
-
-### Safe 모드
-
-`safe` 옵션으로 자동 오류 복구를 활성화합니다:
-
-```tsx
-import { lazy } from '@suspensive/react'
-
-const Component = lazy(() => import('./Component'), { safe: true })
-```
-
-`safe: true`일 때:
-
-- 첫 번째 실패: 페이지를 새로고침하고 재시도
-- 두 번째 실패: 원래 오류를 던짐
+- **성공**: 컴포넌트가 정상적으로 로드됨, `React.lazy`와 동일
+- **실패 후 새로고침**: 설정된 횟수만큼 자동으로 페이지를 새로고침
+- **최종 실패**: 오류가 던져져서 오류 경계가 처리할 수 있음
 
 ## 예제
 
-### 기본 사용법
+### 기본 컴포넌트 로딩
 
 ```tsx
-import { lazy } from '@suspensive/react'
+import { lazy, Suspense, ErrorBoundary } from '@suspensive/react'
 
 const UserProfile = lazy(() => import('./UserProfile'))
 
 function App() {
-  return <UserProfile />
-}
-```
-
-### Safe 모드와 함께
-
-```tsx
-import { lazy } from '@suspensive/react'
-
-const Dashboard = lazy(() => import('./Dashboard'), { safe: true })
-
-function App() {
-  return <Dashboard />
-}
-```
-
-### 수동 로딩
-
-```tsx
-const Component = lazy(() => import('./Component'))
-
-// 컴포넌트를 미리 로드
-await Component.load()
-```
-
-### 오류 경계와 함께
-
-```tsx
-import { lazy, ErrorBoundary } from '@suspensive/react'
-
-const Dashboard = lazy(() => import('./Dashboard'), { safe: true })
-
-function App() {
   return (
     <ErrorBoundary fallback={<div>문제가 발생했습니다</div>}>
-      <Dashboard />
+      <Suspense fallback={<div>로딩 중...</div>}>
+        <UserProfile />
+      </Suspense>
     </ErrorBoundary>
   )
 }
 ```
 
-## 제한사항
+### 커스텀 새로고침 옵션
 
-- **브라우저 전용**: `window.sessionStorage`와 `window.location`이 필요합니다
-- **페이지 새로고침**: Safe 모드는 전체 페이지 새로고침을 포함합니다
-- **실험적**: 이 기능은 아직 실험적이며 변경될 수 있습니다
+```tsx
+import { lazy, Suspense, ErrorBoundary } from '@suspensive/react'
 
-## React.lazy에서 마이그레이션
+const UserProfile = lazy(() => import('./UserProfile'), { reload: 5 })
 
-```diff
-- import { lazy } from 'react'
-+ import { lazy } from '@suspensive/react'
-
-const Component = lazy(() => import('./Component'))
+function App() {
+  return (
+    <ErrorBoundary fallback={<div>문제가 발생했습니다</div>}>
+      <Suspense fallback={<div>로딩 중...</div>}>
+        <UserProfile />
+      </Suspense>
+    </ErrorBoundary>
+  )
+}
 ```
 
-API는 `React.lazy`와 동일하므로 기존 지연 컴포넌트를 쉽게 교체할 수 있습니다.
+### 컴포넌트 사전 로딩
+
+```tsx
+import { lazy, Suspense } from '@suspensive/react'
+
+const Component = lazy(() => import('./Component'))
+
+function PreloadExample() {
+  const handlePreload = () => {
+    Component.load() // 컴포넌트 사전 로딩
+  }
+
+  return (
+    <div>
+      <button onClick={handlePreload}>컴포넌트 사전 로딩</button>
+      <Suspense fallback={<div>로딩 중...</div>}>
+        <Component />
+      </Suspense>
+    </div>
+  )
+}
+```
+
+### 커스텀 Lazy 팩토리
+
+```tsx
+import { lazy } from '@suspensive/react'
+
+// 5번 새로고침
+const customLazy = lazy.create({ reload: 5 })
+
+const HeavyComponent = customLazy(() => import('./HeavyComponent'))
+// 이 특정 컴포넌트에 대해 기본 새로고침 횟수를 재정의
+const LightComponent = customLazy(() => import('./LightComponent'), {
+  reload: 2,
+})
+
+function App() {
+  return (
+    <div>
+      <HeavyComponent />
+      <LightComponent />
+    </div>
+  )
+}
+```
