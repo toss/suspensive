@@ -12,6 +12,8 @@ import { lazy } from '@suspensive/react'
 const MyComponent = lazy(() => import('./MyComponent'))
 ```
 
+기본적으로 `lazy`는 컴포넌트 로딩이 실패할 경우 페이지를 **1번** 새로고침합니다.
+
 ## 작동 방식
 
 1. **첫 번째 시도**: 컴포넌트가 처음 로드에 실패할 때, `lazy`는:

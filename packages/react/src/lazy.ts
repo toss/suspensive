@@ -113,6 +113,6 @@ const createLazy = (defaultOptions: { reload: number }) => {
  * @returns A lazy component with additional `load` method for preloading
  * @property {() => Promise<void>} load - Preloads the component without rendering it. Useful for prefetching components in the background.
  */
-export const lazy = Object.assign(createLazy({ reload: 3 }), {
+export const lazy = Object.assign(createLazy({ reload: 1 }), {
   create: createLazy,
 })

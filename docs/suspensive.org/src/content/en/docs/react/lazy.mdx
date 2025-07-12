@@ -12,6 +12,8 @@ import { lazy } from '@suspensive/react'
 const MyComponent = lazy(() => import('./MyComponent'))
 ```
 
+By default, `lazy` will attempt to reload the page **1 time** if the component fails to load.
+
 ## How it Works
 
 1. **First Attempt**: When a component fails to load for the first time, `lazy`:
