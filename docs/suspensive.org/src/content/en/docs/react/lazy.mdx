@@ -1,0 +1,117 @@
+# lazy
+
+> **⚠️ Experimental**: This is a VERY experimental feature. Use with caution in production environments.
+
+The `lazy` function is a safe wrapper around React's `lazy` function that provides automatic error recovery when component loading fails. It attempts to load a component, and if the loading fails, it will reload the page the specified number of times, providing a better user experience during network issues or temporary loading failures.
+
+## Basic Usage
+
+```tsx
+import { lazy } from '@suspensive/react'
+
+const MyComponent = lazy(() => import('./MyComponent'))
+```
+
+By default, `lazy` will attempt to reload the page **1 time** if the component fails to load.
+
+## How it Works
+
+1. **First Attempt**: When a component fails to load for the first time, `lazy`:
+
+   - Sets a flag in `sessionStorage` to track the failure
+   - Immediately reloads the page to attempt a fresh load
+   - Returns a null component to prevent rendering errors
+
+2. **Reload**: Repeats the loading attempt up to the specified reload count
+3. **Final Failure**: If all reloads fail, throws the original error
+
+## Behavior
+
+- **Success**: Component loads normally, just like `React.lazy`
+- **Failure with Reload**: Automatically reloads the page the specified number of times
+- **Final Failure**: Error is thrown, allowing your error boundary to handle it
+
+## Examples
+
+### Basic Component Loading
+
+```tsx
+import { lazy, Suspense, ErrorBoundary } from '@suspensive/react'
+
+const UserProfile = lazy(() => import('./UserProfile'))
+
+function App() {
+  return (
+    <ErrorBoundary fallback={<div>Something went wrong</div>}>
+      <Suspense fallback={<div>Loading...</div>}>
+        <UserProfile />
+      </Suspense>
+    </ErrorBoundary>
+  )
+}
+```
+
+### Custom Reload Options
+
+```tsx
+import { lazy, Suspense, ErrorBoundary } from '@suspensive/react'
+
+const UserProfile = lazy(() => import('./UserProfile'), { reload: 5 })
+
+function App() {
+  return (
+    <ErrorBoundary fallback={<div>Something went wrong</div>}>
+      <Suspense fallback={<div>Loading...</div>}>
+        <UserProfile />
+      </Suspense>
+    </ErrorBoundary>
+  )
+}
+```
+
+### Preloading Components
+
+```tsx
+import { lazy, Suspense } from '@suspensive/react'
+
+const Component = lazy(() => import('./Component'))
+
+function PreloadExample() {
+  const handlePreload = () => {
+    Component.load() // Preload the component
+  }
+
+  return (
+    <div>
+      <button onClick={handlePreload}>Preload Component</button>
+      <Suspense fallback={<div>Loading...</div>}>
+        <Component />
+      </Suspense>
+    </div>
+  )
+}
+```
+
+### Custom Lazy Factory
+
+```tsx
+import { lazy } from '@suspensive/react'
+
+// 5 reloads
+const customLazy = lazy.create({ reload: 5 })
+
+const HeavyComponent = customLazy(() => import('./HeavyComponent'))
+// Override default reload count for this specific component
+const LightComponent = customLazy(() => import('./LightComponent'), {
+  reload: 2,
+})
+
+function App() {
+  return (
+    <div>
+      <HeavyComponent />
+      <LightComponent />
+    </div>
+  )
+}
+```
