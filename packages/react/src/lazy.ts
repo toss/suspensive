@@ -48,7 +48,7 @@ const createLazy = (defaultOptions: { reload: number }) => {
               const storedValue = window.sessionStorage.getItem(storageKey)
               const reloadCount = storedValue ? parseInt(storedValue, 10) : 0
 
-              if (isNaN(reloadCount)) {
+              if (Number.isNaN(reloadCount)) {
                 window.sessionStorage.removeItem(storageKey)
               }
 
@@ -57,7 +57,7 @@ const createLazy = (defaultOptions: { reload: number }) => {
                 window.sessionStorage.removeItem(storageKey)
                 return result
               } catch (error) {
-                const currentReloadCount = isNaN(reloadCount) ? 0 : reloadCount
+                const currentReloadCount = Number.isNaN(reloadCount) ? 0 : reloadCount
                 if (currentReloadCount < finalOptions.reload) {
                   window.sessionStorage.setItem(storageKey, String(currentReloadCount + 1))
                   window.location.reload()
