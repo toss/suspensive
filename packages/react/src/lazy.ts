@@ -22,6 +22,7 @@ import { noop } from './utils/noop'
  * ```
  */
 const createLazy = (defaultOptions: { reload: number }) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const lazy = <T extends ComponentType<any>>(
     load: () => Promise<{ default: T }>,
     options?: { reload: number }
