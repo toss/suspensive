@@ -24,24 +24,30 @@ const parseReload = (value: string | null): { reloadCount: number; isNaN: boolea
   }
 }
 
-const parseOptions = (options: ReloadOptions): ReloadOptions => {
-  const parsedOptions: ReloadOptions = { reload: DEFAULT_RELOAD_COUNT }
-
-  if (typeof options.reload === 'number' && (!Number.isInteger(options.reload) || options.reload <= 0)) {
+const getDefaultedOptions = (options: ReloadOptions | undefined, defaultOptions: ReloadOptions): ReloadOptions => {
+  if (
+    options != null &&
+    typeof options.reload === 'number' &&
+    (!Number.isInteger(options.reload) || options.reload <= 0)
+  ) {
     if (process.env.NODE_ENV === 'development') {
       console.error(
         `[@suspensive/react] lazy: reload option must be a positive integer, but received ${options.reload}. ` +
           `Please provide a positive integer value (e.g., { reload: 3 }).`
       )
     }
-
-    // Use default value on invalid input
-    parsedOptions.reload = DEFAULT_RELOAD_COUNT
-  } else {
-    parsedOptions.reload = options.reload
   }
 
-  return parsedOptions
+  if (options == null) {
+    return defaultOptions
+  }
+
+  const keys = Object.keys(defaultOptions) as (keyof ReloadOptions)[]
+
+  return keys.reduce<Partial<ReloadOptions>>((acc, key) => {
+    acc[key] = key in options ? options[key] : defaultOptions[key]
+    return acc
+  }, {}) as ReloadOptions
 }
 
 const createLoader = <T extends ComponentType<unknown>>(
@@ -112,8 +118,8 @@ const createLazy = (defaultOptions: ReloadOptions) => {
   ): LazyExoticComponent<T> & {
     load: () => Promise<void>
   } => {
-    const finalOptions = parseOptions(options || defaultOptions)
-    const loader = finalOptions.reload ? createLoader(load, finalOptions.reload) : load
+    const defaultedOptions = getDefaultedOptions(options, defaultOptions)
+    const loader = defaultedOptions.reload ? createLoader(load, defaultedOptions.reload) : load
 
     return Object.assign(originalLazy(loader), { load: () => load().then(noop) })
   }
