@@ -1,6 +1,10 @@
 import { type ComponentType, type LazyExoticComponent, lazy as originalLazy } from 'react'
 import { noop } from './utils/noop'
 
+interface ReloadOptions {
+  reload: number
+}
+
 const DEFAULT_RELOAD_COUNT = 3
 
 const parseReload = (value: string | null): { reloadCount: number; isNaN: boolean } => {
@@ -18,6 +22,26 @@ const parseReload = (value: string | null): { reloadCount: number; isNaN: boolea
     reloadCount: isNaN ? 0 : reloadCount,
     isNaN,
   }
+}
+
+const parseOptions = (options: ReloadOptions): ReloadOptions => {
+  const parsedOptions = { reload: DEFAULT_RELOAD_COUNT }
+
+  if (!Number.isInteger(options.reload) || options.reload <= 0) {
+    if (process.env.NODE_ENV === 'development') {
+      console.error(
+        `[@suspensive/react] lazy: reload option must be a positive integer, but received ${options.reload}. ` +
+          `Please provide a positive integer value (e.g., { reload: 3 }).`
+      )
+    }
+
+    // Use default value on invalid input
+    parsedOptions.reload = DEFAULT_RELOAD_COUNT
+  } else {
+    parsedOptions.reload = options.reload
+  }
+
+  return parsedOptions
 }
 
 /**
@@ -40,24 +64,15 @@ const parseReload = (value: string | null): { reloadCount: number; isNaN: boolea
  * const Component3 = customLazy(() => import('./Component3'), { reload: 2 })
  * ```
  */
-const createLazy = (defaultOptions: { reload: number }) => {
+const createLazy = (defaultOptions: ReloadOptions) => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const lazy = <T extends ComponentType<any>>(
     load: () => Promise<{ default: T }>,
-    options?: { reload: number }
+    options?: ReloadOptions
   ): LazyExoticComponent<T> & {
     load: () => Promise<void>
   } => {
-    const finalOptions = options || defaultOptions
-
-    if (process.env.NODE_ENV === 'development' && finalOptions.reload) {
-      if (!Number.isInteger(finalOptions.reload) || finalOptions.reload <= 0) {
-        console.error(
-          `[@suspensive/react] lazy: reload option must be a positive integer, but received ${finalOptions.reload}. ` +
-            `Please provide a positive integer value (e.g., { reload: 3 }).`
-        )
-      }
-    }
+    const finalOptions = parseOptions(options || defaultOptions)
 
     return Object.assign(
       originalLazy(
