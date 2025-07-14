@@ -95,8 +95,6 @@ class MockStorage {
 const storage = new MockStorage()
 const mockReload = vi.fn<() => void>()
 
-const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
-
 describe('lazy', () => {
   beforeEach(() => {
     vi.useFakeTimers()
