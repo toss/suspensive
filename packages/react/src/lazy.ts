@@ -1,6 +1,25 @@
 import { type ComponentType, type LazyExoticComponent, lazy as originalLazy } from 'react'
 import { noop } from './utils/noop'
 
+const DEFAULT_RELOAD_COUNT = 3
+
+const parseReload = (value: string | null): { reloadCount: number; isNaN: boolean } => {
+  if (!value) {
+    return {
+      reloadCount: 0,
+      isNaN: true,
+    }
+  }
+
+  const reloadCount = parseInt(value, 10)
+  const isNaN = Number.isNaN(reloadCount)
+
+  return {
+    reloadCount: isNaN ? 0 : reloadCount,
+    isNaN,
+  }
+}
+
 /**
  * Creates a lazy function with custom default reload options
  *
@@ -46,9 +65,9 @@ const createLazy = (defaultOptions: { reload: number }) => {
           ? async (): Promise<{ default: T }> => {
               const storageKey = load.toString()
               const storedValue = window.sessionStorage.getItem(storageKey)
-              const reloadCount = storedValue ? parseInt(storedValue, 10) : 0
+              const { reloadCount, isNaN } = parseReload(storedValue)
 
-              if (Number.isNaN(reloadCount)) {
+              if (isNaN) {
                 window.sessionStorage.removeItem(storageKey)
               }
 
@@ -57,9 +76,8 @@ const createLazy = (defaultOptions: { reload: number }) => {
                 window.sessionStorage.removeItem(storageKey)
                 return result
               } catch (error) {
-                const currentReloadCount = Number.isNaN(reloadCount) ? 0 : reloadCount
-                if (currentReloadCount < finalOptions.reload) {
-                  window.sessionStorage.setItem(storageKey, String(currentReloadCount + 1))
+                if (reloadCount < finalOptions.reload) {
+                  window.sessionStorage.setItem(storageKey, String(reloadCount + 1))
                   window.location.reload()
                   return { default: (() => null) as unknown as T }
                 }
@@ -114,6 +132,6 @@ const createLazy = (defaultOptions: { reload: number }) => {
  * @returns A lazy component with additional `load` method for preloading
  * @property {() => Promise<void>} load - Preloads the component without rendering it. Useful for prefetching components in the background.
  */
-export const lazy = Object.assign(createLazy({ reload: 3 }), {
+export const lazy = Object.assign(createLazy({ reload: DEFAULT_RELOAD_COUNT }), {
   create: createLazy,
 })
