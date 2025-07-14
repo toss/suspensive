@@ -1,6 +1,12 @@
+import { Callout } from '@/components'
+
 # lazy
 
-> **⚠️ Experimental**: This is a VERY experimental feature. Use with caution in production environments.
+<Callout type='experimental'>
+
+`lazy` is an experimental feature, so this interface may change.
+
+</Callout>
 
 The `lazy` function is a safe wrapper around React's `lazy` function that provides automatic error recovery when component loading fails. It attempts to load a component, and if the loading fails, it will reload the page the specified number of times, providing a better user experience during network issues or temporary loading failures.
 
