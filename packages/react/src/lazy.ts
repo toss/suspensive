@@ -44,6 +44,31 @@ const parseOptions = (options: ReloadOptions): ReloadOptions => {
   return parsedOptions
 }
 
+const createLoader = <T extends ComponentType<unknown>>(load: () => Promise<{ default: T }>, reloadCount: number) => {
+  return async (): Promise<{ default: T }> => {
+    const storageKey = load.toString()
+    const storedValue = window.sessionStorage.getItem(storageKey)
+    const { reloadCount: currentReloadCount, isNaN } = parseReload(storedValue)
+
+    if (isNaN) {
+      window.sessionStorage.removeItem(storageKey)
+    }
+
+    try {
+      const result = await load()
+      window.sessionStorage.removeItem(storageKey)
+      return result
+    } catch (error) {
+      if (currentReloadCount < reloadCount) {
+        window.sessionStorage.setItem(storageKey, String(currentReloadCount + 1))
+        window.location.reload()
+        return { default: (() => null) as unknown as T }
+      }
+      throw error
+    }
+  }
+}
+
 /**
  * Creates a lazy function with custom default reload options
  *
@@ -73,36 +98,9 @@ const createLazy = (defaultOptions: ReloadOptions) => {
     load: () => Promise<void>
   } => {
     const finalOptions = parseOptions(options || defaultOptions)
+    const loader = finalOptions.reload ? createLoader(load, finalOptions.reload) : load
 
-    return Object.assign(
-      originalLazy(
-        finalOptions.reload
-          ? async (): Promise<{ default: T }> => {
-              const storageKey = load.toString()
-              const storedValue = window.sessionStorage.getItem(storageKey)
-              const { reloadCount, isNaN } = parseReload(storedValue)
-
-              if (isNaN) {
-                window.sessionStorage.removeItem(storageKey)
-              }
-
-              try {
-                const result = await load()
-                window.sessionStorage.removeItem(storageKey)
-                return result
-              } catch (error) {
-                if (reloadCount < finalOptions.reload) {
-                  window.sessionStorage.setItem(storageKey, String(reloadCount + 1))
-                  window.location.reload()
-                  return { default: (() => null) as unknown as T }
-                }
-                throw error
-              }
-            }
-          : load
-      ),
-      { load: () => load().then(noop) }
-    )
+    return Object.assign(originalLazy(loader), { load: () => load().then(noop) })
   }
 
   return lazy
