@@ -2,7 +2,7 @@ import { type ComponentType, type LazyExoticComponent, lazy as originalLazy } fr
 import { noop } from './utils/noop'
 
 interface ReloadOptions {
-  reload: number
+  reload: number | true
 }
 
 const DEFAULT_RELOAD_COUNT = 3
@@ -25,9 +25,9 @@ const parseReload = (value: string | null): { reloadCount: number; isNaN: boolea
 }
 
 const parseOptions = (options: ReloadOptions): ReloadOptions => {
-  const parsedOptions = { reload: DEFAULT_RELOAD_COUNT }
+  const parsedOptions: ReloadOptions = { reload: DEFAULT_RELOAD_COUNT }
 
-  if (!Number.isInteger(options.reload) || options.reload <= 0) {
+  if (typeof options.reload === 'number' && (!Number.isInteger(options.reload) || options.reload <= 0)) {
     if (process.env.NODE_ENV === 'development') {
       console.error(
         `[@suspensive/react] lazy: reload option must be a positive integer, but received ${options.reload}. ` +
@@ -44,23 +44,38 @@ const parseOptions = (options: ReloadOptions): ReloadOptions => {
   return parsedOptions
 }
 
-const createLoader = <T extends ComponentType<unknown>>(load: () => Promise<{ default: T }>, reloadCount: number) => {
+const createLoader = <T extends ComponentType<unknown>>(
+  load: () => Promise<{ default: T }>,
+  reload: ReloadOptions['reload']
+) => {
   return async (): Promise<{ default: T }> => {
     const storageKey = load.toString()
-    const storedValue = window.sessionStorage.getItem(storageKey)
-    const { reloadCount: currentReloadCount, isNaN } = parseReload(storedValue)
+    let currentReloadCount = 0
 
-    if (isNaN) {
-      window.sessionStorage.removeItem(storageKey)
+    if (typeof reload === 'number') {
+      const storedValue = window.sessionStorage.getItem(storageKey)
+      const parsed = parseReload(storedValue)
+      currentReloadCount = parsed.reloadCount
+
+      if (parsed.isNaN) {
+        window.sessionStorage.removeItem(storageKey)
+      }
     }
 
     try {
       const result = await load()
-      window.sessionStorage.removeItem(storageKey)
+      if (typeof reload === 'number') {
+        window.sessionStorage.removeItem(storageKey)
+      }
       return result
     } catch (error) {
-      if (currentReloadCount < reloadCount) {
-        window.sessionStorage.setItem(storageKey, String(currentReloadCount + 1))
+      const shouldRetry = reload === true || (typeof reload === 'number' && currentReloadCount < reload)
+
+      if (shouldRetry) {
+        // Update storage for finite retries
+        if (typeof reload === 'number') {
+          window.sessionStorage.setItem(storageKey, String(currentReloadCount + 1))
+        }
         window.location.reload()
         return { default: (() => null) as unknown as T }
       }
@@ -120,6 +135,9 @@ const createLazy = (defaultOptions: ReloadOptions) => {
  *
  * // Custom reload count
  * const ReloadComponent = lazy(() => import('./ReloadComponent'), { reload: 5 })
+ *
+ * // Infinite reload
+ * const InfiniteReloadComponent = lazy(() => import('./InfiniteReloadComponent'), { reload: true })
  *
  * // Preloading component
  * function PreloadExample() {
