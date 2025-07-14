@@ -1,7 +1,7 @@
 import { type ComponentType, type LazyExoticComponent, lazy as originalLazy } from 'react'
 import { noop } from './utils/noop'
 
-interface ReloadOptions {
+interface LazyOptions {
   reload: number | true
 }
 
@@ -24,7 +24,7 @@ const parseReload = (value: string | null): { reloadCount: number; isNaN: boolea
   }
 }
 
-const getDefaultedOptions = (options: ReloadOptions | undefined, defaultOptions: ReloadOptions): ReloadOptions => {
+const getDefaultedOptions = (options: LazyOptions | undefined, defaultOptions: LazyOptions): LazyOptions => {
   if (
     options != null &&
     typeof options.reload === 'number' &&
@@ -42,17 +42,17 @@ const getDefaultedOptions = (options: ReloadOptions | undefined, defaultOptions:
     return defaultOptions
   }
 
-  const keys = Object.keys(defaultOptions) as (keyof ReloadOptions)[]
+  const keys = Object.keys(defaultOptions) as (keyof LazyOptions)[]
 
-  return keys.reduce<Partial<ReloadOptions>>((acc, key) => {
+  return keys.reduce<Partial<LazyOptions>>((acc, key) => {
     acc[key] = key in options ? options[key] : defaultOptions[key]
     return acc
-  }, {}) as ReloadOptions
+  }, {}) as LazyOptions
 }
 
 const createLoader = <T extends ComponentType<unknown>>(
   load: () => Promise<{ default: T }>,
-  reload: ReloadOptions['reload']
+  reload: LazyOptions['reload']
 ) => {
   return async (): Promise<{ default: T }> => {
     const storageKey = load.toString()
@@ -110,11 +110,11 @@ const createLoader = <T extends ComponentType<unknown>>(
  * const Component3 = customLazy(() => import('./Component3'), { reload: 2 })
  * ```
  */
-const createLazy = (defaultOptions: ReloadOptions) => {
+const createLazy = (defaultOptions: LazyOptions) => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const lazy = <T extends ComponentType<any>>(
     load: () => Promise<{ default: T }>,
-    options?: ReloadOptions
+    options?: LazyOptions
   ): LazyExoticComponent<T> & {
     load: () => Promise<void>
   } => {
