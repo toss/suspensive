@@ -5,7 +5,7 @@ interface ReloadOptions {
   reload: number | true
 }
 
-const DEFAULT_RELOAD_COUNT = 3
+const DEFAULT_RELOAD_COUNT = 1
 
 const parseReload = (value: string | null): { reloadCount: number; isNaN: boolean } => {
   if (!value) {
@@ -130,7 +130,7 @@ const createLazy = (defaultOptions: ReloadOptions) => {
  * ```tsx
  * import { lazy, Suspense } from '@suspensive/react'
  *
- * // Basic usage with default reload (3 times)
+ * // Basic usage with default reload (1 time)
  * const Component = lazy(() => import('./Component'))
  *
  * // Custom reload count
