@@ -24,7 +24,7 @@ const parseReload = (value: string | null): { reloadCount: number; isNaN: boolea
   }
 }
 
-const getDefaultedOptions = (options: LazyOptions | undefined, defaultOptions: LazyOptions): LazyOptions => {
+const mergeOptions = (options: Partial<LazyOptions> | undefined, defaultOptions: LazyOptions): LazyOptions => {
   if (
     options != null &&
     typeof options.reload === 'number' &&
@@ -53,7 +53,12 @@ const getDefaultedOptions = (options: LazyOptions | undefined, defaultOptions: L
 const createLoader = <T extends ComponentType<unknown>>(
   load: () => Promise<{ default: T }>,
   reload: LazyOptions['reload']
-) => {
+): (() => Promise<{ default: T }>) => {
+  // If it's falsy(`false` or `0`), return the original load function
+  if (!reload) {
+    return load
+  }
+
   return async (): Promise<{ default: T }> => {
     const storageKey = load.toString()
     let currentReloadCount = 0
@@ -118,8 +123,8 @@ const createLazy = (defaultOptions: LazyOptions) => {
   ): LazyExoticComponent<T> & {
     load: () => Promise<void>
   } => {
-    const defaultedOptions = getDefaultedOptions(options, defaultOptions)
-    const loader = defaultedOptions.reload ? createLoader(load, defaultedOptions.reload) : load
+    const mergedOptions = mergeOptions(options, defaultOptions)
+    const loader = createLoader(load, mergedOptions.reload)
 
     return Object.assign(originalLazy(loader), { load: () => load().then(noop) })
   }
