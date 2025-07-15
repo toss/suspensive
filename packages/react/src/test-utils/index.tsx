@@ -55,3 +55,7 @@ export const Suspend = ({ during, toShow }: { during: number; toShow?: ReactNode
 Suspend.reset = () => {
   isNeedSuspendGlobal.current = true
 }
+
+export default function Component() {
+  return <div>Component</div>
+}

@@ -2,97 +2,12 @@ import { type ComponentType, type LazyExoticComponent, lazy as originalLazy } fr
 import { noop } from './utils/noop'
 
 interface LazyOptions {
-  reload: number | boolean
-}
-
-const DEFAULT_RELOAD_COUNT = 1
-
-const parseReload = (value: string | null): { reloadCount: number; isNaN: boolean } => {
-  if (!value) {
-    return {
-      reloadCount: 0,
-      isNaN: true,
-    }
-  }
-
-  const reloadCount = parseInt(value, 10)
-  const isNaN = Number.isNaN(reloadCount)
-
-  return {
-    reloadCount: isNaN ? 0 : reloadCount,
-    isNaN,
-  }
-}
-
-const mergeOptions = (options: Partial<LazyOptions> | undefined, defaultOptions: LazyOptions): LazyOptions => {
-  const keys = Object.keys(defaultOptions) as (keyof LazyOptions)[]
-  const mergedOptions = keys.reduce<Partial<LazyOptions>>((acc, key) => {
-    acc[key] = options != null && key in options ? options[key] : defaultOptions[key]
-    return acc
-  }, {}) as LazyOptions
-
-  if (process.env.NODE_ENV === 'development') {
-    if (
-      typeof mergedOptions.reload === 'number' &&
-      (!Number.isInteger(mergedOptions.reload) || mergedOptions.reload <= 0)
-    ) {
-      console.error(
-        `[@suspensive/react] lazy: reload option must be a positive integer, but received ${mergedOptions.reload}. ` +
-          `Please provide a positive integer value (e.g., { reload: 3 }).`
-      )
-    }
-  }
-
-  return mergedOptions
-}
-
-const createLoader = <T extends ComponentType<unknown>>(
-  load: () => Promise<{ default: T }>,
-  reload: LazyOptions['reload']
-): (() => Promise<{ default: T }>) => {
-  // If it's falsy(`false` or `0`), return the original load function
-  if (!reload) {
-    return load
-  }
-
-  return async (): Promise<{ default: T }> => {
-    const storageKey = load.toString()
-    let currentReloadCount = 0
-
-    if (typeof reload === 'number') {
-      const storedValue = window.sessionStorage.getItem(storageKey)
-      const parsed = parseReload(storedValue)
-      currentReloadCount = parsed.reloadCount
-
-      if (parsed.isNaN) {
-        window.sessionStorage.removeItem(storageKey)
-      }
-    }
-
-    try {
-      const result = await load()
-      if (typeof reload === 'number') {
-        window.sessionStorage.removeItem(storageKey)
-      }
-      return result
-    } catch (error) {
-      const shouldRetry = reload === true || (typeof reload === 'number' && currentReloadCount < reload)
-
-      if (shouldRetry) {
-        // Update storage for finite retries
-        if (typeof reload === 'number') {
-          window.sessionStorage.setItem(storageKey, String(currentReloadCount + 1))
-        }
-        window.location.reload()
-        return { default: (() => null) as unknown as T }
-      }
-      throw error
-    }
-  }
+  onSuccess?: ({ load }: { load: () => Promise<void> }) => void
+  onError?: ({ error, load }: { error: unknown; load: () => Promise<void> }) => undefined
 }
 
 /**
- * Creates a lazy function with custom default reload options
+ * Creates a lazy function with custom default options
  *
  * @experimental This is experimental feature.
  *
@@ -100,36 +15,54 @@ const createLoader = <T extends ComponentType<unknown>>(
  * ```tsx
  * import { lazy } from '@suspensive/react'
  *
- * // Create a lazy factory with custom default reload count
- * const customLazy = lazy.create({ reload: 5 })
+ * // Create a lazy factory with custom default options
+ * const customLazy = lazy.create({
+ *   onSuccess: () => console.log('Component loaded successfully'),
+ *   onError: ({ error }) => console.error('Component loading failed:', error)
+ * })
  *
  * // Use the factory to create lazy components
  * const Component1 = customLazy(() => import('./Component1'))
  * const Component2 = customLazy(() => import('./Component2'))
  *
  * // Override default options for specific component
- * const Component3 = customLazy(() => import('./Component3'), { reload: 2 })
+ * const Component3 = customLazy(() => import('./Component3'), {
+ *   onError: ({ error }) => {
+ *     console.error('Custom error handling:', error)
+ *     // Additional error handling logic
+ *   }
+ * })
  * ```
  */
-const createLazy = (defaultOptions: LazyOptions) => {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const lazy = <T extends ComponentType<any>>(
+const createLazy =
+  (defaultOptions: LazyOptions) =>
+  <T extends ComponentType<any>>(
     load: () => Promise<{ default: T }>,
     options?: LazyOptions
   ): LazyExoticComponent<T> & {
     load: () => Promise<void>
   } => {
-    const mergedOptions = mergeOptions(options, defaultOptions)
-    const loader = createLoader(load, mergedOptions.reload)
-
-    return Object.assign(originalLazy(loader), { load: () => load().then(noop) })
+    const defaultedOptions = { ...defaultOptions, ...options }
+    const loadNoReturn = () => load().then(noop)
+    return Object.assign(
+      originalLazy(() =>
+        load().then(
+          (loaded) => {
+            defaultedOptions.onSuccess?.({ load: loadNoReturn })
+            return loaded
+          },
+          (error: unknown) => {
+            defaultedOptions.onError?.({ error: error, load: loadNoReturn })
+            throw error
+          }
+        )
+      ),
+      { load: loadNoReturn }
+    )
   }
 
-  return lazy
-}
-
 /**
- * A reload wrapper around React.lazy that handles component loading failures gracefully
+ * A wrapper around React.lazy that provides error handling and success callbacks
  *
  * @experimental This is experimental feature.
  *
@@ -137,14 +70,14 @@ const createLazy = (defaultOptions: LazyOptions) => {
  * ```tsx
  * import { lazy, Suspense } from '@suspensive/react'
  *
- * // Basic usage with default reload (1 time)
+ * // Basic usage
  * const Component = lazy(() => import('./Component'))
  *
- * // Custom reload count
- * const ReloadComponent = lazy(() => import('./ReloadComponent'), { reload: 5 })
- *
- * // Infinite reload
- * const InfiniteReloadComponent = lazy(() => import('./InfiniteReloadComponent'), { reload: true })
+ * // With error handling and success callbacks
+ * const ReloadComponent = lazy(() => import('./ReloadComponent'), {
+ *   onError: ({ error }) => console.error('Loading failed:', error),
+ *   onSuccess: () => console.log('Component loaded successfully')
+ * })
  *
  * // Preloading component
  * function PreloadExample() {
@@ -163,13 +96,15 @@ const createLazy = (defaultOptions: LazyOptions) => {
  * }
  *
  * // Using lazy.create for factory pattern
- * const customLazy = lazy.create({ reload: 2 })
+ * const customLazy = lazy.create({
+ *   onError: ({ error }) => console.error('Default error handling:', error)
+ * })
  * const CustomComponent = customLazy(() => import('./CustomComponent'))
  * ```
  *
  * @returns A lazy component with additional `load` method for preloading
  * @property {() => Promise<void>} load - Preloads the component without rendering it. Useful for prefetching components in the background.
  */
-export const lazy = Object.assign(createLazy({ reload: DEFAULT_RELOAD_COUNT }), {
+export const lazy = Object.assign(createLazy({}), {
   create: createLazy,
 })

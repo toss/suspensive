@@ -8,7 +8,7 @@ import { Callout } from '@/components'
 
 </Callout>
 
-`lazy` 함수는 컴포넌트 로딩이 실패할 때 자동 오류 복구를 제공하는 React의 `lazy` 함수의 안전한 래퍼입니다. 컴포넌트를 로드하려고 시도하고, 로딩이 실패하면 설정된 횟수만큼 페이지를 새로고침하여 네트워크 문제나 일시적인 로딩 실패 시 더 나은 사용자 경험을 제공합니다.
+`lazy` 함수는 React의 `lazy` 함수를 래핑하여 컴포넌트 로딩 성공과 실패에 대한 콜백을 제공합니다. 컴포넌트가 성공적으로 로드되거나 실패할 때 사용자 정의 로직을 실행할 수 있어 더 나은 사용자 경험과 디버깅을 제공합니다.
 
 ## 기본 사용법
 
@@ -18,24 +18,28 @@ import { lazy } from '@suspensive/react'
 const MyComponent = lazy(() => import('./MyComponent'))
 ```
 
-기본적으로 `lazy`는 컴포넌트 로딩이 실패할 경우 페이지를 **1번** 새로고침합니다.
+기본적으로 `lazy`는 React의 `lazy`와 동일하게 작동하지만, 추가적인 `load` 메서드를 제공합니다.
 
-## 작동 방식
+## API 참조
 
-1. **첫 번째 시도**: 컴포넌트가 처음 로드에 실패할 때, `lazy`는:
+```tsx
+interface LazyOptions {
+  onSuccess?: ({ load }: { load: () => Promise<void> }) => void
+  onError?: ({
+    error,
+    load,
+  }: {
+    error: unknown
+    load: () => Promise<void>
+  }) => undefined
+}
 
-   - 실패를 추적하기 위해 `sessionStorage`에 플래그를 설정
-   - 즉시 페이지를 새로고침하여 새로운 로드를 시도
-   - 렌더링 오류를 방지하기 위해 null 컴포넌트를 반환
-
-2. **새로고침**: 설정된 새로고침 횟수만큼 반복하여 컴포넌트 로드를 시도
-3. **최종 실패**: 모든 새로고침이 실패하면 원래 오류를 던짐
-
-## 동작
-
-- **성공**: 컴포넌트가 정상적으로 로드됨, `React.lazy`와 동일
-- **실패 후 새로고침**: 설정된 횟수만큼 자동으로 페이지를 새로고침
-- **최종 실패**: 오류가 던져져서 오류 경계가 처리할 수 있음
+// 반환 타입
+LazyExoticComponent<T> &
+  {
+    load: () => Promise<void>,
+  }
+```
 
 ## 예제
 
@@ -57,32 +61,15 @@ function App() {
 }
 ```
 
-### 커스텀 새로고침 옵션
-
-#### 새로고침 횟수 수정
+### 성공/실패 콜백 사용
 
 ```tsx
 import { lazy, Suspense, ErrorBoundary } from '@suspensive/react'
 
-const UserProfile = lazy(() => import('./UserProfile'), { reload: 5 })
-
-function App() {
-  return (
-    <ErrorBoundary fallback={<div>문제가 발생했습니다</div>}>
-      <Suspense fallback={<div>로딩 중...</div>}>
-        <UserProfile />
-      </Suspense>
-    </ErrorBoundary>
-  )
-}
-```
-
-#### 무한 새로고침
-
-```tsx
-import { lazy, Suspense, ErrorBoundary } from '@suspensive/react'
-
-const UserProfile = lazy(() => import('./UserProfile'), { reload: true })
+const UserProfile = lazy(() => import('./UserProfile'), {
+  onSuccess: () => console.log('컴포넌트가 성공적으로 로드되었습니다'),
+  onError: ({ error }) => console.error('로딩 실패:', error),
+})
 
 function App() {
   return (
@@ -123,21 +110,92 @@ function PreloadExample() {
 ```tsx
 import { lazy } from '@suspensive/react'
 
-// 5번 새로고침
-const customLazy = lazy.create({ reload: 5 })
+const customLazy = lazy.create({
+  onSuccess: () => console.log('컴포넌트가 성공적으로 로드되었습니다'),
+  onError: ({ error }) => console.error('컴포넌트 로딩 실패:', error),
+})
 
-const HeavyComponent = customLazy(() => import('./HeavyComponent'))
-// 이 특정 컴포넌트에 대해 기본 새로고침 횟수를 재정의
-const LightComponent = customLazy(() => import('./LightComponent'), {
-  reload: 2,
+const Component = customLazy(() => import('./Component'))
+```
+
+### 재시도 로직을 통한 오류 복구
+
+```tsx
+import { lazy, Suspense, ErrorBoundary } from '@suspensive/react'
+
+const RetryableComponent = lazy(() => import('./Component'), {
+  onError: ({ error, load }) => {
+    if (error.message?.includes('NetworkError')) {
+      setTimeout(() => load(), 1000) // 1초 후 재시도
+    }
+  },
 })
 
 function App() {
   return (
-    <div>
-      <HeavyComponent />
-      <LightComponent />
-    </div>
+    <ErrorBoundary fallback={<div>문제가 발생했습니다</div>}>
+      <Suspense fallback={<div>로딩 중...</div>}>
+        <RetryableComponent />
+      </Suspense>
+    </ErrorBoundary>
   )
 }
 ```
+
+### Version Skew 문제 해결
+
+```tsx
+import { lazy, Suspense, ErrorBoundary } from '@suspensive/react'
+
+const MAX_RELOADS = 3
+
+const VersionSkewSafeComponent = lazy(
+  () => import('./VersionSkewSafeComponent'),
+  {
+    onSuccess: ({ load }) => {
+      const reloadKey = `reload_count_${load.toString()}`
+      sessionStorage.removeItem(reloadKey)
+    },
+    onError: ({ error, load }) => {
+      const reloadKey = `reload_count_${load.toString()}`
+      const currentReloadCount = parseInt(
+        sessionStorage.getItem(reloadKey) || '0'
+      )
+
+      if (
+        currentReloadCount < MAX_RELOADS &&
+        error.message?.includes('Loading chunk')
+      ) {
+        const newReloadCount = currentReloadCount + 1
+        sessionStorage.setItem(reloadKey, newReloadCount.toString())
+        window.location.reload()
+      }
+    },
+  }
+)
+```
+
+## 마이그레이션 가이드
+
+### React.lazy에서 마이그레이션
+
+```tsx
+// 이전
+import { lazy as ReactLazy } from 'react'
+const Component = ReactLazy(() => import('./Component'))
+
+// 이후
+import { lazy } from '@suspensive/react'
+const Component = lazy(() => import('./Component'), {
+  onSuccess: () => console.log('성공적으로 로드됨'),
+  onError: ({ error }) => console.error('실패:', error),
+})
+```
+
+## 모범 사례
+
+1. **항상 ErrorBoundary 사용**: 로딩 실패를 처리하기 위해 lazy 컴포넌트를 감싸기
+2. **렌더링 외부에서 컴포넌트 생성**: 렌더링 함수 내부에서 lazy 컴포넌트 생성 방지
+3. **전략적으로 사전 로딩**: 중요한 컴포넌트에 `load()` 메서드 사용
+4. **오류를 우아하게 처리**: 네트워크 실패에 대한 재시도 메커니즘 제공
+5. **SSR에서는 clientOnly 사용**: SSR 프레임워크에서 하이드레이션 불일치 방지
