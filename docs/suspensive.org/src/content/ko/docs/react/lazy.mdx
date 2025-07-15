@@ -20,17 +20,26 @@ const MyComponent = lazy(() => import('./MyComponent'))
 
 기본적으로 `lazy`는 React의 `lazy`와 동일하게 작동하지만, 추가적인 `load` 메서드를 제공합니다.
 
-## 작동 방식
+## API 참조
 
-1. **성공 시**: 컴포넌트가 정상적으로 로드되면 `onSuccess` 콜백이 호출됩니다
-2. **실패 시**: 컴포넌트 로딩이 실패하면 `onError` 콜백이 호출됩니다
-3. **사전 로딩**: `load` 메서드를 사용하여 컴포넌트를 렌더링하지 않고 미리 로드할 수 있습니다
+```tsx
+interface LazyOptions {
+  onSuccess?: ({ load }: { load: () => Promise<void> }) => void
+  onError?: ({
+    error,
+    load,
+  }: {
+    error: unknown
+    load: () => Promise<void>
+  }) => undefined
+}
 
-## 동작
-
-- **성공**: 컴포넌트가 정상적으로 로드됨, `React.lazy`와 동일
-- **실패**: 오류가 던져져서 오류 경계가 처리할 수 있음
-- **콜백**: 성공/실패 시점에 사용자 정의 로직 실행 가능
+// 반환 타입
+LazyExoticComponent<T> &
+  {
+    load: () => Promise<void>,
+  }
+```
 
 ## 예제
 
@@ -54,37 +63,12 @@ function App() {
 
 ### 성공/실패 콜백 사용
 
-#### 성공 콜백
-
 ```tsx
 import { lazy, Suspense, ErrorBoundary } from '@suspensive/react'
 
 const UserProfile = lazy(() => import('./UserProfile'), {
-  onSuccess: () =>
-    console.log('UserProfile 컴포넌트가 성공적으로 로드되었습니다'),
-})
-
-function App() {
-  return (
-    <ErrorBoundary fallback={<div>문제가 발생했습니다</div>}>
-      <Suspense fallback={<div>로딩 중...</div>}>
-        <UserProfile />
-      </Suspense>
-    </ErrorBoundary>
-  )
-}
-```
-
-#### 오류 콜백
-
-```tsx
-import { lazy, Suspense, ErrorBoundary } from '@suspensive/react'
-
-const UserProfile = lazy(() => import('./UserProfile'), {
-  onError: ({ error }) => {
-    console.error('UserProfile 로딩 실패:', error)
-    // 추가적인 오류 처리 로직
-  },
+  onSuccess: () => console.log('컴포넌트가 성공적으로 로드되었습니다'),
+  onError: ({ error }) => console.error('로딩 실패:', error),
 })
 
 function App() {
@@ -126,50 +110,23 @@ function PreloadExample() {
 ```tsx
 import { lazy } from '@suspensive/react'
 
-// 기본 성공/실패 콜백이 설정된 커스텀 lazy 팩토리
 const customLazy = lazy.create({
   onSuccess: () => console.log('컴포넌트가 성공적으로 로드되었습니다'),
   onError: ({ error }) => console.error('컴포넌트 로딩 실패:', error),
 })
 
-const HeavyComponent = customLazy(() => import('./HeavyComponent'))
-// 이 특정 컴포넌트에 대해 기본 콜백을 재정의
-const LightComponent = customLazy(() => import('./LightComponent'), {
-  onSuccess: () => console.log('LightComponent 로드 완료'),
-  onError: ({ error }) => {
-    console.error('LightComponent 로딩 실패:', error)
-    // 특별한 오류 처리 로직
-  },
-})
-
-function App() {
-  return (
-    <div>
-      <HeavyComponent />
-      <LightComponent />
-    </div>
-  )
-}
+const Component = customLazy(() => import('./Component'))
 ```
 
-### 로딩 실패 시 페이지 새로고침
-
-네트워크 문제나 일시적인 로딩 실패 시 페이지를 새로고침하여 복구를 시도할 수 있습니다.
+### 재시도 로직을 통한 오류 복구
 
 ```tsx
 import { lazy, Suspense, ErrorBoundary } from '@suspensive/react'
 
-const UserProfile = lazy(() => import('./UserProfile'), {
+const RetryableComponent = lazy(() => import('./Component'), {
   onError: ({ error, load }) => {
-    console.error('UserProfile 로딩 실패:', error)
-
-    // 네트워크 오류나 모듈 로딩 실패 시 페이지 새로고침
-    if (
-      error instanceof TypeError ||
-      error.message?.includes('Loading chunk')
-    ) {
-      console.log('페이지를 새로고침하여 복구를 시도합니다...')
-      window.location.reload()
+    if (error.message?.includes('NetworkError')) {
+      setTimeout(() => load(), 1000) // 1초 후 재시도
     }
   },
 })
@@ -178,7 +135,7 @@ function App() {
   return (
     <ErrorBoundary fallback={<div>문제가 발생했습니다</div>}>
       <Suspense fallback={<div>로딩 중...</div>}>
-        <UserProfile />
+        <RetryableComponent />
       </Suspense>
     </ErrorBoundary>
   )
@@ -186,25 +143,6 @@ function App() {
 ```
 
 ### Version Skew 문제 해결
-
-Version Skew는 배포 과정에서 발생하는 문제로, 사용자가 이전 버전의 JavaScript 청크를 로드하려고 할 때 발생합니다. 이는 다음과 같은 상황에서 발생할 수 있습니다:
-
-- **롤링 배포**: 서버가 순차적으로 업데이트되는 동안
-- **CDN 캐싱**: 이전 버전의 파일이 캐시에 남아있는 경우
-- **브라우저 캐싱**: 사용자가 이전 버전의 파일을 캐시하고 있는 경우
-
-#### 권장 해결 방법
-
-가장 좋은 해결책은 인프라 레벨에서 해결하는 것입니다:
-
-1. **배포 전략 개선**: Blue-Green 배포, Canary 배포 등
-2. **CDN 설정**: 적절한 캐시 무효화 전략
-3. **Service Worker**: 버전 관리 및 캐시 전략
-4. **빌드 최적화**: 청크 해시를 통한 버전 관리
-
-#### 클라이언트 사이드 대안
-
-인프라 개선이 어려운 상황에서는 클라이언트 사이드에서 다음과 같이 처리할 수 있습니다:
 
 ```tsx
 import { lazy, Suspense, ErrorBoundary } from '@suspensive/react'
@@ -215,12 +153,10 @@ const VersionSkewSafeComponent = lazy(
   () => import('./VersionSkewSafeComponent'),
   {
     onSuccess: ({ load }) => {
-      // 성공적으로 로드되면 sessionStorage에서 새로고침 횟수 제거
       const reloadKey = `reload_count_${load.toString()}`
       sessionStorage.removeItem(reloadKey)
     },
     onError: ({ error, load }) => {
-      // load.toString()을 키로 사용하여 sessionStorage에서 새로고침 횟수 추적
       const reloadKey = `reload_count_${load.toString()}`
       const currentReloadCount = parseInt(
         sessionStorage.getItem(reloadKey) || '0'
@@ -232,44 +168,52 @@ const VersionSkewSafeComponent = lazy(
       ) {
         const newReloadCount = currentReloadCount + 1
         sessionStorage.setItem(reloadKey, newReloadCount.toString())
-        console.log(`새로고침 시도 ${newReloadCount}/${MAX_RELOADS}`)
         window.location.reload()
-      } else {
-        console.error('최대 새로고침 횟수 초과:', error)
-        // 세션 스토리지에서 해당 키 제거
-        sessionStorage.removeItem(reloadKey)
       }
     },
   }
 )
 ```
 
-#### 중요 고려사항
+## 마이그레이션 가이드
 
-- **무한 루프 방지**: 새로고침 시도 횟수를 제한하거나 명확한 조건 설정
-- **사용자 경험**: 갑작스러운 새로고침 대신 사용자에게 알림 후 새로고침
-- **성능**: 불필요한 새로고침은 사용자 경험을 해칠 수 있음
+### React.lazy에서 마이그레이션
 
 ```tsx
-import { lazy, Suspense, ErrorBoundary } from '@suspensive/react'
+// 이전
+import { lazy as ReactLazy } from 'react'
+const Component = ReactLazy(() => import('./Component'))
 
-const CriticalComponent = lazy(() => import('./CriticalComponent'), {
-  onError: ({ error, load }) => {
-    // Version Skew 관련 오류 감지
-    if (
-      error.message?.includes('Loading chunk') ||
-      error.message?.includes('Unexpected token') ||
-      error.name === 'ChunkLoadError'
-    ) {
-      console.warn('Version Skew가 감지되었습니다. 페이지를 새로고침합니다.')
-
-      // 사용자에게 알림 (선택사항)
-      if (
-        confirm('새로운 버전이 배포되었습니다. 페이지를 새로고침하시겠습니까?')
-      ) {
-        window.location.reload()
-      }
-    }
-  },
+// 이후
+import { lazy } from '@suspensive/react'
+const Component = lazy(() => import('./Component'), {
+  onSuccess: () => console.log('성공적으로 로드됨'),
+  onError: ({ error }) => console.error('실패:', error),
 })
 ```
+
+## SSR 고려사항
+
+Next.js와 같은 SSR 프레임워크에서 `lazy`를 사용할 때:
+
+```tsx
+import { lazy, Suspense } from '@suspensive/react'
+
+const SSRComponent = lazy(() => import('./SSRComponent'))
+
+function App() {
+  return (
+    <Suspense fallback={<div>로딩 중...</div>} clientOnly>
+      <SSRComponent />
+    </Suspense>
+  )
+}
+```
+
+## 모범 사례
+
+1. **항상 ErrorBoundary 사용**: 로딩 실패를 처리하기 위해 lazy 컴포넌트를 감싸기
+2. **렌더링 외부에서 컴포넌트 생성**: 렌더링 함수 내부에서 lazy 컴포넌트 생성 방지
+3. **전략적으로 사전 로딩**: 중요한 컴포넌트에 `load()` 메서드 사용
+4. **오류를 우아하게 처리**: 네트워크 실패에 대한 재시도 메커니즘 제공
+5. **SSR에서는 clientOnly 사용**: SSR 프레임워크에서 하이드레이션 불일치 방지

@@ -20,17 +20,26 @@ const MyComponent = lazy(() => import('./MyComponent'))
 
 By default, `lazy` works the same as React's `lazy` but provides an additional `load` method.
 
-## How it Works
+## API Reference
 
-1. **On Success**: When a component loads successfully, the `onSuccess` callback is called
-2. **On Failure**: When a component fails to load, the `onError` callback is called
-3. **Preloading**: You can use the `load` method to preload a component without rendering it
+```tsx
+interface LazyOptions {
+  onSuccess?: ({ load }: { load: () => Promise<void> }) => void
+  onError?: ({
+    error,
+    load,
+  }: {
+    error: unknown
+    load: () => Promise<void>
+  }) => undefined
+}
 
-## Behavior
-
-- **Success**: Component loads normally, just like `React.lazy`
-- **Failure**: Error is thrown, allowing your error boundary to handle it
-- **Callbacks**: Custom logic can be executed at success/failure points
+// Return type
+LazyExoticComponent<T> &
+  {
+    load: () => Promise<void>,
+  }
+```
 
 ## Examples
 
@@ -54,36 +63,12 @@ function App() {
 
 ### Success/Error Callbacks
 
-#### Success Callback
-
 ```tsx
 import { lazy, Suspense, ErrorBoundary } from '@suspensive/react'
 
 const UserProfile = lazy(() => import('./UserProfile'), {
-  onSuccess: () => console.log('UserProfile component loaded successfully'),
-})
-
-function App() {
-  return (
-    <ErrorBoundary fallback={<div>Something went wrong</div>}>
-      <Suspense fallback={<div>Loading...</div>}>
-        <UserProfile />
-      </Suspense>
-    </ErrorBoundary>
-  )
-}
-```
-
-#### Error Callback
-
-```tsx
-import { lazy, Suspense, ErrorBoundary } from '@suspensive/react'
-
-const UserProfile = lazy(() => import('./UserProfile'), {
-  onError: ({ error }) => {
-    console.error('UserProfile loading failed:', error)
-    // Additional error handling logic
-  },
+  onSuccess: () => console.log('Component loaded successfully'),
+  onError: ({ error }) => console.error('Loading failed:', error),
 })
 
 function App() {
@@ -125,50 +110,23 @@ function PreloadExample() {
 ```tsx
 import { lazy } from '@suspensive/react'
 
-// Custom lazy factory with default success/error callbacks
 const customLazy = lazy.create({
   onSuccess: () => console.log('Component loaded successfully'),
   onError: ({ error }) => console.error('Component loading failed:', error),
 })
 
-const HeavyComponent = customLazy(() => import('./HeavyComponent'))
-// Override default callbacks for this specific component
-const LightComponent = customLazy(() => import('./LightComponent'), {
-  onSuccess: () => console.log('LightComponent loaded'),
-  onError: ({ error }) => {
-    console.error('LightComponent loading failed:', error)
-    // Special error handling logic
-  },
-})
-
-function App() {
-  return (
-    <div>
-      <HeavyComponent />
-      <LightComponent />
-    </div>
-  )
-}
+const Component = customLazy(() => import('./Component'))
 ```
 
-### Page Reload on Loading Failure
-
-You can attempt to recover from network issues or temporary loading failures by reloading the page.
+### Error Recovery with Retry Logic
 
 ```tsx
 import { lazy, Suspense, ErrorBoundary } from '@suspensive/react'
 
-const UserProfile = lazy(() => import('./UserProfile'), {
+const RetryableComponent = lazy(() => import('./Component'), {
   onError: ({ error, load }) => {
-    console.error('UserProfile loading failed:', error)
-
-    // Reload page on network errors or module loading failures
-    if (
-      error instanceof TypeError ||
-      error.message?.includes('Loading chunk')
-    ) {
-      console.log('Attempting to recover by reloading the page...')
-      window.location.reload()
+    if (error.message?.includes('NetworkError')) {
+      setTimeout(() => load(), 1000) // Retry after 1 second
     }
   },
 })
@@ -177,7 +135,7 @@ function App() {
   return (
     <ErrorBoundary fallback={<div>Something went wrong</div>}>
       <Suspense fallback={<div>Loading...</div>}>
-        <UserProfile />
+        <RetryableComponent />
       </Suspense>
     </ErrorBoundary>
   )
@@ -185,25 +143,6 @@ function App() {
 ```
 
 ### Version Skew Problem Resolution
-
-Version Skew is a deployment issue that occurs when users try to load JavaScript chunks from a previous version. This can happen in the following scenarios:
-
-- **Rolling Deployments**: When servers are updated sequentially
-- **CDN Caching**: When previous version files remain cached
-- **Browser Caching**: When users have cached previous version files
-
-#### Recommended Solutions
-
-The best solution is to resolve this at the infrastructure level:
-
-1. **Deployment Strategy**: Blue-Green deployments, Canary deployments
-2. **CDN Configuration**: Proper cache invalidation strategies
-3. **Service Worker**: Version management and cache strategies
-4. **Build Optimization**: Version management through chunk hashing
-
-#### Client-Side Alternative
-
-When infrastructure improvements are difficult, you can handle this on the client side:
 
 ```tsx
 import { lazy, Suspense, ErrorBoundary } from '@suspensive/react'
@@ -214,12 +153,10 @@ const VersionSkewSafeComponent = lazy(
   () => import('./VersionSkewSafeComponent'),
   {
     onSuccess: ({ load }) => {
-      // Remove reload count from sessionStorage when successfully loaded
       const reloadKey = `reload_count_${load.toString()}`
       sessionStorage.removeItem(reloadKey)
     },
     onError: ({ error, load }) => {
-      // Use load.toString() as key to track reload count in sessionStorage
       const reloadKey = `reload_count_${load.toString()}`
       const currentReloadCount = parseInt(
         sessionStorage.getItem(reloadKey) || '0'
@@ -231,56 +168,52 @@ const VersionSkewSafeComponent = lazy(
       ) {
         const newReloadCount = currentReloadCount + 1
         sessionStorage.setItem(reloadKey, newReloadCount.toString())
-        console.log(`Reload attempt ${newReloadCount}/${MAX_RELOADS}`)
         window.location.reload()
-      } else {
-        console.error('Maximum reload attempts exceeded:', error)
-        // Remove the key from sessionStorage
-        sessionStorage.removeItem(reloadKey)
       }
     },
   }
 )
 ```
 
-#### Important Considerations
+## Migration Guide
 
-- **Prevent Infinite Loops**: Limit reload attempts or set clear conditions
-- **User Experience**: Notify users before reloading instead of sudden reloads
-- **Performance**: Unnecessary reloads can harm user experience
+### From React.lazy
 
 ```tsx
-import { lazy, Suspense, ErrorBoundary } from '@suspensive/react'
+// Before
+import { lazy as ReactLazy } from 'react'
+const Component = ReactLazy(() => import('./Component'))
 
-const CriticalComponent = lazy(() => import('./CriticalComponent'), {
-  onError: ({ error, load }) => {
-    // Detect Version Skew related errors
-    if (
-      error.message?.includes('Loading chunk') ||
-      error.message?.includes('Unexpected token') ||
-      error.name === 'ChunkLoadError'
-    ) {
-      console.warn('Version Skew detected. Reloading page.')
-
-      // Notify user (optional)
-      if (
-        confirm(
-          'A new version has been deployed. Would you like to reload the page?'
-        )
-      ) {
-        window.location.reload()
-      }
-    }
-  },
+// After
+import { lazy } from '@suspensive/react'
+const Component = lazy(() => import('./Component'), {
+  onSuccess: () => console.log('Loaded successfully'),
+  onError: ({ error }) => console.error('Failed:', error),
 })
+```
+
+## SSR Considerations
+
+When using `lazy` with SSR frameworks like Next.js:
+
+```tsx
+import { lazy, Suspense } from '@suspensive/react'
+
+const SSRComponent = lazy(() => import('./SSRComponent'))
 
 function App() {
   return (
-    <ErrorBoundary fallback={<div>Something went wrong</div>}>
-      <Suspense fallback={<div>Loading...</div>}>
-        <CriticalComponent />
-      </Suspense>
-    </ErrorBoundary>
+    <Suspense fallback={<div>Loading...</div>} clientOnly>
+      <SSRComponent />
+    </Suspense>
   )
 }
 ```
+
+## Best Practices
+
+1. **Always use ErrorBoundary**: Wrap lazy components to handle loading failures
+2. **Create components outside render**: Avoid creating lazy components inside render functions
+3. **Preload strategically**: Use `load()` method for important components
+4. **Handle errors gracefully**: Provide retry mechanisms for network failures
+5. **Use clientOnly for SSR**: Prevent hydration mismatches in SSR frameworks
