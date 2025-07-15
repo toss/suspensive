@@ -2,7 +2,7 @@ import { type ComponentType, type LazyExoticComponent, lazy as originalLazy } fr
 import { noop } from './utils/noop'
 
 interface LazyOptions {
-  onSuccess?: () => void
+  onSuccess?: ({ load }: { load: () => Promise<void> }) => void
   onError?: ({ error }: { error: unknown }) => undefined
 }
 
@@ -40,11 +40,12 @@ const createLazy =
     load: () => Promise<void>
   } => {
     const defaultedOptions = { ...defaultOptions, ...options }
+    const loadNoReturn = () => load().then(noop)
     return Object.assign(
       originalLazy(() =>
         load().then(
           (loaded) => {
-            defaultedOptions.onSuccess?.()
+            defaultedOptions.onSuccess?.({ load: loadNoReturn })
             return loaded
           },
           (error: unknown) => {
@@ -53,7 +54,7 @@ const createLazy =
           }
         )
       ),
-      { load: () => load().then(noop) }
+      { load: loadNoReturn }
     )
   }
 
