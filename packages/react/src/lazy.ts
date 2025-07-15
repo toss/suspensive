@@ -3,11 +3,11 @@ import { noop } from './utils/noop'
 
 interface LazyOptions {
   onSuccess?: () => void
-  onError?: ({ error }: { error: unknown }) => undefined | { fallback: ComponentType<any> }
+  onError?: ({ error }: { error: unknown }) => undefined
 }
 
 /**
- * Creates a lazy function with custom default reload options
+ * Creates a lazy function with custom default options
  *
  * @experimental This is experimental feature.
  *
@@ -15,15 +15,20 @@ interface LazyOptions {
  * ```tsx
  * import { lazy } from '@suspensive/react'
  *
- * // Create a lazy factory with custom default reload count
- * const customLazy = lazy.create({ reload: 5 })
+ * // Create a lazy factory with custom default options
+ * const customLazy = lazy.create({
+ *   onSuccess: () => console.log('Component loaded successfully'),
+ *   onError: ({ error }) => ({ fallback: ErrorFallback })
+ * })
  *
  * // Use the factory to create lazy components
  * const Component1 = customLazy(() => import('./Component1'))
  * const Component2 = customLazy(() => import('./Component2'))
  *
  * // Override default options for specific component
- * const Component3 = customLazy(() => import('./Component3'), { reload: 2 })
+ * const Component3 = customLazy(() => import('./Component3'), {
+ *   onError: ({ error }) => ({ fallback: CustomErrorFallback })
+ * })
  * ```
  */
 const createLazy =
@@ -34,26 +39,26 @@ const createLazy =
   ): LazyExoticComponent<T> & {
     load: () => Promise<void>
   } => {
-    const defaultedOptions = {
-      ...defaultOptions,
-      ...options,
-    }
+    const defaultedOptions = { ...defaultOptions, ...options }
     return Object.assign(
-      originalLazy(async () => {
-        const loaded = await load().catch((error: unknown) => {
-          const onErrorResult = defaultedOptions.onError?.({ error: error })
-          if (onErrorResult?.fallback) return { default: onErrorResult.fallback as unknown as T }
-          throw error
-        })
-        defaultedOptions.onSuccess?.()
-        return loaded
-      }),
+      originalLazy(() =>
+        load().then(
+          (loaded) => {
+            defaultedOptions.onSuccess?.()
+            return loaded
+          },
+          (error: unknown) => {
+            defaultedOptions.onError?.({ error: error })
+            throw error
+          }
+        )
+      ),
       { load: () => load().then(noop) }
     )
   }
 
 /**
- * A reload wrapper around React.lazy that handles component loading failures gracefully
+ * A wrapper around React.lazy that provides error handling and success callbacks
  *
  * @experimental This is experimental feature.
  *
@@ -61,14 +66,14 @@ const createLazy =
  * ```tsx
  * import { lazy, Suspense } from '@suspensive/react'
  *
- * // Basic usage with default reload (1 time)
+ * // Basic usage
  * const Component = lazy(() => import('./Component'))
  *
- * // Custom reload count
- * const ReloadComponent = lazy(() => import('./ReloadComponent'), { reload: 5 })
- *
- * // Infinite reload
- * const InfiniteReloadComponent = lazy(() => import('./InfiniteReloadComponent'), { reload: true })
+ * // With error handling and fallback
+ * const ReloadComponent = lazy(() => import('./ReloadComponent'), {
+ *   onError: ({ error }) => ({ fallback: ErrorFallback }),
+ *   onSuccess: () => console.log('Component loaded successfully')
+ * })
  *
  * // Preloading component
  * function PreloadExample() {
@@ -87,7 +92,9 @@ const createLazy =
  * }
  *
  * // Using lazy.create for factory pattern
- * const customLazy = lazy.create({ reload: 2 })
+ * const customLazy = lazy.create({
+ *   onError: ({ error }) => ({ fallback: DefaultErrorFallback })
+ * })
  * const CustomComponent = customLazy(() => import('./CustomComponent'))
  * ```
  *
