@@ -8,7 +8,7 @@ import { Callout } from '@/components'
 
 </Callout>
 
-`lazy` 함수는 컴포넌트 로딩이 실패할 때 자동 오류 복구를 제공하는 React의 `lazy` 함수의 안전한 래퍼입니다. 컴포넌트를 로드하려고 시도하고, 로딩이 실패하면 설정된 횟수만큼 페이지를 새로고침하여 네트워크 문제나 일시적인 로딩 실패 시 더 나은 사용자 경험을 제공합니다.
+`lazy` 함수는 React의 `lazy` 함수를 래핑하여 컴포넌트 로딩 성공과 실패에 대한 콜백을 제공합니다. 컴포넌트가 성공적으로 로드되거나 실패할 때 사용자 정의 로직을 실행할 수 있어 더 나은 사용자 경험과 디버깅을 제공합니다.
 
 ## 기본 사용법
 
@@ -18,24 +18,19 @@ import { lazy } from '@suspensive/react'
 const MyComponent = lazy(() => import('./MyComponent'))
 ```
 
-기본적으로 `lazy`는 컴포넌트 로딩이 실패할 경우 페이지를 **1번** 새로고침합니다.
+기본적으로 `lazy`는 React의 `lazy`와 동일하게 작동하지만, 추가적인 `load` 메서드를 제공합니다.
 
 ## 작동 방식
 
-1. **첫 번째 시도**: 컴포넌트가 처음 로드에 실패할 때, `lazy`는:
-
-   - 실패를 추적하기 위해 `sessionStorage`에 플래그를 설정
-   - 즉시 페이지를 새로고침하여 새로운 로드를 시도
-   - 렌더링 오류를 방지하기 위해 null 컴포넌트를 반환
-
-2. **새로고침**: 설정된 새로고침 횟수만큼 반복하여 컴포넌트 로드를 시도
-3. **최종 실패**: 모든 새로고침이 실패하면 원래 오류를 던짐
+1. **성공 시**: 컴포넌트가 정상적으로 로드되면 `onSuccess` 콜백이 호출됩니다
+2. **실패 시**: 컴포넌트 로딩이 실패하면 `onError` 콜백이 호출됩니다
+3. **사전 로딩**: `load` 메서드를 사용하여 컴포넌트를 렌더링하지 않고 미리 로드할 수 있습니다
 
 ## 동작
 
 - **성공**: 컴포넌트가 정상적으로 로드됨, `React.lazy`와 동일
-- **실패 후 새로고침**: 설정된 횟수만큼 자동으로 페이지를 새로고침
-- **최종 실패**: 오류가 던져져서 오류 경계가 처리할 수 있음
+- **실패**: 오류가 던져져서 오류 경계가 처리할 수 있음
+- **콜백**: 성공/실패 시점에 사용자 정의 로직 실행 가능
 
 ## 예제
 
@@ -57,14 +52,17 @@ function App() {
 }
 ```
 
-### 커스텀 새로고침 옵션
+### 성공/실패 콜백 사용
 
-#### 새로고침 횟수 수정
+#### 성공 콜백
 
 ```tsx
 import { lazy, Suspense, ErrorBoundary } from '@suspensive/react'
 
-const UserProfile = lazy(() => import('./UserProfile'), { reload: 5 })
+const UserProfile = lazy(() => import('./UserProfile'), {
+  onSuccess: () =>
+    console.log('UserProfile 컴포넌트가 성공적으로 로드되었습니다'),
+})
 
 function App() {
   return (
@@ -77,12 +75,17 @@ function App() {
 }
 ```
 
-#### 무한 새로고침
+#### 오류 콜백
 
 ```tsx
 import { lazy, Suspense, ErrorBoundary } from '@suspensive/react'
 
-const UserProfile = lazy(() => import('./UserProfile'), { reload: true })
+const UserProfile = lazy(() => import('./UserProfile'), {
+  onError: ({ error }) => {
+    console.error('UserProfile 로딩 실패:', error)
+    // 추가적인 오류 처리 로직
+  },
+})
 
 function App() {
   return (
@@ -123,13 +126,20 @@ function PreloadExample() {
 ```tsx
 import { lazy } from '@suspensive/react'
 
-// 5번 새로고침
-const customLazy = lazy.create({ reload: 5 })
+// 기본 성공/실패 콜백이 설정된 커스텀 lazy 팩토리
+const customLazy = lazy.create({
+  onSuccess: () => console.log('컴포넌트가 성공적으로 로드되었습니다'),
+  onError: ({ error }) => console.error('컴포넌트 로딩 실패:', error),
+})
 
 const HeavyComponent = customLazy(() => import('./HeavyComponent'))
-// 이 특정 컴포넌트에 대해 기본 새로고침 횟수를 재정의
+// 이 특정 컴포넌트에 대해 기본 콜백을 재정의
 const LightComponent = customLazy(() => import('./LightComponent'), {
-  reload: 2,
+  onSuccess: () => console.log('LightComponent 로드 완료'),
+  onError: ({ error }) => {
+    console.error('LightComponent 로딩 실패:', error)
+    // 특별한 오류 처리 로직
+  },
 })
 
 function App() {

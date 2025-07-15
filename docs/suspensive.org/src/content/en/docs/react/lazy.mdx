@@ -8,7 +8,7 @@ import { Callout } from '@/components'
 
 </Callout>
 
-The `lazy` function is a safe wrapper around React's `lazy` function that provides automatic error recovery when component loading fails. It attempts to load a component, and if the loading fails, it will reload the page the specified number of times, providing a better user experience during network issues or temporary loading failures.
+The `lazy` function is a wrapper around React's `lazy` function that provides callbacks for component loading success and failure. It allows you to execute custom logic when a component loads successfully or fails, providing better user experience and debugging capabilities.
 
 ## Basic Usage
 
@@ -18,24 +18,19 @@ import { lazy } from '@suspensive/react'
 const MyComponent = lazy(() => import('./MyComponent'))
 ```
 
-By default, `lazy` will attempt to reload the page **1 time** if the component fails to load.
+By default, `lazy` works the same as React's `lazy` but provides an additional `load` method.
 
 ## How it Works
 
-1. **First Attempt**: When a component fails to load for the first time, `lazy`:
-
-   - Sets a flag in `sessionStorage` to track the failure
-   - Immediately reloads the page to attempt a fresh load
-   - Returns a null component to prevent rendering errors
-
-2. **Reload**: Repeats the loading attempt up to the specified reload count
-3. **Final Failure**: If all reloads fail, throws the original error
+1. **On Success**: When a component loads successfully, the `onSuccess` callback is called
+2. **On Failure**: When a component fails to load, the `onError` callback is called
+3. **Preloading**: You can use the `load` method to preload a component without rendering it
 
 ## Behavior
 
 - **Success**: Component loads normally, just like `React.lazy`
-- **Failure with Reload**: Automatically reloads the page the specified number of times
-- **Final Failure**: Error is thrown, allowing your error boundary to handle it
+- **Failure**: Error is thrown, allowing your error boundary to handle it
+- **Callbacks**: Custom logic can be executed at success/failure points
 
 ## Examples
 
@@ -57,14 +52,16 @@ function App() {
 }
 ```
 
-### Custom Reload Options
+### Success/Error Callbacks
 
-#### Modifying the reload count
+#### Success Callback
 
 ```tsx
 import { lazy, Suspense, ErrorBoundary } from '@suspensive/react'
 
-const UserProfile = lazy(() => import('./UserProfile'), { reload: 5 })
+const UserProfile = lazy(() => import('./UserProfile'), {
+  onSuccess: () => console.log('UserProfile component loaded successfully'),
+})
 
 function App() {
   return (
@@ -77,12 +74,17 @@ function App() {
 }
 ```
 
-#### Infinite Reload
+#### Error Callback
 
 ```tsx
 import { lazy, Suspense, ErrorBoundary } from '@suspensive/react'
 
-const UserProfile = lazy(() => import('./UserProfile'), { reload: true })
+const UserProfile = lazy(() => import('./UserProfile'), {
+  onError: ({ error }) => {
+    console.error('UserProfile loading failed:', error)
+    // Additional error handling logic
+  },
+})
 
 function App() {
   return (
@@ -123,13 +125,20 @@ function PreloadExample() {
 ```tsx
 import { lazy } from '@suspensive/react'
 
-// 5 reloads
-const customLazy = lazy.create({ reload: 5 })
+// Custom lazy factory with default success/error callbacks
+const customLazy = lazy.create({
+  onSuccess: () => console.log('Component loaded successfully'),
+  onError: ({ error }) => console.error('Component loading failed:', error),
+})
 
 const HeavyComponent = customLazy(() => import('./HeavyComponent'))
-// Override default reload count for this specific component
+// Override default callbacks for this specific component
 const LightComponent = customLazy(() => import('./LightComponent'), {
-  reload: 2,
+  onSuccess: () => console.log('LightComponent loaded'),
+  onError: ({ error }) => {
+    console.error('LightComponent loading failed:', error)
+    // Special error handling logic
+  },
 })
 
 function App() {
