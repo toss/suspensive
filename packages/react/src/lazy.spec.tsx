@@ -282,7 +282,7 @@ describe('lazy', () => {
       await act(() => vi.advanceTimersByTimeAsync(200))
 
       expect(onError).toHaveBeenCalledTimes(1)
-      expect(onError).toHaveBeenCalledWith({ error: expect.any(Error) })
+      expect(onError).toHaveBeenCalledWith({ error: expect.any(Error), load: expect.any(Function) })
     })
   })
 })
