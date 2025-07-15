@@ -1,0 +1,201 @@
+import { Callout } from '@/components'
+
+# lazy
+
+<Callout type='experimental'>
+
+`lazy` is an experimental feature, so this interface may change.
+
+</Callout>
+
+The `lazy` function is a wrapper around React's `lazy` function that provides callbacks for component loading success and failure. It allows you to execute custom logic when a component loads successfully or fails, providing better user experience and debugging capabilities.
+
+## Basic Usage
+
+```tsx
+import { lazy } from '@suspensive/react'
+
+const MyComponent = lazy(() => import('./MyComponent'))
+```
+
+By default, `lazy` works the same as React's `lazy` but provides an additional `load` method.
+
+## API Reference
+
+```tsx
+interface LazyOptions {
+  onSuccess?: ({ load }: { load: () => Promise<void> }) => void
+  onError?: ({
+    error,
+    load,
+  }: {
+    error: unknown
+    load: () => Promise<void>
+  }) => undefined
+}
+
+// Return type
+LazyExoticComponent<T> &
+  {
+    load: () => Promise<void>,
+  }
+```
+
+## Examples
+
+### Basic Component Loading
+
+```tsx
+import { lazy, Suspense, ErrorBoundary } from '@suspensive/react'
+
+const UserProfile = lazy(() => import('./UserProfile'))
+
+function App() {
+  return (
+    <ErrorBoundary fallback={<div>Something went wrong</div>}>
+      <Suspense fallback={<div>Loading...</div>}>
+        <UserProfile />
+      </Suspense>
+    </ErrorBoundary>
+  )
+}
+```
+
+### Success/Error Callbacks
+
+```tsx
+import { lazy, Suspense, ErrorBoundary } from '@suspensive/react'
+
+const UserProfile = lazy(() => import('./UserProfile'), {
+  onSuccess: () => console.log('Component loaded successfully'),
+  onError: ({ error }) => console.error('Loading failed:', error),
+})
+
+function App() {
+  return (
+    <ErrorBoundary fallback={<div>Something went wrong</div>}>
+      <Suspense fallback={<div>Loading...</div>}>
+        <UserProfile />
+      </Suspense>
+    </ErrorBoundary>
+  )
+}
+```
+
+### Preloading Components
+
+```tsx
+import { lazy, Suspense } from '@suspensive/react'
+
+const Component = lazy(() => import('./Component'))
+
+function PreloadExample() {
+  const handlePreload = () => {
+    Component.load() // Preload the component
+  }
+
+  return (
+    <div>
+      <button onClick={handlePreload}>Preload Component</button>
+      <Suspense fallback={<div>Loading...</div>}>
+        <Component />
+      </Suspense>
+    </div>
+  )
+}
+```
+
+### Custom Lazy Factory
+
+```tsx
+import { lazy } from '@suspensive/react'
+
+const customLazy = lazy.create({
+  onSuccess: () => console.log('Component loaded successfully'),
+  onError: ({ error }) => console.error('Component loading failed:', error),
+})
+
+const Component = customLazy(() => import('./Component'))
+```
+
+### Error Recovery with Retry Logic
+
+```tsx
+import { lazy, Suspense, ErrorBoundary } from '@suspensive/react'
+
+const RetryableComponent = lazy(() => import('./Component'), {
+  onError: ({ error, load }) => {
+    if (error.message?.includes('NetworkError')) {
+      setTimeout(() => load(), 1000) // Retry after 1 second
+    }
+  },
+})
+
+function App() {
+  return (
+    <ErrorBoundary fallback={<div>Something went wrong</div>}>
+      <Suspense fallback={<div>Loading...</div>}>
+        <RetryableComponent />
+      </Suspense>
+    </ErrorBoundary>
+  )
+}
+```
+
+### Version Skew Problem Resolution
+
+```tsx
+import { lazy, Suspense, ErrorBoundary } from '@suspensive/react'
+
+const MAX_RELOADS = 3
+
+const VersionSkewSafeComponent = lazy(
+  () => import('./VersionSkewSafeComponent'),
+  {
+    onSuccess: ({ load }) => {
+      const reloadKey = `reload_count_${load.toString()}`
+      sessionStorage.removeItem(reloadKey)
+    },
+    onError: ({ error, load }) => {
+      const reloadKey = `reload_count_${load.toString()}`
+      const currentReloadCount = parseInt(
+        sessionStorage.getItem(reloadKey) || '0'
+      )
+
+      if (
+        currentReloadCount < MAX_RELOADS &&
+        error.message?.includes('Loading chunk')
+      ) {
+        const newReloadCount = currentReloadCount + 1
+        sessionStorage.setItem(reloadKey, newReloadCount.toString())
+        window.location.reload()
+      }
+    },
+  }
+)
+```
+
+## Migration Guide
+
+### From React.lazy
+
+```tsx
+// Before
+import { lazy as ReactLazy } from 'react'
+const Component = ReactLazy(() => import('./Component'))
+
+// After
+import { lazy } from '@suspensive/react'
+const Component = lazy(() => import('./Component'), {
+  onSuccess: () => console.log('Loaded successfully'),
+  onError: ({ error }) => console.error('Failed:', error),
+})
+```
+
+## Best Practices
+
+1. **Always use ErrorBoundary**: Wrap lazy components to handle loading failures
+2. **Create components outside render**: Avoid creating lazy components inside render functions
+3. **Preload strategically**: Use `load()` method for important components
+4. **Handle errors gracefully**: Provide retry mechanisms for network failures
+5. **Use clientOnly for SSR**: Prevent hydration mismatches in SSR frameworks
