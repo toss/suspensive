@@ -25,29 +25,25 @@ const parseReload = (value: string | null): { reloadCount: number; isNaN: boolea
 }
 
 const mergeOptions = (options: Partial<LazyOptions> | undefined, defaultOptions: LazyOptions): LazyOptions => {
-  if (
-    options != null &&
-    typeof options.reload === 'number' &&
-    (!Number.isInteger(options.reload) || options.reload <= 0)
-  ) {
-    if (process.env.NODE_ENV === 'development') {
+  const keys = Object.keys(defaultOptions) as (keyof LazyOptions)[]
+  const mergedOptions = keys.reduce<Partial<LazyOptions>>((acc, key) => {
+    acc[key] = options != null && key in options ? options[key] : defaultOptions[key]
+    return acc
+  }, {}) as LazyOptions
+
+  if (process.env.NODE_ENV === 'development') {
+    if (
+      typeof mergedOptions.reload === 'number' &&
+      (!Number.isInteger(mergedOptions.reload) || mergedOptions.reload <= 0)
+    ) {
       console.error(
-        `[@suspensive/react] lazy: reload option must be a positive integer, but received ${options.reload}. ` +
+        `[@suspensive/react] lazy: reload option must be a positive integer, but received ${mergedOptions.reload}. ` +
           `Please provide a positive integer value (e.g., { reload: 3 }).`
       )
     }
   }
 
-  if (options == null) {
-    return defaultOptions
-  }
-
-  const keys = Object.keys(defaultOptions) as (keyof LazyOptions)[]
-
-  return keys.reduce<Partial<LazyOptions>>((acc, key) => {
-    acc[key] = key in options ? options[key] : defaultOptions[key]
-    return acc
-  }, {}) as LazyOptions
+  return mergedOptions
 }
 
 const createLoader = <T extends ComponentType<unknown>>(
