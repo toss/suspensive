@@ -192,24 +192,6 @@ const Component = lazy(() => import('./Component'), {
 })
 ```
 
-## SSR 고려사항
-
-Next.js와 같은 SSR 프레임워크에서 `lazy`를 사용할 때:
-
-```tsx
-import { lazy, Suspense } from '@suspensive/react'
-
-const SSRComponent = lazy(() => import('./SSRComponent'))
-
-function App() {
-  return (
-    <Suspense fallback={<div>로딩 중...</div>} clientOnly>
-      <SSRComponent />
-    </Suspense>
-  )
-}
-```
-
 ## 모범 사례
 
 1. **항상 ErrorBoundary 사용**: 로딩 실패를 처리하기 위해 lazy 컴포넌트를 감싸기

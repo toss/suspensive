@@ -192,24 +192,6 @@ const Component = lazy(() => import('./Component'), {
 })
 ```
 
-## SSR Considerations
-
-When using `lazy` with SSR frameworks like Next.js:
-
-```tsx
-import { lazy, Suspense } from '@suspensive/react'
-
-const SSRComponent = lazy(() => import('./SSRComponent'))
-
-function App() {
-  return (
-    <Suspense fallback={<div>Loading...</div>} clientOnly>
-      <SSRComponent />
-    </Suspense>
-  )
-}
-```
-
 ## Best Practices
 
 1. **Always use ErrorBoundary**: Wrap lazy components to handle loading failures
