@@ -18,7 +18,7 @@ interface LazyOptions {
  * // Create a lazy factory with custom default options
  * const customLazy = lazy.create({
  *   onSuccess: () => console.log('Component loaded successfully'),
- *   onError: ({ error }) => ({ fallback: ErrorFallback })
+ *   onError: ({ error }) => console.error('Component loading failed:', error)
  * })
  *
  * // Use the factory to create lazy components
@@ -27,7 +27,10 @@ interface LazyOptions {
  *
  * // Override default options for specific component
  * const Component3 = customLazy(() => import('./Component3'), {
- *   onError: ({ error }) => ({ fallback: CustomErrorFallback })
+ *   onError: ({ error }) => {
+ *     console.error('Custom error handling:', error)
+ *     // Additional error handling logic
+ *   }
  * })
  * ```
  */
@@ -70,9 +73,9 @@ const createLazy =
  * // Basic usage
  * const Component = lazy(() => import('./Component'))
  *
- * // With error handling and fallback
+ * // With error handling and success callbacks
  * const ReloadComponent = lazy(() => import('./ReloadComponent'), {
- *   onError: ({ error }) => ({ fallback: ErrorFallback }),
+ *   onError: ({ error }) => console.error('Loading failed:', error),
  *   onSuccess: () => console.log('Component loaded successfully')
  * })
  *
@@ -94,7 +97,7 @@ const createLazy =
  *
  * // Using lazy.create for factory pattern
  * const customLazy = lazy.create({
- *   onError: ({ error }) => ({ fallback: DefaultErrorFallback })
+ *   onError: ({ error }) => console.error('Default error handling:', error)
  * })
  * const CustomComponent = customLazy(() => import('./CustomComponent'))
  * ```
