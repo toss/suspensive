@@ -142,6 +142,20 @@ describe('lazy', () => {
     expect(mockReload).toHaveBeenCalledTimes(1)
   })
 
+  it('should not reload if reload is false', () => {
+    const mockImport = importCache.createImport({ failureCount: 1, failureDelay: 100, successDelay: 100 })
+    const customLazy = lazy.create({ reload: false })
+
+    const Component = customLazy(() => mockImport('/test-component'))
+    const Component2 = customLazy(() => mockImport('/test-component'))
+
+    expect(() => render(<Component />)).not.toThrow()
+    expect(() => render(<Component2 />)).not.toThrow()
+
+    expect(mockReload).toHaveBeenCalledTimes(0)
+    expect(storage.length).toBe(0)
+  })
+
   it('should reload infinitely if reload is true', async () => {
     // Default reload count is 3, so 10 times reload might enough to test infinite reload
     const mockImport = importCache.createImport({ failureCount: 10, failureDelay: 100, successDelay: 100 })

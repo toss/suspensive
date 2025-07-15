@@ -2,7 +2,7 @@ import { type ComponentType, type LazyExoticComponent, lazy as originalLazy } fr
 import { noop } from './utils/noop'
 
 interface LazyOptions {
-  reload: number | true
+  reload: number | boolean
 }
 
 const DEFAULT_RELOAD_COUNT = 1
