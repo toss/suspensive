@@ -59,10 +59,30 @@ function App() {
 
 ### 커스텀 새로고침 옵션
 
+#### 새로고침 횟수 수정
+
 ```tsx
 import { lazy, Suspense, ErrorBoundary } from '@suspensive/react'
 
 const UserProfile = lazy(() => import('./UserProfile'), { reload: 5 })
+
+function App() {
+  return (
+    <ErrorBoundary fallback={<div>문제가 발생했습니다</div>}>
+      <Suspense fallback={<div>로딩 중...</div>}>
+        <UserProfile />
+      </Suspense>
+    </ErrorBoundary>
+  )
+}
+```
+
+#### 무한 새로고침
+
+```tsx
+import { lazy, Suspense, ErrorBoundary } from '@suspensive/react'
+
+const UserProfile = lazy(() => import('./UserProfile'), { reload: true })
 
 function App() {
   return (
