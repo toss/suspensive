@@ -151,3 +151,125 @@ function App() {
   )
 }
 ```
+
+### 로딩 실패 시 페이지 새로고침
+
+네트워크 문제나 일시적인 로딩 실패 시 페이지를 새로고침하여 복구를 시도할 수 있습니다.
+
+```tsx
+import { lazy, Suspense, ErrorBoundary } from '@suspensive/react'
+
+const UserProfile = lazy(() => import('./UserProfile'), {
+  onError: ({ error, load }) => {
+    console.error('UserProfile 로딩 실패:', error)
+
+    // 네트워크 오류나 모듈 로딩 실패 시 페이지 새로고침
+    if (
+      error instanceof TypeError ||
+      error.message?.includes('Loading chunk')
+    ) {
+      console.log('페이지를 새로고침하여 복구를 시도합니다...')
+      window.location.reload()
+    }
+  },
+})
+
+function App() {
+  return (
+    <ErrorBoundary fallback={<div>문제가 발생했습니다</div>}>
+      <Suspense fallback={<div>로딩 중...</div>}>
+        <UserProfile />
+      </Suspense>
+    </ErrorBoundary>
+  )
+}
+```
+
+### Version Skew 문제 해결
+
+Version Skew는 배포 과정에서 발생하는 문제로, 사용자가 이전 버전의 JavaScript 청크를 로드하려고 할 때 발생합니다. 이는 다음과 같은 상황에서 발생할 수 있습니다:
+
+- **롤링 배포**: 서버가 순차적으로 업데이트되는 동안
+- **CDN 캐싱**: 이전 버전의 파일이 캐시에 남아있는 경우
+- **브라우저 캐싱**: 사용자가 이전 버전의 파일을 캐시하고 있는 경우
+
+#### 권장 해결 방법
+
+가장 좋은 해결책은 인프라 레벨에서 해결하는 것입니다:
+
+1. **배포 전략 개선**: Blue-Green 배포, Canary 배포 등
+2. **CDN 설정**: 적절한 캐시 무효화 전략
+3. **Service Worker**: 버전 관리 및 캐시 전략
+4. **빌드 최적화**: 청크 해시를 통한 버전 관리
+
+#### 클라이언트 사이드 대안
+
+인프라 개선이 어려운 상황에서는 클라이언트 사이드에서 다음과 같이 처리할 수 있습니다:
+
+```tsx
+import { lazy, Suspense, ErrorBoundary } from '@suspensive/react'
+
+const MAX_RELOADS = 3
+
+const VersionSkewSafeComponent = lazy(
+  () => import('./VersionSkewSafeComponent'),
+  {
+    onSuccess: ({ load }) => {
+      // 성공적으로 로드되면 sessionStorage에서 새로고침 횟수 제거
+      const reloadKey = `reload_count_${load.toString()}`
+      sessionStorage.removeItem(reloadKey)
+    },
+    onError: ({ error, load }) => {
+      // load.toString()을 키로 사용하여 sessionStorage에서 새로고침 횟수 추적
+      const reloadKey = `reload_count_${load.toString()}`
+      const currentReloadCount = parseInt(
+        sessionStorage.getItem(reloadKey) || '0'
+      )
+
+      if (
+        currentReloadCount < MAX_RELOADS &&
+        error.message?.includes('Loading chunk')
+      ) {
+        const newReloadCount = currentReloadCount + 1
+        sessionStorage.setItem(reloadKey, newReloadCount.toString())
+        console.log(`새로고침 시도 ${newReloadCount}/${MAX_RELOADS}`)
+        window.location.reload()
+      } else {
+        console.error('최대 새로고침 횟수 초과:', error)
+        // 세션 스토리지에서 해당 키 제거
+        sessionStorage.removeItem(reloadKey)
+      }
+    },
+  }
+)
+```
+
+#### 중요 고려사항
+
+- **무한 루프 방지**: 새로고침 시도 횟수를 제한하거나 명확한 조건 설정
+- **사용자 경험**: 갑작스러운 새로고침 대신 사용자에게 알림 후 새로고침
+- **성능**: 불필요한 새로고침은 사용자 경험을 해칠 수 있음
+
+```tsx
+import { lazy, Suspense, ErrorBoundary } from '@suspensive/react'
+
+const CriticalComponent = lazy(() => import('./CriticalComponent'), {
+  onError: ({ error, load }) => {
+    // Version Skew 관련 오류 감지
+    if (
+      error.message?.includes('Loading chunk') ||
+      error.message?.includes('Unexpected token') ||
+      error.name === 'ChunkLoadError'
+    ) {
+      console.warn('Version Skew가 감지되었습니다. 페이지를 새로고침합니다.')
+
+      // 사용자에게 알림 (선택사항)
+      if (
+        confirm('새로운 버전이 배포되었습니다. 페이지를 새로고침하시겠습니까?')
+      ) {
+        window.location.reload()
+      }
+    }
+  },
+})
+```

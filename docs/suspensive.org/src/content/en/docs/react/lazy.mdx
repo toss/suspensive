@@ -150,3 +150,137 @@ function App() {
   )
 }
 ```
+
+### Page Reload on Loading Failure
+
+You can attempt to recover from network issues or temporary loading failures by reloading the page.
+
+```tsx
+import { lazy, Suspense, ErrorBoundary } from '@suspensive/react'
+
+const UserProfile = lazy(() => import('./UserProfile'), {
+  onError: ({ error, load }) => {
+    console.error('UserProfile loading failed:', error)
+
+    // Reload page on network errors or module loading failures
+    if (
+      error instanceof TypeError ||
+      error.message?.includes('Loading chunk')
+    ) {
+      console.log('Attempting to recover by reloading the page...')
+      window.location.reload()
+    }
+  },
+})
+
+function App() {
+  return (
+    <ErrorBoundary fallback={<div>Something went wrong</div>}>
+      <Suspense fallback={<div>Loading...</div>}>
+        <UserProfile />
+      </Suspense>
+    </ErrorBoundary>
+  )
+}
+```
+
+### Version Skew Problem Resolution
+
+Version Skew is a deployment issue that occurs when users try to load JavaScript chunks from a previous version. This can happen in the following scenarios:
+
+- **Rolling Deployments**: When servers are updated sequentially
+- **CDN Caching**: When previous version files remain cached
+- **Browser Caching**: When users have cached previous version files
+
+#### Recommended Solutions
+
+The best solution is to resolve this at the infrastructure level:
+
+1. **Deployment Strategy**: Blue-Green deployments, Canary deployments
+2. **CDN Configuration**: Proper cache invalidation strategies
+3. **Service Worker**: Version management and cache strategies
+4. **Build Optimization**: Version management through chunk hashing
+
+#### Client-Side Alternative
+
+When infrastructure improvements are difficult, you can handle this on the client side:
+
+```tsx
+import { lazy, Suspense, ErrorBoundary } from '@suspensive/react'
+
+const MAX_RELOADS = 3
+
+const VersionSkewSafeComponent = lazy(
+  () => import('./VersionSkewSafeComponent'),
+  {
+    onSuccess: ({ load }) => {
+      // Remove reload count from sessionStorage when successfully loaded
+      const reloadKey = `reload_count_${load.toString()}`
+      sessionStorage.removeItem(reloadKey)
+    },
+    onError: ({ error, load }) => {
+      // Use load.toString() as key to track reload count in sessionStorage
+      const reloadKey = `reload_count_${load.toString()}`
+      const currentReloadCount = parseInt(
+        sessionStorage.getItem(reloadKey) || '0'
+      )
+
+      if (
+        currentReloadCount < MAX_RELOADS &&
+        error.message?.includes('Loading chunk')
+      ) {
+        const newReloadCount = currentReloadCount + 1
+        sessionStorage.setItem(reloadKey, newReloadCount.toString())
+        console.log(`Reload attempt ${newReloadCount}/${MAX_RELOADS}`)
+        window.location.reload()
+      } else {
+        console.error('Maximum reload attempts exceeded:', error)
+        // Remove the key from sessionStorage
+        sessionStorage.removeItem(reloadKey)
+      }
+    },
+  }
+)
+```
+
+#### Important Considerations
+
+- **Prevent Infinite Loops**: Limit reload attempts or set clear conditions
+- **User Experience**: Notify users before reloading instead of sudden reloads
+- **Performance**: Unnecessary reloads can harm user experience
+
+```tsx
+import { lazy, Suspense, ErrorBoundary } from '@suspensive/react'
+
+const CriticalComponent = lazy(() => import('./CriticalComponent'), {
+  onError: ({ error, load }) => {
+    // Detect Version Skew related errors
+    if (
+      error.message?.includes('Loading chunk') ||
+      error.message?.includes('Unexpected token') ||
+      error.name === 'ChunkLoadError'
+    ) {
+      console.warn('Version Skew detected. Reloading page.')
+
+      // Notify user (optional)
+      if (
+        confirm(
+          'A new version has been deployed. Would you like to reload the page?'
+        )
+      ) {
+        window.location.reload()
+      }
+    }
+  },
+})
+
+function App() {
+  return (
+    <ErrorBoundary fallback={<div>Something went wrong</div>}>
+      <Suspense fallback={<div>Loading...</div>}>
+        <CriticalComponent />
+      </Suspense>
+    </ErrorBoundary>
+  )
+}
+```
