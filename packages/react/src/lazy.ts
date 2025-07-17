@@ -225,10 +225,12 @@ export const reloadOnError = ({
         return
       }
 
-      reloadStorage.setItem(storageKey, String(currentRetryCount + 1))
+      if (typeof retry === 'number') {
+        reloadStorage.setItem(storageKey, String(currentRetryCount + 1))
+      }
 
       const delayValue = typeof delay === 'function' ? delay(currentRetryCount) : delay
-      window.setTimeout(() => {
+      setTimeout(() => {
         reloadFunction()
       }, delayValue)
     },

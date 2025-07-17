@@ -2,7 +2,7 @@ import { act, render, screen } from '@testing-library/react'
 import { type ComponentType, Suspense, useState } from 'react'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import { ErrorBoundary } from './ErrorBoundary'
-import { lazy } from './lazy'
+import { lazy, reloadOnError } from './lazy'
 import { sleep } from './test-utils'
 
 type PathData = {
@@ -86,9 +86,6 @@ class MockStorage {
   }
   get length() {
     return this.items.size
-  }
-  key() {
-    return this.items.keys().next().value ?? null
   }
 }
 
@@ -283,6 +280,112 @@ describe('lazy', () => {
 
       expect(onError).toHaveBeenCalledTimes(1)
       expect(onError).toHaveBeenCalledWith({ error: expect.any(Error), load: expect.any(Function) })
+    })
+  })
+
+  describe('reloadOnError option', () => {
+    const mockReload = vi.fn()
+
+    it('should reload importing the component up to 1 time if it fails to load', async () => {
+      const customLazy = lazy.create(reloadOnError({ storage, reload: mockReload }))
+      const mockImport = importCache.createImport({ failureCount: 1, failureDelay: 0, successDelay: 100 })
+
+      const Component1 = customLazy(() => mockImport('/test-component'))
+      render(
+        <ErrorBoundary fallback={<div>error</div>}>
+          <Component1 />
+        </ErrorBoundary>
+      )
+      expect(mockImport).toHaveBeenCalledTimes(1)
+      await act(() => vi.advanceTimersByTimeAsync(100))
+      expect(mockReload).toHaveBeenCalledTimes(1)
+
+      const Component2 = customLazy(() => mockImport('/test-component'))
+      render(
+        <ErrorBoundary fallback={<div>error</div>}>
+          <Component2 />
+        </ErrorBoundary>
+      )
+      expect(mockImport).toHaveBeenCalledTimes(2)
+      await act(() => vi.advanceTimersByTimeAsync(100))
+      expect(mockReload).toHaveBeenCalledTimes(1)
+    })
+
+    it('should reload the page when component fails to load', async () => {
+      const customLazy = lazy.create(reloadOnError({ storage, reload: mockReload }))
+      const mockImport = importCache.createImport({ failureCount: 1, failureDelay: 0, successDelay: 0 })
+      const Component1 = customLazy(() => mockImport('/test-component'))
+      render(
+        <ErrorBoundary fallback={<div>error</div>}>
+          <Component1 />
+        </ErrorBoundary>
+      )
+      expect(mockImport).toHaveBeenCalledTimes(1)
+      await act(() => vi.advanceTimersByTimeAsync(100))
+      expect(mockReload).toHaveBeenCalledTimes(1)
+
+      const Component2 = customLazy(() => mockImport('/test-component'))
+      render(
+        <ErrorBoundary fallback={<div>error</div>}>
+          <Component2 />
+        </ErrorBoundary>
+      )
+      expect(mockImport).toHaveBeenCalledTimes(2)
+      await act(() => vi.advanceTimersByTimeAsync(100))
+      expect(mockReload).toHaveBeenCalledTimes(1)
+    })
+
+    it('should not reload if reload is false', () => {
+      const mockImport = importCache.createImport({ failureCount: 1, failureDelay: 100, successDelay: 100 })
+      const customLazy = lazy.create(reloadOnError({ storage, reload: mockReload, retry: false }))
+
+      const Component = customLazy(() => mockImport('/test-component'))
+      const Component2 = customLazy(() => mockImport('/test-component'))
+
+      expect(() => render(<Component />)).not.toThrow()
+      expect(() => render(<Component2 />)).not.toThrow()
+
+      expect(mockReload).toHaveBeenCalledTimes(0)
+      expect(storage.length).toBe(0)
+    })
+
+    it('should reload infinitely if reload is true', async () => {
+      // Default reload count is 3, so 10 times reload might enough to test infinite reload
+      const mockImport = importCache.createImport({ failureCount: 10, failureDelay: 0, successDelay: 100 })
+      const customLazy = lazy.create(reloadOnError({ storage, delay: 100, reload: mockReload, retry: true }))
+
+      for (let i = 0; i < 10; i++) {
+        const Component = customLazy(() => mockImport('/infinite-test'))
+
+        render(
+          <ErrorBoundary fallback={<div>error</div>}>
+            <Component />
+          </ErrorBoundary>
+        )
+
+        expect(mockImport).toHaveBeenCalledTimes(i + 1)
+        await act(() => vi.advanceTimersByTimeAsync(100))
+        expect(mockReload).toHaveBeenCalledTimes(i + 1)
+      }
+
+      // Verify no storage is used for infinite retries
+      expect(storage.length).toBe(0)
+    })
+
+    it('should reload the component with a delay', async () => {
+      const customLazy = lazy.create(reloadOnError({ storage, delay: 100, reload: mockReload }))
+      const mockImport = importCache.createImport({ failureCount: 1, failureDelay: 100, successDelay: 0 })
+      const Component = customLazy(() => mockImport('/test-component'))
+
+      render(
+        <ErrorBoundary fallback={<div>error</div>}>
+          <Component />
+        </ErrorBoundary>
+      )
+
+      expect(mockReload).toHaveBeenCalledTimes(0)
+      await act(() => vi.advanceTimersByTimeAsync(200))
+      expect(mockReload).toHaveBeenCalledTimes(1)
     })
   })
 })
