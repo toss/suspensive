@@ -143,7 +143,13 @@ interface ReloadOnErrorOptions extends LazyOptions {
   reload?: () => void
 }
 
-export const reloadOnError = ({ retry = 1, delay = 0, storage, reload, ...options }: ReloadOnErrorOptions) => {
+export const reloadOnError = ({
+  retry = 1,
+  delay = 0,
+  storage,
+  reload,
+  ...options
+}: ReloadOnErrorOptions): LazyOptions => {
   const getDefaultStorage = (): ReloadOnErrorStorage => {
     if (storage) {
       return storage
@@ -191,7 +197,7 @@ export const reloadOnError = ({ retry = 1, delay = 0, storage, reload, ...option
     }
   }
 
-  return createLazy({
+  return {
     ...options,
     onSuccess: ({ load }) => {
       options.onSuccess?.({ load })
@@ -226,5 +232,5 @@ export const reloadOnError = ({ retry = 1, delay = 0, storage, reload, ...option
         reloadFunction()
       }, delayValue)
     },
-  })
+  }
 }
