@@ -144,28 +144,28 @@ interface ReloadOnErrorOptions extends LazyOptions {
 }
 
 export const reloadOnError = ({ retry = 1, delay = 0, storage, reload, ...options }: ReloadOnErrorOptions) => {
-  const getDefaultStorage = (): ReloadOnErrorStorage | null => {
+  const getDefaultStorage = (): ReloadOnErrorStorage => {
     if (storage) {
       return storage
     }
 
-    if (typeof window === 'undefined' && 'sessionStorage' in window) {
-      return null
+    if (typeof window !== 'undefined' && 'sessionStorage' in window) {
+      return window.sessionStorage
     }
 
-    return window.sessionStorage
+    throw new Error('[@suspensive/react] No storage provided and no sessionStorage in window')
   }
 
-  const getDefaultReloadFunction = (): ReloadOnErrorOptions['reload'] | null => {
+  const getDefaultReloadFunction = (): NonNullable<ReloadOnErrorOptions['reload']> => {
     if (reload) {
       return reload
     }
 
-    if (typeof window === 'undefined' && 'location' in window) {
-      return null
+    if (typeof window !== 'undefined' && 'location' in window) {
+      return () => window.location.reload()
     }
 
-    return () => window.location.reload()
+    throw new Error('[@suspensive/react] No reload function provided and no location in window')
   }
 
   const reloadStorage = getDefaultStorage()
@@ -195,14 +195,10 @@ export const reloadOnError = ({ retry = 1, delay = 0, storage, reload, ...option
     ...options,
     onSuccess: ({ load }) => {
       options.onSuccess?.({ load })
-      reloadStorage?.removeItem(load.toString())
+      reloadStorage.removeItem(load.toString())
     },
     onError: ({ error, load }) => {
       options.onError?.({ error, load })
-
-      if (reloadStorage == null || reloadFunction == null) {
-        return
-      }
 
       const storageKey = load.toString()
       let currentRetryCount = 0
