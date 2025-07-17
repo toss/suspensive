@@ -110,13 +110,13 @@ export const lazy = Object.assign(createLazy({}), {
   create: createLazy,
 })
 
-export interface ReloadOnErrorStorage {
+interface ReloadOnErrorStorage {
   getItem: (key: string) => string | null
   setItem: (key: string, value: string) => void
   removeItem: (key: string) => void
 }
 
-export interface ReloadOnErrorOptions extends LazyOptions {
+interface ReloadOnErrorOptions extends LazyOptions {
   /**
    * The number of times to retry the loading of the component. \
    * If `true`, the component will be retried indefinitely.
