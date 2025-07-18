@@ -153,7 +153,7 @@ import { lazy, reloadOnError } from '@suspensive/react'
 const customLazy = lazy.create(
   reloadOnError({
     retry: 3, // Retry up to 3 times
-    delay: 1000, // Wait 1 second between retries
+    retryDelay: 1000, // Wait 1 second between retries
   })
 )
 
@@ -176,7 +176,7 @@ interface ReloadOnErrorOptions {
    * If a function is provided, it will be called with the current retry count.
    * @default 0
    */
-  delay?: number | ((retryCount: number) => number)
+  retryDelay?: number | ((retryCount: number) => number)
 
   /**
    * The storage to use for tracking retry count.
@@ -216,7 +216,7 @@ import { lazy, reloadOnError } from '@suspensive/react'
 const customLazy = lazy.create(
   reloadOnError({
     retry: true, // Infinite retries
-    delay: (retryCount) => Math.min(1000 * Math.pow(2, retryCount), 30000), // Exponential backoff, max 30s
+    retryDelay: (retryCount) => Math.min(1000 * Math.pow(2, retryCount), 30000), // Exponential backoff, max 30s
   })
 )
 
@@ -242,7 +242,7 @@ const customReload = () => {
 const customLazy = lazy.create(
   reloadOnError({
     retry: 5,
-    delay: 2000,
+    retryDelay: 2000,
     storage: customStorage,
     reload: customReload,
   })
@@ -259,7 +259,7 @@ import { lazy, reloadOnError } from '@suspensive/react'
 const customLazy = lazy.create(
   reloadOnError({
     retry: 3,
-    delay: 1000,
+    retryDelay: 1000,
     onError: ({ error, load }) => {
       // Only retry for specific error types
       if (

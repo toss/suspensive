@@ -130,7 +130,7 @@ interface ReloadOnErrorOptions extends LazyOptions {
    *
    * @default 0
    */
-  delay?: number | ((retryCount: number) => number)
+  retryDelay?: number | ((retryCount: number) => number)
   /**
    * The storage to use for the retry count. \
    * If not provided, it assumes that you are in a browser environment and uses `sessionStorage`.
@@ -145,7 +145,7 @@ interface ReloadOnErrorOptions extends LazyOptions {
 
 export const reloadOnError = ({
   retry = 1,
-  delay = 0,
+  retryDelay = 0,
   storage,
   reload,
   ...options
@@ -229,7 +229,7 @@ export const reloadOnError = ({
         reloadStorage.setItem(storageKey, String(currentRetryCount + 1))
       }
 
-      const delayValue = typeof delay === 'function' ? delay(currentRetryCount) : delay
+      const delayValue = typeof retryDelay === 'function' ? retryDelay(currentRetryCount) : retryDelay
       setTimeout(() => {
         reloadFunction()
       }, delayValue)

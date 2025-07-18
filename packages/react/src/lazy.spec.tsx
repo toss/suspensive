@@ -352,7 +352,7 @@ describe('lazy', () => {
     it('should reload infinitely if reload is true', async () => {
       // Default reload count is 3, so 10 times reload might enough to test infinite reload
       const mockImport = importCache.createImport({ failureCount: 10, failureDelay: 0, successDelay: 100 })
-      const customLazy = lazy.create(reloadOnError({ storage, delay: 100, reload: mockReload, retry: true }))
+      const customLazy = lazy.create(reloadOnError({ storage, retryDelay: 100, reload: mockReload, retry: true }))
 
       for (let i = 0; i < 10; i++) {
         const Component = customLazy(() => mockImport('/infinite-test'))
@@ -373,7 +373,7 @@ describe('lazy', () => {
     })
 
     it('should reload the component with a delay', async () => {
-      const customLazy = lazy.create(reloadOnError({ storage, delay: 100, reload: mockReload }))
+      const customLazy = lazy.create(reloadOnError({ storage, retryDelay: 100, reload: mockReload }))
       const mockImport = importCache.createImport({ failureCount: 1, failureDelay: 100, successDelay: 0 })
       const Component = customLazy(() => mockImport('/test-component'))
 

@@ -153,7 +153,7 @@ import { lazy, reloadOnError } from '@suspensive/react'
 const customLazy = lazy.create(
   reloadOnError({
     retry: 3, // 최대 3번까지 재시도
-    delay: 1000, // 재시도 간 1초 대기
+    retryDelay: 1000, // 재시도 간 1초 대기
   })
 )
 
@@ -176,7 +176,7 @@ interface ReloadOnErrorOptions {
    * 함수를 전달하면 현재 재시도 횟수와 함께 호출됩니다.
    * @default 0
    */
-  delay?: number | ((retryCount: number) => number)
+  retryDelay?: number | ((retryCount: number) => number)
 
   /**
    * 재시도 횟수를 추적하는 데 사용할 스토리지입니다.
@@ -216,7 +216,7 @@ import { lazy, reloadOnError } from '@suspensive/react'
 const customLazy = lazy.create(
   reloadOnError({
     retry: true, // 무한 재시도
-    delay: (retryCount) => Math.min(1000 * Math.pow(2, retryCount), 30000), // 지수 백오프, 최대 30초
+    retryDelay: (retryCount) => Math.min(1000 * Math.pow(2, retryCount), 30000), // 지수 백오프, 최대 30초
   })
 )
 
@@ -242,7 +242,7 @@ const customReload = () => {
 const customLazy = lazy.create(
   reloadOnError({
     retry: 5,
-    delay: 2000,
+    retryDelay: 2000,
     storage: customStorage,
     reload: customReload,
   })
@@ -259,7 +259,7 @@ import { lazy, reloadOnError } from '@suspensive/react'
 const customLazy = lazy.create(
   reloadOnError({
     retry: 3,
-    delay: 1000,
+    retryDelay: 1000,
     onError: ({ error, load }) => {
       // 특정 오류 유형에 대해서만 재시도
       if (
