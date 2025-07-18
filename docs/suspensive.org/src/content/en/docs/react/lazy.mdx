@@ -163,7 +163,7 @@ const Component = customLazy(() => import('./Component'))
 #### reloadOnError Options
 
 ```tsx
-interface ReloadOnErrorOptions {
+interface ReloadOnErrorOptions extends LazyOptions {
   /**
    * The number of times to retry the loading of the component.
    * If `true`, the component will be retried indefinitely.
