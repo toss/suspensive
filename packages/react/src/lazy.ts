@@ -143,6 +143,19 @@ interface ReloadOnErrorOptions extends LazyOptions {
   reload?: (timeoutId: ReturnType<typeof setTimeout>) => void
 }
 
+/**
+ * Options for reloading page if the component fails to load.
+ *
+ * @experimental This is experimental feature.
+ *
+ * @example
+ * ```tsx
+ * import { lazy, reloadOnError } from '@suspensive/react'
+ *
+ * const customLazy = lazy.create(reloadOnError({ retry: 1, retryDelay: 1000 }))
+ * const Component = customLazy(() => import('./Component'))
+ * ```
+ */
 export const reloadOnError = ({
   retry = 1,
   retryDelay = 0,
