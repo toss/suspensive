@@ -142,6 +142,142 @@ function App() {
 }
 ```
 
+### Automatic Reload on Error
+
+The `reloadOnError` function provides a convenient way to automatically reload the page when component loading fails. This is particularly useful for handling version skew issues in production environments.
+
+```tsx
+import { lazy, reloadOnError } from '@suspensive/react'
+
+// Create a lazy factory with automatic reload on error
+const customLazy = lazy.create(
+  reloadOnError({
+    retry: 3, // Retry up to 3 times
+    retryDelay: 1000, // Wait 1 second between retries
+  })
+)
+
+const Component = customLazy(() => import('./Component'))
+```
+
+#### reloadOnError Options
+
+```tsx
+interface ReloadOnErrorOptions extends LazyOptions {
+  /**
+   * The number of times to retry the loading of the component.
+   * If `true`, the component will be retried indefinitely.
+   * @default 1
+   */
+  retry?: number | boolean
+
+  /**
+   * The delay between retries in milliseconds.
+   * If a function is provided, it will be called with the current retry count.
+   * @default 0
+   */
+  retryDelay?: number | ((retryCount: number) => number)
+
+  /**
+   * The storage to use for tracking retry count.
+   * If not provided, uses `sessionStorage` in browser environments.
+   */
+  storage?: {
+    getItem: (key: string) => string | null
+    setItem: (key: string, value: string) => void
+    removeItem: (key: string) => void
+  }
+
+  /**
+   * The function to use to reload the component.
+   * If not provided, uses `window.location.reload()` in browser environments.
+   */
+  reload?: () => void
+
+  // Standard lazy options
+  onSuccess?: ({ load }: { load: () => Promise<void> }) => void
+  onError?: ({
+    error,
+    load,
+  }: {
+    error: unknown
+    load: () => Promise<void>
+  }) => void
+}
+```
+
+#### Advanced reloadOnError Examples
+
+**Infinite Retry with Exponential Backoff:**
+
+```tsx
+import { lazy, reloadOnError } from '@suspensive/react'
+
+const customLazy = lazy.create(
+  reloadOnError({
+    retry: true, // Infinite retries
+    retryDelay: (retryCount) => Math.min(1000 * Math.pow(2, retryCount), 30000), // Exponential backoff, max 30s
+  })
+)
+
+const Component = customLazy(() => import('./Component'))
+```
+
+**Custom Storage and Reload Function:**
+
+```tsx
+import { lazy, reloadOnError } from '@suspensive/react'
+
+const customStorage = {
+  getItem: (key) => localStorage.getItem(key),
+  setItem: (key, value) => localStorage.setItem(key, value),
+  removeItem: (key) => localStorage.removeItem(key),
+}
+
+const customReload = () => {
+  // Custom reload logic
+  window.location.href = window.location.href
+}
+
+const customLazy = lazy.create(
+  reloadOnError({
+    retry: 5,
+    retryDelay: 2000,
+    storage: customStorage,
+    reload: customReload,
+  })
+)
+
+const Component = customLazy(() => import('./Component'))
+```
+
+**Conditional Retry Based on Error Type:**
+
+```tsx
+import { lazy, reloadOnError } from '@suspensive/react'
+
+const customLazy = lazy.create(
+  reloadOnError({
+    retry: 3,
+    retryDelay: 1000,
+    onError: ({ error, load }) => {
+      // Only retry for specific error types
+      if (
+        error.message?.includes('Loading chunk') ||
+        error.message?.includes('NetworkError')
+      ) {
+        console.log(
+          'Retrying due to network or chunk loading error:',
+          error.message
+        )
+      }
+    },
+  })
+)
+
+const Component = customLazy(() => import('./Component'))
+```
+
 ### Version Skew Problem Resolution
 
 ```tsx

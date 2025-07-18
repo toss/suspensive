@@ -142,7 +142,143 @@ function App() {
 }
 ```
 
-### Version Skew 문제 해결
+### 오류 시 자동 페이지 새로고침
+
+`reloadOnError` 옵션을 사용하면 컴포넌트 로딩이 실패할 때 자동으로 페이지를 새로고침할 수 있습니다. 이는 특히 배포 환경에서 버전 차이(version skew) 문제를 처리하는 데 유용합니다.
+
+```tsx
+import { lazy, reloadOnError } from '@suspensive/react'
+
+// 자동 새로고침 기능이 있는 lazy 팩토리 생성
+const customLazy = lazy.create(
+  reloadOnError({
+    retry: 3, // 최대 3번까지 재시도
+    retryDelay: 1000, // 재시도 간 1초 대기
+  })
+)
+
+const Component = customLazy(() => import('./Component'))
+```
+
+#### reloadOnError 옵션
+
+```tsx
+interface ReloadOnErrorOptions extends LazyOptions {
+  /**
+   * 컴포넌트 로딩을 재시도할 횟수입니다.
+   * `true`인 경우 무한히 재시도합니다.
+   * @default 1
+   */
+  retry?: number | boolean
+
+  /**
+   * 재시도 간 지연 시간(밀리초)입니다.
+   * 함수를 전달하면 현재 재시도 횟수와 함께 호출됩니다.
+   * @default 0
+   */
+  retryDelay?: number | ((retryCount: number) => number)
+
+  /**
+   * 재시도 횟수를 추적하는 데 사용할 스토리지입니다.
+   * 제공되지 않으면 브라우저 환경에서는 `sessionStorage`를 사용합니다.
+   */
+  storage?: {
+    getItem: (key: string) => string | null
+    setItem: (key: string, value: string) => void
+    removeItem: (key: string) => void
+  }
+
+  /**
+   * 컴포넌트를 새로고침하는 데 사용할 함수입니다.
+   * 제공되지 않으면 브라우저 환경에서는 `window.location.reload()`를 사용합니다.
+   */
+  reload?: () => void
+
+  // 기본 lazy 옵션
+  onSuccess?: ({ load }: { load: () => Promise<void> }) => void
+  onError?: ({
+    error,
+    load,
+  }: {
+    error: unknown
+    load: () => Promise<void>
+  }) => void
+}
+```
+
+#### 고급 reloadOnError 예제
+
+**지수 백오프를 사용해 무한히 재시도할 수 있습니다:**
+
+```tsx
+import { lazy, reloadOnError } from '@suspensive/react'
+
+const customLazy = lazy.create(
+  reloadOnError({
+    retry: true, // 무한 재시도
+    retryDelay: (retryCount) => Math.min(1000 * Math.pow(2, retryCount), 30000), // 지수 백오프, 최대 30초
+  })
+)
+
+const Component = customLazy(() => import('./Component'))
+```
+
+**사용자 정의 스토리지 및 새로고침 함수를 사용할 수 있습니다:**
+
+```tsx
+import { lazy, reloadOnError } from '@suspensive/react'
+
+const customStorage = {
+  getItem: (key) => localStorage.getItem(key),
+  setItem: (key, value) => localStorage.setItem(key, value),
+  removeItem: (key) => localStorage.removeItem(key),
+}
+
+const customReload = () => {
+  // 사용자 정의 새로고침 로직
+  window.location.href = window.location.href
+}
+
+const customLazy = lazy.create(
+  reloadOnError({
+    retry: 5,
+    retryDelay: 2000,
+    storage: customStorage,
+    reload: customReload,
+  })
+)
+
+const Component = customLazy(() => import('./Component'))
+```
+
+**오류 유형에 따라 조건부로 재시도할 수 있습니다:**
+
+```tsx
+import { lazy, reloadOnError } from '@suspensive/react'
+
+const customLazy = lazy.create(
+  reloadOnError({
+    retry: 3,
+    retryDelay: 1000,
+    onError: ({ error, load }) => {
+      // 특정 오류 유형에 대해서만 재시도
+      if (
+        error.message?.includes('Loading chunk') ||
+        error.message?.includes('NetworkError')
+      ) {
+        console.log(
+          '네트워크 또는 청크 로딩 오류로 인한 재시도:',
+          error.message
+        )
+      }
+    },
+  })
+)
+
+const Component = customLazy(() => import('./Component'))
+```
+
+### 버전 차이(version skew) 문제 해결
 
 ```tsx
 import { lazy, Suspense, ErrorBoundary } from '@suspensive/react'
