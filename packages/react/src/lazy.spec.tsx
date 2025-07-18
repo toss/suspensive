@@ -284,7 +284,9 @@ describe('lazy', () => {
   })
 
   describe('reloadOnError option', () => {
-    const mockReload = vi.fn()
+    const mockReload = vi.fn((id: ReturnType<typeof setTimeout>) => {
+      clearTimeout(id)
+    })
 
     it('should reload importing the component up to 1 time if it fails to load', async () => {
       const customLazy = lazy.create(reloadOnError({ storage, reload: mockReload }))

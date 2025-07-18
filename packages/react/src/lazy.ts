@@ -140,7 +140,7 @@ interface ReloadOnErrorOptions extends LazyOptions {
    * The function to use to reload the component. \
    * If not provided, it assumes that you are in a browser environment and uses `window.location.reload`.
    */
-  reload?: () => void
+  reload?: (timeoutId: ReturnType<typeof setTimeout>) => void
 }
 
 export const reloadOnError = ({
@@ -230,8 +230,8 @@ export const reloadOnError = ({
       }
 
       const delayValue = typeof retryDelay === 'function' ? retryDelay(currentRetryCount) : retryDelay
-      setTimeout(() => {
-        reloadFunction()
+      const timeoutId = setTimeout(() => {
+        reloadFunction(timeoutId)
       }, delayValue)
     },
   }
