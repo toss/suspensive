@@ -2,4 +2,4 @@
 "@suspensive/react": minor
 ---
 
-feat(react): add `lazy`
+feat(react): add `lazy`, `reloadOnError`
