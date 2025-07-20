@@ -1,5 +1,11 @@
 # @suspensive/react
 
+## 3.3.2
+
+### Patch Changes
+
+- [`c4c0bf8`](https://github.com/toss/suspensive/commit/c4c0bf8ae543d43ba4fd61a59565bedfdcf7452b) Thanks [@manudeli](https://github.com/manudeli)! - fix(react): enable additional props and add 'name' prop to Suspense component (#1663)
+
 ## 3.3.1
 
 ### Patch Changes
