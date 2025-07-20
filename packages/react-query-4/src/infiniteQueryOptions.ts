@@ -1,5 +1,4 @@
-import type { InfiniteData, QueryKey, UseInfiniteQueryOptions } from '@tanstack/react-query'
-import type { OmitKeyof, RequiredKeyof } from './utility-types'
+import type { InfiniteData, OmitKeyof, QueryKey, UseInfiniteQueryOptions, WithRequired } from '@tanstack/react-query'
 
 /**
  * @deprecated There is no `SelectedInfiniteOptions` in \@tanstack/react-query@^4.40.0.
@@ -9,7 +8,7 @@ export type SelectedInfiniteOptions<
   TError = unknown,
   TData = InfiniteData<TQueryFnData>,
   TQueryKey extends QueryKey = QueryKey,
-> = RequiredKeyof<
+> = WithRequired<
   OmitKeyof<
     UseInfiniteQueryOptions<TQueryFnData, TError, TData, TQueryFnData, TQueryKey>,
     | 'queryKeyHashFn'
@@ -38,7 +37,7 @@ export type UnSelectedInfiniteOptions<
   TError = unknown,
   TData = InfiniteData<TQueryFnData>,
   TQueryKey extends QueryKey = QueryKey,
-> = RequiredKeyof<
+> = WithRequired<
   OmitKeyof<
     UseInfiniteQueryOptions<TQueryFnData, TError, TData, TQueryFnData, TQueryKey>,
     | 'queryKeyHashFn'

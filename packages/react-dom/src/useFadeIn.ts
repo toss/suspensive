@@ -1,6 +1,6 @@
 import { type CSSProperties, useMemo } from 'react'
 import { type InViewOptions, useInView } from './useInView'
-import type { OmitKeyof } from './utility-types'
+import type { OmitKeyof } from './utility-types/OmitKeyof'
 
 /**
  * @experimental This is experimental feature.

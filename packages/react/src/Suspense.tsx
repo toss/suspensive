@@ -1,7 +1,7 @@
 import { type ComponentProps, type ComponentType, type SuspenseProps as ReactSuspenseProps, useContext } from 'react'
-import { SuspenseDefaultPropsContext } from './contexts'
-import type { PropsWithoutChildren } from './utility-types'
-import { defineSuspense } from './utils'
+import { SuspenseDefaultPropsContext } from './contexts/DefaultPropsContexts'
+import type { PropsWithoutChildren } from './utility-types/PropsWithoutChildren'
+import { defineSuspense } from './utils/defineSuspense'
 
 export interface SuspenseProps extends ReactSuspenseProps {
   /**

@@ -8,7 +8,7 @@ import {
   useErrorBoundary,
   useErrorBoundaryFallbackProps,
 } from './ErrorBoundary'
-import { useTimeout } from './hooks'
+import { useTimeout } from './hooks/useTimeout'
 import { SuspensiveError } from './models/SuspensiveError'
 import { CustomError, ERROR_MESSAGE, FALLBACK, TEXT, Throw } from './test-utils'
 
