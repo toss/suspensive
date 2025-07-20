@@ -4,6 +4,13 @@ import { noop } from './utils/noop'
 interface LazyOptions {
   onSuccess?: ({ load }: { load: () => Promise<void> }) => void
   onError?: ({ error, load }: { error: unknown; load: () => Promise<void> }) => undefined
+  /**
+   * Prevents merging with component-level callbacks when true. \
+   * This is useful when you want to use the default options for all components.
+   *
+   * @default false
+   */
+  preventMerging?: boolean
 }
 
 /**
@@ -43,17 +50,38 @@ const createLazy =
   ): LazyExoticComponent<T> & {
     load: () => Promise<void>
   } => {
-    const defaultedOptions = { ...defaultOptions, ...options }
+    const shouldCompose = defaultOptions.preventMerging === true
+
+    const composedOnSuccess = ({ load }: { load: () => Promise<void> }) => {
+      if (shouldCompose) {
+        defaultOptions.onSuccess?.({ load })
+        options?.onSuccess?.({ load })
+      } else {
+        const callback = options?.onSuccess ?? defaultOptions.onSuccess
+        callback?.({ load })
+      }
+    }
+
+    const composedOnError = ({ error, load }: { error: unknown; load: () => Promise<void> }) => {
+      if (shouldCompose) {
+        defaultOptions.onError?.({ error, load })
+        options?.onError?.({ error, load })
+      } else {
+        const callback = options?.onError ?? defaultOptions.onError
+        callback?.({ error, load })
+      }
+    }
+
     const loadNoReturn = () => load().then(noop)
     return Object.assign(
       originalLazy(() =>
         load().then(
           (loaded) => {
-            defaultedOptions.onSuccess?.({ load: loadNoReturn })
+            composedOnSuccess({ load: loadNoReturn })
             return loaded
           },
           (error: unknown) => {
-            defaultedOptions.onError?.({ error: error, load: loadNoReturn })
+            composedOnError({ error: error, load: loadNoReturn })
             throw error
           }
         )
@@ -116,7 +144,7 @@ interface ReloadOnErrorStorage {
   removeItem: (key: string) => void
 }
 
-interface ReloadOnErrorOptions extends LazyOptions {
+interface ReloadOnErrorOptions extends Omit<LazyOptions, 'preventMerging'> {
   /**
    * The number of times to retry the loading of the component. \
    * If `true`, the component will be retried indefinitely.
@@ -212,6 +240,7 @@ export const reloadOnError = ({
 
   return {
     ...options,
+    preventMerging: true,
     onSuccess: ({ load }) => {
       options.onSuccess?.({ load })
       reloadStorage.removeItem(load.toString())
