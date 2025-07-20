@@ -16,7 +16,7 @@ export interface SuspenseProps extends ReactSuspenseProps {
  * @see {@link https://suspensive.org/docs/react/Suspense Suspensive Docs}
  */
 export const Suspense = Object.assign(
-  ({ clientOnly, children, fallback }: SuspenseProps) => {
+  ({ clientOnly, children, fallback, name, ...rest }: SuspenseProps) => {
     const defaultProps = useContext(SuspenseDefaultPropsContext)
     const DefinedSuspense = defineSuspense({
       defaultPropsClientOnly: defaultProps.clientOnly,
@@ -24,7 +24,9 @@ export const Suspense = Object.assign(
     })
 
     return (
-      <DefinedSuspense fallback={fallback === undefined ? defaultProps.fallback : fallback}>{children}</DefinedSuspense>
+      <DefinedSuspense {...rest} name={name} fallback={fallback === undefined ? defaultProps.fallback : fallback}>
+        {children}
+      </DefinedSuspense>
     )
   },
   {
