@@ -20,8 +20,9 @@ import {
   Message_useErrorBoundary_this_hook_should_be_called_in_ErrorBoundary_props_children,
   SuspensiveError,
 } from './models/SuspensiveError'
-import type { ConstructorType, PropsWithoutChildren } from './utility-types'
-import { hasResetKeysChanged } from './utils'
+import type { ConstructorType } from './utility-types/ConstructorType'
+import type { PropsWithoutChildren } from './utility-types/PropsWithoutChildren'
+import { hasResetKeysChanged } from './utils/hasResetKeysChanged'
 
 export interface ErrorBoundaryFallbackProps<TError extends Error = Error> {
   /**

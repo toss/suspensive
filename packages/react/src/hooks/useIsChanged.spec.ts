@@ -1,5 +1,5 @@
 import { renderHook } from '@testing-library/react'
-import { useIsChanged } from '.'
+import { useIsChanged } from './useIsChanged'
 
 describe('useIsChanged', () => {
   it('should return boolean that express if given argument is changed value on previous render', () => {

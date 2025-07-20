@@ -9,13 +9,13 @@ import {
   useMemo,
   useReducer,
 } from 'react'
-import { useIsChanged } from './hooks'
+import { useIsChanged } from './hooks/useIsChanged'
 import {
   Message_useErrorBoundaryGroup_this_hook_should_be_called_in_ErrorBoundary_props_children,
   SuspensiveError,
 } from './models/SuspensiveError'
-import type { PropsWithoutChildren } from './utility-types'
-import { increase } from './utils'
+import type { PropsWithoutChildren } from './utility-types/PropsWithoutChildren'
+import { increase } from './utils/increase'
 
 export const ErrorBoundaryGroupContext = createContext<{ reset: () => void; resetKey: number } | undefined>(undefined)
 if (process.env.NODE_ENV === 'development') {

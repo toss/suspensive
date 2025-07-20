@@ -1,8 +1,8 @@
 import { type ComponentProps, type ComponentType, type ReactNode, useContext, useState } from 'react'
-import { DelayDefaultPropsContext } from './contexts'
-import { useTimeout } from './hooks'
+import { DelayDefaultPropsContext } from './contexts/DefaultPropsContexts'
+import { useTimeout } from './hooks/useTimeout'
 import { Message_Delay_ms_prop_should_be_greater_than_or_equal_to_0, SuspensiveError } from './models/SuspensiveError'
-import type { PropsWithoutChildren } from './utility-types'
+import type { PropsWithoutChildren } from './utility-types/PropsWithoutChildren'
 
 export type DelayProps =
   | {
