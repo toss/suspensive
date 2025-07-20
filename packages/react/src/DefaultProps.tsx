@@ -1,5 +1,5 @@
 import { type ContextType, type PropsWithChildren } from 'react'
-import { DelayDefaultPropsContext, SuspenseDefaultPropsContext } from './contexts'
+import { DelayDefaultPropsContext, SuspenseDefaultPropsContext } from './contexts/DefaultPropsContexts'
 import { Message_DefaultProp_delay_ms_should_be_greater_than_0, SuspensiveError } from './models/SuspensiveError'
 
 /**

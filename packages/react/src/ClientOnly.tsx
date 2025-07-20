@@ -1,6 +1,6 @@
 import type { ComponentProps, ComponentType, ReactNode } from 'react'
-import { useIsClient } from './hooks'
-import type { PropsWithoutChildren } from './utility-types'
+import { useIsClient } from './hooks/useIsClient'
+import type { PropsWithoutChildren } from './utility-types/PropsWithoutChildren'
 
 export interface ClientOnlyProps {
   children: ReactNode

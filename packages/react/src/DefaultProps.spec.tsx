@@ -1,6 +1,6 @@
 import { act, render, screen } from '@testing-library/react'
 import { createElement, useContext } from 'react'
-import { DelayDefaultPropsContext, SuspenseDefaultPropsContext } from './contexts'
+import { DelayDefaultPropsContext, SuspenseDefaultPropsContext } from './contexts/DefaultPropsContexts'
 import { DefaultProps, DefaultPropsProvider } from './DefaultProps'
 import { Delay, type DelayProps } from './Delay'
 import { Message_DefaultProp_delay_ms_should_be_greater_than_0, SuspensiveError } from './models/SuspensiveError'

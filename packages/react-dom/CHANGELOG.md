@@ -1,5 +1,13 @@
 # @suspensive/react-dom
 
+## 3.3.2
+
+## 3.3.1
+
+### Patch Changes
+
+- [#1661](https://github.com/toss/suspensive/pull/1661) [`27bda1d`](https://github.com/toss/suspensive/commit/27bda1df5675c068e2cbb6f202b4ceb00ced4465) Thanks [@manudeli](https://github.com/manudeli)! - perf(react, react-query): reduce size
+
 ## 3.3.0
 
 ## 3.2.3

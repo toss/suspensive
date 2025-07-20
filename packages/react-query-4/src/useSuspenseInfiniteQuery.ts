@@ -1,11 +1,11 @@
 import {
   type InfiniteData,
+  type OmitKeyof,
   type QueryKey,
   type UseInfiniteQueryOptions,
   type UseInfiniteQueryResult,
   useInfiniteQuery,
 } from '@tanstack/react-query'
-import type { OmitKeyof } from './utility-types'
 
 export interface UseSuspenseInfiniteQueryResult<TData = unknown, TError = unknown>
   extends OmitKeyof<

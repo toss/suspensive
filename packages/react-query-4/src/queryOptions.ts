@@ -1,5 +1,10 @@
-import { type QueryKey, type UseQueryOptions, queryOptions as original_queryOptions } from '@tanstack/react-query'
-import type { OmitKeyof, RequiredKeyof } from './utility-types'
+import {
+  type OmitKeyof,
+  type QueryKey,
+  type UseQueryOptions,
+  type WithRequired,
+  queryOptions as original_queryOptions,
+} from '@tanstack/react-query'
 
 /**
  * @deprecated There is no `SelectedQueryOptions` in \@tanstack/react-query@^4.40.0.
@@ -9,7 +14,7 @@ export type SelectedQueryOptions<
   TError = unknown,
   TData = TQueryFnData,
   TQueryKey extends QueryKey = QueryKey,
-> = RequiredKeyof<
+> = WithRequired<
   OmitKeyof<
     UseQueryOptions<TQueryFnData, TError, TData, TQueryKey>,
     | 'getNextPageParam'
@@ -40,7 +45,7 @@ export type UnSelectedQueryOptions<
   TError = unknown,
   TData = TQueryFnData,
   TQueryKey extends QueryKey = QueryKey,
-> = RequiredKeyof<
+> = WithRequired<
   OmitKeyof<
     UseQueryOptions<TQueryFnData, TError, TData, TQueryKey>,
     | 'getNextPageParam'

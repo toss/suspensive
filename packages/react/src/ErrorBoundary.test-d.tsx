@@ -1,7 +1,7 @@
 import type { ComponentProps, ReactNode } from 'react'
 import { ErrorBoundary } from './ErrorBoundary'
 import { CustomError } from './test-utils'
-import type { ConstructorType } from './utility-types'
+import type { ConstructorType } from './utility-types/ConstructorType'
 
 class CustomNotError {
   constructor(public message?: string) {
