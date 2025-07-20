@@ -223,20 +223,6 @@ describe('lazy', () => {
       expect(onSuccess).toHaveBeenCalledTimes(1)
     })
 
-    it('should merge default options with provided options', async () => {
-      const mockImport = importCache.createImport({ failureCount: 0, failureDelay: 100, successDelay: 100 })
-      const defaultOnSuccess = vi.fn()
-      const customOnSuccess = vi.fn()
-      const customLazy = lazy.create({ onSuccess: defaultOnSuccess })
-
-      const Component = customLazy(() => mockImport('/test-component'), { onSuccess: customOnSuccess })
-      render(<Component />)
-      await act(() => vi.advanceTimersByTimeAsync(200))
-
-      expect(defaultOnSuccess).not.toHaveBeenCalled()
-      expect(customOnSuccess).toHaveBeenCalledTimes(1)
-    })
-
     it('should handle onError callback without fallback', async () => {
       const mockImport = importCache.createImport({ failureCount: 10, failureDelay: 100, successDelay: 100 })
       const onError = vi.fn().mockReturnValue(undefined)

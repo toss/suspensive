@@ -4,13 +4,6 @@ import { noop } from './utils/noop'
 interface LazyOptions {
   onSuccess?: ({ load }: { load: () => Promise<void> }) => void
   onError?: ({ error, load }: { error: unknown; load: () => Promise<void> }) => undefined
-  /**
-   * Prevents merging with component-level callbacks when true. \
-   * This is useful when you want to use the default options for all components.
-   *
-   * @default false
-   */
-  preventMerging?: boolean
 }
 
 /**
@@ -50,26 +43,14 @@ const createLazy =
   ): LazyExoticComponent<T> & {
     load: () => Promise<void>
   } => {
-    const shouldCompose = defaultOptions.preventMerging === true
-
     const composedOnSuccess = ({ load }: { load: () => Promise<void> }) => {
-      if (shouldCompose) {
-        defaultOptions.onSuccess?.({ load })
-        options?.onSuccess?.({ load })
-      } else {
-        const callback = options?.onSuccess ?? defaultOptions.onSuccess
-        callback?.({ load })
-      }
+      defaultOptions.onSuccess?.({ load })
+      options?.onSuccess?.({ load })
     }
 
     const composedOnError = ({ error, load }: { error: unknown; load: () => Promise<void> }) => {
-      if (shouldCompose) {
-        defaultOptions.onError?.({ error, load })
-        options?.onError?.({ error, load })
-      } else {
-        const callback = options?.onError ?? defaultOptions.onError
-        callback?.({ error, load })
-      }
+      defaultOptions.onError?.({ error, load })
+      options?.onError?.({ error, load })
     }
 
     const loadNoReturn = () => load().then(noop)
@@ -240,7 +221,6 @@ export const reloadOnError = ({
 
   return {
     ...options,
-    preventMerging: true,
     onSuccess: ({ load }) => {
       options.onSuccess?.({ load })
       reloadStorage.removeItem(load.toString())
