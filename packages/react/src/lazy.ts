@@ -44,13 +44,13 @@ const createLazy =
     load: () => Promise<void>
   } => {
     const composedOnSuccess = ({ load }: { load: () => Promise<void> }) => {
-      defaultOptions.onSuccess?.({ load })
       options?.onSuccess?.({ load })
+      defaultOptions.onSuccess?.({ load })
     }
 
     const composedOnError = ({ error, load }: { error: unknown; load: () => Promise<void> }) => {
-      defaultOptions.onError?.({ error, load })
       options?.onError?.({ error, load })
+      defaultOptions.onError?.({ error, load })
     }
 
     const loadNoReturn = () => load().then(noop)
