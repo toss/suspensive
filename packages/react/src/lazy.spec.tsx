@@ -268,6 +268,32 @@ describe('lazy', () => {
       expect(onError).toHaveBeenCalledTimes(1)
       expect(onError).toHaveBeenCalledWith({ error: expect.any(Error), load: expect.any(Function) })
     })
+
+    it('should fire default onError callback at the end', async () => {
+      const mockImport = importCache.createImport({ failureCount: 10, failureDelay: 100, successDelay: 100 })
+      const callOrder: string[] = []
+      const factoryOnError = vi.fn().mockImplementation(() => {
+        callOrder.push('factory')
+      })
+      const componentOnError = vi.fn().mockImplementation(() => {
+        callOrder.push('component')
+      })
+      const customLazy = lazy.create({ onError: factoryOnError })
+
+      const Component = customLazy(() => mockImport('/failing-component'), {
+        onError: componentOnError,
+      })
+      render(
+        <ErrorBoundary fallback={<div>error</div>}>
+          <Component />
+        </ErrorBoundary>
+      )
+      await act(() => vi.advanceTimersByTimeAsync(200))
+
+      expect(factoryOnError).toHaveBeenCalledTimes(1)
+      expect(componentOnError).toHaveBeenCalledTimes(1)
+      expect(callOrder).toEqual(['component', 'factory'])
+    })
   })
 
   describe('reloadOnError option', () => {
