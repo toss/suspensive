@@ -5,22 +5,16 @@ import Image from 'next/image'
 
 export const Logo = () => {
   return (
-    <motion.div
-      className="flex items-center gap-1"
-      whileHover={{ scale: 1.05 }}
-      whileTap={{ scale: 0.95 }}
-    >
-      <motion.span>
+    <motion.div>
+      <div className="relative flex items-center gap-1">
         <Image
-          src="/img/logo_dark.png"
-          width={34}
-          height={34}
+          width={160}
+          height={10}
+          src="/img/logo-suspensive-text-progressive-blur.svg"
+          unoptimized
           alt="suspensive logo"
         />
-      </motion.span>
-      <div className="relative">
-        <strong>Suspensive</strong>
-        <span className="absolute text-[8px]">v3</span>
+        <span className="absolute -top-1 -right-3 text-[8px]">v3</span>
       </div>
     </motion.div>
   )

@@ -49,20 +49,22 @@ export const HomePage = ({
       >
         <div className="flex flex-col items-center justify-center gap-8 text-center">
           <div className="flex flex-col items-center">
-            <div className="width-[360px] height-[360px] -mb-4 hidden md:block">
+            <div className="width-[360px] height-[360px] -mb-4 hidden pt-18 pb-12 md:block">
               <Image
-                src="/img/homepage_logo.png"
+                width={330}
+                height={330}
+                src="/img/logo-suspensive-progressive-blur.svg"
+                unoptimized
                 alt="Suspensive with star"
-                width={360}
-                height={360}
               />
             </div>
-            <div className="width-[210px] height-[210px] -mb-4 md:hidden md:h-auto md:w-auto">
+            <div className="width-[210px] height-[210px] -mb-4 py-6 md:hidden md:h-auto md:w-auto">
               <Image
-                src="/img/homepage_logo.png"
+                width={200}
+                height={200}
+                src="/img/logo-suspensive-progressive-blur.svg"
+                unoptimized
                 alt="Suspensive with star"
-                width={210}
-                height={210}
               />
             </div>
             <div className="flex flex-col items-center gap-4">
@@ -72,9 +74,7 @@ export const HomePage = ({
                 </TextShimmer>
               </div>
             </div>
-            <Magnetic intensity={0.4} springOptions={{ bounce: 0.1 }}>
-              <NpmInstallCopyButton />
-            </Magnetic>
+            <NpmInstallCopyButton />
           </div>
 
           <Delay ms={600}>

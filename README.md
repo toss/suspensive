@@ -1,9 +1,9 @@
 <div align="center">
-  <a href="https://suspensive.org" title="Suspensive Libraries - TypeScript/JavaScript packages to use React Suspense easily">
-    <img src="https://github.com/toss/suspensive/blob/main/assets/logo_background_star.png?raw=true" alt="Suspensive Libraries Logo - TypeScript/JavaScript packages to use React Suspense easily." width="600" />
-    <h1 align="center">Suspensive</h1>
+  <a href="https://suspensive.org" title="Suspensive - All in one for React Suspense">
+    <img src="https://github.com/toss/suspensive/blob/main/assets/readme_main.svg?raw=true" alt="Suspensive - All in one for React Suspense" height="400" />
   </a>
-  <p style="font-size:18px;">All in one for React Suspense</p>
+  <br/>
+  <br/>
 </div>
 
 <div align="center">
