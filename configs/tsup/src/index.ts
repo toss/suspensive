@@ -8,6 +8,7 @@ export const options: Options = {
   outDir: 'dist',
   sourcemap: true,
   dts: true,
+  minify: true,
 }
 
 export const scriptOptions: Options = {
