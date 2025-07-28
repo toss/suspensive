@@ -1,5 +1,4 @@
 import { type ComponentType, type LazyExoticComponent, lazy as originalLazy } from 'react'
-import { OmitKeyof } from './utility-types/OmitKeyof'
 import { noop } from './utils/noop'
 
 interface LazyOptions {
