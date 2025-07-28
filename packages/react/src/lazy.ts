@@ -1,4 +1,5 @@
 import { type ComponentType, type LazyExoticComponent, lazy as originalLazy } from 'react'
+import { OmitKeyof } from './utility-types/OmitKeyof'
 import { noop } from './utils/noop'
 
 interface LazyOptions {
@@ -125,7 +126,7 @@ interface ReloadOnErrorStorage {
   removeItem: (key: string) => void
 }
 
-interface ReloadOnErrorOptions extends Omit<LazyOptions, 'preventMerging'> {
+interface ReloadOnErrorOptions extends LazyOptions {
   /**
    * The number of times to retry the loading of the component. \
    * If `true`, the component will be retried indefinitely.
