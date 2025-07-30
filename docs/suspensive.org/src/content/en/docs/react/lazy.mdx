@@ -1,0 +1,337 @@
+import { Callout } from '@/components'
+
+# lazy
+
+<Callout type='experimental'>
+
+`lazy` is an experimental feature, so this interface may change.
+
+</Callout>
+
+The `lazy` function is a wrapper around React's `lazy` function that provides callbacks for component loading success and failure. It allows you to execute custom logic when a component loads successfully or fails, providing better user experience and debugging capabilities.
+
+## Basic Usage
+
+```tsx
+import { lazy } from '@suspensive/react'
+
+const MyComponent = lazy(() => import('./MyComponent'))
+```
+
+By default, `lazy` works the same as React's `lazy` but provides an additional `load` method.
+
+## API Reference
+
+```tsx
+interface LazyOptions {
+  onSuccess?: ({ load }: { load: () => Promise<void> }) => void
+  onError?: ({
+    error,
+    load,
+  }: {
+    error: unknown
+    load: () => Promise<void>
+  }) => undefined
+}
+
+// Return type
+LazyExoticComponent<T> &
+  {
+    load: () => Promise<void>,
+  }
+```
+
+## Examples
+
+### Basic Component Loading
+
+```tsx
+import { lazy, Suspense, ErrorBoundary } from '@suspensive/react'
+
+const UserProfile = lazy(() => import('./UserProfile'))
+
+function App() {
+  return (
+    <ErrorBoundary fallback={<div>Something went wrong</div>}>
+      <Suspense fallback={<div>Loading...</div>}>
+        <UserProfile />
+      </Suspense>
+    </ErrorBoundary>
+  )
+}
+```
+
+### Success/Error Callbacks
+
+```tsx
+import { lazy, Suspense, ErrorBoundary } from '@suspensive/react'
+
+const UserProfile = lazy(() => import('./UserProfile'), {
+  onSuccess: () => console.log('Component loaded successfully'),
+  onError: ({ error }) => console.error('Loading failed:', error),
+})
+
+function App() {
+  return (
+    <ErrorBoundary fallback={<div>Something went wrong</div>}>
+      <Suspense fallback={<div>Loading...</div>}>
+        <UserProfile />
+      </Suspense>
+    </ErrorBoundary>
+  )
+}
+```
+
+### Preloading Components
+
+```tsx
+import { lazy, Suspense } from '@suspensive/react'
+
+const Component = lazy(() => import('./Component'))
+
+function PreloadExample() {
+  const handlePreload = () => {
+    Component.load() // Preload the component
+  }
+
+  return (
+    <div>
+      <button onClick={handlePreload}>Preload Component</button>
+      <Suspense fallback={<div>Loading...</div>}>
+        <Component />
+      </Suspense>
+    </div>
+  )
+}
+```
+
+### Custom Lazy Factory
+
+```tsx
+import { lazy } from '@suspensive/react'
+
+const customLazy = lazy.create({
+  onSuccess: () => console.log('Component loaded successfully'),
+  onError: ({ error }) => console.error('Component loading failed:', error),
+})
+
+const Component = customLazy(() => import('./Component'))
+```
+
+### Error Recovery with Retry Logic
+
+```tsx
+import { lazy, Suspense, ErrorBoundary } from '@suspensive/react'
+
+const RetryableComponent = lazy(() => import('./Component'), {
+  onError: ({ error, load }) => {
+    if (error.message?.includes('NetworkError')) {
+      setTimeout(() => load(), 1000) // Retry after 1 second
+    }
+  },
+})
+
+function App() {
+  return (
+    <ErrorBoundary fallback={<div>Something went wrong</div>}>
+      <Suspense fallback={<div>Loading...</div>}>
+        <RetryableComponent />
+      </Suspense>
+    </ErrorBoundary>
+  )
+}
+```
+
+### Automatic Reload on Error
+
+The `reloadOnError` function provides a convenient way to automatically reload the page when component loading fails. This is particularly useful for handling version skew issues in production environments.
+
+```tsx
+import { lazy, reloadOnError } from '@suspensive/react'
+
+// Create a lazy factory with automatic reload on error
+const customLazy = lazy.create(
+  reloadOnError({
+    retry: 3, // Retry up to 3 times
+    retryDelay: 1000, // Wait 1 second between retries
+  })
+)
+
+const Component = customLazy(() => import('./Component'))
+```
+
+#### reloadOnError Options
+
+```tsx
+interface ReloadOnErrorOptions extends LazyOptions {
+  /**
+   * The number of times to retry the loading of the component.
+   * If `true`, the component will be retried indefinitely.
+   * @default 1
+   */
+  retry?: number | boolean
+
+  /**
+   * The delay between retries in milliseconds.
+   * If a function is provided, it will be called with the current retry count.
+   * @default 0
+   */
+  retryDelay?: number | ((retryCount: number) => number)
+
+  /**
+   * The storage to use for tracking retry count.
+   * If not provided, uses `sessionStorage` in browser environments.
+   */
+  storage?: {
+    getItem: (key: string) => string | null
+    setItem: (key: string, value: string) => void
+    removeItem: (key: string) => void
+  }
+
+  /**
+   * The function to use to reload the component.
+   * If not provided, uses `window.location.reload()` in browser environments.
+   */
+  reload?: () => void
+
+  // Standard lazy options
+  onSuccess?: ({ load }: { load: () => Promise<void> }) => void
+  onError?: ({
+    error,
+    load,
+  }: {
+    error: unknown
+    load: () => Promise<void>
+  }) => void
+}
+```
+
+#### Advanced reloadOnError Examples
+
+**Infinite Retry with Exponential Backoff:**
+
+```tsx
+import { lazy, reloadOnError } from '@suspensive/react'
+
+const customLazy = lazy.create(
+  reloadOnError({
+    retry: true, // Infinite retries
+    retryDelay: (retryCount) => Math.min(1000 * Math.pow(2, retryCount), 30000), // Exponential backoff, max 30s
+  })
+)
+
+const Component = customLazy(() => import('./Component'))
+```
+
+**Custom Storage and Reload Function:**
+
+```tsx
+import { lazy, reloadOnError } from '@suspensive/react'
+
+const customStorage = {
+  getItem: (key) => localStorage.getItem(key),
+  setItem: (key, value) => localStorage.setItem(key, value),
+  removeItem: (key) => localStorage.removeItem(key),
+}
+
+const customReload = () => {
+  // Custom reload logic
+  window.location.href = window.location.href
+}
+
+const customLazy = lazy.create(
+  reloadOnError({
+    retry: 5,
+    retryDelay: 2000,
+    storage: customStorage,
+    reload: customReload,
+  })
+)
+
+const Component = customLazy(() => import('./Component'))
+```
+
+**Conditional Retry Based on Error Type:**
+
+```tsx
+import { lazy, reloadOnError } from '@suspensive/react'
+
+const customLazy = lazy.create(
+  reloadOnError({
+    retry: 3,
+    retryDelay: 1000,
+    onError: ({ error, load }) => {
+      // Only retry for specific error types
+      if (
+        error.message?.includes('Loading chunk') ||
+        error.message?.includes('NetworkError')
+      ) {
+        console.log(
+          'Retrying due to network or chunk loading error:',
+          error.message
+        )
+      }
+    },
+  })
+)
+
+const Component = customLazy(() => import('./Component'))
+```
+
+### Version Skew Problem Resolution
+
+```tsx
+import { lazy, Suspense, ErrorBoundary } from '@suspensive/react'
+
+const MAX_RELOADS = 3
+
+const VersionSkewSafeComponent = lazy(
+  () => import('./VersionSkewSafeComponent'),
+  {
+    onSuccess: ({ load }) => {
+      const reloadKey = `reload_count_${load.toString()}`
+      sessionStorage.removeItem(reloadKey)
+    },
+    onError: ({ error, load }) => {
+      const reloadKey = `reload_count_${load.toString()}`
+      const currentReloadCount = parseInt(
+        sessionStorage.getItem(reloadKey) || '0'
+      )
+
+      if (
+        currentReloadCount < MAX_RELOADS &&
+        error.message?.includes('Loading chunk')
+      ) {
+        const newReloadCount = currentReloadCount + 1
+        sessionStorage.setItem(reloadKey, newReloadCount.toString())
+        window.location.reload()
+      }
+    },
+  }
+)
+```
+
+## Migration Guide
+
+### From React.lazy
+
+```tsx
+// Before
+import { lazy as ReactLazy } from 'react'
+const Component = ReactLazy(() => import('./Component'))
+
+// After
+import { lazy } from '@suspensive/react'
+const Component = lazy(() => import('./Component'), {
+  onSuccess: () => console.log('Loaded successfully'),
+  onError: ({ error }) => console.error('Failed:', error),
+})
+```
+
+## Best Practices
+
+1. **Always use ErrorBoundary**: Wrap lazy components to handle loading failures
+2. **Create components outside render**: Avoid creating lazy components inside render functions
+3. **Preload strategically**: Use `load()` method for important components
+4. **Handle errors gracefully**: Provide retry mechanisms for network failures
+5. **Use clientOnly for SSR**: Prevent hydration mismatches in SSR frameworks
