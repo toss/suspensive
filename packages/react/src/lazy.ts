@@ -142,12 +142,16 @@ interface ReloadOnErrorOptions extends LazyOptions {
   retryDelay?: number | ((retryCount: number) => number)
   /**
    * The storage to use for the retry count. \
-   * If not provided, it assumes that you are in a browser environment and uses `sessionStorage`.
+   * If not provided, it assumes that you are in a browser environment and uses `window.sessionStorage`.
+   *
+   * @default window.sessionStorage
    */
   storage?: ReloadOnErrorStorage
   /**
    * The function to use to reload the component. \
    * If not provided, it assumes that you are in a browser environment and uses `window.location.reload`.
+   *
+   * @default window.location.reload
    */
   reload?: (timeoutId: ReturnType<typeof setTimeout>) => void
 }
@@ -172,52 +176,16 @@ export const reloadOnError = ({
   reload,
   ...options
 }: ReloadOnErrorOptions): LazyOptions => {
-  const getDefaultStorage = (): ReloadOnErrorStorage => {
-    if (storage) {
-      return storage
-    }
-
-    if (typeof window !== 'undefined' && 'sessionStorage' in window) {
-      return window.sessionStorage
-    }
-
+  const reloadStorage = (() => {
+    if (storage) return storage
+    if (typeof window !== 'undefined' && 'sessionStorage' in window) return window.sessionStorage
     throw new Error('[@suspensive/react] No storage provided and no sessionStorage in window')
-  }
-
-  const getDefaultReloadFunction = (): NonNullable<ReloadOnErrorOptions['reload']> => {
-    if (reload) {
-      return reload
-    }
-
-    if (typeof window !== 'undefined' && 'location' in window) {
-      return () => window.location.reload()
-    }
-
+  })()
+  const reloadFunction = (() => {
+    if (reload) return reload
+    if (typeof window !== 'undefined' && 'location' in window) return () => window.location.reload()
     throw new Error('[@suspensive/react] No reload function provided and no location in window')
-  }
-
-  const reloadStorage = getDefaultStorage()
-  const reloadFunction = getDefaultReloadFunction()
-
-  /**
-   * Parses the reload count from the storage.
-   */
-  const parseReload = (value: string | null): { reloadCount: number; isNaN: boolean } => {
-    if (!value) {
-      return {
-        reloadCount: 0,
-        isNaN: true,
-      }
-    }
-
-    const reloadCount = parseInt(value, 10)
-    const isNaN = Number.isNaN(reloadCount)
-
-    return {
-      reloadCount: isNaN ? 0 : reloadCount,
-      isNaN,
-    }
-  }
+  })()
 
   return {
     ...options,
@@ -233,24 +201,16 @@ export const reloadOnError = ({
 
       if (typeof retry === 'number') {
         const storedValue = reloadStorage.getItem(storageKey)
-        const parsed = parseReload(storedValue)
-        currentRetryCount = parsed.reloadCount
-
-        if (parsed.isNaN) {
-          reloadStorage.removeItem(storageKey)
+        if (storedValue) {
+          const reloadCount = parseInt(storedValue, 10)
+          if (Number.isNaN(reloadCount)) reloadStorage.removeItem(storageKey)
+          currentRetryCount = reloadCount
         }
       }
 
       const shouldRetry = retry === true || (typeof retry === 'number' && currentRetryCount < retry)
-
-      if (!shouldRetry) {
-        return
-      }
-
-      if (typeof retry === 'number') {
-        reloadStorage.setItem(storageKey, String(currentRetryCount + 1))
-      }
-
+      if (!shouldRetry) return
+      if (typeof retry === 'number') reloadStorage.setItem(storageKey, String(currentRetryCount + 1))
       const delayValue = typeof retryDelay === 'function' ? retryDelay(currentRetryCount) : retryDelay
       const timeoutId = setTimeout(() => {
         reloadFunction(timeoutId)
