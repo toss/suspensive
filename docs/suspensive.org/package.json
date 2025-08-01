@@ -40,7 +40,7 @@
     "react-dom": "catalog:react19",
     "remark-sandpack": "^0.0.5",
     "sharp": "catalog:",
-    "zod": "^3.25.47"
+    "zod": "^4.0.14"
   },
   "devDependencies": {
     "@suspensive/eslint-config": "workspace:*",
