@@ -11,7 +11,7 @@
     "clean": "rimraf ./dist ./coverage ./node_modules"
   },
   "dependencies": {
-    "@cspell/eslint-plugin": "^8.19.2",
+    "@cspell/eslint-plugin": "^9.2.0",
     "@eslint-react/eslint-plugin": "^1.48.4",
     "@next/eslint-plugin-next": "catalog:",
     "@vitest/eslint-plugin": "^1.1.43",
