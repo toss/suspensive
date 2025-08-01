@@ -28,7 +28,7 @@
   "devDependencies": {
     "@suspensive/eslint-config": "workspace:*",
     "@babel/core": "^7.27.1",
-    "@types/jest": "^29.5.14",
+    "@types/jest": "^30.0.0",
     "@types/react": "catalog:react19",
     "@types/react-test-renderer": "^19.0.0",
     "jest": "catalog:",

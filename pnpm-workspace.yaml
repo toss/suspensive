@@ -6,7 +6,7 @@ packages:
 
 catalog:
   'babel-jest': '^29.7.0'
-  'jest': '^29.7.0'
+  'jest': '^30.0.5'
   # next
   'next': '^15.3.5'
   '@next/eslint-plugin-next': '^15.3.3'
