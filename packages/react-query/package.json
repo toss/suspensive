@@ -43,7 +43,7 @@
     "src"
   ],
   "scripts": {
-    "build": "tsup",
+    "build": "tsdown",
     "ci:attw": "attw --pack",
     "ci:eslint": "eslint \"**/*.{ts,tsx,cts,mts}\"",
     "ci:publint": "publint --strict",
@@ -64,7 +64,7 @@
   "devDependencies": {
     "@suspensive/eslint-config": "workspace:*",
     "@suspensive/tsconfig": "workspace:*",
-    "@suspensive/tsup": "workspace:*",
+    "@suspensive/tsdown": "workspace:*",
     "@types/react": "catalog:react19",
     "react": "catalog:react19"
   },
