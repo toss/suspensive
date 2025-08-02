@@ -1,5 +1,5 @@
 {
-  "name": "@suspensive/tsup",
+  "name": "@suspensive/tsdown",
   "version": "0.0.0",
   "private": true,
   "author": "Jonghyeon Ko <jonghyeon@toss.im>",
@@ -22,7 +22,7 @@
   "module": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "tsup",
+    "build": "tsdown",
     "ci:attw": "attw --pack",
     "ci:eslint": "eslint \"**/*.{ts,tsx,cts,mts}\"",
     "ci:publint": "publint --strict",
