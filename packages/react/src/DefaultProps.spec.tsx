@@ -94,41 +94,40 @@ describe('<DefaultPropsProvider/>', () => {
   })
 
   it('should accept defaultProps.Suspense.clientOnly to setup default clientOnly prop of Suspense. If Suspense accept no clientOnly, Suspense should use default fallback', () => {
-    let clientOnly1: SuspenseProps['clientOnly'] = undefined
+    let clientOnly: SuspenseProps['clientOnly']
+
     render(
       <DefaultPropsProvider defaultProps={new DefaultProps({ Suspense: { clientOnly: true } })}>
         {createElement(() => {
-          clientOnly1 = useContext(SuspenseDefaultPropsContext).clientOnly
+          clientOnly = useContext(SuspenseDefaultPropsContext).clientOnly
           return <></>
         })}
       </DefaultPropsProvider>
     )
 
-    expect(clientOnly1).toBe(true)
+    expect(clientOnly).toBe(true)
 
-    let clientOnly2: SuspenseProps['clientOnly'] = undefined
     render(
       <DefaultPropsProvider defaultProps={new DefaultProps({ Suspense: { clientOnly: false } })}>
         {createElement(() => {
-          clientOnly2 = useContext(SuspenseDefaultPropsContext).clientOnly
+          clientOnly = useContext(SuspenseDefaultPropsContext).clientOnly
           return <></>
         })}
       </DefaultPropsProvider>
     )
 
-    expect(clientOnly2).toBe(false)
+    expect(clientOnly).toBe(false)
 
-    const clientOnly3: SuspenseProps['clientOnly'] = undefined
     render(
       <DefaultPropsProvider defaultProps={new DefaultProps({ Suspense: {} })}>
         {createElement(() => {
-          clientOnly2 = useContext(SuspenseDefaultPropsContext).clientOnly
+          clientOnly = useContext(SuspenseDefaultPropsContext).clientOnly
           return <></>
         })}
       </DefaultPropsProvider>
     )
 
-    expect(clientOnly3).toBeUndefined()
+    expect(clientOnly).toBeUndefined()
   })
 
   it('should accept defaultProps.Delay.fallback to setup default fallback of Delay. If Delay accepted local fallback as null, Delay should ignore default fallback. even though local fallback is nullish', () => {
