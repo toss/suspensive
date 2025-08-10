@@ -1,5 +1,7 @@
 # @suspensive/react-query-5
 
+## 3.4.0
+
 ## 3.3.2
 
 ## 3.3.1
