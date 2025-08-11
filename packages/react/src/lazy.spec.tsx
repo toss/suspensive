@@ -272,13 +272,13 @@ describe('lazy', () => {
     it('should execute component onError first, then default onError', async () => {
       const mockImport = importCache.createImport({ failureCount: 10, failureDelay: 100, successDelay: 100 })
       const callOrder: string[] = []
-      const factoryOnError = vi.fn().mockImplementation(() => {
+      const defaultOnError = vi.fn().mockImplementation(() => {
         callOrder.push('factory')
       })
       const individualOnError = vi.fn().mockImplementation(() => {
         callOrder.push('individual')
       })
-      const lazy = createLazy({ onError: factoryOnError })
+      const lazy = createLazy({ onError: defaultOnError })
 
       const Component = lazy(() => mockImport('/failing-component'), {
         onError: individualOnError,
@@ -290,7 +290,7 @@ describe('lazy', () => {
       )
       await act(() => vi.advanceTimersByTimeAsync(200))
 
-      expect(factoryOnError).toHaveBeenCalledTimes(1)
+      expect(defaultOnError).toHaveBeenCalledTimes(1)
       expect(individualOnError).toHaveBeenCalledTimes(1)
       expect(callOrder).toEqual(['individual', 'factory'])
     })
@@ -298,13 +298,13 @@ describe('lazy', () => {
     it('should execute default onSuccess first, then component onSuccess', async () => {
       const mockImport = importCache.createImport({ failureCount: 0, failureDelay: 100, successDelay: 100 })
       const callOrder: string[] = []
-      const factoryOnSuccess = vi.fn().mockImplementation(() => {
+      const defaultOnSuccess = vi.fn().mockImplementation(() => {
         callOrder.push('factory')
       })
       const individualOnSuccess = vi.fn().mockImplementation(() => {
         callOrder.push('individual')
       })
-      const lazy = createLazy({ onSuccess: factoryOnSuccess })
+      const lazy = createLazy({ onSuccess: defaultOnSuccess })
 
       const Component = lazy(() => mockImport('/test-component'), {
         onSuccess: individualOnSuccess,
@@ -312,7 +312,7 @@ describe('lazy', () => {
       render(<Component />)
       await act(() => vi.advanceTimersByTimeAsync(200))
 
-      expect(factoryOnSuccess).toHaveBeenCalledTimes(1)
+      expect(defaultOnSuccess).toHaveBeenCalledTimes(1)
       expect(individualOnSuccess).toHaveBeenCalledTimes(1)
       expect(callOrder).toEqual(['individual', 'factory'])
     })
@@ -484,16 +484,16 @@ describe('lazy', () => {
       })
 
       it('should not destroy reloadOnError when creating lazy with reloadOnError containing onSuccess/onError', async () => {
-        const factoryOnSuccess = vi.fn()
-        const factoryOnError = vi.fn()
+        const defaultOnSuccess = vi.fn()
+        const defaultOnError = vi.fn()
         const individualOnSuccess = vi.fn()
         const individualOnError = vi.fn()
         const lazy = createLazy(
           reloadOnError({
             storage,
             reload: mockReload,
-            onSuccess: factoryOnSuccess,
-            onError: factoryOnError,
+            onSuccess: defaultOnSuccess,
+            onError: defaultOnError,
           })
         )
         const mockImport = importCache.createImport({ failureCount: 1, failureDelay: 0, successDelay: 100 })
@@ -515,11 +515,11 @@ describe('lazy', () => {
         // reloadOnError should work
         expect(mockReload).toHaveBeenCalledTimes(1)
         // Factory's onError should also be called
-        expect(factoryOnError).toHaveBeenCalledTimes(1)
-        expect(factoryOnError).toHaveBeenCalledWith({ error: expect.any(Error), load: expect.any(Function) })
+        expect(defaultOnError).toHaveBeenCalledTimes(1)
+        expect(defaultOnError).toHaveBeenCalledWith({ error: expect.any(Error), load: expect.any(Function) })
         expect(individualOnError).toHaveBeenCalledTimes(1)
         expect(individualOnError).toHaveBeenCalledWith({ error: expect.any(Error), load: expect.any(Function) })
-        expect(factoryOnSuccess).toHaveBeenCalledTimes(0)
+        expect(defaultOnSuccess).toHaveBeenCalledTimes(0)
         expect(individualOnSuccess).toHaveBeenCalledTimes(0)
 
         const Component2 = lazy(() => mockImport('/test-component'), {
@@ -536,9 +536,9 @@ describe('lazy', () => {
         expect(mockImport).toHaveBeenCalledTimes(2)
         await act(() => vi.advanceTimersByTimeAsync(100))
 
-        expect(factoryOnError).toHaveBeenCalledTimes(1)
+        expect(defaultOnError).toHaveBeenCalledTimes(1)
         expect(individualOnError).toHaveBeenCalledTimes(1)
-        expect(factoryOnSuccess).toHaveBeenCalledWith({ load: expect.any(Function) })
+        expect(defaultOnSuccess).toHaveBeenCalledWith({ load: expect.any(Function) })
         expect(individualOnSuccess).toHaveBeenCalledWith({ load: expect.any(Function) })
 
         expect(screen.getByText('Component from /test-component')).toBeInTheDocument()
