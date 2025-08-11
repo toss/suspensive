@@ -10,60 +10,30 @@ import { Callout } from '@/components'
 
 `lazy` 함수는 React의 `lazy` 함수를 래핑하여 컴포넌트 로딩 성공과 실패에 대한 콜백을 제공합니다. 컴포넌트가 성공적으로 로드되거나 실패할 때 사용자 정의 로직을 실행할 수 있어 더 나은 사용자 경험과 디버깅을 제공합니다.
 
-## 기본 사용법
-
-```tsx
-import { lazy } from '@suspensive/react'
-
-const MyComponent = lazy(() => import('./MyComponent'))
-```
+### 컴포넌트 사전 로딩
 
 기본적으로 `lazy`는 React의 `lazy`와 동일하게 작동하지만, 추가적인 `load` 메서드를 제공합니다.
 
-## API 참조
+```tsx /Component.load/
+import { lazy, Suspense } from '@suspensive/react'
 
-```tsx
-interface LazyOptions {
-  onSuccess?: ({ load }: { load: () => Promise<void> }) => void
-  onError?: ({
-    error,
-    load,
-  }: {
-    error: unknown
-    load: () => Promise<void>
-  }) => undefined
-}
+const Component = lazy(() => import('./Component'))
 
-// 반환 타입
-LazyExoticComponent<T> &
-  {
-    load: () => Promise<void>,
-  }
-```
-
-## 예제
-
-### 기본 컴포넌트 로딩
-
-```tsx
-import { lazy, Suspense, ErrorBoundary } from '@suspensive/react'
-
-const UserProfile = lazy(() => import('./UserProfile'))
-
-function App() {
+function PreloadExample() {
   return (
-    <ErrorBoundary fallback={<div>문제가 발생했습니다</div>}>
+    <div>
+      <button onClick={() => Component.load()}>컴포넌트 사전 로딩</button>
       <Suspense fallback={<div>로딩 중...</div>}>
-        <UserProfile />
+        <Component />
       </Suspense>
-    </ErrorBoundary>
+    </div>
   )
 }
 ```
 
 ### 성공/실패 콜백 사용
 
-```tsx
+```tsx /onSuccess/ /onError/
 import { lazy, Suspense, ErrorBoundary } from '@suspensive/react'
 
 const UserProfile = lazy(() => import('./UserProfile'), {
@@ -82,32 +52,11 @@ function App() {
 }
 ```
 
-### 컴포넌트 사전 로딩
+## createLazy
 
-```tsx
-import { lazy, Suspense } from '@suspensive/react'
+커스텀 기본 옵션이 있는 lazy 함수를 생성합니다.
 
-const Component = lazy(() => import('./Component'))
-
-function PreloadExample() {
-  const handlePreload = () => {
-    Component.load() // 컴포넌트 사전 로딩
-  }
-
-  return (
-    <div>
-      <button onClick={handlePreload}>컴포넌트 사전 로딩</button>
-      <Suspense fallback={<div>로딩 중...</div>}>
-        <Component />
-      </Suspense>
-    </div>
-  )
-}
-```
-
-### 커스텀 Lazy 팩토리
-
-```tsx
+```tsx /createLazy/
 import { createLazy } from '@suspensive/react'
 
 const lazy = createLazy({
@@ -118,24 +67,12 @@ const lazy = createLazy({
 const Component = lazy(() => import('./Component'))
 ```
 
-**참고:** 기본 `lazy` export는 `createLazy({})`와 동일합니다 - 기본 옵션이 없는 lazy 함수입니다.
-
-```tsx
-// 다음은 동일합니다:
-import { lazy, createLazy } from '@suspensive/react'
-const Component1 = lazy(() => import('./Component'))
-
-const Component2 = createLazy({})(() => import('./Component'))
-```
-
-**콜백 실행 순서:**
+### 콜백 실행 순서
 
 - **onSuccess**: 개별 콜백 → 기본 콜백
 - **onError**: 개별 콜백 → 기본 콜백
 
-**콜백 순서 예제:**
-
-```tsx
+```tsx /onSuccess,onError/
 import { createLazy } from '@suspensive/react'
 
 const lazy = createLazy({
@@ -157,114 +94,69 @@ const Component = lazy(() => import('./Component'), {
 // 2. 기본 onError
 ```
 
-### 재시도 로직을 통한 오류 복구
-
-```tsx
-import { lazy, Suspense, ErrorBoundary } from '@suspensive/react'
-
-const RetryableComponent = lazy(() => import('./Component'), {
-  onError: ({ error, load }) => {
-    if (error.message?.includes('NetworkError')) {
-      setTimeout(() => load(), 1000) // 1초 후 재시도
-    }
-  },
-})
-
-function App() {
-  return (
-    <ErrorBoundary fallback={<div>문제가 발생했습니다</div>}>
-      <Suspense fallback={<div>로딩 중...</div>}>
-        <RetryableComponent />
-      </Suspense>
-    </ErrorBoundary>
-  )
-}
-```
-
-### 오류 시 자동 페이지 새로고침
+## reloadOnError
 
 `reloadOnError` 옵션을 사용하면 컴포넌트 로딩이 실패할 때 자동으로 페이지를 새로고침할 수 있습니다. 이는 특히 배포 환경에서 버전 차이(version skew) 문제를 처리하는 데 유용합니다.
 
-```tsx
-import { createLazy, reloadOnError } from '@suspensive/react'
+**배경:** 버전 차이 문제를 해결하는 가장 좋은 방법은 인프라 레벨에서 처리하는 것입니다 (예: 적절한 배포 전략, CDN 캐시 무효화). 하지만 이러한 방법이 불가능하거나 실용적이지 않은 경우가 있습니다. `reloadOnError`는 이러한 상황을 위한 클라이언트 사이드 대안 솔루션입니다.
 
-// 자동 새로고침 기능이 있는 lazy 팩토리 생성
-const lazy = createLazy(
+### 버전 차이(version skew) 문제 해결
+
+```tsx /reloadOnError/
+import { lazy, reloadOnError } from '@suspensive/react'
+
+const MAX_RELOADS = 3
+
+const VersionSkewSafeComponent = lazy(
+  () => import('./VersionSkewSafeComponent'),
   reloadOnError({
-    retry: 3, // 최대 3번까지 재시도
-    retryDelay: 1000, // 재시도 간 1초 대기
+    retry: MAX_RELOADS,
+    retryDelay: 1000,
   })
 )
+```
+
+<Callout type="info">
+
+**reloadOnError 없이 구현했다면:**
+
+```diff
++ import { lazy, reloadOnError } from '@suspensive/react'
+- import { createLazy } from '@suspensive/react'
+
++ const Component = lazy(() => import('./Component'), reloadOnError({
++   retry: 3,
++   retryDelay: 1000,
++ }))
+- const Component = lazy(() => import('./Component'), {
+-   onError: ({ error, load }) => {
+-     const reloadKey = 'component_reload_count'
+-     const currentCount = parseInt(sessionStorage.getItem(reloadKey) || '0')
+-     const maxRetries = 3
+-
+-     if (currentCount < maxRetries && error.message?.includes('Loading chunk')) {
+-       const newCount = currentCount + 1
+-       sessionStorage.setItem(reloadKey, newCount.toString())
+-
+-       setTimeout(() => {
+-         window.location.reload()
+-       }, 1000)
+-     }
+-   },
+-   onSuccess: ({ load }) => {
+-     // 성공 시 재시도 횟수 초기화
+-     sessionStorage.removeItem('component_reload_count')
+-   },
+- })
 
 const Component = lazy(() => import('./Component'))
 ```
 
-#### reloadOnError 옵션
+</Callout>
 
-```tsx
-interface ReloadOnErrorOptions extends LazyOptions {
-  /**
-   * 컴포넌트 로딩을 재시도할 횟수입니다.
-   * `true`인 경우 무한히 재시도합니다.
-   * @default 1
-   */
-  retry?: number | boolean
+### 사용자 정의 스토리지 및 새로고침 함수
 
-  /**
-   * 재시도 간 지연 시간(밀리초)입니다.
-   * 함수를 전달하면 현재 재시도 횟수와 함께 호출됩니다.
-   * @default 0
-   */
-  retryDelay?: number | ((retryCount: number) => number)
-
-  /**
-   * 재시도 횟수를 추적하는 데 사용할 스토리지입니다.
-   * 제공되지 않으면 브라우저 환경에서는 `sessionStorage`를 사용합니다.
-   */
-  storage?: {
-    getItem: (key: string) => string | null
-    setItem: (key: string, value: string) => void
-    removeItem: (key: string) => void
-  }
-
-  /**
-   * 컴포넌트를 새로고침하는 데 사용할 함수입니다.
-   * 제공되지 않으면 브라우저 환경에서는 `window.location.reload()`를 사용합니다.
-   */
-  reload?: () => void
-
-  // 기본 lazy 옵션
-  onSuccess?: ({ load }: { load: () => Promise<void> }) => void
-  onError?: ({
-    error,
-    load,
-  }: {
-    error: unknown
-    load: () => Promise<void>
-  }) => void
-}
-```
-
-#### 고급 reloadOnError 예제
-
-**지수 백오프를 사용해 무한히 재시도할 수 있습니다:**
-
-```tsx
-import { createLazy, reloadOnError } from '@suspensive/react'
-
-const lazy = createLazy(
-  reloadOnError({
-    retry: true, // 무한 재시도
-    retryDelay: (retryCount) => Math.min(1000 * Math.pow(2, retryCount), 30000), // 지수 백오프, 최대 30초
-  })
-)
-
-const Component = lazy(() => import('./Component'))
-```
-
-**사용자 정의 스토리지 및 새로고침 함수를 사용할 수 있습니다:**
-
-```tsx
+```tsx /storage:/ /reload:/
 import { createLazy, reloadOnError } from '@suspensive/react'
 
 const customStorage = {
@@ -289,85 +181,3 @@ const lazy = createLazy(
 
 const Component = lazy(() => import('./Component'))
 ```
-
-**오류 유형에 따라 조건부로 재시도할 수 있습니다:**
-
-```tsx
-import { createLazy, reloadOnError } from '@suspensive/react'
-
-const lazy = createLazy(
-  reloadOnError({
-    retry: 3,
-    retryDelay: 1000,
-    onError: ({ error, load }) => {
-      // 특정 오류 유형에 대해서만 재시도
-      if (
-        error.message?.includes('Loading chunk') ||
-        error.message?.includes('NetworkError')
-      ) {
-        console.log(
-          '네트워크 또는 청크 로딩 오류로 인한 재시도:',
-          error.message
-        )
-      }
-    },
-  })
-)
-
-const Component = lazy(() => import('./Component'))
-```
-
-### 버전 차이(version skew) 문제 해결
-
-```tsx
-import { lazy, Suspense, ErrorBoundary } from '@suspensive/react'
-
-const MAX_RELOADS = 3
-
-const VersionSkewSafeComponent = lazy(
-  () => import('./VersionSkewSafeComponent'),
-  {
-    onSuccess: ({ load }) => {
-      const reloadKey = `reload_count_${load.toString()}`
-      sessionStorage.removeItem(reloadKey)
-    },
-    onError: ({ error, load }) => {
-      const reloadKey = `reload_count_${load.toString()}`
-      const currentReloadCount = parseInt(
-        sessionStorage.getItem(reloadKey) || '0'
-      )
-
-      if (
-        currentReloadCount < MAX_RELOADS &&
-        error.message?.includes('Loading chunk')
-      ) {
-        const newReloadCount = currentReloadCount + 1
-        sessionStorage.setItem(reloadKey, newReloadCount.toString())
-        window.location.reload()
-      }
-    },
-  }
-)
-```
-
-## 마이그레이션 가이드
-
-### React.lazy에서 마이그레이션
-
-```diff
-- import { lazy } from 'react'
-+ import { lazy } from '@suspensive/react'
-- const Component = lazy(() => import('./Component'))
-+ const Component = lazy(() => import('./Component'), {
-+   onSuccess: () => console.log('성공적으로 로드됨'),
-+   onError: ({ error }) => console.error('실패:', error),
-+ })
-```
-
-## 모범 사례
-
-1. **항상 ErrorBoundary 사용**: 로딩 실패를 처리하기 위해 lazy 컴포넌트를 감싸기
-2. **렌더링 외부에서 컴포넌트 생성**: 렌더링 함수 내부에서 lazy 컴포넌트 생성 방지
-3. **전략적으로 사전 로딩**: 중요한 컴포넌트에 `load()` 메서드 사용
-4. **오류를 우아하게 처리**: 네트워크 실패에 대한 재시도 메커니즘 제공
-5. **SSR에서는 clientOnly 사용**: SSR 프레임워크에서 하이드레이션 불일치 방지
