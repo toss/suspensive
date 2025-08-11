@@ -110,12 +110,12 @@ function PreloadExample() {
 ```tsx
 import { createLazy } from '@suspensive/react'
 
-const customLazy = createLazy({
+const lazy = createLazy({
   onSuccess: () => console.log('Component loaded successfully'),
   onError: ({ error }) => console.error('Component loading failed:', error),
 })
 
-const Component = customLazy(() => import('./Component'))
+const Component = lazy(() => import('./Component'))
 ```
 
 **Note:** The default `lazy` export is equivalent to `createLazy({})` - a lazy function with no default options.
@@ -189,14 +189,14 @@ The `reloadOnError` function provides a convenient way to automatically reload t
 import { createLazy, reloadOnError } from '@suspensive/react'
 
 // Create a lazy factory with automatic reload on error
-const customLazy = createLazy(
+const lazy = createLazy(
   reloadOnError({
     retry: 3, // Retry up to 3 times
     retryDelay: 1000, // Wait 1 second between retries
   })
 )
 
-const Component = customLazy(() => import('./Component'))
+const Component = lazy(() => import('./Component'))
 ```
 
 #### reloadOnError Options
@@ -252,14 +252,14 @@ interface ReloadOnErrorOptions extends LazyOptions {
 ```tsx
 import { createLazy, reloadOnError } from '@suspensive/react'
 
-const customLazy = createLazy(
+const lazy = createLazy(
   reloadOnError({
     retry: true, // Infinite retries
     retryDelay: (retryCount) => Math.min(1000 * Math.pow(2, retryCount), 30000), // Exponential backoff, max 30s
   })
 )
 
-const Component = customLazy(() => import('./Component'))
+const Component = lazy(() => import('./Component'))
 ```
 
 **Custom Storage and Reload Function:**
@@ -278,7 +278,7 @@ const customReload = () => {
   window.location.href = window.location.href
 }
 
-const customLazy = createLazy(
+const lazy = createLazy(
   reloadOnError({
     retry: 5,
     retryDelay: 2000,
@@ -287,7 +287,7 @@ const customLazy = createLazy(
   })
 )
 
-const Component = customLazy(() => import('./Component'))
+const Component = lazy(() => import('./Component'))
 ```
 
 **Conditional Retry Based on Error Type:**
@@ -295,7 +295,7 @@ const Component = customLazy(() => import('./Component'))
 ```tsx
 import { createLazy, reloadOnError } from '@suspensive/react'
 
-const customLazy = createLazy(
+const lazy = createLazy(
   reloadOnError({
     retry: 3,
     retryDelay: 1000,
@@ -314,7 +314,7 @@ const customLazy = createLazy(
   })
 )
 
-const Component = customLazy(() => import('./Component'))
+const Component = lazy(() => import('./Component'))
 ```
 
 ### Version Skew Problem Resolution

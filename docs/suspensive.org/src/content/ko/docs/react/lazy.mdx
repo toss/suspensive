@@ -110,12 +110,12 @@ function PreloadExample() {
 ```tsx
 import { createLazy } from '@suspensive/react'
 
-const customLazy = createLazy({
+const lazy = createLazy({
   onSuccess: () => console.log('컴포넌트가 성공적으로 로드되었습니다'),
   onError: ({ error }) => console.error('컴포넌트 로딩 실패:', error),
 })
 
-const Component = customLazy(() => import('./Component'))
+const Component = lazy(() => import('./Component'))
 ```
 
 **참고:** 기본 `lazy` export는 `createLazy({})`와 동일합니다 - 기본 옵션이 없는 lazy 함수입니다.
@@ -189,14 +189,14 @@ function App() {
 import { createLazy, reloadOnError } from '@suspensive/react'
 
 // 자동 새로고침 기능이 있는 lazy 팩토리 생성
-const customLazy = createLazy(
+const lazy = createLazy(
   reloadOnError({
     retry: 3, // 최대 3번까지 재시도
     retryDelay: 1000, // 재시도 간 1초 대기
   })
 )
 
-const Component = customLazy(() => import('./Component'))
+const Component = lazy(() => import('./Component'))
 ```
 
 #### reloadOnError 옵션
@@ -252,14 +252,14 @@ interface ReloadOnErrorOptions extends LazyOptions {
 ```tsx
 import { createLazy, reloadOnError } from '@suspensive/react'
 
-const customLazy = createLazy(
+const lazy = createLazy(
   reloadOnError({
     retry: true, // 무한 재시도
     retryDelay: (retryCount) => Math.min(1000 * Math.pow(2, retryCount), 30000), // 지수 백오프, 최대 30초
   })
 )
 
-const Component = customLazy(() => import('./Component'))
+const Component = lazy(() => import('./Component'))
 ```
 
 **사용자 정의 스토리지 및 새로고침 함수를 사용할 수 있습니다:**
@@ -278,7 +278,7 @@ const customReload = () => {
   window.location.href = window.location.href
 }
 
-const customLazy = createLazy(
+const lazy = createLazy(
   reloadOnError({
     retry: 5,
     retryDelay: 2000,
@@ -287,7 +287,7 @@ const customLazy = createLazy(
   })
 )
 
-const Component = customLazy(() => import('./Component'))
+const Component = lazy(() => import('./Component'))
 ```
 
 **오류 유형에 따라 조건부로 재시도할 수 있습니다:**
@@ -295,7 +295,7 @@ const Component = customLazy(() => import('./Component'))
 ```tsx
 import { createLazy, reloadOnError } from '@suspensive/react'
 
-const customLazy = createLazy(
+const lazy = createLazy(
   reloadOnError({
     retry: 3,
     retryDelay: 1000,
@@ -314,7 +314,7 @@ const customLazy = createLazy(
   })
 )
 
-const Component = customLazy(() => import('./Component'))
+const Component = lazy(() => import('./Component'))
 ```
 
 ### 버전 차이(version skew) 문제 해결

@@ -171,8 +171,8 @@ interface ReloadOnErrorOptions extends LazyOptions {
  * ```tsx
  * import { createLazy, reloadOnError } from '@suspensive/react'
  *
- * const customLazy = createLazy(reloadOnError({ retry: 1, retryDelay: 1000 }))
- * const Component = customLazy(() => import('./Component'))
+ * const lazy = createLazy(reloadOnError({ retry: 1, retryDelay: 1000 }))
+ * const Component = lazy(() => import('./Component'))
  * ```
  */
 export const reloadOnError = ({
