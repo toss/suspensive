@@ -108,14 +108,53 @@ function PreloadExample() {
 ### 커스텀 Lazy 팩토리
 
 ```tsx
-import { lazy } from '@suspensive/react'
+import { createLazy } from '@suspensive/react'
 
-const customLazy = lazy.create({
+const customLazy = createLazy({
   onSuccess: () => console.log('컴포넌트가 성공적으로 로드되었습니다'),
   onError: ({ error }) => console.error('컴포넌트 로딩 실패:', error),
 })
 
 const Component = customLazy(() => import('./Component'))
+```
+
+**참고:** 기본 `lazy` export는 `createLazy({})`와 동일합니다 - 기본 옵션이 없는 lazy 함수입니다.
+
+```tsx
+// 다음은 동일합니다:
+import { lazy, createLazy } from '@suspensive/react'
+const Component1 = lazy(() => import('./Component'))
+
+const Component2 = createLazy({})(() => import('./Component'))
+```
+
+**콜백 실행 순서:**
+
+- **onSuccess**: 개별 콜백 → 기본 콜백
+- **onError**: 개별 콜백 → 기본 콜백
+
+**콜백 순서 예제:**
+
+```tsx
+import { createLazy } from '@suspensive/react'
+
+const lazy = createLazy({
+  onSuccess: () => console.log('2. 기본 onSuccess'),
+  onError: ({ error }) => console.log('2. 기본 onError:', error),
+})
+
+const Component = lazy(() => import('./Component'), {
+  onSuccess: () => console.log('1. 개별 onSuccess'),
+  onError: ({ error }) => console.log('1. 개별 onError:', error),
+})
+
+// 컴포넌트 로드 성공 시 실행 순서:
+// 1. 개별 onSuccess
+// 2. 기본 onSuccess
+
+// 컴포넌트 로드 실패 시 실행 순서:
+// 1. 개별 onError
+// 2. 기본 onError
 ```
 
 ### 재시도 로직을 통한 오류 복구
@@ -147,10 +186,10 @@ function App() {
 `reloadOnError` 옵션을 사용하면 컴포넌트 로딩이 실패할 때 자동으로 페이지를 새로고침할 수 있습니다. 이는 특히 배포 환경에서 버전 차이(version skew) 문제를 처리하는 데 유용합니다.
 
 ```tsx
-import { lazy, reloadOnError } from '@suspensive/react'
+import { createLazy, reloadOnError } from '@suspensive/react'
 
 // 자동 새로고침 기능이 있는 lazy 팩토리 생성
-const customLazy = lazy.create(
+const customLazy = createLazy(
   reloadOnError({
     retry: 3, // 최대 3번까지 재시도
     retryDelay: 1000, // 재시도 간 1초 대기
@@ -211,9 +250,9 @@ interface ReloadOnErrorOptions extends LazyOptions {
 **지수 백오프를 사용해 무한히 재시도할 수 있습니다:**
 
 ```tsx
-import { lazy, reloadOnError } from '@suspensive/react'
+import { createLazy, reloadOnError } from '@suspensive/react'
 
-const customLazy = lazy.create(
+const customLazy = createLazy(
   reloadOnError({
     retry: true, // 무한 재시도
     retryDelay: (retryCount) => Math.min(1000 * Math.pow(2, retryCount), 30000), // 지수 백오프, 최대 30초
@@ -226,7 +265,7 @@ const Component = customLazy(() => import('./Component'))
 **사용자 정의 스토리지 및 새로고침 함수를 사용할 수 있습니다:**
 
 ```tsx
-import { lazy, reloadOnError } from '@suspensive/react'
+import { createLazy, reloadOnError } from '@suspensive/react'
 
 const customStorage = {
   getItem: (key) => localStorage.getItem(key),
@@ -239,7 +278,7 @@ const customReload = () => {
   window.location.href = window.location.href
 }
 
-const customLazy = lazy.create(
+const customLazy = createLazy(
   reloadOnError({
     retry: 5,
     retryDelay: 2000,
@@ -254,9 +293,9 @@ const Component = customLazy(() => import('./Component'))
 **오류 유형에 따라 조건부로 재시도할 수 있습니다:**
 
 ```tsx
-import { lazy, reloadOnError } from '@suspensive/react'
+import { createLazy, reloadOnError } from '@suspensive/react'
 
-const customLazy = lazy.create(
+const customLazy = createLazy(
   reloadOnError({
     retry: 3,
     retryDelay: 1000,
@@ -315,17 +354,14 @@ const VersionSkewSafeComponent = lazy(
 
 ### React.lazy에서 마이그레이션
 
-```tsx
-// 이전
-import { lazy as ReactLazy } from 'react'
-const Component = ReactLazy(() => import('./Component'))
-
-// 이후
-import { lazy } from '@suspensive/react'
-const Component = lazy(() => import('./Component'), {
-  onSuccess: () => console.log('성공적으로 로드됨'),
-  onError: ({ error }) => console.error('실패:', error),
-})
+```diff
+- import { lazy } from 'react'
++ import { lazy } from '@suspensive/react'
+- const Component = lazy(() => import('./Component'))
++ const Component = lazy(() => import('./Component'), {
++   onSuccess: () => console.log('성공적으로 로드됨'),
++   onError: ({ error }) => console.error('실패:', error),
++ })
 ```
 
 ## 모범 사례

@@ -4,7 +4,7 @@ export { ErrorBoundary, useErrorBoundary, useErrorBoundaryFallbackProps } from '
 export { ErrorBoundaryGroup, useErrorBoundaryGroup } from './ErrorBoundaryGroup'
 export { Delay } from './Delay'
 export { ClientOnly } from './ClientOnly'
-export { lazy, reloadOnError } from './lazy'
+export { lazy, reloadOnError, createLazy } from './lazy'
 
 export type { SuspenseProps } from './Suspense'
 export type { ErrorBoundaryProps, ErrorBoundaryFallbackProps } from './ErrorBoundary'

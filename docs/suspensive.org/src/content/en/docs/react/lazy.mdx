@@ -108,14 +108,53 @@ function PreloadExample() {
 ### Custom Lazy Factory
 
 ```tsx
-import { lazy } from '@suspensive/react'
+import { createLazy } from '@suspensive/react'
 
-const customLazy = lazy.create({
+const customLazy = createLazy({
   onSuccess: () => console.log('Component loaded successfully'),
   onError: ({ error }) => console.error('Component loading failed:', error),
 })
 
 const Component = customLazy(() => import('./Component'))
+```
+
+**Note:** The default `lazy` export is equivalent to `createLazy({})` - a lazy function with no default options.
+
+```tsx
+// These are equivalent:
+import { lazy, createLazy } from '@suspensive/react'
+const Component1 = lazy(() => import('./Component'))
+
+const Component2 = createLazy({})(() => import('./Component'))
+```
+
+**Callback Execution Order:**
+
+- **onSuccess**: Individual callback → Default callback
+- **onError**: Individual callback → Default callback
+
+**Example with Callback Order:**
+
+```tsx
+import { createLazy } from '@suspensive/react'
+
+const lazy = createLazy({
+  onSuccess: () => console.log('2. Default onSuccess'),
+  onError: ({ error }) => console.log('2. Default onError:', error),
+})
+
+const Component = lazy(() => import('./Component'), {
+  onSuccess: () => console.log('1. Individual onSuccess'),
+  onError: ({ error }) => console.log('1. Individual onError:', error),
+})
+
+// Execution order when component loads successfully:
+// 1. Individual onSuccess
+// 2. Default onSuccess
+
+// Execution order when component fails to load:
+// 1. Individual onError
+// 2. Default onError
 ```
 
 ### Error Recovery with Retry Logic
@@ -147,10 +186,10 @@ function App() {
 The `reloadOnError` function provides a convenient way to automatically reload the page when component loading fails. This is particularly useful for handling version skew issues in production environments.
 
 ```tsx
-import { lazy, reloadOnError } from '@suspensive/react'
+import { createLazy, reloadOnError } from '@suspensive/react'
 
 // Create a lazy factory with automatic reload on error
-const customLazy = lazy.create(
+const customLazy = createLazy(
   reloadOnError({
     retry: 3, // Retry up to 3 times
     retryDelay: 1000, // Wait 1 second between retries
@@ -211,9 +250,9 @@ interface ReloadOnErrorOptions extends LazyOptions {
 **Infinite Retry with Exponential Backoff:**
 
 ```tsx
-import { lazy, reloadOnError } from '@suspensive/react'
+import { createLazy, reloadOnError } from '@suspensive/react'
 
-const customLazy = lazy.create(
+const customLazy = createLazy(
   reloadOnError({
     retry: true, // Infinite retries
     retryDelay: (retryCount) => Math.min(1000 * Math.pow(2, retryCount), 30000), // Exponential backoff, max 30s
@@ -226,7 +265,7 @@ const Component = customLazy(() => import('./Component'))
 **Custom Storage and Reload Function:**
 
 ```tsx
-import { lazy, reloadOnError } from '@suspensive/react'
+import { createLazy, reloadOnError } from '@suspensive/react'
 
 const customStorage = {
   getItem: (key) => localStorage.getItem(key),
@@ -239,7 +278,7 @@ const customReload = () => {
   window.location.href = window.location.href
 }
 
-const customLazy = lazy.create(
+const customLazy = createLazy(
   reloadOnError({
     retry: 5,
     retryDelay: 2000,
@@ -254,9 +293,9 @@ const Component = customLazy(() => import('./Component'))
 **Conditional Retry Based on Error Type:**
 
 ```tsx
-import { lazy, reloadOnError } from '@suspensive/react'
+import { createLazy, reloadOnError } from '@suspensive/react'
 
-const customLazy = lazy.create(
+const customLazy = createLazy(
   reloadOnError({
     retry: 3,
     retryDelay: 1000,
@@ -315,17 +354,14 @@ const VersionSkewSafeComponent = lazy(
 
 ### From React.lazy
 
-```tsx
-// Before
-import { lazy as ReactLazy } from 'react'
-const Component = ReactLazy(() => import('./Component'))
-
-// After
-import { lazy } from '@suspensive/react'
-const Component = lazy(() => import('./Component'), {
-  onSuccess: () => console.log('Loaded successfully'),
-  onError: ({ error }) => console.error('Failed:', error),
-})
+```diff
+- import { lazy } from 'react'
++ import { lazy } from '@suspensive/react'
+- const Component = lazy(() => import('./Component'))
++ const Component = lazy(() => import('./Component'), {
++   onSuccess: () => console.log('Loaded successfully'),
++   onError: ({ error }) => console.error('Failed:', error),
++ })
 ```
 
 ## Best Practices

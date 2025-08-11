@@ -9,34 +9,40 @@ interface LazyOptions {
 /**
  * Creates a lazy function with custom default options
  *
+ * The default `lazy` export is equivalent to `createLazy({})`.
+ *
  * @experimental This is experimental feature.
+ *
+ * @description
+ * The created lazy function will execute individual callbacks first, then default callbacks.
+ * For onSuccess: individual onSuccess → default onSuccess
+ * For onError: individual onError → default onError
  *
  * @example
  * ```tsx
- * import { lazy } from '@suspensive/react'
+ * import { createLazy } from '@suspensive/react'
  *
  * // Create a lazy factory with custom default options
- * const customLazy = lazy.create({
+ * const lazy = createLazy({
  *   onSuccess: () => console.log('Component loaded successfully'),
  *   onError: ({ error }) => console.error('Component loading failed:', error)
  * })
  *
  * // Use the factory to create lazy components
- * const Component1 = customLazy(() => import('./Component1'))
- * const Component2 = customLazy(() => import('./Component2'))
+ * const Component1 = lazy(() => import('./Component1'))
+ * const Component2 = lazy(() => import('./Component2'))
  *
- * // Override default options for specific component
- * const Component3 = customLazy(() => import('./Component3'), {
+ * // Individual options are executed after default options
+ * const Component3 = lazy(() => import('./Component3'), {
  *   onError: ({ error }) => {
- *     console.error('Custom error handling:', error)
- *     // Additional error handling logic
+ *     console.error('Individual error handling:', error)
+ *     // This callback runs after the default onError callback
  *   }
  * })
  * ```
  */
-const createLazy =
+export const createLazy =
   (defaultOptions: LazyOptions) =>
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   <T extends ComponentType<any>>(
     load: () => Promise<{ default: T }>,
     options?: LazyOptions
@@ -74,6 +80,8 @@ const createLazy =
 /**
  * A wrapper around React.lazy that provides error handling and success callbacks
  *
+ * This is equivalent to `createLazy({})` - a lazy function with no default options.
+ *
  * @experimental This is experimental feature.
  *
  * @example
@@ -105,19 +113,17 @@ const createLazy =
  *   )
  * }
  *
- * // Using lazy.create for factory pattern
- * const customLazy = lazy.create({
+ * // Using createLazy for factory pattern
+ * const lazy = createLazy({
  *   onError: ({ error }) => console.error('Default error handling:', error)
  * })
- * const CustomComponent = customLazy(() => import('./CustomComponent'))
+ * const CustomComponent = lazy(() => import('./CustomComponent'))
  * ```
  *
  * @returns A lazy component with additional `load` method for preloading
  * @property {() => Promise<void>} load - Preloads the component without rendering it. Useful for prefetching components in the background.
  */
-export const lazy = Object.assign(createLazy({}), {
-  create: createLazy,
-})
+export const lazy = createLazy({})
 
 interface ReloadOnErrorStorage {
   getItem: (key: string) => string | null
@@ -163,9 +169,9 @@ interface ReloadOnErrorOptions extends LazyOptions {
  *
  * @example
  * ```tsx
- * import { lazy, reloadOnError } from '@suspensive/react'
+ * import { createLazy, reloadOnError } from '@suspensive/react'
  *
- * const customLazy = lazy.create(reloadOnError({ retry: 1, retryDelay: 1000 }))
+ * const customLazy = createLazy(reloadOnError({ retry: 1, retryDelay: 1000 }))
  * const Component = customLazy(() => import('./Component'))
  * ```
  */

@@ -3,7 +3,7 @@ import { act, render, screen } from '@testing-library/react'
 import { type ComponentType, Suspense, useState } from 'react'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import { ErrorBoundary } from './ErrorBoundary'
-import { lazy, reloadOnError } from './lazy'
+import { createLazy, lazy, reloadOnError } from './lazy'
 import { sleep } from './test-utils'
 
 type PathData = {
@@ -210,13 +210,13 @@ describe('lazy', () => {
     })
   })
 
-  describe('lazy.create', () => {
+  describe('createLazy', () => {
     it('should use custom default options', async () => {
       const mockImport = importCache.createImport({ failureCount: 0, failureDelay: 100, successDelay: 100 })
       const onSuccess = vi.fn()
-      const customLazy = lazy.create({ onSuccess })
+      const lazy = createLazy({ onSuccess })
 
-      const Component = customLazy(() => mockImport('/test-component'))
+      const Component = lazy(() => mockImport('/test-component'))
       render(<Component />)
       await act(() => vi.advanceTimersByTimeAsync(200))
 
@@ -226,9 +226,9 @@ describe('lazy', () => {
     it('should handle onError callback without fallback', async () => {
       const mockImport = importCache.createImport({ failureCount: 10, failureDelay: 100, successDelay: 100 })
       const onError = vi.fn().mockReturnValue(undefined)
-      const customLazy = lazy.create({ onError })
+      const lazy = createLazy({ onError })
 
-      const Component = customLazy(() => mockImport('/failing-component'))
+      const Component = lazy(() => mockImport('/failing-component'))
       render(
         <ErrorBoundary fallback={<div>error</div>}>
           <Component />
@@ -269,19 +269,19 @@ describe('lazy', () => {
       expect(onError).toHaveBeenCalledWith({ error: expect.any(Error), load: expect.any(Function) })
     })
 
-    it('should fire default onError callback at the end', async () => {
+    it('should execute component onError first, then default onError', async () => {
       const mockImport = importCache.createImport({ failureCount: 10, failureDelay: 100, successDelay: 100 })
       const callOrder: string[] = []
       const factoryOnError = vi.fn().mockImplementation(() => {
         callOrder.push('factory')
       })
-      const componentOnError = vi.fn().mockImplementation(() => {
-        callOrder.push('component')
+      const individualOnError = vi.fn().mockImplementation(() => {
+        callOrder.push('individual')
       })
-      const customLazy = lazy.create({ onError: factoryOnError })
+      const lazy = createLazy({ onError: factoryOnError })
 
-      const Component = customLazy(() => mockImport('/failing-component'), {
-        onError: componentOnError,
+      const Component = lazy(() => mockImport('/failing-component'), {
+        onError: individualOnError,
       })
       render(
         <ErrorBoundary fallback={<div>error</div>}>
@@ -291,8 +291,30 @@ describe('lazy', () => {
       await act(() => vi.advanceTimersByTimeAsync(200))
 
       expect(factoryOnError).toHaveBeenCalledTimes(1)
-      expect(componentOnError).toHaveBeenCalledTimes(1)
-      expect(callOrder).toEqual(['component', 'factory'])
+      expect(individualOnError).toHaveBeenCalledTimes(1)
+      expect(callOrder).toEqual(['individual', 'factory'])
+    })
+
+    it('should execute default onSuccess first, then component onSuccess', async () => {
+      const mockImport = importCache.createImport({ failureCount: 0, failureDelay: 100, successDelay: 100 })
+      const callOrder: string[] = []
+      const factoryOnSuccess = vi.fn().mockImplementation(() => {
+        callOrder.push('factory')
+      })
+      const individualOnSuccess = vi.fn().mockImplementation(() => {
+        callOrder.push('individual')
+      })
+      const lazy = createLazy({ onSuccess: factoryOnSuccess })
+
+      const Component = lazy(() => mockImport('/test-component'), {
+        onSuccess: individualOnSuccess,
+      })
+      render(<Component />)
+      await act(() => vi.advanceTimersByTimeAsync(200))
+
+      expect(factoryOnSuccess).toHaveBeenCalledTimes(1)
+      expect(individualOnSuccess).toHaveBeenCalledTimes(1)
+      expect(callOrder).toEqual(['individual', 'factory'])
     })
   })
 
@@ -302,10 +324,10 @@ describe('lazy', () => {
     })
 
     it('should reload importing the component up to 1 time if it fails to load', async () => {
-      const customLazy = lazy.create(reloadOnError({ storage, reload: mockReload }))
+      const lazy = createLazy(reloadOnError({ storage, reload: mockReload }))
       const mockImport = importCache.createImport({ failureCount: 1, failureDelay: 0, successDelay: 100 })
 
-      const Component1 = customLazy(() => mockImport('/test-component'))
+      const Component1 = lazy(() => mockImport('/test-component'))
       render(
         <ErrorBoundary fallback={<div>error</div>}>
           <Component1 />
@@ -315,7 +337,7 @@ describe('lazy', () => {
       await act(() => vi.advanceTimersByTimeAsync(100))
       expect(mockReload).toHaveBeenCalledTimes(1)
 
-      const Component2 = customLazy(() => mockImport('/test-component'))
+      const Component2 = lazy(() => mockImport('/test-component'))
       render(
         <ErrorBoundary fallback={<div>error</div>}>
           <Component2 />
@@ -327,9 +349,9 @@ describe('lazy', () => {
     })
 
     it('should reload the page when component fails to load', async () => {
-      const customLazy = lazy.create(reloadOnError({ storage, reload: mockReload }))
+      const lazy = createLazy(reloadOnError({ storage, reload: mockReload }))
       const mockImport = importCache.createImport({ failureCount: 1, failureDelay: 0, successDelay: 0 })
-      const Component1 = customLazy(() => mockImport('/test-component'))
+      const Component1 = lazy(() => mockImport('/test-component'))
       render(
         <ErrorBoundary fallback={<div>error</div>}>
           <Component1 />
@@ -339,7 +361,7 @@ describe('lazy', () => {
       await act(() => vi.advanceTimersByTimeAsync(100))
       expect(mockReload).toHaveBeenCalledTimes(1)
 
-      const Component2 = customLazy(() => mockImport('/test-component'))
+      const Component2 = lazy(() => mockImport('/test-component'))
       render(
         <ErrorBoundary fallback={<div>error</div>}>
           <Component2 />
@@ -352,10 +374,10 @@ describe('lazy', () => {
 
     it('should not reload if reload is false', () => {
       const mockImport = importCache.createImport({ failureCount: 1, failureDelay: 100, successDelay: 100 })
-      const customLazy = lazy.create(reloadOnError({ storage, reload: mockReload, retry: false }))
+      const lazy = createLazy(reloadOnError({ storage, reload: mockReload, retry: false }))
 
-      const Component = customLazy(() => mockImport('/test-component'))
-      const Component2 = customLazy(() => mockImport('/test-component'))
+      const Component = lazy(() => mockImport('/test-component'))
+      const Component2 = lazy(() => mockImport('/test-component'))
 
       expect(() => render(<Component />)).not.toThrow()
       expect(() => render(<Component2 />)).not.toThrow()
@@ -367,10 +389,10 @@ describe('lazy', () => {
     it('should reload infinitely if reload is true', async () => {
       // Default reload count is 3, so 10 times reload might enough to test infinite reload
       const mockImport = importCache.createImport({ failureCount: 10, failureDelay: 0, successDelay: 100 })
-      const customLazy = lazy.create(reloadOnError({ storage, retryDelay: 100, reload: mockReload, retry: true }))
+      const lazy = createLazy(reloadOnError({ storage, retryDelay: 100, reload: mockReload, retry: true }))
 
       for (let i = 0; i < 10; i++) {
-        const Component = customLazy(() => mockImport('/infinite-test'))
+        const Component = lazy(() => mockImport('/infinite-test'))
 
         render(
           <ErrorBoundary fallback={<div>error</div>}>
@@ -388,9 +410,9 @@ describe('lazy', () => {
     })
 
     it('should reload the component with a delay', async () => {
-      const customLazy = lazy.create(reloadOnError({ storage, retryDelay: 100, reload: mockReload }))
+      const lazy = createLazy(reloadOnError({ storage, retryDelay: 100, reload: mockReload }))
       const mockImport = importCache.createImport({ failureCount: 1, failureDelay: 100, successDelay: 0 })
-      const Component = customLazy(() => mockImport('/test-component'))
+      const Component = lazy(() => mockImport('/test-component'))
 
       render(
         <ErrorBoundary fallback={<div>error</div>}>
@@ -405,14 +427,14 @@ describe('lazy', () => {
 
     describe('reloadOnError with additional callbacks', () => {
       it('should not destroy reloadOnError when adding onSuccess/onError to component options', async () => {
-        const customLazy = lazy.create(reloadOnError({ storage, reload: mockReload }))
+        const lazy = createLazy(reloadOnError({ storage, reload: mockReload }))
         const mockImport = importCache.createImport({ failureCount: 1, failureDelay: 0, successDelay: 0 })
-        const componentOnSuccess = vi.fn()
-        const componentOnError = vi.fn()
+        const individualOnSuccess = vi.fn()
+        const individualOnError = vi.fn()
 
-        const Component = customLazy(() => mockImport('/test-component'), {
-          onSuccess: componentOnSuccess,
-          onError: componentOnError,
+        const Component = lazy(() => mockImport('/test-component'), {
+          onSuccess: individualOnSuccess,
+          onError: individualOnError,
         })
 
         render(
@@ -426,22 +448,22 @@ describe('lazy', () => {
         expect(mockReload).toHaveBeenCalledTimes(1)
 
         // Component's onError should also be called
-        expect(componentOnError).toHaveBeenCalledTimes(1)
-        expect(componentOnError).toHaveBeenCalledWith({ error: expect.any(Error), load: expect.any(Function) })
+        expect(individualOnError).toHaveBeenCalledTimes(1)
+        expect(individualOnError).toHaveBeenCalledWith({ error: expect.any(Error), load: expect.any(Function) })
       })
 
       it('should not destroy reloadOnError when using it as component options with onSuccess/onError', async () => {
         const mockImport = importCache.createImport({ failureCount: 1, failureDelay: 0, successDelay: 100 })
-        const componentOnSuccess = vi.fn()
-        const componentOnError = vi.fn()
+        const individualOnSuccess = vi.fn()
+        const individualOnError = vi.fn()
 
         const Component = lazy(
           () => mockImport('/test-component'),
           reloadOnError({
             storage,
             reload: mockReload,
-            onSuccess: componentOnSuccess,
-            onError: componentOnError,
+            onSuccess: individualOnSuccess,
+            onError: individualOnError,
           })
         )
 
@@ -457,16 +479,16 @@ describe('lazy', () => {
         // reloadOnError should work
         expect(mockReload).toHaveBeenCalledTimes(1)
         // Component's onError should also be called
-        expect(componentOnError).toHaveBeenCalledTimes(1)
-        expect(componentOnError).toHaveBeenCalledWith({ error: expect.any(Error), load: expect.any(Function) })
+        expect(individualOnError).toHaveBeenCalledTimes(1)
+        expect(individualOnError).toHaveBeenCalledWith({ error: expect.any(Error), load: expect.any(Function) })
       })
 
       it('should not destroy reloadOnError when creating lazy with reloadOnError containing onSuccess/onError', async () => {
         const factoryOnSuccess = vi.fn()
         const factoryOnError = vi.fn()
-        const componentOnSuccess = vi.fn()
-        const componentOnError = vi.fn()
-        const customLazy = lazy.create(
+        const individualOnSuccess = vi.fn()
+        const individualOnError = vi.fn()
+        const lazy = createLazy(
           reloadOnError({
             storage,
             reload: mockReload,
@@ -476,9 +498,9 @@ describe('lazy', () => {
         )
         const mockImport = importCache.createImport({ failureCount: 1, failureDelay: 0, successDelay: 100 })
 
-        const Component = customLazy(() => mockImport('/test-component'), {
-          onSuccess: componentOnSuccess,
-          onError: componentOnError,
+        const Component = lazy(() => mockImport('/test-component'), {
+          onSuccess: individualOnSuccess,
+          onError: individualOnError,
         })
 
         render(
@@ -495,14 +517,14 @@ describe('lazy', () => {
         // Factory's onError should also be called
         expect(factoryOnError).toHaveBeenCalledTimes(1)
         expect(factoryOnError).toHaveBeenCalledWith({ error: expect.any(Error), load: expect.any(Function) })
-        expect(componentOnError).toHaveBeenCalledTimes(1)
-        expect(componentOnError).toHaveBeenCalledWith({ error: expect.any(Error), load: expect.any(Function) })
+        expect(individualOnError).toHaveBeenCalledTimes(1)
+        expect(individualOnError).toHaveBeenCalledWith({ error: expect.any(Error), load: expect.any(Function) })
         expect(factoryOnSuccess).toHaveBeenCalledTimes(0)
-        expect(componentOnSuccess).toHaveBeenCalledTimes(0)
+        expect(individualOnSuccess).toHaveBeenCalledTimes(0)
 
-        const Component2 = customLazy(() => mockImport('/test-component'), {
-          onSuccess: componentOnSuccess,
-          onError: componentOnError,
+        const Component2 = lazy(() => mockImport('/test-component'), {
+          onSuccess: individualOnSuccess,
+          onError: individualOnError,
         })
 
         render(
@@ -515,9 +537,9 @@ describe('lazy', () => {
         await act(() => vi.advanceTimersByTimeAsync(100))
 
         expect(factoryOnError).toHaveBeenCalledTimes(1)
-        expect(componentOnError).toHaveBeenCalledTimes(1)
+        expect(individualOnError).toHaveBeenCalledTimes(1)
         expect(factoryOnSuccess).toHaveBeenCalledWith({ load: expect.any(Function) })
-        expect(componentOnSuccess).toHaveBeenCalledWith({ load: expect.any(Function) })
+        expect(individualOnSuccess).toHaveBeenCalledWith({ load: expect.any(Function) })
 
         expect(screen.getByText('Component from /test-component')).toBeInTheDocument()
       })
