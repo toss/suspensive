@@ -22,7 +22,6 @@
     "ci:type": {
       "dependsOn": ["prepack"]
     },
-
     "clean": {
       "cache": false
     },
