@@ -1,5 +1,17 @@
 # @suspensive/react
 
+## 3.5.0
+
+### Minor Changes
+
+- [#1684](https://github.com/toss/suspensive/pull/1684) [`dc4f868`](https://github.com/toss/suspensive/commit/dc4f86853f3391047a7772214e50507ad4d3ffed) Thanks [@manudeli](https://github.com/manudeli)! - feat(react): add `createLazy`
+
+## 3.4.0
+
+### Minor Changes
+
+- [#1651](https://github.com/toss/suspensive/pull/1651) [`1b9fd97`](https://github.com/toss/suspensive/commit/1b9fd9716699d2721926545bd03133eedd4c4812) Thanks [@marshallku](https://github.com/marshallku)! - feat(react): add `lazy`, `reloadOnError`
+
 ## 3.3.2
 
 ### Patch Changes

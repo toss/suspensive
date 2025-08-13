@@ -669,10 +669,10 @@ importers:
         specifier: ^13.0.0
         version: 13.0.0(commander@13.1.0)
       '@suspensive/react-query-4':
-        specifier: workspace:^3.3.2
+        specifier: workspace:^3.5.0
         version: link:../react-query-4
       '@suspensive/react-query-5':
-        specifier: workspace:^3.3.2
+        specifier: workspace:^3.5.0
         version: link:../react-query-5
       '@tanstack/react-query':
         specifier: ^4.40.0 || ^5
@@ -3990,6 +3990,7 @@ packages:
 
   '@zod/mini@4.0.0-beta.20250420T053007':
     resolution: {integrity: sha512-PnQwkzlUbUj6A2GKbqhskH/v58m2WfmP+dbXevzzMdvVA7H/KNao37YWhHOTjBzf+xykCXNoLwfwnPMIsU0hOA==}
+    deprecated: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
 
   '@zxing/text-encoding@0.9.0':
     resolution: {integrity: sha512-U/4aVJ2mxI0aDNI8Uq0wEhMgY+u4CNtEb0om3+y3+niDAsoTCOB33UF0sxpzqzdqXLqmvc+vZyAt4O8pPdfkwA==}
@@ -9404,6 +9405,7 @@ packages:
   source-map@0.8.0-beta.0:
     resolution: {integrity: sha512-2ymg6oRBpebeZi9UUNsgQ89bhx01TcTkmNTGnNO88imTmbSgy4nfujrgVEFKWpMTEGA11EDkTt7mqObTPdigIA==}
     engines: {node: '>= 8'}
+    deprecated: The work that was done in this beta branch won't be included in future versions
 
   space-separated-tokens@2.0.2:
     resolution: {integrity: sha512-PEGlAwrG8yXGXRjW32fGbg66JAlOAwbObuqVoJpv/mRgoWDQfgH1wDPvtzWyUSNAXBGSk8h755YDbbcEy3SH2Q==}
