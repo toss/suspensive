@@ -1,12 +1,12 @@
 ---
-'@suspensive/codemods': patch
-'@suspensive/jotai': patch
-'@suspensive/react-dom': patch
-'@suspensive/react-native': patch
-'@suspensive/react-query-4': patch
-'@suspensive/react-query-5': patch
-'@suspensive/react-query': patch
-'@suspensive/react': patch
+'@suspensive/codemods': minor
+'@suspensive/jotai': minor
+'@suspensive/react-dom': minor
+'@suspensive/react-native': minor
+'@suspensive/react-query-4': minor
+'@suspensive/react-query-5': minor
+'@suspensive/react-query': minor
+'@suspensive/react': minor
 ---
 
 chore(\*): migrate tsdown
