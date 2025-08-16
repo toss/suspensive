@@ -1,4 +1,4 @@
 import { defineConfig } from 'tsdown'
-import { options } from './src/index.js'
+import { options } from './src/index.ts'
 
 export default defineConfig(options)
