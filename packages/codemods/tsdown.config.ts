@@ -1,5 +1,5 @@
-import { scriptOptions } from '@suspensive/tsup'
-import { defineConfig } from 'tsup'
+import { scriptOptions } from '@suspensive/tsdown'
+import { defineConfig } from 'tsdown'
 
 export default defineConfig([
   {
