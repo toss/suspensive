@@ -1,0 +1,183 @@
+import { Callout } from '@/components'
+
+# lazy
+
+<Callout type='experimental'>
+
+`lazy`는 실험 기능이므로 이 인터페이스는 변경될 수 있습니다.
+
+</Callout>
+
+`lazy` 함수는 React의 `lazy` 함수를 래핑하여 컴포넌트 로딩 성공과 실패에 대한 콜백을 제공합니다. 컴포넌트가 성공적으로 로드되거나 실패할 때 사용자 정의 로직을 실행할 수 있어 더 나은 사용자 경험과 디버깅을 제공합니다.
+
+### 컴포넌트 사전 로딩
+
+기본적으로 `lazy`는 React의 `lazy`와 동일하게 작동하지만, 추가적인 `load` 메서드를 제공합니다.
+
+```tsx /Component.load/
+import { lazy, Suspense } from '@suspensive/react'
+
+const Component = lazy(() => import('./Component'))
+
+function PreloadExample() {
+  return (
+    <div>
+      <button onClick={() => Component.load()}>컴포넌트 사전 로딩</button>
+      <Suspense fallback={<div>로딩 중...</div>}>
+        <Component />
+      </Suspense>
+    </div>
+  )
+}
+```
+
+### 성공/실패 콜백 사용
+
+```tsx /onSuccess/ /onError/
+import { lazy, Suspense, ErrorBoundary } from '@suspensive/react'
+
+const UserProfile = lazy(() => import('./UserProfile'), {
+  onSuccess: () => console.log('컴포넌트가 성공적으로 로드되었습니다'),
+  onError: ({ error }) => console.error('로딩 실패:', error),
+})
+
+function App() {
+  return (
+    <ErrorBoundary fallback={<div>문제가 발생했습니다</div>}>
+      <Suspense fallback={<div>로딩 중...</div>}>
+        <UserProfile />
+      </Suspense>
+    </ErrorBoundary>
+  )
+}
+```
+
+## createLazy
+
+커스텀 기본 옵션이 있는 lazy 함수를 생성합니다.
+
+```tsx /createLazy/
+import { createLazy } from '@suspensive/react'
+
+const lazy = createLazy({
+  onSuccess: () => console.log('컴포넌트가 성공적으로 로드되었습니다'),
+  onError: ({ error }) => console.error('컴포넌트 로딩 실패:', error),
+})
+
+const Component = lazy(() => import('./Component'))
+```
+
+### 콜백 실행 순서
+
+- **onSuccess**: 개별 콜백 → 기본 콜백
+- **onError**: 개별 콜백 → 기본 콜백
+
+```tsx /onSuccess,onError/
+import { createLazy } from '@suspensive/react'
+
+const lazy = createLazy({
+  onSuccess: () => console.log('2. 기본 onSuccess'),
+  onError: ({ error }) => console.log('2. 기본 onError:', error),
+})
+
+const Component = lazy(() => import('./Component'), {
+  onSuccess: () => console.log('1. 개별 onSuccess'),
+  onError: ({ error }) => console.log('1. 개별 onError:', error),
+})
+
+// 컴포넌트 로드 성공 시 실행 순서:
+// 1. 개별 onSuccess
+// 2. 기본 onSuccess
+
+// 컴포넌트 로드 실패 시 실행 순서:
+// 1. 개별 onError
+// 2. 기본 onError
+```
+
+## reloadOnError
+
+`reloadOnError` 옵션을 사용하면 컴포넌트 로딩이 실패할 때 자동으로 페이지를 새로고침할 수 있습니다. 이는 특히 배포 환경에서 버전 차이(version skew) 문제를 처리하는 데 유용합니다.
+
+**배경:** 버전 차이 문제를 해결하는 가장 좋은 방법은 인프라 레벨에서 처리하는 것입니다 (예: 적절한 배포 전략, CDN 캐시 무효화). 하지만 이러한 방법이 불가능하거나 실용적이지 않은 경우가 있습니다. `reloadOnError`는 이러한 상황을 위한 클라이언트 사이드 대안 솔루션입니다.
+
+### 버전 차이(version skew) 문제 해결
+
+```tsx /reloadOnError/
+import { lazy, reloadOnError } from '@suspensive/react'
+
+const MAX_RELOADS = 3
+
+const VersionSkewSafeComponent = lazy(
+  () => import('./VersionSkewSafeComponent'),
+  reloadOnError({
+    retry: MAX_RELOADS,
+    retryDelay: 1000,
+  })
+)
+```
+
+<Callout type="info">
+
+**reloadOnError 없이 구현했다면:**
+
+```diff
++ import { lazy, reloadOnError } from '@suspensive/react'
+- import { createLazy } from '@suspensive/react'
+
++ const Component = lazy(() => import('./Component'), reloadOnError({
++   retry: 3,
++   retryDelay: 1000,
++ }))
+- const Component = lazy(() => import('./Component'), {
+-   onError: ({ error, load }) => {
+-     const reloadKey = 'component_reload_count'
+-     const currentCount = parseInt(sessionStorage.getItem(reloadKey) || '0')
+-     const maxRetries = 3
+-
+-     if (currentCount < maxRetries && error.message?.includes('Loading chunk')) {
+-       const newCount = currentCount + 1
+-       sessionStorage.setItem(reloadKey, newCount.toString())
+-
+-       setTimeout(() => {
+-         window.location.reload()
+-       }, 1000)
+-     }
+-   },
+-   onSuccess: ({ load }) => {
+-     // 성공 시 재시도 횟수 초기화
+-     sessionStorage.removeItem('component_reload_count')
+-   },
+- })
+
+const Component = lazy(() => import('./Component'))
+```
+
+</Callout>
+
+### 사용자 정의 스토리지 및 새로고침 함수
+
+```tsx /storage:/ /reload:/
+import { createLazy, reloadOnError } from '@suspensive/react'
+
+const customStorage = {
+  getItem: (key) => localStorage.getItem(key),
+  setItem: (key, value) => localStorage.setItem(key, value),
+  removeItem: (key) => localStorage.removeItem(key),
+}
+
+const customReload = () => {
+  // 사용자 정의 새로고침 로직
+  window.location.href = window.location.href
+}
+
+const lazy = createLazy(
+  reloadOnError({
+    retry: 5,
+    retryDelay: 2000,
+    storage: customStorage,
+    reload: customReload,
+  })
+)
+
+const Component = lazy(() => import('./Component'))
+```
