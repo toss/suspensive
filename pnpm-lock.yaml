@@ -669,10 +669,10 @@ importers:
         specifier: ^13.0.0
         version: 13.0.0(commander@13.1.0)
       '@suspensive/react-query-4':
-        specifier: workspace:^3.5.0
+        specifier: workspace:^3.6.0
         version: link:../react-query-4
       '@suspensive/react-query-5':
-        specifier: workspace:^3.5.0
+        specifier: workspace:^3.6.0
         version: link:../react-query-5
       '@tanstack/react-query':
         specifier: ^4.40.0 || ^5
@@ -2210,7 +2210,7 @@ packages:
 
   '@expo/bunyan@4.0.1':
     resolution: {integrity: sha512-+Lla7nYSiHZirgK+U/uYzsLv/X+HaJienbD5AKX1UQZHYfWaP+9uuQluRB4GrEVWF0GZ7vEVp/jzaOT9k/SQlg==}
-    engines: {'0': node >=0.10.0}
+    engines: {node: '>=0.10.0'}
 
   '@expo/cli@0.22.8':
     resolution: {integrity: sha512-MpHrfPKcHL+b1wwx+WiniEL5n33tl964tN8EW1K4okW3/tAPgbu3R00NZs6OExH9PZGQP8OKhCXhZttbK2jUnA==}
