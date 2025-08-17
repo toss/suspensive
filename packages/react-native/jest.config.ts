@@ -7,4 +7,5 @@ module.exports = {
   },
   transformIgnorePatterns: ['../../node_modules/(?!@react-native|react-native)'],
   setupFilesAfterEnv: ['./jest.setup.ts'],
+  collectCoverage: true,
 } satisfies Config
