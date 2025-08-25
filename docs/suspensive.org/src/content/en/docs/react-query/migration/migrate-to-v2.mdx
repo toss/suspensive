@@ -25,9 +25,9 @@ import { PostList } from './components/PostList'
 const PostsPage = ({ userId }) => (
   <ErrorBoundary fallback={({ error }) => <>{error.message}</>}>
     <Suspense fallback={'loading...'}>
-      <AuthorInfo userId={userId} />{' '}
+      <AuthorInfo userId={userId} />
       {/* It is difficult to predict whether a suspension will occur internally. */}
-      <PostList userId={userId} />{' '}
+      <PostList userId={userId} />
       {/* It is difficult to predict whether a suspension will occur internally. */}
     </Suspense>
   </ErrorBoundary>
@@ -82,7 +82,7 @@ Therefore, we provide these components to clearly express what causes suspension
 ```jsx
 import { SuspenseQuery } from '@suspensive/react-query'
 import { Suspense, ErrorBoundary } from '@suspensive/react'
-import { PostItem, AuthorProfile } from '~/components'
+import { PostListItem, AuthorProfile } from '~/components'
 
 const PostsPage = ({ authorId }) => (
   <ErrorBoundary fallback={({ error }) => <>{error.message}</>}>
