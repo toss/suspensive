@@ -177,13 +177,13 @@ export type User = {
       lat: string
       lng: string
     }
-    phone: string
-    website: string
-    company: {
-      name: string
-      catchPhrase: string
-      bs: string
-    }
+  }
+  phone: string
+  website: string
+  company: {
+    name: string
+    catchPhrase: string
+    bs: string
   }
 }
 
@@ -218,9 +218,9 @@ import { PostList } from './components/PostList'
 const PostsPage = ({ userId }) => (
   <ErrorBoundary fallback={({ error }) => <>{error.message}</>}>
     <Suspense fallback={'loading...'}>
-      <UserInfo userId={userId} />{' '}
+      <UserInfo userId={userId} />
       {/* It is difficult to predict whether a suspension will occur internally. */}
-      <PostList userId={userId} />{' '}
+      <PostList userId={userId} />
       {/* It is difficult to predict whether a suspension will occur internally. */}
     </Suspense>
   </ErrorBoundary>
