@@ -29,7 +29,7 @@ const PostsPage = () => {
             >
               {commentMutation => (
                 <div>
-                  {postMutation.isLoading ? <Spinner/> : null}
+                  {postMutation.isPending ? <Spinner/> : null}
                   {comment.content}
                   <textarea onChange={e => commentMutation.mutateAsync({ content: e.target.value })} />
                 </div>
@@ -59,10 +59,10 @@ const PostsPage = () => {
 // PostToUseMutation (불필요한 이름, useMutation만 사용하도록 변경 필요)
 const PostToUseMutation = ({ post }: { post: Post }) => { // props는 useMutation을 사용하기 위해 전달되어야 합니다.
   const postMutation = useMutation({
-    mutationFn: ({ content }: { content: string }) => api.editPost({ postId: post.id }),
+    mutationFn: ({ content }: { content: string }) => api.editPost({ postId: post.id, content }),
   });
 
-  if (postMutation.isLoading) {
+  if (postMutation.isPending) {
     return <Spinner />;
   }
 
@@ -80,7 +80,7 @@ const PostToUseMutation = ({ post }: { post: Post }) => { // props는 useMutatio
 // CommentToUseMutation (불필요한 이름, useMutation만 사용하도록 변경 필요)
 const CommentToUseMutation = ({ post, comment }: { post: Post, comment: Comment }) => { // props는 useMutation을 사용하기 위해 전달되어야 합니다.
   const commentMutation = useMutation({
-    mutationFn: ({ content }: { content: string }) => api.editComment({ postId: post.id, commentId: comment.id, comment }),
+    mutationFn: ({ content }: { content: string }) => api.editComment({ postId: post.id, commentId: comment.id, content }),
   });
 
   return (
