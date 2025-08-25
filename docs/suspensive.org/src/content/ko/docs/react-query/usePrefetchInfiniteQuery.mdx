@@ -24,7 +24,7 @@ const PostsPage = ({ postId }) => {
 }
 
 export const Posts = () => {
-  const postsInifiniteQuery = useSuspenseInfiniteQuery({
+  const postsInfiniteQuery = useSuspenseInfiniteQuery({
     queryKey: ['posts'],
     queryFn: () => getPosts(),
   })
