@@ -52,7 +52,6 @@ const Example = () => (
 
 ```tsx
 // payment/page.tsx
-import { Atom } from '@suspensive/jotai'
 import { Suspense } from '@suspensive/react'
 import { UserInfo, ShoppingCart } from '~/components'
 
@@ -69,11 +68,10 @@ const PaymentPage = () => (
 ```tsx
 // payment/components/UserInfo.tsx
 import { useAtomValue } from '@suspensive/jotai'
-import { Suspense } from '@suspensive/react'
 import { UserAddress } from '~/components'
 import { userAsyncAtom } from '~/atoms'
 
-// 이 컴포넌트를 사용하는 입장에서 UserInfo라는 이름만으로 내부적으로 어떤 Atom을 사용하고, Suspense를 발생할지 예상하기 어렵습니다.
+// 이 컴포넌트를 사용하는 입장에서 UserInfo라는 이름만으로 내부적으로 어떤 Atom을 사용하고, Suspense가 발생할지 예상하기 어렵습니다.
 const UserInfo = () => {
   const data = useAtomValue(userAsyncAtom)
 
@@ -83,11 +81,11 @@ const UserInfo = () => {
 
 ```tsx
 // payment/components/ShoppingCart.tsx
-import { Atom } from '@suspensive/jotai'
-import { Suspense } from '@suspensive/react'
+import { useAtom } from 'jotai'
+import { ShoppingItem } from '~/components'
 import { shoppingCartAtom } from '~/atoms'
 
-// 이 컴포넌트를 사용하는 입장에서 ShoppingCart라는 이름만으로 내부적으로 어떤 Atom을 사용하고, Suspense를 발생할지 예상하기 어렵습니다.
+// 이 컴포넌트를 사용하는 입장에서 ShoppingCart라는 이름만으로 내부적으로 어떤 Atom을 사용하고, Suspense가 발생할지 예상하기 어렵습니다.
 const ShoppingCart = () => {
   const [data] = useAtom(shoppingCartAtom)
 
