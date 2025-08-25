@@ -56,6 +56,7 @@ export const Example = () => {
     <>
       {Array.from({ length: 100 }).map((_, index) => (
         <InView
+          key={index}
           onInView={() => setInViewIndexes((prev) => [...prev, index])}
           onInViewEnd={() =>
             setInViewIndexes((prev) => prev.filter((i) => i !== index))
@@ -63,7 +64,6 @@ export const Example = () => {
         >
           {({ ref, isInView }) => (
             <div
-              key={index}
               ref={ref}
               style={{
                 backgroundColor: isInView ? 'lightblue' : 'orange',
@@ -98,10 +98,9 @@ import { InView } from '@suspensive/react-dom'
 
 export const Example = () =>
   Array.from({ length: 100 }).map((_, index) => (
-    <InView threshold={0.5}>
+    <InView key={index} threshold={0.5}>
       {({ ref, isInView }) => (
         <div
-          key={index}
           ref={ref}
           style={{
             backgroundColor: isInView ? 'lightblue' : 'orange',
@@ -130,10 +129,9 @@ import { InView } from '@suspensive/react-dom'
 
 export const Example = () =>
   Array.from({ length: 100 }).map((_, index) => (
-    <InView triggerOnce>
+    <InView key={index} triggerOnce>
       {({ ref, isInView }) => (
         <div
-          key={index}
           ref={ref}
           style={{
             backgroundColor: isInView ? 'lightblue' : 'orange',
@@ -167,10 +165,9 @@ export const Example = () => (
       <div>
         <h1>skip: {isDelayed ? 'true' : 'false'}</h1>
         {Array.from({ length: 100 }).map((_, index) => (
-          <InView skip={isDelayed}>
+          <InView key={index} skip={isDelayed}>
             {({ ref, isInView }) => (
               <div
-                key={index}
                 ref={ref}
                 style={{
                   backgroundColor: isInView ? 'lightblue' : 'orange',
@@ -203,10 +200,9 @@ import { InView } from '@suspensive/react-dom'
 
 export const Example = () =>
   Array.from({ length: 100 }).map((_, index) => (
-    <InView delay={500}>
+    <InView key={index} delay={500}>
       {({ ref, isInView }) => (
         <div
-          key={index}
           ref={ref}
           style={{
             backgroundColor: isInView ? 'lightblue' : 'orange',
