@@ -29,7 +29,7 @@ const PostsPage = () => {
             >
               {commentMutation => (
                 <div>
-                  {postMutation.isLoading ? <Spinner/> : null}
+                  {postMutation.isPending ? <Spinner/> : null}
                   {comment.content}
                   <textarea onChange={e => commentMutation.mutateAsync({ content: e.target.value })} />
                 </div>
@@ -62,7 +62,7 @@ const PostToUseMutation = ({ post }: { post: Post }) => { // Props need to be pa
     mutationFn: ({ content }: { content: string }) => api.editPost({ postId: post.id, content }),
   });
 
-  if (postMutation.isLoading) {
+  if (postMutation.isPending) {
     return <Spinner />;
   }
 
