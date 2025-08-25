@@ -6,7 +6,7 @@
 
 A new feature that wraps a component in `<Suspense/>`, `<ErrorBoundary/>`, and `<ErrorBoundaryGroup/>` all at once.
 
-For `<Suspense/>`, `<ErrorBoundary/>`, `<ErrorBoundaryGroup/>`, etc. many people use hoc to wrap these around a component. This is because these components require some processing on their children. So, in order to not unnecessarily divide components and create depth, we use the hocs for each interface, withErrorBoundary, withErrorBoundaryGroup, and withSuspense, but as we often use each hoc in combination, we also need to improve readability. To improve this, we decided to provide wrap.
+For `<Suspense/>`, `<ErrorBoundary/>`, `<ErrorBoundaryGroup/>`, etc. many people use HOC to wrap these around a component. This is because these components require some processing on their children. So, in order to not unnecessarily divide components and create depth, we use the HOCs for each interface, withErrorBoundary, withErrorBoundaryGroup, and withSuspense, but as we often use each HOC in combination, we also need to improve readability. To improve this, we decided to provide wrap.
 
 ```jsx
 import { wrap } from '@suspensive/react'
@@ -136,26 +136,26 @@ We removed `<AsyncBoundary/>` in v2. [#295](https://github.com/toss/suspensive/i
 
 Because `<AsyncBoundary/>` uses `<ErrorBoundary/>` internally, it can be used with `useErrorBoundary` and is affected by `<ErrorBoundaryGroup/>`. We decided to remove this component from v2, believing that it would be better for maintainability and interface unification for library users.
 
-`<AsyncBoundary/>`'s feature is just wrap two component(`<Suspense/>`, `<Errorboundary/>`) by one.
+`<AsyncBoundary/>`'s feature is just wrap two component(`<Suspense/>`, `<ErrorBoundary/>`) by one.
 So, you can split by two like this.
 
 ```diff
-+ import { Suspense, Errorboundary } from '@suspensive/react'
++ import { Suspense, ErrorBoundary } from '@suspensive/react'
 - import { AsyncBoundary } from '@suspensive/react'
 
-+ <Errorboundary fallback={<Error />} onError={onError} onReset={onReset}>
++ <ErrorBoundary fallback={<Error />} onError={onError} onReset={onReset}>
 +   <Suspense fallback={<Loading />}>
 +     <Children />
 +   </Suspense>
-+ </Errorboundary>
++ </ErrorBoundary>
 - <AsyncBoundary pendingFallback={<Loading />} rejectedFallback={<Error />} onError={onError} onReset={onReset}>
 -   <Children />
 - </AsyncBoundary>
 ```
 
-### Removed `withSuspense`, `withDelay`, `withErrorboundary`, `withErrorBoundaryGroup`
+### Removed `withSuspense`, `withDelay`, `withErrorBoundary`, `withErrorBoundaryGroup`
 
-These all hocs can be replaced beautifully by new hoc builder [`wrap`](/docs/react/wrap) in v2.
+These all HOCs can be replaced beautifully by new HOC builder [`wrap`](/docs/react/wrap) in v2.
 
 ```diff
 + import { wrap } from '@suspensive/react'
