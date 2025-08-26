@@ -46,7 +46,7 @@ export const HomePage = ({
       >
         <div className="flex flex-col items-center justify-center gap-8 text-center">
           <div className="flex flex-col items-center">
-            <div className="width-[360px] height-[360px] mt-24 -mb-6 hidden pt-18 pb-12 md:block">
+            <div className="width-[360px] height-[360px] mx-6 mt-24 -mb-6 hidden pt-18 pb-12 md:block">
               <Image
                 width={330 * 2.4}
                 height={43.7 * 2.4}
@@ -57,8 +57,8 @@ export const HomePage = ({
             </div>
             <div className="width-[210px] height-[210px] mt-24 -mb-6 py-6 md:hidden md:h-auto md:w-auto">
               <Image
-                width={330 * 1}
-                height={43.7 * 1}
+                width={330 * 1.2}
+                height={43.7 * 1.2}
                 src="/img/logo-suspensive-text-progressive-blur.svg"
                 unoptimized
                 alt="Suspensive with star"
