@@ -8,9 +8,9 @@ export const Logo = () => {
     <motion.div>
       <div className="relative flex items-center gap-1">
         <Image
-          width={160}
-          height={10}
-          src="/img/logo-suspensive-text-progressive-blur.svg"
+          width={36}
+          height={36}
+          src="/img/logo-suspensive-progressive-blur.svg"
           unoptimized
           alt="suspensive logo"
         />

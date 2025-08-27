@@ -3,15 +3,14 @@
 import { ClientOnly, Delay } from '@suspensive/react'
 import { ArrowRight } from 'lucide-react'
 import { motion } from 'motion/react'
-import Image from 'next/image'
 import Link from 'next/link'
 import { type ReactNode, useEffect, useRef } from 'react'
 import { BorderTrail } from './BorderTrail'
 import { GlowEffect } from './GlowEffect'
+import { LogoImage } from './logo'
 import { Magnetic } from './Magnetic'
 import { NpmInstallCopyButton } from './NpmInstallCopyButton'
 import { Spotlight } from './Spotlight'
-import { TextShimmer } from './TextShimmer'
 import { Tilt } from './Tilt'
 
 const CodeBlockClassName = 'nextra-code'
@@ -25,12 +24,10 @@ const backtickToCodeBlock = (text: string) =>
 const formatCodeBlocks = (desc: string) => backtickToCodeBlock(escapeHtml(desc))
 
 export const HomePage = ({
-  title,
   buttonText,
   items,
   children,
 }: {
-  title: string
   buttonText: string
   items: { title: string; desc: string }[]
   children?: ReactNode
@@ -49,30 +46,11 @@ export const HomePage = ({
       >
         <div className="flex flex-col items-center justify-center gap-8 text-center">
           <div className="flex flex-col items-center">
-            <div className="width-[360px] height-[360px] -mb-4 hidden pt-18 pb-12 md:block">
-              <Image
-                width={330}
-                height={330}
-                src="/img/logo-suspensive-progressive-blur.svg"
-                unoptimized
-                alt="Suspensive with star"
-              />
+            <div className="width-[360px] height-[360px] mx-6 mt-24 -mb-6 hidden pt-18 pb-12 md:block">
+              <LogoImage size={2.4} />
             </div>
-            <div className="width-[210px] height-[210px] -mb-4 py-6 md:hidden md:h-auto md:w-auto">
-              <Image
-                width={200}
-                height={200}
-                src="/img/logo-suspensive-progressive-blur.svg"
-                unoptimized
-                alt="Suspensive with star"
-              />
-            </div>
-            <div className="flex flex-col items-center gap-4">
-              <div className="text-4xl leading-tight font-bold break-keep text-transparent md:text-6xl">
-                <TextShimmer spread={8} duration={3}>
-                  {title}
-                </TextShimmer>
-              </div>
+            <div className="width-[210px] height-[210px] mt-24 -mb-6 py-6 md:hidden md:h-auto md:w-auto">
+              <LogoImage size={1.2} />
             </div>
             <NpmInstallCopyButton />
           </div>
@@ -131,7 +109,7 @@ export const HomePage = ({
           </Delay>
         </div>
 
-        <div className="h-14" />
+        <div className="h-24 md:h-40" />
         <div className="container mx-auto flex flex-col items-start justify-between gap-8 px-4 md:flex-row">
           {items.map(({ title, desc }, index) => (
             <motion.div
