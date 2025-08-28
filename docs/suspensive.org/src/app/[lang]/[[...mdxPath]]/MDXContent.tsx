@@ -22,10 +22,10 @@ export function MDXContent({
   mdxPath,
   children,
 }: MDXContentProps) {
-  const { wrapper: Wrapper } = useMDXComponents()
+  const MDXComponents = useMDXComponents()
 
   return (
-    <Wrapper
+    <MDXComponents.wrapper
       toc={toc}
       metadata={metadata}
       sourceCode={isIndexPage ? '' : sourceCode}
@@ -35,6 +35,6 @@ export function MDXContent({
       ) : (
         <FadeIn key={mdxPath.join('/')}>{children}</FadeIn>
       )}
-    </Wrapper>
+    </MDXComponents.wrapper>
   )
 }
