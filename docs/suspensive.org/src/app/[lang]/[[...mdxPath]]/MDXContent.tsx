@@ -7,6 +7,7 @@ import { useMDXComponents } from '@/mdx-components'
 
 type MDXContentProps = {
   toc: Array<Heading>
+  sourceCode: string
   metadata: $NextraMetadata
   isIndexPage: boolean
   mdxPath: string[]
@@ -15,6 +16,7 @@ type MDXContentProps = {
 
 export function MDXContent({
   toc,
+  sourceCode,
   metadata,
   isIndexPage,
   mdxPath,
@@ -23,7 +25,11 @@ export function MDXContent({
   const { wrapper: Wrapper } = useMDXComponents()
 
   return (
-    <Wrapper toc={toc} metadata={metadata}>
+    <Wrapper
+      toc={toc}
+      metadata={metadata}
+      sourceCode={isIndexPage ? '' : sourceCode}
+    >
       {isIndexPage ? (
         children
       ) : (

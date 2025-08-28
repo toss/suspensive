@@ -7,6 +7,7 @@ type Page = {
   toc: Array<Heading>
   metadata: $NextraMetadata
   default: React.ComponentType<{ params: Awaited<PageProps['params']> }>
+  sourceCode: string
 }
 
 type PageParams = {
@@ -35,6 +36,7 @@ export default async function Page(props: PageProps) {
   return (
     <MDXContent
       toc={page.toc}
+      sourceCode={page.sourceCode}
       metadata={page.metadata}
       isIndexPage={isIndexPage}
       mdxPath={params.mdxPath}
