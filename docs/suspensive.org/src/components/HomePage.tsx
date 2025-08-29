@@ -46,11 +46,8 @@ export const HomePage = ({
       >
         <div className="flex flex-col items-center justify-center gap-8 text-center">
           <div className="flex flex-col items-center">
-            <div className="width-[360px] height-[360px] mx-6 mt-24 -mb-6 hidden pt-18 pb-12 md:block">
+            <div className="align-center mx-6 mt-24 -mb-6 flex justify-center pt-18 pb-12">
               <LogoImage size={2.4} />
-            </div>
-            <div className="width-[210px] height-[210px] mt-24 -mb-6 py-6 md:hidden md:h-auto md:w-auto">
-              <LogoImage size={1.2} />
             </div>
             <NpmInstallCopyButton />
           </div>
