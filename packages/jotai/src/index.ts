@@ -1,3 +1,3 @@
 export { Atom } from './Atom'
-export { SetAtom } from './SetAtom'
 export { AtomValue } from './AtomValue'
+export { SetAtom } from './SetAtom'
