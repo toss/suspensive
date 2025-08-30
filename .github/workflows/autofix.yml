@@ -21,4 +21,5 @@ jobs:
       - uses: ./.github/actions/pnpm-setup-node
       - run: pnpm install
       - run: pnpm prettier --write .
+      - run: pnpm run packlint
       - uses: autofix-ci/action@635ffb0c9798bd160680f18fd73371e355b85f27
