@@ -1,0 +1,24 @@
+name: autofix.ci
+
+on:
+  push:
+    branches: [main, beta, next, v1, v2, v3]
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.number || github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  autofix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: ./.github/actions/pnpm-setup-node
+      - run: pnpm install
+      - run: pnpm prettier --write .
+      - uses: autofix-ci/action@635ffb0c9798bd160680f18fd73371e355b85f27

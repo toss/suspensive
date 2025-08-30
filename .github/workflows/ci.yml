@@ -18,7 +18,7 @@ jobs:
       matrix:
         command: ['prepack', 'ci:attw', 'ci:eslint', 'ci:publint', 'ci:sherif', 'ci:type', 'ci:test', 'build']
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: ./.github/actions/pnpm-setup-node
       - run: pnpm install
       - if: matrix.command == 'ci:test'

@@ -16,7 +16,7 @@ jobs:
     name: Knip
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: ./.github/actions/pnpm-setup-node
       - run: pnpm install
       - run: pnpm run ci:knip
