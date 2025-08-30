@@ -19,5 +19,6 @@ jobs:
     steps:
       - uses: actions/checkout@v5
       - uses: ./.github/actions/pnpm-setup-node
+      - run: pnpm install
       - run: pnpm prettier --write .
       - uses: autofix-ci/action@635ffb0c9798bd160680f18fd73371e355b85f27
