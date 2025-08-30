@@ -1,2 +1,8 @@
 # transforms testfixtures
 packages/codemods/src/transforms/testfixtures/**
+pnpm-lock.yaml
+**/.next
+**/coverage
+**/dist
+**/tsconfig.vitest-temp.json
+packages/**/tsup.config.bundled*.mjs
