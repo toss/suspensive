@@ -61,6 +61,7 @@
     "packlint": "^0.2.4",
     "playwright": "^1.52.0",
     "prettier": "^3.5.3",
+    "prettier-plugin-sort-re-exports": "^0.1.0",
     "prettier-plugin-tailwindcss": "^0.6.13",
     "publint": "^0.3.12",
     "rimraf": "^6.0.1",
