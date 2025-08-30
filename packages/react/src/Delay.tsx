@@ -62,7 +62,3 @@ export const Delay = Object.assign(
       ),
   }
 )
-
-
-
-
