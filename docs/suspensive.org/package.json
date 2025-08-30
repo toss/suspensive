@@ -31,7 +31,7 @@
     "clsx": "catalog:",
     "codehike": "^1.0.7",
     "d3": "^7.9.0",
-    "lucide-react": "^0.511.0",
+    "lucide-react": "^0.542.0",
     "motion": "^12.15.0",
     "next": "catalog:",
     "nextra": "^4.4.0",
