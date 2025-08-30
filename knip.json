@@ -2,7 +2,7 @@
   "$schema": "https://unpkg.com/knip@5/schema.json",
   "ignoreWorkspaces": ["examples/**"],
   "ignore": ["**/test-utils/**"],
-  "ignoreDependencies": ["@testing-library/user-event"],
+  "ignoreDependencies": ["prettier-plugin-sort-re-exports"],
   "workspaces": {
     ".": {
       "ignore": ["packlint.config.mjs"],
@@ -15,9 +15,6 @@
     "packages/react-native": {
       "ignoreDependencies": ["ts-node"],
       "ignore": ["babel.config.cjs"]
-    },
-    "packages/react": {
-      "ignoreDependencies": ["react-dom", "@types/react-dom", "react-error-boundary"]
     },
     "packages/react-dom": {
       "ignoreDependencies": ["react-dom", "@types/react-dom"],

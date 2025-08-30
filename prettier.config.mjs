@@ -12,4 +12,5 @@ export default {
   singleQuote: true,
   tabWidth: 2,
   trailingComma: 'es5',
+  overrides: [{ files: 'packages/*/src/index.ts', options: { plugins: ['prettier-plugin-sort-re-exports'] } }],
 }
