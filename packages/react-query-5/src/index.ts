@@ -9,6 +9,7 @@ export type { SuspenseQueriesOptions, SuspenseQueriesResults } from './useSuspen
 export { useSuspenseQuery } from './useSuspenseQuery'
 export type { UseSuspenseQueryOptions, UseSuspenseQueryResult } from './useSuspenseQuery'
 
+export { IsFetching } from './IsFetching'
 export { Mutation } from './Mutation'
 export { mutationOptions } from './mutationOptions'
 export { PrefetchInfiniteQuery } from './PrefetchInfiniteQuery'

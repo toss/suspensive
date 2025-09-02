@@ -1,0 +1,38 @@
+import { Callout } from '@/components'
+
+# IsFetching
+
+<Callout type='experimental'>
+
+`<IsFetching/>`는 실험 기능이므로 이 인터페이스는 변경될 수 있습니다.
+
+</Callout>
+
+현재 fetch 중인 쿼리 개수(TanStack Query의 `useIsFetching`)를 render-prop으로 전달하는 컴포넌트입니다. 전역 로딩 인디케이터를 훅을 추가하지 않고도 쉽게 표시할 수 있습니다.
+
+```tsx /IsFetching basic/
+import { IsFetching } from '@suspensive/react-query'
+
+const GlobalFetchingIndicator = () => (
+  <IsFetching>{(isFetching) => (isFetching ? <Spinner /> : null)}</IsFetching>
+)
+```
+
+### 필터 (QueryFilters)
+
+TanStack Query의 `useIsFetching`가 받는 `QueryFilters`와 동일한 필터(`queryKey`, `predicate` 등)로 범위를 좁힐 수 있습니다.
+
+```tsx /IsFetching with filters/
+import { IsFetching } from '@suspensive/react-query'
+
+const PostsFetchingIndicator = () => (
+  <IsFetching queryKey={['posts']}>
+    {(isFetching) => (isFetching ? <Spinner /> : null)}
+  </IsFetching>
+)
+```
+
+### Props
+
+- **children**: `(isFetching: number) => ReactNode`
+- **...QueryFilters**: TanStack Query `useIsFetching`의 `QueryFilters`와 동일한 형태
