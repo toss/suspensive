@@ -1,5 +1,17 @@
 # @suspensive/react-query
 
+## 3.7.0
+
+### Minor Changes
+
+- [#1723](https://github.com/toss/suspensive/pull/1723) [`509bbcf`](https://github.com/toss/suspensive/commit/509bbcfeb8fcdb8c066d91d1589b2163e053452d) Thanks [@manudeli](https://github.com/manudeli)! - feat(react-query): add `<IsFetching />`
+
+### Patch Changes
+
+- Updated dependencies [[`509bbcf`](https://github.com/toss/suspensive/commit/509bbcfeb8fcdb8c066d91d1589b2163e053452d)]:
+  - @suspensive/react-query-4@3.7.0
+  - @suspensive/react-query-5@3.7.0
+
 ## 3.6.0
 
 ### Minor Changes
