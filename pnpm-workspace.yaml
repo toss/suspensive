@@ -37,9 +37,9 @@ catalogs:
     '@tanstack/react-query': 4.40.0
     '@tanstack/react-query-devtools': 4.40.0
   react-query5:
-    '@tanstack/react-query': ^5.79.0
-    '@tanstack/react-query-devtools': ^5.79.0
-    '@tanstack/react-query-next-experimental': ^5.79.0
+    '@tanstack/react-query': ^5.85.9
+    '@tanstack/react-query-devtools': ^5.85.9
+    '@tanstack/react-query-next-experimental': ^5.85.9
 
 onlyBuiltDependencies:
   - '@tailwindcss/oxide'
