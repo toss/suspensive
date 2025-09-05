@@ -33,6 +33,6 @@ export const SuspenseInfiniteQuery = <
 >({
   children,
   ...options
-}: UseSuspenseInfiniteQueryOptions<TQueryFnData, TError, TData, TQueryFnData, TQueryKey, TPageParam> & {
+}: UseSuspenseInfiniteQueryOptions<TQueryFnData, TError, TData, TQueryKey, TPageParam> & {
   children: (query: UseSuspenseInfiniteQueryResult<TData, TError>) => ReactNode
 }) => <>{children(useSuspenseInfiniteQuery(options))}</>
