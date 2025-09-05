@@ -380,6 +380,26 @@ describe('lazy', () => {
       clearTimeout(id)
     })
 
+    it('should throw error when no storage provided and no sessionStorage in window', () => {
+      vi.stubGlobal('window', {})
+
+      expect(() => {
+        reloadOnError({})
+      }).toThrow('[@suspensive/react] No storage provided and no sessionStorage in window')
+
+      vi.unstubAllGlobals()
+    })
+
+    it('should throw error when no reload function provided and no location in window', () => {
+      vi.stubGlobal('window', { sessionStorage: storage })
+
+      expect(() => {
+        reloadOnError({})
+      }).toThrow('[@suspensive/react] No reload function provided and no location in window')
+
+      vi.unstubAllGlobals()
+    })
+
     it('should reload importing the component up to 1 time if it fails to load', async () => {
       const lazy = createLazy(reloadOnError({ storage, reload: mockReload }))
       const mockImport = importCache.createImport({ failureCount: 1, failureDelay: 100, successDelay: 50 })
