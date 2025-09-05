@@ -1,5 +1,23 @@
 # @suspensive/react-query-4
 
+## 3.8.0
+
+### Minor Changes
+
+- [#1726](https://github.com/toss/suspensive/pull/1726) [`c87696a`](https://github.com/toss/suspensive/commit/c87696a1bf526b27a53a4ba81f82edf50c8f8c12) Thanks [@manudeli](https://github.com/manudeli)! - feat: mark `@suspensive/react-query-5`'s `mutationOptions` as deprecated, `@suspensive/react-query-4`'s `mutationOptions` as stable
+
+## 3.7.0
+
+### Minor Changes
+
+- [#1723](https://github.com/toss/suspensive/pull/1723) [`509bbcf`](https://github.com/toss/suspensive/commit/509bbcfeb8fcdb8c066d91d1589b2163e053452d) Thanks [@manudeli](https://github.com/manudeli)! - feat(react-query): add `<IsFetching />`
+
+## 3.6.0
+
+### Minor Changes
+
+- [#1678](https://github.com/toss/suspensive/pull/1678) [`b2f7f44`](https://github.com/toss/suspensive/commit/b2f7f44f69768aaf92bf20fc52e15f2b573e7664) Thanks [@gwansikk](https://github.com/gwansikk)! - chore(\*): migrate tsdown
+
 ## 3.5.0
 
 ## 3.4.0

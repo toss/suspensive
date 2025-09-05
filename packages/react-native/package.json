@@ -1,6 +1,6 @@
 {
   "name": "@suspensive/react-native",
-  "version": "0.0.19",
+  "version": "0.1.0",
   "description": "Suspensive interfaces for react-native",
   "keywords": [
     "suspensive",
@@ -39,20 +39,20 @@
     "src"
   ],
   "scripts": {
-    "build": "tsup",
+    "build": "tsdown",
     "ci:attw": "attw --pack",
     "ci:eslint": "eslint \"**/*.{ts,tsx,cts,mts}\"",
     "ci:publint": "publint --strict",
-    "ci:test": "jest --coverage",
+    "ci:test": "jest",
     "ci:type": "tsc --noEmit",
     "clean": "rimraf ./dist ./coverage ./node_modules",
     "prepack": "pnpm run build",
-    "test:ui": "jest --watchAll --coverage"
+    "test:ui": "jest --watchAll"
   },
   "devDependencies": {
     "@suspensive/eslint-config": "workspace:*",
     "@suspensive/tsconfig": "workspace:*",
-    "@suspensive/tsup": "workspace:*",
+    "@suspensive/tsdown": "workspace:*",
     "@testing-library/react-native": "catalog:react19",
     "@types/react": "catalog:react19",
     "babel-jest": "catalog:",

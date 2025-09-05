@@ -25,9 +25,9 @@ import { PostList } from './components/PostList'
 const PostsPage = ({ userId }) => (
   <ErrorBoundary fallback={({ error }) => <>{error.message}</>}>
     <Suspense fallback={'loading...'}>
-      <AuthorInfo userId={userId} />{' '}
+      <AuthorInfo userId={userId} />
       {/* 내부적으로 Suspense를 발생할 지 예상하기 어렵습니다. */}
-      <PostList userId={userId} />{' '}
+      <PostList userId={userId} />
       {/* 내부적으로 Suspense를 발생할 지 예상하기 어렵습니다. */}
     </Suspense>
   </ErrorBoundary>
@@ -82,7 +82,7 @@ const PostList = ({ userId }) => {
 ```jsx
 import { SuspenseQuery } from '@suspensive/react-query'
 import { Suspense, ErrorBoundary } from '@suspensive/react'
-import { PostItem, AuthorProfile } from '~/components'
+import { PostListItem, AuthorProfile } from '~/components'
 
 const PostsPage = ({ authorId }) => (
   <ErrorBoundary fallback={({ error }) => <>{error.message}</>}>
@@ -156,7 +156,7 @@ queryClient.cancelQueries(postQueryOptions(1))
 
 ### 오직 하나의 queryOptions만을 받습니다.
 
-기존 @supensive/react-query에서는 @tanstack/react-query의 구현사항에 따라 queryKey, queryFn, options를 arg1, arg2, arg3에 나누어 인자를 받게 했습니다.
+기존 @suspensive/react-query에서는 @tanstack/react-query의 구현사항에 따라 queryKey, queryFn, options를 arg1, arg2, arg3에 나누어 인자를 받게 했습니다.
 하지만 더 이상 queryKey, queryFn을 분리해 받지 않습니다. 이유는 아래와 같습니다.
 
 1. Suspensive 메인테이너가 함수에 불필요한 오버라이딩을 만들어야 합니다. 이것은 유지관리가 쉽지 않을 뿐 아니라 TypeScript Parser가 사용처의 코드를 해석할 때에 좋지 않습니다.

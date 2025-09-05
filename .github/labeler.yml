@@ -1,30 +1,30 @@
-"@suspensive/react":
-  - "packages/react/**/*"
-"@suspensive/react-dom":
-  - "packages/react-dom/**/*"
-"@suspensive/react-native":
-  - "packages/react-native/**/*"
-"@suspensive/react-query":
-  - "packages/react-query/**/*"
-"@suspensive/react-query-4":
-  - "packages/react-query-4/**/*"
-"@suspensive/react-query-5":
-  - "packages/react-query-5/**/*"
-"@suspensive/jotai":
-  - "packages/jotai/**/*"
-"@suspensive/codemods":
-  - "packages/codemods/**/*"
-"suspensive.org":
-  - "docs/suspensive.org/**/*"
-"examples":
-  - "examples/**/*"
-"eslint":
-  - "configs/eslint/**/*"
-  - "**/.eslint*"
-"tsconfig":
-  - "configs/tsconfig/**/*"
-  - "**/.tsconfig*"
-"dependencies":
-  - "pnpm-lock.yaml"
-"workflows":
-  - ".github/workflows/**/*"
+'@suspensive/react':
+  - 'packages/react/**/*'
+'@suspensive/react-dom':
+  - 'packages/react-dom/**/*'
+'@suspensive/react-native':
+  - 'packages/react-native/**/*'
+'@suspensive/react-query':
+  - 'packages/react-query/**/*'
+'@suspensive/react-query-4':
+  - 'packages/react-query-4/**/*'
+'@suspensive/react-query-5':
+  - 'packages/react-query-5/**/*'
+'@suspensive/jotai':
+  - 'packages/jotai/**/*'
+'@suspensive/codemods':
+  - 'packages/codemods/**/*'
+'suspensive.org':
+  - 'docs/suspensive.org/**/*'
+'examples':
+  - 'examples/**/*'
+'eslint':
+  - 'configs/eslint/**/*'
+  - '**/.eslint*'
+'tsconfig':
+  - 'configs/tsconfig/**/*'
+  - '**/.tsconfig*'
+'dependencies':
+  - 'pnpm-lock.yaml'
+'workflows':
+  - '.github/workflows/**/*'

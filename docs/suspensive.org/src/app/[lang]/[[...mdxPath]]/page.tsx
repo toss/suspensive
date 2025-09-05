@@ -1,4 +1,3 @@
-import type { Metadata } from 'next'
 import type { $NextraMetadata, Heading } from 'nextra'
 import { generateStaticParamsFor, importPage } from 'nextra/pages'
 import { MDXContent } from './MDXContent'
@@ -7,6 +6,7 @@ type Page = {
   toc: Array<Heading>
   metadata: $NextraMetadata
   default: React.ComponentType<{ params: Awaited<PageProps['params']> }>
+  sourceCode: string
 }
 
 type PageParams = {
@@ -20,10 +20,10 @@ type PageProps = Readonly<{
 
 export const generateStaticParams = generateStaticParamsFor('mdxPath')
 
-export async function generateMetadata(props: PageProps): Promise<Metadata> {
+export async function generateMetadata(props: PageProps) {
   const params = await props.params
   const page = (await importPage(params.mdxPath, params.lang)) as Page
-  return page.metadata as unknown as Metadata
+  return page.metadata
 }
 
 export default async function Page(props: PageProps) {
@@ -35,6 +35,7 @@ export default async function Page(props: PageProps) {
   return (
     <MDXContent
       toc={page.toc}
+      sourceCode={page.sourceCode}
       metadata={page.metadata}
       isIndexPage={isIndexPage}
       mdxPath={params.mdxPath}

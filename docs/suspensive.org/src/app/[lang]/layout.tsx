@@ -3,7 +3,7 @@ import { GoogleAnalytics, GoogleTagManager } from '@next/third-parties/google'
 import { ClientOnly } from '@suspensive/react'
 import type { Metadata } from 'next'
 import Script from 'next/script'
-import { Banner, Head, Search } from 'nextra/components'
+import { Head, Search } from 'nextra/components'
 import { getPageMap } from 'nextra/page-map'
 import {
   Footer,
@@ -51,11 +51,6 @@ export default async function RootLayout({
       <body>
         <Layout
           darkMode={false}
-          banner={
-            <Banner storageKey="suspensive-banner-0">
-              {dictionary.banner}
-            </Banner>
-          }
           search={<Search placeholder={dictionary.search.placeholder} />}
           navbar={
             <Navbar

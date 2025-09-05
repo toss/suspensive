@@ -8,10 +8,12 @@ import { describe, expectTypeOf, it } from 'vitest'
 import { Mutation } from './Mutation'
 import { mutationOptions } from './mutationOptions'
 
-const mutationOption = mutationOptions({
-  mutationFn: () => Promise.resolve(1),
-  onMutate: () => 'onMutation',
-})
+const mutationOption =
+  // eslint-disable-next-line @typescript-eslint/no-deprecated
+  mutationOptions({
+    mutationFn: () => Promise.resolve(1),
+    onMutate: () => 'onMutation',
+  })
 
 describe('mutationOptions', () => {
   it('should be used with useMutation', () => {

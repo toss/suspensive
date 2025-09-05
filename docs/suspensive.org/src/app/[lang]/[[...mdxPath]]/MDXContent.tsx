@@ -1,34 +1,40 @@
 'use client'
 
 import type { $NextraMetadata, Heading } from 'nextra'
-import type { ReactNode } from 'react'
+import { type ReactNode } from 'react'
 import { FadeIn } from './FadeIn'
-import { useMDXComponents } from '@/mdx-components'
+import { useMDXComponents as getMDXComponents } from '@/mdx-components'
 
 type MDXContentProps = {
   toc: Array<Heading>
+  sourceCode: string
   metadata: $NextraMetadata
   isIndexPage: boolean
   mdxPath: string[]
   children: ReactNode
 }
 
+const MDXComponents = getMDXComponents()
+
 export function MDXContent({
   toc,
+  sourceCode,
   metadata,
   isIndexPage,
   mdxPath,
   children,
 }: MDXContentProps) {
-  const { wrapper: Wrapper } = useMDXComponents()
-
   return (
-    <Wrapper toc={toc} metadata={metadata}>
+    <MDXComponents.wrapper
+      toc={toc}
+      metadata={metadata}
+      sourceCode={isIndexPage ? '' : sourceCode}
+    >
       {isIndexPage ? (
         children
       ) : (
         <FadeIn key={mdxPath.join('/')}>{children}</FadeIn>
       )}
-    </Wrapper>
+    </MDXComponents.wrapper>
   )
 }

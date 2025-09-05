@@ -1,6 +1,6 @@
 {
   "name": "@suspensive/codemods",
-  "version": "3.5.0",
+  "version": "3.8.0",
   "description": "Codemods for @suspensive.",
   "keywords": [
     "suspensive",
@@ -22,7 +22,7 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsup",
+    "build": "tsdown",
     "ci:attw": "attw --pack",
     "ci:eslint": "eslint \"**/*.{ts,tsx,cts,mts}\"",
     "ci:publint": "publint --strict",
@@ -42,7 +42,7 @@
   "devDependencies": {
     "@suspensive/eslint-config": "workspace:*",
     "@suspensive/tsconfig": "workspace:*",
-    "@suspensive/tsup": "workspace:*",
+    "@suspensive/tsdown": "workspace:*",
     "@types/jscodeshift": "^0.12.0",
     "@types/prompts": "^2.4.9"
   },

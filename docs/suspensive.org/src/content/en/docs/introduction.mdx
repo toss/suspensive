@@ -1,6 +1,14 @@
+import Image from 'next/image'
 import { Table } from 'nextra/components'
 
-# Suspensive
+<Image
+  width={330 * 2.4}
+  height={43.7 * 2.4}
+  src="/img/logo-suspensive-text-progressive-blur.svg"
+  unoptimized
+  alt="Suspensive"
+  className="my-20 px-12 md:my-40 md:px-24"
+/>
 
 Suspensive is a comprehensive collection of libraries designed to simplify and enhance the use of React Suspense. Suspensive contains several packages that provide components, hooks, and utilities to streamline the implementation of suspense-based features, error handling, and integrations with popular data fetching libraries.
 
@@ -100,7 +108,7 @@ C[useSuspenseQuery, SuspenseQuery];
 D[useSuspenseInfiniteQuery, SuspenseInfiniteQuery];
 E[useSuspenseQueries, SuspenseQueries];
 end
-subgraph BB [Sate Management @suspensive/jotai]
+subgraph BB [State Management @suspensive/jotai]
 F[Atom];
 G[AtomValue];
 end

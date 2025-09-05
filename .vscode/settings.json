@@ -6,5 +6,8 @@
   },
   "eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact", "mdx"],
   "eslint.workingDirectories": [{ "mode": "auto" }],
-  "vitest.disableWorkspaceWarning": true
+  "vitest.disableWorkspaceWarning": true,
+  "[yaml]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
 }
