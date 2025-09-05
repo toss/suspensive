@@ -4,18 +4,19 @@ import { Callout } from '@/components'
 
 <Callout type='info'>
 
-This codemod is recommended for updating `@suspensive/react-query` & `@tanstack/react-query@4` to `@tanstack/react-query@5`.
+- We recommend upgrading to `@tanstack/react-query@5` when using `@suspensive/react-query` with `@tanstack/react-query@4`.
+- Starting from `@suspensive/react-query-4@3.3.0`, `queryOptions`, `infiniteQueryOption`, `useSuspenseQuery`, and `useSuspenseQueries` have been deprecated. (`@tanstack/react-query@4.40.0` officially supports `useSuspenseQuery` and `queryOptions`.)
 
 </Callout>
 
-In the `@suspensive/react-query` & `@tanstack/react-query@5` environment, Suspense Hooks and `queryOptions` provided by `@suspensive/react-query` are marked as `deprecated`.  
-This is because `@suspensive/react-query` offers the same APIs (Suspense Hooks and queryOptions) that are available in `@tanstack/react-query@5`. The purpose is to encourage developers to use the v5 API from `@tanstack/react-query` directly.
+Any API in `@suspensive/react-query` that is officially provided by `@tanstack/react-query` will be marked as `deprecated`.  
+This is because `@suspensive/react-query` offers the same APIs such as Suspense Hooks and `queryOptions`/`infiniteQueryOption`, and we want to encourage developers to use the official `@tanstack/react-query` APIs first.
 
 ```bash filename="Terminal"
 npx @suspensive/codemods tanstack-query-import .
 ```
 
-This codemod automatically transforms import paths from `@suspensive/react-query` to `@tanstack/react-query@5`.
+This codemod automatically transforms import paths from `@suspensive/react-query` to `@tanstack/react-query`.
 
 For example:
 
