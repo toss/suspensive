@@ -1,4 +1,11 @@
-import type { InfiniteData, OmitKeyof, QueryKey, UseInfiniteQueryOptions, WithRequired } from '@tanstack/react-query'
+import {
+  type InfiniteData,
+  type OmitKeyof,
+  type QueryKey,
+  type UseInfiniteQueryOptions,
+  type WithRequired,
+  infiniteQueryOptions as original_infiniteQueryOptions,
+} from '@tanstack/react-query'
 
 /**
  * @deprecated There is no `SelectedInfiniteOptions` in \@tanstack/react-query@^4.40.0.
@@ -58,24 +65,13 @@ export type UnSelectedInfiniteOptions<
   select?: undefined
 }
 
-export function infiniteQueryOptions<
-  TQueryFnData,
-  TError = unknown,
-  TData = InfiniteData<TQueryFnData>,
-  TQueryKey extends QueryKey = QueryKey,
->(
-  options: SelectedInfiniteOptions<TQueryFnData, TError, TData, TQueryKey>
-): SelectedInfiniteOptions<TQueryFnData, TError, TData, TQueryKey>
-
-export function infiniteQueryOptions<
-  TQueryFnData,
-  TError = unknown,
-  TData = InfiniteData<TQueryFnData>,
-  TQueryKey extends QueryKey = QueryKey,
->(
-  options: UnSelectedInfiniteOptions<TQueryFnData, TError, TData, TQueryKey>
-): UnSelectedInfiniteOptions<TQueryFnData, TError, TData, TQueryKey>
-
-export function infiniteQueryOptions(options: unknown) {
-  return options
-}
+/**
+ * This feature is officially supported in \@tanstack/react-query@^4.41.0, You can proceed with the migration.
+ * @deprecated Use `infiniteQueryOptions` from \@tanstack/react-query@^4.41.0
+ * @example
+ * ```diff
+ * - import { infiniteQueryOptions } from '@suspensive/react-query'
+ * + import { infiniteQueryOptions } from '@tanstack/react-query'
+ * ```
+ */
+export const infiniteQueryOptions = original_infiniteQueryOptions

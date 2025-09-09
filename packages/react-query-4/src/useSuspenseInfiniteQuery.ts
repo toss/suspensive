@@ -1,20 +1,21 @@
 import {
-  type InfiniteData,
   type OmitKeyof,
   type QueryKey,
   type UseInfiniteQueryOptions,
-  type UseInfiniteQueryResult,
-  useInfiniteQuery,
+  type UseSuspenseInfiniteQueryResult as original_UseSuspenseInfiniteQueryResult,
+  useSuspenseInfiniteQuery as original_useSuspenseInfiniteQuery,
 } from '@tanstack/react-query'
 
-export interface UseSuspenseInfiniteQueryResult<TData = unknown, TError = unknown>
-  extends OmitKeyof<
-    UseInfiniteQueryResult<TData, TError>,
-    keyof Pick<UseInfiniteQueryResult<TData, TError>, 'isPlaceholderData'>
-  > {
-  data: InfiniteData<TData>
-  status: 'success'
-}
+/**
+ * This feature is officially supported in \@tanstack/react-query@^4.41.0, You can proceed with the migration.
+ * @deprecated Use `UseSuspenseInfiniteQueryResult` from \@tanstack/react-query@^4.41.0
+ * @example
+ * ```diff
+ * - import { UseSuspenseInfiniteQueryResult } from '@suspensive/react-query'
+ * + import { UseSuspenseInfiniteQueryResult } from '@tanstack/react-query'
+ * ```
+ */
+export type UseSuspenseInfiniteQueryResult = original_UseSuspenseInfiniteQueryResult
 
 export type UseSuspenseInfiniteQueryOptions<
   TQueryFnData = unknown,
@@ -27,22 +28,12 @@ export type UseSuspenseInfiniteQueryOptions<
 >
 
 /**
- * This hook is wrapping `useInfiniteQuery` of `@tanstack/react-query` v4 with default suspense option.
- * @see {@link https://suspensive.org/docs/react-query/useSuspenseInfiniteQuery Suspensive Docs}
+ * This feature is officially supported in \@tanstack/react-query@^4.41.0, You can proceed with the migration.
+ * @deprecated Use `useSuspenseInfiniteQuery` from \@tanstack/react-query@^4.41.0
+ * @example
+ * ```diff
+ * - import { useSuspenseInfiniteQuery } from '@suspensive/react-query'
+ * + import { useSuspenseInfiniteQuery } from '@tanstack/react-query'
+ * ```
  */
-export function useSuspenseInfiniteQuery<
-  TQueryFnData = unknown,
-  TError = unknown,
-  TData = TQueryFnData,
-  TQueryKey extends QueryKey = QueryKey,
->(
-  options: UseSuspenseInfiniteQueryOptions<TQueryFnData, TError, TData, TQueryKey>
-): UseSuspenseInfiniteQueryResult<TData, TError> {
-  return useInfiniteQuery({
-    ...options,
-    enabled: true,
-    suspense: true,
-    useErrorBoundary: true,
-    networkMode: 'always',
-  }) as UseSuspenseInfiniteQueryResult<TData, TError>
-}
+export const useSuspenseInfiniteQuery = original_useSuspenseInfiniteQuery
