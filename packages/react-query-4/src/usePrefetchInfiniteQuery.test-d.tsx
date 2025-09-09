@@ -1,4 +1,4 @@
-import { infiniteQueryOptions } from './infiniteQueryOptions'
+import { infiniteQueryOptions } from '@tanstack/react-query'
 import { queryFn, queryKey } from './test-utils'
 import { usePrefetchInfiniteQuery } from './usePrefetchInfiniteQuery'
 
@@ -7,12 +7,7 @@ describe('usePrefetchInfiniteQuery', () => {
     expectTypeOf(usePrefetchInfiniteQuery({ queryFn, queryKey }))
       // eslint-disable-next-line @typescript-eslint/no-invalid-void-type
       .toEqualTypeOf<void>()
-    expectTypeOf(
-      usePrefetchInfiniteQuery(
-        // eslint-disable-next-line @typescript-eslint/no-deprecated
-        infiniteQueryOptions({ queryFn, queryKey })
-      )
-    )
+    expectTypeOf(usePrefetchInfiniteQuery(infiniteQueryOptions({ queryFn, queryKey })))
       // eslint-disable-next-line @typescript-eslint/no-invalid-void-type
       .toEqualTypeOf<void>()
   })
