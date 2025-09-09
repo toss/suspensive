@@ -7,7 +7,12 @@ describe('usePrefetchInfiniteQuery', () => {
     expectTypeOf(usePrefetchInfiniteQuery({ queryFn, queryKey }))
       // eslint-disable-next-line @typescript-eslint/no-invalid-void-type
       .toEqualTypeOf<void>()
-    expectTypeOf(usePrefetchInfiniteQuery(infiniteQueryOptions({ queryFn, queryKey })))
+    expectTypeOf(
+      usePrefetchInfiniteQuery(
+        // eslint-disable-next-line @typescript-eslint/no-deprecated
+        infiniteQueryOptions({ queryFn, queryKey })
+      )
+    )
       // eslint-disable-next-line @typescript-eslint/no-invalid-void-type
       .toEqualTypeOf<void>()
   })
