@@ -1,5 +1,11 @@
 # @suspensive/react-query-5
 
+## 3.9.0
+
+### Minor Changes
+
+- [`7c712e1`](https://github.com/toss/suspensive/commit/7c712e1ca1a2804796c7d8f252b40f7bd7f225a6) Thanks [@manudeli](https://github.com/manudeli)! - feat(react-query): update minimum version of TanStack Query as 4.41.0
+
 ## 3.8.0
 
 ### Minor Changes
