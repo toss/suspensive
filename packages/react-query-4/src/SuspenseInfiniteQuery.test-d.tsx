@@ -1,10 +1,8 @@
-import type { InfiniteData } from '@tanstack/react-query'
+import { type InfiniteData, type UseSuspenseInfiniteQueryResult, infiniteQueryOptions } from '@tanstack/react-query'
 import type { ReactNode } from 'react'
 import { describe, expectTypeOf, it } from 'vitest'
-import { infiniteQueryOptions } from './infiniteQueryOptions'
 import { SuspenseInfiniteQuery } from './SuspenseInfiniteQuery'
 import { queryFn, queryKey } from './test-utils'
-import type { UseSuspenseInfiniteQueryResult } from './useSuspenseInfiniteQuery'
 
 describe('<SuspenseInfiniteQuery/>', () => {
   it('type check', () => {
@@ -121,7 +119,7 @@ describe('<SuspenseInfiniteQuery/>', () => {
         {(query) => {
           expectTypeOf(query).toEqualTypeOf<UseSuspenseInfiniteQueryResult<{ text: string }>>()
           expectTypeOf(query.data).toEqualTypeOf<InfiniteData<{ text: string }>>()
-          expectTypeOf(query.status).toEqualTypeOf<'success'>()
+          expectTypeOf(query.status).toEqualTypeOf<'success' | 'error'>()
           return <></>
         }}
       </SuspenseInfiniteQuery>
@@ -138,7 +136,7 @@ describe('<SuspenseInfiniteQuery/>', () => {
         {(selectedQuery) => {
           expectTypeOf(selectedQuery).toEqualTypeOf<UseSuspenseInfiniteQueryResult<string>>()
           expectTypeOf(selectedQuery.data).toEqualTypeOf<InfiniteData<string>>()
-          expectTypeOf(selectedQuery.status).toEqualTypeOf<'success'>()
+          expectTypeOf(selectedQuery.status).toEqualTypeOf<'success' | 'error'>()
           return <></>
         }}
       </SuspenseInfiniteQuery>
@@ -151,7 +149,7 @@ describe('<SuspenseInfiniteQuery/>', () => {
         {(query) => {
           expectTypeOf(query).toEqualTypeOf<UseSuspenseInfiniteQueryResult<{ text: string }>>()
           expectTypeOf(query.data).toEqualTypeOf<InfiniteData<{ text: string }>>()
-          expectTypeOf(query.status).toEqualTypeOf<'success'>()
+          expectTypeOf(query.status).toEqualTypeOf<'success' | 'error'>()
           return <></>
         }}
       </SuspenseInfiniteQuery>
@@ -167,7 +165,7 @@ describe('<SuspenseInfiniteQuery/>', () => {
         {(selectedQuery) => {
           expectTypeOf(selectedQuery).toEqualTypeOf<UseSuspenseInfiniteQueryResult<string>>()
           expectTypeOf(selectedQuery.data).toEqualTypeOf<InfiniteData<string>>()
-          expectTypeOf(selectedQuery.status).toEqualTypeOf<'success'>()
+          expectTypeOf(selectedQuery.status).toEqualTypeOf<'success' | 'error'>()
           return <></>
         }}
       </SuspenseInfiniteQuery>
