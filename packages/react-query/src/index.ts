@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-deprecated */
 export { queryOptions } from '@suspensive/react-query-4'
 export type { SelectedQueryOptions, UnSelectedQueryOptions } from '@suspensive/react-query-4'
 export { infiniteQueryOptions } from '@suspensive/react-query-4'
