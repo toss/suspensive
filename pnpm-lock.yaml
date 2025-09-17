@@ -141,9 +141,6 @@ importers:
       eslint:
         specifier: ^9.28.0
         version: 9.28.0(jiti@2.4.2)
-      execa:
-        specifier: ^5.1.1
-        version: 5.1.1
       husky:
         specifier: ^9.1.7
         version: 9.1.7
@@ -183,9 +180,6 @@ importers:
       tsdown:
         specifier: ^0.13.1
         version: 0.13.1(@arethetypeswrong/core@0.18.1)(publint@0.3.12)(typescript@5.8.3)
-      tsx:
-        specifier: ^4.19.3
-        version: 4.19.3
       turbo:
         specifier: ^2.5.4
         version: 2.5.4
@@ -2216,7 +2210,7 @@ packages:
 
   '@expo/bunyan@4.0.1':
     resolution: {integrity: sha512-+Lla7nYSiHZirgK+U/uYzsLv/X+HaJienbD5AKX1UQZHYfWaP+9uuQluRB4GrEVWF0GZ7vEVp/jzaOT9k/SQlg==}
-    engines: {'0': node >=0.10.0}
+    engines: {node: '>=0.10.0'}
 
   '@expo/cli@0.22.8':
     resolution: {integrity: sha512-MpHrfPKcHL+b1wwx+WiniEL5n33tl964tN8EW1K4okW3/tAPgbu3R00NZs6OExH9PZGQP8OKhCXhZttbK2jUnA==}
@@ -22697,6 +22691,7 @@ snapshots:
       get-tsconfig: 4.10.1
     optionalDependencies:
       fsevents: 2.3.3
+    optional: true
 
   tunnel-agent@0.6.0:
     dependencies:
