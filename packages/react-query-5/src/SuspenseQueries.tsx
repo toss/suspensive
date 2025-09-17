@@ -25,5 +25,10 @@ export function SuspenseQueries<T extends any[], TCombinedResult = SuspenseQueri
   children: (queries: TCombinedResult) => ReactNode
   combine?: (result: SuspenseQueriesResults<T>) => TCombinedResult
 }) {
-  return <>{children(useSuspenseQueries({ queries, combine }))}</>
+  return (
+    <>
+      {/* eslint-disable-next-line @suspensive/check-parent-suspense */}
+      {children(useSuspenseQueries({ queries, combine }))}
+    </>
+  )
 }

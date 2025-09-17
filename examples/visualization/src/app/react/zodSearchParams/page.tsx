@@ -32,6 +32,7 @@ export default ErrorBoundary.with(
   Suspense.with({ fallback: <Spinner /> }, () => {
     const searchParams = useSearchParams()
     const { id } = searchParamsSchema.parse(Object.fromEntries(searchParams.entries()))
+    // eslint-disable-next-line @suspensive/check-parent-suspense
     const userQuery = useSuspenseQuery({
       queryKey: ['users', id] as const,
       queryFn: ({ queryKey: [, userId] }) => delay(200).then(() => ({ id: userId, name: 'John' })),
