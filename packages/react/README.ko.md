@@ -30,13 +30,15 @@ import { Suspense, ErrorBoundary, Async } from '@suspensive/react'
 
 function App() {
   return (
-    <ErrorBoundary fallback={({ error, reset }) => (
-      <div>
-        <h2>문제가 발생했습니다:</h2>
-        <details>{error.message}</details>
-        <button onClick={reset}>다시 시도</button>
-      </div>
-    )}>
+    <ErrorBoundary
+      fallback={({ error, reset }) => (
+        <div>
+          <h2>문제가 발생했습니다:</h2>
+          <details>{error.message}</details>
+          <button onClick={reset}>다시 시도</button>
+        </div>
+      )}
+    >
       <Suspense fallback={<div>로딩 중...</div>}>
         <AsyncComponent />
       </Suspense>
@@ -60,15 +62,19 @@ function AsyncComponent() {
 ## 핵심 컴포넌트
 
 ### Suspense
+
 향상된 개발자 경험을 제공하는 Suspense 컴포넌트.
 
 ### ErrorBoundary
+
 React 컴포넌트를 위한 선언적 에러 바운더리.
 
 ### Async
+
 Suspense와 함께 비동기 작업을 처리하는 컴포넌트.
 
 ### Delay
+
 로딩 상태의 깜빡임을 방지하기 위한 지연 추가.
 
 ## 문서

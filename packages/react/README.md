@@ -30,13 +30,15 @@ import { Suspense, ErrorBoundary, Async } from '@suspensive/react'
 
 function App() {
   return (
-    <ErrorBoundary fallback={({ error, reset }) => (
-      <div>
-        <h2>Something went wrong:</h2>
-        <details>{error.message}</details>
-        <button onClick={reset}>Try again</button>
-      </div>
-    )}>
+    <ErrorBoundary
+      fallback={({ error, reset }) => (
+        <div>
+          <h2>Something went wrong:</h2>
+          <details>{error.message}</details>
+          <button onClick={reset}>Try again</button>
+        </div>
+      )}
+    >
       <Suspense fallback={<div>Loading...</div>}>
         <AsyncComponent />
       </Suspense>
@@ -60,15 +62,19 @@ function AsyncComponent() {
 ## Core Components
 
 ### Suspense
+
 Enhanced Suspense component with better developer experience.
 
 ### ErrorBoundary
+
 Declarative error boundaries for React components.
 
 ### Async
+
 Component for handling async operations with Suspense.
 
 ### Delay
+
 Add delays to prevent flash of loading states.
 
 ## Documentation

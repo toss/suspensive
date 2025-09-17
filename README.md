@@ -22,16 +22,16 @@ Suspensive is a comprehensive suite of libraries that makes React Suspense easie
 
 ## Packages
 
-| Package | Description | Version |
-|---------|-------------|---------|
-| [@suspensive/react](./packages/react) | All components to use React Suspense easily | [![npm](https://img.shields.io/npm/v/@suspensive/react?color=000&labelColor=000)](https://www.npmjs.com/package/@suspensive/react) |
-| [@suspensive/react-dom](./packages/react-dom) | Suspensive interfaces for react-dom | [![npm](https://img.shields.io/npm/v/@suspensive/react-dom?color=000&labelColor=000)](https://www.npmjs.com/package/@suspensive/react-dom) |
-| [@suspensive/react-native](./packages/react-native) | Suspensive interfaces for react-native | [![npm](https://img.shields.io/npm/v/@suspensive/react-native?color=000&labelColor=000)](https://www.npmjs.com/package/@suspensive/react-native) |
-| [@suspensive/react-query](./packages/react-query) | Components and hooks to use @tanstack/react-query's suspense option easily | [![npm](https://img.shields.io/npm/v/@suspensive/react-query?color=000&labelColor=000)](https://www.npmjs.com/package/@suspensive/react-query) |
-| [@suspensive/react-query-4](./packages/react-query-4) | Suspensive interfaces for @tanstack/react-query@4 | [![npm](https://img.shields.io/npm/v/@suspensive/react-query-4?color=000&labelColor=000)](https://www.npmjs.com/package/@suspensive/react-query-4) |
-| [@suspensive/react-query-5](./packages/react-query-5) | Suspensive interfaces for @tanstack/react-query@5 | [![npm](https://img.shields.io/npm/v/@suspensive/react-query-5?color=000&labelColor=000)](https://www.npmjs.com/package/@suspensive/react-query-5) |
-| [@suspensive/jotai](./packages/jotai) | Suspensive integrations for Jotai state management | [![npm](https://img.shields.io/npm/v/@suspensive/jotai?color=000&labelColor=000)](https://www.npmjs.com/package/@suspensive/jotai) |
-| [@suspensive/codemods](./packages/codemods) | Codemods to help migrate and transform your Suspensive code | [![npm](https://img.shields.io/npm/v/@suspensive/codemods?color=000&labelColor=000)](https://www.npmjs.com/package/@suspensive/codemods) |
+| Package                                               | Description                                                                | Version                                                                                                                                            |
+| ----------------------------------------------------- | -------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [@suspensive/react](./packages/react)                 | All components to use React Suspense easily                                | [![npm](https://img.shields.io/npm/v/@suspensive/react?color=000&labelColor=000)](https://www.npmjs.com/package/@suspensive/react)                 |
+| [@suspensive/react-dom](./packages/react-dom)         | Suspensive interfaces for react-dom                                        | [![npm](https://img.shields.io/npm/v/@suspensive/react-dom?color=000&labelColor=000)](https://www.npmjs.com/package/@suspensive/react-dom)         |
+| [@suspensive/react-native](./packages/react-native)   | Suspensive interfaces for react-native                                     | [![npm](https://img.shields.io/npm/v/@suspensive/react-native?color=000&labelColor=000)](https://www.npmjs.com/package/@suspensive/react-native)   |
+| [@suspensive/react-query](./packages/react-query)     | Components and hooks to use @tanstack/react-query's suspense option easily | [![npm](https://img.shields.io/npm/v/@suspensive/react-query?color=000&labelColor=000)](https://www.npmjs.com/package/@suspensive/react-query)     |
+| [@suspensive/react-query-4](./packages/react-query-4) | Suspensive interfaces for @tanstack/react-query@4                          | [![npm](https://img.shields.io/npm/v/@suspensive/react-query-4?color=000&labelColor=000)](https://www.npmjs.com/package/@suspensive/react-query-4) |
+| [@suspensive/react-query-5](./packages/react-query-5) | Suspensive interfaces for @tanstack/react-query@5                          | [![npm](https://img.shields.io/npm/v/@suspensive/react-query-5?color=000&labelColor=000)](https://www.npmjs.com/package/@suspensive/react-query-5) |
+| [@suspensive/jotai](./packages/jotai)                 | Suspensive integrations for Jotai state management                         | [![npm](https://img.shields.io/npm/v/@suspensive/jotai?color=000&labelColor=000)](https://www.npmjs.com/package/@suspensive/jotai)                 |
+| [@suspensive/codemods](./packages/codemods)           | Codemods to help migrate and transform your Suspensive code                | [![npm](https://img.shields.io/npm/v/@suspensive/codemods?color=000&labelColor=000)](https://www.npmjs.com/package/@suspensive/codemods)           |
 
 ## Quick Start
 

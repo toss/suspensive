@@ -48,20 +48,22 @@ function UserProfile({ userId }) {
     queryKey: ['user', userId],
     queryFn: () => fetchUser(userId),
   })
-  
+
   return <div>안녕하세요, {user.name}님!</div>
 }
 
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <ErrorBoundary fallback={({ error, reset }) => (
-        <div>
-          <h2>문제가 발생했습니다:</h2>
-          <details>{error.message}</details>
-          <button onClick={reset}>다시 시도</button>
-        </div>
-      )}>
+      <ErrorBoundary
+        fallback={({ error, reset }) => (
+          <div>
+            <h2>문제가 발생했습니다:</h2>
+            <details>{error.message}</details>
+            <button onClick={reset}>다시 시도</button>
+          </div>
+        )}
+      >
         <Suspense fallback={<div>로딩 중...</div>}>
           <UserProfile userId={1} />
         </Suspense>
@@ -74,15 +76,19 @@ function App() {
 ## 핵심 훅
 
 ### useSuspenseQuery
+
 내장 Suspense 지원을 제공하는 향상된 `useQuery`.
 
 ### useSuspenseQueries
+
 병렬 쿼리를 위한 `useQueries`의 Suspense 버전.
 
 ### useSuspenseInfiniteQuery
+
 내장 Suspense 지원을 제공하는 향상된 `useInfiniteQuery`.
 
 ### 쿼리 옵션
+
 - `queryOptions` - 타입 안전한 쿼리 옵션 빌더
 - `infiniteQueryOptions` - 타입 안전한 무한 쿼리 옵션 빌더
 - `mutationOptions` - 타입 안전한 뮤테이션 옵션 빌더

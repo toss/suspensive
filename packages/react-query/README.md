@@ -48,17 +48,12 @@ function UserProfile({ userId }) {
     queryKey: ['user', userId],
     queryFn: () => fetchUser(userId),
   })
-  
+
   return <div>Hello, {user.name}!</div>
 }
 
 function UserPosts({ userId }) {
-  const {
-    data,
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
-  } = useSuspenseInfiniteQuery({
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useSuspenseInfiniteQuery({
     queryKey: ['posts', userId],
     queryFn: ({ pageParam = 0 }) => fetchUserPosts(userId, pageParam),
     getNextPageParam: (lastPage) => lastPage.nextCursor,
@@ -66,14 +61,9 @@ function UserPosts({ userId }) {
 
   return (
     <div>
-      {data.pages.map((page) =>
-        page.posts.map((post) => <div key={post.id}>{post.title}</div>)
-      )}
+      {data.pages.map((page) => page.posts.map((post) => <div key={post.id}>{post.title}</div>))}
       {hasNextPage && (
-        <button
-          onClick={() => fetchNextPage()}
-          disabled={isFetchingNextPage}
-        >
+        <button onClick={() => fetchNextPage()} disabled={isFetchingNextPage}>
           Load More
         </button>
       )}
@@ -84,13 +74,15 @@ function UserPosts({ userId }) {
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <ErrorBoundary fallback={({ error, reset }) => (
-        <div>
-          <h2>Something went wrong:</h2>
-          <details>{error.message}</details>
-          <button onClick={reset}>Try again</button>
-        </div>
-      )}>
+      <ErrorBoundary
+        fallback={({ error, reset }) => (
+          <div>
+            <h2>Something went wrong:</h2>
+            <details>{error.message}</details>
+            <button onClick={reset}>Try again</button>
+          </div>
+        )}
+      >
         <Suspense fallback={<div>Loading...</div>}>
           <UserProfile userId={1} />
           <UserPosts userId={1} />
@@ -104,15 +96,19 @@ function App() {
 ## Core Hooks
 
 ### useSuspenseQuery
+
 Enhanced `useQuery` with built-in Suspense support.
 
 ### useSuspenseQueries
+
 Suspense version of `useQueries` for parallel queries.
 
 ### useSuspenseInfiniteQuery
+
 Enhanced `useInfiniteQuery` with built-in Suspense support.
 
 ### Query Options
+
 - `queryOptions` - Type-safe query option builder
 - `infiniteQueryOptions` - Type-safe infinite query option builder
 - `mutationOptions` - Type-safe mutation option builder

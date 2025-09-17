@@ -54,12 +54,15 @@ function App() {
 ## Core Features
 
 ### atomWithSuspenseQuery
+
 Create atoms that integrate with TanStack Query and support Suspense.
 
 ### Async State Management
+
 Handle asynchronous state with automatic Suspense integration.
 
 ### Type Safety
+
 Full TypeScript support for all atom operations and state management.
 
 ## Documentation

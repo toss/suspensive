@@ -36,7 +36,7 @@ function UserProfile({ userId }) {
     queryKey: ['user', userId],
     queryFn: () => fetchUser(userId),
   })
-  
+
   return <div>Hello, {user.name}!</div>
 }
 
