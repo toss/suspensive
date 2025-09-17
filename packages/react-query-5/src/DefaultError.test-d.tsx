@@ -95,4 +95,26 @@ describe('DefaultError type overriding', () => {
       <PrefetchInfiniteQuery queryKey={queryKey} queryFn={queryFn} initialPageParam={0} getNextPageParam={() => 1} />
     ).toEqualTypeOf<React.JSX.Element>()
   })
+
+  it('should support complex custom error types with additional properties', () => {
+    class ApiError extends Error {
+      constructor(
+        message: string,
+        public status: number,
+        public response?: unknown,
+        public retryable: boolean = false
+      ) {
+        super(message)
+        this.name = 'ApiError'
+      }
+    }
+
+    // Simulate user's module augmentation for this test scope
+    const testError = new ApiError('Test error', 500, { details: 'Server error' }, true)
+
+    // Verify the error type structure
+    expectTypeOf(testError.status).toEqualTypeOf<number>()
+    expectTypeOf(testError.response).toEqualTypeOf<unknown>()
+    expectTypeOf(testError.retryable).toEqualTypeOf<boolean>()
+  })
 })
