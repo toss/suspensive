@@ -32,6 +32,7 @@ jobs:
         uses: preactjs/compressed-size-action@v2
         with:
           build-script: 'prepack'
-          pattern: 'packages/*/dist/{index,v4,v5}.{js,cjs,mjs}'
+          pattern: 'packages/**/dist/*.{js,cjs,mjs}'
           exclude: '{**/*.map,**/node_modules/**}'
+          strip-hash: '-([A-Za-z0-9_-]+)\.'
           repo-token: ${{ secrets.GITHUB_TOKEN }}
