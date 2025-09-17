@@ -24,42 +24,38 @@ npm install @suspensive/jotai jotai
 ## 빠른 시작
 
 ```jsx
-import { Suspense } from 'react'
-import { atom, useAtom } from 'jotai'
-import { atomWithSuspenseQuery } from '@suspensive/jotai'
+import { Atom } from '@suspensive/jotai'
+import { Suspense } from '@suspensive/react'
+import { atom } from 'jotai'
 
-// suspense가 포함된 비동기 atom 생성
-const userAtom = atomWithSuspenseQuery(() => ({
-  queryKey: ['user'],
-  queryFn: async () => {
-    const response = await fetch('/api/user')
-    return response.json()
-  },
-}))
-
-function UserProfile() {
-  const [user] = useAtom(userAtom)
-  return <div>안녕하세요, {user.name}님!</div>
-}
+// 비동기 atom 생성
+const userAtom = atom(async () => {
+  const response = await fetch('/api/user')
+  return response.json()
+})
 
 function App() {
   return (
     <Suspense fallback={<div>사용자 정보 로딩 중...</div>}>
-      <UserProfile />
+      <Atom atom={userAtom}>{([user]) => <div>안녕하세요, {user.name}님!</div>}</Atom>
     </Suspense>
   )
 }
 ```
 
-## 핵심 기능
+## 핵심 컴포넌트
 
-### atomWithSuspenseQuery
+### Atom
 
-TanStack Query와 통합되고 Suspense를 지원하는 atom을 생성합니다.
+비동기 atom에 대한 자동 Suspense 지원과 함께 Jotai atom을 사용하기 위한 선언적 인터페이스.
 
-### 비동기 상태 관리
+### AtomValue
 
-자동 Suspense 통합으로 비동기 상태를 처리합니다.
+Jotai의 useAtomValue와 유사하지만 컴포넌트로 제공되는 atom 값의 읽기 전용 인터페이스.
+
+### SetAtom
+
+atom을 업데이트하기 위한 쓰기 전용 인터페이스로, atom setter에 접근하는 선언적 방법을 제공.
 
 ### 타입 안전성
 

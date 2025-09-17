@@ -24,42 +24,38 @@ npm install @suspensive/jotai jotai
 ## Quick Start
 
 ```jsx
-import { Suspense } from 'react'
-import { atom, useAtom } from 'jotai'
-import { atomWithSuspenseQuery } from '@suspensive/jotai'
+import { Atom } from '@suspensive/jotai'
+import { Suspense } from '@suspensive/react'
+import { atom } from 'jotai'
 
-// Create an async atom with suspense
-const userAtom = atomWithSuspenseQuery(() => ({
-  queryKey: ['user'],
-  queryFn: async () => {
-    const response = await fetch('/api/user')
-    return response.json()
-  },
-}))
-
-function UserProfile() {
-  const [user] = useAtom(userAtom)
-  return <div>Hello, {user.name}!</div>
-}
+// Create an async atom
+const userAtom = atom(async () => {
+  const response = await fetch('/api/user')
+  return response.json()
+})
 
 function App() {
   return (
     <Suspense fallback={<div>Loading user...</div>}>
-      <UserProfile />
+      <Atom atom={userAtom}>{([user]) => <div>Hello, {user.name}!</div>}</Atom>
     </Suspense>
   )
 }
 ```
 
-## Core Features
+## Core Components
 
-### atomWithSuspenseQuery
+### Atom
 
-Create atoms that integrate with TanStack Query and support Suspense.
+Declarative interface for using Jotai atoms with automatic Suspense support for async atoms.
 
-### Async State Management
+### AtomValue
 
-Handle asynchronous state with automatic Suspense integration.
+Read-only interface for atom values, similar to Jotai's useAtomValue but as a component.
+
+### SetAtom
+
+Write-only interface for updating atoms, providing a declarative way to access atom setters.
 
 ### Type Safety
 
