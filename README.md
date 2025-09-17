@@ -12,9 +12,55 @@
 
 </div>
 
+## What is Suspensive?
+
+Suspensive is a comprehensive suite of libraries that makes React Suspense easier to use. It provides powerful components, hooks, and utilities that help you build better user experiences with declarative loading states, error boundaries, and async data fetching.
+
 ## Visit [suspensive.org](https://suspensive.org) for docs, guides, API and more!
 
 [English](https://suspensive.org/en) | [한국어](https://suspensive.org/ko)
+
+## Packages
+
+| Package | Description | Version |
+|---------|-------------|---------|
+| [@suspensive/react](./packages/react) | All components to use React Suspense easily | [![npm](https://img.shields.io/npm/v/@suspensive/react?color=000&labelColor=000)](https://www.npmjs.com/package/@suspensive/react) |
+| [@suspensive/react-dom](./packages/react-dom) | Suspensive interfaces for react-dom | [![npm](https://img.shields.io/npm/v/@suspensive/react-dom?color=000&labelColor=000)](https://www.npmjs.com/package/@suspensive/react-dom) |
+| [@suspensive/react-native](./packages/react-native) | Suspensive interfaces for react-native | [![npm](https://img.shields.io/npm/v/@suspensive/react-native?color=000&labelColor=000)](https://www.npmjs.com/package/@suspensive/react-native) |
+| [@suspensive/react-query](./packages/react-query) | Components and hooks to use @tanstack/react-query's suspense option easily | [![npm](https://img.shields.io/npm/v/@suspensive/react-query?color=000&labelColor=000)](https://www.npmjs.com/package/@suspensive/react-query) |
+| [@suspensive/react-query-4](./packages/react-query-4) | Suspensive interfaces for @tanstack/react-query@4 | [![npm](https://img.shields.io/npm/v/@suspensive/react-query-4?color=000&labelColor=000)](https://www.npmjs.com/package/@suspensive/react-query-4) |
+| [@suspensive/react-query-5](./packages/react-query-5) | Suspensive interfaces for @tanstack/react-query@5 | [![npm](https://img.shields.io/npm/v/@suspensive/react-query-5?color=000&labelColor=000)](https://www.npmjs.com/package/@suspensive/react-query-5) |
+| [@suspensive/jotai](./packages/jotai) | Suspensive integrations for Jotai state management | [![npm](https://img.shields.io/npm/v/@suspensive/jotai?color=000&labelColor=000)](https://www.npmjs.com/package/@suspensive/jotai) |
+| [@suspensive/codemods](./packages/codemods) | Codemods to help migrate and transform your Suspensive code | [![npm](https://img.shields.io/npm/v/@suspensive/codemods?color=000&labelColor=000)](https://www.npmjs.com/package/@suspensive/codemods) |
+
+## Quick Start
+
+```bash npm2yarn
+npm install @suspensive/react
+```
+
+```jsx
+import { Suspense, ErrorBoundary } from '@suspensive/react'
+
+function App() {
+  return (
+    <ErrorBoundary fallback={({ error }) => <div>Error: {error.message}</div>}>
+      <Suspense fallback={<div>Loading...</div>}>
+        <AsyncComponent />
+      </Suspense>
+    </ErrorBoundary>
+  )
+}
+```
+
+## Why Suspensive?
+
+- 🚀 **Easy to use**: Write declarative loading states with React Suspense
+- 🎯 **Type-safe**: Full TypeScript support with excellent type inference
+- 📦 **Modular**: Use only what you need - each package is independently installable
+- 🔄 **Compatible**: Works seamlessly with popular libraries like TanStack Query and Jotai
+- 🧪 **Well-tested**: Comprehensive test coverage and battle-tested in production
+- 📚 **Great DX**: Excellent documentation and developer experience
 
 <br/>
 
