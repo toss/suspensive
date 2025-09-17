@@ -2,6 +2,19 @@ import { Callout, Sandpack } from '@/components'
 
 # useSuspenseQueries
 
+<Callout type='warning'>
+
+**TanStack Query v4.40.0+에서 Deprecated**
+
+이 훅은 이제 TanStack Query v4.40.0+에서 공식적으로 지원됩니다. TanStack Query의 공식 인터페이스로 마이그레이션해주세요:
+
+```diff
+- import { useSuspenseQueries } from '@suspensive/react-query'
++ import { useSuspenseQueries } from '@tanstack/react-query'
+```
+
+</Callout>
+
 이 hook의 return 타입에는 isLoading, isError이 없습니다. `<Suspense/>` and `<ErrorBoundary/>`가 이 hook의 data를 보장해주기 때문입니다. 또한, 이 hook의 options에는 기본적으로 suspense가 true입니다. 필요한 새 options는 @tanstack/react-query의 [useQueries](https://tanstack.com/query/v4/docs/react/reference/useQueries)처럼 사용하면 됩니다.
 
 ```tsx /useSuspenseQueries/

@@ -1,6 +1,19 @@
-import { Sandpack } from '@/components'
+import { Callout, Sandpack } from '@/components'
 
 # infiniteQueryOptions
+
+<Callout type='warning'>
+
+**TanStack Query v4.41.0+에서 Deprecated**
+
+이 인터페이스는 이제 TanStack Query v4.41.0+에서 공식적으로 지원됩니다. TanStack Query의 공식 인터페이스로 마이그레이션해주세요:
+
+```diff
+- import { infiniteQueryOptions } from '@suspensive/react-query'
++ import { infiniteQueryOptions } from '@tanstack/react-query'
+```
+
+</Callout>
 
 `infiniteQueryOptions`는 Infinite Query에서 queryOptions를 활용할 수 있도록 도와줍니다. 이는 [`queryOptions`](https://suspensive.org/ko/docs/react-query/queryOptions)가 사용되는 이유와 유사한 장점을 제공합니다.
 

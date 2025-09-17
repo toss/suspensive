@@ -1,6 +1,19 @@
-import { Sandpack } from '@/components'
+import { Callout, Sandpack } from '@/components'
 
 # queryOptions
+
+<Callout type='warning'>
+
+**TanStack Query v4.40.0+에서 Deprecated**
+
+이 인터페이스는 이제 TanStack Query v4.40.0+에서 공식적으로 지원됩니다. TanStack Query의 공식 인터페이스로 마이그레이션해주세요:
+
+```diff
+- import { queryOptions } from '@suspensive/react-query'
++ import { queryOptions } from '@tanstack/react-query'
+```
+
+</Callout>
 
 TanStack Query의 메인테이너 [Tkdodo의 TanStack Query v5의 queryOptions 설명 영상](https://youtu.be/bhE3wuB_TuA?feature=shared&t=1697)에서 이 interface가 필요한 이유를 잘 설명되어 있습니다.
 TanStack Query v4에서도 queryOptions를 활용할 수 있습니다.
