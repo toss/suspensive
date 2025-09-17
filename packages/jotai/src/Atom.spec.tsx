@@ -115,7 +115,7 @@ describe('<Atom />', () => {
     )
 
     expect(screen.getByText('loading...')).toBeInTheDocument()
-    await act(() => vi.advanceTimersByTimeAsync(100))
+    await act(() => vi.advanceTimersByTime(100))
     expect(screen.getByText('value: hello')).toBeInTheDocument()
   })
 
@@ -152,12 +152,12 @@ describe('<Atom />', () => {
     )
 
     expect(screen.getByText('loading...')).toBeInTheDocument()
-    await act(() => vi.advanceTimersByTimeAsync(100))
+    await act(() => vi.advanceTimersByTime(100))
     expect(screen.getByText('value: 0')).toBeInTheDocument()
     fireEvent.click(screen.getByText('Set to 100'))
-    await act(() => vi.advanceTimersByTimeAsync(100))
+    await act(() => vi.advanceTimersByTime(100))
     expect(screen.getByText('loading...')).toBeInTheDocument()
-    await act(() => vi.advanceTimersByTimeAsync(100))
+    await act(() => vi.advanceTimersByTime(100))
     expect(screen.getByText('value: 100')).toBeInTheDocument()
   })
 })

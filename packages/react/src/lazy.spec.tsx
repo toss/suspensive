@@ -166,9 +166,9 @@ describe('lazy', () => {
 
     screen.getByRole('button', { name: 'show' }).click()
     expect(screen.getByText('not loaded')).toBeInTheDocument()
-    await act(() => vi.advanceTimersByTimeAsync(0))
+    await act(() => vi.advanceTimersByTime(0))
     expect(screen.getByText('loading...')).toBeInTheDocument()
-    await act(() => vi.advanceTimersByTimeAsync(100))
+    await act(() => vi.advanceTimersByTime(100))
     expect(screen.getByText('Component from /test-component')).toBeInTheDocument()
     expect(screen.queryByText('not loaded')).not.toBeInTheDocument()
   })
@@ -183,14 +183,14 @@ describe('lazy', () => {
 
       expect(importCache.getAttempt('/cached-component1')).toBe(1)
       expect(importCache.isCached('/cached-component1')).toBe(false)
-      await act(() => vi.advanceTimersByTimeAsync(100))
+      await act(() => vi.advanceTimersByTime(100))
       expect(importCache.isCached('/cached-component1')).toBe(true)
 
       render(<Component2 />)
 
       expect(importCache.getAttempt('/cached-component2')).toBe(1)
       expect(importCache.isCached('/cached-component2')).toBe(false)
-      await act(() => vi.advanceTimersByTimeAsync(100))
+      await act(() => vi.advanceTimersByTime(100))
       expect(importCache.isCached('/cached-component2')).toBe(true)
 
       render(<Component1 />)
@@ -217,7 +217,7 @@ describe('lazy', () => {
       )
 
       expect(screen.getByText('loading...')).toBeInTheDocument()
-      await act(() => vi.advanceTimersByTimeAsync(300))
+      await act(() => vi.advanceTimersByTime(300))
       expect(screen.getByText('error')).toBeInTheDocument()
 
       const Component2 = lazy(() => mockImport('/test-component'))
@@ -231,7 +231,7 @@ describe('lazy', () => {
       )
 
       expect(screen.getByText('loading...')).toBeInTheDocument()
-      await act(() => vi.advanceTimersByTimeAsync(200))
+      await act(() => vi.advanceTimersByTime(200))
       expect(screen.getByText('Component from /test-component')).toBeInTheDocument()
     })
 
@@ -245,7 +245,7 @@ describe('lazy', () => {
         </ErrorBoundary>
       )
 
-      await act(() => vi.advanceTimersByTimeAsync(100))
+      await act(() => vi.advanceTimersByTime(100))
       expect(screen.getByText('error')).toBeInTheDocument()
     })
   })
@@ -260,7 +260,7 @@ describe('lazy', () => {
 
       render(<Component />)
 
-      await act(() => vi.advanceTimersByTimeAsync(100))
+      await act(() => vi.advanceTimersByTime(100))
       expect(screen.getByText('Component from /test-component')).toBeInTheDocument()
 
       expect(onSuccess).toHaveBeenCalledTimes(1)
@@ -279,7 +279,7 @@ describe('lazy', () => {
         </ErrorBoundary>
       )
 
-      await act(() => vi.advanceTimersByTimeAsync(100))
+      await act(() => vi.advanceTimersByTime(100))
       expect(screen.getByText('error')).toBeInTheDocument()
 
       expect(onError).toHaveBeenCalledTimes(1)
@@ -295,7 +295,7 @@ describe('lazy', () => {
 
       render(<Component />)
 
-      await act(() => vi.advanceTimersByTimeAsync(100))
+      await act(() => vi.advanceTimersByTime(100))
       expect(screen.getByText('Component from /test-component')).toBeInTheDocument()
 
       expect(onSuccess).toHaveBeenCalledTimes(1)
@@ -313,7 +313,7 @@ describe('lazy', () => {
         </ErrorBoundary>
       )
 
-      await act(() => vi.advanceTimersByTimeAsync(100))
+      await act(() => vi.advanceTimersByTime(100))
       expect(screen.getByText('error')).toBeInTheDocument()
 
       expect(onError).toHaveBeenCalledTimes(1)
@@ -341,7 +341,7 @@ describe('lazy', () => {
         </ErrorBoundary>
       )
 
-      await act(() => vi.advanceTimersByTimeAsync(100))
+      await act(() => vi.advanceTimersByTime(100))
       expect(screen.getByText('error')).toBeInTheDocument()
 
       expect(defaultOnError).toHaveBeenCalledTimes(1)
@@ -366,7 +366,7 @@ describe('lazy', () => {
 
       render(<Component />)
 
-      await act(() => vi.advanceTimersByTimeAsync(100))
+      await act(() => vi.advanceTimersByTime(100))
       expect(screen.getByText('Component from /test-component')).toBeInTheDocument()
 
       expect(defaultOnSuccess).toHaveBeenCalledTimes(1)
@@ -394,10 +394,10 @@ describe('lazy', () => {
 
       expect(mockImport).toHaveBeenCalledTimes(1)
 
-      await act(() => vi.advanceTimersByTimeAsync(100))
+      await act(() => vi.advanceTimersByTime(100))
       expect(screen.getByText('error')).toBeInTheDocument()
 
-      await act(() => vi.advanceTimersByTimeAsync(1))
+      await act(() => vi.advanceTimersByTime(1))
       expect(mockReload).toHaveBeenCalledTimes(1)
 
       const Component2 = lazy(() => mockImport('/test-component'))
@@ -410,7 +410,7 @@ describe('lazy', () => {
 
       expect(mockImport).toHaveBeenCalledTimes(2)
 
-      await act(() => vi.advanceTimersByTimeAsync(100))
+      await act(() => vi.advanceTimersByTime(100))
       expect(screen.getByText('error')).toBeInTheDocument()
 
       expect(mockReload).toHaveBeenCalledTimes(1)
@@ -430,10 +430,10 @@ describe('lazy', () => {
 
       expect(mockImport).toHaveBeenCalledTimes(1)
 
-      await act(() => vi.advanceTimersByTimeAsync(100))
+      await act(() => vi.advanceTimersByTime(100))
       expect(screen.getByText('error')).toBeInTheDocument()
 
-      await act(() => vi.advanceTimersByTimeAsync(1))
+      await act(() => vi.advanceTimersByTime(1))
       expect(mockReload).toHaveBeenCalledTimes(1)
 
       const Component2 = lazy(() => mockImport('/test-component'))
@@ -446,7 +446,7 @@ describe('lazy', () => {
 
       expect(mockImport).toHaveBeenCalledTimes(2)
 
-      await act(() => vi.advanceTimersByTimeAsync(50))
+      await act(() => vi.advanceTimersByTime(50))
       expect(screen.getByText('Component from /test-component')).toBeInTheDocument()
 
       expect(mockReload).toHaveBeenCalledTimes(1)
@@ -482,13 +482,13 @@ describe('lazy', () => {
 
         expect(mockImport).toHaveBeenCalledTimes(i + 1)
 
-        await act(() => vi.advanceTimersByTimeAsync(50))
+        await act(() => vi.advanceTimersByTime(50))
         const errorElements = screen.getAllByText('error')
         errorElements.forEach((errorElement) => {
           expect(errorElement).toBeInTheDocument()
         })
 
-        await act(() => vi.advanceTimersByTimeAsync(100))
+        await act(() => vi.advanceTimersByTime(100))
         expect(mockReload).toHaveBeenCalledTimes(i + 1)
       }
 
@@ -509,10 +509,10 @@ describe('lazy', () => {
 
       expect(mockImport).toHaveBeenCalledTimes(1)
 
-      await act(() => vi.advanceTimersByTimeAsync(100))
+      await act(() => vi.advanceTimersByTime(100))
       expect(screen.getByText('error')).toBeInTheDocument()
 
-      await act(() => vi.advanceTimersByTimeAsync(50))
+      await act(() => vi.advanceTimersByTime(50))
       expect(mockReload).toHaveBeenCalledTimes(1)
     })
 
@@ -536,13 +536,13 @@ describe('lazy', () => {
 
         expect(mockImport).toHaveBeenCalledTimes(1)
 
-        await act(() => vi.advanceTimersByTimeAsync(100))
+        await act(() => vi.advanceTimersByTime(100))
         expect(screen.getByText('error')).toBeInTheDocument()
 
         // Component's onError should also be called
         expect(individualOnError).toHaveBeenCalledTimes(1)
         expect(individualOnError).toHaveBeenCalledWith({ error: expect.any(Error), load: expect.any(Function) })
-        await act(() => vi.advanceTimersByTimeAsync(1))
+        await act(() => vi.advanceTimersByTime(1))
         expect(mockReload).toHaveBeenCalledTimes(1)
       })
 
@@ -568,13 +568,13 @@ describe('lazy', () => {
         )
 
         expect(mockImport).toHaveBeenCalledTimes(1)
-        await act(() => vi.advanceTimersByTimeAsync(50))
+        await act(() => vi.advanceTimersByTime(50))
         expect(screen.getByText('error')).toBeInTheDocument()
 
         // Component's onError should also be called
         expect(individualOnError).toHaveBeenCalledTimes(1)
         expect(individualOnError).toHaveBeenCalledWith({ error: expect.any(Error), load: expect.any(Function) })
-        await act(() => vi.advanceTimersByTimeAsync(1))
+        await act(() => vi.advanceTimersByTime(1))
         // reloadOnError should work
         expect(mockReload).toHaveBeenCalledTimes(1)
       })
@@ -607,7 +607,7 @@ describe('lazy', () => {
 
         expect(mockImport).toHaveBeenCalledTimes(1)
 
-        await act(() => vi.advanceTimersByTimeAsync(50))
+        await act(() => vi.advanceTimersByTime(50))
         expect(screen.getByText('error')).toBeInTheDocument()
 
         // Factory's onError should also be called
@@ -617,7 +617,7 @@ describe('lazy', () => {
         expect(individualOnError).toHaveBeenCalledWith({ error: expect.any(Error), load: expect.any(Function) })
         expect(defaultOnSuccess).toHaveBeenCalledTimes(0)
         expect(individualOnSuccess).toHaveBeenCalledTimes(0)
-        await act(() => vi.advanceTimersByTimeAsync(1))
+        await act(() => vi.advanceTimersByTime(1))
         // reloadOnError should work
         expect(mockReload).toHaveBeenCalledTimes(1)
 
@@ -634,7 +634,7 @@ describe('lazy', () => {
 
         expect(mockImport).toHaveBeenCalledTimes(2)
 
-        await act(() => vi.advanceTimersByTimeAsync(100))
+        await act(() => vi.advanceTimersByTime(100))
         expect(screen.getByText('Component from /test-component')).toBeInTheDocument()
 
         expect(defaultOnError).toHaveBeenCalledTimes(1)
