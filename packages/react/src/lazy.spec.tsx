@@ -645,4 +645,73 @@ describe('lazy', () => {
       })
     })
   })
+
+  describe('reloadOnError error cases', () => {
+    const originalWindow = global.window
+    const mockReload = vi.fn((id: ReturnType<typeof setTimeout>) => {
+      clearTimeout(id)
+    })
+
+    afterEach(() => {
+      global.window = originalWindow
+    })
+
+    it('should throw error when no storage is provided and no sessionStorage in window', () => {
+      // @ts-expect-error - temporarily removing window for testing
+      delete global.window
+
+      expect(() => reloadOnError({})).toThrow('[@suspensive/react] No storage provided and no sessionStorage in window')
+    })
+
+    it('should throw error when no reload function is provided and no location in window', () => {
+      // @ts-expect-error - temporarily removing window for testing  
+      delete global.window
+
+      expect(() => reloadOnError({ storage })).toThrow('[@suspensive/react] No reload function provided and no location in window')
+    })
+
+    it('should reach retry limit and stop', async () => {
+      const lazy = createLazy(reloadOnError({ storage, reload: mockReload, retry: 2 }))
+      const mockImport = importCache.createImport({ failureCount: 10, failureDelay: 50, successDelay: 50 })
+
+      // First failure
+      const Component1 = lazy(() => mockImport('/test-component'))
+      const { unmount: unmount1 } = render(
+        <ErrorBoundary fallback={<div>error1</div>}>
+          <Component1 />
+        </ErrorBoundary>
+      )
+      await act(() => vi.advanceTimersByTimeAsync(50))
+      expect(screen.getByText('error1')).toBeInTheDocument()
+      await act(() => vi.advanceTimersByTimeAsync(1))
+      expect(mockReload).toHaveBeenCalledTimes(1)
+      unmount1()
+
+      // Second failure  
+      const Component2 = lazy(() => mockImport('/test-component'))
+      const { unmount: unmount2 } = render(
+        <ErrorBoundary fallback={<div>error2</div>}>
+          <Component2 />
+        </ErrorBoundary>
+      )
+      await act(() => vi.advanceTimersByTimeAsync(50))
+      expect(screen.getByText('error2')).toBeInTheDocument()
+      await act(() => vi.advanceTimersByTimeAsync(1))
+      expect(mockReload).toHaveBeenCalledTimes(2)
+      unmount2()
+
+      // Third failure - should not reload anymore
+      const Component3 = lazy(() => mockImport('/test-component'))
+      render(
+        <ErrorBoundary fallback={<div>error3</div>}>
+          <Component3 />
+        </ErrorBoundary>
+      )
+      await act(() => vi.advanceTimersByTimeAsync(50))
+      expect(screen.getByText('error3')).toBeInTheDocument()
+      await act(() => vi.advanceTimersByTimeAsync(1))
+      // Should still be 2, not 3
+      expect(mockReload).toHaveBeenCalledTimes(2)
+    })
+  })
 })
