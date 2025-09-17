@@ -13,6 +13,8 @@ This hook is now officially supported in TanStack Query v4.40.0+. Please migrate
 + import { useSuspenseQuery } from '@tanstack/react-query'
 ```
 
+For more details, see [TanStack Query PR #9140](https://github.com/TanStack/query/pull/9140).
+
 </Callout>
 
 There is no isLoading or isError in the return type of this hook. This is because `<Suspense/>` and `<ErrorBoundary/>` guarantee the data of this hook. Also, in the options of this hook, suspense is set to true by default. Any new options you need can be used like @tanstack/react-query's [useQuery](https://tanstack.com/query/v4/docs/react/reference/useQuery).

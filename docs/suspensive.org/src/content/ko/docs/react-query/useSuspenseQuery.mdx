@@ -13,6 +13,8 @@ import { Callout, Sandpack } from '@/components'
 + import { useSuspenseQuery } from '@tanstack/react-query'
 ```
 
+자세한 내용은 [TanStack Query PR #9140](https://github.com/TanStack/query/pull/9140)을 참고하세요.
+
 </Callout>
 
 이 hook의 return 타입에는 isLoading, isError이 없습니다. `<Suspense/>`와 `<ErrorBoundary/>`가 이 hook의 data를 보장해주기 때문입니다. 또한, 이 hook의 options에는 기본적으로 suspense가 true입니다. 필요한 새 options는 @tanstack/react-query의 [useQuery](https://tanstack.com/query/v4/docs/react/reference/useQuery)처럼 사용하면 됩니다.
