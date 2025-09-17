@@ -5,7 +5,7 @@ import Component from './index'
 describe('test-utils default component', () => {
   it('should render the default component', () => {
     render(<Component />)
-    
+
     expect(screen.getByText('Component')).toBeInTheDocument()
   })
 })

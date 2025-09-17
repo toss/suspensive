@@ -664,10 +664,12 @@ describe('lazy', () => {
     })
 
     it('should throw error when no reload function is provided and no location in window', () => {
-      // @ts-expect-error - temporarily removing window for testing  
+      // @ts-expect-error - temporarily removing window for testing
       delete global.window
 
-      expect(() => reloadOnError({ storage })).toThrow('[@suspensive/react] No reload function provided and no location in window')
+      expect(() => reloadOnError({ storage })).toThrow(
+        '[@suspensive/react] No reload function provided and no location in window'
+      )
     })
 
     it('should reach retry limit and stop', async () => {
@@ -687,7 +689,7 @@ describe('lazy', () => {
       expect(mockReload).toHaveBeenCalledTimes(1)
       unmount1()
 
-      // Second failure  
+      // Second failure
       const Component2 = lazy(() => mockImport('/test-component'))
       const { unmount: unmount2 } = render(
         <ErrorBoundary fallback={<div>error2</div>}>
