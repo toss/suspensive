@@ -1,9 +1,5 @@
-import {
-  type DefaultError,
-  type FetchInfiniteQueryOptions,
-  type QueryKey,
-  usePrefetchInfiniteQuery,
-} from '@tanstack/react-query'
+import { type FetchInfiniteQueryOptions, type QueryKey, usePrefetchInfiniteQuery } from '@tanstack/react-query'
+import type { DefaultError } from './types'
 
 /**
  * A component that allows you to use usePrefetchInfiniteQuery in JSX, avoiding the limitations of React hooks.

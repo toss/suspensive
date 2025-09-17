@@ -1,5 +1,4 @@
 import {
-  type DefaultError,
   type InfiniteData,
   type QueryKey,
   type UseSuspenseInfiniteQueryOptions,
@@ -7,6 +6,7 @@ import {
   useSuspenseInfiniteQuery,
 } from '@tanstack/react-query'
 import type { ReactNode } from 'react'
+import type { DefaultError } from './types'
 
 /**
  * We provide these components to clearly express what causes suspense at the same depth.

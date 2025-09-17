@@ -1,11 +1,11 @@
 import {
-  type DefaultError,
   type QueryKey,
   type UseSuspenseQueryOptions,
   type UseSuspenseQueryResult,
   useSuspenseQuery,
 } from '@tanstack/react-query'
 import type { ReactNode } from 'react'
+import type { DefaultError } from './types'
 
 /**
  * We provide these components to clearly express what causes suspense at the same depth.

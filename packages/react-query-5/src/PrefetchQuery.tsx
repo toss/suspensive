@@ -1,4 +1,5 @@
-import { type DefaultError, type QueryKey, type UsePrefetchQueryOptions, usePrefetchQuery } from '@tanstack/react-query'
+import { type QueryKey, type UsePrefetchQueryOptions, usePrefetchQuery } from '@tanstack/react-query'
+import type { DefaultError } from './types'
 
 /**
  * A component that allows you to use usePrefetchQuery in JSX, avoiding the limitations of React hooks.

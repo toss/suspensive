@@ -1,5 +1,6 @@
 export { infiniteQueryOptions } from './infiniteQueryOptions'
 export { queryOptions } from './queryOptions'
+export type { DefaultError, Register } from './types'
 export { usePrefetchInfiniteQuery } from './usePrefetchInfiniteQuery'
 export { usePrefetchQuery } from './usePrefetchQuery'
 export { useSuspenseInfiniteQuery } from './useSuspenseInfiniteQuery'
