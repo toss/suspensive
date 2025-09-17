@@ -23,5 +23,9 @@
     "eslint-plugin-prettier": "^5.5.4",
     "eslint-plugin-react-hooks": "6.0.0-rc.1",
     "typescript-eslint": "^8.31.0"
+  },
+  "devDependencies": {
+    "@babel/eslint-parser": "^7.28.4",
+    "@babel/preset-react": "^7.27.1"
   }
 }
