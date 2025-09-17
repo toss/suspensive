@@ -14,6 +14,7 @@ import {
   useRef,
   useState,
 } from 'react'
+import { ErrorBoundaryDefaultPropsContext } from './contexts/DefaultPropsContexts'
 import { ErrorBoundaryGroupContext } from './ErrorBoundaryGroup'
 import {
   Message_useErrorBoundaryFallbackProps_this_hook_should_be_called_in_ErrorBoundary_props_fallback,
@@ -169,7 +170,8 @@ class FallbackBoundary extends Component<{ children: ReactNode }> {
 export const ErrorBoundary = Object.assign(
   forwardRef<{ reset: () => void }, ErrorBoundaryProps>(
     ({ fallback, children, onError, onReset, resetKeys, shouldCatch }, ref) => {
-      const group = useContext(ErrorBoundaryGroupContext) ?? { resetKey: 0 }
+      const group = useContext(ErrorBoundaryGroupContext)
+      const defaultProps = useContext(ErrorBoundaryDefaultPropsContext)
       const baseErrorBoundaryRef = useRef<BaseErrorBoundary>(null)
       useImperativeHandle(ref, () => ({
         reset: () => baseErrorBoundaryRef.current?.reset(),
@@ -177,11 +179,11 @@ export const ErrorBoundary = Object.assign(
 
       return (
         <BaseErrorBoundary
-          shouldCatch={shouldCatch}
+          shouldCatch={shouldCatch ?? defaultProps.shouldCatch}
           fallback={fallback}
-          onError={onError}
-          onReset={onReset}
-          resetKeys={[group.resetKey, ...(resetKeys || [])]}
+          onError={onError ?? defaultProps.onError}
+          onReset={onReset ?? defaultProps.onReset}
+          resetKeys={[group?.resetKey ?? 0, ...(resetKeys || defaultProps.resetKeys || [])]}
           ref={baseErrorBoundaryRef}
         >
           {children}
