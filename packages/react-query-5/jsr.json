@@ -4,7 +4,7 @@
   "version": "3.9.0",
   "exports": "./src/index.ts",
   "imports": {
-    "@tanstack/react-query": "npm:@tanstack/react-query@latest",
+    "@tanstack/react-query": "npm:@tanstack/react-query@^5",
     "react": "npm:react@^19"
   },
   "publish": {
