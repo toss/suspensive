@@ -1,5 +1,11 @@
 # @suspensive/react
 
+## 3.10.0
+
+### Minor Changes
+
+- [#1734](https://github.com/toss/suspensive/pull/1734) [`956f31f`](https://github.com/toss/suspensive/commit/956f31f50cfb92a96dbd2310c0a4557d54158c71) Thanks [@manudeli](https://github.com/manudeli)! - feat(react): `useIsClient` as public api
+
 ## 3.9.1
 
 ### Patch Changes
