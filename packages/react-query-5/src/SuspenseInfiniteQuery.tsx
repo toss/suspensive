@@ -35,4 +35,9 @@ export const SuspenseInfiniteQuery = <
   ...options
 }: UseSuspenseInfiniteQueryOptions<TQueryFnData, TError, TData, TQueryKey, TPageParam> & {
   children: (query: UseSuspenseInfiniteQueryResult<TData, TError>) => ReactNode
-}) => <>{children(useSuspenseInfiniteQuery(options))}</>
+}) => (
+  <>
+    {/* eslint-disable-next-line @suspensive/check-parent-suspense */}
+    {children(useSuspenseInfiniteQuery(options))}
+  </>
+)

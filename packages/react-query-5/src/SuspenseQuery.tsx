@@ -32,4 +32,9 @@ export const SuspenseQuery = <
   ...options
 }: UseSuspenseQueryOptions<TQueryFnData, TError, TData, TQueryKey> & {
   children: (queryResult: UseSuspenseQueryResult<TData, TError>) => ReactNode
-}) => <>{children(useSuspenseQuery(options))}</>
+}) => (
+  <>
+    {/* eslint-disable-next-line @suspensive/check-parent-suspense */}
+    {children(useSuspenseQuery(options))}
+  </>
+)

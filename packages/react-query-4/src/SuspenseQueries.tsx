@@ -23,5 +23,10 @@ export function SuspenseQueries<T extends any[]>({
   queries: readonly [...SuspenseQueriesOptions<T>]
   children: (queries: SuspenseQueriesResults<T>) => ReactNode
 }) {
-  return <>{children(useSuspenseQueries({ queries }))}</>
+  return (
+    <>
+      {/* eslint-disable-next-line @suspensive/check-parent-suspense */}
+      {children(useSuspenseQueries({ queries }))}
+    </>
+  )
 }

@@ -8,6 +8,7 @@ import type { ReactNode } from 'react'
 import { query } from '~/query'
 
 const Text = ({ ms }: { ms: number }) => {
+  // eslint-disable-next-line @suspensive/check-parent-suspense
   const { data } = useSuspenseQuery(query.text(ms))
   return <p>result: {data}</p>
 }

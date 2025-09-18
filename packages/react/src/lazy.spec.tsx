@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @suspensive/check-parent-suspense */
 import { act, render, screen } from '@testing-library/react'
 import { type ComponentType, Suspense, useState } from 'react'
 import { afterEach, describe, expect, it, vi } from 'vitest'
