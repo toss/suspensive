@@ -1,6 +1,6 @@
+import { infiniteQueryOptions } from '@tanstack/react-query'
 import type { ReactNode } from 'react'
 import { describe, expectTypeOf, it } from 'vitest'
-import { infiniteQueryOptions } from './infiniteQueryOptions'
 import { PrefetchInfiniteQuery } from './PrefetchInfiniteQuery'
 import { queryFn, queryKey } from './test-utils'
 

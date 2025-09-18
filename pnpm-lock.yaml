@@ -35,11 +35,11 @@ catalogs:
       version: 4.1.8
   react-query4:
     '@tanstack/react-query':
-      specifier: 4.40.0
-      version: 4.40.0
+      specifier: 4.41.0
+      version: 4.41.0
     '@tanstack/react-query-devtools':
-      specifier: 4.40.0
-      version: 4.40.0
+      specifier: 4.41.0
+      version: 4.41.0
   react-query5:
     '@tanstack/react-query':
       specifier: ^5.85.9
@@ -259,10 +259,10 @@ importers:
         version: link:../../packages/react-query-4
       '@tanstack/react-query':
         specifier: catalog:react-query4
-        version: 4.40.0(react-dom@19.1.0(react@19.1.0))(react-native@0.76.6(@babel/core@7.27.1)(@babel/preset-env@7.26.0(@babel/core@7.27.1))(@types/react@19.1.6)(react@19.1.0))(react@19.1.0)
+        version: 4.41.0(react-dom@19.1.0(react@19.1.0))(react-native@0.76.6(@babel/core@7.27.1)(@babel/preset-env@7.26.0(@babel/core@7.27.1))(@types/react@19.1.6)(react@19.1.0))(react@19.1.0)
       '@tanstack/react-query-devtools':
         specifier: catalog:react-query4
-        version: 4.40.0(@tanstack/react-query@4.40.0(react-dom@19.1.0(react@19.1.0))(react-native@0.76.6(@babel/core@7.27.1)(@babel/preset-env@7.26.0(@babel/core@7.27.1))(@types/react@19.1.6)(react@19.1.0))(react@19.1.0))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+        version: 4.41.0(@tanstack/react-query@4.41.0(react-dom@19.1.0(react@19.1.0))(react-native@0.76.6(@babel/core@7.27.1)(@babel/preset-env@7.26.0(@babel/core@7.27.1))(@types/react@19.1.6)(react@19.1.0))(react@19.1.0))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       clsx:
         specifier: 'catalog:'
         version: 2.1.1
@@ -672,13 +672,13 @@ importers:
         specifier: ^13.0.0
         version: 13.0.0(commander@13.1.0)
       '@suspensive/react-query-4':
-        specifier: workspace:^3.8.0
+        specifier: workspace:^3.9.1
         version: link:../react-query-4
       '@suspensive/react-query-5':
-        specifier: workspace:^3.8.0
+        specifier: workspace:^3.9.1
         version: link:../react-query-5
       '@tanstack/react-query':
-        specifier: ^4.40.0 || ^5.82.0
+        specifier: ^4.41.0 || ^5.82.0
         version: 5.85.9(react@19.1.0)
       cli-table3:
         specifier: ^0.6.5
@@ -716,7 +716,7 @@ importers:
         version: link:../../configs/tsdown
       '@tanstack/react-query':
         specifier: catalog:react-query4
-        version: 4.40.0(react-dom@18.3.1(react@19.1.0))(react-native@0.76.6(@babel/core@7.27.1)(@babel/preset-env@7.26.0(@babel/core@7.27.1))(@types/react@19.1.6)(react@19.1.0))(react@19.1.0)
+        version: 4.41.0(react-dom@18.3.1(react@19.1.0))(react-native@0.76.6(@babel/core@7.27.1)(@babel/preset-env@7.26.0(@babel/core@7.27.1))(@types/react@19.1.6)(react@19.1.0))(react@19.1.0)
       '@types/react':
         specifier: catalog:react19
         version: 19.1.6
@@ -1973,9 +1973,6 @@ packages:
   '@emnapi/core@1.4.5':
     resolution: {integrity: sha512-XsLw1dEOpkSX/WucdqUhPWP7hDxSvZiY+fsUC14h+FtQ2Ifni4znbBt8punRX+Uj2JG/uDb8nEHVKvrVlvdZ5Q==}
 
-  '@emnapi/runtime@1.4.3':
-    resolution: {integrity: sha512-pBPWdu6MLKROBX05wSNKcNb++m5Er+KQ9QkB+WVM+pW2Kx9hoSrVTnu3BdkI5eBLZoKu/J6mW/B6i6bJB2ytXQ==}
-
   '@emnapi/runtime@1.4.5':
     resolution: {integrity: sha512-++LApOtY0pEEz1zrd9vy1/zXVaVJJ/EbAF3u0fXIzPJEDtnITsBGbbK0EkM72amhl/R5b+5xx0Y/QhcVOpuulg==}
 
@@ -2574,10 +2571,6 @@ packages:
 
   '@jridgewell/gen-mapping@0.3.12':
     resolution: {integrity: sha512-OuLGC46TjB5BbN1dH8JULVVZY4WTdkF7tV9Ys6wLL1rubZnCMstOhNHueU5bLCrnRuDhKPDM4g6sw4Bel5Gzqg==}
-
-  '@jridgewell/gen-mapping@0.3.5':
-    resolution: {integrity: sha512-IzL8ZoEDIBRWEzlCcRhOaCupYyN5gdIK+Q6fbFdPDg6HqX6jpkItn7DFIpW9LQzXG6Df9sA7+OKnq0qlz/GaQg==}
-    engines: {node: '>=6.0.0'}
 
   '@jridgewell/gen-mapping@0.3.8':
     resolution: {integrity: sha512-imAbBGkb+ebQyxKgzv5Hu2nmROxoDOXHh80evxdoXNOrvAnVx7zimzc1Oo5h9RlfV4vPXaE2iM5pOFbvOCClWA==}
@@ -3526,8 +3519,8 @@ packages:
     resolution: {integrity: sha512-Wo1iKt2b9OT7d+YGhvEPD3DXvPv2etTusIMhMUoG7fbhmxcXCtIjJDEygy91Y2JFlwGyjqiBPRozme7UD8hoqg==}
     engines: {node: '>=12'}
 
-  '@tanstack/query-core@4.40.0':
-    resolution: {integrity: sha512-7MJTtZkCSuehMC7IxMOCGsLvHS3jHx4WjveSrGsG1Nc1UQLjaFwwkpLA2LmPfvOAxnH4mszMOBFD6LlZE+aB+Q==}
+  '@tanstack/query-core@4.41.0':
+    resolution: {integrity: sha512-193R4Jp9hjvlij6LryxrB5Mpbffd2L9PeWh3KlIy/hJV4SkBOfiQZ+jc5qAZLDCrdbkA5FjGj+UoDYw6TcNnyA==}
 
   '@tanstack/query-core@5.85.9':
     resolution: {integrity: sha512-5fxb9vwyftYE6KFLhhhDyLr8NO75+Wpu7pmTo+TkwKmMX2oxZDoLwcqGP8ItKSpUMwk3urWgQDZfyWr5Jm9LsQ==}
@@ -3535,10 +3528,10 @@ packages:
   '@tanstack/query-devtools@5.84.0':
     resolution: {integrity: sha512-fbF3n+z1rqhvd9EoGp5knHkv3p5B2Zml1yNRjh7sNXklngYI5RVIWUrUjZ1RIcEoscarUb0+bOvIs5x9dwzOXQ==}
 
-  '@tanstack/react-query-devtools@4.40.0':
-    resolution: {integrity: sha512-Imtu6sx1NDVtH+hVuF7ftTL3t9r7jmfgnfedoj9xuxsFYwC2IbD0wXKJbeItHa4XbXCd63BFRGGGrMtVzuMnbA==}
+  '@tanstack/react-query-devtools@4.41.0':
+    resolution: {integrity: sha512-p0JJcKYyrRYv7HXPttEArIUIYEiFafTrimFfbT/IDmVlakDD9wYQLHAdjgyq+rzXeSmCkXbwVFiMu5zSl5Ka0A==}
     peerDependencies:
-      '@tanstack/react-query': ^4.40.0
+      '@tanstack/react-query': ^4.41.0
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
       react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
 
@@ -3555,8 +3548,8 @@ packages:
       next: ^13 || ^14 || ^15
       react: ^18 || ^19
 
-  '@tanstack/react-query@4.40.0':
-    resolution: {integrity: sha512-kt1G/wETT/Ad79cac5zJ8tyaMOm4rgyeomW5yDxgOO9qEhOwufgw9kgPpp+T9U0M0lL7EMoc6YXgv4gYhXu9tg==}
+  '@tanstack/react-query@4.41.0':
+    resolution: {integrity: sha512-4/euCZAv8zeaB5P/nQiySzB0JHM3tiraU9KjSvSlJAX7oIE9uPDZlHCkDg/bHYNXewzvsg0FtOMq0VUq8XMMOQ==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
       react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
@@ -12583,11 +12576,6 @@ snapshots:
       tslib: 2.8.1
     optional: true
 
-  '@emnapi/runtime@1.4.3':
-    dependencies:
-      tslib: 2.8.1
-    optional: true
-
   '@emnapi/runtime@1.4.5':
     dependencies:
       tslib: 2.8.1
@@ -12896,7 +12884,7 @@ snapshots:
       undici: 6.21.0
       unique-string: 2.0.0
       wrap-ansi: 7.0.0
-      ws: 8.18.1
+      ws: 8.18.3
     transitivePeerDependencies:
       - bufferutil
       - encoding
@@ -13012,9 +13000,9 @@ snapshots:
   '@expo/metro-config@0.19.8':
     dependencies:
       '@babel/core': 7.27.1
-      '@babel/generator': 7.27.1
-      '@babel/parser': 7.27.1
-      '@babel/types': 7.27.1
+      '@babel/generator': 7.28.0
+      '@babel/parser': 7.28.0
+      '@babel/types': 7.28.2
       '@expo/config': 10.0.7
       '@expo/env': 0.4.0
       '@expo/json-file': 9.0.0
@@ -13251,7 +13239,7 @@ snapshots:
 
   '@img/sharp-wasm32@0.34.2':
     dependencies:
-      '@emnapi/runtime': 1.4.3
+      '@emnapi/runtime': 1.4.5
     optional: true
 
   '@img/sharp-win32-arm64@0.34.2':
@@ -13409,7 +13397,7 @@ snapshots:
       '@jest/test-result': 29.7.0
       '@jest/transform': 29.7.0
       '@jest/types': 29.6.3
-      '@jridgewell/trace-mapping': 0.3.25
+      '@jridgewell/trace-mapping': 0.3.29
       '@types/node': 22.14.1
       chalk: 4.1.2
       collect-v8-coverage: 1.0.2
@@ -13437,7 +13425,7 @@ snapshots:
 
   '@jest/source-map@29.6.3':
     dependencies:
-      '@jridgewell/trace-mapping': 0.3.25
+      '@jridgewell/trace-mapping': 0.3.29
       callsites: 3.1.0
       graceful-fs: 4.2.11
 
@@ -13459,7 +13447,7 @@ snapshots:
     dependencies:
       '@babel/core': 7.27.1
       '@jest/types': 29.6.3
-      '@jridgewell/trace-mapping': 0.3.25
+      '@jridgewell/trace-mapping': 0.3.29
       babel-plugin-istanbul: 6.1.1
       chalk: 4.1.2
       convert-source-map: 2.0.0
@@ -13489,12 +13477,6 @@ snapshots:
       '@jridgewell/sourcemap-codec': 1.5.0
       '@jridgewell/trace-mapping': 0.3.29
 
-  '@jridgewell/gen-mapping@0.3.5':
-    dependencies:
-      '@jridgewell/set-array': 1.2.1
-      '@jridgewell/sourcemap-codec': 1.5.0
-      '@jridgewell/trace-mapping': 0.3.25
-
   '@jridgewell/gen-mapping@0.3.8':
     dependencies:
       '@jridgewell/set-array': 1.2.1
@@ -13507,8 +13489,8 @@ snapshots:
 
   '@jridgewell/source-map@0.3.6':
     dependencies:
-      '@jridgewell/gen-mapping': 0.3.8
-      '@jridgewell/trace-mapping': 0.3.25
+      '@jridgewell/gen-mapping': 0.3.12
+      '@jridgewell/trace-mapping': 0.3.29
 
   '@jridgewell/sourcemap-codec@1.5.0': {}
 
@@ -13681,7 +13663,7 @@ snapshots:
   '@napi-rs/wasm-runtime@0.2.10':
     dependencies:
       '@emnapi/core': 1.4.3
-      '@emnapi/runtime': 1.4.3
+      '@emnapi/runtime': 1.4.5
       '@tybys/wasm-util': 0.9.0
     optional: true
 
@@ -14563,16 +14545,16 @@ snapshots:
     dependencies:
       remove-accents: 0.5.0
 
-  '@tanstack/query-core@4.40.0': {}
+  '@tanstack/query-core@4.41.0': {}
 
   '@tanstack/query-core@5.85.9': {}
 
   '@tanstack/query-devtools@5.84.0': {}
 
-  '@tanstack/react-query-devtools@4.40.0(@tanstack/react-query@4.40.0(react-dom@19.1.0(react@19.1.0))(react-native@0.76.6(@babel/core@7.27.1)(@babel/preset-env@7.26.0(@babel/core@7.27.1))(@types/react@19.1.6)(react@19.1.0))(react@19.1.0))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
+  '@tanstack/react-query-devtools@4.41.0(@tanstack/react-query@4.41.0(react-dom@19.1.0(react@19.1.0))(react-native@0.76.6(@babel/core@7.27.1)(@babel/preset-env@7.26.0(@babel/core@7.27.1))(@types/react@19.1.6)(react@19.1.0))(react@19.1.0))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
     dependencies:
       '@tanstack/match-sorter-utils': 8.19.4
-      '@tanstack/react-query': 4.40.0(react-dom@19.1.0(react@19.1.0))(react-native@0.76.6(@babel/core@7.27.1)(@babel/preset-env@7.26.0(@babel/core@7.27.1))(@types/react@19.1.6)(react@19.1.0))(react@19.1.0)
+      '@tanstack/react-query': 4.41.0(react-dom@19.1.0(react@19.1.0))(react-native@0.76.6(@babel/core@7.27.1)(@babel/preset-env@7.26.0(@babel/core@7.27.1))(@types/react@19.1.6)(react@19.1.0))(react@19.1.0)
       react: 19.1.0
       react-dom: 19.1.0(react@19.1.0)
       superjson: 1.13.3
@@ -14596,18 +14578,18 @@ snapshots:
       next: 15.3.5(@babel/core@7.27.1)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       react: 19.1.0
 
-  '@tanstack/react-query@4.40.0(react-dom@18.3.1(react@19.1.0))(react-native@0.76.6(@babel/core@7.27.1)(@babel/preset-env@7.26.0(@babel/core@7.27.1))(@types/react@19.1.6)(react@19.1.0))(react@19.1.0)':
+  '@tanstack/react-query@4.41.0(react-dom@18.3.1(react@19.1.0))(react-native@0.76.6(@babel/core@7.27.1)(@babel/preset-env@7.26.0(@babel/core@7.27.1))(@types/react@19.1.6)(react@19.1.0))(react@19.1.0)':
     dependencies:
-      '@tanstack/query-core': 4.40.0
+      '@tanstack/query-core': 4.41.0
       react: 19.1.0
       use-sync-external-store: 1.2.2(react@19.1.0)
     optionalDependencies:
       react-dom: 18.3.1(react@19.1.0)
       react-native: 0.76.6(@babel/core@7.27.1)(@babel/preset-env@7.26.0(@babel/core@7.27.1))(@types/react@19.1.6)(react@19.1.0)
 
-  '@tanstack/react-query@4.40.0(react-dom@19.1.0(react@19.1.0))(react-native@0.76.6(@babel/core@7.27.1)(@babel/preset-env@7.26.0(@babel/core@7.27.1))(@types/react@19.1.6)(react@19.1.0))(react@19.1.0)':
+  '@tanstack/react-query@4.41.0(react-dom@19.1.0(react@19.1.0))(react-native@0.76.6(@babel/core@7.27.1)(@babel/preset-env@7.26.0(@babel/core@7.27.1))(@types/react@19.1.6)(react@19.1.0))(react@19.1.0)':
     dependencies:
-      '@tanstack/query-core': 4.40.0
+      '@tanstack/query-core': 4.41.0
       react: 19.1.0
       use-sync-external-store: 1.2.2(react@19.1.0)
     optionalDependencies:
@@ -18892,10 +18874,10 @@ snapshots:
   jest-snapshot@29.7.0:
     dependencies:
       '@babel/core': 7.27.1
-      '@babel/generator': 7.27.1
+      '@babel/generator': 7.28.0
       '@babel/plugin-syntax-jsx': 7.25.9(@babel/core@7.27.1)
       '@babel/plugin-syntax-typescript': 7.25.9(@babel/core@7.27.1)
-      '@babel/types': 7.27.1
+      '@babel/types': 7.28.2
       '@jest/expect-utils': 29.7.0
       '@jest/transform': 29.7.0
       '@jest/types': 29.6.3
@@ -19093,7 +19075,7 @@ snapshots:
       whatwg-encoding: 2.0.0
       whatwg-mimetype: 3.0.0
       whatwg-url: 11.0.0
-      ws: 8.18.1
+      ws: 8.18.3
       xml-name-validator: 4.0.0
     transitivePeerDependencies:
       - bufferutil
@@ -19808,7 +19790,7 @@ snapshots:
     dependencies:
       '@babel/traverse': 7.27.1
       '@babel/traverse--for-generate-function-map': '@babel/traverse@7.27.1'
-      '@babel/types': 7.27.1
+      '@babel/types': 7.28.2
       flow-enums-runtime: 0.0.6
       invariant: 2.2.4
       metro-symbolicate: 0.81.0
@@ -19834,7 +19816,7 @@ snapshots:
   metro-transform-plugins@0.81.0:
     dependencies:
       '@babel/core': 7.27.1
-      '@babel/generator': 7.27.1
+      '@babel/generator': 7.28.0
       '@babel/template': 7.27.1
       '@babel/traverse': 7.27.1
       flow-enums-runtime: 0.0.6
@@ -19845,7 +19827,7 @@ snapshots:
   metro-transform-worker@0.81.0:
     dependencies:
       '@babel/core': 7.27.1
-      '@babel/generator': 7.27.1
+      '@babel/generator': 7.28.0
       '@babel/parser': 7.28.0
       '@babel/types': 7.28.2
       flow-enums-runtime: 0.0.6
@@ -19866,7 +19848,7 @@ snapshots:
     dependencies:
       '@babel/code-frame': 7.27.1
       '@babel/core': 7.27.1
-      '@babel/generator': 7.27.1
+      '@babel/generator': 7.28.0
       '@babel/parser': 7.28.0
       '@babel/template': 7.27.1
       '@babel/traverse': 7.27.1
@@ -22373,7 +22355,7 @@ snapshots:
 
   sucrase@3.35.0:
     dependencies:
-      '@jridgewell/gen-mapping': 0.3.5
+      '@jridgewell/gen-mapping': 0.3.12
       commander: 4.1.1
       glob: 10.4.5
       lines-and-columns: 1.2.4
@@ -23077,7 +23059,7 @@ snapshots:
 
   v8-to-istanbul@9.3.0:
     dependencies:
-      '@jridgewell/trace-mapping': 0.3.25
+      '@jridgewell/trace-mapping': 0.3.29
       '@types/istanbul-lib-coverage': 2.0.6
       convert-source-map: 2.0.0
 

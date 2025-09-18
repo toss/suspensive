@@ -34,8 +34,8 @@ catalogs:
     jest-expo: ^52.0.2
     '@testing-library/react-native': ^12.9.0
   react-query4:
-    '@tanstack/react-query': 4.40.0
-    '@tanstack/react-query-devtools': 4.40.0
+    '@tanstack/react-query': 4.41.0
+    '@tanstack/react-query-devtools': 4.41.0
   react-query5:
     '@tanstack/react-query': ^5.85.9
     '@tanstack/react-query-devtools': ^5.85.9

@@ -43,6 +43,8 @@ import {
 이 경우 `isLoading`과 `isError`를 체크하여 로딩과 에러 상태를 처리하고 타입스크립트적으로 data에서 `undefined`를 제거할 수 있습니다.
 
 ```jsx ! Page.jsx
+import { useQuery } from '@tanstack/react-query'
+
 const Page = () => {
   const userQuery = useQuery(userQueryOptions())
   const postsQuery = useQuery({
@@ -82,6 +84,8 @@ const Page = () => {
 조회해야 하는 API가 더 많아진다면 이 로딩상태와 에러상태를 처리하는 코드가 더욱 복잡해집니다.
 
 ```jsx ! Page.jsx
+import { useQuery } from '@tanstack/react-query'
+
 const Page = () => {
   const userQuery = useQuery(userQueryOptions())
   const postsQuery = useQuery({
@@ -128,6 +132,9 @@ const Page = () => {
 하지만 `useSuspenseQuery`는 hook이기 때문에 부모에 `Suspense`와 `ErrorBoundary`를 두기 위해 컴포넌트가 분리되어야만 하기 때문에 뎁스가 깊어지는 문제가 있습니다.
 
 ```jsx ! Page.jsx
+import { ErrorBoundary, Suspense } from '@suspensive/react'
+import { useSuspenseQuery } from '@tanstack/react-query'
+
 const Page = () => (
   <ErrorBoundary fallback="error">
     <Suspense fallback="loading...">
@@ -165,6 +172,9 @@ const PromotionList = ({ userId }) => {
 2. UserInfo라는 컴포넌트를 제거하고 UserProfile과 같은 Presentational 컴포넌트만 남으므로 테스트하기 쉬워집니다.
 
 ```jsx ! Page.jsx
+import { ErrorBoundary, Suspense } from '@suspensive/react'
+import { SuspenseQuery } from '@suspensive/react-query'
+
 const Page = () => (
   <ErrorBoundary fallback="error">
     <Suspense fallback="loading...">
@@ -208,6 +218,9 @@ const Page = () => (
 혹은 서버에서 `Suspense`를 사용하고 싶지 않을 때가 있습니다.
 
 ```jsx ! Page.jsx
+import { Suspense } from '@suspensive/react'
+import { SuspenseQuery } from '@suspensive/react-query'
+
 const Page = () => (
   <Suspense fallback={<Spinner />}>
     <SuspenseQuery {...notNeedSEOQueryOptions()}>
@@ -222,6 +235,9 @@ const Page = () => (
 `ClientOnly`를 감싸주기만 하면 해결됩니다.
 
 ```jsx ! Page.jsx
+import { Suspense, ClientOnly } from '@suspensive/react'
+import { SuspenseQuery } from '@suspensive/react-query'
+
 const Page = () => (
   <Suspense fallback={<Spinner />}>
     <ClientOnly fallback={<InsteadOfChildrenOnlyInServer />}>
@@ -238,6 +254,9 @@ const Page = () => (
 간단하죠?
 
 ```jsx ! Page.jsx
+import { Suspense } from '@suspensive/react'
+import { SuspenseQuery } from '@suspensive/react-query'
+
 const Page = () => (
   <Suspense fallback={<Spinner />} clientOnly>
     <SuspenseQuery {...notNeedSEOQueryOptions()}>
@@ -253,6 +272,9 @@ const Page = () => (
 그럴 때 `DefaultProps`를 활용해보세요.
 
 ```jsx ! Page.jsx
+import { Suspense, DefaultProps, DefaultPropsProvider } from '@suspensive/react'
+import { SuspenseQuery } from '@suspensive/react-query'
+
 const defaultProps = new DefaultProps({
   Suspense: {
     fallback: <Spinner />,
@@ -275,6 +297,10 @@ const Page = () => (
 그렇다면 `FadeIn`을 활용해보면 어떨까요?
 
 ```jsx ! Page.jsx
+import { Suspense, DefaultProps, DefaultPropsProvider } from '@suspensive/react'
+import { SuspenseQuery } from '@suspensive/react-query'
+import { FadeIn } from '@suspensive/react-dom'
+
 const defaultProps = new DefaultProps({
   Suspense: {
     fallback: <FadeIn>{(fadeIn) => <Spinner {...fadeIn} />}</FadeIn>,
@@ -297,6 +323,10 @@ const Page = () => (
 디자이너가 이 부분에 기본 `Spinner`보다 `Skeleton`으로 동작하도록 지원해달라고 하네요~! 그냥 넣으면 되어요.
 
 ```jsx ! Page.jsx
+import { Suspense, DefaultProps, DefaultPropsProvider } from '@suspensive/react'
+import { SuspenseQuery } from '@suspensive/react-query'
+import { FadeIn } from '@suspensive/react-dom'
+
 const defaultProps = new DefaultProps({
   Suspense: {
     fallback: <FadeIn>{(fadeIn) => <Spinner {...fadeIn} />}</FadeIn>,
@@ -305,7 +335,7 @@ const defaultProps = new DefaultProps({
 
 const Page = () => (
   <DefaultPropsProvider defaultProps={defaultProps}>
-    <Suspense fallback={<Skeleton {...fadeIn} />} clientOnly>
+    <Suspense fallback={<Skeleton />} clientOnly>
       <SuspenseQuery {...notNeedSEOQueryOptions()}>
         {({ data }) => <NotNeedSEO {...data} />}
       </SuspenseQuery>
@@ -326,6 +356,8 @@ const Page = () => (
 이는 깊은 컴포넌트의 경우 `resetKey`를 전달해야 하는 문제가 있습니다. 또한 state를 만들어 `resetKey`를 전달해야 하는 문제가 있습니다.
 
 ```jsx ! Page.jsx
+import { ErrorBoundary } from '@suspensive/react'
+
 const Page = () => {
   const [resetKey, setResetKey] = useState(0)
 
@@ -357,6 +389,8 @@ const DeepComponent = ({ resetKeys }) => (
 `ErrorBoundaryGroup`을 사용해보세요.
 
 ```jsx ! Page.jsx
+import { ErrorBoundary, ErrorBoundaryGroup } from '@suspensive/react'
+
 const Page = () => (
   <ErrorBoundaryGroup>
     <ErrorBoundaryGroup.Consumer>
@@ -384,6 +418,8 @@ const DeepComponent = () => (
 그럴 때에는 Suspensive가 제공하는 `ErrorBoundary`의 `shouldCatch`를 써보세요. 이 `shouldCatch`에 Error Constructor를 넣으면 해당 Error에 대해서만 처리할 수 있습니다.
 
 ```jsx ! Page.jsx
+import { ErrorBoundary, ErrorBoundaryGroup } from '@suspensive/react'
+
 const Page = () => (
   <ErrorBoundaryGroup>
     <ErrorBoundaryGroup.Consumer>
@@ -414,6 +450,8 @@ const DeepComponent = () => (
 그럴 때에는 `shouldCatch`에 callback을 넣어서 처리할 수 있습니다.
 
 ```jsx ! Page.jsx
+import { ErrorBoundary, ErrorBoundaryGroup } from '@suspensive/react'
+
 const Page = () => (
   <ErrorBoundaryGroup>
     <ErrorBoundaryGroup.Consumer>
