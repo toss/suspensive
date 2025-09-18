@@ -1,0 +1,115 @@
+import { Sandpack } from '@/components'
+
+# useIsClient
+
+클라이언트 사이드에서 실행될 때는 `true`를, 서버 사이드에서 실행될 때는 `false`를 반환하는 훅입니다. 이 훅은 실행 환경을 감지하고 클라이언트 전용 로직을 처리하는 데 유용합니다.
+
+이 훅은 [`ClientOnly`](/docs/react/ClientOnly) 컴포넌트에서 내부적으로 사용되어 언제 children을 렌더링할지 결정합니다.
+
+```tsx /useIsClient/
+import { useIsClient } from '@suspensive/react'
+
+const Example = () => {
+  const isClient = useIsClient()
+
+  return <div>{isClient ? '클라이언트' : '서버'}</div>
+}
+```
+
+<Sandpack>
+
+```tsx Example.tsx active
+import { useIsClient } from '@suspensive/react'
+
+export const Example = () => {
+  const isClient = useIsClient()
+
+  return (
+    <div style={{ padding: 20, backgroundColor: 'lightblue' }}>
+      <h3>환경 감지</h3>
+      <p>현재 환경: {isClient ? '클라이언트 사이드' : '서버 사이드'}</p>
+      {isClient && <p>이 텍스트는 클라이언트에서만 나타납니다!</p>}
+    </div>
+  )
+}
+```
+
+</Sandpack>
+
+## 사용 사례
+
+### 환경에 따른 조건부 렌더링
+
+`useIsClient`를 사용하여 코드가 클라이언트에서 실행되는지 서버에서 실행되는지에 따라 컴포넌트나 콘텐츠를 조건부로 렌더링할 수 있습니다.
+
+```tsx /conditional-rendering/
+import { useIsClient } from '@suspensive/react'
+
+const Example = () => {
+  const isClient = useIsClient()
+
+  return <div>{isClient ? <ClientOnlyComponent /> : <ServerFallback />}</div>
+}
+```
+
+### 클라이언트 전용 로직
+
+`useIsClient`를 사용하여 하이드레이션 불일치를 일으키지 않고 클라이언트 전용 코드를 안전하게 실행할 수 있습니다.
+
+```tsx /client-only-logic/
+import { useIsClient } from '@suspensive/react'
+import { useEffect, useState } from 'react'
+
+const Example = () => {
+  const isClient = useIsClient()
+  const [windowWidth, setWindowWidth] = useState(0)
+
+  useEffect(() => {
+    if (isClient) {
+      const handleResize = () => setWindowWidth(window.innerWidth)
+      window.addEventListener('resize', handleResize)
+      handleResize() // 초기값 설정
+
+      return () => window.removeEventListener('resize', handleResize)
+    }
+  }, [isClient])
+
+  return <div>{isClient ? `창 너비: ${windowWidth}px` : '로딩 중...'}</div>
+}
+```
+
+### 안전한 브라우저 API 접근
+
+클라이언트 사이드에서만 사용 가능한 브라우저 API에 안전하게 접근할 수 있습니다.
+
+```tsx /browser-api/
+import { useIsClient } from '@suspensive/react'
+
+const Example = () => {
+  const isClient = useIsClient()
+
+  const handleClick = () => {
+    if (isClient) {
+      // 브라우저 API를 안전하게 사용
+      localStorage.setItem('clicked', 'true')
+      console.log('클릭됨!')
+    }
+  }
+
+  return <button onClick={handleClick}>클릭하세요 (클라이언트 전용)</button>
+}
+```
+
+## 구현 세부사항
+
+`useIsClient`는 React의 `useSyncExternalStore` 훅을 사용하여 구현되어 다음을 보장합니다:
+
+- **일관된 동작**: 서버 사이드 렌더링 중에는 `false`를, 클라이언트에서는 `true`를 반환
+- **하이드레이션 불일치 없음**: 서버에서 클라이언트로의 전환을 적절히 처리
+- **성능**: 불필요한 리렌더링 없이 최소한의 오버헤드
+
+훅은 내부적으로 다음을 사용합니다:
+
+- `getSnapshot`: `true` 반환 (클라이언트 환경)
+- `getServerSnapshot`: `false` 반환 (서버 환경)
+- `emptySubscribe`: 환경이 컴포넌트 생명주기 동안 변경되지 않으므로 no-op 구독 함수
