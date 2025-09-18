@@ -7,18 +7,18 @@ Suspensive v3에서는 새로운 기능을 도입하고 안정성을 높이기 �
 
 ### 실험 버전의 Suspensive 패키지들을 안정화했습니다.
 
-- [@suspensive/react-dom](../react-dom/installation)
+- [@suspensive/react-dom](../react-dom/installation) - [#1467](https://github.com/toss/suspensive/pull/1467)
 - [@suspensive/jotai](../jotai/motivation)
-- [@suspensive/codemods](../codemods/motivation)
+- [@suspensive/codemods](../codemods/motivation) - [#1461](https://github.com/toss/suspensive/pull/1461)
 
 ### ErrorBoundary fallback내 에러 발생 시 무한 루프를 방지합니다.
 
-@suspensive/react의 ErrorBoundary의 fallback내 에러를 처리하는 방식이 변경되었습니다.
+@suspensive/react의 ErrorBoundary의 fallback내 에러를 처리하는 방식이 변경되었습니다. [#1409](https://github.com/toss/suspensive/pull/1409)
 
 ### @suspensive/react-query의 peerDependency을 제거했습니다.
 
 @suspensive/react를 더 이상 peerDependency로 의존하지 않습니다. 오직 QueryErrorBoundary를 제공하기 위해 의존했었습니다.
-따라서 @suspensive/react-query의 사용자가 @tanstack/react-query외에 다른 라이브러리를 추가로 반드시 사용하지 않도록 단순화하는 작업을 진행했습니다.
+따라서 @suspensive/react-query의 사용자가 @tanstack/react-query외에 다른 라이브러리를 추가로 반드시 사용하지 않도록 단순화하는 작업을 진행했습니다. [#1434](https://github.com/toss/suspensive/pull/1434)
 
 ### 마이그레이션 가이드
 
