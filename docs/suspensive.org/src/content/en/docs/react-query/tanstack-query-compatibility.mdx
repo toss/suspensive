@@ -8,6 +8,24 @@ From version 2.2.0 onwards, @tanstack/react-query supports both v4 and v5. To su
 
 </Callout>
 
+<Callout type='warning'>
+
+**Deprecated Backported Interfaces in TanStack Query v4**
+
+Starting from TanStack Query v4.40.0 and v4.41.0, several interfaces that were previously backported by @suspensive/react-query are now officially supported in TanStack Query itself. These backported interfaces are now deprecated and will be removed in future versions.
+
+**Deprecated interfaces:**
+
+- `queryOptions` (available since v4.40.0)
+- `infiniteQueryOptions` (available since v4.41.0)
+- `useSuspenseQuery`, `useSuspenseQueries`, `useSuspenseInfiniteQuery` (available since v4.40.0)
+- `SuspenseQueriesOptions`, `SuspenseQueriesResults` (available since v4.40.0)
+- `UseSuspenseQueryOptions`, `UseSuspenseQueryResult` (available since v4.40.0)
+
+**Migration required:** If you're using TanStack Query v4.40.0+ or v4.41.0+, please migrate to the official TanStack Query interfaces instead of the backported ones from @suspensive/react-query.
+
+</Callout>
+
 @suspensive/react-query is composed of @suspensive/react-query-4 and @suspensive/react-query-5, which provide interfaces corresponding to the version of @tanstack/react-query. It detects the installed version of @tanstack/react-query in the user's environment and automatically provides the compatible interface.
 
 ## Command-Line Interface (CLI)
