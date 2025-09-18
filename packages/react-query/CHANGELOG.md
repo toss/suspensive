@@ -1,5 +1,25 @@
 # @suspensive/react-query
 
+## 3.9.1
+
+### Patch Changes
+
+- [#1737](https://github.com/toss/suspensive/pull/1737) [`458812c`](https://github.com/toss/suspensive/commit/458812cb875356aefacba2f3ba9515a30720b57e) Thanks [@copilot-swe-agent](https://github.com/apps/copilot-swe-agent)! - feat: add npm OIDC authentication support
+
+  This adds OIDC (OpenID Connect) authentication support for npm publishing in GitHub Actions. The implementation enables secure, tokenless publishing to npm using GitHub's OIDC tokens with provenance support.
+
+  Key features:
+
+  - **OIDC Authentication**: Uses GitHub Actions `id-token: write` permission for secure publishing
+  - **Provenance Support**: Enables npm package provenance through `NPM_CONFIG_PROVENANCE=true`
+  - **Backward Compatibility**: Maintains NPM_TOKEN as fallback for existing workflows
+
+  This enhances security by reducing dependency on long-lived npm tokens while providing package provenance for better supply chain security.
+
+- Updated dependencies [[`458812c`](https://github.com/toss/suspensive/commit/458812cb875356aefacba2f3ba9515a30720b57e)]:
+  - @suspensive/react-query-4@3.9.1
+  - @suspensive/react-query-5@3.9.1
+
 ## 3.9.0
 
 ### Minor Changes
