@@ -1,0 +1,62 @@
+{
+  "name": "forsightjs",
+  "version": "0.1.0",
+  "description": "Predictive viewport detection library for enhanced user experience",
+  "keywords": [
+    "viewport",
+    "intersection",
+    "predictive",
+    "performance",
+    "preload"
+  ],
+  "homepage": "https://suspensive.org",
+  "bugs": "https://github.com/toss/suspensive/issues",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/toss/suspensive.git",
+    "directory": "packages/forsightjs"
+  },
+  "license": "MIT",
+  "author": "Jonghyeon Ko <jonghyeon@toss.im>",
+  "sideEffects": false,
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
+    },
+    "./package.json": "./package.json"
+  },
+  "main": "dist/index.cjs",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "build": "tsdown",
+    "ci:attw": "attw --pack",
+    "ci:eslint": "eslint \"**/*.{ts,tsx,cts,mts}\"",
+    "ci:publint": "publint --strict",
+    "ci:test": "vitest run",
+    "ci:type": "tsc --noEmit",
+    "clean": "rimraf ./dist ./coverage ./node_modules",
+    "prepack": "pnpm run build",
+    "test:ui": "vitest --ui"
+  },
+  "devDependencies": {
+    "@suspensive/eslint-config": "workspace:*",
+    "@suspensive/tsconfig": "workspace:*",
+    "@suspensive/tsdown": "workspace:*"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
