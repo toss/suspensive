@@ -1,4 +1,5 @@
 import pluginReact from '@eslint-react/eslint-plugin'
+import { defineConfig } from 'eslint/config'
 import importPlugin from 'eslint-plugin-import'
 import jsdoc from 'eslint-plugin-jsdoc'
 import reactHooks from 'eslint-plugin-react-hooks'
@@ -12,7 +13,7 @@ import * as mdx from 'eslint-plugin-mdx'
 
 const ignores = ['**/.next/**', '**/build/**', '**/coverage/**', '**/dist/**']
 
-export const suspensiveTypeScriptConfig = tseslint.config(
+export const suspensiveTypeScriptConfig = defineConfig(
   {
     ignores,
   },
@@ -109,7 +110,7 @@ export const suspensiveTypeScriptConfig = tseslint.config(
   eslintPluginPrettierRecommended
 )
 
-export const suspensiveReactTypeScriptConfig = tseslint.config(
+export const suspensiveReactTypeScriptConfig = defineConfig(
   ...suspensiveTypeScriptConfig,
   reactHooks.configs.recommended,
   {
