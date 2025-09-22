@@ -9,6 +9,109 @@
   display: none; /* Chrome, Safari, Opera*/
 }
 
+/* 기본 body 스타일 - 라이트모드 우선 */
 body {
-  background-color: #0c0c0c;
+  @apply bg-white text-black transition-colors duration-300;
+}
+
+/* 다크모드일 때만 어두운 배경과 밝은 텍스트 */
+.dark body {
+  @apply bg-black text-white;
+}
+
+/* HomePage 컨테이너 섹션 - 라이트모드가 기본 */
+.homepage-content {
+  @apply bg-white text-black transition-colors duration-300;
+}
+
+/* 다크모드에서만 어두운 배경 */
+.dark .homepage-content {
+  @apply bg-black text-white;
+}
+
+/* 코드 블록 스타일 - 라이트모드 기본 */
+.nextra-code {
+  @apply border border-gray-300 bg-gray-100 text-gray-900;
+}
+
+/* 다크모드에서만 어두운 코드 블록 */
+.dark .nextra-code {
+  @apply border-gray-700 bg-gray-800 text-gray-100;
+}
+
+/* homepage-content 내부의 코드 블록도 동일하게 */
+.homepage-content .nextra-code {
+  @apply border border-gray-300 bg-gray-100 text-gray-900;
+}
+
+.dark .homepage-content .nextra-code {
+  @apply border-gray-700 bg-gray-800 text-gray-100;
+}
+
+/* 코드 하이라이팅 - 라이트모드 기본 */
+pre {
+  @apply border border-gray-300 bg-gray-200;
+}
+
+code {
+  @apply bg-gray-100 text-gray-900;
+}
+
+/* 다크모드에서만 어두운 코드 하이라이팅 */
+.dark pre {
+  @apply border-gray-900 bg-black;
+}
+
+.dark code {
+  @apply bg-[#000000] text-gray-100;
+}
+
+/* 링크 색상 */
+
+.a {
+  @apply text-blue-400 hover:text-blue-300;
+}
+
+/* 테이블 스타일 */
+table {
+  @apply border-gray-300 bg-white;
+}
+
+th {
+  @apply bg-gray-50 text-gray-900;
+}
+
+td {
+  @apply border-gray-300 text-gray-800;
+}
+
+/* 다크모드 테이블 */
+.dark table {
+  @apply border-gray-700 bg-gray-800;
+}
+
+.dark th {
+  @apply bg-gray-700 text-gray-100;
+}
+
+.dark td {
+  @apply border-gray-700 text-gray-200;
+}
+
+/* nextra 컴포넌트들 기본 스타일 */
+.nextra-nav-container {
+  @apply border-gray-200 bg-white;
+}
+
+.nextra-sidebar {
+  @apply bg-white;
+}
+
+/* nextra 컴포넌트들 다크모드 */
+.dark .nextra-nav-container {
+  @apply border-gray-700 bg-gray-900;
+}
+
+.dark .nextra-sidebar {
+  @apply bg-gray-900;
 }
