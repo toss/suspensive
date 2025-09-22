@@ -50,7 +50,7 @@ export default async function RootLayout({
       </Head>
       <body>
         <Layout
-          darkMode={true} // nextra 내장 다크모드 토글 활성화 시도 - 9/22
+          darkMode
           search={<Search placeholder={dictionary.search.placeholder} />}
           navbar={
             <Navbar
