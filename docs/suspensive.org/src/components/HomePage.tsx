@@ -12,6 +12,7 @@ import { Magnetic } from './Magnetic'
 import { NpmInstallCopyButton } from './NpmInstallCopyButton'
 import { Spotlight } from './Spotlight'
 import { Tilt } from './Tilt'
+import { useTheme } from 'nextra-theme-docs'
 
 const CodeBlockClassName = 'nextra-code'
 
@@ -42,7 +43,7 @@ export const HomePage = ({
       <motion.section
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        className="-mx-4 -mt-4 bg-[url('/img/homepage_background.svg')] bg-cover bg-center bg-no-repeat pb-20 md:-mx-12"
+        className="-mx-4 -mt-4 bg-[url('/img/homepage_background.svg')] bg-cover bg-center bg-no-repeat pb-20 transition-colors duration-300 md:-mx-12"
       >
         <div className="flex flex-col items-center justify-center gap-8 text-center">
           <div className="flex flex-col items-center">
@@ -70,7 +71,7 @@ export const HomePage = ({
                         whileTap={{ scale: 0.95 }}
                         animate={{ scale: 1.01 }}
                         type="button"
-                        className="cursor-pointer rounded-xl bg-[#000000] px-7 py-2 text-lg font-semibold text-[ffffff80] md:px-7 md:py-3 md:text-xl"
+                        className="cursor-pointer rounded-xl bg-black px-7 py-2 text-lg font-semibold text-white/80 transition-colors duration-300 md:px-7 md:py-3 md:text-xl"
                       >
                         <BorderTrail
                           size={200}
@@ -80,7 +81,7 @@ export const HomePage = ({
                           }}
                         />
                         <Spotlight
-                          className="blur-4xl bg-zinc-700"
+                          className="blur-4xl bg-zinc-700 dark:bg-zinc-300"
                           size={64}
                           springOptions={{
                             bounce: 0.3,
@@ -131,7 +132,7 @@ export const HomePage = ({
         initial={{ y: 30, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ delay: 0.5, duration: 0.2 }}
-        className="container"
+        className="homepage-content container"
       >
         {children}
       </motion.section>
@@ -158,6 +159,7 @@ const StarCanvasFar = () => {
   const resizeAnimationFrameIdRef = useRef(0)
   const onRenderRef = useRef<VoidFunction | null>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
+  const { resolvedTheme } = useTheme() // useTheme 사용 -9/22
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -199,6 +201,9 @@ const StarCanvasFar = () => {
       const maxSX = Math.ceil(width / TILE)
       const maxSY = Math.ceil(height / TILE)
 
+      // 다크모드에 따른 별 색상 변경 시도 -9/22
+      const starColor = resolvedTheme === 'dark' ? '255, 255, 255' : '0, 0, 0'
+
       for (let sx = 0; sx <= maxSX; ++sx) {
         for (let sy = 0; sy <= maxSY; ++sy) {
           const { velocity, distance, pos, size } = getVertex(sx, sy)
@@ -218,7 +223,7 @@ const StarCanvasFar = () => {
 
           ctx?.beginPath()
           // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-          ctx!.fillStyle = `rgba(255, 255, 255, ${a})`
+          ctx!.fillStyle = `rgba(${starColor}, ${a})`
           ctx?.arc(x, y, size, 0, 2 * Math.PI)
           ctx?.fill()
         }
@@ -245,7 +250,7 @@ const StarCanvasFar = () => {
       cancelAnimationFrame(resizeAnimationFrameIdRef.current)
       observer.disconnect()
     }
-  }, [])
+  }, [resolvedTheme]) // resolvedTheme 의존성을 추가하였습니다. -9/22
 
   useEffect(() => {
     const requestAnimation = () => {
@@ -280,6 +285,7 @@ const StarCanvasClose = () => {
   const resizeAnimationFrameIdRef = useRef(0)
   const onRenderRef = useRef<VoidFunction | null>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
+  const { resolvedTheme } = useTheme() // useTheme 사용 -9/22
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -323,6 +329,9 @@ const StarCanvasClose = () => {
       const maxSX = Math.ceil(width / TILE_CLOSE)
       const maxSY = Math.ceil(height / TILE_CLOSE)
 
+      // 다크모드에 따른 별 색상 변경 시도 -9/22
+      const starColor = resolvedTheme === 'dark' ? '255, 255, 255' : '0, 0, 0'
+
       for (let sx = 0; sx <= maxSX; ++sx) {
         for (let sy = 0; sy <= maxSY; ++sy) {
           const { velocity, distance, pos, size } = getVertex(sx, sy)
@@ -342,7 +351,7 @@ const StarCanvasClose = () => {
 
           ctx?.beginPath()
           // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-          ctx!.fillStyle = `rgba(255, 255, 255, ${a})`
+          ctx!.fillStyle = `rgba(${starColor}, ${a})`
           ctx?.arc(x, y, size, 0, 2 * Math.PI)
           ctx?.fill()
         }
@@ -369,7 +378,7 @@ const StarCanvasClose = () => {
       cancelAnimationFrame(resizeAnimationFrameIdRef.current)
       observer.disconnect()
     }
-  }, [])
+  }, [resolvedTheme])
 
   useEffect(() => {
     const requestAnimation = () => {
