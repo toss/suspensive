@@ -82,7 +82,6 @@ export default async function RootLayout({
           }}
           editLink={dictionary.editPage}
           pageMap={pageMap}
-          // next-themes 설정 시도 - 9/22
           nextThemes={{
             defaultTheme: 'system',
             storageKey: 'suspensive-theme',
