@@ -50,7 +50,7 @@ export default async function RootLayout({
       </Head>
       <body>
         <Layout
-          darkMode={false}
+          darkMode={true} // nextra 내장 다크모드 토글 활성화 시도 - 9/22
           search={<Search placeholder={dictionary.search.placeholder} />}
           navbar={
             <Navbar
@@ -82,7 +82,11 @@ export default async function RootLayout({
           }}
           editLink={dictionary.editPage}
           pageMap={pageMap}
-          nextThemes={{ defaultTheme: 'dark' }}
+          // next-themes 설정 시도 - 9/22
+          nextThemes={{
+            defaultTheme: 'system',
+            storageKey: 'suspensive-theme',
+          }}
           feedback={{ content: '' }}
           lastUpdated={<LastUpdated>{dictionary.lastUpdated}</LastUpdated>}
         >
