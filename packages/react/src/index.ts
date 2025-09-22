@@ -5,6 +5,7 @@ export { ErrorBoundary, useErrorBoundary, useErrorBoundaryFallbackProps } from '
 export { ErrorBoundaryGroup, useErrorBoundaryGroup } from './ErrorBoundaryGroup'
 export { lazy, reloadOnError, createLazy } from './lazy'
 export { Suspense } from './Suspense'
+export { useIsClient } from './useIsClient'
 
 export type { ClientOnlyProps } from './ClientOnly'
 export type { DelayProps } from './Delay'
