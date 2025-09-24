@@ -7,19 +7,19 @@ interface TrustedByProps {
   description?: string
 }
 
+// Initial set of companies - this can be expanded as companies add themselves
+const companies = [
+  {
+    name: 'Toss',
+    logo: 'https://static.toss.im/logos/png/4x/logo-toss-blue.png',
+    website: 'https://toss.im',
+  },
+] as const
+
 export const TrustedBy = ({
   title = 'Trusted by',
   description = 'Used by teams at these companies',
 }: TrustedByProps) => {
-  // Initial set of companies - this can be expanded as companies add themselves
-  const companies = [
-    {
-      name: 'Toss',
-      logo: 'https://static.toss.im/logos/png/4x/logo-toss-blue.png',
-      website: 'https://toss.im',
-    },
-  ]
-
   return (
     <motion.section
       initial={{ y: 30, opacity: 0 }}
