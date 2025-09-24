@@ -16,21 +16,74 @@ npm install @suspensive/react-dom react-dom
 
 ## Features
 
-- 🚀 **DOM-specific Suspense utilities**: Enhanced components and hooks tailored for react-dom
+- 🚀 **InView Component**: Uses IntersectionObserver to detect when elements enter/leave viewport
+- 🎨 **FadeIn Animation**: Smooth fade-in animations for better UX
 - 🎯 **Type-safe**: Full TypeScript support with excellent type inference
 - ⚡ **Lightweight**: Minimal bundle size impact
-- 🔄 **React 18+ Support**: Built for modern React with Suspense
+- 🔄 **React 18+ Support**: Built for modern React with concurrent features
 
 ## Usage
 
+### InView Component
+
+The `<InView/>` component uses IntersectionObserver to detect when elements are visible in the viewport:
+
 ```jsx
-import { Suspense } from '@suspensive/react-dom'
+import { InView } from '@suspensive/react-dom'
+import { PrefetchQuery } from '@suspensive/react-query'
+
+function PostsList({ posts }) {
+  return (
+    <div>
+      {posts.map((post) => (
+        <InView key={post.id}>
+          {({ ref, isInView }) => (
+            <div ref={ref}>
+              {isInView && (
+                <PrefetchQuery queryKey={['posts', post.id, 'comments']} queryFn={() => getPostComments(post.id)} />
+              )}
+              <h2>{post.title}</h2>
+              <p>{post.description}</p>
+            </div>
+          )}
+        </InView>
+      ))}
+    </div>
+  )
+}
+```
+
+### FadeIn Component
+
+The `<FadeIn/>` component provides smooth fade-in animations:
+
+```jsx
+import { FadeIn } from '@suspensive/react-dom'
 
 function App() {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <YourAsyncComponent />
-    </Suspense>
+    <FadeIn>
+      <div>This content will fade in smoothly</div>
+    </FadeIn>
+  )
+}
+```
+
+### Hooks
+
+You can also use the underlying hooks directly:
+
+```jsx
+import { useInView, useFadeIn } from '@suspensive/react-dom'
+
+function MyComponent() {
+  const { ref, isInView } = useInView()
+  const fadeInProps = useFadeIn()
+
+  return (
+    <div ref={ref} {...fadeInProps}>
+      {isInView ? 'Visible!' : 'Not visible'}
+    </div>
   )
 }
 ```

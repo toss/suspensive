@@ -16,23 +16,48 @@ npm install @suspensive/react-native react-native
 
 ## Features
 
-- 📱 **React Native optimized**: Designed specifically for React Native environments
-- 🚀 **Suspense integration**: Seamless React Suspense support for mobile apps
+- 📱 **React Native Components**: Components specifically designed for React Native environments
+- 🧪 **Testing Utilities**: Components for testing React Native applications
 - 🎯 **Type-safe**: Full TypeScript support with excellent type inference
 - ⚡ **Performance focused**: Optimized for mobile performance
 - 🔄 **Cross-platform**: Works on both iOS and Android
 
 ## Usage
 
+### TestText Component
+
+The `<TestText/>` component provides a simple text component for testing purposes:
+
 ```jsx
-import { Suspense, ErrorBoundary } from '@suspensive/react-native'
-import { Text, View, ActivityIndicator } from 'react-native'
+import { TestText } from '@suspensive/react-native'
+import { View } from 'react-native'
+
+function App() {
+  return (
+    <View>
+      <TestText />
+    </View>
+  )
+}
+```
+
+### With Suspensive React Components
+
+For full Suspense functionality in React Native, combine with `@suspensive/react`:
+
+```jsx
+import { TestText } from '@suspensive/react-native'
+import { Suspense, ErrorBoundary } from '@suspensive/react'
+import { View, Text, ActivityIndicator } from 'react-native'
 
 function App() {
   return (
     <ErrorBoundary fallback={({ error }) => <Text>Error: {error.message}</Text>}>
       <Suspense fallback={<ActivityIndicator size="large" />}>
-        <YourAsyncComponent />
+        <View>
+          <TestText />
+          <YourAsyncComponent />
+        </View>
       </Suspense>
     </ErrorBoundary>
   )
