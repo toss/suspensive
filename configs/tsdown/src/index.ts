@@ -9,6 +9,9 @@ export const options: Options = {
   sourcemap: true,
   minify: false,
   dts: true,
+  attw: true,
+  publint: true,
+  clean: true,
 }
 
 export const scriptOptions: Options = {
@@ -16,4 +19,7 @@ export const scriptOptions: Options = {
   target: ['node18'],
   entry: ['src/bin/*.{ts,tsx}', '!**/*.{spec,test,test-d}.*'],
   outDir: 'dist/bin',
+  attw: true,
+  publint: true,
+  clean: true,
 }
