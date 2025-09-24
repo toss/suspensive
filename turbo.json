@@ -3,41 +3,31 @@
   "ui": "tui",
   "tasks": {
     "build": {
-      "dependsOn": ["^build"],
+      "dependsOn": ["^build:lib"],
       "outputs": ["dist/**", ".next/**"]
     },
-    "ci:attw": {
-      "dependsOn": ["prepack"]
+    "build:lib": {
+      "dependsOn": ["^build:lib"],
+      "outputs": ["dist/**"]
     },
     "ci:eslint": {
-      "dependsOn": ["prepack"]
-    },
-    "ci:publint": {
-      "dependsOn": ["prepack"]
+      "dependsOn": ["build:lib"]
     },
     "ci:test": {
-      "dependsOn": ["prepack"],
+      "dependsOn": ["build:lib"],
       "outputs": ["coverage/**"]
     },
     "ci:type": {
-      "dependsOn": ["prepack"]
+      "dependsOn": ["build:lib"]
     },
     "clean": {
       "cache": false
     },
     "dev": {
-      "dependsOn": ["prepack"],
+      "dependsOn": ["build:lib"],
       "outputs": ["dist/**", "coverage/**"],
       "cache": false,
       "persistent": true
-    },
-    "prepack": {
-      "dependsOn": ["^prepack"],
-      "outputs": ["dist/**"]
-    },
-    "start": {
-      "dependsOn": ["build"],
-      "cache": false
     }
   },
   "globalEnv": ["NODE_ENV"]

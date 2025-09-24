@@ -43,15 +43,12 @@
     "src"
   ],
   "scripts": {
-    "build": "tsdown",
-    "ci:attw": "attw --pack",
+    "build:lib": "tsdown",
     "ci:eslint": "eslint \"**/*.{ts,tsx,cts,mts}\"",
-    "ci:publint": "publint --strict",
     "ci:test": "vitest run",
     "ci:type": "tsc --noEmit",
     "clean": "rimraf ./dist ./coverage ./node_modules",
     "postinstall": "node ./dist/bin/postinstall.cjs || echo 'please reinstall @suspensive/react-query'",
-    "prepack": "pnpm run build",
     "test:ui": "vitest --ui"
   },
   "dependencies": {
