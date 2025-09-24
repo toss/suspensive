@@ -31,7 +31,7 @@ jobs:
       - if: matrix.command == 'build:lib'
         uses: preactjs/compressed-size-action@v2
         with:
-          build-script: 'build:lib'
+          build-script: 'pnpm run build:lib'
           pattern: 'packages/**/dist/*.{js,cjs,mjs}'
           exclude: '{**/*.map,**/node_modules/**}'
           strip-hash: '-([A-Za-z0-9_-]+)\.'
