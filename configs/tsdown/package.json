@@ -22,7 +22,7 @@
   "module": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "tsdown",
+    "build:lib": "tsdown",
     "ci:eslint": "eslint \"**/*.{ts,tsx,cts,mts}\"",
     "ci:type": "tsc --noEmit",
     "clean": "rimraf ./dist ./coverage ./node_modules"
