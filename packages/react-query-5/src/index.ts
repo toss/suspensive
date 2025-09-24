@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-deprecated */
 export { infiniteQueryOptions } from './infiniteQueryOptions'
 export { queryOptions } from './queryOptions'
 export { usePrefetchInfiniteQuery } from './usePrefetchInfiniteQuery'
