@@ -7,3 +7,4 @@ pnpm-lock.yaml
 **/tsconfig.vitest-temp.json
 packages/**/tsup.config.bundled*.mjs
 .changeset/*.md
+packages/**/CHANGELOG.md
