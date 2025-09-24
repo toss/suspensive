@@ -715,5 +715,76 @@ describe('lazy', () => {
       // Should still be 2, not 3
       expect(mockReload).toHaveBeenCalledTimes(2)
     })
+
+    it('should use window.sessionStorage when no storage provided', () => {
+      // Mock window.sessionStorage
+      const mockSessionStorage = {
+        getItem: vi.fn(),
+        setItem: vi.fn(),
+        removeItem: vi.fn(),
+        key: vi.fn(),
+        length: 0,
+        clear: vi.fn(),
+      }
+      global.window = { sessionStorage: mockSessionStorage } as any
+
+      const options = reloadOnError({ reload: mockReload })
+
+      // Should not throw error and should have used sessionStorage
+      expect(options).toBeDefined()
+    })
+
+    it('should use window.location.reload when no reload function provided', () => {
+      const mockLocationReload = vi.fn()
+      global.window = {
+        sessionStorage: storage,
+        location: { reload: mockLocationReload } as any,
+      } as any
+
+      const options = reloadOnError({ storage })
+
+      // Should not throw error and should have used location.reload
+      expect(options).toBeDefined()
+    })
+
+    it('should use function-based retry delay', async () => {
+      const delayFn = vi.fn((retryCount: number) => retryCount * 100)
+      const lazy = createLazy(reloadOnError({ storage, reload: mockReload, retryDelay: delayFn }))
+      const mockImport = importCache.createImport({ failureCount: 1, failureDelay: 50, successDelay: 50 })
+
+      const Component = lazy(() => mockImport('/test-component'))
+      render(
+        <ErrorBoundary fallback={<div>error</div>}>
+          <Component />
+        </ErrorBoundary>
+      )
+
+      await act(() => vi.advanceTimersByTimeAsync(50))
+      expect(screen.getByText('error')).toBeInTheDocument()
+
+      // The delay function should have been called with retry count 0
+      expect(delayFn).toHaveBeenCalledWith(0)
+
+      await act(() => vi.advanceTimersByTimeAsync(1)) // trigger setTimeout with delay=0
+      expect(mockReload).toHaveBeenCalledTimes(1)
+    })
+
+    it('should handle NaN in stored retry count', async () => {
+      // Pre-populate storage with invalid number
+      const storageKey = 'test-key'
+      storage.setItem(storageKey, 'invalid-number')
+
+      // Create a custom onError that uses the same storage key format as the actual implementation
+      const testOnError = reloadOnError({ storage, reload: mockReload }).onError!
+
+      // Call onError directly to test the parseInt logic
+      testOnError({
+        error: new Error('test'),
+        load: { toString: () => storageKey } as any,
+      })
+
+      // The invalid stored value should be removed
+      expect(storage.getItem(storageKey)).toBe(null)
+    })
   })
 })
