@@ -2,13 +2,9 @@
   "$schema": "https://turbo.build/schema.json",
   "ui": "tui",
   "tasks": {
-    "build:services": {
-      "dependsOn": ["build"],
-      "outputs": ["dist/**", ".next/**"]
-    },
     "build": {
       "dependsOn": ["^build"],
-      "outputs": ["dist/**"]
+      "outputs": ["dist/**", ".next/**"]
     },
     "ci:eslint": {
       "dependsOn": ["build"]

@@ -5,7 +5,7 @@
   "author": "Jonghyeon Ko <jonghyeon@toss.im>",
   "type": "module",
   "scripts": {
-    "build:services": "tsc -b && vite build",
+    "build": "tsc -b && vite build",
     "ci:eslint": "eslint \"**/*.{ts,tsx,cts,mts}\"",
     "dev": "vite",
     "preview": "vite preview"

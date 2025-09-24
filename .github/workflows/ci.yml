@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        command: ['ci:test', 'ci:eslint', 'ci:sherif', 'ci:type', 'build', 'build:services']
+        command: ['ci:test', 'ci:eslint', 'ci:sherif', 'ci:type', 'build']
     steps:
       - uses: actions/checkout@v5
       - uses: ./.github/actions/pnpm-setup-node
