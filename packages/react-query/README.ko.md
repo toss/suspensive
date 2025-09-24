@@ -14,14 +14,14 @@
 
 @suspensive/react-query는 npm에 있습니다. 최신 안정 버전을 설치하기 위해 아래 커맨드를 실행하세요
 
-```shell npm2yarn
+```shell
 npm install @suspensive/react-query @tanstack/react-query
 ```
 
 @tanstack/react-query v4는 @tanstack/react-query v5 보다 [더 낮은 버전의 브라우저](https://suspensive.org/ko/docs/react-query/motivation#tanstackreact-query-v5%EC%9D%98-es-private-field%EB%A1%9C-%EC%9D%B8%ED%95%B4-%EC%A0%80%EB%B2%84%EC%A0%84%EC%9D%98-%EB%B8%8C%EB%9D%BC%EC%9A%B0%EC%A0%80%EB%A5%BC-%EC%A7%80%EC%9B%90%ED%95%98%EC%A7%80-%EB%AA%BB%ED%95%98%EB%8A%94-%EB%AC%B8%EC%A0%9C%EB%A5%BC-%ED%95%B4%EA%B2%B0%ED%95%A9%EB%8B%88%EB%8B%A4)를 지원합니다.  
 @tanstack/react-query v4를 사용하고자 하면 아래 커맨드를 실행하세요.
 
-```shell npm2yarn
+```shell
 npm install @suspensive/react-query @tanstack/react-query@4
 ```
 

@@ -10,7 +10,7 @@
 
 @suspensive/react is available on npm. To install the latest stable version, run the following command:
 
-```shell npm2yarn
+```shell
 npm install @suspensive/react
 ```
 

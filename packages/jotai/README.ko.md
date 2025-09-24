@@ -8,7 +8,7 @@
 
 @suspensive/jotai는 npm에 있습니다. 최신 안정버전을 설치하기 위해 아래 커맨드를 실행하세요
 
-```shell npm2yarn
+```shell
 npm install @suspensive/jotai jotai
 ```
 

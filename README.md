@@ -35,7 +35,7 @@ Suspensive is a comprehensive suite of libraries that makes React Suspense easie
 
 ## Quick Start
 
-```bash npm2yarn
+```bash
 npm install @suspensive/react
 ```
 

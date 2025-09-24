@@ -10,7 +10,7 @@
 
 @suspensive/react-query-5 is available on npm. To install the latest stable version, run the following command:
 
-```shell npm2yarn
+```shell
 npm install @suspensive/react-query-5 @tanstack/react-query@5
 ```
 
