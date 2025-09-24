@@ -20,31 +20,21 @@ export default {
           suspenseHooks: {
             type: 'array',
             items: { type: 'string' },
-            default: [
-              'useSuspenseQuery',
-              'useSuspenseInfiniteQuery', 
-              'useSuspenseQueries'
-            ]
+            default: ['useSuspenseQuery', 'useSuspenseInfiniteQuery', 'useSuspenseQueries'],
           },
           suspenseComponents: {
             type: 'array',
             items: { type: 'string' },
-            default: [
-              'SuspenseQuery',
-              'SuspenseInfiniteQuery',
-              'SuspenseQueries'
-            ]
+            default: ['SuspenseQuery', 'SuspenseInfiniteQuery', 'SuspenseQueries'],
           },
           suspenseWrappers: {
             type: 'array',
             items: { type: 'string' },
-            default: [
-              'Suspense'
-            ]
-          }
+            default: ['Suspense'],
+          },
         },
         additionalProperties: false,
-      }
+      },
     ],
     messages: {
       missingSuspenseWrapper: 'Component using "{{name}}" must be wrapped in a Suspense boundary.',
@@ -54,18 +44,14 @@ export default {
 
   create(context) {
     const options = context.options[0] || {}
-    const suspenseHooks = new Set(options.suspenseHooks || [
-      'useSuspenseQuery',
-      'useSuspenseInfiniteQuery', 
-      'useSuspenseQueries'
-    ])
-    const suspenseComponents = new Set(options.suspenseComponents || [
-      'SuspenseQuery',
-      'SuspenseInfiniteQuery',
-      'SuspenseQueries'
-    ])
+    const suspenseHooks = new Set(
+      options.suspenseHooks || ['useSuspenseQuery', 'useSuspenseInfiniteQuery', 'useSuspenseQueries']
+    )
+    const suspenseComponents = new Set(
+      options.suspenseComponents || ['SuspenseQuery', 'SuspenseInfiniteQuery', 'SuspenseQueries']
+    )
     const suspenseWrappers = new Set(options.suspenseWrappers || ['Suspense'])
-    
+
     /**
      * Get JSX element name from JSX identifier
      */
@@ -101,15 +87,14 @@ export default {
      */
     function isSuspenseHook(node) {
       if (node.type !== 'CallExpression') return false
-      
+
       let name = null
       if (node.callee.type === 'Identifier') {
         name = node.callee.name
-      } else if (node.callee.type === 'MemberExpression' && 
-                 node.callee.property.type === 'Identifier') {
+      } else if (node.callee.type === 'MemberExpression' && node.callee.property.type === 'Identifier') {
         name = node.callee.property.name
       }
-      
+
       return name && suspenseHooks.has(name)
     }
 
@@ -118,10 +103,10 @@ export default {
      */
     function isLazyComponent(node) {
       if (node.type !== 'JSXElement') return false
-      
+
       const elementName = getJSXElementName(node.openingElement.name)
       if (!elementName) return false
-      
+
       // Check if the component was created with lazy()
       const scope = context.sourceCode.getScope(node)
       let currentScope = scope
@@ -135,7 +120,7 @@ export default {
         }
         currentScope = currentScope.upper
       }
-      
+
       return false
     }
 
@@ -144,16 +129,18 @@ export default {
      */
     function isLazyCall(node) {
       if (node.type !== 'CallExpression') return false
-      
-      return (node.callee.type === 'Identifier' && node.callee.name === 'lazy') ||
-             (node.callee.type === 'MemberExpression' &&
-              node.callee.property.type === 'Identifier' && 
-              node.callee.property.name === 'lazy')
+
+      return (
+        (node.callee.type === 'Identifier' && node.callee.name === 'lazy') ||
+        (node.callee.type === 'MemberExpression' &&
+          node.callee.property.type === 'Identifier' &&
+          node.callee.property.name === 'lazy')
+      )
     }
 
     return {
       // Check for suspense hooks
-      'CallExpression': function(node) {
+      CallExpression: function (node) {
         if (isSuspenseHook(node) && !isInsideSuspenseBoundary(node)) {
           let name = null
           if (node.callee.type === 'Identifier') {
@@ -161,37 +148,37 @@ export default {
           } else if (node.callee.type === 'MemberExpression') {
             name = node.callee.property.name
           }
-          
+
           context.report({
             node: node.callee,
             messageId: 'missingSuspenseWrapper',
-            data: { name }
+            data: { name },
           })
         }
       },
-      
+
       // Check suspense components and lazy components
-      'JSXElement': function(node) {
+      JSXElement: function (node) {
         const elementName = getJSXElementName(node.openingElement.name)
-        
+
         // Check if this is a suspense component that needs wrapping
         if (elementName && suspenseComponents.has(elementName) && !isInsideSuspenseBoundary(node)) {
           context.report({
             node: node.openingElement.name,
             messageId: 'missingSuspenseWrapper',
-            data: { name: elementName }
+            data: { name: elementName },
           })
         }
-        
+
         // Check if this is a lazy component that needs wrapping
         if (isLazyComponent(node) && !isInsideSuspenseBoundary(node)) {
           context.report({
             node: node.openingElement.name,
             messageId: 'missingLazySuspenseWrapper',
-            data: { name: elementName }
+            data: { name: elementName },
           })
         }
-      }
+      },
     }
-  }
+  },
 }

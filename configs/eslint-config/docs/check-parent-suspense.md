@@ -9,16 +9,19 @@ This rule checks that components using Suspense-related hooks and components are
 ### Suspense-related APIs checked:
 
 **Hooks:**
-- `useSuspenseQuery` 
+
+- `useSuspenseQuery`
 - `useSuspenseInfiniteQuery`
 - `useSuspenseQueries`
 
 **Components:**
+
 - `SuspenseQuery`
-- `SuspenseInfiniteQuery` 
+- `SuspenseInfiniteQuery`
 - `SuspenseQueries`
 
 **Lazy components:**
+
 - Components created with `lazy()` function
 
 ## Examples
@@ -32,13 +35,9 @@ function MyComponent() {
   return <div>{data}</div>
 }
 
-// Component without Suspense wrapper  
+// Component without Suspense wrapper
 function MyComponent() {
-  return (
-    <SuspenseQuery>
-      {(data) => <div>{data}</div>}
-    </SuspenseQuery>
-  )
+  return <SuspenseQuery>{(data) => <div>{data}</div>}</SuspenseQuery>
 }
 
 // Lazy component without Suspense wrapper
@@ -70,9 +69,7 @@ function MyComponent() {
 function MyComponent() {
   return (
     <Suspense fallback={<div>Loading...</div>}>
-      <SuspenseQuery>
-        {(data) => <div>{data}</div>}
-      </SuspenseQuery>
+      <SuspenseQuery>{(data) => <div>{data}</div>}</SuspenseQuery>
     </Suspense>
   )
 }
@@ -94,7 +91,7 @@ function MyApp() {
 The rule accepts an options object with the following properties:
 
 - `suspenseHooks` (array): List of hook names to check. Default: `['useSuspenseQuery', 'useSuspenseInfiniteQuery', 'useSuspenseQueries']`
-- `suspenseComponents` (array): List of component names to check. Default: `['SuspenseQuery', 'SuspenseInfiniteQuery', 'SuspenseQueries']`  
+- `suspenseComponents` (array): List of component names to check. Default: `['SuspenseQuery', 'SuspenseInfiniteQuery', 'SuspenseQueries']`
 - `suspenseWrappers` (array): List of valid Suspense wrapper component names. Default: `['Suspense']`
 
 ### Example configuration

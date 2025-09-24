@@ -43,7 +43,7 @@ ruleTester.run('check-parent-suspense', rule, {
         }
       `,
     },
-    
+
     // Valid: SuspenseQuery wrapped in Suspense
     {
       code: `
@@ -58,7 +58,7 @@ ruleTester.run('check-parent-suspense', rule, {
         }
       `,
     },
-    
+
     // Valid: lazy component wrapped in Suspense
     {
       code: `
@@ -73,7 +73,7 @@ ruleTester.run('check-parent-suspense', rule, {
         }
       `,
     },
-    
+
     // Valid: nested Suspense boundaries
     {
       code: `
@@ -92,7 +92,7 @@ ruleTester.run('check-parent-suspense', rule, {
         }
       `,
     },
-    
+
     // Valid: non-suspense hooks
     {
       code: `
@@ -102,7 +102,7 @@ ruleTester.run('check-parent-suspense', rule, {
         }
       `,
     },
-    
+
     // Valid: regular components
     {
       code: `
@@ -129,7 +129,7 @@ ruleTester.run('check-parent-suspense', rule, {
         },
       ],
     },
-    
+
     // Invalid: useSuspenseInfiniteQuery not wrapped
     {
       code: `
@@ -145,7 +145,7 @@ ruleTester.run('check-parent-suspense', rule, {
         },
       ],
     },
-    
+
     // Invalid: useSuspenseQueries not wrapped
     {
       code: `
@@ -161,7 +161,7 @@ ruleTester.run('check-parent-suspense', rule, {
         },
       ],
     },
-    
+
     // Invalid: SuspenseQuery not wrapped in Suspense
     {
       code: `
@@ -180,7 +180,7 @@ ruleTester.run('check-parent-suspense', rule, {
         },
       ],
     },
-    
+
     // Invalid: SuspenseInfiniteQuery not wrapped
     {
       code: `
@@ -199,7 +199,7 @@ ruleTester.run('check-parent-suspense', rule, {
         },
       ],
     },
-    
+
     // Invalid: lazy component not wrapped in Suspense
     {
       code: `
@@ -216,7 +216,7 @@ ruleTester.run('check-parent-suspense', rule, {
         },
       ],
     },
-    
+
     // Invalid: multiple violations
     {
       code: `
@@ -242,7 +242,7 @@ ruleTester.run('check-parent-suspense', rule, {
         },
       ],
     },
-    
+
     // Invalid: member expression usage
     {
       code: `
