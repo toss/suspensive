@@ -27,6 +27,7 @@
   This adds OIDC (OpenID Connect) authentication support for npm publishing in GitHub Actions. The implementation enables secure, tokenless publishing to npm using GitHub's OIDC tokens with provenance support.
 
   Key features:
+
   - **OIDC Authentication**: Uses GitHub Actions `id-token: write` permission for secure publishing
   - **Provenance Support**: Enables npm package provenance through `NPM_CONFIG_PROVENANCE=true`
   - **Backward Compatibility**: Maintains NPM_TOKEN as fallback for existing workflows
