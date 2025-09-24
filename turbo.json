@@ -6,38 +6,24 @@
       "dependsOn": ["^build"],
       "outputs": ["dist/**", ".next/**"]
     },
-    "ci:attw": {
-      "dependsOn": ["prepack"]
-    },
     "ci:eslint": {
-      "dependsOn": ["prepack"]
-    },
-    "ci:publint": {
-      "dependsOn": ["prepack"]
+      "dependsOn": ["build"]
     },
     "ci:test": {
-      "dependsOn": ["prepack"],
+      "dependsOn": ["build"],
       "outputs": ["coverage/**"]
     },
     "ci:type": {
-      "dependsOn": ["prepack"]
+      "dependsOn": ["build"]
     },
     "clean": {
       "cache": false
     },
     "dev": {
-      "dependsOn": ["prepack"],
+      "dependsOn": ["build"],
       "outputs": ["dist/**", "coverage/**"],
       "cache": false,
       "persistent": true
-    },
-    "prepack": {
-      "dependsOn": ["^prepack"],
-      "outputs": ["dist/**"]
-    },
-    "start": {
-      "dependsOn": ["build"],
-      "cache": false
     }
   },
   "globalEnv": ["NODE_ENV"]
