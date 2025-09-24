@@ -17,7 +17,7 @@ describe('copy', () => {
   })
 
   it('should copy and replace files with the specified version', () => {
-    vi.spyOn(fs, 'readdirSync').mockReturnValue(['v5', 'other'] as unknown as fs.Dirent[])
+    vi.spyOn(fs, 'readdirSync').mockReturnValue(['v5', 'other'] as unknown as fs.Dirent<Buffer>[])
     vi.spyOn(fs, 'unlinkSync').mockReturnValue()
     vi.spyOn(fs, 'writeFileSync').mockReturnValue()
 
