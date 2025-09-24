@@ -1,5 +1,15 @@
 # @suspensive/react-query
 
+## 3.10.1
+
+### Patch Changes
+
+- [#1756](https://github.com/toss/suspensive/pull/1756) [`46c7db1`](https://github.com/toss/suspensive/commit/46c7db14b4f9f8ccb0e1146524db91e719265ead) Thanks [@manudeli](https://github.com/manudeli)! - chore: update tsdown version
+
+- Updated dependencies [[`46c7db1`](https://github.com/toss/suspensive/commit/46c7db14b4f9f8ccb0e1146524db91e719265ead)]:
+  - @suspensive/react-query-4@3.10.1
+  - @suspensive/react-query-5@3.10.1
+
 ## 3.10.0
 
 ### Patch Changes
