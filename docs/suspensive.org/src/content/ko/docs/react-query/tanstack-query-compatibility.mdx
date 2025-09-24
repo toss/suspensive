@@ -8,6 +8,24 @@ import { Callout } from '@/components'
 
 </Callout>
 
+<Callout type='warning'>
+
+**TanStack Query v4에서 백포팅된 인터페이스 Deprecated 처리**
+
+TanStack Query v4.40.0과 v4.41.0부터, 이전에 @suspensive/react-query에서 백포팅했던 여러 인터페이스들이 이제 TanStack Query에서 공식적으로 지원됩니다. 이러한 백포팅된 인터페이스들은 이제 deprecated 처리되었으며, 향후 버전에서 제거될 예정입니다.
+
+**Deprecated된 인터페이스:**
+
+- `queryOptions` (v4.40.0부터 사용 가능)
+- `infiniteQueryOptions` (v4.41.0부터 사용 가능)
+- `useSuspenseQuery`, `useSuspenseQueries`, `useSuspenseInfiniteQuery` (v4.40.0부터 사용 가능)
+- `SuspenseQueriesOptions`, `SuspenseQueriesResults` (v4.40.0부터 사용 가능)
+- `UseSuspenseQueryOptions`, `UseSuspenseQueryResult` (v4.40.0부터 사용 가능)
+
+**마이그레이션 필요:** TanStack Query v4.40.0+ 또는 v4.41.0+를 사용하고 있다면, @suspensive/react-query의 백포팅된 인터페이스 대신 TanStack Query의 공식 인터페이스로 마이그레이션해주세요.
+
+</Callout>
+
 @suspensive/react-query는 내부적으로 @tanstack/react-query의 버전에 대응하여 인터페이스를 제공하는 @suspensive/react-query-4와 @suspensive/react-query-5로 구성되어 있습니다. 사용자 환경에 설치된 @tanstack/react-query 버전을 감지하여 자동으로 호환되는 인터페이스를 제공합니다.
 
 ## Command-Line Interface (CLI)
