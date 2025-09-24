@@ -2,29 +2,29 @@
   "$schema": "https://turbo.build/schema.json",
   "ui": "tui",
   "tasks": {
-    "build": {
-      "dependsOn": ["^build:lib"],
+    "build:services": {
+      "dependsOn": ["build"],
       "outputs": ["dist/**", ".next/**"]
     },
-    "build:lib": {
-      "dependsOn": ["^build:lib"],
+    "build": {
+      "dependsOn": ["^build"],
       "outputs": ["dist/**"]
     },
     "ci:eslint": {
-      "dependsOn": ["build:lib"]
+      "dependsOn": ["build"]
     },
     "ci:test": {
-      "dependsOn": ["build:lib"],
+      "dependsOn": ["build"],
       "outputs": ["coverage/**"]
     },
     "ci:type": {
-      "dependsOn": ["build:lib"]
+      "dependsOn": ["build"]
     },
     "clean": {
       "cache": false
     },
     "dev": {
-      "dependsOn": ["build:lib"],
+      "dependsOn": ["build"],
       "outputs": ["dist/**", "coverage/**"],
       "cache": false,
       "persistent": true

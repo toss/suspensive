@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        command: ['build:lib', 'ci:test', 'ci:eslint', 'ci:sherif', 'ci:type', 'build']
+        command: ['ci:test', 'ci:eslint', 'ci:sherif', 'ci:type', 'build', 'build:services']
     steps:
       - uses: actions/checkout@v5
       - uses: ./.github/actions/pnpm-setup-node
@@ -28,7 +28,7 @@ jobs:
         uses: codecov/codecov-action@v5
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-      - if: matrix.command == 'build:lib'
+      - if: matrix.command == 'build'
         uses: preactjs/compressed-size-action@v2
         with:
           pattern: 'packages/**/dist/*.{js,cjs,mjs}'
