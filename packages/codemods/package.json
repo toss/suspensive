@@ -1,6 +1,6 @@
 {
   "name": "@suspensive/codemods",
-  "version": "3.10.0",
+  "version": "3.10.1",
   "description": "Codemods for @suspensive.",
   "keywords": [
     "suspensive",
@@ -23,13 +23,10 @@
   ],
   "scripts": {
     "build": "tsdown",
-    "ci:attw": "attw --pack",
     "ci:eslint": "eslint \"**/*.{ts,tsx,cts,mts}\"",
-    "ci:publint": "publint --strict",
     "ci:test": "vitest run",
     "ci:type": "tsc --noEmit",
     "clean": "rimraf ./dist ./coverage ./node_modules",
-    "prepack": "pnpm run build",
     "test:ui": "vitest --ui"
   },
   "dependencies": {

@@ -1,6 +1,6 @@
 {
   "name": "@suspensive/react-query-5",
-  "version": "3.10.0",
+  "version": "3.10.1",
   "description": "Suspensive interfaces for @tanstack/react-query@5",
   "keywords": [
     "suspensive",
@@ -40,13 +40,10 @@
   ],
   "scripts": {
     "build": "tsdown",
-    "ci:attw": "attw --pack",
     "ci:eslint": "eslint \"**/*.{ts,tsx,cts,mts}\"",
-    "ci:publint": "publint --strict",
     "ci:test": "vitest run",
     "ci:type": "tsc --noEmit",
     "clean": "rimraf ./dist ./coverage ./node_modules",
-    "prepack": "pnpm run build",
     "test:ui": "vitest --ui"
   },
   "devDependencies": {

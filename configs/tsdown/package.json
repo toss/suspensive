@@ -23,12 +23,9 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsdown",
-    "ci:attw": "attw --pack",
     "ci:eslint": "eslint \"**/*.{ts,tsx,cts,mts}\"",
-    "ci:publint": "publint --strict",
     "ci:type": "tsc --noEmit",
-    "clean": "rimraf ./dist ./coverage ./node_modules",
-    "prepack": "pnpm run build"
+    "clean": "rimraf ./dist ./coverage ./node_modules"
   },
   "devDependencies": {
     "@suspensive/eslint-config": "workspace:*",

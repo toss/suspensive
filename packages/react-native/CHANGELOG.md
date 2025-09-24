@@ -1,5 +1,11 @@
 # @suspensive/react-native
 
+## 0.1.2
+
+### Patch Changes
+
+- [#1756](https://github.com/toss/suspensive/pull/1756) [`46c7db1`](https://github.com/toss/suspensive/commit/46c7db14b4f9f8ccb0e1146524db91e719265ead) Thanks [@manudeli](https://github.com/manudeli)! - chore: update tsdown version
+
 ## 0.1.1
 
 ### Patch Changes
