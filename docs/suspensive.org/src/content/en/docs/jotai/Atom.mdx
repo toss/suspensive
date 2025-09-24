@@ -52,7 +52,6 @@ It's not immediately clear from the parent component which atoms are used intern
 
 ```tsx
 // payment/page.tsx
-import { Atom } from '@suspensive/jotai'
 import { Suspense } from '@suspensive/react'
 import { UserInfo, ShoppingCart } from '~/components'
 
@@ -69,7 +68,6 @@ const PaymentPage = () => (
 ```tsx
 // payment/components/UserInfo.tsx
 import { useAtomValue } from '@suspensive/jotai'
-import { Suspense } from '@suspensive/react'
 import { UserAddress } from '~/components'
 import { userAsyncAtom } from '~/atoms'
 
@@ -83,8 +81,8 @@ const UserInfo = () => {
 
 ```tsx
 // payment/components/ShoppingCart.tsx
-import { Atom } from '@suspensive/jotai'
-import { Suspense } from '@suspensive/react'
+import { useAtom } from 'jotai'
+import { ShoppingItem } from '~/components'
 import { shoppingCartAtom } from '~/atoms'
 
 // It's not clear from the usage of this component what Atom ShoppingCart uses internally and whether it triggers Suspense.

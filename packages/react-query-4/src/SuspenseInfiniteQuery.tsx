@@ -1,11 +1,6 @@
-import type { QueryKey } from '@tanstack/react-query'
+import { type QueryKey, type UseSuspenseInfiniteQueryResult, useSuspenseInfiniteQuery } from '@tanstack/react-query'
 import type { ReactNode } from 'react'
-import {
-  type UseSuspenseInfiniteQueryOptions,
-  type UseSuspenseInfiniteQueryResult,
-  useSuspenseInfiniteQuery,
-} from './useSuspenseInfiniteQuery'
-
+import { type UseSuspenseInfiniteQueryOptions } from './useSuspenseInfiniteQuery'
 /**
  * We provide these components to clearly express what causes suspense at the same depth.
  * `<SuspenseInfiniteQuery/>` serves to make `useSuspenseInfiniteQuery` easier to use in jsx.

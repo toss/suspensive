@@ -1,0 +1,38 @@
+import { Callout } from '@/components'
+
+# IsFetching
+
+<Callout type='experimental'>
+
+`<IsFetching/>` is an experimental feature, so this interface may change.
+
+</Callout>
+
+Render-prop component that exposes the number of queries currently fetching (from TanStack Query's `useIsFetching`). Useful for showing global loading indicators without adding hooks in every component.
+
+```tsx /IsFetching basic/
+import { IsFetching } from '@suspensive/react-query'
+
+const GlobalFetchingIndicator = () => (
+  <IsFetching>{(isFetching) => (isFetching ? <Spinner /> : null)}</IsFetching>
+)
+```
+
+### Filters (QueryFilters)
+
+You can scope the indicator with the same filters accepted by TanStack Query's `useIsFetching` (e.g., `queryKey`, `predicate`).
+
+```tsx /IsFetching with filters/
+import { IsFetching } from '@suspensive/react-query'
+
+const PostsFetchingIndicator = () => (
+  <IsFetching queryKey={['posts']}>
+    {(isFetching) => (isFetching ? <Spinner /> : null)}
+  </IsFetching>
+)
+```
+
+### Props
+
+- **children**: `(isFetching: number) => ReactNode`
+- **...QueryFilters**: Same shape as TanStack Query's `QueryFilters` for `useIsFetching`.

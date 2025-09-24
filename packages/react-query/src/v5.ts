@@ -9,6 +9,7 @@ export type { UseSuspenseInfiniteQueryOptions, UseSuspenseInfiniteQueryResult } 
 export { usePrefetchQuery } from '@suspensive/react-query-5'
 export { usePrefetchInfiniteQuery } from '@suspensive/react-query-5'
 
+export { IsFetching } from '@suspensive/react-query-5'
 export { SuspenseQuery } from '@suspensive/react-query-5'
 export { SuspenseQueries } from '@suspensive/react-query-5'
 export { SuspenseInfiniteQuery } from '@suspensive/react-query-5'

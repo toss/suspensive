@@ -1,0 +1,115 @@
+import { Sandpack } from '@/components'
+
+# useIsClient
+
+A hook that returns `true` when running on the client side and `false` when running on the server side. This hook is useful for detecting the execution environment and handling client-only logic.
+
+This hook is used internally by the [`ClientOnly`](/docs/react/ClientOnly) component to determine when to render its children.
+
+```tsx /useIsClient/
+import { useIsClient } from '@suspensive/react'
+
+const Example = () => {
+  const isClient = useIsClient()
+
+  return <div>{isClient ? 'Client Side' : 'Server Side'}</div>
+}
+```
+
+<Sandpack>
+
+```tsx Example.tsx active
+import { useIsClient } from '@suspensive/react'
+
+export const Example = () => {
+  const isClient = useIsClient()
+
+  return (
+    <div style={{ padding: 20, backgroundColor: 'lightblue' }}>
+      <h3>Environment Detection</h3>
+      <p>Current environment: {isClient ? 'Client Side' : 'Server Side'}</p>
+      {isClient && <p>This text only appears on the client!</p>}
+    </div>
+  )
+}
+```
+
+</Sandpack>
+
+## Use Cases
+
+### Conditional Rendering Based on Environment
+
+You can use `useIsClient` to conditionally render components or content based on whether the code is running on the client or server.
+
+```tsx /conditional-rendering/
+import { useIsClient } from '@suspensive/react'
+
+const Example = () => {
+  const isClient = useIsClient()
+
+  return <div>{isClient ? <ClientOnlyComponent /> : <ServerFallback />}</div>
+}
+```
+
+### Client-Only Logic
+
+Use `useIsClient` to safely execute client-only code without causing hydration mismatches.
+
+```tsx /client-only-logic/
+import { useIsClient } from '@suspensive/react'
+import { useEffect, useState } from 'react'
+
+const Example = () => {
+  const isClient = useIsClient()
+  const [windowWidth, setWindowWidth] = useState(0)
+
+  useEffect(() => {
+    if (isClient) {
+      const handleResize = () => setWindowWidth(window.innerWidth)
+      window.addEventListener('resize', handleResize)
+      handleResize() // Set initial value
+
+      return () => window.removeEventListener('resize', handleResize)
+    }
+  }, [isClient])
+
+  return <div>{isClient ? `Window width: ${windowWidth}px` : 'Loading...'}</div>
+}
+```
+
+### Safe Browser API Access
+
+Safely access browser APIs that are only available on the client side.
+
+```tsx /browser-api/
+import { useIsClient } from '@suspensive/react'
+
+const Example = () => {
+  const isClient = useIsClient()
+
+  const handleClick = () => {
+    if (isClient) {
+      // Safe to use browser APIs
+      localStorage.setItem('clicked', 'true')
+      console.log('Clicked!')
+    }
+  }
+
+  return <button onClick={handleClick}>Click me (client only)</button>
+}
+```
+
+## Implementation Details
+
+`useIsClient` is implemented using React's `useSyncExternalStore` hook, which ensures:
+
+- **Consistent behavior**: Returns `false` during server-side rendering and `true` on the client
+- **No hydration mismatches**: The hook properly handles the transition from server to client
+- **Performance**: Minimal overhead with no unnecessary re-renders
+
+The hook internally uses:
+
+- `getSnapshot`: Returns `true` (client environment)
+- `getServerSnapshot`: Returns `false` (server environment)
+- `emptySubscribe`: No-op subscription function since the environment doesn't change during component lifecycle

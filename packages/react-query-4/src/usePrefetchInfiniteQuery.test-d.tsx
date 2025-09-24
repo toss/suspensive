@@ -1,4 +1,4 @@
-import { infiniteQueryOptions } from './infiniteQueryOptions'
+import { infiniteQueryOptions } from '@tanstack/react-query'
 import { queryFn, queryKey } from './test-utils'
 import { usePrefetchInfiniteQuery } from './usePrefetchInfiniteQuery'
 

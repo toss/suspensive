@@ -12,7 +12,6 @@ import {
 } from '@/components'
 
 <HomePage
-  title="All in one for React Suspense"
   buttonText="Get Started"
   items={[
     {
@@ -43,6 +42,8 @@ import {
 In this case, you can check `isLoading` and `isError` to handle loading and error states, and remove `undefined` from data in TypeScript.
 
 ```jsx ! Page.jsx
+import { useQuery } from '@tanstack/react-query'
+
 const Page = () => {
   const userQuery = useQuery(userQueryOptions())
   const postsQuery = useQuery({
@@ -82,6 +83,8 @@ const Page = () => {
 If there are more APIs to query, the code to handle the loading state and error state becomes more complicated.
 
 ```jsx ! Page.jsx
+import { useQuery } from '@tanstack/react-query'
+
 const Page = () => {
   const userQuery = useQuery(userQueryOptions())
   const postsQuery = useQuery({
@@ -128,6 +131,9 @@ const Page = () => {
 However, since `useSuspenseQuery` is a hook, the component must be separated to place `Suspense` and `ErrorBoundary` in the parent, which causes the depth to increase.
 
 ```jsx ! Page.jsx
+import { ErrorBoundary, Suspense } from '@suspensive/react'
+import { useSuspenseQuery } from '@tanstack/react-query'
+
 const Page = () => (
   <ErrorBoundary fallback="error">
     <Suspense fallback="loading...">
@@ -166,6 +172,9 @@ const PromotionList = ({ userId }) => {
 2. You remove the component called UserInfo, leaving only the presentational component like UserProfile, which makes it easier to test.
 
 ```jsx ! Page.jsx
+import { ErrorBoundary, Suspense } from '@suspensive/react'
+import { SuspenseQuery } from '@suspensive/react-query'
+
 const Page = () => (
   <ErrorBoundary fallback="error">
     <Suspense fallback="loading...">
@@ -208,6 +217,9 @@ const Page = () => (
 Or, there are times when you don't want to use `Suspense` on the server.
 
 ```jsx ! Page.jsx
+import { Suspense } from '@suspensive/react'
+import { SuspenseQuery } from '@suspensive/react-query'
+
 const Page = () => (
   <Suspense fallback={<Spinner />}>
     <SuspenseQuery {...notNeedSEOQueryOptions()}>
@@ -222,6 +234,9 @@ const Page = () => (
 Just wrap `ClientOnly` and it will be solved.
 
 ```jsx ! Page.jsx
+import { Suspense, ClientOnly } from '@suspensive/react'
+import { SuspenseQuery } from '@suspensive/react-query'
+
 const Page = () => (
   <Suspense fallback={<Spinner />}>
     <ClientOnly fallback={<InsteadOfChildrenOnlyInServer />}>
@@ -238,6 +253,9 @@ const Page = () => (
 Easy, right?
 
 ```jsx ! Page.jsx
+import { Suspense } from '@suspensive/react'
+import { SuspenseQuery } from '@suspensive/react-query'
+
 const Page = () => (
   <Suspense fallback={<Spinner />} clientOnly>
     <SuspenseQuery {...notNeedSEOQueryOptions()}>
@@ -253,6 +271,9 @@ Especially when working on a product like Admin, there are cases where designers
 In that case, try using `DefaultProps`.
 
 ```jsx ! Page.jsx
+import { Suspense, DefaultProps, DefaultPropsProvider } from '@suspensive/react'
+import { SuspenseQuery } from '@suspensive/react-query'
+
 const defaultProps = new DefaultProps({
   Suspense: {
     fallback: <Spinner />,
@@ -275,6 +296,10 @@ const Page = () => (
 Then, how about using `FadeIn`?
 
 ```jsx ! Page.jsx
+import { Suspense, DefaultProps, DefaultPropsProvider } from '@suspensive/react'
+import { SuspenseQuery } from '@suspensive/react-query'
+import { FadeIn } from '@suspensive/react-dom'
+
 const defaultProps = new DefaultProps({
   Suspense: {
     fallback: <FadeIn>{(fadeIn) => <Spinner {...fadeIn} />}</FadeIn>,
@@ -297,6 +322,10 @@ const Page = () => (
 The designer asked me to support `Skeleton` instead of the default `Spinner` in this part~! Just add it.
 
 ```jsx ! Page.jsx
+import { Suspense, DefaultProps, DefaultPropsProvider } from '@suspensive/react'
+import { SuspenseQuery } from '@suspensive/react-query'
+import { FadeIn } from '@suspensive/react-dom'
+
 const defaultProps = new DefaultProps({
   Suspense: {
     fallback: <FadeIn>{(fadeIn) => <Spinner {...fadeIn} />}</FadeIn>,
@@ -305,7 +334,7 @@ const defaultProps = new DefaultProps({
 
 const Page = () => (
   <DefaultPropsProvider defaultProps={defaultProps}>
-    <Suspense fallback={<Skeleton {...fadeIn} />} clientOnly>
+    <Suspense fallback={<Skeleton />} clientOnly>
       <SuspenseQuery {...notNeedSEOQueryOptions()}>
         {({ data }) => <NotNeedSEO {...data} />}
       </SuspenseQuery>
@@ -326,6 +355,8 @@ const Page = () => (
 This has the issue of requiring `resetKey` to be passed down for deeply nested components. Additionally, you need to create a state to pass the `resetKey`.
 
 ```jsx ! Page.jsx
+import { ErrorBoundary } from '@suspensive/react'
+
 const Page = () => {
   const [resetKey, setResetKey] = useState(0)
 
@@ -357,6 +388,8 @@ const DeepComponent = ({ resetKeys }) => (
 Try using `ErrorBoundaryGroup`.
 
 ```jsx ! Page.jsx
+import { ErrorBoundary, ErrorBoundaryGroup } from '@suspensive/react'
+
 const Page = () => (
   <ErrorBoundaryGroup>
     <ErrorBoundaryGroup.Consumer>
@@ -384,6 +417,8 @@ const DeepComponent = () => (
 In such cases, try using the `shouldCatch` feature provided by Suspensive's `ErrorBoundary`. By passing an Error Constructor to `shouldCatch`, you can handle only the specified errors.
 
 ```jsx ! Page.jsx
+import { ErrorBoundary, ErrorBoundaryGroup } from '@suspensive/react'
+
 const Page = () => (
   <ErrorBoundaryGroup>
     <ErrorBoundaryGroup.Consumer>
@@ -414,6 +449,8 @@ const DeepComponent = () => (
 In such cases, you can handle it by passing a callback to `shouldCatch`.
 
 ```jsx ! Page.jsx
+import { ErrorBoundary, ErrorBoundaryGroup } from '@suspensive/react'
+
 const Page = () => (
   <ErrorBoundaryGroup>
     <ErrorBoundaryGroup.Consumer>
