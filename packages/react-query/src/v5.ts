@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-deprecated */
 export { queryOptions } from '@suspensive/react-query-5'
 export { infiniteQueryOptions } from '@suspensive/react-query-5'
 export { useSuspenseQuery } from '@suspensive/react-query-5'
