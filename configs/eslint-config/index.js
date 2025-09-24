@@ -76,6 +76,7 @@ export const suspensiveTypeScriptConfig = defineConfig(
       '@typescript-eslint/only-throw-error': 'warn',
       '@typescript-eslint/no-confusing-void-expression': 'off',
       '@typescript-eslint/restrict-template-expressions': 'off',
+      '@typescript-eslint/no-deprecated': 'warn',
       '@typescript-eslint/no-empty-function': 'warn',
       '@typescript-eslint/no-extra-semi': 'warn',
       '@typescript-eslint/no-empty-interface': 'warn',
