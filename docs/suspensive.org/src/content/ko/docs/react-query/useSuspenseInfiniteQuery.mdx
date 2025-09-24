@@ -2,6 +2,21 @@ import { Callout, Sandpack } from '@/components'
 
 # useSuspenseInfiniteQuery
 
+<Callout type='warning'>
+
+**@suspensive/react-query에서 Deprecated**
+
+이 훅은 이제 TanStack Query v4.40.0+에서 공식적으로 지원됩니다. TanStack Query에서 백포팅했으므로, @suspensive/react-query의 백포팅된 버전을 deprecated 처리합니다. 공식 TanStack Query 인터페이스로 마이그레이션하세요:
+
+```diff
+- import { useSuspenseInfiniteQuery } from '@suspensive/react-query'
++ import { useSuspenseInfiniteQuery } from '@tanstack/react-query'
+```
+
+자세한 내용은 [TanStack Query PR #9334](https://github.com/TanStack/query/pull/9334)을 참고하세요.
+
+</Callout>
+
 이 hook의 return 타입에는 isLoading, isError이 없습니다. `<Suspense/>` and `<ErrorBoundary/>`가 이 hook의 data를 보장해주기 때문입니다. 또한, 이 hook의 options에는 기본적으로 suspense가 true입니다. 필요한 새 options는 @tanstack/react-query의 [useInfiniteQuery](https://tanstack.com/query/v4/docs/react/reference/useInfiniteQuery)처럼 사용하면 됩니다.
 
 ```tsx /useSuspenseInfiniteQuery/

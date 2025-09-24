@@ -7,6 +7,7 @@ export { ErrorBoundaryGroup, useErrorBoundaryGroup } from './ErrorBoundaryGroup'
 export { useLazy } from './hooks/useLazy'
 export { lazy, reloadOnError, createLazy } from './lazy'
 export { Suspense } from './Suspense'
+export { useIsClient } from './useIsClient'
 
 export type { ClientOnlyProps } from './ClientOnly'
 export type { LazyProviderProps, LazyComponent } from './contexts/LazyContext'
