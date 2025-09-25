@@ -159,7 +159,7 @@ const StarCanvasFar = () => {
   const resizeAnimationFrameIdRef = useRef(0)
   const onRenderRef = useRef<VoidFunction | null>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
-  const { resolvedTheme } = useTheme() // useTheme 사용 -9/22
+  const { resolvedTheme } = useTheme()
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -201,7 +201,6 @@ const StarCanvasFar = () => {
       const maxSX = Math.ceil(width / TILE)
       const maxSY = Math.ceil(height / TILE)
 
-      // 다크모드에 따른 별 색상 변경 시도 -9/22
       const starColor = resolvedTheme === 'dark' ? '255, 255, 255' : '0, 0, 0'
 
       for (let sx = 0; sx <= maxSX; ++sx) {
@@ -250,7 +249,7 @@ const StarCanvasFar = () => {
       cancelAnimationFrame(resizeAnimationFrameIdRef.current)
       observer.disconnect()
     }
-  }, [resolvedTheme]) // resolvedTheme 의존성을 추가하였습니다. -9/22
+  }, [resolvedTheme])
 
   useEffect(() => {
     const requestAnimation = () => {
@@ -285,7 +284,7 @@ const StarCanvasClose = () => {
   const resizeAnimationFrameIdRef = useRef(0)
   const onRenderRef = useRef<VoidFunction | null>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
-  const { resolvedTheme } = useTheme() // useTheme 사용 -9/22
+  const { resolvedTheme } = useTheme()
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -329,7 +328,6 @@ const StarCanvasClose = () => {
       const maxSX = Math.ceil(width / TILE_CLOSE)
       const maxSY = Math.ceil(height / TILE_CLOSE)
 
-      // 다크모드에 따른 별 색상 변경 시도 -9/22
       const starColor = resolvedTheme === 'dark' ? '255, 255, 255' : '0, 0, 0'
 
       for (let sx = 0; sx <= maxSX; ++sx) {
