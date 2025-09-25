@@ -51,7 +51,7 @@ describe('<AtomValue />', () => {
     )
 
     expect(screen.getByText('loading...')).toBeInTheDocument()
-    await act(() => vi.advanceTimersByTimeAsync(100))
+    await act(() => vi.advanceTimersByTime(100))
     expect(screen.getByText('value: hello')).toBeInTheDocument()
   })
 })
