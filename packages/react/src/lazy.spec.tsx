@@ -769,13 +769,18 @@ describe('lazy', () => {
       expect(mockReload).toHaveBeenCalledTimes(1)
     })
 
-    it('should handle NaN in stored retry count', async () => {
+    it('should handle NaN in stored retry count', () => {
       // Pre-populate storage with invalid number
       const storageKey = 'test-key'
       storage.setItem(storageKey, 'invalid-number')
 
       // Create a custom onError that uses the same storage key format as the actual implementation
-      const testOnError = reloadOnError({ storage, reload: mockReload }).onError!
+      const options = reloadOnError({ storage, reload: mockReload })
+      const testOnError = options.onError
+
+      // Ensure onError exists
+      expect(testOnError).toBeDefined()
+      if (!testOnError) return
 
       // Call onError directly to test the parseInt logic
       testOnError({

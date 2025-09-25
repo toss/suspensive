@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest'
-import { intersectionMockInstance, mockIsIntersecting, mockAllIsIntersecting } from './index'
+import { intersectionMockInstance, mockAllIsIntersecting, mockIsIntersecting } from './index'
 
 // Mock console.error to avoid pollution during tests
 const originalConsoleError = console.error
