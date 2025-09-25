@@ -1,9 +1,7 @@
 import { act } from 'react'
 
 declare global {
-  // eslint-disable-next-line no-var
   var IS_REACT_ACT_ENVIRONMENT: boolean
-  // eslint-disable-next-line no-var
   var jest: { fn: typeof vi.fn } | undefined
 }
 
@@ -142,6 +140,7 @@ function triggerIntersection(
   if (
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     act &&
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-conversion
     Boolean(global.IS_REACT_ACT_ENVIRONMENT)
   )
     act(() => item.callback(entries, observer))
