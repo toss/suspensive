@@ -1,11 +1,16 @@
 import { act, render, screen } from '@testing-library/react'
 import { createElement, useContext } from 'react'
-import { DelayDefaultPropsContext, SuspenseDefaultPropsContext } from './contexts/DefaultPropsContexts'
+import {
+  DelayDefaultPropsContext,
+  SuspenseDefaultPropsContext,
+  ErrorBoundaryDefaultPropsContext,
+} from './contexts/DefaultPropsContexts'
 import { DefaultProps, DefaultPropsProvider } from './DefaultProps'
 import { Delay, type DelayProps } from './Delay'
+import { ErrorBoundary, type ErrorBoundaryProps } from './ErrorBoundary'
 import { Message_DefaultProp_delay_ms_should_be_greater_than_0, SuspensiveError } from './models/SuspensiveError'
 import { Suspense, type SuspenseProps } from './Suspense'
-import { CustomError, FALLBACK, Suspend, TEXT } from './test-utils'
+import { CustomError, FALLBACK, Suspend, TEXT, Throw } from './test-utils'
 
 const FALLBACK_GLOBAL = 'FALLBACK_GLOBAL'
 
@@ -177,5 +182,110 @@ describe('<DefaultPropsProvider/>', () => {
     )
 
     expect(ms).toBe(defaultPropsMs)
+  })
+
+  it('should accept defaultProps.ErrorBoundary.onError to setup default onError callback of ErrorBoundary', async () => {
+    const globalOnError = vi.fn()
+    const ERROR_MESSAGE = 'test error'
+
+    render(
+      <DefaultPropsProvider defaultProps={new DefaultProps({ ErrorBoundary: { onError: globalOnError } })}>
+        <ErrorBoundary fallback={<div>Error fallback</div>}>
+          <Throw.Error message={ERROR_MESSAGE} after={100}>
+            {TEXT}
+          </Throw.Error>
+        </ErrorBoundary>
+      </DefaultPropsProvider>
+    )
+
+    expect(screen.queryByText(TEXT)).toBeInTheDocument()
+    expect(globalOnError).toHaveBeenCalledTimes(0)
+
+    await act(() => vi.advanceTimersByTime(100))
+
+    expect(screen.queryByText('Error fallback')).toBeInTheDocument()
+    expect(screen.queryByText(TEXT)).not.toBeInTheDocument()
+    expect(globalOnError).toHaveBeenCalledTimes(1)
+    expect(globalOnError).toHaveBeenCalledWith(expect.any(Error), expect.any(Object))
+  })
+
+  it('should use local onError over default onError when both are provided', async () => {
+    const globalOnError = vi.fn()
+    const localOnError = vi.fn()
+    const ERROR_MESSAGE = 'test error'
+
+    render(
+      <DefaultPropsProvider defaultProps={new DefaultProps({ ErrorBoundary: { onError: globalOnError } })}>
+        <ErrorBoundary fallback={<div>Error fallback</div>} onError={localOnError}>
+          <Throw.Error message={ERROR_MESSAGE} after={100}>
+            {TEXT}
+          </Throw.Error>
+        </ErrorBoundary>
+      </DefaultPropsProvider>
+    )
+
+    expect(screen.queryByText(TEXT)).toBeInTheDocument()
+    expect(globalOnError).toHaveBeenCalledTimes(0)
+    expect(localOnError).toHaveBeenCalledTimes(0)
+
+    await act(() => vi.advanceTimersByTime(100))
+
+    expect(screen.queryByText('Error fallback')).toBeInTheDocument()
+    expect(screen.queryByText(TEXT)).not.toBeInTheDocument()
+    expect(localOnError).toHaveBeenCalledTimes(1)
+    expect(globalOnError).toHaveBeenCalledTimes(0)
+  })
+
+  it('should accept defaultProps.ErrorBoundary.onReset to setup default onReset callback of ErrorBoundary', async () => {
+    const globalOnReset = vi.fn()
+    const ERROR_MESSAGE = 'test error'
+
+    const { rerender } = render(
+      <DefaultPropsProvider defaultProps={new DefaultProps({ ErrorBoundary: { onReset: globalOnReset } })}>
+        <ErrorBoundary resetKeys={[0]} fallback={(props) => <div>Error: {props.error.message}</div>}>
+          <Throw.Error message={ERROR_MESSAGE} after={100}>
+            {TEXT}
+          </Throw.Error>
+        </ErrorBoundary>
+      </DefaultPropsProvider>
+    )
+
+    expect(globalOnReset).toHaveBeenCalledTimes(0)
+    expect(screen.queryByText(TEXT)).toBeInTheDocument()
+
+    await act(() => vi.advanceTimersByTime(100))
+
+    expect(screen.queryByText(`Error: ${ERROR_MESSAGE}`)).toBeInTheDocument()
+    expect(screen.queryByText(TEXT)).not.toBeInTheDocument()
+    expect(globalOnReset).toHaveBeenCalledTimes(0)
+
+    rerender(
+      <DefaultPropsProvider defaultProps={new DefaultProps({ ErrorBoundary: { onReset: globalOnReset } })}>
+        <ErrorBoundary resetKeys={[1]} fallback={(props) => <div>Error: {props.error.message}</div>}>
+          <Throw.Error message={ERROR_MESSAGE} after={100}>
+            {TEXT}
+          </Throw.Error>
+        </ErrorBoundary>
+      </DefaultPropsProvider>
+    )
+
+    expect(globalOnReset).toHaveBeenCalledTimes(1)
+    expect(screen.queryByText(TEXT)).toBeInTheDocument()
+  })
+
+  it('should provide access to ErrorBoundaryDefaultPropsContext', () => {
+    const testOnError = vi.fn()
+    let contextValue: ErrorBoundaryProps
+
+    render(
+      <DefaultPropsProvider defaultProps={new DefaultProps({ ErrorBoundary: { onError: testOnError } })}>
+        {createElement(() => {
+          contextValue = useContext(ErrorBoundaryDefaultPropsContext)
+          return <></>
+        })}
+      </DefaultPropsProvider>
+    )
+
+    expect(contextValue!.onError).toBe(testOnError)
   })
 })
