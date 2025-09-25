@@ -173,6 +173,21 @@ describe('lazy', () => {
     expect(screen.queryByText('not loaded')).not.toBeInTheDocument()
   })
 
+  it('should allow manually preloading a component via load()', async () => {
+    const mockImport = importCache.createImport({ failureCount: 0, failureDelay: 0, successDelay: 100 })
+    const Component = lazy(() => mockImport('/preload-component'))
+
+    const preloadPromise = Component.load()
+
+    expect(importCache.isCached('/preload-component')).toBe(false)
+
+    await act(() => vi.advanceTimersByTimeAsync(100))
+    await expect(preloadPromise).resolves.toBeUndefined()
+
+    expect(mockImport).toHaveBeenCalledTimes(1)
+    expect(importCache.isCached('/preload-component')).toBe(true)
+  })
+
   describe('with unified test helper', () => {
     it('should cache successful imports with timing difference', async () => {
       const mockImport = importCache.createImport({ failureCount: 0, failureDelay: 100, successDelay: 100 })
@@ -745,6 +760,30 @@ describe('lazy', () => {
 
       // Should not throw error and should have used location.reload
       expect(options).toBeDefined()
+    })
+
+    it('should invoke window.location.reload when retrying without custom reload', async () => {
+      const mockLocationReload = vi.fn()
+      const mockImport = importCache.createImport({ failureCount: 1, failureDelay: 50, successDelay: 50 })
+      global.window = {
+        sessionStorage: storage,
+        location: { reload: mockLocationReload } as any,
+      } as any
+
+      const lazy = createLazy(reloadOnError({ storage }))
+      const Component = lazy(() => mockImport('/fallback-reload'))
+
+      render(
+        <ErrorBoundary fallback={<div>error</div>}>
+          <Component />
+        </ErrorBoundary>
+      )
+
+      await act(() => vi.advanceTimersByTimeAsync(50))
+      expect(screen.getByText('error')).toBeInTheDocument()
+
+      await act(() => vi.advanceTimersByTimeAsync(1))
+      expect(mockLocationReload).toHaveBeenCalledTimes(1)
     })
 
     it('should use function-based retry delay', async () => {
