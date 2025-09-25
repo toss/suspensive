@@ -1,4 +1,3 @@
-/* eslint-disable @suspensive/check-parent-suspense */
 import { type InfiniteData, type UseSuspenseInfiniteQueryResult, infiniteQueryOptions } from '@tanstack/react-query'
 import type { ReactNode } from 'react'
 import { describe, expectTypeOf, it } from 'vitest'

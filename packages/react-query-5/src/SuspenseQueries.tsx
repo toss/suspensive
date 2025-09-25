@@ -27,7 +27,6 @@ export function SuspenseQueries<T extends any[], TCombinedResult = SuspenseQueri
 }) {
   return (
     <>
-      {/* eslint-disable-next-line @suspensive/check-parent-suspense */}
       {children(useSuspenseQueries({ queries, combine }))}
     </>
   )

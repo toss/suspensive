@@ -139,6 +139,12 @@ export const suspensiveReactTypeScriptConfig = tseslint.config(
         version: 'detect',
       },
     },
+  },
+  {
+    files: ['packages/**/*.{ts,tsx}'],
+    rules: {
+      '@suspensive/check-parent-suspense': 'off',
+    },
   }
 )
 
