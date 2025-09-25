@@ -1,0 +1,163 @@
+# Suspensive.org LLM Context
+
+Suspensive is a comprehensive collection of libraries designed to simplify and enhance the use of React Suspense. This file provides context for Large Language Models (LLMs) about the Suspensive ecosystem.
+
+## About Suspensive
+
+Suspensive contains several packages that provide components, hooks, and utilities to streamline the implementation of suspense-based features, error handling, and integrations with popular data fetching libraries.
+
+**Homepage**: https://suspensive.org
+**GitHub**: https://github.com/toss/suspensive
+**Documentation**: https://suspensive.org/docs
+**License**: MIT
+
+## Core Packages
+
+### @suspensive/react
+The foundation package providing core React Suspense components:
+- `Suspense` - Enhanced React Suspense with additional features
+- `ErrorBoundary` - Declarative error boundary component
+- `ErrorBoundaryGroup` - Coordinate multiple error boundaries
+- `Delay` - Add delays to prevent flickering
+- `ClientOnly` - Render components only on client-side
+
+### @suspensive/react-query
+Integration with TanStack Query (React Query):
+- `useSuspenseQuery` - Query hook that works with Suspense
+- `useSuspenseInfiniteQuery` - Infinite query with Suspense
+- `useSuspenseQueries` - Multiple queries with Suspense
+- `SuspenseQuery` - Component-based query interface
+- `queryOptions` and `infiniteQueryOptions` - Type-safe query configuration
+
+### @suspensive/jotai
+Integration with Jotai state management:
+- `Atom` - Suspense-compatible atom component
+- `AtomValue` - Read atom values with Suspense
+- `SetAtom` - Component for setting atom values
+
+### @suspensive/react-dom
+DOM-specific components:
+- `InView` - Intersection observer with Suspense
+- `FadeIn` - Animated fade-in transitions
+
+### @suspensive/react-native
+React Native specific components:
+- Native equivalents of core components
+
+## Architecture Philosophy
+
+Suspensive follows these key principles:
+
+1. **Declarative**: Components and hooks that make async state management declarative
+2. **Suspense-First**: Built around React Suspense patterns
+3. **Type-Safe**: Full TypeScript support with excellent type inference
+4. **Composable**: Components work together seamlessly
+5. **Performance**: Optimized for performance with minimal overhead
+
+## Common Patterns
+
+### Basic Error Boundary + Suspense
+```jsx
+import { ErrorBoundary, Suspense } from '@suspensive/react'
+
+function App() {
+  return (
+    <ErrorBoundary fallback={({ error }) => <div>Error: {error.message}</div>}>
+      <Suspense fallback={<div>Loading...</div>}>
+        <AsyncComponent />
+      </Suspense>
+    </ErrorBoundary>
+  )
+}
+```
+
+### Data Fetching with React Query
+```jsx
+import { useSuspenseQuery } from '@suspensive/react-query'
+import { Suspense } from '@suspensive/react'
+
+function UserProfile({ userId }) {
+  const { data: user } = useSuspenseQuery({
+    queryKey: ['users', userId],
+    queryFn: () => fetchUser(userId)
+  })
+  
+  return <div>{user.name}</div>
+}
+
+function App() {
+  return (
+    <Suspense fallback={<div>Loading user...</div>}>
+      <UserProfile userId={1} />
+    </Suspense>
+  )
+}
+```
+
+### Component Composition
+```jsx
+import { ErrorBoundary, Suspense, Delay } from '@suspensive/react'
+
+function App() {
+  return (
+    <ErrorBoundary fallback={ErrorFallback}>
+      <Suspense fallback={<Delay ms={200}><Spinner /></Delay>}>
+        <MyAsyncComponent />
+      </Suspense>
+    </ErrorBoundary>
+  )
+}
+```
+
+## Version Support
+
+- React 18 and React 19
+- TanStack Query v4 and v5
+- Jotai v2
+- TypeScript 5.0+
+
+## Integration Guidelines
+
+When using Suspensive in your applications:
+
+1. **Start with @suspensive/react** for core functionality
+2. **Add data fetching integration** with @suspensive/react-query or @suspensive/jotai
+3. **Use ErrorBoundary** at appropriate boundaries in your component tree
+4. **Combine with Delay** to prevent loading flickers
+5. **Leverage TypeScript** for better development experience
+
+## Common Use Cases
+
+- **Loading States**: Replace manual loading state management with Suspense
+- **Error Handling**: Declarative error boundaries throughout your app
+- **Data Fetching**: Suspense-compatible data fetching with TanStack Query
+- **State Management**: Suspense-compatible global state with Jotai
+- **Performance**: Reduce bundle size and improve UX with better async patterns
+
+## Migration
+
+Suspensive provides codemods to help migrate from older patterns:
+- Migrate from wrap API to with API
+- Remove deprecated networkMode usage
+- Update TanStack Query imports
+
+Run codemods with:
+```bash
+npx @suspensive/codemods
+```
+
+## Community
+
+- **Discord**: https://discord.gg/RFcR9WWmCH
+- **Discussions**: https://github.com/toss/suspensive/discussions
+- **Issues**: https://github.com/toss/suspensive/issues
+
+## Examples
+
+The repository contains numerous examples in the `/examples` directory:
+- Next.js integration
+- Vite + React integration
+- React Native examples
+- Advanced patterns and compositions
+
+Visit https://suspensive.org for comprehensive documentation, guides, and API references.
