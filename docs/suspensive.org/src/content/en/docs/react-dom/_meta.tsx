@@ -6,5 +6,7 @@ export default {
     type: 'separator',
     title: 'API Reference',
   },
+  Foresight: { title: '<Foresight/>' },
   InView: { title: '<InView/>' },
+  useForesight: { title: 'useForesight' },
 } satisfies MetaRecord

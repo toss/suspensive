@@ -1,0 +1,341 @@
+import { Callout, Sandpack } from '@/components'
+
+# Foresight
+
+This is a component that uses `js.foresight` to predict user interactions based on mouse trajectory, keyboard navigation, and scroll behavior. It enables proactive prefetching and UI optimization before users actually interact with elements.
+
+<Callout type="info">
+The `Foresight` component integrates with the [`js.foresight`](https://foresightjs.com/) library to provide predictive interaction detection. This allows you to trigger callbacks before users actually click or interact with elements, enabling smart prefetching strategies.
+</Callout>
+
+```tsx
+import { PrefetchQuery } from '@suspensive/react-query'
+import { Foresight } from '@suspensive/react-dom'
+
+const PostsPage = ({ posts }: { posts: Post[] }) => (
+  <div>
+    <h1>Posts</h1>
+    {posts.map((post) => (
+      <Foresight
+        key={post.id}
+        callback={() => {
+          // This will be called when user is likely to interact with the element
+          console.log(`User is likely to click on post ${post.id}`)
+        }}
+        name={`post-${post.id}`}
+        hitSlop={10}
+      >
+        {({ ref, isRegistered }) => (
+          <div ref={ref}>
+            {isRegistered && (
+              <PrefetchQuery
+                queryKey={['posts', post.id, 'comments']}
+                queryFn={() => getPostComments(post.id)}
+              />
+            )}
+            <h2>{post.title}</h2>
+            <p>{post.description}</p>
+            <Link to={`/posts/${post.id}/comments`}>See comments</Link>
+          </div>
+        )}
+      </Foresight>
+    ))}
+  </div>
+)
+```
+
+## props.callback
+
+`callback` is a function that is called when the user is predicted to interact with the element. This happens before the actual interaction occurs.
+
+<Sandpack>
+
+```tsx Example.tsx active
+import { Foresight } from '@suspensive/react-dom'
+import { useState } from 'react'
+
+export const Example = () => {
+  const [predictions, setPredictions] = useState([])
+  
+  return (
+    <>
+      {Array.from({ length: 10 }).map((_, index) => (
+        <Foresight
+          key={index}
+          callback={() => {
+            setPredictions(prev => [
+              ...prev,
+              `Predicted interaction with button ${index} at ${new Date().toLocaleTimeString()}`
+            ])
+          }}
+          name={`button-${index}`}
+          hitSlop={5}
+        >
+          {({ ref, isRegistered }) => (
+            <button
+              ref={ref}
+              style={{
+                margin: 10,
+                padding: '20px 40px',
+                backgroundColor: isRegistered ? 'lightblue' : 'lightgray',
+                border: 'none',
+                borderRadius: 4,
+                cursor: 'pointer',
+              }}
+              onClick={() => alert(`Actually clicked button ${index}!`)}
+            >
+              Button {index} {isRegistered ? '(Tracked)' : '(Not Tracked)'}
+            </button>
+          )}
+        </Foresight>
+      ))}
+      <div style={{ marginTop: 20, padding: 10, backgroundColor: '#f0f0f0' }}>
+        <h3>Predictions:</h3>
+        <ul>
+          {predictions.slice(-5).map((prediction, i) => (
+            <li key={i}>{prediction}</li>
+          ))}
+        </ul>
+      </div>
+    </>
+  )
+}
+```
+
+</Sandpack>
+
+## props.hitSlop
+
+`hitSlop` expands the interaction detection area around the element. It can be a number (for all sides) or an object specifying different values for each side.
+
+<Sandpack>
+
+```tsx Example.tsx active
+import { Foresight } from '@suspensive/react-dom'
+import { useState } from 'react'
+
+export const Example = () => {
+  const [lastPrediction, setLastPrediction] = useState('')
+  
+  return (
+    <div style={{ padding: 50 }}>
+      <Foresight
+        callback={() => setLastPrediction(`Predicted at ${new Date().toLocaleTimeString()}`)}
+        name="hitslop-example"
+        hitSlop={30}
+      >
+        {({ ref }) => (
+          <div>
+            <button
+              ref={ref}
+              style={{
+                padding: '10px 20px',
+                backgroundColor: 'lightcoral',
+                border: '2px dashed red',
+                borderRadius: 4,
+              }}
+            >
+              Hover near me (30px hitSlop)
+            </button>
+            <div style={{ marginTop: 10, fontSize: 12, color: 'gray' }}>
+              The red dashed border shows the actual button. 
+              Move your mouse around the button area to trigger predictions.
+            </div>
+          </div>
+        )}
+      </Foresight>
+      <div style={{ marginTop: 20, padding: 10, backgroundColor: '#f0f0f0' }}>
+        Last prediction: {lastPrediction}
+      </div>
+    </div>
+  )
+}
+```
+
+</Sandpack>
+
+## props.name
+
+`name` is an optional identifier for the registered element, useful for debugging and analytics.
+
+## props.meta
+
+`meta` is an optional object for storing additional information about the registered element.
+
+<Sandpack>
+
+```tsx Example.tsx active
+import { Foresight } from '@suspensive/react-dom'
+import { useState } from 'react'
+
+export const Example = () => {
+  const [events, setEvents] = useState([])
+  
+  const handlePrediction = (elementName, metadata) => {
+    setEvents(prev => [
+      ...prev.slice(-4),
+      {
+        time: new Date().toLocaleTimeString(),
+        element: elementName,
+        priority: metadata.priority,
+        category: metadata.category,
+      }
+    ])
+  }
+  
+  return (
+    <>
+      <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
+        {[
+          { name: 'High Priority Button', priority: 'high', category: 'action' },
+          { name: 'Medium Priority Link', priority: 'medium', category: 'navigation' },
+          { name: 'Low Priority Info', priority: 'low', category: 'info' },
+        ].map((item, index) => (
+          <Foresight
+            key={index}
+            callback={() => handlePrediction(item.name, { priority: item.priority, category: item.category })}
+            name={item.name}
+            meta={{ priority: item.priority, category: item.category }}
+          >
+            {({ ref }) => (
+              <button
+                ref={ref}
+                style={{
+                  padding: '10px 15px',
+                  backgroundColor: 
+                    item.priority === 'high' ? 'lightcoral' :
+                    item.priority === 'medium' ? 'lightyellow' : 'lightgray',
+                  border: 'none',
+                  borderRadius: 4,
+                  cursor: 'pointer',
+                }}
+              >
+                {item.name}
+              </button>
+            )}
+          </Foresight>
+        ))}
+      </div>
+      
+      <div style={{ marginTop: 20, padding: 10, backgroundColor: '#f0f0f0' }}>
+        <h3>Recent Predictions:</h3>
+        <ul>
+          {events.map((event, i) => (
+            <li key={i}>
+              {event.time} - {event.element} (Priority: {event.priority}, Category: {event.category})
+            </li>
+          ))}
+        </ul>
+      </div>
+    </>
+  )
+}
+```
+
+</Sandpack>
+
+## props.reactivateAfter
+
+`reactivateAfter` sets the time in milliseconds after which the callback can be fired again. Default is `Infinity` (callback only fires once).
+
+<Sandpack>
+
+```tsx Example.tsx active
+import { Foresight } from '@suspensive/react-dom'
+import { useState } from 'react'
+
+export const Example = () => {
+  const [callCount, setCallCount] = useState(0)
+  
+  return (
+    <div style={{ padding: 20 }}>
+      <Foresight
+        callback={() => setCallCount(prev => prev + 1)}
+        name="reactivate-example"
+        reactivateAfter={2000} // Reactivate after 2 seconds
+      >
+        {({ ref }) => (
+          <button
+            ref={ref}
+            style={{
+              padding: '15px 30px',
+              backgroundColor: 'lightgreen',
+              border: 'none',
+              borderRadius: 4,
+              cursor: 'pointer',
+              fontSize: 16,
+            }}
+          >
+            Hover me repeatedly
+          </button>
+        )}
+      </Foresight>
+      
+      <div style={{ marginTop: 15 }}>
+        <p>Callback called: <strong>{callCount}</strong> times</p>
+        <p style={{ fontSize: 12, color: 'gray' }}>
+          The callback will reactivate 2 seconds after each trigger.
+        </p>
+      </div>
+    </div>
+  )
+}
+```
+
+</Sandpack>
+
+## props.disabled
+
+`disabled` prevents the element from being registered with foresight tracking.
+
+<Sandpack>
+
+```tsx Example.tsx active
+import { Foresight } from '@suspensive/react-dom'
+import { useState } from 'react'
+
+export const Example = () => {
+  const [disabled, setDisabled] = useState(false)
+  const [predictions, setPredictions] = useState(0)
+  
+  return (
+    <div style={{ padding: 20 }}>
+      <label style={{ display: 'block', marginBottom: 15 }}>
+        <input
+          type="checkbox"
+          checked={disabled}
+          onChange={e => setDisabled(e.target.checked)}
+        />
+        Disable foresight tracking
+      </label>
+      
+      <Foresight
+        callback={() => setPredictions(prev => prev + 1)}
+        name="disabled-example"
+        disabled={disabled}
+      >
+        {({ ref, isRegistered }) => (
+          <button
+            ref={ref}
+            style={{
+              padding: '15px 30px',
+              backgroundColor: isRegistered ? 'lightblue' : 'lightgray',
+              border: 'none',
+              borderRadius: 4,
+              cursor: 'pointer',
+            }}
+          >
+            {isRegistered ? 'Tracking Enabled' : 'Tracking Disabled'}
+          </button>
+        )}
+      </Foresight>
+      
+      <div style={{ marginTop: 15 }}>
+        <p>Predictions: <strong>{predictions}</strong></p>
+      </div>
+    </div>
+  )
+}
+```
+
+</Sandpack>

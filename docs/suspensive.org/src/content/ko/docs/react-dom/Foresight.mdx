@@ -1,0 +1,171 @@
+import { Callout, Sandpack } from '@/components'
+
+# Foresight
+
+`js.foresight`를 사용하여 마우스 궤적, 키보드 내비게이션, 스크롤 동작을 기반으로 사용자 상호작용을 예측하는 컴포넌트입니다. 사용자가 실제로 요소와 상호작용하기 전에 미리 프리페칭 및 UI 최적화를 가능하게 합니다.
+
+<Callout type="info">
+`Foresight` 컴포넌트는 [`js.foresight`](https://foresightjs.com/) 라이브러리와 통합되어 예측적 상호작용 감지를 제공합니다. 이를 통해 사용자가 실제로 클릭하거나 상호작용하기 전에 콜백을 트리거하여 스마트한 프리페칭 전략을 구현할 수 있습니다.
+</Callout>
+
+```tsx
+import { PrefetchQuery } from '@suspensive/react-query'
+import { Foresight } from '@suspensive/react-dom'
+
+const PostsPage = ({ posts }: { posts: Post[] }) => (
+  <div>
+    <h1>Posts</h1>
+    {posts.map((post) => (
+      <Foresight
+        key={post.id}
+        callback={() => {
+          // 사용자가 요소와 상호작용할 가능성이 높을 때 호출됩니다
+          console.log(`사용자가 포스트 ${post.id}를 클릭할 것 같습니다`)
+        }}
+        name={`post-${post.id}`}
+        hitSlop={10}
+      >
+        {({ ref, isRegistered }) => (
+          <div ref={ref}>
+            {isRegistered && (
+              <PrefetchQuery
+                queryKey={['posts', post.id, 'comments']}
+                queryFn={() => getPostComments(post.id)}
+              />
+            )}
+            <h2>{post.title}</h2>
+            <p>{post.description}</p>
+            <Link to={`/posts/${post.id}/comments`}>댓글 보기</Link>
+          </div>
+        )}
+      </Foresight>
+    ))}
+  </div>
+)
+```
+
+## props.callback
+
+`callback`은 사용자가 요소와 상호작용할 것으로 예측될 때 호출되는 함수입니다. 실제 상호작용이 발생하기 전에 호출됩니다.
+
+<Sandpack>
+
+```tsx Example.tsx active
+import { Foresight } from '@suspensive/react-dom'
+import { useState } from 'react'
+
+export const Example = () => {
+  const [predictions, setPredictions] = useState([])
+  
+  return (
+    <>
+      {Array.from({ length: 10 }).map((_, index) => (
+        <Foresight
+          key={index}
+          callback={() => {
+            setPredictions(prev => [
+              ...prev,
+              `버튼 ${index}과의 상호작용 예측 - ${new Date().toLocaleTimeString()}`
+            ])
+          }}
+          name={`button-${index}`}
+          hitSlop={5}
+        >
+          {({ ref, isRegistered }) => (
+            <button
+              ref={ref}
+              style={{
+                margin: 10,
+                padding: '20px 40px',
+                backgroundColor: isRegistered ? 'lightblue' : 'lightgray',
+                border: 'none',
+                borderRadius: 4,
+                cursor: 'pointer',
+              }}
+              onClick={() => alert(`실제로 버튼 ${index}을 클릭했습니다!`)}
+            >
+              버튼 {index} {isRegistered ? '(추적 중)' : '(추적 안함)'}
+            </button>
+          )}
+        </Foresight>
+      ))}
+      <div style={{ marginTop: 20, padding: 10, backgroundColor: '#f0f0f0' }}>
+        <h3>예측 기록:</h3>
+        <ul>
+          {predictions.slice(-5).map((prediction, i) => (
+            <li key={i}>{prediction}</li>
+          ))}
+        </ul>
+      </div>
+    </>
+  )
+}
+```
+
+</Sandpack>
+
+## props.hitSlop
+
+`hitSlop`은 요소 주변의 상호작용 감지 영역을 확장합니다. 숫자(모든 면) 또는 각 면에 대해 다른 값을 지정하는 객체일 수 있습니다.
+
+<Sandpack>
+
+```tsx Example.tsx active
+import { Foresight } from '@suspensive/react-dom'
+import { useState } from 'react'
+
+export const Example = () => {
+  const [lastPrediction, setLastPrediction] = useState('')
+  
+  return (
+    <div style={{ padding: 50 }}>
+      <Foresight
+        callback={() => setLastPrediction(`예측 시간: ${new Date().toLocaleTimeString()}`)}
+        name="hitslop-example"
+        hitSlop={30}
+      >
+        {({ ref }) => (
+          <div>
+            <button
+              ref={ref}
+              style={{
+                padding: '10px 20px',
+                backgroundColor: 'lightcoral',
+                border: '2px dashed red',
+                borderRadius: 4,
+              }}
+            >
+              내 근처로 마우스를 가져다 대세요 (30px hitSlop)
+            </button>
+            <div style={{ marginTop: 10, fontSize: 12, color: 'gray' }}>
+              빨간색 점선 테두리가 실제 버튼을 나타냅니다.
+              버튼 영역 주변에서 마우스를 움직여 예측을 트리거해보세요.
+            </div>
+          </div>
+        )}
+      </Foresight>
+      <div style={{ marginTop: 20, padding: 10, backgroundColor: '#f0f0f0' }}>
+        마지막 예측: {lastPrediction}
+      </div>
+    </div>
+  )
+}
+```
+
+</Sandpack>
+
+## props.name
+
+`name`은 등록된 요소의 선택적 식별자로, 디버깅 및 분석에 유용합니다.
+
+## props.meta
+
+`meta`는 등록된 요소에 대한 추가 정보를 저장하기 위한 선택적 객체입니다.
+
+## props.reactivateAfter
+
+`reactivateAfter`는 콜백이 다시 실행될 수 있을 때까지의 시간을 밀리초 단위로 설정합니다. 기본값은 `Infinity`(콜백이 한 번만 실행됨)입니다.
+
+## props.disabled
+
+`disabled`는 요소가 foresight 추적에 등록되는 것을 방지합니다.
