@@ -55,6 +55,9 @@
     "react": "catalog:react19",
     "react-dom": "catalog:react19"
   },
+  "dependencies": {
+    "js.foresight": "^3.3.3"
+  },
   "peerDependencies": {
     "react": "^18 || ^19",
     "react-dom": "^18 || ^19"
