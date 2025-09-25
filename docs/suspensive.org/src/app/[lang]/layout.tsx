@@ -50,7 +50,7 @@ export default async function RootLayout({
       </Head>
       <body>
         <Layout
-          darkMode={false}
+          darkMode
           search={<Search placeholder={dictionary.search.placeholder} />}
           navbar={
             <Navbar
@@ -82,7 +82,10 @@ export default async function RootLayout({
           }}
           editLink={dictionary.editPage}
           pageMap={pageMap}
-          nextThemes={{ defaultTheme: 'dark' }}
+          nextThemes={{
+            defaultTheme: 'system',
+            storageKey: 'suspensive-theme',
+          }}
           feedback={{ content: '' }}
           lastUpdated={<LastUpdated>{dictionary.lastUpdated}</LastUpdated>}
         >

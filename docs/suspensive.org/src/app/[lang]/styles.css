@@ -10,5 +10,93 @@
 }
 
 body {
-  background-color: #0c0c0c;
+  @apply bg-white text-black transition-colors duration-300;
+}
+
+.dark body {
+  @apply bg-black text-white;
+}
+
+.homepage-content {
+  @apply bg-white text-black transition-colors duration-300;
+}
+
+.dark .homepage-content {
+  @apply bg-black text-white;
+}
+
+.nextra-code {
+  @apply border border-gray-300 bg-gray-100 text-gray-900;
+}
+
+.dark .nextra-code {
+  @apply border-gray-700 bg-gray-800 text-gray-100;
+}
+
+.homepage-content .nextra-code {
+  @apply border border-gray-300 bg-gray-100 text-gray-900;
+}
+
+.dark .homepage-content .nextra-code {
+  @apply border-gray-700 bg-gray-800 text-gray-100;
+}
+
+pre {
+  @apply border border-gray-300 bg-gray-200;
+}
+
+code {
+  @apply bg-gray-100 text-gray-900;
+}
+
+.dark pre {
+  @apply border-gray-900 bg-black;
+}
+
+.dark code {
+  @apply bg-[#000000] text-gray-100;
+}
+
+.a {
+  @apply text-blue-400 hover:text-blue-300;
+}
+
+table {
+  @apply border-gray-300 bg-white;
+}
+
+th {
+  @apply bg-gray-50 text-gray-900;
+}
+
+td {
+  @apply border-gray-300 text-gray-800;
+}
+
+.dark table {
+  @apply border-gray-700 bg-gray-800;
+}
+
+.dark th {
+  @apply bg-gray-700 text-gray-100;
+}
+
+.dark td {
+  @apply border-gray-700 text-gray-200;
+}
+
+.nextra-nav-container {
+  @apply border-gray-200 bg-white;
+}
+
+.nextra-sidebar {
+  @apply bg-white;
+}
+
+.dark .nextra-nav-container {
+  @apply border-gray-700 bg-gray-900;
+}
+
+.dark .nextra-sidebar {
+  @apply bg-gray-900;
 }
