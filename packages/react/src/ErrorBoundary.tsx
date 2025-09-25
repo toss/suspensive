@@ -211,37 +211,40 @@ export const ErrorBoundary = Object.assign(
 )
 
 /**
- * Create a type-narrowed ErrorBoundary component for better TypeScript inference.
- * This helper function allows you to create an ErrorBoundary with narrowed error types
- * based on the shouldCatch prop value.
- *
+ * Type-narrowed version of ErrorBoundary that provides automatic type inference
+ * for the fallback error parameter based on the shouldCatch prop.
+ * 
  * @example
  * ```tsx
- * const CustomErrorBoundary = createTypedErrorBoundary<typeof CustomError>()
- *
- * <CustomErrorBoundary
- *   shouldCatch={CustomError}
- *   fallback={({ error }) => {
- *     // error is typed as CustomError here
+ * // For single error constructor
+ * withErrorBoundary({
+ *   shouldCatch: CustomError,
+ *   fallback: ({ error }) => {
+ *     // error is automatically typed as CustomError
  *     return <div>{error.customProperty}</div>
- *   }}
- * >
- *   <MyComponent />
- * </CustomErrorBoundary>
+ *   }
+ * })
+ * 
+ * // For array of error constructors  
+ * withErrorBoundary({
+ *   shouldCatch: [CustomError, AnotherError],
+ *   fallback: ({ error }) => {
+ *     // error is automatically typed as CustomError | AnotherError
+ *     return <div>{error.message}</div>
+ *   }
+ * })
  * ```
  */
-export function createTypedErrorBoundary<TShouldCatch = undefined>() {
-  return ErrorBoundary as <T extends TShouldCatch>(
-    props: PropsWithChildren<{
-      resetKeys?: unknown[]
-      onReset?: () => void
-      onError?: (error: Error, info: ErrorInfo) => void
-      fallback:
-        | ReactNode
-        | FunctionComponent<ErrorBoundaryFallbackProps<TShouldCatch extends undefined ? Error : ExtractErrorType<T>>>
-      shouldCatch?: T
-    }>
-  ) => React.JSX.Element
+export const withErrorBoundary = <TShouldCatch extends ShouldCatch | [ShouldCatch, ...ShouldCatch[]]>(
+  props: PropsWithChildren<{
+    resetKeys?: unknown[]
+    onReset?: () => void
+    onError?: (error: Error, info: ErrorInfo) => void
+    fallback: ReactNode | FunctionComponent<ErrorBoundaryFallbackProps<ExtractErrorType<TShouldCatch>>>
+    shouldCatch: TShouldCatch
+  }>
+) => {
+  return <ErrorBoundary {...(props as any)} />
 }
 
 const ErrorBoundaryContext = Object.assign(createContext<({ reset: () => void } & ErrorBoundaryState) | null>(null), {

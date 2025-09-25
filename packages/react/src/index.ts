@@ -5,7 +5,7 @@ export {
   ErrorBoundary,
   useErrorBoundary,
   useErrorBoundaryFallbackProps,
-  createTypedErrorBoundary,
+  withErrorBoundary,
 } from './ErrorBoundary'
 export { ErrorBoundaryGroup, useErrorBoundaryGroup } from './ErrorBoundaryGroup'
 export { lazy, reloadOnError, createLazy } from './lazy'
