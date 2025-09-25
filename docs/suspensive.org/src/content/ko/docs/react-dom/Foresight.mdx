@@ -5,7 +5,10 @@ import { Callout, Sandpack } from '@/components'
 `js.foresight`를 사용하여 마우스 궤적, 키보드 내비게이션, 스크롤 동작을 기반으로 사용자 상호작용을 예측하는 컴포넌트입니다. 사용자가 실제로 요소와 상호작용하기 전에 미리 프리페칭 및 UI 최적화를 가능하게 합니다.
 
 <Callout type="info">
-`Foresight` 컴포넌트는 [`js.foresight`](https://foresightjs.com/) 라이브러리와 통합되어 예측적 상호작용 감지를 제공합니다. 이를 통해 사용자가 실제로 클릭하거나 상호작용하기 전에 콜백을 트리거하여 스마트한 프리페칭 전략을 구현할 수 있습니다.
+  `Foresight` 컴포넌트는 [`js.foresight`](https://foresightjs.com/) 라이브러리와
+  통합되어 예측적 상호작용 감지를 제공합니다. 이를 통해 사용자가 실제로
+  클릭하거나 상호작용하기 전에 콜백을 트리거하여 스마트한 프리페칭 전략을 구현할
+  수 있습니다.
 </Callout>
 
 ```tsx
@@ -56,16 +59,16 @@ import { useState } from 'react'
 
 export const Example = () => {
   const [predictions, setPredictions] = useState([])
-  
+
   return (
     <>
       {Array.from({ length: 10 }).map((_, index) => (
         <Foresight
           key={index}
           callback={() => {
-            setPredictions(prev => [
+            setPredictions((prev) => [
               ...prev,
-              `버튼 ${index}과의 상호작용 예측 - ${new Date().toLocaleTimeString()}`
+              `버튼 ${index}과의 상호작용 예측 - ${new Date().toLocaleTimeString()}`,
             ])
           }}
           name={`button-${index}`}
@@ -116,11 +119,13 @@ import { useState } from 'react'
 
 export const Example = () => {
   const [lastPrediction, setLastPrediction] = useState('')
-  
+
   return (
     <div style={{ padding: 50 }}>
       <Foresight
-        callback={() => setLastPrediction(`예측 시간: ${new Date().toLocaleTimeString()}`)}
+        callback={() =>
+          setLastPrediction(`예측 시간: ${new Date().toLocaleTimeString()}`)
+        }
         name="hitslop-example"
         hitSlop={30}
       >
@@ -138,8 +143,8 @@ export const Example = () => {
               내 근처로 마우스를 가져다 대세요 (30px hitSlop)
             </button>
             <div style={{ marginTop: 10, fontSize: 12, color: 'gray' }}>
-              빨간색 점선 테두리가 실제 버튼을 나타냅니다.
-              버튼 영역 주변에서 마우스를 움직여 예측을 트리거해보세요.
+              빨간색 점선 테두리가 실제 버튼을 나타냅니다. 버튼 영역 주변에서
+              마우스를 움직여 예측을 트리거해보세요.
             </div>
           </div>
         )}

@@ -46,6 +46,9 @@
     "clean": "rimraf ./dist ./coverage ./node_modules",
     "test:ui": "vitest --ui"
   },
+  "dependencies": {
+    "js.foresight": "^3.3.3"
+  },
   "devDependencies": {
     "@suspensive/eslint-config": "workspace:*",
     "@suspensive/tsconfig": "workspace:*",
@@ -54,9 +57,6 @@
     "@types/react-dom": "catalog:react19",
     "react": "catalog:react19",
     "react-dom": "catalog:react19"
-  },
-  "dependencies": {
-    "js.foresight": "^3.3.3"
   },
   "peerDependencies": {
     "react": "^18 || ^19",

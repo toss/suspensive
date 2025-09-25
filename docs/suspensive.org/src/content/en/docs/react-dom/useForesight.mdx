@@ -5,7 +5,11 @@ import { Callout, Sandpack } from '@/components'
 This is a React hook that integrates with `js.foresight` to predict user interactions based on mouse trajectory, keyboard navigation, and scroll behavior. It enables proactive prefetching and UI optimization before users actually interact with elements.
 
 <Callout type="info">
-The `useForesight` hook integrates with the [`js.foresight`](https://foresightjs.com/) library to provide predictive interaction detection. This allows you to trigger callbacks before users actually click or interact with elements, enabling smart prefetching strategies.
+  The `useForesight` hook integrates with the
+  [`js.foresight`](https://foresightjs.com/) library to provide predictive
+  interaction detection. This allows you to trigger callbacks before users
+  actually click or interact with elements, enabling smart prefetching
+  strategies.
 </Callout>
 
 ```tsx
@@ -17,7 +21,7 @@ const PostCard = ({ post }: { post: Post }) => {
     queryKey: ['posts', post.id, 'comments'],
     queryFn: () => getPostComments(post.id),
   })
-  
+
   const { ref } = useForesight({
     callback: () => {
       // This will be called when user is likely to interact with the element
@@ -49,10 +53,12 @@ import { useState } from 'react'
 
 export const Example = () => {
   const [lastPrediction, setLastPrediction] = useState('')
-  
+
   const { ref, isRegistered, registerResult } = useForesight({
     callback: () => {
-      setLastPrediction(`Predicted interaction at ${new Date().toLocaleTimeString()}`)
+      setLastPrediction(
+        `Predicted interaction at ${new Date().toLocaleTimeString()}`
+      )
     },
     name: 'basic-example',
   })
@@ -73,12 +79,23 @@ export const Example = () => {
       >
         Hover or move towards me
       </button>
-      
+
       <div style={{ marginTop: 15 }}>
-        <p><strong>Registration Status:</strong> {isRegistered ? 'Registered' : 'Not Registered'}</p>
-        <p><strong>Touch Device:</strong> {registerResult?.isTouchDevice ? 'Yes' : 'No'}</p>
-        <p><strong>Limited Connection:</strong> {registerResult?.isLimitedConnection ? 'Yes' : 'No'}</p>
-        <p><strong>Last Prediction:</strong> {lastPrediction || 'None yet'}</p>
+        <p>
+          <strong>Registration Status:</strong>{' '}
+          {isRegistered ? 'Registered' : 'Not Registered'}
+        </p>
+        <p>
+          <strong>Touch Device:</strong>{' '}
+          {registerResult?.isTouchDevice ? 'Yes' : 'No'}
+        </p>
+        <p>
+          <strong>Limited Connection:</strong>{' '}
+          {registerResult?.isLimitedConnection ? 'Yes' : 'No'}
+        </p>
+        <p>
+          <strong>Last Prediction:</strong> {lastPrediction || 'None yet'}
+        </p>
       </div>
     </div>
   )
@@ -99,12 +116,12 @@ import { useState } from 'react'
 
 export const Example = () => {
   const [predictions, setPredictions] = useState([])
-  
+
   const { ref } = useForesight({
     callback: () => {
-      setPredictions(prev => [
+      setPredictions((prev) => [
         ...prev,
-        `Prediction ${prev.length + 1} at ${new Date().toLocaleTimeString()}`
+        `Prediction ${prev.length + 1} at ${new Date().toLocaleTimeString()}`,
       ])
     },
     name: 'callback-example',
@@ -127,7 +144,7 @@ export const Example = () => {
       >
         Interactive Area - Move your mouse towards me!
       </div>
-      
+
       <div style={{ marginTop: 20, padding: 10, backgroundColor: '#f0f0f0' }}>
         <h3>Predictions:</h3>
         <ul>
@@ -161,9 +178,9 @@ import { useState } from 'react'
 export const Example = () => {
   const [hitSlop, setHitSlop] = useState(0)
   const [predictions, setPredictions] = useState(0)
-  
+
   const { ref } = useForesight({
-    callback: () => setPredictions(prev => prev + 1),
+    callback: () => setPredictions((prev) => prev + 1),
     name: 'hitslop-example',
     hitSlop,
     reactivateAfter: 500,
@@ -173,19 +190,19 @@ export const Example = () => {
     <div style={{ padding: 50 }}>
       <div style={{ marginBottom: 20 }}>
         <label>
-          Hit Slop: 
+          Hit Slop:
           <input
             type="range"
             min="0"
             max="50"
             value={hitSlop}
-            onChange={e => setHitSlop(Number(e.target.value))}
+            onChange={(e) => setHitSlop(Number(e.target.value))}
             style={{ marginLeft: 10 }}
           />
           {hitSlop}px
         </label>
       </div>
-      
+
       <div
         ref={ref}
         style={{
@@ -199,11 +216,14 @@ export const Example = () => {
       >
         Target Element
       </div>
-      
+
       <div style={{ marginTop: 20 }}>
-        <p>Predictions: <strong>{predictions}</strong></p>
+        <p>
+          Predictions: <strong>{predictions}</strong>
+        </p>
         <p style={{ fontSize: 12, color: 'gray' }}>
-          Move your mouse around the element to see how hitSlop affects detection.
+          Move your mouse around the element to see how hitSlop affects
+          detection.
         </p>
       </div>
     </div>
@@ -226,9 +246,9 @@ import { useState } from 'react'
 export const Example = () => {
   const [disabled, setDisabled] = useState(false)
   const [predictions, setPredictions] = useState(0)
-  
+
   const { ref, isRegistered } = useForesight({
-    callback: () => setPredictions(prev => prev + 1),
+    callback: () => setPredictions((prev) => prev + 1),
     name: 'disabled-example',
     disabled,
     reactivateAfter: 1000,
@@ -241,12 +261,12 @@ export const Example = () => {
           <input
             type="checkbox"
             checked={disabled}
-            onChange={e => setDisabled(e.target.checked)}
+            onChange={(e) => setDisabled(e.target.checked)}
           />
           Disable tracking
         </label>
       </div>
-      
+
       <div
         ref={ref}
         style={{
@@ -260,10 +280,15 @@ export const Example = () => {
       >
         {isRegistered ? 'Tracking Active' : 'Tracking Disabled'}
       </div>
-      
+
       <div style={{ marginTop: 15 }}>
-        <p>Predictions: <strong>{predictions}</strong></p>
-        <p>Status: <strong>{isRegistered ? 'Registered' : 'Not Registered'}</strong></p>
+        <p>
+          Predictions: <strong>{predictions}</strong>
+        </p>
+        <p>
+          Status:{' '}
+          <strong>{isRegistered ? 'Registered' : 'Not Registered'}</strong>
+        </p>
       </div>
     </div>
   )
@@ -285,9 +310,9 @@ import { useState } from 'react'
 export const Example = () => {
   const [autoInit, setAutoInit] = useState(true)
   const [predictions, setPredictions] = useState(0)
-  
+
   const { ref, isRegistered, registerResult } = useForesight({
-    callback: () => setPredictions(prev => prev + 1),
+    callback: () => setPredictions((prev) => prev + 1),
     name: 'auto-init-example',
     autoInitialize: autoInit,
     reactivateAfter: 1000,
@@ -300,12 +325,12 @@ export const Example = () => {
           <input
             type="checkbox"
             checked={autoInit}
-            onChange={e => setAutoInit(e.target.checked)}
+            onChange={(e) => setAutoInit(e.target.checked)}
           />
           Auto-initialize ForesightManager
         </label>
       </div>
-      
+
       <div
         ref={ref}
         style={{
@@ -319,11 +344,17 @@ export const Example = () => {
       >
         Hover me
       </div>
-      
+
       <div style={{ marginTop: 15 }}>
-        <p>Auto Initialize: <strong>{autoInit ? 'Enabled' : 'Disabled'}</strong></p>
-        <p>Registered: <strong>{isRegistered ? 'Yes' : 'No'}</strong></p>
-        <p>Predictions: <strong>{predictions}</strong></p>
+        <p>
+          Auto Initialize: <strong>{autoInit ? 'Enabled' : 'Disabled'}</strong>
+        </p>
+        <p>
+          Registered: <strong>{isRegistered ? 'Yes' : 'No'}</strong>
+        </p>
+        <p>
+          Predictions: <strong>{predictions}</strong>
+        </p>
       </div>
     </div>
   )
@@ -348,9 +379,9 @@ import { useState } from 'react'
 
 export const Example = () => {
   const [callbackCount, setCallbackCount] = useState(0)
-  
+
   const foresightResult = useForesight({
-    callback: () => setCallbackCount(prev => prev + 1),
+    callback: () => setCallbackCount((prev) => prev + 1),
     name: 'return-value-example',
     reactivateAfter: 2000,
   })
@@ -370,14 +401,32 @@ export const Example = () => {
       >
         Interactive Element
       </div>
-      
-      <div style={{ marginTop: 20, padding: 15, backgroundColor: '#f5f5f5', borderRadius: 4 }}>
+
+      <div
+        style={{
+          marginTop: 20,
+          padding: 15,
+          backgroundColor: '#f5f5f5',
+          borderRadius: 4,
+        }}
+      >
         <h3>Hook Return Value:</h3>
         <ul>
-          <li><strong>isRegistered:</strong> {String(foresightResult.isRegistered)}</li>
-          <li><strong>registerResult.isTouchDevice:</strong> {String(foresightResult.registerResult?.isTouchDevice)}</li>
-          <li><strong>registerResult.isLimitedConnection:</strong> {String(foresightResult.registerResult?.isLimitedConnection)}</li>
-          <li><strong>Callback invoked:</strong> {callbackCount} times</li>
+          <li>
+            <strong>isRegistered:</strong>{' '}
+            {String(foresightResult.isRegistered)}
+          </li>
+          <li>
+            <strong>registerResult.isTouchDevice:</strong>{' '}
+            {String(foresightResult.registerResult?.isTouchDevice)}
+          </li>
+          <li>
+            <strong>registerResult.isLimitedConnection:</strong>{' '}
+            {String(foresightResult.registerResult?.isLimitedConnection)}
+          </li>
+          <li>
+            <strong>Callback invoked:</strong> {callbackCount} times
+          </li>
         </ul>
       </div>
     </div>

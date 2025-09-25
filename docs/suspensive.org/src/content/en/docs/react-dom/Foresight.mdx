@@ -5,7 +5,11 @@ import { Callout, Sandpack } from '@/components'
 This is a component that uses `js.foresight` to predict user interactions based on mouse trajectory, keyboard navigation, and scroll behavior. It enables proactive prefetching and UI optimization before users actually interact with elements.
 
 <Callout type="info">
-The `Foresight` component integrates with the [`js.foresight`](https://foresightjs.com/) library to provide predictive interaction detection. This allows you to trigger callbacks before users actually click or interact with elements, enabling smart prefetching strategies.
+  The `Foresight` component integrates with the
+  [`js.foresight`](https://foresightjs.com/) library to provide predictive
+  interaction detection. This allows you to trigger callbacks before users
+  actually click or interact with elements, enabling smart prefetching
+  strategies.
 </Callout>
 
 ```tsx
@@ -56,16 +60,16 @@ import { useState } from 'react'
 
 export const Example = () => {
   const [predictions, setPredictions] = useState([])
-  
+
   return (
     <>
       {Array.from({ length: 10 }).map((_, index) => (
         <Foresight
           key={index}
           callback={() => {
-            setPredictions(prev => [
+            setPredictions((prev) => [
               ...prev,
-              `Predicted interaction with button ${index} at ${new Date().toLocaleTimeString()}`
+              `Predicted interaction with button ${index} at ${new Date().toLocaleTimeString()}`,
             ])
           }}
           name={`button-${index}`}
@@ -116,11 +120,13 @@ import { useState } from 'react'
 
 export const Example = () => {
   const [lastPrediction, setLastPrediction] = useState('')
-  
+
   return (
     <div style={{ padding: 50 }}>
       <Foresight
-        callback={() => setLastPrediction(`Predicted at ${new Date().toLocaleTimeString()}`)}
+        callback={() =>
+          setLastPrediction(`Predicted at ${new Date().toLocaleTimeString()}`)
+        }
         name="hitslop-example"
         hitSlop={30}
       >
@@ -138,8 +144,8 @@ export const Example = () => {
               Hover near me (30px hitSlop)
             </button>
             <div style={{ marginTop: 10, fontSize: 12, color: 'gray' }}>
-              The red dashed border shows the actual button. 
-              Move your mouse around the button area to trigger predictions.
+              The red dashed border shows the actual button. Move your mouse
+              around the button area to trigger predictions.
             </div>
           </div>
         )}
@@ -170,30 +176,43 @@ import { useState } from 'react'
 
 export const Example = () => {
   const [events, setEvents] = useState([])
-  
+
   const handlePrediction = (elementName, metadata) => {
-    setEvents(prev => [
+    setEvents((prev) => [
       ...prev.slice(-4),
       {
         time: new Date().toLocaleTimeString(),
         element: elementName,
         priority: metadata.priority,
         category: metadata.category,
-      }
+      },
     ])
   }
-  
+
   return (
     <>
       <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
         {[
-          { name: 'High Priority Button', priority: 'high', category: 'action' },
-          { name: 'Medium Priority Link', priority: 'medium', category: 'navigation' },
+          {
+            name: 'High Priority Button',
+            priority: 'high',
+            category: 'action',
+          },
+          {
+            name: 'Medium Priority Link',
+            priority: 'medium',
+            category: 'navigation',
+          },
           { name: 'Low Priority Info', priority: 'low', category: 'info' },
         ].map((item, index) => (
           <Foresight
             key={index}
-            callback={() => handlePrediction(item.name, { priority: item.priority, category: item.category })}
+            callback={() =>
+              handlePrediction(item.name, {
+                priority: item.priority,
+                category: item.category,
+              })
+            }
             name={item.name}
             meta={{ priority: item.priority, category: item.category }}
           >
@@ -202,9 +221,12 @@ export const Example = () => {
                 ref={ref}
                 style={{
                   padding: '10px 15px',
-                  backgroundColor: 
-                    item.priority === 'high' ? 'lightcoral' :
-                    item.priority === 'medium' ? 'lightyellow' : 'lightgray',
+                  backgroundColor:
+                    item.priority === 'high'
+                      ? 'lightcoral'
+                      : item.priority === 'medium'
+                        ? 'lightyellow'
+                        : 'lightgray',
                   border: 'none',
                   borderRadius: 4,
                   cursor: 'pointer',
@@ -216,13 +238,14 @@ export const Example = () => {
           </Foresight>
         ))}
       </div>
-      
+
       <div style={{ marginTop: 20, padding: 10, backgroundColor: '#f0f0f0' }}>
         <h3>Recent Predictions:</h3>
         <ul>
           {events.map((event, i) => (
             <li key={i}>
-              {event.time} - {event.element} (Priority: {event.priority}, Category: {event.category})
+              {event.time} - {event.element} (Priority: {event.priority},
+              Category: {event.category})
             </li>
           ))}
         </ul>
@@ -246,11 +269,11 @@ import { useState } from 'react'
 
 export const Example = () => {
   const [callCount, setCallCount] = useState(0)
-  
+
   return (
     <div style={{ padding: 20 }}>
       <Foresight
-        callback={() => setCallCount(prev => prev + 1)}
+        callback={() => setCallCount((prev) => prev + 1)}
         name="reactivate-example"
         reactivateAfter={2000} // Reactivate after 2 seconds
       >
@@ -270,9 +293,11 @@ export const Example = () => {
           </button>
         )}
       </Foresight>
-      
+
       <div style={{ marginTop: 15 }}>
-        <p>Callback called: <strong>{callCount}</strong> times</p>
+        <p>
+          Callback called: <strong>{callCount}</strong> times
+        </p>
         <p style={{ fontSize: 12, color: 'gray' }}>
           The callback will reactivate 2 seconds after each trigger.
         </p>
@@ -297,20 +322,20 @@ import { useState } from 'react'
 export const Example = () => {
   const [disabled, setDisabled] = useState(false)
   const [predictions, setPredictions] = useState(0)
-  
+
   return (
     <div style={{ padding: 20 }}>
       <label style={{ display: 'block', marginBottom: 15 }}>
         <input
           type="checkbox"
           checked={disabled}
-          onChange={e => setDisabled(e.target.checked)}
+          onChange={(e) => setDisabled(e.target.checked)}
         />
         Disable foresight tracking
       </label>
-      
+
       <Foresight
-        callback={() => setPredictions(prev => prev + 1)}
+        callback={() => setPredictions((prev) => prev + 1)}
         name="disabled-example"
         disabled={disabled}
       >
@@ -329,9 +354,11 @@ export const Example = () => {
           </button>
         )}
       </Foresight>
-      
+
       <div style={{ marginTop: 15 }}>
-        <p>Predictions: <strong>{predictions}</strong></p>
+        <p>
+          Predictions: <strong>{predictions}</strong>
+        </p>
       </div>
     </div>
   )
