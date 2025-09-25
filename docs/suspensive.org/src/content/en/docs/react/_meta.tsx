@@ -14,4 +14,6 @@ export default {
   Delay: { title: '<Delay/>' },
   ClientOnly: { title: '<ClientOnly/>' },
   DefaultPropsProvider: { title: '<DefaultPropsProvider/>' },
+  lazy: { title: 'lazy' },
+  useIsClient: { title: 'useIsClient' },
 } satisfies MetaRecord

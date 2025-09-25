@@ -2,6 +2,8 @@
 
 이 컴포넌트는 클라이언트 환경에서만 children을 렌더링하며, 서버에서는 fallback을 렌더링합니다. 필요에 따라 적절한 fallback을 설정하여 사용자 경험을 향상할 수 있습니다.
 
+`ClientOnly`는 실행 환경을 감지하기 위해 내부적으로 [`useIsClient`](/docs/react/useIsClient) 훅을 사용하여 구현되었습니다.
+
 ```tsx /ClientOnly/
 import { ClientOnly } from '@suspensive/react'
 
