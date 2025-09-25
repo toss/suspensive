@@ -22,6 +22,7 @@ import {
 } from './models/SuspensiveError'
 import type { ConstructorType } from './utility-types/ConstructorType'
 import type { PropsWithoutChildren } from './utility-types/PropsWithoutChildren'
+import type { ExtractErrorType } from './utility-types/ExtractErrorType'
 import { hasResetKeysChanged } from './utils/hasResetKeysChanged'
 
 export interface ErrorBoundaryFallbackProps<TError extends Error = Error> {
@@ -208,6 +209,40 @@ export const ErrorBoundary = Object.assign(
     ),
   }
 )
+
+/**
+ * Create a type-narrowed ErrorBoundary component for better TypeScript inference.
+ * This helper function allows you to create an ErrorBoundary with narrowed error types
+ * based on the shouldCatch prop value.
+ *
+ * @example
+ * ```tsx
+ * const CustomErrorBoundary = createTypedErrorBoundary<typeof CustomError>()
+ *
+ * <CustomErrorBoundary
+ *   shouldCatch={CustomError}
+ *   fallback={({ error }) => {
+ *     // error is typed as CustomError here
+ *     return <div>{error.customProperty}</div>
+ *   }}
+ * >
+ *   <MyComponent />
+ * </CustomErrorBoundary>
+ * ```
+ */
+export function createTypedErrorBoundary<TShouldCatch = undefined>() {
+  return ErrorBoundary as <T extends TShouldCatch>(
+    props: PropsWithChildren<{
+      resetKeys?: unknown[]
+      onReset?: () => void
+      onError?: (error: Error, info: ErrorInfo) => void
+      fallback:
+        | ReactNode
+        | FunctionComponent<ErrorBoundaryFallbackProps<TShouldCatch extends undefined ? Error : ExtractErrorType<T>>>
+      shouldCatch?: T
+    }>
+  ) => React.JSX.Element
+}
 
 const ErrorBoundaryContext = Object.assign(createContext<({ reset: () => void } & ErrorBoundaryState) | null>(null), {
   displayName: 'ErrorBoundaryContext',
