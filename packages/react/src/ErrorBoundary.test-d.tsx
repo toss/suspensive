@@ -1,7 +1,6 @@
-import type { ComponentProps, ReactNode } from 'react'
+import type { ReactNode } from 'react'
 import { ErrorBoundary } from './ErrorBoundary'
 import { CustomError } from './test-utils'
-import type { ConstructorType } from './utility-types/ConstructorType'
 
 class CustomNotError {
   constructor(public message?: string) {
@@ -11,14 +10,7 @@ class CustomNotError {
 
 describe('<ErrorBoundary/>', () => {
   it('should pass only boolean or ErrorConstructor or ShouldCatchCallback or ShouldCatch[]', () => {
-    type ShouldCatchCallback = (error: Error) => boolean
-    type ShouldCatch = boolean | ConstructorType<Error> | ShouldCatchCallback
-    expectTypeOf<ComponentProps<typeof ErrorBoundary>['shouldCatch']>().toEqualTypeOf<
-      undefined | ShouldCatch | [ShouldCatch, ...ShouldCatch[]]
-    >()
-
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const ShouldCatchByMany = () => (
+    assertType(() => (
       <ErrorBoundary
         shouldCatch={[
           // @ts-expect-error CustomNotError should be new (...args) => Error
@@ -29,20 +21,124 @@ describe('<ErrorBoundary/>', () => {
         ]}
         fallback={({ error }) => <>{error.message} of Child</>}
       ></ErrorBoundary>
-    )
+    ))
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const ShouldCatchByOne = () => (
+    assertType(() => (
       <ErrorBoundary
         // @ts-expect-error CustomNotError should be new (...args) => Error
         shouldCatch={CustomNotError}
         fallback={({ error }) => <>{error.message} of Child</>}
       ></ErrorBoundary>
-    )
+    ))
   })
 
   it('type check', () => {
     expectTypeOf(<ErrorBoundary.Consumer>{() => <></>}</ErrorBoundary.Consumer>).toEqualTypeOf<React.JSX.Element>()
     expectTypeOf(<ErrorBoundary.Consumer>{() => <></>}</ErrorBoundary.Consumer>).not.toEqualTypeOf<ReactNode>()
+  })
+
+  describe('ErrorBoundary automatic type narrowing', () => {
+    class CustomError extends Error {
+      customProperty = 'custom' as const
+    }
+
+    class AnotherError extends Error {
+      anotherProperty = 'another' as const
+    }
+
+    function isAnotherError(payload: unknown): payload is AnotherError {
+      return payload instanceof AnotherError
+    }
+
+    it('should maintain backward compatibility with regular ErrorBoundary', () => {
+      const example = (
+        <ErrorBoundary
+          fallback={({ error }) => {
+            expectTypeOf(error).toEqualTypeOf<Error>()
+            return <div>{error.message}</div>
+          }}
+        >
+          <div>content</div>
+        </ErrorBoundary>
+      )
+      expectTypeOf(example).toEqualTypeOf<React.JSX.Element>()
+    })
+
+    it('should work with regular ErrorBoundary and specific error constructors', () => {
+      // This shows existing behavior - no automatic narrowing
+      const example = (
+        <ErrorBoundary
+          shouldCatch={CustomError}
+          onError={(error) => {
+            expectTypeOf(error).toEqualTypeOf<CustomError>()
+          }}
+          fallback={({ error }) => {
+            expectTypeOf(error).toEqualTypeOf<CustomError>()
+            return <div>{error.message}</div>
+          }}
+        >
+          <div>content</div>
+        </ErrorBoundary>
+      )
+      expectTypeOf(example).toEqualTypeOf<React.JSX.Element>()
+    })
+
+    it('should narrow error type for single constructor using ErrorBoundary', () => {
+      const example = (
+        <ErrorBoundary
+          shouldCatch={CustomError}
+          onError={(error) => {
+            expectTypeOf(error).toEqualTypeOf<CustomError>()
+          }}
+          fallback={({ error }) => {
+            expectTypeOf(error).toEqualTypeOf<CustomError>()
+            expectTypeOf(error.customProperty).toEqualTypeOf<'custom'>()
+            return <div>{error.message}</div>
+          }}
+        >
+          <div>content</div>
+        </ErrorBoundary>
+      )
+      expectTypeOf(example).toEqualTypeOf<React.JSX.Element>()
+    })
+
+    it('should narrow error type for array of constructors using ErrorBoundary', () => {
+      const example = (
+        <ErrorBoundary
+          shouldCatch={[CustomError, (e) => isAnotherError(e), isAnotherError, (e) => e instanceof AnotherError]}
+          onError={(error) => {
+            expectTypeOf(error).toEqualTypeOf<CustomError | AnotherError>()
+          }}
+          fallback={({ error }) => {
+            expectTypeOf(error).toEqualTypeOf<CustomError | AnotherError>()
+            if (error instanceof CustomError) {
+              expectTypeOf(error.customProperty).toEqualTypeOf<'custom'>()
+            }
+            if (error instanceof AnotherError) {
+              expectTypeOf(error.anotherProperty).toEqualTypeOf<'another'>()
+            }
+            return <div>{error.message}</div>
+          }}
+        >
+          <div>content</div>
+        </ErrorBoundary>
+      )
+      expectTypeOf(example).toEqualTypeOf<React.JSX.Element>()
+    })
+
+    it('should fallback to Error for boolean shouldCatch with ErrorBoundary', () => {
+      const example = (
+        <ErrorBoundary
+          shouldCatch={true}
+          fallback={({ error }) => {
+            expectTypeOf(error).toEqualTypeOf<Error>()
+            return <div>{error.message}</div>
+          }}
+        >
+          <div>content</div>
+        </ErrorBoundary>
+      )
+      expectTypeOf(example).toEqualTypeOf<React.JSX.Element>()
+    })
   })
 })
