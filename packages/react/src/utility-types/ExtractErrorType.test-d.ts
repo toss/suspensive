@@ -9,37 +9,37 @@ class AnotherError extends Error {
 }
 
 describe('ExtractErrorType', () => {
-  it('should extract error type from single constructor', () => {
+  it('should extract specific error type from single Error constructor', () => {
     type Result = ExtractErrorType<typeof CustomError>
     expectTypeOf<Result>().toEqualTypeOf<CustomError>()
   })
 
-  it('should extract union type from array of constructors', () => {
+  it('should extract union error type from array of Error constructors', () => {
     type Result = ExtractErrorType<[typeof CustomError, typeof AnotherError]>
     expectTypeOf<Result>().toEqualTypeOf<CustomError | AnotherError>()
   })
 
-  it('should fallback to Error for boolean', () => {
+  it('should fallback to generic Error type for boolean values', () => {
     type Result = ExtractErrorType<true>
     expectTypeOf<Result>().toEqualTypeOf<Error>()
   })
 
-  it('should fallback to Error for function', () => {
+  it('should fallback to generic Error type for callback functions', () => {
     type Result = ExtractErrorType<(error: Error) => boolean>
     expectTypeOf<Result>().toEqualTypeOf<Error>()
   })
 
-  it('should fallback to Error for mixed array', () => {
+  it('should fallback to generic Error type for mixed arrays with non-constructor items', () => {
     type Result = ExtractErrorType<[typeof CustomError, true, (error: Error) => boolean]>
     expectTypeOf<Result>().toEqualTypeOf<Error>()
   })
 
-  it('should extract types from array with only constructors', () => {
+  it('should extract union error type from array containing only Error constructors', () => {
     type Result = ExtractErrorType<[typeof CustomError, typeof AnotherError, typeof Error]>
     expectTypeOf<Result>().toEqualTypeOf<CustomError | AnotherError | Error>()
   })
 
-  it('should fallback to Error for undefined', () => {
+  it('should fallback to generic Error type for undefined values', () => {
     type Result = ExtractErrorType<undefined>
     expectTypeOf<Result>().toEqualTypeOf<Error>()
   })

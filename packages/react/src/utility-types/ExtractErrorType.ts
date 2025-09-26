@@ -12,8 +12,8 @@ type ShouldCatchItem =
   | boolean
 
 /**
- * Extract the error type from a single ShouldCatch value
- * Returns the error type if it's a constructor or assertion function, otherwise returns never
+ * Extract the error type from a single shouldCatch item
+ * Returns the specific error type if it's an Error constructor or type guard function, otherwise returns never
  */
 type ExtractErrorFromShouldCatch<T> =
   T extends ConstructorType<infer U>
@@ -27,8 +27,8 @@ type ExtractErrorFromShouldCatch<T> =
       : never
 
 /**
- * Extract error types from an array of ShouldCatch values
- * Returns union of all constructor error types, or never if none
+ * Extract error types from an array of shouldCatch items
+ * Returns union of all specific error types from constructors and type guards, or never if none
  */
 type ExtractErrorFromShouldCatchArray<T extends readonly ShouldCatchItem[]> = T extends readonly [
   infer First,
@@ -40,7 +40,8 @@ type ExtractErrorFromShouldCatchArray<T extends readonly ShouldCatchItem[]> = T 
   : never
 
 /**
- * Check if an array contains only error constructors, assertion functions, or instanceof functions
+ * Check if an array contains only Error constructors and type guard functions
+ * Returns true if all items are type-safe error handlers, false otherwise
  */
 type ArrayHasOnlyConstructors<T extends readonly ShouldCatchItem[]> = T extends readonly []
   ? true
@@ -56,7 +57,8 @@ type ArrayHasOnlyConstructors<T extends readonly ShouldCatchItem[]> = T extends 
 
 /**
  * Main type to extract error types from shouldCatch prop
- * Only narrows when we have pure error constructors or assertion functions, otherwise falls back to Error
+ * Automatically infers specific error types from Error constructors and type guards
+ * Falls back to generic Error type for boolean or callback functions
  */
 export type ExtractErrorType<T> =
   T extends ConstructorType<infer U>
