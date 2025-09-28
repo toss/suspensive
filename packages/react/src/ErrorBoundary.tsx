@@ -3,18 +3,16 @@ import {
   type ComponentProps,
   type ComponentType,
   type ErrorInfo,
-  type ForwardRefExoticComponent,
   type ForwardedRef,
   type FunctionComponent,
   type PropsWithChildren,
   type ReactNode,
   createContext,
-  forwardRef,
   useContext,
   useImperativeHandle,
   useMemo,
   useRef,
-  useState,
+  useState
 } from 'react'
 import { ErrorBoundaryGroupContext } from './ErrorBoundaryGroup'
 import {
@@ -24,6 +22,7 @@ import {
 } from './models/SuspensiveError'
 import type { ConstructorType } from './utility-types/ConstructorType'
 import type { PropsWithoutChildren } from './utility-types/PropsWithoutChildren'
+import { genericForwardRef } from './utils/genericForwardRef'
 import { hasResetKeysChanged } from './utils/hasResetKeysChanged'
 
 interface ErrorBoundaryHandle {
@@ -193,34 +192,31 @@ class FallbackBoundary extends Component<{ children: ReactNode }> {
  * @see {@link https://suspensive.org/docs/react/ErrorBoundary Suspensive Docs}
  */
 export const ErrorBoundary = Object.assign(
-  forwardRef(function ErrorBoundary<TShouldCatch extends ShouldCatch = ShouldCatch>(
-    props: ErrorBoundaryProps<TShouldCatch>,
-    ref: ForwardedRef<ErrorBoundaryHandle>
-  ) {
-    const { fallback, children, onError, onReset, resetKeys, shouldCatch } = props
-    const group = useContext(ErrorBoundaryGroupContext) ?? { resetKey: 0 }
-    const baseErrorBoundaryRef = useRef<BaseErrorBoundary<TShouldCatch>>(null)
-    useImperativeHandle(ref, () => ({
-      reset: () => baseErrorBoundaryRef.current?.reset(),
-    }))
+  genericForwardRef<ErrorBoundaryProps, ErrorBoundaryHandle>(
+    function ErrorBoundary<TShouldCatch extends ShouldCatch = ShouldCatch>(
+      props: ErrorBoundaryProps<TShouldCatch>,
+      ref: ForwardedRef<ErrorBoundaryHandle>
+    ) {
+      const { fallback, children, onError, onReset, resetKeys, shouldCatch } = props
+      const group = useContext(ErrorBoundaryGroupContext) ?? { resetKey: 0 }
+      const baseErrorBoundaryRef = useRef<BaseErrorBoundary<TShouldCatch>>(null)
+      useImperativeHandle(ref, () => ({
+        reset: () => baseErrorBoundaryRef.current?.reset(),
+      }))
 
-    return (
-      <BaseErrorBoundary<TShouldCatch>
-        shouldCatch={shouldCatch}
-        fallback={fallback}
-        onError={onError}
-        onReset={onReset}
-        resetKeys={[group.resetKey, ...(resetKeys || [])]}
-        ref={baseErrorBoundaryRef}
-      >
-        {children}
-      </BaseErrorBoundary>
-    )
-  }) as {
-    <TShouldCatch extends ShouldCatch = ShouldCatch>(
-      props: ErrorBoundaryProps<TShouldCatch> & React.RefAttributes<ErrorBoundaryHandle>
-    ): ReturnType<ForwardRefExoticComponent<ErrorBoundaryProps>>
-  },
+      return (
+        <BaseErrorBoundary<TShouldCatch>
+          shouldCatch={shouldCatch}
+          fallback={fallback}
+          onError={onError}
+          onReset={onReset}
+          resetKeys={[group.resetKey, ...(resetKeys || [])]}
+          ref={baseErrorBoundaryRef}
+        >
+          {children}
+        </BaseErrorBoundary>
+      )
+    }),
   {
     displayName: 'ErrorBoundary',
     with: <TProps extends ComponentProps<ComponentType> = Record<string, never>>(
@@ -295,50 +291,50 @@ export const useErrorBoundaryFallbackProps = <TError extends Error = Error>(): E
 
 type InferErrorFromShouldCatchItem<T> =
   T extends ConstructorType<infer TClass>
-    ? TClass extends Error
-      ? TClass
-      : never
-    : T extends ShouldCatchItemErrorAssertionCallback<infer TError>
-      ? TError extends Error
-        ? TError
-        : never
-      : never
+  ? TClass extends Error
+  ? TClass
+  : never
+  : T extends ShouldCatchItemErrorAssertionCallback<infer TError>
+  ? TError extends Error
+  ? TError
+  : never
+  : never
 
 type InferErrorFromArrayOf<TShouldCatch extends readonly ShouldCatchItem[]> = TShouldCatch extends readonly [
   infer TFirst,
   ...infer TRest,
 ]
   ? TRest extends readonly ShouldCatchItem[]
-    ? InferErrorFromShouldCatchItem<TFirst> | InferErrorFromArrayOf<TRest>
-    : InferErrorFromShouldCatchItem<TFirst>
+  ? InferErrorFromShouldCatchItem<TFirst> | InferErrorFromArrayOf<TRest>
+  : InferErrorFromShouldCatchItem<TFirst>
   : never
 
 type IsInferableArrayOf<TShouldCatch extends readonly ShouldCatchItem[]> = TShouldCatch extends readonly []
   ? true
   : TShouldCatch extends readonly [infer TFirst, ...infer TRest]
-    ? TRest extends readonly ShouldCatchItem[]
-      ? TFirst extends ConstructorType<Error> | ShouldCatchItemErrorAssertionCallback<Error>
-        ? IsInferableArrayOf<TRest>
-        : false
-      : TFirst extends ConstructorType<Error> | ShouldCatchItemErrorAssertionCallback<Error>
-        ? true
-        : false
-    : false
+  ? TRest extends readonly ShouldCatchItem[]
+  ? TFirst extends ConstructorType<Error> | ShouldCatchItemErrorAssertionCallback<Error>
+  ? IsInferableArrayOf<TRest>
+  : false
+  : TFirst extends ConstructorType<Error> | ShouldCatchItemErrorAssertionCallback<Error>
+  ? true
+  : false
+  : false
 
 // Main InferError type
 type InferError<TShouldCatch extends ShouldCatch> =
   TShouldCatch extends ConstructorType<infer TClass>
-    ? TClass extends Error
-      ? TClass
-      : Error
-    : TShouldCatch extends ShouldCatchItemErrorAssertionCallback<infer TError>
-      ? TError extends Error
-        ? TError
-        : Error
-      : TShouldCatch extends readonly ShouldCatchItem[]
-        ? IsInferableArrayOf<TShouldCatch> extends true
-          ? InferErrorFromArrayOf<TShouldCatch> extends never
-            ? Error
-            : InferErrorFromArrayOf<TShouldCatch>
-          : Error
-        : Error
+  ? TClass extends Error
+  ? TClass
+  : Error
+  : TShouldCatch extends ShouldCatchItemErrorAssertionCallback<infer TError>
+  ? TError extends Error
+  ? TError
+  : Error
+  : TShouldCatch extends readonly ShouldCatchItem[]
+  ? IsInferableArrayOf<TShouldCatch> extends true
+  ? InferErrorFromArrayOf<TShouldCatch> extends never
+  ? Error
+  : InferErrorFromArrayOf<TShouldCatch>
+  : Error
+  : Error
