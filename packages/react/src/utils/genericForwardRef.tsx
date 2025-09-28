@@ -1,16 +1,11 @@
-import * as React from 'react';
+import React from 'react';
 
-export function genericForwardRef<TProps = {}, TRef = any>(
-  render: <TGenericProps extends TProps = TProps>(
-    props: TGenericProps,
-    ref: React.ForwardedRef<TRef>
-  ) => React.ReactElement | null
-) {
-  const WrappedComponent = React.forwardRef<TRef, TProps>(
-    (props, ref) => render(props as any, ref)
-  );
-
-  return WrappedComponent as <TGenericProps extends TProps = TProps>(
-    props: TGenericProps & React.RefAttributes<TRef>
-  ) => React.ReactElement | null;
+/**
+ * A utility that allows creating a forwardRef component that can accept generic props.
+ * React.forwardRef does not support this out of the box.
+ */
+export function genericForwardRef<TRef, TProp = {}>(
+  render: (props: TProp, ref: React.Ref<TRef>) => React.ReactElement | null
+): (props: TProp & React.RefAttributes<TRef>) => React.ReactElement | null {
+  return React.forwardRef(render as any) as any
 }

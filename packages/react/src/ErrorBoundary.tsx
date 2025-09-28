@@ -192,7 +192,7 @@ class FallbackBoundary extends Component<{ children: ReactNode }> {
  * @see {@link https://suspensive.org/docs/react/ErrorBoundary Suspensive Docs}
  */
 export const ErrorBoundary = Object.assign(
-  genericForwardRef<ErrorBoundaryProps, ErrorBoundaryHandle>(
+  genericForwardRef(
     function ErrorBoundary<TShouldCatch extends ShouldCatch = ShouldCatch>(
       props: ErrorBoundaryProps<TShouldCatch>,
       ref: ForwardedRef<ErrorBoundaryHandle>
