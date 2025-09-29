@@ -38,15 +38,15 @@ body {
 }
 
 .dark .homepage-content .nextra-code {
-  @apply border-gray-700 bg-gray-800 text-gray-100;
+  @apply border-gray-700 bg-[#202020] text-gray-100;
 }
 
 pre {
-  @apply border border-gray-300 bg-gray-200;
+  @apply rounded-xl border border-gray-900 bg-zinc-700;
 }
 
 code {
-  @apply bg-gray-100 text-gray-900;
+  @apply rounded-xl bg-gray-100 text-gray-900;
 }
 
 .dark pre {
@@ -82,7 +82,7 @@ td {
 }
 
 .dark td {
-  @apply border-gray-700 text-gray-200;
+  @apply border-gray-700 bg-[#181b1e] text-gray-200;
 }
 
 .nextra-nav-container {
