@@ -22,67 +22,23 @@ body {
 }
 
 .dark .homepage-content {
-  @apply bg-black text-white;
-}
-
-.nextra-code {
-  @apply border border-gray-300 bg-gray-100 text-gray-900;
-}
-
-.dark .nextra-code {
-  @apply border-gray-700 bg-gray-800 text-gray-100;
-}
-
-.homepage-content .nextra-code {
-  @apply border border-gray-300 bg-gray-100 text-gray-900;
-}
-
-.dark .homepage-content .nextra-code {
-  @apply border-gray-700 bg-[#202020] text-gray-100;
+  @apply bg-black text-white transition-colors;
 }
 
 pre {
-  @apply rounded-xl border border-gray-900 bg-zinc-700;
-}
-
-code {
-  @apply rounded-xl bg-gray-100 text-gray-900;
+  @apply rounded-lg bg-zinc-900;
 }
 
 .dark pre {
-  @apply border-gray-900 bg-black;
+  @apply border-gray-900 bg-inherit;
 }
 
 .dark code {
-  @apply bg-[#000000] text-gray-100;
+  @apply border-gray-900;
 }
 
 .a {
   @apply text-blue-400 hover:text-blue-300;
-}
-
-table {
-  @apply border-gray-300 bg-white;
-}
-
-th {
-  @apply bg-gray-50 text-gray-900;
-}
-
-td {
-  @apply border-gray-300 text-gray-800;
-}
-
-.dark table {
-  @apply border-gray-700 bg-black;
-}
-
-.dark th {
-  @apply bg-black text-gray-100;
-}
-
-.dark td {
-  @apply border-gray-700 bg-[#181b1e] text-gray-200;
 }
 
 .nextra-nav-container {
