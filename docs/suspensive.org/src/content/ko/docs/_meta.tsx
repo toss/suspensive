@@ -26,4 +26,8 @@ export default {
   links: {
     title: '관련 링크',
   },
+  llms: {
+    title: 'LLMs 문서 ↗',
+    href: '/llms.txt',
+  },
 } satisfies typeof MetaEn satisfies MetaRecord

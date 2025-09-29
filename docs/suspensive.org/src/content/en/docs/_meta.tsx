@@ -27,4 +27,8 @@ export default {
   links: {
     title: 'Related Links',
   },
+  llms: {
+    title: 'LLMs Documentation ↗',
+    href: '/llms.txt',
+  },
 } satisfies MetaRecord
