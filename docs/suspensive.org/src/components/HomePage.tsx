@@ -81,7 +81,7 @@ export const HomePage = ({
                           }}
                         />
                         <Spotlight
-                          className="blur-4xl bg-zinc-700 dark:bg-zinc-300"
+                          className="blur-4xl bg-zinc-700"
                           size={64}
                           springOptions={{
                             bounce: 0.3,
