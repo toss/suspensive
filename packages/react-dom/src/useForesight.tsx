@@ -27,6 +27,7 @@ export interface UseForesightResult {
  *
  * This enables proactive prefetching and UI optimization before users interact with elements.
  *
+ * @experimental This is experimental feature.
  * @see {@link https://foresightjs.com/docs/integrations/react/useForesight ForesightJS React Documentation}
  *
  * @example
