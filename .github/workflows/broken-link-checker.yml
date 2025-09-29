@@ -7,6 +7,7 @@ on:
 
 jobs:
   broken-link-checker:
+    if: github.repository == 'toss/suspensive'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
