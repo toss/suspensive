@@ -74,11 +74,11 @@ td {
 }
 
 .dark table {
-  @apply border-gray-700 bg-gray-800;
+  @apply border-gray-700 bg-black;
 }
 
 .dark th {
-  @apply bg-gray-700 text-gray-100;
+  @apply bg-black text-gray-100;
 }
 
 .dark td {
@@ -98,5 +98,5 @@ td {
 }
 
 .dark .nextra-sidebar {
-  @apply bg-gray-900;
+  @apply bg-black;
 }
