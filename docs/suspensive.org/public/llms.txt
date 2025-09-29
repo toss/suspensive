@@ -149,7 +149,6 @@ npx @suspensive/codemods
 ## Community
 
 - **Discord**: https://discord.gg/RFcR9WWmCH
-- **Discussions**: https://github.com/toss/suspensive/discussions
 - **Issues**: https://github.com/toss/suspensive/issues
 
 ## Examples

@@ -15,6 +15,7 @@ import {
 import type { ReactNode } from 'react'
 import { getDictionary, getDirection } from '../_dictionaries/get-dictionary'
 import './styles.css'
+import { LLMSLink } from './_components/LLMSLink'
 import { Logo } from './_components/Logo'
 import { SandPackCSS } from '@/components/Sandpack/SandPackCSS'
 
@@ -58,6 +59,7 @@ export default async function RootLayout({
               projectLink="https://github.com/toss/suspensive"
               chatLink="https://discord.gg/RFcR9WWmCH"
             >
+              <LLMSLink />
               <LocaleSwitch />
             </Navbar>
           }
