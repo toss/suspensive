@@ -56,14 +56,11 @@ const checkErrorBoundary = (shouldCatchItem: ShouldCatchItem, error: Error) => {
   if (shouldCatchItem.prototype instanceof Error) {
     return error instanceof shouldCatchItem
   }
-  if (typeof shouldCatchItem === 'function' && shouldCatchItem.length === 1) {
-    return (shouldCatchItem as ShouldCatchItemErrorValidationCallback | ShouldCatchItemErrorAssertionCallback<Error>)(
-      error
-    )
-  }
-  return (shouldCatchItem as ShouldCatchItemErrorValidationCallback | ShouldCatchItemErrorAssertionCallback<Error>)(
-    error
-  )
+  return (
+    shouldCatchItem as
+      | ShouldCatchItemErrorValidationCallback
+      | ShouldCatchItemErrorAssertionCallback<InferError<ShouldCatchItem>>
+  )(error)
 }
 
 type ShouldCatch = ShouldCatchItem | [ShouldCatchItem, ...ShouldCatchItem[]]
@@ -95,10 +92,11 @@ type ErrorBoundaryState<TError extends Error = Error> =
   | { isError: true; error: TError }
   | { isError: false; error: null }
 
-const initialErrorBoundaryState: ErrorBoundaryState = {
+const initialErrorBoundaryState = <TError extends Error>(): ErrorBoundaryState<TError> => ({
   isError: false,
   error: null,
-}
+})
+
 class BaseErrorBoundary<TShouldCatch extends ShouldCatch = ShouldCatch> extends Component<
   ErrorBoundaryProps<TShouldCatch>,
   ErrorBoundaryState<InferError<TShouldCatch>>
@@ -107,7 +105,7 @@ class BaseErrorBoundary<TShouldCatch extends ShouldCatch = ShouldCatch> extends 
     return { isError: true, error }
   }
 
-  state = initialErrorBoundaryState as ErrorBoundaryState<InferError<TShouldCatch>>
+  state = initialErrorBoundaryState<InferError<TShouldCatch>>()
 
   componentDidUpdate(
     prevProps: ErrorBoundaryProps<TShouldCatch>,
@@ -126,7 +124,7 @@ class BaseErrorBoundary<TShouldCatch extends ShouldCatch = ShouldCatch> extends 
 
   reset = () => {
     this.props.onReset?.()
-    this.setState(initialErrorBoundaryState as ErrorBoundaryState<InferError<TShouldCatch>>)
+    this.setState(initialErrorBoundaryState<InferError<TShouldCatch>>())
   }
 
   render() {
