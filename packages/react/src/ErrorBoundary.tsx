@@ -284,8 +284,8 @@ export const useErrorBoundaryFallbackProps = <TError extends Error = Error>(): E
     }),
     [errorBoundary.error, errorBoundary.reset]
   )
-} 
- 
+}
+
 type InferErrorFromShouldCatchItem<T> =
   T extends ConstructorType<infer TClass>
     ? TClass extends Error
