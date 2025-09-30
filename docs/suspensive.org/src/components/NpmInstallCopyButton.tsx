@@ -35,7 +35,7 @@ export const NpmInstallCopyButton = () => {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
             >
-              <Image src={isClicked ? checkSVG : content_copySVG} alt="svg" />
+              <Image src={isClicked ? checkSVG : content_copySVG} alt="" />
             </motion.span>
           ) : null}
         </AnimatePresence>
