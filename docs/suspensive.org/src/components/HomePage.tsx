@@ -349,7 +349,7 @@ const StarCanvasClose = () => {
 
           ctx?.beginPath()
           // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-          ctx!.fillStyle = `rgba(${starColor}, ${a})`
+          ctx!.fillStyle = `rgba(${resolvedTheme === 'dark' ? '255, 255, 255' : '0, 0, 0'}, ${a})`
           ctx?.arc(x, y, size, 0, 2 * Math.PI)
           ctx?.fill()
         }
