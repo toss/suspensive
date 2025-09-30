@@ -328,8 +328,6 @@ const StarCanvasClose = () => {
       const maxSX = Math.ceil(width / TILE_CLOSE)
       const maxSY = Math.ceil(height / TILE_CLOSE)
 
-      const starColor = resolvedTheme === 'dark' ? '255, 255, 255' : '0, 0, 0'
-
       for (let sx = 0; sx <= maxSX; ++sx) {
         for (let sy = 0; sy <= maxSY; ++sy) {
           const { velocity, distance, pos, size } = getVertex(sx, sy)
