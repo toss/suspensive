@@ -16,6 +16,7 @@ concurrency:
 jobs:
   build:
     name: Build
+    if: github.repository == 'toss/suspensive'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
@@ -32,6 +33,7 @@ jobs:
           path: ./graph
 
   deploy:
+    if: github.repository == 'toss/suspensive'
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
