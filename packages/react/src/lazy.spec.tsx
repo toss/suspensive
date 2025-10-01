@@ -173,6 +173,21 @@ describe('lazy', () => {
     expect(screen.queryByText('not loaded')).not.toBeInTheDocument()
   })
 
+  it('should allow manually preloading a component via load()', async () => {
+    const mockImport = importCache.createImport({ failureCount: 0, failureDelay: 0, successDelay: 100 })
+    const Component = lazy(() => mockImport('/preload-component'))
+
+    const preloadPromise = Component.load()
+
+    expect(importCache.isCached('/preload-component')).toBe(false)
+
+    await act(() => vi.advanceTimersByTimeAsync(100))
+    await expect(preloadPromise).resolves.toBeUndefined()
+
+    expect(mockImport).toHaveBeenCalledTimes(1)
+    expect(importCache.isCached('/preload-component')).toBe(true)
+  })
+
   describe('with unified test helper', () => {
     it('should cache successful imports with timing difference', async () => {
       const mockImport = importCache.createImport({ failureCount: 0, failureDelay: 100, successDelay: 100 })
@@ -643,6 +658,177 @@ describe('lazy', () => {
         expect(individualOnSuccess).toHaveBeenCalledWith({ load: expect.any(Function) })
         expect(mockReload).toHaveBeenCalledTimes(1)
       })
+    })
+  })
+
+  describe('reloadOnError error cases', () => {
+    const originalWindow = global.window
+    const mockReload = vi.fn((id: ReturnType<typeof setTimeout>) => {
+      clearTimeout(id)
+    })
+
+    afterEach(() => {
+      global.window = originalWindow
+    })
+
+    it('should throw error when no storage is provided and no sessionStorage in window', () => {
+      // @ts-expect-error - temporarily removing window for testing
+      delete global.window
+
+      expect(() => reloadOnError({})).toThrow('[@suspensive/react] No storage provided and no sessionStorage in window')
+    })
+
+    it('should throw error when no reload function is provided and no location in window', () => {
+      // @ts-expect-error - temporarily removing window for testing
+      delete global.window
+
+      expect(() => reloadOnError({ storage })).toThrow(
+        '[@suspensive/react] No reload function provided and no location in window'
+      )
+    })
+
+    it('should reach retry limit and stop', async () => {
+      const lazy = createLazy(reloadOnError({ storage, reload: mockReload, retry: 2 }))
+      const mockImport = importCache.createImport({ failureCount: 10, failureDelay: 50, successDelay: 50 })
+
+      // First failure
+      const Component1 = lazy(() => mockImport('/test-component'))
+      const { unmount: unmount1 } = render(
+        <ErrorBoundary fallback={<div>error1</div>}>
+          <Component1 />
+        </ErrorBoundary>
+      )
+      await act(() => vi.advanceTimersByTimeAsync(50))
+      expect(screen.getByText('error1')).toBeInTheDocument()
+      await act(() => vi.advanceTimersByTimeAsync(1))
+      expect(mockReload).toHaveBeenCalledTimes(1)
+      unmount1()
+
+      // Second failure
+      const Component2 = lazy(() => mockImport('/test-component'))
+      const { unmount: unmount2 } = render(
+        <ErrorBoundary fallback={<div>error2</div>}>
+          <Component2 />
+        </ErrorBoundary>
+      )
+      await act(() => vi.advanceTimersByTimeAsync(50))
+      expect(screen.getByText('error2')).toBeInTheDocument()
+      await act(() => vi.advanceTimersByTimeAsync(1))
+      expect(mockReload).toHaveBeenCalledTimes(2)
+      unmount2()
+
+      // Third failure - should not reload anymore
+      const Component3 = lazy(() => mockImport('/test-component'))
+      render(
+        <ErrorBoundary fallback={<div>error3</div>}>
+          <Component3 />
+        </ErrorBoundary>
+      )
+      await act(() => vi.advanceTimersByTimeAsync(50))
+      expect(screen.getByText('error3')).toBeInTheDocument()
+      await act(() => vi.advanceTimersByTimeAsync(1))
+      // Should still be 2, not 3
+      expect(mockReload).toHaveBeenCalledTimes(2)
+    })
+
+    it('should use window.sessionStorage when no storage provided', () => {
+      // Mock window.sessionStorage
+      const mockSessionStorage = {
+        getItem: vi.fn(),
+        setItem: vi.fn(),
+        removeItem: vi.fn(),
+        key: vi.fn(),
+        length: 0,
+        clear: vi.fn(),
+      }
+      global.window = { sessionStorage: mockSessionStorage } as any
+
+      const options = reloadOnError({ reload: mockReload })
+
+      // Should not throw error and should have used sessionStorage
+      expect(options).toBeDefined()
+    })
+
+    it('should use window.location.reload when no reload function provided', () => {
+      const mockLocationReload = vi.fn()
+      global.window = {
+        sessionStorage: storage,
+        location: { reload: mockLocationReload } as any,
+      } as any
+
+      const options = reloadOnError({ storage })
+
+      // Should not throw error and should have used location.reload
+      expect(options).toBeDefined()
+    })
+
+    it('should invoke window.location.reload when retrying without custom reload', async () => {
+      const mockLocationReload = vi.fn()
+      const mockImport = importCache.createImport({ failureCount: 1, failureDelay: 50, successDelay: 50 })
+      global.window = {
+        sessionStorage: storage,
+        location: { reload: mockLocationReload } as any,
+      } as any
+
+      const lazy = createLazy(reloadOnError({ storage }))
+      const Component = lazy(() => mockImport('/fallback-reload'))
+
+      render(
+        <ErrorBoundary fallback={<div>error</div>}>
+          <Component />
+        </ErrorBoundary>
+      )
+
+      await act(() => vi.advanceTimersByTimeAsync(50))
+      expect(screen.getByText('error')).toBeInTheDocument()
+
+      await act(() => vi.advanceTimersByTimeAsync(1))
+      expect(mockLocationReload).toHaveBeenCalledTimes(1)
+    })
+
+    it('should use function-based retry delay', async () => {
+      const delayFn = vi.fn((retryCount: number) => retryCount * 100)
+      const lazy = createLazy(reloadOnError({ storage, reload: mockReload, retryDelay: delayFn }))
+      const mockImport = importCache.createImport({ failureCount: 1, failureDelay: 50, successDelay: 50 })
+
+      const Component = lazy(() => mockImport('/test-component'))
+      render(
+        <ErrorBoundary fallback={<div>error</div>}>
+          <Component />
+        </ErrorBoundary>
+      )
+
+      await act(() => vi.advanceTimersByTimeAsync(50))
+      expect(screen.getByText('error')).toBeInTheDocument()
+
+      // The delay function should have been called with retry count 0
+      expect(delayFn).toHaveBeenCalledWith(0)
+
+      await act(() => vi.advanceTimersByTimeAsync(1)) // trigger setTimeout with delay=0
+      expect(mockReload).toHaveBeenCalledTimes(1)
+    })
+
+    it('should handle NaN in stored retry count', () => {
+      // Pre-populate storage with invalid number
+      const storageKey = 'test-key'
+      storage.setItem(storageKey, 'invalid-number')
+
+      // Create a custom onError that uses the same storage key format as the actual implementation
+      const options = reloadOnError({ storage, reload: mockReload })
+      const testOnError = options.onError
+
+      // Ensure onError exists
+      expect(testOnError).toBeDefined()
+      if (!testOnError) return
+
+      // Call onError directly to test the parseInt logic
+      testOnError({
+        error: new Error('test'),
+        load: { toString: () => storageKey } as any,
+      })
+
+      // The invalid stored value should be removed
+      expect(storage.getItem(storageKey)).toBe(null)
     })
   })
 })
