@@ -1,5 +1,9 @@
 import { type ContextType, type PropsWithChildren } from 'react'
-import { DelayDefaultPropsContext, SuspenseDefaultPropsContext } from './contexts/DefaultPropsContexts'
+import {
+  DelayDefaultPropsContext,
+  SuspenseDefaultPropsContext,
+  ErrorBoundaryDefaultPropsContext,
+} from './contexts/DefaultPropsContexts'
 import { Message_DefaultProp_delay_ms_should_be_greater_than_0, SuspensiveError } from './models/SuspensiveError'
 
 /**
@@ -16,12 +20,16 @@ import { Message_DefaultProp_delay_ms_should_be_greater_than_0, SuspensiveError 
  *     fallback: <Spinner>Fetching data...</Spinner>,
  *     clientOnly: false,
  *   },
+ *   ErrorBoundary: {
+ *     onError: (error, info) => console.error('Global error handler:', error),
+ *   },
  * })
  * ```
  */
 export class DefaultProps {
   Suspense?: ContextType<typeof SuspenseDefaultPropsContext>
   Delay?: ContextType<typeof DelayDefaultPropsContext>
+  ErrorBoundary?: ContextType<typeof ErrorBoundaryDefaultPropsContext>
 
   constructor(defaultProps: DefaultProps = {}) {
     if (process.env.NODE_ENV === 'development' && typeof defaultProps.Delay?.ms === 'number') {
@@ -29,6 +37,7 @@ export class DefaultProps {
     }
     this.Suspense = defaultProps.Suspense
     this.Delay = defaultProps.Delay
+    this.ErrorBoundary = defaultProps.ErrorBoundary
   }
 }
 
@@ -38,7 +47,7 @@ interface DefaultPropsProviderProps extends PropsWithChildren {
 
 /**
  * A provider component that controls the default settings of Suspensive components.
- * Use this to configure default props for Suspense, Delay, and other Suspensive components globally.
+ * Use this to configure default props for Suspense, Delay, and ErrorBoundary components globally.
  *
  * @example
  * ```tsx
@@ -50,6 +59,9 @@ interface DefaultPropsProviderProps extends PropsWithChildren {
  *   Suspense: {
  *     fallback: <Skeleton />,
  *     clientOnly: false,
+ *   },
+ *   ErrorBoundary: {
+ *     onError: (error, info) => console.error('Global error:', error),
  *   },
  * })
  *
@@ -67,7 +79,9 @@ interface DefaultPropsProviderProps extends PropsWithChildren {
 export const DefaultPropsProvider = ({ defaultProps, children }: DefaultPropsProviderProps) => (
   <DelayDefaultPropsContext.Provider value={defaultProps.Delay ?? {}}>
     <SuspenseDefaultPropsContext.Provider value={defaultProps.Suspense ?? {}}>
-      {children}
+      <ErrorBoundaryDefaultPropsContext.Provider value={defaultProps.ErrorBoundary ?? {}}>
+        {children}
+      </ErrorBoundaryDefaultPropsContext.Provider>
     </SuspenseDefaultPropsContext.Provider>
   </DelayDefaultPropsContext.Provider>
 )
