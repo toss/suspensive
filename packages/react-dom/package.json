@@ -46,6 +46,9 @@
     "clean": "rimraf ./dist ./coverage ./node_modules",
     "test:ui": "vitest --ui"
   },
+  "dependencies": {
+    "js.foresight": "^3.3.3"
+  },
   "devDependencies": {
     "@suspensive/eslint-config": "workspace:*",
     "@suspensive/tsconfig": "workspace:*",

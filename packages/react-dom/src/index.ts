@@ -1,4 +1,6 @@
 export { FadeIn } from './FadeIn'
+export { Foresight } from './Foresight'
 export { InView } from './InView'
 export { useFadeIn } from './useFadeIn'
+export { useForesight, type UseForesightOptions, type UseForesightResult } from './useForesight'
 export { useInView } from './useInView'
