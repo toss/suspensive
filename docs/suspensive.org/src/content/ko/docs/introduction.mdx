@@ -24,28 +24,27 @@ Suspensive는 이러한 문제에 대한 통합적이고 선언적인 API를 제
 
 ```mermaid
 graph TD;
-subgraph DD [Migration Packages]
-E[@suspensive/codemods];
-end
-subgraph AA [Core Packages]
-A[@suspensive/react];
-end
-subgraph BB [Adapter Packages]
-B[@suspensive/react-dom];
-C[@suspensive/react-query];
-D[@suspensive/jotai];
-end
-subgraph CC [Version-Specific Packages]
-F[@suspensive/react-query-4];
-G[@suspensive/react-query-5];
-end
+    subgraph DD ["Migration Packages"]
+        E["@suspensive/codemods"]
+    end
+    subgraph AA ["Core Packages"]
+        A["@suspensive/react"]
+    end
+    subgraph BB ["Adapter Packages"]
+        B["@suspensive/react-dom"]
+        C["@suspensive/react-query"]
+        D["@suspensive/jotai"]
+    end
+    subgraph CC ["Version-Specific Packages"]
+        F["@suspensive/react-query-4"]
+        G["@suspensive/react-query-5"]
+    end
 
-A --> B;
-A --> C;
-A --> D;
-
-C --> F;
-C --> G;
+    A --> B
+    A --> C
+    A --> D
+    C --> F
+    C --> G
 ```
 
 ### 패키지 책임
