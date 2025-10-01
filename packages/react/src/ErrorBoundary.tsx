@@ -3,13 +3,11 @@ import {
   type ComponentProps,
   type ComponentType,
   type ErrorInfo,
-  type ForwardRefExoticComponent,
   type ForwardedRef,
   type FunctionComponent,
   type PropsWithChildren,
   type ReactNode,
   createContext,
-  forwardRef,
   useContext,
   useImperativeHandle,
   useMemo,
@@ -24,6 +22,7 @@ import {
 } from './models/SuspensiveError'
 import type { ConstructorType } from './utility-types/ConstructorType'
 import type { PropsWithoutChildren } from './utility-types/PropsWithoutChildren'
+import { genericForwardRef } from './utils/genericForwardRef'
 import { hasResetKeysChanged } from './utils/hasResetKeysChanged'
 
 interface ErrorBoundaryHandle {
@@ -191,7 +190,7 @@ class FallbackBoundary extends Component<{ children: ReactNode }> {
  * @see {@link https://suspensive.org/docs/react/ErrorBoundary Suspensive Docs}
  */
 export const ErrorBoundary = Object.assign(
-  forwardRef(function ErrorBoundary<TShouldCatch extends ShouldCatch = ShouldCatch>(
+  genericForwardRef(function ErrorBoundary<TShouldCatch extends ShouldCatch = ShouldCatch>(
     props: ErrorBoundaryProps<TShouldCatch>,
     ref: ForwardedRef<ErrorBoundaryHandle>
   ) {
@@ -214,11 +213,7 @@ export const ErrorBoundary = Object.assign(
         {children}
       </BaseErrorBoundary>
     )
-  }) as {
-    <TShouldCatch extends ShouldCatch = ShouldCatch>(
-      props: ErrorBoundaryProps<TShouldCatch> & React.RefAttributes<ErrorBoundaryHandle>
-    ): ReturnType<ForwardRefExoticComponent<ErrorBoundaryProps>>
-  },
+  }),
   {
     displayName: 'ErrorBoundary',
     with: <TProps extends ComponentProps<ComponentType> = Record<string, never>>(
