@@ -432,10 +432,10 @@ describe('<ErrorBoundary/>', () => {
         <ErrorBoundary
           shouldCatch={[CustomError, true]}
           onError={(error) => {
-            expectTypeOf(error).toEqualTypeOf<Error>()
+            expectTypeOf(error).toEqualTypeOf<CustomError | Error>()
           }}
           fallback={({ error }) => {
-            expectTypeOf(error).toEqualTypeOf<Error>()
+            expectTypeOf(error).toEqualTypeOf<CustomError | Error>()
             return <div>{error.message}</div>
           }}
         >
