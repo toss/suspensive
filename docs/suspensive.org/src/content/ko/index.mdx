@@ -180,7 +180,7 @@ const Page = () => (
   <ErrorBoundary fallback="error">
     <Suspense fallback="loading...">
       <SuspenseQuery {...userQueryOptions()}>
-        {({ data: user }) => <UserProfile key={user.id} {...user} />}
+        {({ data: user }) => <UserProfile {...user} />}
       </SuspenseQuery>
       <SuspenseQuery
         {...postsQueryOptions()}
