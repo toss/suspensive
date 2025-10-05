@@ -40,30 +40,72 @@ export interface ErrorBoundaryFallbackProps<TError extends Error = Error> extend
   error: TError
 }
 
-type ShouldCatchItemErrorValidationCallback = (error: Error) => boolean
-type ShouldCatchItemErrorAssertionCallback<TError extends Error> = (error: Error) => error is TError
+/**
+ * Type guard function that narrows error type
+ */
+type ErrorTypeGuard<TError extends Error = Error> = (error: Error) => error is TError
 
-type ShouldCatchItem =
-  | ConstructorType<Error>
-  | ShouldCatchItemErrorValidationCallback
-  | ShouldCatchItemErrorAssertionCallback<Error>
+/**
+ * Validation function without type narrowing
+ */
+type ErrorValidator = (error: Error) => boolean
+
+type ErrorMatcher<TError extends Error = Error> =
   | boolean
+  | ConstructorType<TError>
+  | ErrorTypeGuard<TError>
+  | ErrorValidator
 
-const checkErrorBoundary = (shouldCatchItem: ShouldCatchItem, error: Error) => {
-  if (typeof shouldCatchItem === 'boolean') {
-    return shouldCatchItem
+type ShouldCatch<TError extends Error = Error> = ErrorMatcher<TError> | readonly ErrorMatcher<TError>[]
+
+/**
+ * Extract error type from a single matcher
+ */
+type ExtractErrorType<T> =
+  T extends ConstructorType<infer E extends Error> ? E : T extends ErrorTypeGuard<infer E extends Error> ? E : Error
+
+/**
+ * Extract error types from array (via union of element types)
+ */
+type ExtractErrorTypes<T extends readonly ErrorMatcher[]> = ExtractErrorType<T[number]>
+
+/**
+ * Main type inference from shouldCatch
+ */
+type InferError<T> = T extends readonly ErrorMatcher[]
+  ? ExtractErrorTypes<T> extends never
+    ? Error
+    : ExtractErrorTypes<T>
+  : T extends ErrorMatcher
+    ? ExtractErrorType<T>
+    : Error
+
+const matchError = <TError extends Error>(matcher: ErrorMatcher<TError>, error: Error): boolean => {
+  if (typeof matcher === 'boolean') {
+    return matcher
   }
-  if (shouldCatchItem.prototype instanceof Error) {
-    return error instanceof shouldCatchItem
+  if (typeof matcher === 'function') {
+    try {
+      if (matcher.prototype && (matcher.prototype instanceof Error || matcher.prototype === Error.prototype)) {
+        return error instanceof (matcher as ConstructorType<Error>)
+      }
+    } catch {
+      // If accessing prototype throws, it's not a constructor
+    }
+    return (matcher as ErrorValidator | ErrorTypeGuard<TError>)(error)
   }
-  return (
-    shouldCatchItem as
-      | ShouldCatchItemErrorValidationCallback
-      | ShouldCatchItemErrorAssertionCallback<InferError<ShouldCatchItem>>
-  )(error)
+  return false
 }
 
-type ShouldCatch = ShouldCatchItem | [ShouldCatchItem, ...ShouldCatchItem[]]
+const shouldCatchError = <TError extends Error>(shouldCatch: ShouldCatch<TError>, error: Error): boolean => {
+  if (Array.isArray(shouldCatch)) {
+    return (shouldCatch as readonly ErrorMatcher<TError>[]).some((matcher: ErrorMatcher<TError>) =>
+      matchError<TError>(matcher, error)
+    )
+  }
+  return matchError<TError>(shouldCatch as ErrorMatcher<TError>, error)
+}
+
 export type ErrorBoundaryProps<TShouldCatch extends ShouldCatch = ShouldCatch> = PropsWithChildren<{
   /**
    * an array of elements for the ErrorBoundary to check each render. If any of those elements change between renders, then the ErrorBoundary will reset the state which will re-render the children
@@ -140,10 +182,8 @@ class BaseErrorBoundary<TShouldCatch extends ShouldCatch = ShouldCatch> extends 
       if (error instanceof ErrorInFallback) {
         throw error.originalError
       }
-      const isCatch = Array.isArray(shouldCatch)
-        ? shouldCatch.some((shouldCatchItem) => checkErrorBoundary(shouldCatchItem, error))
-        : checkErrorBoundary(shouldCatch, error)
-      if (!isCatch) {
+      if (!shouldCatchError<InferError<TShouldCatch>>(shouldCatch as ShouldCatch<InferError<TShouldCatch>>, error)) {
+        // eslint-disable-next-line @typescript-eslint/only-throw-error
         throw error
       }
 
@@ -151,6 +191,7 @@ class BaseErrorBoundary<TShouldCatch extends ShouldCatch = ShouldCatch> extends 
         if (process.env.NODE_ENV === 'development') {
           console.error('ErrorBoundary of @suspensive/react requires a defined fallback')
         }
+        // eslint-disable-next-line @typescript-eslint/only-throw-error
         throw error
       }
 
@@ -177,6 +218,7 @@ class ErrorInFallback extends Error {
     this.originalError = originalError
   }
 }
+
 class FallbackBoundary extends Component<{ children: ReactNode }> {
   componentDidCatch(originalError: Error) {
     throw originalError instanceof SuspensiveError ? originalError : new ErrorInFallback(originalError)
@@ -290,53 +332,3 @@ export const useErrorBoundaryFallbackProps = <TError extends Error = Error>(): E
     [errorBoundary.error, errorBoundary.reset]
   )
 }
-
-type InferErrorFromShouldCatchItem<T> =
-  T extends ConstructorType<infer TClass>
-    ? TClass extends Error
-      ? TClass
-      : never
-    : T extends ShouldCatchItemErrorAssertionCallback<infer TError>
-      ? TError extends Error
-        ? TError
-        : never
-      : never
-
-type InferErrorFromArrayOf<TShouldCatch extends readonly ShouldCatchItem[]> = TShouldCatch extends readonly [
-  infer TFirst,
-  ...infer TRest,
-]
-  ? TRest extends readonly ShouldCatchItem[]
-    ? InferErrorFromShouldCatchItem<TFirst> | InferErrorFromArrayOf<TRest>
-    : InferErrorFromShouldCatchItem<TFirst>
-  : never
-
-type IsInferableArrayOf<TShouldCatch extends readonly ShouldCatchItem[]> = TShouldCatch extends readonly []
-  ? true
-  : TShouldCatch extends readonly [infer TFirst, ...infer TRest]
-    ? TRest extends readonly ShouldCatchItem[]
-      ? TFirst extends ConstructorType<Error> | ShouldCatchItemErrorAssertionCallback<Error>
-        ? IsInferableArrayOf<TRest>
-        : false
-      : TFirst extends ConstructorType<Error> | ShouldCatchItemErrorAssertionCallback<Error>
-        ? true
-        : false
-    : false
-
-// Main InferError type
-type InferError<TShouldCatch extends ShouldCatch> =
-  TShouldCatch extends ConstructorType<infer TClass>
-    ? TClass extends Error
-      ? TClass
-      : Error
-    : TShouldCatch extends ShouldCatchItemErrorAssertionCallback<infer TError>
-      ? TError extends Error
-        ? TError
-        : Error
-      : TShouldCatch extends readonly ShouldCatchItem[]
-        ? IsInferableArrayOf<TShouldCatch> extends true
-          ? InferErrorFromArrayOf<TShouldCatch> extends never
-            ? Error
-            : InferErrorFromArrayOf<TShouldCatch>
-          : Error
-        : Error
