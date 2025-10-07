@@ -598,6 +598,10 @@ importers:
         version: 6.0.0(react@19.1.1)
 
   packages/react-dom:
+    dependencies:
+      js.foresight:
+        specifier: ^3.3.3
+        version: 3.3.3
     devDependencies:
       '@suspensive/eslint-config':
         specifier: workspace:*
@@ -7031,6 +7035,9 @@ packages:
     resolution: {integrity: sha512-wpxZs9NoxZaJESJGIZTyDEaYpl0FKSA+FB9aJiyemKhMwkxQg63h4T1KJgUGHpTqPDNRcmmYLugrRjJlBtWvRA==}
     hasBin: true
 
+  js.foresight@3.3.3:
+    resolution: {integrity: sha512-w45nROynBftUDdY8bCXSPONYZqfMNQaKtrVS+nwLgMlzzyvvRqMkWjUXTEYu1c/5Z30QQhry7q39jTFdUwdlCA==}
+
   jsbn@0.1.1:
     resolution: {integrity: sha512-UVU9dibq2JcFWxQPA6KCqj5O42VOmAY3zQUfEKxU0KpTGXwNoCjkX1e13eHNvw/xPynt6pU0rZ1htjWTNTSXsg==}
 
@@ -8402,6 +8409,9 @@ packages:
 
   points-on-path@0.2.1:
     resolution: {integrity: sha512-25ClnWWuw7JbWZcgqY/gJ4FQWadKxGWk+3kR/7kD0tCaDtPPMj7oHu2ToLaVhfpnHrZzYby2w6tUA0eOIuUg8g==}
+
+  position-observer@1.0.3:
+    resolution: {integrity: sha512-iqzsYcYB7wo9kd3Juw4XaVPhlLCfKhZLv6TrH096reU6tIcXuftPkA41+nqQgnPGzVo5zTC4tJ7GnIRTxrnZbQ==}
 
   possible-typed-array-names@1.1.0:
     resolution: {integrity: sha512-/+5VFTchJDoVj3bhoqi6UeymcD00DAwb1nJwamzPvHEszJ4FpF6SNNbUbOS8yI56qHzdV8eK0qEfOSiodkTdxg==}
@@ -18443,6 +18453,11 @@ snapshots:
     dependencies:
       argparse: 2.0.1
 
+  js.foresight@3.3.3:
+    dependencies:
+      position-observer: 1.0.3
+      tabbable: 6.2.0
+
   jsbn@0.1.1: {}
 
   jsc-android@250231.0.0: {}
@@ -20309,6 +20324,10 @@ snapshots:
     dependencies:
       path-data-parser: 0.1.0
       points-on-curve: 0.2.0
+
+  position-observer@1.0.3:
+    optionalDependencies:
+      '@rollup/rollup-linux-x64-gnu': 4.50.1
 
   possible-typed-array-names@1.1.0: {}
 
