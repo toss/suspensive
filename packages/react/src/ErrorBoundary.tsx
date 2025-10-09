@@ -98,25 +98,22 @@ type ErrorBoundaryState =
       error: null
     }
 
-const initialErrorBoundaryState = <TError extends Error>(): ErrorBoundaryState<TError> => ({
+const initialErrorBoundaryState: ErrorBoundaryState = {
   isError: false,
   error: null,
-})
+}
 
 class BaseErrorBoundary<TShouldCatch extends ShouldCatch = ShouldCatch> extends Component<
   ErrorBoundaryProps<TShouldCatch>,
-  ErrorBoundaryState<InferError<TShouldCatch>>
+  ErrorBoundaryState
 > {
   static getDerivedStateFromError(error: Error): ErrorBoundaryState {
     return { isError: true, error }
   }
 
-  state = initialErrorBoundaryState<InferError<TShouldCatch>>()
+  state = initialErrorBoundaryState
 
-  componentDidUpdate(
-    prevProps: ErrorBoundaryProps<TShouldCatch>,
-    prevState: ErrorBoundaryState<InferError<TShouldCatch>>
-  ) {
+  componentDidUpdate(prevProps: ErrorBoundaryProps<TShouldCatch>, prevState: ErrorBoundaryState) {
     const { isError } = this.state
     const { resetKeys } = this.props
     if (isError && prevState.isError && hasResetKeysChanged(prevProps.resetKeys, resetKeys)) {
@@ -130,7 +127,7 @@ class BaseErrorBoundary<TShouldCatch extends ShouldCatch = ShouldCatch> extends 
 
   reset = () => {
     this.props.onReset?.()
-    this.setState(initialErrorBoundaryState<InferError<TShouldCatch>>())
+    this.setState(initialErrorBoundaryState)
   }
 
   render() {
@@ -163,7 +160,11 @@ class BaseErrorBoundary<TShouldCatch extends ShouldCatch = ShouldCatch> extends 
       const Fallback = fallback
       childrenOrFallback = (
         <FallbackBoundary>
-          {typeof Fallback === 'function' ? <Fallback error={error} reset={this.reset} /> : Fallback}
+          {typeof Fallback === 'function' ? (
+            <Fallback error={error as InferError<TShouldCatch>} reset={this.reset} />
+          ) : (
+            Fallback
+          )}
         </FallbackBoundary>
       )
     }
