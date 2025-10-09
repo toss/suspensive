@@ -13,7 +13,7 @@ import * as mdx from 'eslint-plugin-mdx'
 
 const ignores = ['**/.next/**', '**/build/**', '**/coverage/**', '**/dist/**']
 
-export const suspensiveTypeScriptConfig = defineConfig(
+export const suspensiveTypeScriptConfig = defineConfig([
   {
     ignores,
   },
@@ -109,12 +109,12 @@ export const suspensiveTypeScriptConfig = defineConfig(
       ],
     },
   },
-  eslintPluginPrettierRecommended
-)
+  eslintPluginPrettierRecommended,
+])
 
-export const suspensiveReactTypeScriptConfig = defineConfig(
+export const suspensiveReactTypeScriptConfig = defineConfig([
   ...suspensiveTypeScriptConfig,
-  reactHooks.configs.recommended,
+  reactHooks.configs.flat['recommended-latest'],
   {
     files: ['**/*.{ts,tsx}'],
     ...pluginReact.configs.recommended,
@@ -127,7 +127,7 @@ export const suspensiveReactTypeScriptConfig = defineConfig(
       },
     },
     rules: {
-      'react-hooks/react-compiler': 'warn',
+      'react-hooks/refs': 'warn',
       '@eslint-react/no-use-context': 'off',
       '@eslint-react/no-forward-ref': 'off',
       '@eslint-react/no-context-provider': 'off',
@@ -137,15 +137,15 @@ export const suspensiveReactTypeScriptConfig = defineConfig(
         version: 'detect',
       },
     },
-  }
-)
+  },
+])
 
-export const suspensiveNextTypeScriptConfig = [
+export const suspensiveNextTypeScriptConfig = defineConfig([
   ...suspensiveReactTypeScriptConfig,
   { plugins: { 'plugin:@next/next/recommended': next.configs.recommended } },
-]
+])
 
-export const suspensiveMDXConfig = [
+export const suspensiveMDXConfig = defineConfig([
   mdx.configs.flat,
   mdx.configs.flatCodeBlocks,
   {
@@ -165,4 +165,4 @@ export const suspensiveMDXConfig = [
       'prefer-const': 'error',
     },
   },
-]
+])
