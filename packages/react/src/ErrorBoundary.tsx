@@ -71,9 +71,15 @@ export type ErrorBoundaryProps = PropsWithChildren<{
   shouldCatch?: ShouldCatch | [ShouldCatch, ...ShouldCatch[]]
 }>
 
-type ErrorBoundaryState<TError extends Error = Error> =
-  | { isError: true; error: TError }
-  | { isError: false; error: null }
+type ErrorBoundaryState =
+  | {
+      isError: true
+      error: Error
+    }
+  | {
+      isError: false
+      error: null
+    }
 
 const initialErrorBoundaryState: ErrorBoundaryState = {
   isError: false,
@@ -219,7 +225,7 @@ const ErrorBoundaryContext = Object.assign(createContext<({ reset: () => void } 
  */
 // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-parameters
 export const useErrorBoundary = <TError extends Error = Error>() => {
-  const [state, setState] = useState<ErrorBoundaryState<TError>>({
+  const [state, setState] = useState<ErrorBoundaryState>({
     isError: false,
     error: null,
   })
