@@ -54,6 +54,13 @@ describe('<ErrorBoundary/>', () => {
       fourthProperty = 'fourth' as const
     }
 
+    class FifthError<T> extends Error {
+      fifthProperty = 'fifth' as const
+      constructor(public data: T) {
+        super(`FifthError with data: ${data}`)
+      }
+    }
+
     function isAnotherError(payload: unknown): payload is AnotherError {
       return payload instanceof AnotherError
     }
@@ -194,6 +201,26 @@ describe('<ErrorBoundary/>', () => {
           fallback={({ error }) => {
             expectTypeOf(error).toEqualTypeOf<ThirdError>()
             expectTypeOf(error.thirdProperty).toEqualTypeOf<'third'>()
+            return <div>{error.message}</div>
+          }}
+        >
+          <div>content</div>
+        </ErrorBoundary>
+      )
+      expectTypeOf(example).toEqualTypeOf<React.JSX.Element>()
+    })
+
+    it('should infer error type from single generic Error constructor (FifthError)', () => {
+      const example = (
+        <ErrorBoundary
+          shouldCatch={FifthError<string>}
+          onError={(error) => {
+            expectTypeOf(error).toEqualTypeOf<FifthError<string>>()
+          }}
+          fallback={({ error }) => {
+            expectTypeOf(error).toEqualTypeOf<FifthError<string>>()
+            expectTypeOf(error.fifthProperty).toEqualTypeOf<'fifth'>()
+            expectTypeOf(error.data).toEqualTypeOf<string>()
             return <div>{error.message}</div>
           }}
         >
@@ -552,6 +579,31 @@ describe('<ErrorBoundary/>', () => {
             }
             if (error instanceof AnotherError) {
               expectTypeOf(error.anotherProperty).toEqualTypeOf<'another'>()
+            }
+            return <div>{error.message}</div>
+          }}
+        >
+          <div>content</div>
+        </ErrorBoundary>
+      )
+      expectTypeOf(example).toEqualTypeOf<React.JSX.Element>()
+    })
+
+    it('should handle array with generic Error constructor and other constructors', () => {
+      const example = (
+        <ErrorBoundary
+          shouldCatch={[CustomError, FifthError<number>]}
+          onError={(error) => {
+            expectTypeOf(error).toEqualTypeOf<CustomError | FifthError<number>>()
+          }}
+          fallback={({ error }) => {
+            expectTypeOf(error).toEqualTypeOf<CustomError | FifthError<number>>()
+            if (error instanceof CustomError) {
+              expectTypeOf(error.customProperty).toEqualTypeOf<'custom'>()
+            }
+            if (error instanceof FifthError) {
+              expectTypeOf(error.fifthProperty).toEqualTypeOf<'fifth'>()
+              expectTypeOf(error.data).toEqualTypeOf<number>()
             }
             return <div>{error.message}</div>
           }}
