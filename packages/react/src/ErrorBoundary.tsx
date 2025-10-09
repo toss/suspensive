@@ -130,9 +130,15 @@ export type ErrorBoundaryProps<TShouldCatch extends ShouldCatch = ShouldCatch> =
   shouldCatch?: TShouldCatch
 }>
 
-type ErrorBoundaryState<TError extends Error = Error> =
-  | { isError: true; error: TError }
-  | { isError: false; error: null }
+type ErrorBoundaryState =
+  | {
+      isError: true
+      error: Error
+    }
+  | {
+      isError: false
+      error: null
+    }
 
 const initialErrorBoundaryState: ErrorBoundaryState = {
   isError: false,
@@ -149,10 +155,7 @@ class BaseErrorBoundary<TShouldCatch extends ShouldCatch = ShouldCatch> extends 
 
   state = initialErrorBoundaryState
 
-  componentDidUpdate(
-    prevProps: ErrorBoundaryProps<TShouldCatch>,
-    prevState: ErrorBoundaryState<InferError<TShouldCatch>>
-  ) {
+  componentDidUpdate(prevProps: ErrorBoundaryProps<TShouldCatch>, prevState: ErrorBoundaryState) {
     const { isError } = this.state
     const { resetKeys } = this.props
     if (isError && prevState.isError && hasResetKeysChanged(prevProps.resetKeys, resetKeys)) {
@@ -293,7 +296,7 @@ const ErrorBoundaryContext = Object.assign(createContext<(ErrorBoundaryHandle & 
  */
 // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-parameters
 export const useErrorBoundary = <TError extends Error = Error>() => {
-  const [state, setState] = useState<ErrorBoundaryState<TError>>({
+  const [state, setState] = useState<ErrorBoundaryState>({
     isError: false,
     error: null,
   })
