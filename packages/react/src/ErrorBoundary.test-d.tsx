@@ -1,4 +1,4 @@
-import type { ComponentProps, ReactNode } from 'react'
+import { type ComponentProps, type ReactNode, useState } from 'react'
 import { ErrorBoundary } from './ErrorBoundary'
 import { CustomError } from './test-utils'
 import type { ConstructorType } from './utility-types/ConstructorType'
@@ -18,18 +18,22 @@ describe('<ErrorBoundary/>', () => {
     >()
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const ShouldCatchByMany = () => (
-      <ErrorBoundary
-        shouldCatch={[
-          // @ts-expect-error CustomNotError should be new (...args) => Error
-          CustomNotError,
-          CustomError,
-          (error) => error instanceof CustomError,
-          Math.random() > 0.5,
-        ]}
-        fallback={({ error }) => <>{error.message} of Child</>}
-      ></ErrorBoundary>
-    )
+    const ShouldCatchByMany = () => {
+      const [randomNumber] = useState(() => Math.random())
+
+      return (
+        <ErrorBoundary
+          shouldCatch={[
+            // @ts-expect-error CustomNotError should be new (...args) => Error
+            CustomNotError,
+            CustomError,
+            (error) => error instanceof CustomError,
+            randomNumber > 0.5,
+          ]}
+          fallback={({ error }) => <>{error.message} of Child</>}
+        ></ErrorBoundary>
+      )
+    }
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const ShouldCatchByOne = () => (
