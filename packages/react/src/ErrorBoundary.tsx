@@ -134,20 +134,20 @@ type ErrorBoundaryState<TError extends Error = Error> =
   | { isError: true; error: TError }
   | { isError: false; error: null }
 
-const initialErrorBoundaryState = <TError extends Error>(): ErrorBoundaryState<TError> => ({
+const initialErrorBoundaryState: ErrorBoundaryState = {
   isError: false,
   error: null,
-})
+}
 
 class BaseErrorBoundary<TShouldCatch extends ShouldCatch = ShouldCatch> extends Component<
   ErrorBoundaryProps<TShouldCatch>,
-  ErrorBoundaryState<InferError<TShouldCatch>>
+  ErrorBoundaryState
 > {
   static getDerivedStateFromError(error: Error): ErrorBoundaryState {
     return { isError: true, error }
   }
 
-  state = initialErrorBoundaryState<InferError<TShouldCatch>>()
+  state = initialErrorBoundaryState
 
   componentDidUpdate(
     prevProps: ErrorBoundaryProps<TShouldCatch>,
@@ -166,7 +166,7 @@ class BaseErrorBoundary<TShouldCatch extends ShouldCatch = ShouldCatch> extends 
 
   reset = () => {
     this.props.onReset?.()
-    this.setState(initialErrorBoundaryState<InferError<TShouldCatch>>())
+    this.setState(initialErrorBoundaryState)
   }
 
   render() {
@@ -183,7 +183,6 @@ class BaseErrorBoundary<TShouldCatch extends ShouldCatch = ShouldCatch> extends 
         throw error.originalError
       }
       if (!shouldCatchError<InferError<TShouldCatch>>(shouldCatch as ShouldCatch<InferError<TShouldCatch>>, error)) {
-        // eslint-disable-next-line @typescript-eslint/only-throw-error
         throw error
       }
 
@@ -191,14 +190,17 @@ class BaseErrorBoundary<TShouldCatch extends ShouldCatch = ShouldCatch> extends 
         if (process.env.NODE_ENV === 'development') {
           console.error('ErrorBoundary of @suspensive/react requires a defined fallback')
         }
-        // eslint-disable-next-line @typescript-eslint/only-throw-error
         throw error
       }
 
       const Fallback = fallback
       childrenOrFallback = (
         <FallbackBoundary>
-          {typeof Fallback === 'function' ? <Fallback error={error} reset={this.reset} /> : Fallback}
+          {typeof Fallback === 'function' ? (
+            <Fallback error={error as InferError<TShouldCatch>} reset={this.reset} />
+          ) : (
+            Fallback
+          )}
         </FallbackBoundary>
       )
     }
