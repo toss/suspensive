@@ -3,6 +3,7 @@
 import { ErrorBoundary, Suspense } from '@suspensive/react'
 import { useQueryErrorResetBoundary, useSuspenseQuery } from '@tanstack/react-query'
 import { AxiosError, isAxiosError } from 'axios'
+import { useState } from 'react'
 import { Area, Box, Button } from '~/components/uis'
 import { api } from '~/utils'
 
@@ -53,7 +54,8 @@ export default function Page() {
 }
 
 const AxiosErrorOrJustErrorMaker = () => {
-  if (Math.random() > 0.5) {
+  const [randomNumber] = useState(() => Math.random())
+  if (randomNumber > 0.5) {
     throw new Error('sometimes not AxiosError')
   }
 
