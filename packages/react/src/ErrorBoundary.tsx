@@ -186,7 +186,6 @@ class BaseErrorBoundary<TShouldCatch extends ShouldCatch = ShouldCatch> extends 
         throw error.originalError
       }
       if (!shouldCatchError<InferError<TShouldCatch>>(shouldCatch as ShouldCatch<InferError<TShouldCatch>>, error)) {
-        // eslint-disable-next-line @typescript-eslint/only-throw-error
         throw error
       }
 
@@ -194,7 +193,6 @@ class BaseErrorBoundary<TShouldCatch extends ShouldCatch = ShouldCatch> extends 
         if (process.env.NODE_ENV === 'development') {
           console.error('ErrorBoundary of @suspensive/react requires a defined fallback')
         }
-        // eslint-disable-next-line @typescript-eslint/only-throw-error
         throw error
       }
 
