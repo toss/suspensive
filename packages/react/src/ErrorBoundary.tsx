@@ -84,15 +84,15 @@ const matchError = (errorMatcher: ErrorMatcher, error: Error): error is InferErr
   return false
 }
 
-const shouldCatchError = <TShouldCatch extends ShouldCatch = ShouldCatch>(
-  shouldCatch: TShouldCatch,
+const shouldCatchError = <TShouldCatch extends ShouldCatch>(
+  shouldCatch: TShouldCatch | true,
   error: Error
 ): error is InferError<TShouldCatch> =>
   Array.isArray(shouldCatch)
     ? shouldCatch.some((errorMatcher) => matchError(errorMatcher, error))
     : matchError(shouldCatch, error)
 
-export type ErrorBoundaryProps<TShouldCatch extends ShouldCatch = ShouldCatch> = PropsWithChildren<{
+export type ErrorBoundaryProps<TShouldCatch extends ShouldCatch = true> = PropsWithChildren<{
   /**
    * an array of elements for the ErrorBoundary to check each render. If any of those elements change between renders, then the ErrorBoundary will reset the state which will re-render the children
    */
@@ -131,7 +131,7 @@ const initialErrorBoundaryState: ErrorBoundaryState = {
   error: null,
 }
 
-class BaseErrorBoundary<TShouldCatch extends ShouldCatch = ShouldCatch> extends Component<
+class BaseErrorBoundary<TShouldCatch extends ShouldCatch> extends Component<
   ErrorBoundaryProps<TShouldCatch>,
   ErrorBoundaryState
 > {
@@ -159,7 +159,7 @@ class BaseErrorBoundary<TShouldCatch extends ShouldCatch = ShouldCatch> extends 
   }
 
   render() {
-    const { children, fallback, shouldCatch = true as TShouldCatch } = this.props
+    const { children, fallback, shouldCatch = true } = this.props
     const { isError, error } = this.state
 
     let childrenOrFallback = children
@@ -220,7 +220,7 @@ class FallbackBoundary extends Component<{ children: ReactNode }> {
  * @see {@link https://suspensive.org/docs/react/ErrorBoundary Suspensive Docs}
  */
 export const ErrorBoundary = Object.assign(
-  forwardRef(function ErrorBoundary<TShouldCatch extends ShouldCatch = ShouldCatch>(
+  forwardRef(function ErrorBoundary<TShouldCatch extends ShouldCatch>(
     props: ErrorBoundaryProps<TShouldCatch>,
     ref: ForwardedRef<ErrorBoundaryHandle>
   ) {
@@ -244,7 +244,7 @@ export const ErrorBoundary = Object.assign(
       </BaseErrorBoundary>
     )
   }) as {
-    <TShouldCatch extends ShouldCatch = ShouldCatch>(
+    <TShouldCatch extends ShouldCatch>(
       props: ErrorBoundaryProps<TShouldCatch> & React.RefAttributes<ErrorBoundaryHandle>
     ): ReturnType<ForwardRefExoticComponent<ErrorBoundaryProps<TShouldCatch>>>
   },
