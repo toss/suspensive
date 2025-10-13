@@ -42,10 +42,10 @@ export const NpmInstallCopyButton = () => {
               <Image
                 src={
                   theme === 'dark'
-                    ? isChecked
+                    ? isClicked
                       ? checkSVG
                       : content_copySVG
-                    : isChecked
+                    : isClicked
                       ? checkBlackSVG
                       : content_copyBlackSVG
                 }
