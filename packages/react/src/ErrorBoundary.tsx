@@ -246,7 +246,7 @@ export const ErrorBoundary = Object.assign(
   }) as {
     <TShouldCatch extends ShouldCatch = ShouldCatch>(
       props: ErrorBoundaryProps<TShouldCatch> & React.RefAttributes<ErrorBoundaryHandle>
-    ): ReturnType<ForwardRefExoticComponent<ErrorBoundaryProps>>
+    ): ReturnType<ForwardRefExoticComponent<ErrorBoundaryProps<TShouldCatch>>>
   },
   {
     displayName: 'ErrorBoundary',
