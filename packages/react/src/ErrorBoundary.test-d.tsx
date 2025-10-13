@@ -623,4 +623,611 @@ describe('<ErrorBoundary/>', () => {
       expectTypeOf(example).toEqualTypeOf<React.JSX.Element>()
     })
   })
+
+  describe('ErrorBoundary.with automatic error type inference from shouldCatch prop', () => {
+    class CustomError extends Error {
+      customProperty = 'custom' as const
+    }
+
+    class AnotherError extends Error {
+      anotherProperty = 'another' as const
+    }
+
+    class ThirdError extends Error {
+      thirdProperty = 'third' as const
+    }
+
+    class FourthError extends Error {
+      fourthProperty = 'fourth' as const
+    }
+
+    class FifthError<T> extends Error {
+      fifthProperty = 'fifth' as const
+      constructor(public data: T) {
+        super(`FifthError with data: ${data}`)
+      }
+    }
+
+    function isAnotherError(payload: unknown): payload is AnotherError {
+      return payload instanceof AnotherError
+    }
+
+    function isThirdError(payload: unknown): payload is ThirdError {
+      return payload instanceof ThirdError
+    }
+
+    function isFourthError(payload: unknown): payload is FourthError {
+      return payload instanceof FourthError
+    }
+
+    // Type guard functions with different signatures
+    function isAnotherErrorWithErrorParam(error: Error): error is AnotherError {
+      return error instanceof AnotherError
+    }
+
+    // Callback functions (non-type-guards)
+    const customErrorCallback = (error: Error) => error instanceof CustomError
+
+    // Test component
+    const TestComponent = ({ message }: { message: string }) => <div>{message}</div>
+
+    it('should maintain backward compatibility - fallback error type defaults to Error when no shouldCatch is provided', () => {
+      const WrappedComponent = ErrorBoundary.with(
+        {
+          fallback: ({ error }) => {
+            expectTypeOf(error).toEqualTypeOf<Error>()
+            return <div>{error.message}</div>
+          },
+        },
+        TestComponent
+      )
+
+      const example = <WrappedComponent message="test" />
+      expectTypeOf(example).toEqualTypeOf<React.JSX.Element>()
+    })
+
+    it('should automatically infer error type from single Error constructor in shouldCatch', () => {
+      const WrappedComponent = ErrorBoundary.with(
+        {
+          shouldCatch: CustomError,
+          onError: (error) => {
+            expectTypeOf(error).toEqualTypeOf<CustomError>()
+          },
+          fallback: ({ error }) => {
+            expectTypeOf(error).toEqualTypeOf<CustomError>()
+            return <div>{error.message}</div>
+          },
+        },
+        TestComponent
+      )
+
+      const example = <WrappedComponent message="test" />
+      expectTypeOf(example).toEqualTypeOf<React.JSX.Element>()
+    })
+
+    it('should provide type-safe access to custom error properties when using single Error constructor', () => {
+      const WrappedComponent = ErrorBoundary.with(
+        {
+          shouldCatch: CustomError,
+          onError: (error) => {
+            expectTypeOf(error).toEqualTypeOf<CustomError>()
+          },
+          fallback: ({ error }) => {
+            expectTypeOf(error).toEqualTypeOf<CustomError>()
+            expectTypeOf(error.customProperty).toEqualTypeOf<'custom'>()
+            return <div>{error.message}</div>
+          },
+        },
+        TestComponent
+      )
+
+      const example = <WrappedComponent message="test" />
+      expectTypeOf(example).toEqualTypeOf<React.JSX.Element>()
+    })
+
+    it('should automatically infer union error type from array of Error constructors and type guards in shouldCatch', () => {
+      const WrappedComponent = ErrorBoundary.with(
+        {
+          shouldCatch: [CustomError, (e) => isAnotherError(e), isAnotherError, (e) => e instanceof AnotherError],
+          onError: (error) => {
+            expectTypeOf(error).toEqualTypeOf<CustomError | AnotherError>()
+          },
+          fallback: ({ error }) => {
+            expectTypeOf(error).toEqualTypeOf<CustomError | AnotherError>()
+            if (error instanceof CustomError) {
+              expectTypeOf(error.customProperty).toEqualTypeOf<'custom'>()
+            }
+            if (error instanceof AnotherError) {
+              expectTypeOf(error.anotherProperty).toEqualTypeOf<'another'>()
+            }
+            return <div>{error.message}</div>
+          },
+        },
+        TestComponent
+      )
+
+      const example = <WrappedComponent message="test" />
+      expectTypeOf(example).toEqualTypeOf<React.JSX.Element>()
+    })
+
+    it('should fallback to generic Error type when shouldCatch is boolean true', () => {
+      const WrappedComponent = ErrorBoundary.with(
+        {
+          shouldCatch: true,
+          fallback: ({ error }) => {
+            expectTypeOf(error).toEqualTypeOf<Error>()
+            return <div>{error.message}</div>
+          },
+        },
+        TestComponent
+      )
+
+      const example = <WrappedComponent message="test" />
+      expectTypeOf(example).toEqualTypeOf<React.JSX.Element>()
+    })
+
+    // Single Error Constructor Tests
+    it('should infer error type from single Error constructor (AnotherError)', () => {
+      const WrappedComponent = ErrorBoundary.with(
+        {
+          shouldCatch: AnotherError,
+          onError: (error) => {
+            expectTypeOf(error).toEqualTypeOf<AnotherError>()
+          },
+          fallback: ({ error }) => {
+            expectTypeOf(error).toEqualTypeOf<AnotherError>()
+            expectTypeOf(error.anotherProperty).toEqualTypeOf<'another'>()
+            return <div>{error.message}</div>
+          },
+        },
+        TestComponent
+      )
+
+      const example = <WrappedComponent message="test" />
+      expectTypeOf(example).toEqualTypeOf<React.JSX.Element>()
+    })
+
+    it('should infer error type from single Error constructor (ThirdError)', () => {
+      const WrappedComponent = ErrorBoundary.with(
+        {
+          shouldCatch: ThirdError,
+          onError: (error) => {
+            expectTypeOf(error).toEqualTypeOf<ThirdError>()
+          },
+          fallback: ({ error }) => {
+            expectTypeOf(error).toEqualTypeOf<ThirdError>()
+            expectTypeOf(error.thirdProperty).toEqualTypeOf<'third'>()
+            return <div>{error.message}</div>
+          },
+        },
+        TestComponent
+      )
+
+      const example = <WrappedComponent message="test" />
+      expectTypeOf(example).toEqualTypeOf<React.JSX.Element>()
+    })
+
+    it('should infer error type from single generic Error constructor (FifthError)', () => {
+      const WrappedComponent = ErrorBoundary.with(
+        {
+          shouldCatch: FifthError<string>,
+          onError: (error) => {
+            expectTypeOf(error).toEqualTypeOf<FifthError<string>>()
+          },
+          fallback: ({ error }) => {
+            expectTypeOf(error).toEqualTypeOf<FifthError<string>>()
+            expectTypeOf(error.fifthProperty).toEqualTypeOf<'fifth'>()
+            expectTypeOf(error.data).toEqualTypeOf<string>()
+            return <div>{error.message}</div>
+          },
+        },
+        TestComponent
+      )
+
+      const example = <WrappedComponent message="test" />
+      expectTypeOf(example).toEqualTypeOf<React.JSX.Element>()
+    })
+
+    // Type Guard Function Tests
+    it('should infer error type from single type guard function (unknown param)', () => {
+      const WrappedComponent = ErrorBoundary.with(
+        {
+          shouldCatch: isAnotherError,
+          onError: (error) => {
+            expectTypeOf(error).toEqualTypeOf<AnotherError>()
+          },
+          fallback: ({ error }) => {
+            expectTypeOf(error).toEqualTypeOf<AnotherError>()
+            return <div>{error.message}</div>
+          },
+        },
+        TestComponent
+      )
+
+      const example = <WrappedComponent message="test" />
+      expectTypeOf(example).toEqualTypeOf<React.JSX.Element>()
+    })
+
+    it('should infer error type from single type guard function (Error param)', () => {
+      const WrappedComponent = ErrorBoundary.with(
+        {
+          shouldCatch: isAnotherErrorWithErrorParam,
+          onError: (error) => {
+            expectTypeOf(error).toEqualTypeOf<AnotherError>()
+          },
+          fallback: ({ error }) => {
+            expectTypeOf(error).toEqualTypeOf<AnotherError>()
+            return <div>{error.message}</div>
+          },
+        },
+        TestComponent
+      )
+
+      const example = <WrappedComponent message="test" />
+      expectTypeOf(example).toEqualTypeOf<React.JSX.Element>()
+    })
+
+    it('should infer error type from single type guard function (ThirdError)', () => {
+      const WrappedComponent = ErrorBoundary.with(
+        {
+          shouldCatch: isThirdError,
+          onError: (error) => {
+            expectTypeOf(error).toEqualTypeOf<ThirdError>()
+          },
+          fallback: ({ error }) => {
+            expectTypeOf(error).toEqualTypeOf<ThirdError>()
+            return <div>{error.message}</div>
+          },
+        },
+        TestComponent
+      )
+
+      const example = <WrappedComponent message="test" />
+      expectTypeOf(example).toEqualTypeOf<React.JSX.Element>()
+    })
+
+    // Callback Function Tests (should fallback to Error)
+    it('should fallback to generic Error type for callback functions', () => {
+      const WrappedComponent = ErrorBoundary.with(
+        {
+          shouldCatch: customErrorCallback,
+          onError: (error) => {
+            expectTypeOf(error).toEqualTypeOf<CustomError>()
+          },
+          fallback: ({ error }) => {
+            expectTypeOf(error).toEqualTypeOf<CustomError>()
+            return <div>{error.message}</div>
+          },
+        },
+        TestComponent
+      )
+
+      const example = <WrappedComponent message="test" />
+      expectTypeOf(example).toEqualTypeOf<React.JSX.Element>()
+    })
+
+    // Array Tests - Two Error Constructors
+    it('should infer union error type from array of two Error constructors', () => {
+      const WrappedComponent = ErrorBoundary.with(
+        {
+          shouldCatch: [CustomError, AnotherError],
+          onError: (error) => {
+            expectTypeOf(error).toEqualTypeOf<CustomError | AnotherError>()
+          },
+          fallback: ({ error }) => {
+            expectTypeOf(error).toEqualTypeOf<CustomError | AnotherError>()
+            if (error instanceof CustomError) {
+              expectTypeOf(error.customProperty).toEqualTypeOf<'custom'>()
+            }
+            if (error instanceof AnotherError) {
+              expectTypeOf(error.anotherProperty).toEqualTypeOf<'another'>()
+            }
+            return <div>{error.message}</div>
+          },
+        },
+        TestComponent
+      )
+
+      const example = <WrappedComponent message="test" />
+      expectTypeOf(example).toEqualTypeOf<React.JSX.Element>()
+    })
+
+    it('should infer union error type from array of three Error constructors', () => {
+      const WrappedComponent = ErrorBoundary.with(
+        {
+          shouldCatch: [CustomError, AnotherError, ThirdError],
+          onError: (error) => {
+            expectTypeOf(error).toEqualTypeOf<CustomError | AnotherError | ThirdError>()
+          },
+          fallback: ({ error }) => {
+            expectTypeOf(error).toEqualTypeOf<CustomError | AnotherError | ThirdError>()
+            if (error instanceof CustomError) {
+              expectTypeOf(error.customProperty).toEqualTypeOf<'custom'>()
+            }
+            if (error instanceof AnotherError) {
+              expectTypeOf(error.anotherProperty).toEqualTypeOf<'another'>()
+            }
+            if (error instanceof ThirdError) {
+              expectTypeOf(error.thirdProperty).toEqualTypeOf<'third'>()
+            }
+            return <div>{error.message}</div>
+          },
+        },
+        TestComponent
+      )
+
+      const example = <WrappedComponent message="test" />
+      expectTypeOf(example).toEqualTypeOf<React.JSX.Element>()
+    })
+
+    // Array Tests - Mixed Type Guards
+    it('should infer union error type from array of Error constructor and type guard', () => {
+      const WrappedComponent = ErrorBoundary.with(
+        {
+          shouldCatch: [CustomError, isAnotherError],
+          onError: (error) => {
+            expectTypeOf(error).toEqualTypeOf<CustomError | AnotherError>()
+          },
+          fallback: ({ error }) => {
+            expectTypeOf(error).toEqualTypeOf<CustomError | AnotherError>()
+            if (error instanceof CustomError) {
+              expectTypeOf(error.customProperty).toEqualTypeOf<'custom'>()
+            }
+            if (error instanceof AnotherError) {
+              expectTypeOf(error.anotherProperty).toEqualTypeOf<'another'>()
+            }
+            return <div>{error.message}</div>
+          },
+        },
+        TestComponent
+      )
+
+      const example = <WrappedComponent message="test" />
+      expectTypeOf(example).toEqualTypeOf<React.JSX.Element>()
+    })
+
+    it('should infer union error type from array of multiple type guards', () => {
+      const WrappedComponent = ErrorBoundary.with(
+        {
+          shouldCatch: [isAnotherError, isThirdError, isFourthError],
+          onError: (error) => {
+            expectTypeOf(error).toEqualTypeOf<AnotherError | ThirdError | FourthError>()
+          },
+          fallback: ({ error }) => {
+            expectTypeOf(error).toEqualTypeOf<AnotherError | ThirdError | FourthError>()
+            if (error instanceof AnotherError) {
+              expectTypeOf(error.anotherProperty).toEqualTypeOf<'another'>()
+            }
+            if (error instanceof ThirdError) {
+              expectTypeOf(error.thirdProperty).toEqualTypeOf<'third'>()
+            }
+            if (error instanceof FourthError) {
+              expectTypeOf(error.fourthProperty).toEqualTypeOf<'fourth'>()
+            }
+            return <div>{error.message}</div>
+          },
+        },
+        TestComponent
+      )
+
+      const example = <WrappedComponent message="test" />
+      expectTypeOf(example).toEqualTypeOf<React.JSX.Element>()
+    })
+
+    // Array Tests - Mixed with Callbacks (should fallback to Error)
+    it('should fallback to generic Error type for arrays containing callback functions', () => {
+      const WrappedComponent = ErrorBoundary.with(
+        {
+          shouldCatch: [CustomError, customErrorCallback],
+          onError: (error) => {
+            expectTypeOf(error).toEqualTypeOf<CustomError>()
+          },
+          fallback: ({ error }) => {
+            expectTypeOf(error).toEqualTypeOf<CustomError>()
+            return <div>{error.message}</div>
+          },
+        },
+        TestComponent
+      )
+
+      const example = <WrappedComponent message="test" />
+      expectTypeOf(example).toEqualTypeOf<React.JSX.Element>()
+    })
+
+    it('should fallback to generic Error type for arrays containing boolean values', () => {
+      const WrappedComponent = ErrorBoundary.with(
+        {
+          shouldCatch: [CustomError, true],
+          onError: (error) => {
+            expectTypeOf(error).toEqualTypeOf<CustomError | Error>()
+          },
+          fallback: ({ error }) => {
+            expectTypeOf(error).toEqualTypeOf<CustomError | Error>()
+            return <div>{error.message}</div>
+          },
+        },
+        TestComponent
+      )
+
+      const example = <WrappedComponent message="test" />
+      expectTypeOf(example).toEqualTypeOf<React.JSX.Element>()
+    })
+
+    // Boolean Tests
+    it('should fallback to generic Error type when shouldCatch is boolean false', () => {
+      const WrappedComponent = ErrorBoundary.with(
+        {
+          shouldCatch: false,
+          fallback: ({ error }) => {
+            expectTypeOf(error).toEqualTypeOf<Error>()
+            return <div>{error.message}</div>
+          },
+        },
+        TestComponent
+      )
+
+      const example = <WrappedComponent message="test" />
+      expectTypeOf(example).toEqualTypeOf<React.JSX.Element>()
+    })
+
+    // Complex Array Tests
+    it('should infer union error type from complex array with constructors and type guards', () => {
+      const WrappedComponent = ErrorBoundary.with(
+        {
+          shouldCatch: [CustomError, AnotherError, isThirdError, isFourthError],
+          onError: (error) => {
+            expectTypeOf(error).toEqualTypeOf<CustomError | AnotherError | ThirdError | FourthError>()
+          },
+          fallback: ({ error }) => {
+            expectTypeOf(error).toEqualTypeOf<CustomError | AnotherError | ThirdError | FourthError>()
+            if (error instanceof CustomError) {
+              expectTypeOf(error.customProperty).toEqualTypeOf<'custom'>()
+            }
+            if (error instanceof AnotherError) {
+              expectTypeOf(error.anotherProperty).toEqualTypeOf<'another'>()
+            }
+            if (error instanceof ThirdError) {
+              expectTypeOf(error.thirdProperty).toEqualTypeOf<'third'>()
+            }
+            if (error instanceof FourthError) {
+              expectTypeOf(error.fourthProperty).toEqualTypeOf<'fourth'>()
+            }
+            return <div>{error.message}</div>
+          },
+        },
+        TestComponent
+      )
+
+      const example = <WrappedComponent message="test" />
+      expectTypeOf(example).toEqualTypeOf<React.JSX.Element>()
+    })
+
+    // Edge Cases
+    it('should handle undefined shouldCatch', () => {
+      const WrappedComponent = ErrorBoundary.with(
+        {
+          shouldCatch: undefined,
+          fallback: ({ error }) => {
+            expectTypeOf(error).toEqualTypeOf<Error>()
+            return <div>{error.message}</div>
+          },
+        },
+        TestComponent
+      )
+
+      const example = <WrappedComponent message="test" />
+      expectTypeOf(example).toEqualTypeOf<React.JSX.Element>()
+    })
+
+    it('should handle single element array with Error constructor', () => {
+      const WrappedComponent = ErrorBoundary.with(
+        {
+          shouldCatch: [CustomError],
+          onError: (error) => {
+            expectTypeOf(error).toEqualTypeOf<CustomError>()
+          },
+          fallback: ({ error }) => {
+            expectTypeOf(error).toEqualTypeOf<CustomError>()
+            expectTypeOf(error.customProperty).toEqualTypeOf<'custom'>()
+            return <div>{error.message}</div>
+          },
+        },
+        TestComponent
+      )
+
+      const example = <WrappedComponent message="test" />
+      expectTypeOf(example).toEqualTypeOf<React.JSX.Element>()
+    })
+
+    it('should handle single element array with type guard', () => {
+      const WrappedComponent = ErrorBoundary.with(
+        {
+          shouldCatch: [isAnotherError],
+          onError: (error) => {
+            expectTypeOf(error).toEqualTypeOf<AnotherError>()
+          },
+          fallback: ({ error }) => {
+            expectTypeOf(error).toEqualTypeOf<AnotherError>()
+            expectTypeOf(error.anotherProperty).toEqualTypeOf<'another'>()
+            return <div>{error.message}</div>
+          },
+        },
+        TestComponent
+      )
+
+      const example = <WrappedComponent message="test" />
+      expectTypeOf(example).toEqualTypeOf<React.JSX.Element>()
+    })
+
+    // Built-in Error Constructor
+    it('should handle built-in Error constructor', () => {
+      const WrappedComponent = ErrorBoundary.with(
+        {
+          shouldCatch: Error,
+          onError: (error) => {
+            expectTypeOf(error).toEqualTypeOf<Error>()
+          },
+          fallback: ({ error }) => {
+            expectTypeOf(error).toEqualTypeOf<Error>()
+            return <div>{error.message}</div>
+          },
+        },
+        TestComponent
+      )
+
+      const example = <WrappedComponent message="test" />
+      expectTypeOf(example).toEqualTypeOf<React.JSX.Element>()
+    })
+
+    it('should handle array with built-in Error constructor and custom constructors', () => {
+      const WrappedComponent = ErrorBoundary.with(
+        {
+          shouldCatch: [Error, CustomError, AnotherError],
+          onError: (error) => {
+            expectTypeOf(error).toEqualTypeOf<Error | CustomError | AnotherError>()
+          },
+          fallback: ({ error }) => {
+            expectTypeOf(error).toEqualTypeOf<Error | CustomError | AnotherError>()
+            if (error instanceof CustomError) {
+              expectTypeOf(error.customProperty).toEqualTypeOf<'custom'>()
+            }
+            if (error instanceof AnotherError) {
+              expectTypeOf(error.anotherProperty).toEqualTypeOf<'another'>()
+            }
+            return <div>{error.message}</div>
+          },
+        },
+        TestComponent
+      )
+
+      const example = <WrappedComponent message="test" />
+      expectTypeOf(example).toEqualTypeOf<React.JSX.Element>()
+    })
+
+    it('should handle array with generic Error constructor and other constructors', () => {
+      const WrappedComponent = ErrorBoundary.with(
+        {
+          shouldCatch: [CustomError, FifthError<number>],
+          onError: (error) => {
+            expectTypeOf(error).toEqualTypeOf<CustomError | FifthError<number>>()
+          },
+          fallback: ({ error }) => {
+            expectTypeOf(error).toEqualTypeOf<CustomError | FifthError<number>>()
+            if (error instanceof CustomError) {
+              expectTypeOf(error.customProperty).toEqualTypeOf<'custom'>()
+            }
+            if (error instanceof FifthError) {
+              expectTypeOf(error.fifthProperty).toEqualTypeOf<'fifth'>()
+              expectTypeOf(error.data).toEqualTypeOf<number>()
+            }
+            return <div>{error.message}</div>
+          },
+        },
+        TestComponent
+      )
+
+      const example = <WrappedComponent message="test" />
+      expectTypeOf(example).toEqualTypeOf<React.JSX.Element>()
+    })
+  })
 })
