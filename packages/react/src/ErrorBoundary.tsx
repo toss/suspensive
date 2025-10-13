@@ -64,7 +64,7 @@ type InferError<TShouldCatch extends ShouldCatch> = TShouldCatch extends readonl
     ? InferErrorByErrorMatcher<TShouldCatch>
     : Error
 
-const matchError = (errorMatcher: ErrorMatcher, error: Error): boolean => {
+const matchError = (errorMatcher: ErrorMatcher, error: Error): error is InferError<typeof errorMatcher> => {
   if (typeof errorMatcher === 'boolean') {
     return errorMatcher
   }
@@ -83,6 +83,14 @@ const matchError = (errorMatcher: ErrorMatcher, error: Error): boolean => {
   }
   return false
 }
+
+const shouldCatchError = <TShouldCatch extends ShouldCatch = ShouldCatch>(
+  shouldCatch: TShouldCatch,
+  error: Error
+): error is InferError<TShouldCatch> =>
+  Array.isArray(shouldCatch)
+    ? shouldCatch.some((errorMatcher) => matchError(errorMatcher, error))
+    : matchError(shouldCatch, error)
 
 export type ErrorBoundaryProps<TShouldCatch extends ShouldCatch = ShouldCatch> = PropsWithChildren<{
   /**
@@ -151,7 +159,7 @@ class BaseErrorBoundary<TShouldCatch extends ShouldCatch = ShouldCatch> extends 
   }
 
   render() {
-    const { children, fallback, shouldCatch = true } = this.props
+    const { children, fallback, shouldCatch = true as TShouldCatch } = this.props
     const { isError, error } = this.state
 
     let childrenOrFallback = children
@@ -163,11 +171,7 @@ class BaseErrorBoundary<TShouldCatch extends ShouldCatch = ShouldCatch> extends 
       if (error instanceof ErrorInFallback) {
         throw error.originalError
       }
-      if (
-        !(Array.isArray(shouldCatch)
-          ? shouldCatch.some((errorMatcher) => matchError(errorMatcher, error))
-          : matchError(shouldCatch, error))
-      ) {
+      if (!shouldCatchError(shouldCatch, error)) {
         throw error
       }
 
@@ -181,11 +185,7 @@ class BaseErrorBoundary<TShouldCatch extends ShouldCatch = ShouldCatch> extends 
       const Fallback = fallback
       childrenOrFallback = (
         <FallbackBoundary>
-          {typeof Fallback === 'function' ? (
-            <Fallback error={error as InferError<TShouldCatch>} reset={this.reset} />
-          ) : (
-            Fallback
-          )}
+          {typeof Fallback === 'function' ? <Fallback error={error} reset={this.reset} /> : Fallback}
         </FallbackBoundary>
       )
     }
