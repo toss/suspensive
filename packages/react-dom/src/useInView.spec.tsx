@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react'
-import { useCallback, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { intersectionMockInstance, mockAllIsIntersecting, mockIsIntersecting } from './test-utils'
 import { type InViewOptions, useInView } from './useInView'
 
@@ -232,14 +232,16 @@ describe('useInView', () => {
 
   const MergeRefsComponent = ({ options }: { options?: InViewOptions }) => {
     const mergeInViewResult = useInView(options)
-    const setRef = useCallback(
-      (node: Element | null) => {
-        mergeInViewResult.ref(node)
-      },
-      [mergeInViewResult.ref]
-    )
 
-    return <div data-testid="inview" data-inview={mergeInViewResult.isInView} ref={setRef} />
+    return (
+      <div
+        data-testid="inview"
+        data-inview={mergeInViewResult.isInView}
+        ref={(node) => {
+          mergeInViewResult.ref(node)
+        }}
+      />
+    )
   }
 
   it('should handle ref merged', () => {
@@ -257,17 +259,14 @@ describe('useInView', () => {
     const el2 = useInView(options)
     const el3 = useInView()
 
-    const mergedRefs = useCallback(
-      (node: Element | null) => {
-        el1.ref(node)
-        el2.ref(node)
-        el3.ref(node)
-      },
-      [el1.ref, el2.ref, el3.ref]
-    )
-
     return (
-      <div ref={mergedRefs}>
+      <div
+        ref={(node) => {
+          el1.ref(node)
+          el2.ref(node)
+          el3.ref(node)
+        }}
+      >
         <div data-testid="item-1" data-inview={el1.isInView}>
           {el1.isInView}
         </div>
