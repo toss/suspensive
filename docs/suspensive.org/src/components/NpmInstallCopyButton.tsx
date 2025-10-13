@@ -40,7 +40,15 @@ export const NpmInstallCopyButton = () => {
               exit={{ opacity: 0 }}
             >
               <Image
-                src={theme === 'dark' ? isChecked ? checkSVG : content_copySVG : isChecked ? checkBlackSVG : content_copyBlackSVG}
+                src={
+                  theme === 'dark'
+                    ? isChecked
+                      ? checkSVG
+                      : content_copySVG
+                    : isChecked
+                      ? checkBlackSVG
+                      : content_copyBlackSVG
+                }
                 alt="svg"
                 className="object-contain"
               />
