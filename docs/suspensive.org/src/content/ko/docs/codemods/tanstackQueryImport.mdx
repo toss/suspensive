@@ -4,18 +4,19 @@ import { Callout } from '@/components'
 
 <Callout type='info'>
 
-`@suspensive/react-query` & `@tanstack/react-query@4` 환경에서 `@tanstack/react-query@5`로 업데이트 하는 경우 추천합니다.
+- `@suspensive/react-query` & `@tanstack/react-query@4` 환경에서 `@tanstack/react-query@5`로 업데이트 하는 경우 추천합니다.
+- `@suspensive/react-query-4@3.3.0`부터 `queryOptions`, `infiniteQueryOption`, `useSuspenseQuery`, `useSuspenseQueries`가 deprecated 되었습니다. (`@tanstack/react-query@4.40.0` 버전에서 공식적으로 `useSuspenseQuery`, `queryOptions` 지원합니다.)
 
 </Callout>
 
-`@suspensive/react-query` & `@tanstack/react-query@5` 환경에서는 `@suspensive/react-query`가 제공하는 Suspense Hooks와 `queryOptions`가 `deprecated`로 표시됩니다.  
-이는 `@tanstack/react-query@5`에 동일한 API인 Suspense Hooks와 `queryOptions`를 `@suspensive/react-query`가 제공하고 있어, 개발자가 `@tanstack/react-query@5`의 API를 우선적으로 사용하도록 유도하기 위함입니다.
+`@suspensive/react-query`의 API 중 `@tanstack/react-query`에서 공식 제공하는 API일 경우 `deprecated`로 표시됩니다.  
+이는 `@tanstack/react-query`에 동일한 API인 Suspense Hooks와 `queryOptions`, `infiniteQueryOption`을 `@suspensive/react-query`가 제공하고 있어, 개발자가 `@tanstack/react-query`의 API를 우선적으로 사용하도록 유도하기 위함입니다.
 
 ```bash filename="Terminal"
 npx @suspensive/codemods tanstack-query-import .
 ```
 
-`@suspensive/react-query`에서 `@tanstack/react-query@5`로 import 경로를 자동 변환할 수 있습니다.
+`@suspensive/react-query`에서 `@tanstack/react-query`로 import 경로를 자동 변환할 수 있습니다.
 
 예:
 
