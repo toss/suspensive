@@ -40,70 +40,48 @@ export interface ErrorBoundaryFallbackProps<TError extends Error = Error> extend
   error: TError
 }
 
-/**
- * Type guard function that narrows error type
- */
-type ErrorTypeGuard<TError extends Error = Error> = (error: Error) => error is TError
-
-/**
- * Validation function without type narrowing
- */
+type ErrorTypeGuard<TError extends Error> = (error: Error) => error is TError
 type ErrorValidator = (error: Error) => boolean
 
-type ErrorMatcher<TError extends Error = Error> =
-  | boolean
-  | ConstructorType<TError>
-  | ErrorTypeGuard<TError>
-  | ErrorValidator
+type ErrorMatcher = boolean | ConstructorType<Error> | ErrorTypeGuard<Error> | ErrorValidator
 
-type ShouldCatch<TError extends Error = Error> = ErrorMatcher<TError> | readonly ErrorMatcher<TError>[]
+type InferErrorByErrorMatcher<TErrorMatcher extends ErrorMatcher> =
+  TErrorMatcher extends ConstructorType<infer TErrorOfConstructorType extends Error>
+    ? TErrorOfConstructorType
+    : TErrorMatcher extends ErrorTypeGuard<infer TErrorOfTypeGuard extends Error>
+      ? TErrorOfTypeGuard
+      : Error
 
-/**
- * Extract error type from a single matcher
- */
-type ExtractErrorType<T> =
-  T extends ConstructorType<infer E extends Error> ? E : T extends ErrorTypeGuard<infer E extends Error> ? E : Error
-
-/**
- * Extract error types from array (via union of element types)
- */
-type ExtractErrorTypes<T extends readonly ErrorMatcher[]> = ExtractErrorType<T[number]>
-
+type ShouldCatch = ErrorMatcher | [ErrorMatcher, ...ErrorMatcher[]]
 /**
  * Main type inference from shouldCatch
  */
-type InferError<T> = T extends readonly ErrorMatcher[]
-  ? ExtractErrorTypes<T> extends never
+type InferError<TShouldCatch extends ShouldCatch> = TShouldCatch extends readonly ErrorMatcher[]
+  ? InferErrorByErrorMatcher<TShouldCatch[number]> extends never
     ? Error
-    : ExtractErrorTypes<T>
-  : T extends ErrorMatcher
-    ? ExtractErrorType<T>
+    : InferErrorByErrorMatcher<TShouldCatch[number]>
+  : TShouldCatch extends ErrorMatcher
+    ? InferErrorByErrorMatcher<TShouldCatch>
     : Error
 
-const matchError = <TError extends Error>(matcher: ErrorMatcher<TError>, error: Error): boolean => {
-  if (typeof matcher === 'boolean') {
-    return matcher
+const matchError = (errorMatcher: ErrorMatcher, error: Error): boolean => {
+  if (typeof errorMatcher === 'boolean') {
+    return errorMatcher
   }
-  if (typeof matcher === 'function') {
+  if (typeof errorMatcher === 'function') {
     try {
-      if (matcher.prototype && (matcher.prototype instanceof Error || matcher.prototype === Error.prototype)) {
-        return error instanceof (matcher as ConstructorType<Error>)
+      if (
+        errorMatcher.prototype &&
+        (errorMatcher.prototype instanceof Error || errorMatcher.prototype === Error.prototype)
+      ) {
+        return error instanceof errorMatcher
       }
     } catch {
       // If accessing prototype throws, it's not a constructor
     }
-    return (matcher as ErrorValidator | ErrorTypeGuard<TError>)(error)
+    return (errorMatcher as ErrorValidator | ErrorTypeGuard<InferError<typeof errorMatcher>>)(error)
   }
   return false
-}
-
-const shouldCatchError = <TError extends Error>(shouldCatch: ShouldCatch<TError>, error: Error): boolean => {
-  if (Array.isArray(shouldCatch)) {
-    return (shouldCatch as readonly ErrorMatcher<TError>[]).some((matcher: ErrorMatcher<TError>) =>
-      matchError<TError>(matcher, error)
-    )
-  }
-  return matchError<TError>(shouldCatch as ErrorMatcher<TError>, error)
 }
 
 export type ErrorBoundaryProps<TShouldCatch extends ShouldCatch = ShouldCatch> = PropsWithChildren<{
@@ -185,7 +163,11 @@ class BaseErrorBoundary<TShouldCatch extends ShouldCatch = ShouldCatch> extends 
       if (error instanceof ErrorInFallback) {
         throw error.originalError
       }
-      if (!shouldCatchError<InferError<TShouldCatch>>(shouldCatch as ShouldCatch<InferError<TShouldCatch>>, error)) {
+      if (
+        !(Array.isArray(shouldCatch)
+          ? shouldCatch.some((errorMatcher) => matchError(errorMatcher, error))
+          : matchError(shouldCatch, error))
+      ) {
         throw error
       }
 

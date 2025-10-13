@@ -31,6 +31,15 @@ describe('<ErrorBoundary/>', () => {
       ></ErrorBoundary>
     ))
   })
+  it('should not accept empty array', () => {
+    assertType(() => (
+      <ErrorBoundary
+        // @ts-expect-error shouldCatch should be ErrorMatcher | [ErrorMatcher, ...ErrorMatcher[]]
+        shouldCatch={[]}
+        fallback={({ error }) => <>{error.message} of Child</>}
+      ></ErrorBoundary>
+    ))
+  })
 
   it('should render ErrorBoundary.Consumer with correct JSX element type', () => {
     expectTypeOf(<ErrorBoundary.Consumer>{() => <></>}</ErrorBoundary.Consumer>).toEqualTypeOf<React.JSX.Element>()
