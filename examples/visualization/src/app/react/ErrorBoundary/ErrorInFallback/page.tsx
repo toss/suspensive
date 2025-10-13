@@ -1,19 +1,10 @@
 'use client'
 
 import { ErrorBoundary as SuspensiveErrorBoundary } from '@suspensive/react'
-import { type PropsWithChildren, useCallback, useEffect, useRef, useState } from 'react'
+import { type PropsWithChildren, useState } from 'react'
 import { ErrorBoundary as ReactErrorBoundary } from 'react-error-boundary'
+import { useTimeout } from 'usehooks-ts'
 import { Area } from '~/components/uis'
-
-export const useTimeout = (fn: () => void, ms: number) => {
-  const fnRef = useRef(fn)
-  fnRef.current = fn
-  const fnPreserved = useCallback(() => fnRef.current(), [])
-  useEffect(() => {
-    const id = setTimeout(fnPreserved, ms)
-    return () => clearTimeout(id)
-  }, [fnPreserved, ms])
-}
 
 export const Throw = {
   Error: ({ message, after = 0, children }: PropsWithChildren<{ message: string; after?: number }>) => {
