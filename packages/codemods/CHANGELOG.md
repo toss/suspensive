@@ -1,5 +1,11 @@
 # @suspensive/codemods
 
+## 3.11.0
+
+### Minor Changes
+
+- [#1672](https://github.com/toss/suspensive/pull/1672) [`b187fda`](https://github.com/toss/suspensive/commit/b187fdafa29a4788d3e48791912db54b0afe9737) Thanks [@gwansikk](https://github.com/gwansikk)! - feat(codemods): remove deprecated api for react-query-4 in tanstack-query-import
+
 ## 3.10.1
 
 ### Patch Changes
