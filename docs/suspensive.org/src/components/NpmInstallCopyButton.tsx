@@ -13,13 +13,6 @@ export const NpmInstallCopyButton = () => {
   const [isClicked, setIsClicked] = useState(false)
   const { theme } = useTheme()
 
-  const getIcon = (isChecked: boolean): any => {
-    if (theme === 'dark') {
-      return isChecked ? checkSVG : content_copySVG
-    }
-    return isChecked ? checkBlackSVG : content_copyBlackSVG
-  }
-
   return (
     <motion.button
       className="relative mt-4 flex cursor-copy"
