@@ -1,5 +1,11 @@
 # @suspensive/react
 
+## 3.11.0
+
+### Patch Changes
+
+- [#1770](https://github.com/toss/suspensive/pull/1770) [`14a1771`](https://github.com/toss/suspensive/commit/14a17719fc0eb057b80595a25cf975511a128575) Thanks [@manudeli](https://github.com/manudeli)! - fix(react): ErrorBoundaryState shouldn't be generic
+
 ## 3.10.1
 
 ### Patch Changes
@@ -21,7 +27,6 @@
   This adds OIDC (OpenID Connect) authentication support for npm publishing in GitHub Actions. The implementation enables secure, tokenless publishing to npm using GitHub's OIDC tokens with provenance support.
 
   Key features:
-
   - **OIDC Authentication**: Uses GitHub Actions `id-token: write` permission for secure publishing
   - **Provenance Support**: Enables npm package provenance through `NPM_CONFIG_PROVENANCE=true`
   - **Backward Compatibility**: Maintains NPM_TOKEN as fallback for existing workflows
