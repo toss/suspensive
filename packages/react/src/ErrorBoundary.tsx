@@ -73,8 +73,14 @@ const matchError = (errorMatcher: ErrorMatcher, error: Error): error is InferErr
       if (errorMatcher === Error || errorMatcher.prototype instanceof Error) {
         return error instanceof errorMatcher
       }
-    } catch {
+    } catch (err) {
       // If accessing prototype throws, it's not a constructor. This can happen with proxy objects or in restricted environments.
+      // Only TypeError is expected here; log unexpected errors in development mode.
+      if (process.env.NODE_ENV !== 'production') {
+        if (!(err instanceof TypeError)) {
+          console.error('Unexpected error in matchError when accessing prototype:', err)
+        }
+      }
     }
     return (errorMatcher as ErrorValidator | ErrorTypeGuard<InferError<typeof errorMatcher>>)(error)
   }

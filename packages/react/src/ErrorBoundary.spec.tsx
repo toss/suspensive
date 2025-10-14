@@ -342,6 +342,145 @@ describe('<ErrorBoundary/>', () => {
     }
   )
 
+  it('should log unexpected errors in development mode when accessing prototype in matchError', () => {
+    const consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {
+      // Mock implementation
+    })
+    const originalNodeEnv = process.env.NODE_ENV
+
+    try {
+      // Set to development mode
+      process.env.NODE_ENV = 'development'
+
+      // Create a Proxy that throws a non-TypeError when accessing prototype
+      const ProxyErrorMatcher = new Proxy(
+        function () {
+          return true // Catch the error
+        },
+        {
+          get(target, prop) {
+            if (prop === 'prototype') {
+              throw new RangeError('Unexpected error accessing prototype')
+            }
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+            return Reflect.get(target, prop)
+          },
+        }
+      )
+
+      // The Proxy will throw during prototype check, then be treated as validator
+      render(
+        <ErrorBoundary shouldCatch={ProxyErrorMatcher as never} fallback={<>{FALLBACK}</>}>
+          <Throw.Error message={ERROR_MESSAGE} after={0} />
+        </ErrorBoundary>
+      )
+
+      // Should have logged the unexpected error during the matchError check
+      expect(consoleErrorSpy).toHaveBeenCalledWith(
+        'Unexpected error in matchError when accessing prototype:',
+        expect.any(RangeError)
+      )
+
+      // The validator returns true, so error should be caught
+      expect(screen.queryByText(FALLBACK)).toBeInTheDocument()
+    } finally {
+      process.env.NODE_ENV = originalNodeEnv
+      consoleErrorSpy.mockRestore()
+    }
+  })
+
+  it('should not log TypeError in development mode when accessing prototype in matchError', () => {
+    const consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {
+      // Mock implementation
+    })
+    const originalNodeEnv = process.env.NODE_ENV
+
+    try {
+      // Set to development mode
+      process.env.NODE_ENV = 'development'
+
+      // Create a Proxy that throws a TypeError when accessing prototype (expected behavior)
+      const ProxyErrorMatcher = new Proxy(
+        function () {
+          return true // Catch the error
+        },
+        {
+          get(target, prop) {
+            if (prop === 'prototype') {
+              throw new TypeError('Expected TypeError accessing prototype')
+            }
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+            return Reflect.get(target, prop)
+          },
+        }
+      )
+
+      render(
+        <ErrorBoundary shouldCatch={ProxyErrorMatcher as never} fallback={<>{FALLBACK}</>}>
+          <Throw.Error message={ERROR_MESSAGE} after={0} />
+        </ErrorBoundary>
+      )
+
+      // Should NOT have logged the TypeError (it's expected)
+      expect(consoleErrorSpy).not.toHaveBeenCalledWith(
+        'Unexpected error in matchError when accessing prototype:',
+        expect.any(TypeError)
+      )
+
+      // The validator returns true, so error should be caught
+      expect(screen.queryByText(FALLBACK)).toBeInTheDocument()
+    } finally {
+      process.env.NODE_ENV = originalNodeEnv
+      consoleErrorSpy.mockRestore()
+    }
+  })
+
+  it('should not log errors in production mode when accessing prototype in matchError', () => {
+    const consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {
+      // Mock implementation
+    })
+    const originalNodeEnv = process.env.NODE_ENV
+
+    try {
+      // Set to production mode
+      process.env.NODE_ENV = 'production'
+
+      // Create a Proxy that throws a non-TypeError when accessing prototype
+      const ProxyErrorMatcher = new Proxy(
+        function () {
+          return true // Catch the error
+        },
+        {
+          get(target, prop) {
+            if (prop === 'prototype') {
+              throw new RangeError('Unexpected error accessing prototype')
+            }
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+            return Reflect.get(target, prop)
+          },
+        }
+      )
+
+      render(
+        <ErrorBoundary shouldCatch={ProxyErrorMatcher as never} fallback={<>{FALLBACK}</>}>
+          <Throw.Error message={ERROR_MESSAGE} after={0} />
+        </ErrorBoundary>
+      )
+
+      // Should NOT have logged in production mode
+      expect(consoleErrorSpy).not.toHaveBeenCalledWith(
+        'Unexpected error in matchError when accessing prototype:',
+        expect.any(RangeError)
+      )
+
+      // The validator returns true, so error should be caught
+      expect(screen.queryByText(FALLBACK)).toBeInTheDocument()
+    } finally {
+      process.env.NODE_ENV = originalNodeEnv
+      consoleErrorSpy.mockRestore()
+    }
+  })
+
   it('should re-throw error in fallback', async () => {
     render(
       <ErrorBoundary fallback={() => <>This is expected</>}>
