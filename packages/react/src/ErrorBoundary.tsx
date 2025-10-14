@@ -3,6 +3,8 @@ import {
   type ComponentProps,
   type ComponentType,
   type ErrorInfo,
+  type ForwardRefExoticComponent,
+  type ForwardedRef,
   type FunctionComponent,
   type PropsWithChildren,
   type ReactNode,
@@ -24,30 +26,70 @@ import type { ConstructorType } from './utility-types/ConstructorType'
 import type { PropsWithoutChildren } from './utility-types/PropsWithoutChildren'
 import { hasResetKeysChanged } from './utils/hasResetKeysChanged'
 
-export interface ErrorBoundaryFallbackProps<TError extends Error = Error> {
-  /**
-   * when ErrorBoundary catch error, you can use this error
-   */
-  error: TError
+interface ErrorBoundaryHandle {
   /**
    * when you want to reset caught error, you can use this reset
    */
   reset: () => void
 }
 
-type ShouldCatchCallback = (error: Error) => boolean
-type ShouldCatch = ConstructorType<Error> | ShouldCatchCallback | boolean
-const checkErrorBoundary = (shouldCatch: ShouldCatch, error: Error) => {
-  if (typeof shouldCatch === 'boolean') {
-    return shouldCatch
-  }
-  if (shouldCatch.prototype instanceof Error) {
-    return error instanceof shouldCatch
-  }
-  return (shouldCatch as ShouldCatchCallback)(error)
+export interface ErrorBoundaryFallbackProps<TError extends Error = Error> extends ErrorBoundaryHandle {
+  /**
+   * when ErrorBoundary catch error, you can use this error
+   */
+  error: TError
 }
 
-export type ErrorBoundaryProps = PropsWithChildren<{
+type ErrorTypeGuard<TError extends Error> = (error: Error) => error is TError
+type ErrorValidator = (error: Error) => boolean
+
+type ErrorMatcher = boolean | ConstructorType<Error> | ErrorTypeGuard<Error> | ErrorValidator
+
+type InferErrorByErrorMatcher<TErrorMatcher extends ErrorMatcher> =
+  TErrorMatcher extends ConstructorType<infer TErrorOfConstructorType extends Error>
+    ? TErrorOfConstructorType
+    : TErrorMatcher extends ErrorTypeGuard<infer TErrorOfTypeGuard extends Error>
+      ? TErrorOfTypeGuard
+      : Error
+
+type ShouldCatch = ErrorMatcher | [ErrorMatcher, ...ErrorMatcher[]]
+/**
+ * Main type inference from shouldCatch
+ */
+type InferError<TShouldCatch extends ShouldCatch> = TShouldCatch extends readonly ErrorMatcher[]
+  ? InferErrorByErrorMatcher<TShouldCatch[number]> extends never
+    ? Error
+    : InferErrorByErrorMatcher<TShouldCatch[number]>
+  : TShouldCatch extends ErrorMatcher
+    ? InferErrorByErrorMatcher<TShouldCatch>
+    : Error
+
+const matchError = (errorMatcher: ErrorMatcher, error: Error): error is InferError<typeof errorMatcher> => {
+  if (typeof errorMatcher === 'boolean') {
+    return errorMatcher
+  }
+  if (typeof errorMatcher === 'function') {
+    try {
+      if (errorMatcher === Error || errorMatcher.prototype instanceof Error) {
+        return error instanceof errorMatcher
+      }
+    } catch {
+      // If accessing prototype throws, it's not a constructor. This can happen with proxy objects or in restricted environments.
+    }
+    return (errorMatcher as ErrorValidator | ErrorTypeGuard<InferError<typeof errorMatcher>>)(error)
+  }
+  return false
+}
+
+const shouldCatchError = <TShouldCatch extends ShouldCatch>(
+  shouldCatch: TShouldCatch | true,
+  error: Error
+): error is InferError<TShouldCatch> =>
+  Array.isArray(shouldCatch)
+    ? shouldCatch.some((errorMatcher) => matchError(errorMatcher, error))
+    : matchError(shouldCatch, error)
+
+export type ErrorBoundaryProps<TShouldCatch extends ShouldCatch = true> = PropsWithChildren<{
   /**
    * an array of elements for the ErrorBoundary to check each render. If any of those elements change between renders, then the ErrorBoundary will reset the state which will re-render the children
    */
@@ -59,16 +101,16 @@ export type ErrorBoundaryProps = PropsWithChildren<{
   /**
    * when ErrorBoundary catch error, onError will be triggered
    */
-  onError?: (error: Error, info: ErrorInfo) => void
+  onError?: (error: InferError<TShouldCatch>, info: ErrorInfo) => void
   /**
    * when ErrorBoundary catch error, fallback will be render instead of children
    */
-  fallback: ReactNode | FunctionComponent<ErrorBoundaryFallbackProps>
+  fallback: ReactNode | FunctionComponent<ErrorBoundaryFallbackProps<InferError<TShouldCatch>>>
   /**
    * determines whether the ErrorBoundary should catch errors based on conditions
    * @default true
    */
-  shouldCatch?: ShouldCatch | [ShouldCatch, ...ShouldCatch[]]
+  shouldCatch?: TShouldCatch
 }>
 
 type ErrorBoundaryState =
@@ -85,14 +127,18 @@ const initialErrorBoundaryState: ErrorBoundaryState = {
   isError: false,
   error: null,
 }
-class BaseErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
+
+class BaseErrorBoundary<TShouldCatch extends ShouldCatch> extends Component<
+  ErrorBoundaryProps<TShouldCatch>,
+  ErrorBoundaryState
+> {
   static getDerivedStateFromError(error: Error): ErrorBoundaryState {
     return { isError: true, error }
   }
 
   state = initialErrorBoundaryState
 
-  componentDidUpdate(prevProps: ErrorBoundaryProps, prevState: ErrorBoundaryState) {
+  componentDidUpdate(prevProps: ErrorBoundaryProps<TShouldCatch>, prevState: ErrorBoundaryState) {
     const { isError } = this.state
     const { resetKeys } = this.props
     if (isError && prevState.isError && hasResetKeysChanged(prevProps.resetKeys, resetKeys)) {
@@ -100,7 +146,7 @@ class BaseErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState
     }
   }
 
-  componentDidCatch(error: Error, info: ErrorInfo) {
+  componentDidCatch(error: InferError<TShouldCatch>, info: ErrorInfo) {
     this.props.onError?.(error, info)
   }
 
@@ -122,10 +168,7 @@ class BaseErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState
       if (error instanceof ErrorInFallback) {
         throw error.originalError
       }
-      const isCatch = Array.isArray(shouldCatch)
-        ? shouldCatch.some((shouldCatch) => checkErrorBoundary(shouldCatch, error))
-        : checkErrorBoundary(shouldCatch, error)
-      if (!isCatch) {
+      if (!shouldCatchError(shouldCatch, error)) {
         throw error
       }
 
@@ -159,6 +202,7 @@ class ErrorInFallback extends Error {
     this.originalError = originalError
   }
 }
+
 class FallbackBoundary extends Component<{ children: ReactNode }> {
   componentDidCatch(originalError: Error) {
     throw originalError instanceof SuspensiveError ? originalError : new ErrorInFallback(originalError)
@@ -173,37 +217,46 @@ class FallbackBoundary extends Component<{ children: ReactNode }> {
  * @see {@link https://suspensive.org/docs/react/ErrorBoundary Suspensive Docs}
  */
 export const ErrorBoundary = Object.assign(
-  forwardRef<{ reset: () => void }, ErrorBoundaryProps>(
-    ({ fallback, children, onError, onReset, resetKeys, shouldCatch }, ref) => {
-      const group = useContext(ErrorBoundaryGroupContext) ?? { resetKey: 0 }
-      const baseErrorBoundaryRef = useRef<BaseErrorBoundary>(null)
-      useImperativeHandle(ref, () => ({
-        reset: () => baseErrorBoundaryRef.current?.reset(),
-      }))
+  forwardRef(function ErrorBoundary<TShouldCatch extends ShouldCatch>(
+    props: ErrorBoundaryProps<TShouldCatch>,
+    ref: ForwardedRef<ErrorBoundaryHandle>
+  ) {
+    const { fallback, children, onError, onReset, resetKeys, shouldCatch } = props
+    const group = useContext(ErrorBoundaryGroupContext) ?? { resetKey: 0 }
+    const baseErrorBoundaryRef = useRef<BaseErrorBoundary<TShouldCatch>>(null)
+    useImperativeHandle(ref, () => ({
+      reset: () => baseErrorBoundaryRef.current?.reset(),
+    }))
 
-      return (
-        <BaseErrorBoundary
-          shouldCatch={shouldCatch}
-          fallback={fallback}
-          onError={onError}
-          onReset={onReset}
-          resetKeys={[group.resetKey, ...(resetKeys || [])]}
-          ref={baseErrorBoundaryRef}
-        >
-          {children}
-        </BaseErrorBoundary>
-      )
-    }
-  ),
+    return (
+      <BaseErrorBoundary<TShouldCatch>
+        shouldCatch={shouldCatch}
+        fallback={fallback}
+        onError={onError}
+        onReset={onReset}
+        resetKeys={[group.resetKey, ...(resetKeys || [])]}
+        ref={baseErrorBoundaryRef}
+      >
+        {children}
+      </BaseErrorBoundary>
+    )
+  }) as {
+    <TShouldCatch extends ShouldCatch>(
+      props: ErrorBoundaryProps<TShouldCatch> & React.RefAttributes<ErrorBoundaryHandle>
+    ): ReturnType<ForwardRefExoticComponent<ErrorBoundaryProps<TShouldCatch>>>
+  },
   {
     displayName: 'ErrorBoundary',
-    with: <TProps extends ComponentProps<ComponentType> = Record<string, never>>(
-      errorBoundaryProps: PropsWithoutChildren<ErrorBoundaryProps> = { fallback: undefined },
+    with: <
+      TProps extends ComponentProps<ComponentType> = Record<string, never>,
+      TShouldCatch extends ShouldCatch = ShouldCatch,
+    >(
+      errorBoundaryProps: PropsWithoutChildren<ErrorBoundaryProps<TShouldCatch>> = { fallback: undefined },
       Component: ComponentType<TProps>
     ) =>
       Object.assign(
         (props: TProps) => (
-          <ErrorBoundary {...errorBoundaryProps}>
+          <ErrorBoundary<TShouldCatch> {...errorBoundaryProps}>
             <Component {...props} />
           </ErrorBoundary>
         ),
@@ -215,7 +268,7 @@ export const ErrorBoundary = Object.assign(
   }
 )
 
-const ErrorBoundaryContext = Object.assign(createContext<({ reset: () => void } & ErrorBoundaryState) | null>(null), {
+const ErrorBoundaryContext = Object.assign(createContext<(ErrorBoundaryHandle & ErrorBoundaryState) | null>(null), {
   displayName: 'ErrorBoundaryContext',
 })
 
