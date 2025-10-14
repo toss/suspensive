@@ -70,7 +70,7 @@ const matchError = (errorMatcher: ErrorMatcher, error: Error): error is InferErr
   }
   if (typeof errorMatcher === 'function') {
     try {
-      if (errorMatcher.prototype instanceof Error || errorMatcher.prototype === Error.prototype) {
+      if (errorMatcher === Error || errorMatcher.prototype instanceof Error) {
         return error instanceof errorMatcher
       }
     } catch {
