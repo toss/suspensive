@@ -1,5 +1,11 @@
 # @suspensive/react
 
+## 3.12.0
+
+### Minor Changes
+
+- [#1760](https://github.com/toss/suspensive/pull/1760) [`8335208`](https://github.com/toss/suspensive/commit/8335208b4fcdd8a6316c728d59c750eceb209506) Thanks [@manudeli](https://github.com/manudeli)! - feat(react): infer ErrorBoundary error type from `shouldCatch`
+
 ## 3.11.0
 
 ### Patch Changes
