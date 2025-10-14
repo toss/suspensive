@@ -11,7 +11,7 @@ const npmInstallScript = 'npm i @suspensive/react'
 export const NpmInstallCopyButton = () => {
   const [isHovered, setIsHovered] = useState(false)
   const [isClicked, setIsClicked] = useState(false)
-  const { theme } = useTheme()
+  const { resolvedTheme } = useTheme()
 
   return (
     <motion.button
@@ -41,7 +41,7 @@ export const NpmInstallCopyButton = () => {
             >
               <Image
                 src={
-                  theme === 'dark'
+                  resolvedTheme === 'dark'
                     ? isClicked
                       ? checkSVG
                       : content_copySVG
