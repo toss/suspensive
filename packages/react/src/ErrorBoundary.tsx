@@ -99,9 +99,9 @@ export type ErrorBoundaryProps<TShouldCatch extends ShouldCatch = true> = PropsW
    */
   onReset?: () => void
   /**
-   * when ErrorBoundary catch error, onError will be triggered
+   * when ErrorBoundary catch error, onCatch will be triggered
    */
-  onError?: (error: InferError<TShouldCatch>, info: ErrorInfo) => void
+  onCatch?: (error: InferError<TShouldCatch>, info: ErrorInfo) => void
   /**
    * when ErrorBoundary catch error, fallback will be render instead of children
    */
@@ -147,7 +147,7 @@ class BaseErrorBoundary<TShouldCatch extends ShouldCatch> extends Component<
   }
 
   componentDidCatch(error: InferError<TShouldCatch>, info: ErrorInfo) {
-    this.props.onError?.(error, info)
+    this.props.onCatch?.(error, info)
   }
 
   reset = () => {
@@ -221,7 +221,7 @@ export const ErrorBoundary = Object.assign(
     props: ErrorBoundaryProps<TShouldCatch>,
     ref: ForwardedRef<ErrorBoundaryHandle>
   ) {
-    const { fallback, children, onError, onReset, resetKeys, shouldCatch } = props
+    const { fallback, children, onCatch, onReset, resetKeys, shouldCatch } = props
     const group = useContext(ErrorBoundaryGroupContext) ?? { resetKey: 0 }
     const baseErrorBoundaryRef = useRef<BaseErrorBoundary<TShouldCatch>>(null)
     useImperativeHandle(ref, () => ({
@@ -232,7 +232,7 @@ export const ErrorBoundary = Object.assign(
       <BaseErrorBoundary<TShouldCatch>
         shouldCatch={shouldCatch}
         fallback={fallback}
-        onError={onError}
+        onCatch={onCatch}
         onReset={onReset}
         resetKeys={[group.resetKey, ...(resetKeys || [])]}
         ref={baseErrorBoundaryRef}

@@ -298,11 +298,11 @@ export const fetchSomething = () => {
 
 </Sandpack>
 
-### props.onError
+### props.onCatch
 
 This is a callback called when `<ErrorBoundary/>` catches an error.
 
-```tsx /onError/
+```tsx /onCatch/
 import { ErrorBoundary } from '@suspensive/react'
 
 const logError = (error: Error, info: ErrorInfo) => {
@@ -310,7 +310,7 @@ const logError = (error: Error, info: ErrorInfo) => {
 }
 
 const Example = (
-  <ErrorBoundary fallback={ErrorBoundaryFallback} onError={logError}>
+  <ErrorBoundary fallback={ErrorBoundaryFallback} onCatch={logError}>
     <ErrorAfter2s />
   </ErrorBoundary>
 )
@@ -335,7 +335,7 @@ export const Example = () => {
           {props.error.message}
         </>
       )}
-      onError={logError}
+      onCatch={logError}
     >
       <ErrorAfter2s />
     </ErrorBoundary>
