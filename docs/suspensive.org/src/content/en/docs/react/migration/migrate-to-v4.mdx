@@ -1,0 +1,54 @@
+# Migrating to v4
+
+## Handling BREAKING CHANGES
+
+### ErrorBoundary's `onError` prop renamed to `onCatch` [#1783](https://github.com/toss/suspensive/issues/1783)
+
+The `onError` prop in `ErrorBoundary` has been renamed to `onCatch` to better align with React's naming conventions and improve API consistency.
+
+This change makes the API more intuitive by matching the naming pattern:
+- `shouldCatch` - determines whether to catch the error
+- `componentDidCatch` - React lifecycle method that catches the error  
+- `onCatch` - callback invoked when an error is caught
+
+#### Migration
+
+Simply rename the `onError` prop to `onCatch`:
+
+```diff
+  import { ErrorBoundary } from '@suspensive/react'
+
+  const logError = (error: Error, info: ErrorInfo) => {
+    console.log(error, info)
+  }
+
+  const Example = () => (
+    <ErrorBoundary
+      fallback={(props) => (
+        <>
+          <button onClick={props.reset}>Try again</button>
+          {props.error.message}
+        </>
+      )}
+-     onError={logError}
++     onCatch={logError}
+    >
+      <YourComponent />
+    </ErrorBoundary>
+  )
+```
+
+This change also applies when using `ErrorBoundary.with`:
+
+```diff
+  import { ErrorBoundary } from '@suspensive/react'
+
+  const Example = ErrorBoundary.with(
+    {
+      fallback: ({ error }) => <>{error.message}</>,
+-     onError: logger.log,
++     onCatch: logger.log,
+    },
+    YourComponent
+  )
+```
