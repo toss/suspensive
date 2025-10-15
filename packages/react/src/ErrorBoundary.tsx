@@ -128,12 +128,16 @@ const initialErrorBoundaryState: ErrorBoundaryState = {
   error: null,
 }
 
+const convertToError = (error: unknown): Error => {
+  return error instanceof Error ? error : new Error(String(error))
+}
+
 class BaseErrorBoundary<TShouldCatch extends ShouldCatch> extends Component<
   ErrorBoundaryProps<TShouldCatch>,
   ErrorBoundaryState
 > {
   static getDerivedStateFromError(error: Error): ErrorBoundaryState {
-    return { isError: true, error: error instanceof Error ? error : new Error(String(error)) }
+    return { isError: true, error: convertToError(error) }
   }
 
   state = initialErrorBoundaryState
@@ -147,7 +151,7 @@ class BaseErrorBoundary<TShouldCatch extends ShouldCatch> extends Component<
   }
 
   componentDidCatch(error: InferError<TShouldCatch>, info: ErrorInfo) {
-    this.props.onError?.(error, info)
+    this.props.onError?.(convertToError(error) as InferError<TShouldCatch>, info)
   }
 
   reset = () => {

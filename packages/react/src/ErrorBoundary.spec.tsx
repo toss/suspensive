@@ -179,6 +179,60 @@ describe('<ErrorBoundary/>', () => {
     expect(error).toBe(originalError)
   })
 
+  it('should pass Error instance to onError callback when null is thrown', () => {
+    const onError = vi.fn()
+
+    render(
+      <ErrorBoundary fallback={<div>fallback</div>} onError={onError}>
+        {createElement(() => {
+          // eslint-disable-next-line @typescript-eslint/only-throw-error
+          throw null
+        })}
+      </ErrorBoundary>
+    )
+
+    expect(onError).toHaveBeenCalled()
+    const error = onError.mock.calls[0][0]
+    expect(error).toBeInstanceOf(Error)
+    expect(error.message).toBe('null')
+  })
+
+  it('should pass Error instance to onError callback when string is thrown', () => {
+    const onError = vi.fn()
+
+    render(
+      <ErrorBoundary fallback={<div>fallback</div>} onError={onError}>
+        {createElement(() => {
+          // eslint-disable-next-line @typescript-eslint/only-throw-error
+          throw 'string error'
+        })}
+      </ErrorBoundary>
+    )
+
+    expect(onError).toHaveBeenCalled()
+    const error = onError.mock.calls[0][0]
+    expect(error).toBeInstanceOf(Error)
+    expect(error.message).toBe('string error')
+  })
+
+  it('should pass Error instance to onError callback when number is thrown', () => {
+    const onError = vi.fn()
+
+    render(
+      <ErrorBoundary fallback={<div>fallback</div>} onError={onError}>
+        {createElement(() => {
+          // eslint-disable-next-line @typescript-eslint/only-throw-error
+          throw 42
+        })}
+      </ErrorBoundary>
+    )
+
+    expect(onError).toHaveBeenCalled()
+    const error = onError.mock.calls[0][0]
+    expect(error).toBeInstanceOf(Error)
+    expect(error.message).toBe('42')
+  })
+
   it('should be reset by items of resetKeys, and call onReset', async () => {
     const onReset = vi.fn()
 
