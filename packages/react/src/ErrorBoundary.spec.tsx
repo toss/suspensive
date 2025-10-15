@@ -1,6 +1,6 @@
 import { act, render, screen } from '@testing-library/react'
 import { userEvent } from '@testing-library/user-event'
-import { type ComponentRef, createElement, createRef } from 'react'
+import { type ComponentRef, type ReactNode, createElement, createRef } from 'react'
 import { ErrorBoundary as ReactErrorBoundary } from 'react-error-boundary'
 import {
   ErrorBoundary,
@@ -82,6 +82,101 @@ describe('<ErrorBoundary/>', () => {
     expect(screen.queryByText(FALLBACK)).toBeInTheDocument()
     expect(screen.queryByText(TEXT)).not.toBeInTheDocument()
     expect(onError).toHaveBeenCalledTimes(1)
+  })
+
+  it('should convert null to Error instance', () => {
+    const fallbackFn = vi.fn<(props: ErrorBoundaryFallbackProps) => ReactNode>()
+    fallbackFn.mockImplementation(({ error }) => <div>{error.message}</div>)
+
+    render(
+      <ErrorBoundary fallback={fallbackFn}>
+        {createElement(() => {
+          // eslint-disable-next-line @typescript-eslint/only-throw-error
+          throw null
+        })}
+      </ErrorBoundary>
+    )
+
+    expect(fallbackFn).toHaveBeenCalled()
+    const error = fallbackFn.mock.calls[0][0].error
+    expect(error).toBeInstanceOf(Error)
+    expect(error.message).toBe('null')
+  })
+
+  it('should convert string to Error instance', () => {
+    const fallbackFn = vi.fn<(props: ErrorBoundaryFallbackProps) => ReactNode>()
+    fallbackFn.mockImplementation(({ error }) => <div>{error.message}</div>)
+
+    render(
+      <ErrorBoundary fallback={fallbackFn}>
+        {createElement(() => {
+          // eslint-disable-next-line @typescript-eslint/only-throw-error
+          throw 'string error'
+        })}
+      </ErrorBoundary>
+    )
+
+    expect(fallbackFn).toHaveBeenCalled()
+    const error = fallbackFn.mock.calls[0][0].error
+    expect(error).toBeInstanceOf(Error)
+    expect(error.message).toBe('string error')
+  })
+
+  it('should convert number to Error instance', () => {
+    const fallbackFn = vi.fn<(props: ErrorBoundaryFallbackProps) => ReactNode>()
+    fallbackFn.mockImplementation(({ error }) => <div>{error.message}</div>)
+
+    render(
+      <ErrorBoundary fallback={fallbackFn}>
+        {createElement(() => {
+          // eslint-disable-next-line @typescript-eslint/only-throw-error
+          throw 42
+        })}
+      </ErrorBoundary>
+    )
+
+    expect(fallbackFn).toHaveBeenCalled()
+    const error = fallbackFn.mock.calls[0][0].error
+    expect(error).toBeInstanceOf(Error)
+    expect(error.message).toBe('42')
+  })
+
+  it('should convert plain object to Error instance', () => {
+    const fallbackFn = vi.fn<(props: ErrorBoundaryFallbackProps) => ReactNode>()
+    fallbackFn.mockImplementation(({ error }) => <div>{error.message}</div>)
+
+    render(
+      <ErrorBoundary fallback={fallbackFn}>
+        {createElement(() => {
+          // eslint-disable-next-line @typescript-eslint/only-throw-error
+          throw { message: 'object error' }
+        })}
+      </ErrorBoundary>
+    )
+
+    expect(fallbackFn).toHaveBeenCalled()
+    const error = fallbackFn.mock.calls[0][0].error
+    expect(error).toBeInstanceOf(Error)
+    expect(error.message).toBe('[object Object]')
+  })
+
+  it('should keep Error instance as-is when Error is thrown', () => {
+    const fallbackFn = vi.fn<(props: ErrorBoundaryFallbackProps) => ReactNode>()
+    fallbackFn.mockImplementation(({ error }) => <div>{error.message}</div>)
+    const originalError = new Error('original error')
+
+    render(
+      <ErrorBoundary fallback={fallbackFn}>
+        {createElement(() => {
+          throw originalError
+        })}
+      </ErrorBoundary>
+    )
+
+    expect(fallbackFn).toHaveBeenCalled()
+    const error = fallbackFn.mock.calls[0][0].error
+    expect(error).toBeInstanceOf(Error)
+    expect(error).toBe(originalError)
   })
 
   it('should be reset by items of resetKeys, and call onReset', async () => {

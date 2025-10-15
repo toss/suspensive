@@ -133,7 +133,7 @@ class BaseErrorBoundary<TShouldCatch extends ShouldCatch> extends Component<
   ErrorBoundaryState
 > {
   static getDerivedStateFromError(error: Error): ErrorBoundaryState {
-    return { isError: true, error }
+    return { isError: true, error: error instanceof Error ? error : new Error(String(error)) }
   }
 
   state = initialErrorBoundaryState
