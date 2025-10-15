@@ -7,7 +7,7 @@ const logError = (error: Error) => console.error(error)
 export default ErrorBoundaryGroup.with(
   { blockOutside: false },
   ErrorBoundary.with(
-    { fallback: (props) => <div>{props.error.message}</div>, onError: logError },
+    { fallback: (props) => <div>{props.error.message}</div>, onCatch: logError },
     Suspense.with({ clientOnly: true, fallback: 'loading...' }, ({ text }: { text: string }) => {
       const errorBoundary = useErrorBoundary()
 
