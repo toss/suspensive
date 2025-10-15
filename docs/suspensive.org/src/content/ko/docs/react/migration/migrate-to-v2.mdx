@@ -16,7 +16,7 @@ const Example = wrap
   .ErrorBoundaryGroup({ blockOutside: false })
   .ErrorBoundary({
     fallback: ({ error }) => <>{error.message}</>,
-    onCatch: logger.log,
+    onError: logger.log,
   })
   .Suspense({ fallback: <>loading...</>, clientOnly: true })
   .on(() => {
@@ -47,7 +47,7 @@ const Example = () => {
     <ErrorBoundary fallback={({ error }) => <>RestError: {error.message}</>}>
       <ErrorBoundary
         shouldCatch={CustomError}
-        onCatch={logOnCustomError}
+        onError={logOnCustomError}
         fallback={({ error }) => <>CustomError: {error.message}</>}
       >
         <ThrowErrorComponent />
@@ -69,7 +69,7 @@ const Example = () => {
     <ErrorBoundary fallback={({ error }) => <>RestError: {error.message}</>}>
       <ErrorBoundary
         shouldCatch={(error) => error instanceof CustomError}
-        onCatch={logOnCustomError}
+        onError={logOnCustomError}
         fallback={({ error }) => <>CustomError: {error.message}</>}
       >
         <ThrowErrorComponent />
@@ -91,7 +91,7 @@ const Example = () => {
     <ErrorBoundary fallback={({ error }) => <>RestError: {error.message}</>}>
       <ErrorBoundary
         shouldCatch={new Date().toISOString() > '2024-01-01T00:00:00.000Z'}
-        onCatch={logOnErrorAfter2024}
+        onError={logOnErrorAfter2024}
         fallback={({ error }) => <>ErrorAfter2024: {error.message}</>}
       >
         <ThrowErrorComponent />
@@ -143,7 +143,7 @@ v2에서는 `<AsyncBoundary/>`를 제거했습니다. [#295](https://github.com/
 + import { Suspense, ErrorBoundary } from '@suspensive/react'
 - import { AsyncBoundary } from '@suspensive/react'
 
-+ <ErrorBoundary fallback={<Error />} onCatch={onCatch} onReset={onReset}>
++ <ErrorBoundary fallback={<Error />} onError={onError} onReset={onReset}>
 +   <Suspense fallback={<Loading />}>
 +     <Children />
 +   </Suspense>
@@ -163,7 +163,7 @@ v2에서는 `<AsyncBoundary/>`를 제거했습니다. [#295](https://github.com/
 
 + const Example = wrap
 +   .ErrorBoundaryGroup({ blockOutside: false })
-+   .ErrorBoundary({ fallback: ({ error }) => <>{error.message}</>, onCatch: logger.log })
++   .ErrorBoundary({ fallback: ({ error }) => <>{error.message}</>, onError: logger.log })
 +   .Suspense({ fallback: <>loading...</>, clientOnly: true })
 +   .on(() => {
 +     const query = useSuspenseQuery({
