@@ -47,14 +47,14 @@ export function getIndexFileContent(...paths: string[]): string {
 
 export function getTargetSuspensiveReactQueryVersion(): string | undefined {
   const indexFileContent = getIndexFileContent(__dirname, '../../')
-  const version = RegExp(/@suspensive\/react-query-(\d+)/).exec(indexFileContent)?.[1]
+  const version = new RegExp(/@suspensive\/react-query-(\d+)/).exec(indexFileContent)?.[1]
 
   return version
 }
 
 export function getTargetSuspensiveReactQueryAPIs(): string[] {
   const indexFileContent = getIndexFileContent(__dirname, '../../')
-  const modules = indexFileContent.matchAll(/export \* from ['"](@suspensive\/react-query-\d+)['"]/g)
+  const modules = indexFileContent.matchAll(/from ['"](@suspensive\/react-query-\d+)['"]/g)
   const results: string[] = []
 
   for (const [, moduleName] of modules) {

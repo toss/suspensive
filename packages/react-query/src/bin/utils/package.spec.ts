@@ -1,3 +1,5 @@
+import { execFileSync } from 'node:child_process'
+import path from 'node:path'
 import tanStackReactQueryPackageJson from '@tanstack/react-query/package.json'
 import packageJson from '../../../package.json'
 import {
@@ -11,22 +13,7 @@ import {
   loadModule,
 } from './package'
 
-const version4APIs = [
-  'useSuspenseQuery',
-  'useSuspenseQueries',
-  'useSuspenseInfiniteQuery',
-  'usePrefetchQuery',
-  'usePrefetchInfiniteQuery',
-  'queryOptions',
-  'infiniteQueryOptions',
-  'SuspenseQuery',
-  'SuspenseQueries',
-  'SuspenseInfiniteQuery',
-  'QueryClientConsumer',
-  'PrefetchQuery',
-  'PrefetchInfiniteQuery',
-  'Mutation',
-]
+const cliPath = path.resolve(__dirname, '../../../dist/bin/cli.cjs')
 
 describe('package', () => {
   describe('getPackageJson', () => {
@@ -52,18 +39,78 @@ describe('package', () => {
   })
 
   describe('getTargetSuspensiveReactQueryVersion', () => {
-    it('should get the target @suspensive/react-query version from the index file content', () => {
+    it('should get the target @suspensive/react-query-4 from the index file content', () => {
+      const switchResult = execFileSync('node', [cliPath, 'switch', '4']).toString()
+      expect(switchResult).toContain('[@suspensive/react-query] switched to version v4')
       const targetSuspensiveReactQueryVersion = getTargetSuspensiveReactQueryVersion()
 
       expect(targetSuspensiveReactQueryVersion).toBe('4')
     })
+
+    it('should get the target @suspensive/react-query-5 from the index file content', () => {
+      const switchResult = execFileSync('node', [cliPath, 'switch', '5']).toString()
+      expect(switchResult).toContain('[@suspensive/react-query] switched to version v5')
+      const targetSuspensiveReactQueryVersion = getTargetSuspensiveReactQueryVersion()
+
+      expect(targetSuspensiveReactQueryVersion).toBe('5')
+    })
   })
 
   describe('getTargetSuspensiveReactQueryAPIs', () => {
-    it.todo('should get the target @suspensive/react-query version 4 APIs', () => {
+    const version4APIs = [
+      'useSuspenseQuery',
+      'useSuspenseQueries',
+      'useSuspenseInfiniteQuery',
+      'usePrefetchQuery',
+      'usePrefetchInfiniteQuery',
+      'queryOptions',
+      'mutationOptions',
+      'infiniteQueryOptions',
+      'SuspenseQuery',
+      'SuspenseQueries',
+      'SuspenseInfiniteQuery',
+      'QueryClientConsumer',
+      'PrefetchQuery',
+      'PrefetchInfiniteQuery',
+      'Mutation',
+      'IsFetching',
+    ]
+
+    const version5APIs = [
+      'useSuspenseQuery',
+      'useSuspenseQueries',
+      'useSuspenseInfiniteQuery',
+      'usePrefetchQuery',
+      'usePrefetchInfiniteQuery',
+      'queryOptions',
+      'mutationOptions',
+      'infiniteQueryOptions',
+      'SuspenseQuery',
+      'SuspenseQueries',
+      'SuspenseInfiniteQuery',
+      'QueryClientConsumer',
+      'PrefetchQuery',
+      'PrefetchInfiniteQuery',
+      'Mutation',
+      'IsFetching',
+    ]
+
+    it('should get the target @suspensive/react-query version 5 APIs', () => {
+      const switchResult = execFileSync('node', [cliPath, 'switch', '5']).toString()
+      expect(switchResult).toContain('[@suspensive/react-query] switched to version v5')
+
       const apis = getTargetSuspensiveReactQueryAPIs()
 
       expect(apis).toEqual(version4APIs)
+    })
+
+    it('should get the target @suspensive/react-query version 4 APIs', () => {
+      const switchResult = execFileSync('node', [cliPath, 'switch', '4']).toString()
+      expect(switchResult).toContain('[@suspensive/react-query] switched to version v4')
+
+      const apis = getTargetSuspensiveReactQueryAPIs()
+
+      expect(apis).toEqual(version5APIs)
     })
   })
 
