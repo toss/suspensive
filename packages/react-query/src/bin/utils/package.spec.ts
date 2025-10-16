@@ -57,7 +57,25 @@ describe('package', () => {
   })
 
   describe('getTargetSuspensiveReactQueryAPIs', () => {
-    // Current target version: 5 in suspensive codebase
+    const version4APIs = [
+      'useSuspenseQuery',
+      'useSuspenseQueries',
+      'useSuspenseInfiniteQuery',
+      'usePrefetchQuery',
+      'usePrefetchInfiniteQuery',
+      'queryOptions',
+      'mutationOptions',
+      'infiniteQueryOptions',
+      'SuspenseQuery',
+      'SuspenseQueries',
+      'SuspenseInfiniteQuery',
+      'QueryClientConsumer',
+      'PrefetchQuery',
+      'PrefetchInfiniteQuery',
+      'Mutation',
+      'IsFetching',
+    ]
+
     const version5APIs = [
       'useSuspenseQuery',
       'useSuspenseQueries',
@@ -83,7 +101,7 @@ describe('package', () => {
 
       const apis = getTargetSuspensiveReactQueryAPIs()
 
-      expect(apis).toEqual(version5APIs)
+      expect(apis).toEqual(version4APIs)
     })
 
     it('should get the target @suspensive/react-query version 4 APIs', () => {
