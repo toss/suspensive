@@ -5,6 +5,78 @@ import { Callout, Sandpack } from '@/components'
 
 this component can handle any errors in children.
 
+## Comparison with react-error-boundary
+
+`@suspensive/react`'s `<ErrorBoundary/>` provides similar functionality to the popular `react-error-boundary` library, but with additional features designed to integrate seamlessly with modern React patterns and libraries like TanStack Query.
+
+### Feature Comparison
+
+| Feature | @suspensive/react | react-error-boundary |
+|---------|-------------------|---------------------|
+| Basic error catching | ✅ | ✅ |
+| Fallback UI with error & reset | ✅ | ✅ |
+| Reset with resetKeys | ✅ | ✅ |
+| onReset callback | ✅ | ✅ |
+| onError callback | ✅ | ✅ |
+| Conditional error catching (shouldCatch) | ✅ | ❌ |
+| useErrorBoundary hook | ✅ | ✅ |
+| useErrorBoundaryFallbackProps hook | ✅ | ❌ |
+| ErrorBoundaryGroup | ✅ | ❌ |
+| HOC support (ErrorBoundary.with) | ✅ | ✅ (withErrorBoundary) |
+| TypeScript error type inference | ✅ (Advanced) | ✅ (Basic) |
+
+### Key Advantages of @suspensive/react
+
+1. **Advanced Error Filtering with shouldCatch**: Unlike react-error-boundary, `@suspensive/react` allows you to conditionally catch specific errors using boolean, ErrorConstructor, or callback matchers. This enables sophisticated error handling strategies where parent and child ErrorBoundaries can handle different error types.
+
+2. **useErrorBoundaryFallbackProps**: Eliminates prop drilling in fallback components by providing direct access to `error` and `reset` through a hook, making deeply nested fallback UIs much cleaner.
+
+3. **ErrorBoundaryGroup**: Manage and reset multiple ErrorBoundaries together, perfect for complex UIs with multiple error boundaries that need coordinated reset behavior.
+
+4. **Better TypeScript Support**: Advanced type inference for error types based on shouldCatch configuration, providing better autocomplete and type safety.
+
+### Migration from react-error-boundary
+
+If you're using react-error-boundary, migrating to `@suspensive/react` is straightforward:
+
+```tsx
+// react-error-boundary
+import { ErrorBoundary } from 'react-error-boundary'
+
+<ErrorBoundary
+  fallbackRender={({ error, resetErrorBoundary }) => (
+    <div>
+      <button onClick={resetErrorBoundary}>Reset</button>
+      {error.message}
+    </div>
+  )}
+  onReset={() => console.log('reset')}
+>
+  <YourComponent />
+</ErrorBoundary>
+
+// @suspensive/react - same functionality
+import { ErrorBoundary } from '@suspensive/react'
+
+<ErrorBoundary
+  fallback={({ error, reset }) => (
+    <div>
+      <button onClick={reset}>Reset</button>
+      {error.message}
+    </div>
+  )}
+  onReset={() => console.log('reset')}
+>
+  <YourComponent />
+</ErrorBoundary>
+```
+
+The main differences:
+- `fallbackRender` → `fallback`
+- `resetErrorBoundary` → `reset` (in fallback props)
+
+---
+
 ### props.fallback
 
 If there is any thrown error in children of `<ErrorBoundary/>`, Error will be caught and then fallback will be rendered.

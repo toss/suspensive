@@ -5,6 +5,78 @@ import { Callout, Sandpack } from '@/components'
 
 이 컴포넌트는 children에 에러가 발생하면 제어할 수 있습니다.
 
+## react-error-boundary와의 비교
+
+`@suspensive/react`의 `<ErrorBoundary/>`는 인기 있는 `react-error-boundary` 라이브러리와 유사한 기능을 제공하지만, 현대적인 React 패턴과 TanStack Query 같은 라이브러리와 완벽하게 통합되도록 설계된 추가 기능을 제공합니다.
+
+### 기능 비교
+
+| 기능 | @suspensive/react | react-error-boundary |
+|------|-------------------|---------------------|
+| 기본 에러 캐칭 | ✅ | ✅ |
+| 에러 및 리셋 기능이 있는 Fallback UI | ✅ | ✅ |
+| resetKeys로 리셋 | ✅ | ✅ |
+| onReset 콜백 | ✅ | ✅ |
+| onError 콜백 | ✅ | ✅ |
+| 조건부 에러 캐칭 (shouldCatch) | ✅ | ❌ |
+| useErrorBoundary 훅 | ✅ | ✅ |
+| useErrorBoundaryFallbackProps 훅 | ✅ | ❌ |
+| ErrorBoundaryGroup | ✅ | ❌ |
+| HOC 지원 (ErrorBoundary.with) | ✅ | ✅ (withErrorBoundary) |
+| TypeScript 에러 타입 추론 | ✅ (고급) | ✅ (기본) |
+
+### @suspensive/react의 주요 장점
+
+1. **shouldCatch를 통한 고급 에러 필터링**: react-error-boundary와 달리, `@suspensive/react`는 boolean, ErrorConstructor 또는 콜백 매처를 사용하여 특정 에러를 조건부로 캐치할 수 있습니다. 이를 통해 부모와 자식 ErrorBoundary가 서로 다른 에러 타입을 처리할 수 있는 정교한 에러 처리 전략을 구현할 수 있습니다.
+
+2. **useErrorBoundaryFallbackProps**: fallback 컴포넌트에서 prop drilling을 제거하고 훅을 통해 `error`와 `reset`에 직접 접근할 수 있어, 깊게 중첩된 fallback UI를 훨씬 깔끔하게 만들 수 있습니다.
+
+3. **ErrorBoundaryGroup**: 여러 ErrorBoundary를 함께 관리하고 리셋할 수 있으며, 조정된 리셋 동작이 필요한 여러 에러 경계가 있는 복잡한 UI에 완벽합니다.
+
+4. **더 나은 TypeScript 지원**: shouldCatch 구성을 기반으로 에러 타입에 대한 고급 타입 추론을 제공하여 더 나은 자동 완성과 타입 안정성을 제공합니다.
+
+### react-error-boundary에서 마이그레이션
+
+react-error-boundary를 사용하고 있다면, `@suspensive/react`로 마이그레이션하는 것은 간단합니다:
+
+```tsx
+// react-error-boundary
+import { ErrorBoundary } from 'react-error-boundary'
+
+<ErrorBoundary
+  fallbackRender={({ error, resetErrorBoundary }) => (
+    <div>
+      <button onClick={resetErrorBoundary}>리셋</button>
+      {error.message}
+    </div>
+  )}
+  onReset={() => console.log('reset')}
+>
+  <YourComponent />
+</ErrorBoundary>
+
+// @suspensive/react - 동일한 기능
+import { ErrorBoundary } from '@suspensive/react'
+
+<ErrorBoundary
+  fallback={({ error, reset }) => (
+    <div>
+      <button onClick={reset}>리셋</button>
+      {error.message}
+    </div>
+  )}
+  onReset={() => console.log('reset')}
+>
+  <YourComponent />
+</ErrorBoundary>
+```
+
+주요 차이점:
+- `fallbackRender` → `fallback`
+- `resetErrorBoundary` → `reset` (fallback props에서)
+
+---
+
 ### props.fallback
 
 `<ErrorBoundary/>`의 children에 error가 발생하면 error는 잡히고 fallback이 렌더링됩니다.
