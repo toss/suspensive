@@ -1,5 +1,5 @@
-import { Tabs } from 'nextra/components'
-import { Callout, Sandpack } from '@/components'
+import { Tabs } from "nextra/components";
+import { Callout, Sandpack } from "@/components";
 
 # ErrorBoundary
 
@@ -17,6 +17,7 @@ import { Callout, Sandpack } from '@/components'
 | onReset 콜백                         | ✅                | ✅                     | ⚠️ (수동)              |
 | onError 콜백                         | ✅                | ✅                     | ✅ (componentDidCatch) |
 | 조건부 에러 캐칭 (shouldCatch)       | ✅                | ❌                     | ⚠️ (수동)              |
+| Fallback 에러 처리                   | ✅ (부모로 전달)  | ❌ (재귀적)            | ⚠️ (수동)              |
 | useErrorBoundary 훅                  | ✅                | ✅                     | ❌                     |
 | useErrorBoundaryFallbackProps 훅     | ✅                | ❌                     | ❌                     |
 | ErrorBoundaryGroup                   | ✅                | ❌                     | ❌                     |
@@ -28,7 +29,7 @@ import { Callout, Sandpack } from '@/components'
   <Tabs.Tab>
 
 ```tsx
-import { ErrorBoundary } from '@suspensive/react'
+import { ErrorBoundary } from "@suspensive/react";
 
 const SuspensiveExample = () => (
   <ErrorBoundary
@@ -41,14 +42,14 @@ const SuspensiveExample = () => (
   >
     <YourComponent />
   </ErrorBoundary>
-)
+);
 ```
 
   </Tabs.Tab>
   <Tabs.Tab>
 
 ```tsx
-import { ErrorBoundary } from 'react-error-boundary'
+import { ErrorBoundary } from "react-error-boundary";
 
 const ReactErrorBoundaryExample = () => (
   <ErrorBoundary
@@ -61,37 +62,37 @@ const ReactErrorBoundaryExample = () => (
   >
     <YourComponent />
   </ErrorBoundary>
-)
+);
 ```
 
   </Tabs.Tab>
   <Tabs.Tab>
 
 ```tsx
-import { Component, ReactNode } from 'react'
+import { Component, ReactNode } from "react";
 
 class ErrorBoundary extends Component<
   { children: ReactNode; fallback: (error: Error) => ReactNode },
   { hasError: boolean; error: Error | null }
 > {
   constructor(props) {
-    super(props)
-    this.state = { hasError: false, error: null }
+    super(props);
+    this.state = { hasError: false, error: null };
   }
 
   static getDerivedStateFromError(error: Error) {
-    return { hasError: true, error }
+    return { hasError: true, error };
   }
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    console.error('에러 캐치:', error, errorInfo)
+    console.error("에러 캐치:", error, errorInfo);
   }
 
   render() {
     if (this.state.hasError) {
-      return this.props.fallback(this.state.error!)
+      return this.props.fallback(this.state.error!);
     }
-    return this.props.children
+    return this.props.children;
   }
 }
 
@@ -107,7 +108,7 @@ const ReactClassErrorBoundaryExample = () => (
   >
     <YourComponent />
   </ErrorBoundary>
-)
+);
 ```
 
   </Tabs.Tab>
@@ -117,13 +118,15 @@ const ReactClassErrorBoundaryExample = () => (
 
 1. **shouldCatch를 통한 고급 에러 필터링**: 다른 솔루션과 달리, `@suspensive/react`는 boolean, ErrorConstructor 또는 콜백 매처를 사용하여 특정 에러를 조건부로 캐치할 수 있습니다. 이를 통해 부모와 자식 ErrorBoundary가 서로 다른 에러 타입을 처리할 수 있는 정교한 에러 처리 전략을 구현할 수 있습니다.
 
-2. **useErrorBoundaryFallbackProps**: fallback 컴포넌트에서 prop drilling을 제거하고 훅을 통해 `error`와 `reset`에 직접 접근할 수 있어, 깊게 중첩된 fallback UI를 훨씬 깔끔하게 만들 수 있습니다.
+2. **적절한 Fallback 에러 처리**: `react-error-boundary`와 달리, fallback 컴포넌트에서 발생한 에러는 같은 경계에서 재귀적으로 캐치되는 대신 부모 ErrorBoundary로 전달됩니다. 이를 통해 무한 fallback 루프를 방지하고 더 예측 가능한 에러 처리 동작을 제공합니다. [자세히 알아보기](/docs/react/migration/migrate-to-v3#now-thrown-error-in-errorboundary-fallback-will-be-passed-to-parent-1409)
 
-3. **ErrorBoundaryGroup**: 여러 ErrorBoundary를 함께 관리하고 리셋할 수 있으며, 조정된 리셋 동작이 필요한 여러 에러 경계가 있는 복잡한 UI에 완벽합니다.
+3. **useErrorBoundaryFallbackProps**: fallback 컴포넌트에서 prop drilling을 제거하고 훅을 통해 `error`와 `reset`에 직접 접근할 수 있어, 깊게 중첩된 fallback UI를 훨씬 깔끔하게 만들 수 있습니다.
 
-4. **더 나은 TypeScript 지원**: shouldCatch 구성을 기반으로 에러 타입에 대한 고급 타입 추론을 제공하여 더 나은 자동 완성과 타입 안정성을 제공합니다.
+4. **ErrorBoundaryGroup**: 여러 ErrorBoundary를 함께 관리하고 리셋할 수 있으며, 조정된 리셋 동작이 필요한 여러 에러 경계가 있는 복잡한 UI에 완벽합니다.
 
-5. **클래스 컴포넌트 불필요**: 네이티브 React 에러 경계와 달리, 클래스 컴포넌트를 작성하지 않고도 완전히 선언적인 함수 컴포넌트 기반 접근 방식을 사용할 수 있습니다.
+5. **더 나은 TypeScript 지원**: shouldCatch 구성을 기반으로 에러 타입에 대한 고급 타입 추론을 제공하여 더 나은 자동 완성과 타입 안정성을 제공합니다.
+
+6. **클래스 컴포넌트 불필요**: 네이티브 React 에러 경계와 달리, 클래스 컴포넌트를 작성하지 않고도 완전히 선언적인 함수 컴포넌트 기반 접근 방식을 사용할 수 있습니다.
 
 ### 마이그레이션 가이드
 
@@ -134,7 +137,7 @@ react-error-boundary를 사용하고 있다면, `@suspensive/react`로 마이그
 
 ```tsx
 // react-error-boundary
-import { ErrorBoundary } from 'react-error-boundary'
+import { ErrorBoundary } from "react-error-boundary";
 
 const ReactErrorBoundaryExample = () => (
   <ErrorBoundary
@@ -144,14 +147,14 @@ const ReactErrorBoundaryExample = () => (
         {error.message}
       </div>
     )}
-    onReset={() => console.log('reset')}
+    onReset={() => console.log("reset")}
   >
     <YourComponent />
   </ErrorBoundary>
-)
+);
 
 // @suspensive/react - 동일한 기능
-import { ErrorBoundary } from '@suspensive/react'
+import { ErrorBoundary } from "@suspensive/react";
 
 const SuspensiveExample = () => (
   <ErrorBoundary
@@ -161,11 +164,11 @@ const SuspensiveExample = () => (
         {error.message}
       </div>
     )}
-    onReset={() => console.log('reset')}
+    onReset={() => console.log("reset")}
   >
     <YourComponent />
   </ErrorBoundary>
-)
+);
 ```
 
 주요 API 차이점:
@@ -181,30 +184,30 @@ React 클래스 컴포넌트를 에러 경계로 사용하고 있다면, `@suspe
 ```tsx
 // React 클래스 컴포넌트
 class ErrorBoundary extends Component {
-  state = { hasError: false, error: null }
+  state = { hasError: false, error: null };
 
   static getDerivedStateFromError(error) {
-    return { hasError: true, error }
+    return { hasError: true, error };
   }
 
   componentDidCatch(error, errorInfo) {
-    logErrorToService(error, errorInfo)
+    logErrorToService(error, errorInfo);
   }
 
   reset = () => {
-    this.setState({ hasError: false, error: null })
-  }
+    this.setState({ hasError: false, error: null });
+  };
 
   render() {
     if (this.state.hasError) {
-      return <FallbackComponent error={this.state.error} reset={this.reset} />
+      return <FallbackComponent error={this.state.error} reset={this.reset} />;
     }
-    return this.props.children
+    return this.props.children;
   }
 }
 
 // @suspensive/react - 훨씬 간단합니다!
-import { ErrorBoundary } from '@suspensive/react'
+import { ErrorBoundary } from "@suspensive/react";
 
 const SuspensiveExample = () => (
   <ErrorBoundary
@@ -215,7 +218,7 @@ const SuspensiveExample = () => (
   >
     <YourComponent />
   </ErrorBoundary>
-)
+);
 ```
 
 </Tabs.Tab>
@@ -228,8 +231,8 @@ const SuspensiveExample = () => (
 `<ErrorBoundary/>`의 children에 error가 발생하면 error는 잡히고 fallback이 렌더링됩니다.
 
 ```tsx /fallback/
-import { ErrorBoundary } from '@suspensive/react'
-import { useState, useEffect } from 'react'
+import { ErrorBoundary } from "@suspensive/react";
+import { useState, useEffect } from "react";
 
 const Example = () => (
   <ErrorBoundary
@@ -242,15 +245,15 @@ const Example = () => (
   >
     <ErrorAfter2s />
   </ErrorBoundary>
-)
+);
 ```
 
 <Sandpack>
 
 ```tsx Example.tsx active
-import { ErrorBoundary } from '@suspensive/react'
-import { useState, useEffect } from 'react'
-import { ErrorAfter2s } from './ErrorAfter2s'
+import { ErrorBoundary } from "@suspensive/react";
+import { useState, useEffect } from "react";
+import { ErrorAfter2s } from "./ErrorAfter2s";
 
 export const Example = () => {
   return (
@@ -264,12 +267,12 @@ export const Example = () => {
     >
       <ErrorAfter2s />
     </ErrorBoundary>
-  )
-}
+  );
+};
 ```
 
 ```tsx ErrorAfter2s.tsx
-import { useState, useEffect } from 'react'
+import { useState, useEffect } from "react";
 
 export const ErrorAfter2s = () => {
   const [asyncState, setAsyncState] = useState<
@@ -277,20 +280,20 @@ export const ErrorAfter2s = () => {
   >({
     isError: false,
     error: null,
-  })
+  });
 
   useEffect(() => {
     setTimeout(() => {
-      setAsyncState({ isError: true, error: new Error('error made by Error') })
-    }, 2000)
-  }, [])
+      setAsyncState({ isError: true, error: new Error("error made by Error") });
+    }, 2000);
+  }, []);
 
   if (asyncState.isError) {
-    throw asyncState.error
+    throw asyncState.error;
   }
 
-  return <>No error</>
-}
+  return <>No error</>;
+};
 ```
 
 </Sandpack>
@@ -304,7 +307,7 @@ export const ErrorAfter2s = () => {
 `<ErrorBoundary/>`의 fallback으로 컴포넌트를 전달하고 싶다면 `ErrorBoundaryFallbackProps` 타입을 활용해 쉽게 컴포넌트를 선언할 수 있습니다.
 
 ```tsx /ErrorBoundaryFallbackProps/
-import type { ErrorBoundaryFallbackProps } from '@suspensive/react'
+import type { ErrorBoundaryFallbackProps } from "@suspensive/react";
 
 const ErrorBoundaryFallback = ({
   reset,
@@ -314,13 +317,13 @@ const ErrorBoundaryFallback = ({
     <button onClick={reset}>reset</button>
     {error.message}
   </>
-)
+);
 
 const Example = () => (
   <ErrorBoundary fallback={ErrorBoundaryFallback}>
     <ErrorAfter2s />
   </ErrorBoundary>
-)
+);
 ```
 
 </Callout>
@@ -335,27 +338,30 @@ const Example = () => (
 이 때, `useErrorBoundaryFallbackProps`을 통해, prop drilling 없이 `reset` 메소드와 `error` 객체에 접근할 수 있습니다.
 
 ```tsx /useErrorBoundaryFallbackProps/
-import { ErrorBoundary, useErrorBoundaryFallbackProps } from '@suspensive/react'
+import {
+  ErrorBoundary,
+  useErrorBoundaryFallbackProps,
+} from "@suspensive/react";
 
 const Nested = () => {
-  const { reset, error } = useErrorBoundaryFallbackProps()
+  const { reset, error } = useErrorBoundaryFallbackProps();
 
   return (
     <>
       <button onClick={reset}>Try again</button>
       {error.message}
     </>
-  )
-}
+  );
+};
 
 // 여기서 fallbackProp 을 전달할 필요가 없어집니다!
-const ErrorBoundaryFallback = () => <Nested />
+const ErrorBoundaryFallback = () => <Nested />;
 
 const Example = () => (
   <ErrorBoundary fallback={ErrorBoundaryFallback}>
     <ErrorAfter2s />
   </ErrorBoundary>
-)
+);
 ```
 
 </Callout>
@@ -365,11 +371,11 @@ const Example = () => (
 `<ErrorBoundary/>`의 fallback 외부에 있는 컴포넌트가 `<ErrorBoundary/>`를 reset하려면 resetKeys배열에 resetKey를 할당하면 됩니다. resetKeys는 배열의 하나 이상의 요소가 변경된 경우에만 작동합니다. useEffect의 종속성 배열이 작동하는 방식과 같이 resetKeys로 매 렌더링마다 새 배열을 주입하는 것을 걱정할 필요도 없습니다.
 
 ```tsx /resetKeys/
-import { ErrorBoundary } from '@suspensive/react'
-import { useState, useEffect } from 'react'
+import { ErrorBoundary } from "@suspensive/react";
+import { useState, useEffect } from "react";
 
 const Example = () => {
-  const [resetKey, setResetKey] = useState(0)
+  const [resetKey, setResetKey] = useState(0);
 
   return (
     <>
@@ -381,19 +387,19 @@ const Example = () => {
         <ErrorAfter2s />
       </ErrorBoundary>
     </>
-  )
-}
+  );
+};
 ```
 
 <Sandpack>
 
 ```tsx Example.tsx active
-import { ErrorBoundary } from '@suspensive/react'
-import { useState, useEffect } from 'react'
-import { ErrorAfter2s } from './ErrorAfter2s'
+import { ErrorBoundary } from "@suspensive/react";
+import { useState, useEffect } from "react";
+import { ErrorAfter2s } from "./ErrorAfter2s";
 
 export const Example = () => {
-  const [resetKey, setResetKey] = useState(0)
+  const [resetKey, setResetKey] = useState(0);
 
   return (
     <>
@@ -405,12 +411,12 @@ export const Example = () => {
         <ErrorAfter2s />
       </ErrorBoundary>
     </>
-  )
-}
+  );
+};
 ```
 
 ```tsx /ErrorAfter2s.tsx
-import { useState, useEffect } from 'react'
+import { useState, useEffect } from "react";
 
 export const ErrorAfter2s = () => {
   const [asyncState, setAsyncState] = useState<
@@ -418,20 +424,20 @@ export const ErrorAfter2s = () => {
   >({
     isError: false,
     error: null,
-  })
+  });
 
   useEffect(() => {
     setTimeout(() => {
-      setAsyncState({ isError: true, error: new Error('error made by Error') })
-    }, 2000)
-  }, [])
+      setAsyncState({ isError: true, error: new Error("error made by Error") });
+    }, 2000);
+  }, []);
 
   if (asyncState.isError) {
-    throw asyncState.error
+    throw asyncState.error;
   }
 
-  return <>No error</>
-}
+  return <>No error</>;
+};
 ```
 
 </Sandpack>
@@ -441,8 +447,8 @@ export const ErrorAfter2s = () => {
 `<ErrorBoundary/>`가 reset할 때 먼저 호출되는 callback입니다. @tanstack/react-query와는 아래와 같이 사용할 수 있습니다.
 
 ```tsx /onReset/
-import { ErrorBoundary } from '@suspensive/react'
-import { QueryErrorResetBoundary } from '@tanstack/react-query'
+import { ErrorBoundary } from "@suspensive/react";
+import { QueryErrorResetBoundary } from "@tanstack/react-query";
 
 const Example = () => (
   <QueryErrorResetBoundary>
@@ -460,15 +466,15 @@ const Example = () => (
       </ErrorBoundary>
     )}
   </QueryErrorResetBoundary>
-)
+);
 ```
 
 <Sandpack>
 
 ```tsx Example.tsx active
-import { ErrorBoundary } from '@suspensive/react'
-import { QueryErrorResetBoundary } from '@tanstack/react-query'
-import { Page } from './Page'
+import { ErrorBoundary } from "@suspensive/react";
+import { QueryErrorResetBoundary } from "@tanstack/react-query";
+import { Page } from "./Page";
 
 export const Example = () => (
   <QueryErrorResetBoundary>
@@ -486,35 +492,35 @@ export const Example = () => (
       </ErrorBoundary>
     )}
   </QueryErrorResetBoundary>
-)
+);
 ```
 
 ```tsx /Page.tsx
-import { useQuery } from '@tanstack/react-query'
-import { fetchSomething } from './fetchSomething'
+import { useQuery } from "@tanstack/react-query";
+import { fetchSomething } from "./fetchSomething";
 
 export const Page = () => {
   const { data, isLoading, error } = useQuery({
-    queryKey: ['key'],
+    queryKey: ["key"],
     queryFn: fetchSomething,
     useErrorBoundary: true,
     retry: false,
-  })
+  });
 
-  if (isLoading) return <>Loading...</>
+  if (isLoading) return <>Loading...</>;
 
-  return <>{data}</>
-}
+  return <>{data}</>;
+};
 ```
 
 ```tsx /fetchSomething.ts
 export const fetchSomething = () => {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      reject({ status: 401, message: 'unauthorized' })
-    }, 2000)
-  })
-}
+      reject({ status: 401, message: "unauthorized" });
+    }, 2000);
+  });
+};
 ```
 
 </Sandpack>
@@ -524,28 +530,28 @@ export const fetchSomething = () => {
 `<ErrorBoundary/>`가 error를 잡을 때 호출되는 callback입니다.
 
 ```tsx /onError/
-import { ErrorBoundary } from '@suspensive/react'
+import { ErrorBoundary } from "@suspensive/react";
 
 const logError = (error: Error, info: ErrorInfo) => {
   // ...
-}
+};
 
 const Example = (
   <ErrorBoundary fallback={ErrorBoundaryFallback} onError={logError}>
     <ErrorAfter2s />
   </ErrorBoundary>
-)
+);
 ```
 
 <Sandpack previewOptions={{ showConsoleButton: true, showConsole: true }}>
 
 ```tsx Example.tsx active
-import { ErrorBoundary } from '@suspensive/react'
-import { ErrorAfter2s } from './ErrorAfter2s'
+import { ErrorBoundary } from "@suspensive/react";
+import { ErrorAfter2s } from "./ErrorAfter2s";
 
 const logError = (error: Error, info: ErrorInfo) => {
-  console.log(error, info)
-}
+  console.log(error, info);
+};
 
 export const Example = () => {
   return (
@@ -560,12 +566,12 @@ export const Example = () => {
     >
       <ErrorAfter2s />
     </ErrorBoundary>
-  )
-}
+  );
+};
 ```
 
 ```tsx /ErrorAfter2s.tsx
-import { useState, useEffect } from 'react'
+import { useState, useEffect } from "react";
 
 export const ErrorAfter2s = () => {
   const [asyncState, setAsyncState] = useState<
@@ -573,20 +579,20 @@ export const ErrorAfter2s = () => {
   >({
     isError: false,
     error: null,
-  })
+  });
 
   useEffect(() => {
     setTimeout(() => {
-      setAsyncState({ isError: true, error: new Error('error made by Error') })
-    }, 2000)
-  }, [])
+      setAsyncState({ isError: true, error: new Error("error made by Error") });
+    }, 2000);
+  }, []);
 
   if (asyncState.isError) {
-    throw asyncState.error
+    throw asyncState.error;
   }
 
-  return <>No error</>
-}
+  return <>No error</>;
+};
 ```
 
 </Sandpack>
@@ -601,8 +607,8 @@ Boolean, ErrorConstructor, Callback의 3가지 기준을 받으며 기본값은 
 <Tabs.Tab>
 
 ```tsx /shouldCatch/
-import { ErrorBoundary } from '@suspensive/react'
-import { useState, useEffect, createElement } from 'react'
+import { ErrorBoundary } from "@suspensive/react";
+import { useState, useEffect, createElement } from "react";
 
 export const Example = () => {
   return (
@@ -620,16 +626,16 @@ export const Example = () => {
         <CustomErrorAfter2s />
       </ErrorBoundary>
     </ErrorBoundary>
-  )
-}
+  );
+};
 ```
 
 </Tabs.Tab>
 <Tabs.Tab>
 
 ```tsx /shouldCatch/
-import { ErrorBoundary } from '@suspensive/react'
-import { useState, useEffect, createElement } from 'react'
+import { ErrorBoundary } from "@suspensive/react";
+import { useState, useEffect, createElement } from "react";
 
 export const Example = () => {
   return (
@@ -647,16 +653,16 @@ export const Example = () => {
         <CustomErrorAfter2s />
       </ErrorBoundary>
     </ErrorBoundary>
-  )
-}
+  );
+};
 ```
 
 </Tabs.Tab>
 <Tabs.Tab>
 
 ```tsx /shouldCatch/
-import { ErrorBoundary } from '@suspensive/react'
-import { useState, useEffect, createElement } from 'react'
+import { ErrorBoundary } from "@suspensive/react";
+import { useState, useEffect, createElement } from "react";
 
 export const Example = () => {
   return (
@@ -674,8 +680,8 @@ export const Example = () => {
         <CustomErrorAfter2s />
       </ErrorBoundary>
     </ErrorBoundary>
-  )
-}
+  );
+};
 ```
 
 </Tabs.Tab>
@@ -684,8 +690,8 @@ export const Example = () => {
 배열을 통해 여러 조건을 적용할 수도 있습니다.
 
 ```tsx /shouldCatch/
-import { ErrorBoundary } from '@suspensive/react'
-import { useState, useEffect, createElement } from 'react'
+import { ErrorBoundary } from "@suspensive/react";
+import { useState, useEffect, createElement } from "react";
 
 const Example = () => {
   return (
@@ -707,15 +713,15 @@ const Example = () => {
         <CustomErrorAfter2s />
       </ErrorBoundary>
     </ErrorBoundary>
-  )
-}
+  );
+};
 ```
 
 <Sandpack>
 
 ```tsx Example.tsx active
-import { ErrorBoundary } from '@suspensive/react'
-import { useState, useEffect, createElement } from 'react'
+import { ErrorBoundary } from "@suspensive/react";
+import { useState, useEffect, createElement } from "react";
 
 export const Example = () => {
   return (
@@ -733,13 +739,13 @@ export const Example = () => {
         <CustomErrorAfter2s />
       </ErrorBoundary>
     </ErrorBoundary>
-  )
-}
+  );
+};
 
 export class CustomError extends Error {
   constructor(...args: ConstructorParameters<ErrorConstructor>) {
-    super(...args)
-    console.error(...args)
+    super(...args);
+    console.error(...args);
   }
 }
 
@@ -749,23 +755,23 @@ export const CustomErrorAfter2s = () => {
   >({
     isError: false,
     error: null,
-  })
+  });
 
   useEffect(() => {
     setTimeout(() => {
       setAsyncState({
         isError: true,
-        error: () => new CustomError('error made by CustomError'),
-      })
-    }, 2000)
-  }, [])
+        error: () => new CustomError("error made by CustomError"),
+      });
+    }, 2000);
+  }, []);
 
   if (asyncState.isError) {
-    throw asyncState.error()
+    throw asyncState.error();
   }
 
-  return <>No error</>
-}
+  return <>No error</>;
+};
 ```
 
 </Sandpack>
@@ -775,8 +781,8 @@ export const CustomErrorAfter2s = () => {
 <Sandpack>
 
 ```tsx Example.tsx active
-import { ErrorBoundary } from '@suspensive/react'
-import { useState, useEffect, createElement } from 'react'
+import { ErrorBoundary } from "@suspensive/react";
+import { useState, useEffect, createElement } from "react";
 
 export const Example = () => {
   return (
@@ -794,13 +800,13 @@ export const Example = () => {
         <ErrorAfter2s />
       </ErrorBoundary>
     </ErrorBoundary>
-  )
-}
+  );
+};
 
 export class CustomError extends Error {
   constructor(...args: ConstructorParameters<ErrorConstructor>) {
-    super(...args)
-    console.error(...args)
+    super(...args);
+    console.error(...args);
   }
 }
 
@@ -810,20 +816,20 @@ export const ErrorAfter2s = () => {
   >({
     isError: false,
     error: null,
-  })
+  });
 
   useEffect(() => {
     setTimeout(() => {
-      setAsyncState({ isError: true, error: new Error('error made by Error') })
-    }, 2000)
-  }, [])
+      setAsyncState({ isError: true, error: new Error("error made by Error") });
+    }, 2000);
+  }, []);
 
   if (asyncState.isError) {
-    throw asyncState.error
+    throw asyncState.error;
   }
 
-  return <>No error</>
-}
+  return <>No error</>;
+};
 ```
 
 </Sandpack>
@@ -834,13 +840,13 @@ export const ErrorAfter2s = () => {
 `ErrorBoundary.with`를 사용하면 컴포넌트를 쉽게 래핑할 수 있습니다.
 
 ```tsx /ErrorBoundary.with/
-import { ErrorBoundary, useErrorBoundary } from '@suspensive/react'
+import { ErrorBoundary, useErrorBoundary } from "@suspensive/react";
 
 const Example = ErrorBoundary.with({ fallback: ErrorBoundaryFallback }, () => {
-  const errorBoundary = useErrorBoundary()
+  const errorBoundary = useErrorBoundary();
 
-  return <>...</>
-})
+  return <>...</>;
+});
 ```
 
 ## useErrorBoundary
@@ -850,76 +856,76 @@ const Example = ErrorBoundary.with({ fallback: ErrorBoundaryFallback }, () => {
 `<ErrorBoundary/>`의 children에서 useErrorBoundary().setError을 사용해 throw 없이도 `<ErrorBoundary/>`에서 Error를 알도록 할 수 있습니다.
 
 ```tsx /useErrorBoundary/
-import { ErrorBoundary, useErrorBoundary } from '@suspensive/react'
-import { useEffect } from 'react'
+import { ErrorBoundary, useErrorBoundary } from "@suspensive/react";
+import { useEffect } from "react";
 
 const Example = () => (
   <ErrorBoundary fallback={ErrorBoundaryFallback}>
     <SetErrorAfterFetch />
   </ErrorBoundary>
-)
+);
 
 const SetErrorAfterFetch = () => {
-  const errorBoundary = useErrorBoundary()
+  const errorBoundary = useErrorBoundary();
 
   useEffect(() => {
     fetchSomething().then(
       (response) => {},
-      (error) => errorBoundary.setError(error) // instead of throw inside
-    )
-  }, [])
+      (error) => errorBoundary.setError(error), // instead of throw inside
+    );
+  }, []);
 
-  return <>No error</>
-}
+  return <>No error</>;
+};
 ```
 
 <Sandpack>
 
 ```tsx Example.tsx active
-import { ErrorBoundary, useErrorBoundary } from '@suspensive/react'
-import { useEffect } from 'react'
-import { ErrorBoundaryFallback } from './ErrorBoundaryFallback'
-import { fetchSomething } from './fetchSomething'
+import { ErrorBoundary, useErrorBoundary } from "@suspensive/react";
+import { useEffect } from "react";
+import { ErrorBoundaryFallback } from "./ErrorBoundaryFallback";
+import { fetchSomething } from "./fetchSomething";
 
 export const Example = () => (
   <ErrorBoundary fallback={ErrorBoundaryFallback}>
     <SetErrorAfterFetch />
   </ErrorBoundary>
-)
+);
 
 const SetErrorAfterFetch = () => {
-  const errorBoundary = useErrorBoundary()
+  const errorBoundary = useErrorBoundary();
 
   useEffect(() => {
     fetchSomething().then(
       (response) => {},
-      (error) => errorBoundary.setError(error) // instead of throw inside
-    )
-  }, [])
+      (error) => errorBoundary.setError(error), // instead of throw inside
+    );
+  }, []);
 
-  return <>No error</>
-}
+  return <>No error</>;
+};
 ```
 
 ```tsx /ErrorBoundaryFallback.tsx
-import type { ErrorBoundaryFallbackProps } from '@suspensive/react'
+import type { ErrorBoundaryFallbackProps } from "@suspensive/react";
 
 export const ErrorBoundaryFallback = (props: ErrorBoundaryFallbackProps) => (
   <>
     <button onClick={props.reset}>Try again</button>
     {props.error.message}
   </>
-)
+);
 ```
 
 ```tsx /fetchSomething.ts
 export const fetchSomething = () => {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      reject({ status: 401, message: 'unauthorized' })
-    }, 2000)
-  })
-}
+      reject({ status: 401, message: "unauthorized" });
+    }, 2000);
+  });
+};
 ```
 
 </Sandpack>
