@@ -600,34 +600,7 @@ shouldCatch는 조건에 따라 `<ErrorBoundary/>`가 에러를 잡을지 결정
 
 Boolean, ErrorConstructor, Callback의 3가지 기준을 받으며 기본값은 `true`입니다.
 
-<Tabs items={['Boolean', 'ErrorConstructor', 'Callback']}>
-<Tabs.Tab>
-
-```tsx /shouldCatch/
-import { ErrorBoundary } from '@suspensive/react'
-import { useState, useEffect, createElement } from 'react'
-
-export const Example = () => {
-  return (
-    <ErrorBoundary
-      fallback={({ error }) => (
-        <>Parent ErrorBoundary fallback: {error.message}</>
-      )}
-    >
-      <ErrorBoundary
-        shouldCatch={false}
-        fallback={({ error }) => (
-          <>Child ErrorBoundary fallback: {error.message}</>
-        )}
-      >
-        <CustomErrorAfter2s />
-      </ErrorBoundary>
-    </ErrorBoundary>
-  )
-}
-```
-
-</Tabs.Tab>
+<Tabs items={['ErrorConstructor', 'Callback', 'Boolean']}>
 <Tabs.Tab>
 
 ```tsx /shouldCatch/
@@ -670,6 +643,33 @@ export const Example = () => {
     >
       <ErrorBoundary
         shouldCatch={(error) => error instanceof CustomError}
+        fallback={({ error }) => (
+          <>Child ErrorBoundary fallback: {error.message}</>
+        )}
+      >
+        <CustomErrorAfter2s />
+      </ErrorBoundary>
+    </ErrorBoundary>
+  )
+}
+```
+
+</Tabs.Tab>
+<Tabs.Tab>
+
+```tsx /shouldCatch/
+import { ErrorBoundary } from '@suspensive/react'
+import { useState, useEffect, createElement } from 'react'
+
+export const Example = () => {
+  return (
+    <ErrorBoundary
+      fallback={({ error }) => (
+        <>Parent ErrorBoundary fallback: {error.message}</>
+      )}
+    >
+      <ErrorBoundary
+        shouldCatch={false}
         fallback={({ error }) => (
           <>Child ErrorBoundary fallback: {error.message}</>
         )}

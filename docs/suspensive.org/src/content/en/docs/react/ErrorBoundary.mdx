@@ -597,34 +597,7 @@ shouldCatch determines whether `<ErrorBoundary/>` should catch errors based on c
 
 It accepts three criteria: Boolean, ErrorConstructor, and Callback, and defaults to true.
 
-<Tabs items={['Boolean', 'ErrorConstructor', 'Callback']}>
-<Tabs.Tab>
-
-```tsx /shouldCatch/
-import { ErrorBoundary } from '@suspensive/react'
-import { useState, useEffect, createElement } from 'react'
-
-export const Example = () => {
-  return (
-    <ErrorBoundary
-      fallback={({ error }) => (
-        <>Parent ErrorBoundary fallback: {error.message}</>
-      )}
-    >
-      <ErrorBoundary
-        shouldCatch={false}
-        fallback={({ error }) => (
-          <>Child ErrorBoundary fallback: {error.message}</>
-        )}
-      >
-        <CustomErrorAfter2s />
-      </ErrorBoundary>
-    </ErrorBoundary>
-  )
-}
-```
-
-</Tabs.Tab>
+<Tabs items={['ErrorConstructor', 'Callback', 'Boolean']}>
 <Tabs.Tab>
 
 ```tsx /shouldCatch/
@@ -667,6 +640,33 @@ export const Example = () => {
     >
       <ErrorBoundary
         shouldCatch={(error) => error instanceof CustomError}
+        fallback={({ error }) => (
+          <>Child ErrorBoundary fallback: {error.message}</>
+        )}
+      >
+        <CustomErrorAfter2s />
+      </ErrorBoundary>
+    </ErrorBoundary>
+  )
+}
+```
+
+</Tabs.Tab>
+<Tabs.Tab>
+
+```tsx /shouldCatch/
+import { ErrorBoundary } from '@suspensive/react'
+import { useState, useEffect, createElement } from 'react'
+
+export const Example = () => {
+  return (
+    <ErrorBoundary
+      fallback={({ error }) => (
+        <>Parent ErrorBoundary fallback: {error.message}</>
+      )}
+    >
+      <ErrorBoundary
+        shouldCatch={false}
         fallback={({ error }) => (
           <>Child ErrorBoundary fallback: {error.message}</>
         )}
