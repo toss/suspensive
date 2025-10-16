@@ -9,8 +9,6 @@ import { Callout, Sandpack } from '@/components'
 
 `@suspensive/react`의 `<ErrorBoundary/>`는 React의 클래스 기반 에러 경계와 인기 있는 `react-error-boundary` 라이브러리에 대한 선언적이고 기능이 풍부한 대안을 제공합니다.
 
-### 기능 비교
-
 | 기능                                 | @suspensive/react | react-error-boundary   | React 클래스 컴포넌트  |
 | ------------------------------------ | ----------------- | ---------------------- | ---------------------- |
 | 기본 에러 캐칭                       | ✅                | ✅                     | ✅                     |
@@ -25,8 +23,6 @@ import { Callout, Sandpack } from '@/components'
 | HOC 지원                             | ✅ (with)         | ✅ (withErrorBoundary) | ❌                     |
 | TypeScript 에러 타입 추론            | ✅ (고급)         | ✅ (기본)              | ⚠️ (수동)              |
 | 선언적 API                           | ✅                | ✅                     | ❌                     |
-
-### 비교 예제
 
 <Tabs items={['@suspensive/react', 'react-error-boundary', 'React 클래스']}>
   <Tabs.Tab>
@@ -174,7 +170,7 @@ const SuspensiveExample = () => (
 
 주요 API 차이점:
 
-- `fallbackRender` → `fallback`
+- `fallback`, `fallbackRender`, `FallbackComponent` → `fallback`
 - `resetErrorBoundary` → `reset` (fallback props에서)
 
 </Tabs.Tab>

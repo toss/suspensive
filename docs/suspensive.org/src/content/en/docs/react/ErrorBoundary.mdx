@@ -9,8 +9,6 @@ this component can handle any errors in children.
 
 `@suspensive/react`'s `<ErrorBoundary/>` provides a declarative, feature-rich alternative to React's class-based error boundaries and the popular `react-error-boundary` library.
 
-### Feature Comparison
-
 | Feature                                  | @suspensive/react | react-error-boundary   | React Class Component  |
 | ---------------------------------------- | ----------------- | ---------------------- | ---------------------- |
 | Basic error catching                     | ✅                | ✅                     | ✅                     |
@@ -25,8 +23,6 @@ this component can handle any errors in children.
 | HOC support                              | ✅ (with)         | ✅ (withErrorBoundary) | ❌                     |
 | TypeScript error type inference          | ✅ (Advanced)     | ✅ (Basic)             | ⚠️ (Manual)            |
 | Declarative API                          | ✅                | ✅                     | ❌                     |
-
-### Comparison Examples
 
 <Tabs items={['@suspensive/react', 'react-error-boundary', 'React Class']}>
 <Tabs.Tab>
@@ -174,7 +170,7 @@ const SuspensiveExample = () => (
 
 Main API differences:
 
-- `fallbackRender` → `fallback`
+- `fallback`, `fallbackRender`, `FallbackComponent` → `fallback`
 - `resetErrorBoundary` → `reset` (in fallback props)
 
 </Tabs.Tab>
