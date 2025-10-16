@@ -11,19 +11,19 @@ import { Callout, Sandpack } from '@/components'
 
 ### 기능 비교
 
-| 기능 | @suspensive/react | react-error-boundary |
-|------|-------------------|---------------------|
-| 기본 에러 캐칭 | ✅ | ✅ |
-| 에러 및 리셋 기능이 있는 Fallback UI | ✅ | ✅ |
-| resetKeys로 리셋 | ✅ | ✅ |
-| onReset 콜백 | ✅ | ✅ |
-| onError 콜백 | ✅ | ✅ |
-| 조건부 에러 캐칭 (shouldCatch) | ✅ | ❌ |
-| useErrorBoundary 훅 | ✅ | ✅ |
-| useErrorBoundaryFallbackProps 훅 | ✅ | ❌ |
-| ErrorBoundaryGroup | ✅ | ❌ |
-| HOC 지원 (ErrorBoundary.with) | ✅ | ✅ (withErrorBoundary) |
-| TypeScript 에러 타입 추론 | ✅ (고급) | ✅ (기본) |
+| 기능                                 | @suspensive/react | react-error-boundary   |
+| ------------------------------------ | ----------------- | ---------------------- |
+| 기본 에러 캐칭                       | ✅                | ✅                     |
+| 에러 및 리셋 기능이 있는 Fallback UI | ✅                | ✅                     |
+| resetKeys로 리셋                     | ✅                | ✅                     |
+| onReset 콜백                         | ✅                | ✅                     |
+| onError 콜백                         | ✅                | ✅                     |
+| 조건부 에러 캐칭 (shouldCatch)       | ✅                | ❌                     |
+| useErrorBoundary 훅                  | ✅                | ✅                     |
+| useErrorBoundaryFallbackProps 훅     | ✅                | ❌                     |
+| ErrorBoundaryGroup                   | ✅                | ❌                     |
+| HOC 지원 (ErrorBoundary.with)        | ✅                | ✅ (withErrorBoundary) |
+| TypeScript 에러 타입 추론            | ✅ (고급)         | ✅ (기본)              |
 
 ### @suspensive/react의 주요 장점
 
@@ -43,7 +43,7 @@ react-error-boundary를 사용하고 있다면, `@suspensive/react`로 마이그
 // react-error-boundary
 import { ErrorBoundary } from 'react-error-boundary'
 
-<ErrorBoundary
+;<ErrorBoundary
   fallbackRender={({ error, resetErrorBoundary }) => (
     <div>
       <button onClick={resetErrorBoundary}>리셋</button>
@@ -58,7 +58,7 @@ import { ErrorBoundary } from 'react-error-boundary'
 // @suspensive/react - 동일한 기능
 import { ErrorBoundary } from '@suspensive/react'
 
-<ErrorBoundary
+;<ErrorBoundary
   fallback={({ error, reset }) => (
     <div>
       <button onClick={reset}>리셋</button>
@@ -72,6 +72,7 @@ import { ErrorBoundary } from '@suspensive/react'
 ```
 
 주요 차이점:
+
 - `fallbackRender` → `fallback`
 - `resetErrorBoundary` → `reset` (fallback props에서)
 

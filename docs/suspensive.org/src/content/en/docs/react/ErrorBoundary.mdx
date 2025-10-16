@@ -11,19 +11,19 @@ this component can handle any errors in children.
 
 ### Feature Comparison
 
-| Feature | @suspensive/react | react-error-boundary |
-|---------|-------------------|---------------------|
-| Basic error catching | ✅ | ✅ |
-| Fallback UI with error & reset | ✅ | ✅ |
-| Reset with resetKeys | ✅ | ✅ |
-| onReset callback | ✅ | ✅ |
-| onError callback | ✅ | ✅ |
-| Conditional error catching (shouldCatch) | ✅ | ❌ |
-| useErrorBoundary hook | ✅ | ✅ |
-| useErrorBoundaryFallbackProps hook | ✅ | ❌ |
-| ErrorBoundaryGroup | ✅ | ❌ |
-| HOC support (ErrorBoundary.with) | ✅ | ✅ (withErrorBoundary) |
-| TypeScript error type inference | ✅ (Advanced) | ✅ (Basic) |
+| Feature                                  | @suspensive/react | react-error-boundary   |
+| ---------------------------------------- | ----------------- | ---------------------- |
+| Basic error catching                     | ✅                | ✅                     |
+| Fallback UI with error & reset           | ✅                | ✅                     |
+| Reset with resetKeys                     | ✅                | ✅                     |
+| onReset callback                         | ✅                | ✅                     |
+| onError callback                         | ✅                | ✅                     |
+| Conditional error catching (shouldCatch) | ✅                | ❌                     |
+| useErrorBoundary hook                    | ✅                | ✅                     |
+| useErrorBoundaryFallbackProps hook       | ✅                | ❌                     |
+| ErrorBoundaryGroup                       | ✅                | ❌                     |
+| HOC support (ErrorBoundary.with)         | ✅                | ✅ (withErrorBoundary) |
+| TypeScript error type inference          | ✅ (Advanced)     | ✅ (Basic)             |
 
 ### Key Advantages of @suspensive/react
 
@@ -43,7 +43,7 @@ If you're using react-error-boundary, migrating to `@suspensive/react` is straig
 // react-error-boundary
 import { ErrorBoundary } from 'react-error-boundary'
 
-<ErrorBoundary
+;<ErrorBoundary
   fallbackRender={({ error, resetErrorBoundary }) => (
     <div>
       <button onClick={resetErrorBoundary}>Reset</button>
@@ -58,7 +58,7 @@ import { ErrorBoundary } from 'react-error-boundary'
 // @suspensive/react - same functionality
 import { ErrorBoundary } from '@suspensive/react'
 
-<ErrorBoundary
+;<ErrorBoundary
   fallback={({ error, reset }) => (
     <div>
       <button onClick={reset}>Reset</button>
@@ -72,6 +72,7 @@ import { ErrorBoundary } from '@suspensive/react'
 ```
 
 The main differences:
+
 - `fallbackRender` → `fallback`
 - `resetErrorBoundary` → `reset` (in fallback props)
 
