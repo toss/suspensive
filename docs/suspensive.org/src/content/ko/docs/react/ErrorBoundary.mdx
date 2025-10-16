@@ -209,14 +209,17 @@ class ErrorBoundary extends Component {
 
 // @suspensive/react - 훨씬 간단합니다!
 import { ErrorBoundary } from '@suspensive/react'
-;<ErrorBoundary
-  fallback={({ error, reset }) => (
-    <FallbackComponent error={error} reset={reset} />
-  )}
-  onError={(error, errorInfo) => logErrorToService(error, errorInfo)}
->
-  <YourComponent />
-</ErrorBoundary>
+
+const SuspensiveExample = () => (
+  <ErrorBoundary
+    fallback={({ error, reset }) => (
+      <FallbackComponent error={error} reset={reset} />
+    )}
+    onError={(error, errorInfo) => logErrorToService(error, errorInfo)}
+  >
+    <YourComponent />
+  </ErrorBoundary>
+)
 ```
 
 </Tabs.Tab>
