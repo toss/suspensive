@@ -133,31 +133,37 @@ react-error-boundary를 사용하고 있다면, `@suspensive/react`로 마이그
 ```tsx
 // react-error-boundary
 import { ErrorBoundary } from "react-error-boundary";
-<ErrorBoundary
-  fallbackRender={({ error, resetErrorBoundary }) => (
-    <div>
-      <button onClick={resetErrorBoundary}>리셋</button>
-      {error.message}
-    </div>
-  )}
-  onReset={() => console.log("reset")}
->
-  <YourComponent />
-</ErrorBoundary>;
+
+const ReactErrorBoundaryExample = () => (
+  <ErrorBoundary
+    fallbackRender={({ error, resetErrorBoundary }) => (
+      <div>
+        <button onClick={resetErrorBoundary}>리셋</button>
+        {error.message}
+      </div>
+    )}
+    onReset={() => console.log("reset")}
+  >
+    <YourComponent />
+  </ErrorBoundary>
+);
 
 // @suspensive/react - 동일한 기능
 import { ErrorBoundary } from "@suspensive/react";
-<ErrorBoundary
-  fallback={({ error, reset }) => (
-    <div>
-      <button onClick={reset}>리셋</button>
-      {error.message}
-    </div>
-  )}
-  onReset={() => console.log("reset")}
->
-  <YourComponent />
-</ErrorBoundary>;
+
+const SuspensiveErrorBoundaryExample = () => (
+  <ErrorBoundary
+    fallback={({ error, reset }) => (
+      <div>
+        <button onClick={reset}>리셋</button>
+        {error.message}
+      </div>
+    )}
+    onReset={() => console.log("reset")}
+  >
+    <YourComponent />
+  </ErrorBoundary>
+);
 ```
 
 주요 API 차이점:
@@ -165,7 +171,7 @@ import { ErrorBoundary } from "@suspensive/react";
 - `fallbackRender` → `fallback`
 - `resetErrorBoundary` → `reset` (fallback props에서)
 
-  </Tabs.Tab>
+    </Tabs.Tab>
 <Tabs.Tab>
 
 React 클래스 컴포넌트를 에러 경계로 사용하고 있다면, `@suspensive/react`는 훨씬 간단한 선언적 API를 제공합니다:

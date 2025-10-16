@@ -133,31 +133,37 @@ If you're using react-error-boundary, migrating to `@suspensive/react` is straig
 ```tsx
 // react-error-boundary
 import { ErrorBoundary } from "react-error-boundary";
-<ErrorBoundary
-  fallbackRender={({ error, resetErrorBoundary }) => (
-    <div>
-      <button onClick={resetErrorBoundary}>Reset</button>
-      {error.message}
-    </div>
-  )}
-  onReset={() => console.log("reset")}
->
-  <YourComponent />
-</ErrorBoundary>;
+
+const ReactErrorBoundaryExample = () => (
+  <ErrorBoundary
+    fallbackRender={({ error, resetErrorBoundary }) => (
+      <div>
+        <button onClick={resetErrorBoundary}>Reset</button>
+        {error.message}
+      </div>
+    )}
+    onReset={() => console.log("reset")}
+  >
+    <YourComponent />
+  </ErrorBoundary>
+);
 
 // @suspensive/react - same functionality
 import { ErrorBoundary } from "@suspensive/react";
-<ErrorBoundary
-  fallback={({ error, reset }) => (
-    <div>
-      <button onClick={reset}>Reset</button>
-      {error.message}
-    </div>
-  )}
-  onReset={() => console.log("reset")}
->
-  <YourComponent />
-</ErrorBoundary>;
+
+const SuspensiveErrorBoundaryExample = () => (
+  <ErrorBoundary
+    fallback={({ error, reset }) => (
+      <div>
+        <button onClick={reset}>Reset</button>
+        {error.message}
+      </div>
+    )}
+    onReset={() => console.log("reset")}
+  >
+    <YourComponent />
+  </ErrorBoundary>
+);
 ```
 
 Main API differences:
@@ -165,7 +171,7 @@ Main API differences:
 - `fallbackRender` → `fallback`
 - `resetErrorBoundary` → `reset` (in fallback props)
 
-  </Tabs.Tab>
+    </Tabs.Tab>
 <Tabs.Tab>
 
 If you're using React class components for error boundaries, `@suspensive/react` provides a much simpler declarative API:
