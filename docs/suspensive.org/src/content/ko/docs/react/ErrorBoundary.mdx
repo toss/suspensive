@@ -5,6 +5,227 @@ import { Callout, Sandpack } from '@/components'
 
 이 컴포넌트는 children에 에러가 발생하면 제어할 수 있습니다.
 
+## 비교
+
+`@suspensive/react`의 `<ErrorBoundary/>`는 React의 클래스 기반 에러 경계와 인기 있는 `react-error-boundary` 라이브러리에 대한 선언적이고 기능이 풍부한 대안을 제공합니다.
+
+| 기능                                 | @suspensive/react | react-error-boundary   | React 클래스 컴포넌트  |
+| ------------------------------------ | ----------------- | ---------------------- | ---------------------- |
+| 기본 에러 캐칭                       | ✅                | ✅                     | ✅                     |
+| 에러 및 리셋 기능이 있는 Fallback UI | ✅                | ✅                     | ⚠️ (수동)              |
+| resetKeys로 리셋                     | ✅                | ✅                     | ⚠️ (수동)              |
+| onReset 콜백                         | ✅                | ✅                     | ⚠️ (수동)              |
+| onError 콜백                         | ✅                | ✅                     | ✅ (componentDidCatch) |
+| 조건부 에러 캐칭 (shouldCatch)       | ✅                | ❌                     | ⚠️ (수동)              |
+| Fallback 에러 처리                   | ✅ (부모로 전달)  | ❌ (재귀적)            | ⚠️ (수동)              |
+| useErrorBoundary 훅                  | ✅                | ✅                     | ❌                     |
+| useErrorBoundaryFallbackProps 훅     | ✅                | ❌                     | ❌                     |
+| ErrorBoundaryGroup                   | ✅                | ❌                     | ❌                     |
+| HOC 지원                             | ✅ (with)         | ✅ (withErrorBoundary) | ❌                     |
+| TypeScript 에러 타입 추론            | ✅ (고급)         | ✅ (기본)              | ⚠️ (수동)              |
+| 선언적 API                           | ✅                | ✅                     | ❌                     |
+
+<Tabs items={['@suspensive/react', 'react-error-boundary', 'React 클래스']}>
+  <Tabs.Tab>
+
+```tsx
+import { ErrorBoundary } from '@suspensive/react'
+
+const SuspensiveExample = () => (
+  <ErrorBoundary
+    fallback={({ error, reset }) => (
+      <div>
+        <button onClick={reset}>리셋</button>
+        {error.message}
+      </div>
+    )}
+  >
+    <YourComponent />
+  </ErrorBoundary>
+)
+```
+
+  </Tabs.Tab>
+  <Tabs.Tab>
+
+```tsx
+import { ErrorBoundary } from 'react-error-boundary'
+
+const ReactErrorBoundaryExample = () => (
+  <ErrorBoundary
+    fallbackRender={({ error, resetErrorBoundary }) => (
+      <div>
+        <button onClick={resetErrorBoundary}>리셋</button>
+        {error.message}
+      </div>
+    )}
+  >
+    <YourComponent />
+  </ErrorBoundary>
+)
+```
+
+  </Tabs.Tab>
+  <Tabs.Tab>
+
+```tsx
+import { Component, ReactNode } from 'react'
+
+class ErrorBoundary extends Component<
+  { children: ReactNode; fallback: (error: Error) => ReactNode },
+  { hasError: boolean; error: Error | null }
+> {
+  constructor(props) {
+    super(props)
+    this.state = { hasError: false, error: null }
+  }
+
+  static getDerivedStateFromError(error: Error) {
+    return { hasError: true, error }
+  }
+
+  componentDidCatch(error: Error, errorInfo: ErrorInfo) {
+    console.error('에러 캐치:', error, errorInfo)
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return this.props.fallback(this.state.error!)
+    }
+    return this.props.children
+  }
+}
+
+// 사용법
+const ReactClassErrorBoundaryExample = () => (
+  <ErrorBoundary
+    fallback={(error) => (
+      <div>
+        <button onClick={() => window.location.reload()}>리셋</button>
+        {error.message}
+      </div>
+    )}
+  >
+    <YourComponent />
+  </ErrorBoundary>
+)
+```
+
+  </Tabs.Tab>
+</Tabs>
+
+### @suspensive/react의 주요 장점
+
+1. **shouldCatch를 통한 고급 에러 필터링**: 다른 솔루션과 달리, `@suspensive/react`는 boolean, ErrorConstructor 또는 콜백 매처를 사용하여 특정 에러를 조건부로 캐치할 수 있습니다. 이를 통해 부모와 자식 ErrorBoundary가 서로 다른 에러 타입을 처리할 수 있는 정교한 에러 처리 전략을 구현할 수 있습니다.
+
+2. **적절한 Fallback 에러 처리**: `react-error-boundary`와 달리, fallback 컴포넌트에서 발생한 에러는 같은 경계에서 재귀적으로 캐치되는 대신 부모 ErrorBoundary로 전달됩니다. 이를 통해 무한 fallback 루프를 방지하고 더 예측 가능한 에러 처리 동작을 제공합니다. [자세히 알아보기](/docs/react/migration/migrate-to-v3#now-thrown-error-in-errorboundary-fallback-will-be-passed-to-parent-1409)
+
+3. **useErrorBoundaryFallbackProps**: fallback 컴포넌트에서 prop drilling을 제거하고 훅을 통해 `error`와 `reset`에 직접 접근할 수 있어, 깊게 중첩된 fallback UI를 훨씬 깔끔하게 만들 수 있습니다.
+
+4. **ErrorBoundaryGroup**: 여러 ErrorBoundary를 함께 관리하고 리셋할 수 있으며, 조정된 리셋 동작이 필요한 여러 에러 경계가 있는 복잡한 UI에 완벽합니다.
+
+5. **더 나은 TypeScript 지원**: shouldCatch 구성을 기반으로 에러 타입에 대한 고급 타입 추론을 제공하여 더 나은 자동 완성과 타입 안정성을 제공합니다.
+
+6. **클래스 컴포넌트 불필요**: 네이티브 React 에러 경계와 달리, 클래스 컴포넌트를 작성하지 않고도 완전히 선언적인 함수 컴포넌트 기반 접근 방식을 사용할 수 있습니다.
+
+### 마이그레이션 가이드
+
+<Tabs items={['react-error-boundary에서', 'React 클래스 컴포넌트에서']}>
+<Tabs.Tab>
+
+react-error-boundary를 사용하고 있다면, `@suspensive/react`로 마이그레이션하는 것은 간단합니다:
+
+```tsx
+// react-error-boundary
+import { ErrorBoundary } from 'react-error-boundary'
+
+const ReactErrorBoundaryExample = () => (
+  <ErrorBoundary
+    fallbackRender={({ error, resetErrorBoundary }) => (
+      <div>
+        <button onClick={resetErrorBoundary}>리셋</button>
+        {error.message}
+      </div>
+    )}
+    onReset={() => console.log('reset')}
+  >
+    <YourComponent />
+  </ErrorBoundary>
+)
+
+// @suspensive/react - 동일한 기능
+import { ErrorBoundary } from '@suspensive/react'
+
+const SuspensiveExample = () => (
+  <ErrorBoundary
+    fallback={({ error, reset }) => (
+      <div>
+        <button onClick={reset}>리셋</button>
+        {error.message}
+      </div>
+    )}
+    onReset={() => console.log('reset')}
+  >
+    <YourComponent />
+  </ErrorBoundary>
+)
+```
+
+주요 API 차이점:
+
+- `fallback`, `fallbackRender`, `FallbackComponent` → `fallback`
+- `resetErrorBoundary` → `reset` (fallback props에서)
+
+</Tabs.Tab>
+<Tabs.Tab>
+
+React 클래스 컴포넌트를 에러 경계로 사용하고 있다면, `@suspensive/react`는 훨씬 간단한 선언적 API를 제공합니다:
+
+```tsx
+// React 클래스 컴포넌트
+class ErrorBoundary extends Component {
+  state = { hasError: false, error: null }
+
+  static getDerivedStateFromError(error) {
+    return { hasError: true, error }
+  }
+
+  componentDidCatch(error, errorInfo) {
+    logErrorToService(error, errorInfo)
+  }
+
+  reset = () => {
+    this.setState({ hasError: false, error: null })
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return <FallbackComponent error={this.state.error} reset={this.reset} />
+    }
+    return this.props.children
+  }
+}
+
+// @suspensive/react - 훨씬 간단합니다!
+import { ErrorBoundary } from '@suspensive/react'
+
+const SuspensiveExample = () => (
+  <ErrorBoundary
+    fallback={({ error, reset }) => (
+      <FallbackComponent error={error} reset={reset} />
+    )}
+    onError={(error, errorInfo) => logErrorToService(error, errorInfo)}
+  >
+    <YourComponent />
+  </ErrorBoundary>
+)
+```
+
+</Tabs.Tab>
+</Tabs>
+
+---
+
 ### props.fallback
 
 `<ErrorBoundary/>`의 children에 error가 발생하면 error는 잡히고 fallback이 렌더링됩니다.
@@ -380,7 +601,7 @@ shouldCatch는 조건에 따라 `<ErrorBoundary/>`가 에러를 잡을지 결정
 Boolean, ErrorConstructor, Callback의 3가지 기준을 받으며 기본값은 `true`입니다.
 
 <Tabs items={['Boolean', 'ErrorConstructor', 'Callback']}>
-  <Tabs.Tab>
+<Tabs.Tab>
 
 ```tsx /shouldCatch/
 import { ErrorBoundary } from '@suspensive/react'
@@ -406,19 +627,25 @@ export const Example = () => {
 }
 ```
 
-  </Tabs.Tab>
-  <Tabs.Tab>
-  
+</Tabs.Tab>
+<Tabs.Tab>
+
 ```tsx /shouldCatch/
 import { ErrorBoundary } from '@suspensive/react'
 import { useState, useEffect, createElement } from 'react'
 
 export const Example = () => {
   return (
-    <ErrorBoundary fallback={({ error }) => <>Parent ErrorBoundary fallback: {error.message}</>}>
+    <ErrorBoundary
+      fallback={({ error }) => (
+        <>Parent ErrorBoundary fallback: {error.message}</>
+      )}
+    >
       <ErrorBoundary
         shouldCatch={CustomError}
-        fallback={({ error }) => <>Child ErrorBoundary fallback: {error.message}</>}
+        fallback={({ error }) => (
+          <>Child ErrorBoundary fallback: {error.message}</>
+        )}
       >
         <CustomErrorAfter2s />
       </ErrorBoundary>
@@ -427,19 +654,25 @@ export const Example = () => {
 }
 ```
 
-  </Tabs.Tab>
-  <Tabs.Tab>
-  
+</Tabs.Tab>
+<Tabs.Tab>
+
 ```tsx /shouldCatch/
 import { ErrorBoundary } from '@suspensive/react'
 import { useState, useEffect, createElement } from 'react'
 
 export const Example = () => {
   return (
-    <ErrorBoundary fallback={({ error }) => <>Parent ErrorBoundary fallback: {error.message}</>}>
+    <ErrorBoundary
+      fallback={({ error }) => (
+        <>Parent ErrorBoundary fallback: {error.message}</>
+      )}
+    >
       <ErrorBoundary
         shouldCatch={(error) => error instanceof CustomError}
-        fallback={({ error }) => <>Child ErrorBoundary fallback: {error.message}</>}
+        fallback={({ error }) => (
+          <>Child ErrorBoundary fallback: {error.message}</>
+        )}
       >
         <CustomErrorAfter2s />
       </ErrorBoundary>
@@ -448,7 +681,7 @@ export const Example = () => {
 }
 ```
 
-  </Tabs.Tab>
+</Tabs.Tab>
 </Tabs>
 
 배열을 통해 여러 조건을 적용할 수도 있습니다.
