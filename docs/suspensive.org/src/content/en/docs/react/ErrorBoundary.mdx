@@ -42,7 +42,6 @@ If you're using react-error-boundary, migrating to `@suspensive/react` is straig
 ```tsx
 // react-error-boundary
 import { ErrorBoundary } from 'react-error-boundary'
-
 ;<ErrorBoundary
   fallbackRender={({ error, resetErrorBoundary }) => (
     <div>
@@ -57,7 +56,6 @@ import { ErrorBoundary } from 'react-error-boundary'
 
 // @suspensive/react - same functionality
 import { ErrorBoundary } from '@suspensive/react'
-
 ;<ErrorBoundary
   fallback={({ error, reset }) => (
     <div>

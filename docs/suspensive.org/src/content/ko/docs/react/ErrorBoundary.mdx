@@ -42,7 +42,6 @@ react-error-boundary를 사용하고 있다면, `@suspensive/react`로 마이그
 ```tsx
 // react-error-boundary
 import { ErrorBoundary } from 'react-error-boundary'
-
 ;<ErrorBoundary
   fallbackRender={({ error, resetErrorBoundary }) => (
     <div>
@@ -57,7 +56,6 @@ import { ErrorBoundary } from 'react-error-boundary'
 
 // @suspensive/react - 동일한 기능
 import { ErrorBoundary } from '@suspensive/react'
-
 ;<ErrorBoundary
   fallback={({ error, reset }) => (
     <div>
