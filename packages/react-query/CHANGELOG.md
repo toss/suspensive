@@ -1,5 +1,17 @@
 # @suspensive/react-query
 
+## 3.13.0
+
+### Minor Changes
+
+- [#1791](https://github.com/toss/suspensive/pull/1791) [`192b6c8`](https://github.com/toss/suspensive/commit/192b6c86000995afb58610a441b6d9746c66a128) Thanks [@gwansikk](https://github.com/gwansikk)! - fix(react-query): add peer react19
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @suspensive/react-query-4@3.13.0
+  - @suspensive/react-query-5@3.13.0
+
 ## 3.12.0
 
 ### Patch Changes
