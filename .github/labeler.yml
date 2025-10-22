@@ -1,46 +1,46 @@
 '@suspensive/react':
   - changed-files:
-    - any-glob-to-any-file: 'packages/react/**/*'
+      - any-glob-to-any-file: 'packages/react/**/*'
 '@suspensive/react-dom':
   - changed-files:
-    - any-glob-to-any-file: 'packages/react-dom/**/*'
+      - any-glob-to-any-file: 'packages/react-dom/**/*'
 '@suspensive/react-native':
   - changed-files:
-    - any-glob-to-any-file: 'packages/react-native/**/*'
+      - any-glob-to-any-file: 'packages/react-native/**/*'
 '@suspensive/react-query':
   - changed-files:
-    - any-glob-to-any-file: 'packages/react-query/**/*'
+      - any-glob-to-any-file: 'packages/react-query/**/*'
 '@suspensive/react-query-4':
   - changed-files:
-    - any-glob-to-any-file: 'packages/react-query-4/**/*'
+      - any-glob-to-any-file: 'packages/react-query-4/**/*'
 '@suspensive/react-query-5':
   - changed-files:
-    - any-glob-to-any-file: 'packages/react-query-5/**/*'
+      - any-glob-to-any-file: 'packages/react-query-5/**/*'
 '@suspensive/jotai':
   - changed-files:
-    - any-glob-to-any-file: 'packages/jotai/**/*'
+      - any-glob-to-any-file: 'packages/jotai/**/*'
 '@suspensive/codemods':
   - changed-files:
-    - any-glob-to-any-file: 'packages/codemods/**/*'
+      - any-glob-to-any-file: 'packages/codemods/**/*'
 'suspensive.org':
   - changed-files:
-    - any-glob-to-any-file: 'docs/suspensive.org/**/*'
+      - any-glob-to-any-file: 'docs/suspensive.org/**/*'
 'examples':
   - changed-files:
-    - any-glob-to-any-file: 'examples/**/*'
+      - any-glob-to-any-file: 'examples/**/*'
 'eslint':
   - changed-files:
-    - any-glob-to-any-file:
-      - 'configs/eslint/**/*'
-      - '**/.eslint*'
+      - any-glob-to-any-file:
+          - 'configs/eslint/**/*'
+          - '**/.eslint*'
 'tsconfig':
   - changed-files:
-    - any-glob-to-any-file:
-      - 'configs/tsconfig/**/*'
-      - '**/.tsconfig*'
+      - any-glob-to-any-file:
+          - 'configs/tsconfig/**/*'
+          - '**/.tsconfig*'
 'dependencies':
   - changed-files:
-    - any-glob-to-any-file: 'pnpm-lock.yaml'
+      - any-glob-to-any-file: 'pnpm-lock.yaml'
 'workflows':
   - changed-files:
-    - any-glob-to-any-file: '.github/workflows/**/*'
+      - any-glob-to-any-file: '.github/workflows/**/*'
