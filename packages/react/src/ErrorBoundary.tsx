@@ -128,12 +128,20 @@ const initialErrorBoundaryState: ErrorBoundaryState = {
   error: null,
 }
 
+// Although `componentDidCatch` and `getDerivedStateFromError` are typed to accept an `Error` object,
+// they can also be invoked with non-error objects. This is why we need to convert them to Error instances.
+// See: https://github.com/getsentry/sentry-javascript/issues/6167
+const convertToError = (error: unknown): Error => {
+  return error instanceof Error ? error : new Error(String(error))
+}
+
 class BaseErrorBoundary<TShouldCatch extends ShouldCatch> extends Component<
   ErrorBoundaryProps<TShouldCatch>,
   ErrorBoundaryState
 > {
-  static getDerivedStateFromError(error: Error): ErrorBoundaryState {
-    return { isError: true, error }
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  static getDerivedStateFromError(error: any): ErrorBoundaryState {
+    return { isError: true, error: convertToError(error) }
   }
 
   state = initialErrorBoundaryState
@@ -146,8 +154,9 @@ class BaseErrorBoundary<TShouldCatch extends ShouldCatch> extends Component<
     }
   }
 
-  componentDidCatch(error: InferError<TShouldCatch>, info: ErrorInfo) {
-    this.props.onError?.(error, info)
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  componentDidCatch(error: any, info: ErrorInfo) {
+    this.props.onError?.(convertToError(error) as InferError<TShouldCatch>, info)
   }
 
   reset = () => {
