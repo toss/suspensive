@@ -9,6 +9,11 @@
   display: none; /* Chrome, Safari, Opera*/
 }
 
+:lang(ko) {
+  word-break: keep-all;
+  word-wrap: break-word;
+}
+
 body {
   @apply bg-white text-black transition-colors duration-300;
 }
