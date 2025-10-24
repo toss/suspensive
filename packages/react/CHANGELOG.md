@@ -1,5 +1,7 @@
 # @suspensive/react
 
+## 3.13.0
+
 ## 3.12.0
 
 ### Minor Changes
