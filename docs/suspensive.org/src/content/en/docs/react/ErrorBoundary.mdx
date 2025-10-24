@@ -5,6 +5,227 @@ import { Callout, Sandpack } from '@/components'
 
 this component can handle any errors in children.
 
+## Comparison
+
+`@suspensive/react`'s `<ErrorBoundary/>` provides a declarative, feature-rich alternative to React's class-based error boundaries and the popular `react-error-boundary` library.
+
+| Feature                                  | @suspensive/react | react-error-boundary   | React Class Component  |
+| ---------------------------------------- | ----------------- | ---------------------- | ---------------------- |
+| Basic error catching                     | ✅                | ✅                     | ✅                     |
+| Fallback UI with error & reset           | ✅                | ✅                     | ⚠️ (Manual)            |
+| Reset with resetKeys                     | ✅                | ✅                     | ⚠️ (Manual)            |
+| onReset callback                         | ✅                | ✅                     | ⚠️ (Manual)            |
+| onError callback                         | ✅                | ✅                     | ✅ (componentDidCatch) |
+| Conditional error catching (shouldCatch) | ✅                | ❌                     | ⚠️ (Manual)            |
+| Fallback error handling                  | ✅ (To parent)    | ❌ (Recursive)         | ⚠️ (Manual)            |
+| useErrorBoundary hook                    | ✅                | ✅                     | ❌                     |
+| useErrorBoundaryFallbackProps hook       | ✅                | ❌                     | ❌                     |
+| ErrorBoundaryGroup                       | ✅                | ❌                     | ❌                     |
+| HOC support                              | ✅ (with)         | ✅ (withErrorBoundary) | ❌                     |
+| TypeScript error type inference          | ✅ (Advanced)     | ✅ (Basic)             | ⚠️ (Manual)            |
+| Declarative API                          | ✅                | ✅                     | ❌                     |
+
+<Tabs items={['@suspensive/react', 'react-error-boundary', 'React Class']}>
+<Tabs.Tab>
+
+```tsx
+import { ErrorBoundary } from '@suspensive/react'
+
+const SuspensiveExample = () => (
+  <ErrorBoundary
+    fallback={({ error, reset }) => (
+      <div>
+        <button onClick={reset}>Reset</button>
+        {error.message}
+      </div>
+    )}
+  >
+    <YourComponent />
+  </ErrorBoundary>
+)
+```
+
+</Tabs.Tab>
+<Tabs.Tab>
+
+```tsx
+import { ErrorBoundary } from 'react-error-boundary'
+
+const ReactErrorBoundaryExample = () => (
+  <ErrorBoundary
+    fallbackRender={({ error, resetErrorBoundary }) => (
+      <div>
+        <button onClick={resetErrorBoundary}>Reset</button>
+        {error.message}
+      </div>
+    )}
+  >
+    <YourComponent />
+  </ErrorBoundary>
+)
+```
+
+</Tabs.Tab>
+<Tabs.Tab>
+
+```tsx
+import { Component, ReactNode } from 'react'
+
+class ErrorBoundary extends Component<
+  { children: ReactNode; fallback: (error: Error) => ReactNode },
+  { hasError: boolean; error: Error | null }
+> {
+  constructor(props) {
+    super(props)
+    this.state = { hasError: false, error: null }
+  }
+
+  static getDerivedStateFromError(error: Error) {
+    return { hasError: true, error }
+  }
+
+  componentDidCatch(error: Error, errorInfo: ErrorInfo) {
+    console.error('Error caught:', error, errorInfo)
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return this.props.fallback(this.state.error!)
+    }
+    return this.props.children
+  }
+}
+
+// Usage
+const ReactClassExample = () => (
+  <ErrorBoundary
+    fallback={(error) => (
+      <div>
+        <button onClick={() => window.location.reload()}>Reset</button>
+        {error.message}
+      </div>
+    )}
+  >
+    <YourComponent />
+  </ErrorBoundary>
+)
+```
+
+</Tabs.Tab>
+</Tabs>
+
+### Key Advantages of @suspensive/react
+
+1. **Advanced Error Filtering with shouldCatch**: Unlike other solutions, `@suspensive/react` allows you to conditionally catch specific errors using boolean, ErrorConstructor, or callback matchers. This enables sophisticated error handling strategies where parent and child ErrorBoundaries can handle different error types.
+
+2. **Proper Fallback Error Handling**: Unlike `react-error-boundary`, errors thrown in fallback components are passed to the parent ErrorBoundary instead of being caught recursively by the same boundary. This prevents infinite fallback loops and provides more predictable error handling behavior. [Learn more](/docs/react/migration/migrate-to-v3#now-thrown-error-in-errorboundary-fallback-will-be-passed-to-parent-1409)
+
+3. **useErrorBoundaryFallbackProps**: Eliminates prop drilling in fallback components by providing direct access to `error` and `reset` through a hook, making deeply nested fallback UIs much cleaner.
+
+4. **ErrorBoundaryGroup**: Manage and reset multiple ErrorBoundaries together, perfect for complex UIs with multiple error boundaries that need coordinated reset behavior.
+
+5. **Better TypeScript Support**: Advanced type inference for error types based on shouldCatch configuration, providing better autocomplete and type safety.
+
+6. **No Class Components Required**: Unlike native React error boundaries, you can use a fully declarative, function component-based approach without writing class components.
+
+### Migration Guide
+
+<Tabs items={['From react-error-boundary', 'From React Class Component']}>
+<Tabs.Tab>
+
+If you're using react-error-boundary, migrating to `@suspensive/react` is straightforward:
+
+```tsx
+// react-error-boundary
+import { ErrorBoundary } from 'react-error-boundary'
+
+const ReactErrorBoundaryExample = () => (
+  <ErrorBoundary
+    fallbackRender={({ error, resetErrorBoundary }) => (
+      <div>
+        <button onClick={resetErrorBoundary}>Reset</button>
+        {error.message}
+      </div>
+    )}
+    onReset={() => console.log('reset')}
+  >
+    <YourComponent />
+  </ErrorBoundary>
+)
+
+// @suspensive/react - same functionality
+import { ErrorBoundary } from '@suspensive/react'
+
+const SuspensiveExample = () => (
+  <ErrorBoundary
+    fallback={({ error, reset }) => (
+      <div>
+        <button onClick={reset}>Reset</button>
+        {error.message}
+      </div>
+    )}
+    onReset={() => console.log('reset')}
+  >
+    <YourComponent />
+  </ErrorBoundary>
+)
+```
+
+Main API differences:
+
+- `fallback`, `fallbackRender`, `FallbackComponent` → `fallback`
+- `resetErrorBoundary` → `reset` (in fallback props)
+
+</Tabs.Tab>
+<Tabs.Tab>
+
+If you're using React class components for error boundaries, `@suspensive/react` provides a much simpler declarative API:
+
+```tsx
+// React Class Component
+class ErrorBoundary extends Component {
+  state = { hasError: false, error: null }
+
+  static getDerivedStateFromError(error) {
+    return { hasError: true, error }
+  }
+
+  componentDidCatch(error, errorInfo) {
+    logErrorToService(error, errorInfo)
+  }
+
+  reset = () => {
+    this.setState({ hasError: false, error: null })
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return <FallbackComponent error={this.state.error} reset={this.reset} />
+    }
+    return this.props.children
+  }
+}
+
+// @suspensive/react - much simpler!
+import { ErrorBoundary } from '@suspensive/react'
+
+const SuspensiveExample = () => (
+  <ErrorBoundary
+    fallback={({ error, reset }) => (
+      <FallbackComponent error={error} reset={reset} />
+    )}
+    onError={(error, errorInfo) => logErrorToService(error, errorInfo)}
+  >
+    <YourComponent />
+  </ErrorBoundary>
+)
+```
+
+</Tabs.Tab>
+</Tabs>
+
+---
+
 ### props.fallback
 
 If there is any thrown error in children of `<ErrorBoundary/>`, Error will be caught and then fallback will be rendered.
@@ -376,29 +597,8 @@ shouldCatch determines whether `<ErrorBoundary/>` should catch errors based on c
 
 It accepts three criteria: Boolean, ErrorConstructor, and Callback, and defaults to true.
 
-<Tabs items={['Boolean', 'ErrorConstructor', 'Callback']}>
-  <Tabs.Tab>
-  
-```tsx /shouldCatch/
-import { ErrorBoundary } from '@suspensive/react'
-import { useState, useEffect, createElement } from 'react'
-
-export const Example = () => {
-  return (
-    <ErrorBoundary fallback={({ error }) => <>Parent ErrorBoundary fallback: {error.message}</>}>
-      <ErrorBoundary
-        shouldCatch={false}
-        fallback={({ error }) => <>Child ErrorBoundary fallback: {error.message}</>}
-      >
-        <CustomErrorAfter2s />
-      </ErrorBoundary>
-    </ErrorBoundary>
-  )
-}
-```
-
-  </Tabs.Tab>
-  <Tabs.Tab>
+<Tabs items={['ErrorConstructor', 'Callback', 'Boolean']}>
+<Tabs.Tab>
 
 ```tsx /shouldCatch/
 import { ErrorBoundary } from '@suspensive/react'
@@ -424,19 +624,25 @@ export const Example = () => {
 }
 ```
 
-  </Tabs.Tab>
-  <Tabs.Tab>
-  
+</Tabs.Tab>
+<Tabs.Tab>
+
 ```tsx /shouldCatch/
 import { ErrorBoundary } from '@suspensive/react'
 import { useState, useEffect, createElement } from 'react'
 
 export const Example = () => {
   return (
-    <ErrorBoundary fallback={({ error }) => <>Parent ErrorBoundary fallback: {error.message}</>}>
+    <ErrorBoundary
+      fallback={({ error }) => (
+        <>Parent ErrorBoundary fallback: {error.message}</>
+      )}
+    >
       <ErrorBoundary
         shouldCatch={(error) => error instanceof CustomError}
-        fallback={({ error }) => <>Child ErrorBoundary fallback: {error.message}</>}
+        fallback={({ error }) => (
+          <>Child ErrorBoundary fallback: {error.message}</>
+        )}
       >
         <CustomErrorAfter2s />
       </ErrorBoundary>
@@ -445,7 +651,34 @@ export const Example = () => {
 }
 ```
 
-  </Tabs.Tab>
+</Tabs.Tab>
+<Tabs.Tab>
+
+```tsx /shouldCatch/
+import { ErrorBoundary } from '@suspensive/react'
+import { useState, useEffect, createElement } from 'react'
+
+export const Example = () => {
+  return (
+    <ErrorBoundary
+      fallback={({ error }) => (
+        <>Parent ErrorBoundary fallback: {error.message}</>
+      )}
+    >
+      <ErrorBoundary
+        shouldCatch={false}
+        fallback={({ error }) => (
+          <>Child ErrorBoundary fallback: {error.message}</>
+        )}
+      >
+        <CustomErrorAfter2s />
+      </ErrorBoundary>
+    </ErrorBoundary>
+  )
+}
+```
+
+</Tabs.Tab>
 </Tabs>
 
 You can also apply multiple criteria through array.
