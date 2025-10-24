@@ -1,4 +1,5 @@
-import { type ReactNode, use } from 'react'
+import type { ReactNode } from 'react'
+import { use } from './utils/use'
 
 // TODO: implement cache value
 const imageCache = new Map<string, Promise<HTMLImageElement>>()

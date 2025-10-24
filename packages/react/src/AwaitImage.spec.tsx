@@ -20,7 +20,7 @@ afterEach(() => {
 })
 
 describe('<AwaitImage />', () => {
-  it('renders children after image load', async () => {
+  it('renders children after image load', () => {
     render(
       <Suspense fallback={<div>Loading...</div>}>
         <AwaitImage src="/img.png">
