@@ -1,12 +1,15 @@
 'use client'
 
+import { useIsClient } from '@suspensive/react'
 import { motion } from 'motion/react'
 import { useTheme } from 'nextra-theme-docs'
 
 export const Logo = () => {
   const { resolvedTheme } = useTheme()
 
-  return (
+  const isClient = useIsClient()
+
+  return isClient ? (
     <motion.div>
       <div className="relative flex items-center gap-1">
         <svg
@@ -26,5 +29,5 @@ export const Logo = () => {
         <span className="absolute -top-1 -right-3 text-[8px]">v3</span>
       </div>
     </motion.div>
-  )
+  ) : null
 }
