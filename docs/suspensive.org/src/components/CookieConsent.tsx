@@ -3,9 +3,10 @@
 import { ClientOnly } from '@suspensive/react'
 import { motion } from 'motion/react'
 import { useTheme } from 'nextra-theme-docs'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useLocalStorage } from 'usehooks-ts'
 import { STORAGE_KEYS } from '@/constants'
+import { isUserInEEA } from '@/utils/geolocation'
 
 export const CookieConsent = ClientOnly.with({}, () => {
   const { resolvedTheme } = useTheme()
@@ -13,12 +14,30 @@ export const CookieConsent = ClientOnly.with({}, () => {
     STORAGE_KEYS.COOKIE_CONSENT,
     null
   )
+  const [isEEAUser, setIsEEAUser] = useState<boolean | null>(null)
+
+  useEffect(() => {
+    // Detect if user is in EEA
+    const inEEA = isUserInEEA()
+    setIsEEAUser(inEEA)
+
+    // If user is not in EEA and consent hasn't been set, automatically grant consent
+    if (!inEEA && consent === null) {
+      setConsent('granted')
+      window.clarity?.('consent', true)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   useEffect(() => {
     if (consent === 'granted') window.clarity?.('consent', true)
   }, [consent])
 
-  if (consent === 'granted' || consent === 'denied') {
+  // Don't show banner if:
+  // 1. Consent has already been granted or denied
+  // 2. User is not in EEA (consent is auto-granted)
+  // 3. Still detecting user location
+  if (consent === 'granted' || consent === 'denied' || !isEEAUser) {
     return null
   }
 
