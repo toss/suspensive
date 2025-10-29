@@ -22,12 +22,15 @@ export const CookieConsent = ClientOnly.with({}, () => {
     setIsEEAUser(inEEA)
 
     // If user is not in EEA and consent hasn't been set, automatically grant consent
-    if (!inEEA && consent === null) {
-      setConsent('granted')
-      window.clarity?.('consent', true)
+    if (!inEEA) {
+      if (consent === null) {
+        setConsent('granted')
+      }
+      if (consent === 'granted') {
+        window.clarity?.('consent', true)
+      }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [consent, setConsent])
 
   useEffect(() => {
     if (consent === 'granted') window.clarity?.('consent', true)
@@ -35,9 +38,14 @@ export const CookieConsent = ClientOnly.with({}, () => {
 
   // Don't show banner if:
   // 1. Consent has already been granted or denied
-  // 2. User is not in EEA (consent is auto-granted)
-  // 3. Still detecting user location
-  if (consent === 'granted' || consent === 'denied' || !isEEAUser) {
+  // 2. User is confirmed to be outside EEA (consent is auto-granted)
+  // 3. Still detecting user location (isEEAUser is null)
+  if (
+    consent === 'granted' ||
+    consent === 'denied' ||
+    isEEAUser === false ||
+    isEEAUser === null
+  ) {
     return null
   }
 

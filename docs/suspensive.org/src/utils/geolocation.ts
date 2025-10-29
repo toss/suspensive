@@ -45,11 +45,6 @@ const EEA_TIMEZONES = [
   'Europe/Monaco',
   'Europe/San_Marino',
   'Europe/Vatican',
-  'Europe/Belgrade', // Serbia (candidate)
-  'Europe/Sarajevo', // Bosnia (candidate)
-  'Europe/Podgorica', // Montenegro (candidate)
-  'Europe/Skopje', // North Macedonia (candidate)
-  'Europe/Tirane', // Albania (candidate)
 ]
 
 /**
