@@ -5,7 +5,7 @@ import { ArrowRight } from 'lucide-react'
 import { motion } from 'motion/react'
 import Link from 'next/link'
 import { useTheme } from 'nextra-theme-docs'
-import { type ReactNode, useEffect, useRef } from 'react'
+import { type ReactNode, Suspense, useEffect, useRef } from 'react'
 import { BorderTrail } from './BorderTrail'
 import { GlowEffect } from './GlowEffect'
 import { LogoImage } from './Logo'
@@ -48,7 +48,9 @@ export const HomePage = ({
         <div className="flex flex-col items-center justify-center gap-8 text-center">
           <div className="flex flex-col items-center">
             <div className="align-center mx-6 mt-24 -mb-6 flex justify-center pt-18 pb-12">
-              <LogoImage size={2.4} />
+              <Suspense>
+                <LogoImage size={2.4} />
+              </Suspense>
             </div>
             <NpmInstallCopyButton />
           </div>
