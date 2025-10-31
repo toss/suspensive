@@ -13,8 +13,8 @@
     "start": "next start -p 4100"
   },
   "dependencies": {
-    "@suspensive/react": "workspace:*",
     "@suspensive/next": "workspace:*",
+    "@suspensive/react": "workspace:*",
     "@suspensive/react-query-5": "workspace:*",
     "@tanstack/react-query": "catalog:react-query5",
     "@tanstack/react-query-devtools": "catalog:react-query5",
