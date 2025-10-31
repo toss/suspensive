@@ -47,9 +47,6 @@ catalogs:
     '@tanstack/react-query-devtools':
       specifier: ^5.85.9
       version: 5.87.4
-    '@tanstack/react-query-next-experimental':
-      specifier: ^5.85.9
-      version: 5.87.4
   react18:
     '@types/react':
       specifier: 18.3.12
@@ -321,6 +318,9 @@ importers:
 
   examples/next-streaming-react-query:
     dependencies:
+      '@suspensive/next':
+        specifier: workspace:*
+        version: link:../../packages/next
       '@suspensive/react':
         specifier: workspace:*
         version: link:../../packages/react
@@ -333,9 +333,6 @@ importers:
       '@tanstack/react-query-devtools':
         specifier: catalog:react-query5
         version: 5.87.4(@tanstack/react-query@5.87.4(react@19.1.1))(react@19.1.1)
-      '@tanstack/react-query-next-experimental':
-        specifier: catalog:react-query5
-        version: 5.87.4(@tanstack/react-query@5.87.4(react@19.1.1))(next@15.5.6(react-dom@19.1.1(react@19.1.1))(react@19.1.1))(react@19.1.1)
       next:
         specifier: 'catalog:'
         version: 15.5.6(@babel/core@7.28.4)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
@@ -572,6 +569,21 @@ importers:
       react:
         specifier: catalog:react19
         version: 19.1.1
+
+  packages/next:
+    devDependencies:
+      '@suspensive/eslint-config':
+        specifier: workspace:*
+        version: link:../../configs/eslint-config
+      '@suspensive/tsconfig':
+        specifier: workspace:*
+        version: link:../../configs/tsconfig
+      '@suspensive/tsdown':
+        specifier: workspace:*
+        version: link:../../configs/tsdown
+      next:
+        specifier: 'catalog:'
+        version: 15.5.6(@babel/core@7.28.4)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
 
   packages/react:
     devDependencies:
@@ -3492,13 +3504,6 @@ packages:
     resolution: {integrity: sha512-JYcnVJBBW1DCPyNGM0S2CyrLpe6KFiL2gpYd/k9tAp62Du7+Y27zkzd+dKFyxpFadYaTxsx4kUA7YvnkMLVUoQ==}
     peerDependencies:
       '@tanstack/react-query': ^5.87.4
-      react: ^18 || ^19
-
-  '@tanstack/react-query-next-experimental@5.87.4':
-    resolution: {integrity: sha512-58nv1vqNzGpwsUG6C8hSOri7kT2TvzxQd5oz195FtQaNAeID0HIGNduvQBylxHeBxHaujuMksh/A+MxfbzZ5YQ==}
-    peerDependencies:
-      '@tanstack/react-query': ^5.87.4
-      next: ^13 || ^14 || ^15
       react: ^18 || ^19
 
   '@tanstack/react-query@4.42.0':
@@ -14094,12 +14099,6 @@ snapshots:
     dependencies:
       '@tanstack/query-devtools': 5.87.3
       '@tanstack/react-query': 5.87.4(react@19.1.1)
-      react: 19.1.1
-
-  '@tanstack/react-query-next-experimental@5.87.4(@tanstack/react-query@5.87.4(react@19.1.1))(next@15.5.6(react-dom@19.1.1(react@19.1.1))(react@19.1.1))(react@19.1.1)':
-    dependencies:
-      '@tanstack/react-query': 5.87.4(react@19.1.1)
-      next: 15.5.6(@babel/core@7.28.4)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
       react: 19.1.1
 
   '@tanstack/react-query@4.42.0(react-dom@19.1.1(react@19.1.1))(react-native@0.76.9(@babel/core@7.28.4)(@babel/preset-env@7.28.3(@babel/core@7.28.4))(@types/react@19.1.13)(react@19.1.1))(react@19.1.1)':

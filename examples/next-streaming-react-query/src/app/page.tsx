@@ -3,7 +3,6 @@
 import { Suspense } from '@suspensive/react'
 import { SuspenseQuery } from '@suspensive/react-query-5'
 import { useQueryClient, useSuspenseQuery } from '@tanstack/react-query'
-import Link from 'next/link'
 import type { ReactNode } from 'react'
 import { query } from '~/query'
 
@@ -19,7 +18,6 @@ export default function Page() {
 
   return (
     <>
-      <Link href="/test">to test page</Link>
       <Suspense>
         <Text ms={100} />
       </Suspense>
