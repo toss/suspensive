@@ -204,11 +204,10 @@ const SuspensiveExample = () => (
 
 ```tsx
 // @sentry/react
-import { ErrorBoundary } from '@sentry/react'
 import * as Sentry from '@sentry/react'
 
 const SentryExample = () => (
-  <ErrorBoundary
+  <Sentry.ErrorBoundary
     fallback={({ error, resetError }) => (
       <div>
         <button onClick={resetError}>리셋</button>
@@ -221,7 +220,7 @@ const SentryExample = () => (
     }}
   >
     <YourComponent />
-  </ErrorBoundary>
+  </Sentry.ErrorBoundary>
 )
 
 // @suspensive/react - 수동 Sentry 통합과 함께
