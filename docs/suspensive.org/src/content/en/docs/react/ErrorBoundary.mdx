@@ -239,7 +239,7 @@ const SuspensiveExample = () => (
     onError={(error, errorInfo) => {
       // Manually capture error in Sentry if needed
       Sentry.captureException(error, {
-        contexts: { react: { componentStack: errorInfo.componentStack } }
+        contexts: { react: { componentStack: errorInfo.componentStack } },
       })
     }}
   >
