@@ -7,25 +7,26 @@ import { Callout, Sandpack } from '@/components'
 
 ## 비교
 
-`@suspensive/react`의 `<ErrorBoundary/>`는 React의 클래스 기반 에러 경계와 인기 있는 `react-error-boundary` 라이브러리에 대한 선언적이고 기능이 풍부한 대안을 제공합니다.
+`@suspensive/react`의 `<ErrorBoundary/>`는 React의 클래스 기반 에러 경계와 인기 있는 `react-error-boundary` 및 `@sentry/react`와 같은 에러 경계 라이브러리에 대한 선언적이고 기능이 풍부한 대안을 제공합니다.
 
-| 기능                                 | @suspensive/react | react-error-boundary   | React 클래스 컴포넌트  |
-| ------------------------------------ | ----------------- | ---------------------- | ---------------------- |
-| 기본 에러 캐칭                       | ✅                | ✅                     | ✅                     |
-| 에러 및 리셋 기능이 있는 Fallback UI | ✅                | ✅                     | ⚠️ (수동)              |
-| resetKeys로 리셋                     | ✅                | ✅                     | ⚠️ (수동)              |
-| onReset 콜백                         | ✅                | ✅                     | ⚠️ (수동)              |
-| onError 콜백                         | ✅                | ✅                     | ✅ (componentDidCatch) |
-| 조건부 에러 캐칭 (shouldCatch)       | ✅                | ❌                     | ⚠️ (수동)              |
-| Fallback 에러 처리                   | ✅ (부모로 전달)  | ❌ (재귀적)            | ⚠️ (수동)              |
-| useErrorBoundary 훅                  | ✅                | ✅                     | ❌                     |
-| useErrorBoundaryFallbackProps 훅     | ✅                | ❌                     | ❌                     |
-| ErrorBoundaryGroup                   | ✅                | ❌                     | ❌                     |
-| HOC 지원                             | ✅ (with)         | ✅ (withErrorBoundary) | ❌                     |
-| TypeScript 에러 타입 추론            | ✅ (고급)         | ✅ (기본)              | ⚠️ (수동)              |
-| 선언적 API                           | ✅                | ✅                     | ❌                     |
+| 기능                                 | @suspensive/react | react-error-boundary   | @sentry/react          | React 클래스 컴포넌트  |
+| ------------------------------------ | ----------------- | ---------------------- | ---------------------- | ---------------------- |
+| 기본 에러 캐칭                       | ✅                | ✅                     | ✅                     | ✅                     |
+| 에러 및 리셋 기능이 있는 Fallback UI | ✅                | ✅                     | ✅                     | ⚠️ (수동)              |
+| resetKeys로 리셋                     | ✅                | ✅                     | ❌                     | ⚠️ (수동)              |
+| onReset 콜백                         | ✅                | ✅                     | ✅                     | ⚠️ (수동)              |
+| onError 콜백                         | ✅                | ✅                     | ✅                     | ✅ (componentDidCatch) |
+| 조건부 에러 캐칭 (shouldCatch)       | ✅                | ❌                     | ❌                     | ⚠️ (수동)              |
+| Fallback 에러 처리                   | ✅ (부모로 전달)  | ❌ (재귀적)            | ❌ (재귀적)            | ⚠️ (수동)              |
+| useErrorBoundary 훅                  | ✅                | ✅                     | ❌                     | ❌                     |
+| useErrorBoundaryFallbackProps 훅     | ✅                | ❌                     | ❌                     | ❌                     |
+| ErrorBoundaryGroup                   | ✅                | ❌                     | ❌                     | ❌                     |
+| HOC 지원                             | ✅ (with)         | ✅ (withErrorBoundary) | ✅ (withErrorBoundary) | ❌                     |
+| TypeScript 에러 타입 추론            | ✅ (고급)         | ✅ (기본)              | ✅ (기본)              | ⚠️ (수동)              |
+| 선언적 API                           | ✅                | ✅                     | ❌                     | ❌                     |
+| 자동 에러 보고                       | ❌                | ❌                     | ✅ (Sentry로)          | ❌                     |
 
-<Tabs items={['@suspensive/react', 'react-error-boundary', 'React 클래스']}>
+<Tabs items={['@suspensive/react', 'react-error-boundary', '@sentry/react', 'React 클래스']}>
   <Tabs.Tab>
 
 ```tsx
@@ -56,6 +57,26 @@ const ReactErrorBoundaryExample = () => (
     fallbackRender={({ error, resetErrorBoundary }) => (
       <div>
         <button onClick={resetErrorBoundary}>리셋</button>
+        {error.message}
+      </div>
+    )}
+  >
+    <YourComponent />
+  </ErrorBoundary>
+)
+```
+
+  </Tabs.Tab>
+  <Tabs.Tab>
+
+```tsx
+import { ErrorBoundary } from '@sentry/react'
+
+const SentryExample = () => (
+  <ErrorBoundary
+    fallback={({ error, resetError }) => (
+      <div>
+        <button onClick={resetError}>리셋</button>
         {error.message}
       </div>
     )}
@@ -130,7 +151,7 @@ const ReactClassErrorBoundaryExample = () => (
 
 ### 마이그레이션 가이드
 
-<Tabs items={['react-error-boundary에서', 'React 클래스 컴포넌트에서']}>
+<Tabs items={['react-error-boundary에서', '@sentry/react에서', 'React 클래스 컴포넌트에서']}>
 <Tabs.Tab>
 
 react-error-boundary를 사용하고 있다면, `@suspensive/react`로 마이그레이션하는 것은 간단합니다:
@@ -175,6 +196,64 @@ const SuspensiveExample = () => (
 
 - `fallback`, `fallbackRender`, `FallbackComponent` → `fallback`
 - `resetErrorBoundary` → `reset` (fallback props에서)
+
+</Tabs.Tab>
+<Tabs.Tab>
+
+`@sentry/react`를 사용하고 있다면, `@suspensive/react`로 마이그레이션하는 것은 간단합니다:
+
+```tsx
+// @sentry/react
+import { ErrorBoundary } from '@sentry/react'
+import * as Sentry from '@sentry/react'
+
+const SentryExample = () => (
+  <ErrorBoundary
+    fallback={({ error, resetError }) => (
+      <div>
+        <button onClick={resetError}>리셋</button>
+        {error.message}
+      </div>
+    )}
+    onError={(error, componentStack, eventId) => {
+      // 에러가 자동으로 Sentry로 전송됨
+      console.log('에러 캐치:', eventId)
+    }}
+  >
+    <YourComponent />
+  </ErrorBoundary>
+)
+
+// @suspensive/react - 수동 Sentry 통합과 함께
+import { ErrorBoundary } from '@suspensive/react'
+import * as Sentry from '@sentry/react'
+
+const SuspensiveExample = () => (
+  <ErrorBoundary
+    fallback={({ error, reset }) => (
+      <div>
+        <button onClick={reset}>리셋</button>
+        {error.message}
+      </div>
+    )}
+    onError={(error, errorInfo) => {
+      // 필요한 경우 수동으로 Sentry에 에러 캡처
+      Sentry.captureException(error, {
+        contexts: { react: { componentStack: errorInfo.componentStack } }
+      })
+    }}
+  >
+    <YourComponent />
+  </ErrorBoundary>
+)
+```
+
+주요 차이점:
+
+- `@sentry/react`는 자동으로 Sentry에 에러를 보고합니다
+- `@suspensive/react`는 `shouldCatch`를 통해 더 유연한 에러 처리를 제공합니다
+- `resetError` → `reset` (fallback props에서)
+- 수동 Sentry 통합은 무엇을 보고할지 더 많은 제어를 제공합니다
 
 </Tabs.Tab>
 <Tabs.Tab>
