@@ -2,7 +2,7 @@
   "name": "@suspensive/next",
   "version": "0.0.1",
   "private": true,
-  "description": "Suspensive interface for next",
+  "description": "Suspensive experimental interfaces for next",
   "keywords": [
     "suspensive",
     "next"
