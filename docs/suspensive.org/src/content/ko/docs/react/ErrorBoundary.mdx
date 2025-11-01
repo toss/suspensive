@@ -238,6 +238,7 @@ const SuspensiveExample = () => (
     onError={(error, errorInfo) => {
       // 필요한 경우 수동으로 Sentry에 에러 캡처
       const eventId = Sentry.captureReactException(error, errorInfo)
+      console.log('에러 캐치:', eventId)
     }}
   >
     <YourComponent />
