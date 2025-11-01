@@ -204,11 +204,10 @@ If you're using `@sentry/react`, migrating to `@suspensive/react` is straightfor
 
 ```tsx
 // @sentry/react
-import { ErrorBoundary } from '@sentry/react'
 import * as Sentry from '@sentry/react'
 
 const SentryExample = () => (
-  <ErrorBoundary
+  <Sentry.ErrorBoundary
     fallback={({ error, resetError }) => (
       <div>
         <button onClick={resetError}>Reset</button>
@@ -221,7 +220,7 @@ const SentryExample = () => (
     }}
   >
     <YourComponent />
-  </ErrorBoundary>
+  </Sentry.ErrorBoundary>
 )
 
 // @suspensive/react - with manual Sentry integration
