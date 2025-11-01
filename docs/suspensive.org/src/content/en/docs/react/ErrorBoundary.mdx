@@ -236,7 +236,6 @@ const SuspensiveExample = () => (
       </div>
     )}
     onError={(error, errorInfo) => {
-      // Manually capture error in Sentry if needed
       const eventId = Sentry.captureReactException(error, errorInfo)
       console.log('Error caught:', eventId)
     }}
