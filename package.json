@@ -57,7 +57,7 @@
     "playwright": "^1.52.0",
     "prettier": "^3.5.3",
     "prettier-plugin-sort-re-exports": "^0.1.0",
-    "prettier-plugin-tailwindcss": "^0.6.13",
+    "prettier-plugin-tailwindcss": "^0.7.1",
     "rimraf": "^6.0.1",
     "sherif": "^1.5.0",
     "tsdown": "^0.15.4",
