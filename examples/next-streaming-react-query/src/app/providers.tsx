@@ -1,21 +1,16 @@
 'use client'
-
-import { DefaultProps, DefaultPropsProvider } from '@suspensive/react'
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
-import { ReactQueryStreamedHydration } from '@tanstack/react-query-next-experimental'
-import { type ReactNode, useState } from 'react'
+import { type ReactNode } from 'react'
+import { getQueryClient } from '~/app/get-query-client'
 
 export function Providers(props: { children: ReactNode }) {
-  const queryClient = useState(() => new QueryClient({ defaultOptions: { queries: { staleTime: 5 * 1000 } } }))[0]
-  const defaultProps = useState(() => new DefaultProps({ Suspense: { fallback: <div>loading...</div> } }))[0]
+  const queryClient = getQueryClient()
 
   return (
-    <DefaultPropsProvider defaultProps={defaultProps}>
-      <QueryClientProvider client={queryClient}>
-        <ReactQueryStreamedHydration>{props.children}</ReactQueryStreamedHydration>
-        <ReactQueryDevtools initialIsOpen={false} />
-      </QueryClientProvider>
-    </DefaultPropsProvider>
+    <QueryClientProvider client={queryClient}>
+      {props.children}
+      <ReactQueryDevtools initialIsOpen />
+    </QueryClientProvider>
   )
 }

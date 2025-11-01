@@ -1,3 +1,4 @@
+import { headers, nextComponentType } from '@suspensive/next'
 import { queryOptions } from '@tanstack/react-query'
 
 const baseURL = (() => {
@@ -7,15 +8,30 @@ const baseURL = (() => {
 })()
 
 export const query = {
-  text: <TMs extends number>(ms: TMs) =>
+  text: (ms: number) =>
     queryOptions({
       queryKey: ['query.text', ms],
       queryFn: () =>
-        fetch(`${baseURL}/api/text?wait=${ms}`, {
+        isoFetch(`${baseURL}/api/text?wait=${ms}`, {
           cache: 'no-store',
-        }).then(
-          (res) =>
-            res.json() as unknown as `${ReturnType<Date['toISOString']>} success to get text waited after ${TMs}ms`
-        ),
+        }).then((res) => res.json()) as unknown as Promise<string>,
     }),
+}
+
+const isoFetch: typeof fetch = async (input: string | URL | Request, init?: RequestInit) => {
+  switch (nextComponentType()) {
+    case 'React Client Component (server)':
+      // throw new Error(`isoFetch: React Client Component (server) ${JSON.stringify({ input, init })}`)
+      return fetch(input, init)
+    case 'React Client Component (browser)':
+      return fetch(input, init)
+    case 'React Server Component': {
+      const nextHeaders = await headers()
+      console.log('isoFetch(React Server Component):', { result: Object.fromEntries(nextHeaders.entries()) })
+      const mergedHeaders = new Headers(init?.headers)
+      nextHeaders.forEach((value, key) => mergedHeaders.set(key, value))
+      return fetch(input, { ...init, headers: mergedHeaders })
+    }
+  }
+  return fetch(input, init)
 }
