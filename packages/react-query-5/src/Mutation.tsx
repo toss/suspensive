@@ -1,3 +1,5 @@
+'use client'
+
 import { type DefaultError, type UseMutationOptions, type UseMutationResult, useMutation } from '@tanstack/react-query'
 import type { ReactNode } from 'react'
 

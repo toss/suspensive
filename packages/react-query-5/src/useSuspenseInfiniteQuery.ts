@@ -1,3 +1,5 @@
+'use client'
+
 import {
   type UseSuspenseInfiniteQueryOptions as original_UseSuspenseInfiniteQueryOptions,
   type UseSuspenseInfiniteQueryResult as original_UseSuspenseInfiniteQueryResult,
