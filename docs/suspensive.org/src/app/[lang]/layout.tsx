@@ -16,7 +16,6 @@ import type { ReactNode } from 'react'
 import { getDictionary, getDirection } from '../_dictionaries/get-dictionary'
 import './styles.css'
 import { Logo } from './_components/Logo'
-import { CookieConsent } from '@/components/CookieConsent'
 import { SandPackCSS } from '@/components/Sandpack/SandPackCSS'
 import { STORAGE_KEYS } from '@/constants'
 
@@ -92,7 +91,6 @@ export default async function RootLayout({
           lastUpdated={<LastUpdated>{dictionary.lastUpdated}</LastUpdated>}
         >
           {children}
-          <CookieConsent />
         </Layout>
         <GoogleTagManager gtmId="G-NYQZGKRL0Y" />
         <GoogleAnalytics gaId="G-NYQZGKRL0Y" />

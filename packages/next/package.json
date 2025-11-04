@@ -1,0 +1,57 @@
+{
+  "name": "@suspensive/next",
+  "version": "0.0.2",
+  "description": "Suspensive experimental interfaces for next",
+  "keywords": [
+    "suspensive",
+    "next"
+  ],
+  "homepage": "https://suspensive.org",
+  "bugs": "https://github.com/toss/suspensive/issues",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/toss/suspensive.git",
+    "directory": "packages/next"
+  },
+  "license": "MIT",
+  "author": "Jonghyeon Ko <jonghyeon@toss.im>",
+  "sideEffects": false,
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "react-server": "./dist/react-server.js",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "react-server": "./dist/react-server.cjs",
+        "default": "./dist/index.cjs"
+      }
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "build": "tsdown",
+    "ci:eslint": "eslint \"**/*.{ts,tsx,cts,mts}\"",
+    "ci:type": "tsc --noEmit",
+    "clean": "rimraf ./dist ./coverage ./node_modules"
+  },
+  "devDependencies": {
+    "@suspensive/eslint-config": "workspace:*",
+    "@suspensive/tsconfig": "workspace:*",
+    "@suspensive/tsdown": "workspace:*",
+    "next": "catalog:"
+  },
+  "peerDependencies": {
+    "next": "^15 || ^16"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

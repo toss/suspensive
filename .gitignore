@@ -52,3 +52,4 @@ web-build/
 
 # macOS
 .DS_Store
+*.tsbuildinfo
