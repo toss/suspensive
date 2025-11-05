@@ -13,12 +13,7 @@ export default function Page() {
     <div>
       <h1 className="text-xl font-bold">Next.js HTML Streaming + React Query</h1>
       <div className="flex items-start justify-between">
-        <Image
-          height={160}
-          width={160}
-          src="https://raw.githubusercontent.com/toss/suspensive/main/assets/readme_main.svg"
-          alt=""
-        />
+        <Image width={160} height={96.25} src="/img/banner.png" alt="" />
         <Buttons />
       </div>
       <div style={{ fontSize: 12 }}>
