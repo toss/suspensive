@@ -1,3 +1,4 @@
+import { Tabs } from 'nextra/components'
 import { Callout, Sandpack } from '@/components'
 
 # QueriesHydrationBoundary
@@ -14,12 +15,14 @@ React Server Components를 사용하는 환경에서 서버 측에서 데이터�
 
 ## 기본 사용법
 
+<Tabs items={['page.tsx (RSC)', 'UserProfile.tsx (RCC)', 'PostList.tsx (RCC)']}>
+<Tabs.Tab>
+
 ```tsx /QueriesHydrationBoundary/
 import { QueriesHydrationBoundary } from '@suspensive/react-query'
 import { Suspense } from '@suspensive/react'
 import { userQueryOptions, postsQueryOptions } from './queries'
-import { UserProfile } from './UserProfile'
-import { PostList } from './PostList'
+import { UserProfile, PostList } from './_components'
 
 // 서버 컴포넌트
 const PostsPage = ({ userId }) => {
@@ -40,8 +43,10 @@ const PostsPage = ({ userId }) => {
 }
 ```
 
+</Tabs.Tab>
+<Tabs.Tab>
+
 ```tsx
-// UserProfile.tsx (클라이언트 컴포넌트)
 'use client'
 
 import { useSuspenseQuery } from '@suspensive/react-query'
@@ -60,8 +65,10 @@ export const UserProfile = ({ userId }) => {
 }
 ```
 
+</Tabs.Tab>
+<Tabs.Tab>
+
 ```tsx
-// PostList.tsx (클라이언트 컴포넌트)
 'use client'
 
 import { useSuspenseQuery } from '@suspensive/react-query'
@@ -80,6 +87,9 @@ export const PostList = ({ userId }) => {
   )
 }
 ```
+
+</Tabs.Tab>
+</Tabs>
 
 ## Props
 
@@ -123,7 +133,7 @@ const Page = async () => {
 2. **RCC(React Client Component) - Server**: `useSuspenseQuery`에서 캐시된 데이터가 없으면 쿼리 실행
 3. **RCC(React Client Component) - Browser**: `useSuspenseQuery`에서 캐시나 fresh한 데이터가 없으면 쿼리 실행
 
-1단계에서 실패하면 2단계도 같은 원인으로 실패할 가능성이 높습니다. 하지만 3단계(브라우저)에서는 성공할 수 있습니다 (예: 네트워크 일시적 장애, CORS 이슈 등).
+1단계에서 실패하면 2단계도 같은 원인으로 실패할 가능성이 높습니다. 하지만 3단계(브라우저)에서는 성공할 수 있습니다 (예: 인증 관련 이슈 등). 브라우저에서는 재시도를 통해 다시 성공할 가능성이 있어, `skipSsrOnError`를 통해 RSC에서 실패했다면 RCC(server)를 통하지 않고 바로 RCC(browser)에서 페칭하도록 하는 것이 더 좋습니다.
 
 - `true` (기본값): 1단계에서 실패하면 SSR을 건너뛰고 3단계(브라우저)에서 재시도합니다
 - `false`: 1단계에서 실패해도 hydration 없이 2단계로 진행합니다 (서버에서 다시 페칭 시도)
@@ -132,6 +142,7 @@ const Page = async () => {
 ```tsx
 import { QueriesHydrationBoundary } from '@suspensive/react-query'
 import { Suspense } from '@suspensive/react'
+import { UserProfile, PostList, CommentList } from './_components'
 
 const Page = async () => {
   return (
@@ -175,6 +186,9 @@ React Server Components 환경에서는 서버에서 데이터를 미리 불러�
 
 ### 기존 방식: 수동으로 prefetch 및 dehydrate
 
+<Tabs items={['page.tsx (RSC)', 'UserProfile.tsx (RCC)', 'PostList.tsx (RCC)']}>
+  <Tabs.Tab>
+
 ```tsx
 import {
   QueryClient,
@@ -183,6 +197,7 @@ import {
 } from '@tanstack/react-query'
 import { Suspense } from '@suspensive/react'
 import { userQueryOptions, postsQueryOptions } from './queries'
+import { UserProfile, PostList } from './_components'
 
 // 서버 컴포넌트
 const PostsPage = ({ userId }) => {
@@ -238,14 +253,64 @@ const PostListWithData = async ({ userId }) => {
 }
 ```
 
+</Tabs.Tab>
+<Tabs.Tab>
+
+```tsx
+'use client'
+
+import { useSuspenseQuery } from '@suspensive/react-query'
+import { userQueryOptions } from './queries'
+
+export const UserProfile = ({ userId }) => {
+  const { data: user } = useSuspenseQuery(userQueryOptions(userId))
+
+  return (
+    <div>
+      <h1>{user.name}</h1>
+      <p>{user.email}</p>
+    </div>
+  )
+}
+```
+
+</Tabs.Tab>
+<Tabs.Tab>
+
+```tsx
+'use client'
+
+import { useSuspenseQuery } from '@suspensive/react-query'
+import { postsQueryOptions } from './queries'
+
+export const PostList = ({ userId }) => {
+  const { data: posts } = useSuspenseQuery(postsQueryOptions(userId))
+
+  return (
+    <ul>
+      {posts.map((post) => (
+        <li key={post.id}>{post.title}</li>
+      ))}
+    </ul>
+  )
+}
+```
+
+</Tabs.Tab>
+</Tabs>
+
 ### QueriesHydrationBoundary 사용
 
 `<QueriesHydrationBoundary/>`를 사용하면 이 모든 과정이 자동으로 처리됩니다:
+
+<Tabs items={['page.tsx (RSC)', 'UserProfile.tsx (RCC)', 'PostList.tsx (RCC)']}>
+<Tabs.Tab>
 
 ```tsx
 import { QueriesHydrationBoundary } from '@suspensive/react-query'
 import { Suspense } from '@suspensive/react'
 import { userQueryOptions, postsQueryOptions } from './queries'
+import { UserProfile, PostList } from './_components'
 
 // 서버 컴포넌트
 const PostsPage = ({ userId }) => {
@@ -266,6 +331,54 @@ const PostsPage = ({ userId }) => {
 }
 ```
 
+</Tabs.Tab>
+<Tabs.Tab>
+
+```tsx
+'use client'
+
+import { useSuspenseQuery } from '@suspensive/react-query'
+import { userQueryOptions } from './queries'
+
+export const UserProfile = ({ userId }) => {
+  // 서버에서 미리 불러온 데이터가 자동으로 hydrate됩니다
+  const { data: user } = useSuspenseQuery(userQueryOptions(userId))
+
+  return (
+    <div>
+      <h1>{user.name}</h1>
+      <p>{user.email}</p>
+    </div>
+  )
+}
+```
+
+</Tabs.Tab>
+<Tabs.Tab>
+
+```tsx
+'use client'
+
+import { useSuspenseQuery } from '@suspensive/react-query'
+import { postsQueryOptions } from './queries'
+
+export const PostList = ({ userId }) => {
+  // 서버에서 미리 불러온 데이터가 자동으로 hydrate됩니다
+  const { data: posts } = useSuspenseQuery(postsQueryOptions(userId))
+
+  return (
+    <ul>
+      {posts.map((post) => (
+        <li key={post.id}>{post.title}</li>
+      ))}
+    </ul>
+  )
+}
+```
+
+</Tabs.Tab>
+</Tabs>
+
 주요 이점:
 
 1. **간결한 코드**: QueryClient 생성, prefetch, dehydrate 과정을 자동화
@@ -281,6 +394,7 @@ const PostsPage = ({ userId }) => {
 import { QueriesHydrationBoundary } from '@suspensive/react-query'
 import { Suspense } from '@suspensive/react'
 import { userQueryOptions, postsQueryOptions } from './queries'
+import { UserProfile, PostList } from './_components'
 
 const PostsPage = ({ userId }) => {
   return (

@@ -1,3 +1,4 @@
+import { Tabs } from 'nextra/components'
 import { Callout, Sandpack } from '@/components'
 
 # QueriesHydrationBoundary
@@ -14,12 +15,14 @@ This is useful when you want to prefetch data on the server side and pass it to 
 
 ## Basic Usage
 
+<Tabs items={['page.tsx (RSC)', 'UserProfile.tsx (RCC)', 'PostList.tsx (RCC)']}>
+<Tabs.Tab>
+
 ```tsx /QueriesHydrationBoundary/
 import { QueriesHydrationBoundary } from '@suspensive/react-query'
 import { Suspense } from '@suspensive/react'
 import { userQueryOptions, postsQueryOptions } from './queries'
-import { UserProfile } from './UserProfile'
-import { PostList } from './PostList'
+import { UserProfile, PostList } from './_components'
 
 // Server Component
 const PostsPage = ({ userId }) => {
@@ -40,8 +43,10 @@ const PostsPage = ({ userId }) => {
 }
 ```
 
+</Tabs.Tab>
+<Tabs.Tab>
+
 ```tsx
-// UserProfile.tsx (Client Component)
 'use client'
 
 import { useSuspenseQuery } from '@suspensive/react-query'
@@ -60,8 +65,10 @@ export const UserProfile = ({ userId }) => {
 }
 ```
 
+</Tabs.Tab>
+<Tabs.Tab>
+
 ```tsx
-// PostList.tsx (Client Component)
 'use client'
 
 import { useSuspenseQuery } from '@suspensive/react-query'
@@ -80,6 +87,9 @@ export const PostList = ({ userId }) => {
   )
 }
 ```
+
+</Tabs.Tab>
+</Tabs>
 
 ## Props
 
@@ -123,7 +133,7 @@ Controls the behavior when an error occurs while fetching queries on the server.
 2. **RCC (React Client Component) - Server**: Query execution in `useSuspenseQuery` if no cached data exists
 3. **RCC (React Client Component) - Browser**: Query execution in `useSuspenseQuery` if no cached or fresh data exists
 
-If stage 1 fails, stage 2 is likely to fail for the same reason. However, stage 3 (browser) might succeed (e.g., temporary network issues, CORS issues, etc.).
+If stage 1 fails, stage 2 is likely to fail for the same reason. However, stage 3 (browser) might succeed (e.g., authentication-related issues, etc.). Since the browser can retry and potentially succeed, it's better to use `skipSsrOnError` to skip RCC(server) and fetch directly from RCC(browser) when RSC fails.
 
 - `true` (default): If stage 1 fails, skip SSR and retry in stage 3 (browser)
 - `false`: Even if stage 1 fails, proceed to stage 2 without hydration (retry fetching on server)
@@ -132,6 +142,7 @@ If stage 1 fails, stage 2 is likely to fail for the same reason. However, stage 
 ```tsx
 import { QueriesHydrationBoundary } from '@suspensive/react-query'
 import { Suspense } from '@suspensive/react'
+import { UserProfile, PostList, CommentList } from './_components'
 
 const Page = async () => {
   return (
@@ -175,6 +186,9 @@ In React Server Components environments, you can prefetch data on the server to 
 
 ### Traditional approach: Manual prefetch and dehydrate
 
+<Tabs items={['page.tsx (RSC)', 'UserProfile.tsx (RCC)', 'PostList.tsx (RCC)']}>
+<Tabs.Tab>
+
 ```tsx
 import {
   QueryClient,
@@ -183,6 +197,7 @@ import {
 } from '@tanstack/react-query'
 import { Suspense } from '@suspensive/react'
 import { userQueryOptions, postsQueryOptions } from './queries'
+import { UserProfile, PostList } from './_components'
 
 // Server Component
 const PostsPage = ({ userId }) => {
@@ -238,14 +253,64 @@ const PostListWithData = async ({ userId }) => {
 }
 ```
 
+</Tabs.Tab>
+<Tabs.Tab>
+
+```tsx
+'use client'
+
+import { useSuspenseQuery } from '@suspensive/react-query'
+import { userQueryOptions } from './queries'
+
+export const UserProfile = ({ userId }) => {
+  const { data: user } = useSuspenseQuery(userQueryOptions(userId))
+
+  return (
+    <div>
+      <h1>{user.name}</h1>
+      <p>{user.email}</p>
+    </div>
+  )
+}
+```
+
+</Tabs.Tab>
+<Tabs.Tab>
+
+```tsx
+'use client'
+
+import { useSuspenseQuery } from '@suspensive/react-query'
+import { postsQueryOptions } from './queries'
+
+export const PostList = ({ userId }) => {
+  const { data: posts } = useSuspenseQuery(postsQueryOptions(userId))
+
+  return (
+    <ul>
+      {posts.map((post) => (
+        <li key={post.id}>{post.title}</li>
+      ))}
+    </ul>
+  )
+}
+```
+
+</Tabs.Tab>
+</Tabs>
+
 ### Using QueriesHydrationBoundary
 
 With `<QueriesHydrationBoundary/>`, all of this is handled automatically:
+
+<Tabs items={['page.tsx (RSC)', 'UserProfile.tsx (RCC)', 'PostList.tsx (RCC)']}>
+<Tabs.Tab>
 
 ```tsx
 import { QueriesHydrationBoundary } from '@suspensive/react-query'
 import { Suspense } from '@suspensive/react'
 import { userQueryOptions, postsQueryOptions } from './queries'
+import { UserProfile, PostList } from './_components'
 
 // Server Component
 const PostsPage = ({ userId }) => {
@@ -266,6 +331,54 @@ const PostsPage = ({ userId }) => {
 }
 ```
 
+</Tabs.Tab>
+<Tabs.Tab>
+
+```tsx
+'use client'
+
+import { useSuspenseQuery } from '@suspensive/react-query'
+import { userQueryOptions } from './queries'
+
+export const UserProfile = ({ userId }) => {
+  // Data prefetched on the server is automatically hydrated
+  const { data: user } = useSuspenseQuery(userQueryOptions(userId))
+
+  return (
+    <div>
+      <h1>{user.name}</h1>
+      <p>{user.email}</p>
+    </div>
+  )
+}
+```
+
+</Tabs.Tab>
+<Tabs.Tab>
+
+```tsx
+'use client'
+
+import { useSuspenseQuery } from '@suspensive/react-query'
+import { postsQueryOptions } from './queries'
+
+export const PostList = ({ userId }) => {
+  // Data prefetched on the server is automatically hydrated
+  const { data: posts } = useSuspenseQuery(postsQueryOptions(userId))
+
+  return (
+    <ul>
+      {posts.map((post) => (
+        <li key={post.id}>{post.title}</li>
+      ))}
+    </ul>
+  )
+}
+```
+
+</Tabs.Tab>
+</Tabs>
+
 Key benefits:
 
 1. **Concise code**: Automates QueryClient creation, prefetch, and dehydrate processes
@@ -281,6 +394,7 @@ If you want to skip server-side rendering for a specific component, simply add t
 import { QueriesHydrationBoundary } from '@suspensive/react-query'
 import { Suspense } from '@suspensive/react'
 import { userQueryOptions, postsQueryOptions } from './queries'
+import { UserProfile, PostList } from './_components'
 
 const PostsPage = ({ userId }) => {
   return (
