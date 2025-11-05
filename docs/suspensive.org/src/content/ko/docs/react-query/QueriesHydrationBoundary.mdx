@@ -92,7 +92,7 @@ type QueriesHydrationBoundaryProps = {
   queries: WithRequired<QueryOptions<any, any, any, any>, 'queryKey'>[]
   children: ReactNode
   queryClient?: QueryClient // 선택사항 (기본값: new QueryClient())
-  skipSSROnError?: boolean | { fallback: ReactNode } // 선택사항 (기본값: true)
+  skipSsrOnError?: boolean | { fallback: ReactNode } // 선택사항 (기본값: true)
 }
 ```
 
@@ -122,7 +122,7 @@ const Page = async () => {
 }
 ```
 
-### skipSSROnError
+### skipSsrOnError
 
 서버에서 쿼리를 불러오는 중 에러가 발생했을 때의 동작을 제어합니다. 이 옵션은 데이터 페칭이 발생하는 3단계 시점을 이해하면 더 명확합니다:
 
@@ -154,7 +154,7 @@ const Page = async () => {
       <Suspense fallback={<div>Loading...</div>}>
         <QueriesHydrationBoundary
           queries={[postsQuery]}
-          skipSSROnError={{
+          skipSsrOnError={{
             fallback: <div>서버에서 데이터를 불러올 수 없습니다...</div>,
           }}
         >
@@ -166,7 +166,7 @@ const Page = async () => {
       <Suspense fallback={<div>Loading...</div>}>
         <QueriesHydrationBoundary
           queries={[commentsQuery]}
-          skipSSROnError={false}
+          skipSsrOnError={false}
         >
           <CommentList />
         </QueriesHydrationBoundary>

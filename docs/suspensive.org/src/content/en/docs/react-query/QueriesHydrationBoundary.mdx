@@ -92,7 +92,7 @@ type QueriesHydrationBoundaryProps = {
   queries: WithRequired<QueryOptions<any, any, any, any>, 'queryKey'>[]
   children: ReactNode
   queryClient?: QueryClient // Optional (default: new QueryClient())
-  skipSSROnError?: boolean | { fallback: ReactNode } // Optional (default: true)
+  skipSsrOnError?: boolean | { fallback: ReactNode } // Optional (default: true)
 }
 ```
 
@@ -122,7 +122,7 @@ const Page = async () => {
 }
 ```
 
-### skipSSROnError
+### skipSsrOnError
 
 Controls the behavior when an error occurs while fetching queries on the server. This option becomes clearer when you understand the 3 stages where data fetching occurs:
 
@@ -154,7 +154,7 @@ const Page = async () => {
       <Suspense fallback={<div>Loading...</div>}>
         <QueriesHydrationBoundary
           queries={[postsQuery]}
-          skipSSROnError={{
+          skipSsrOnError={{
             fallback: <div>Unable to fetch data from server...</div>,
           }}
         >
@@ -166,7 +166,7 @@ const Page = async () => {
       <Suspense fallback={<div>Loading...</div>}>
         <QueriesHydrationBoundary
           queries={[commentsQuery]}
-          skipSSROnError={false}
+          skipSsrOnError={false}
         >
           <CommentList />
         </QueriesHydrationBoundary>

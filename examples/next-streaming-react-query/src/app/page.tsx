@@ -21,7 +21,7 @@ export default function Page() {
         alt=""
       />
       <div>
-        <h3>🚧 1. skipSSROnError true (default)</h3>
+        <h3>🚧 1. skipSsrOnError true (default)</h3>
         <p>RSC fail → RCC(server) skip without fallback → RCC(browser) success</p>
         <EmptyBox>
           <ErrorBoundary fallback={<ErrorFallbackBox>error fallback</ErrorFallbackBox>}>
@@ -39,7 +39,7 @@ export default function Page() {
             </Suspense>
           </ErrorBoundary>
         </EmptyBox>
-        <h3>🚧 2. skipSSROnError with fallback</h3>
+        <h3>🚧 2. skipSsrOnError with fallback</h3>
         <p>RSC fail → RCC(server) skip with fallback → RCC(browser) success</p>
         <EmptyBox>
           <ErrorBoundary fallback={<ErrorFallbackBox>error fallback</ErrorFallbackBox>}>
@@ -51,8 +51,8 @@ export default function Page() {
                     queryFn: () => delay(2).then(() => Promise.reject(new Error('error'))),
                   },
                 ]}
-                skipSSROnError={{
-                  fallback: <SkipSSROnErrorFallbackBox>skipSSROnError fallback</SkipSSROnErrorFallbackBox>,
+                skipSsrOnError={{
+                  fallback: <SkipSSROnErrorFallbackBox>skipSsrOnError fallback</SkipSSROnErrorFallbackBox>,
                 }}
               >
                 <ReactClientComponent ms={2} />
@@ -60,7 +60,7 @@ export default function Page() {
             </Suspense>
           </ErrorBoundary>
         </EmptyBox>
-        <h3>🚧 3. skipSSROnError false</h3>
+        <h3>🚧 3. skipSsrOnError false</h3>
         <p>RSC fail → RCC(server) fail → RCC(browser) success</p>
         <EmptyBox>
           <ErrorBoundary fallback={<ErrorFallbackBox>error fallback</ErrorFallbackBox>}>
@@ -72,7 +72,7 @@ export default function Page() {
                     queryFn: () => delay(3).then(() => Promise.reject(new Error('error'))),
                   },
                 ]}
-                skipSSROnError={false}
+                skipSsrOnError={false}
               >
                 <ReactClientComponent ms={3} />
               </QueriesHydrationBoundary>

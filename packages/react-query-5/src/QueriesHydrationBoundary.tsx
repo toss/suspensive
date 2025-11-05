@@ -65,7 +65,7 @@ import { ClientOnly } from './components/ClientOnly'
  * <Suspense fallback={<div>Loading user...</div>}>
  *   <QueriesHydrationBoundary
  *     queries={[userQuery]}
- *     skipSSROnError={{ fallback: <div>Fetching on client...</div> }}
+ *     skipSsrOnError={{ fallback: <div>Fetching on client...</div> }}
  *   >
  *     <UserProfile />
  *   </QueriesHydrationBoundary>
@@ -78,7 +78,7 @@ export async function QueriesHydrationBoundary({
   queries,
   children,
   queryClient = new QueryClient(),
-  skipSSROnError = true,
+  skipSsrOnError = true,
   ...props
 }: {
   /**
@@ -91,7 +91,7 @@ export async function QueriesHydrationBoundary({
    * - `false`: Proceeds with SSR without hydration (retry fetching on client component server rendering)
    * - `{ fallback: ReactNode }`: Skips SSR with custom fallback UI during client-side rendering
    */
-  skipSSROnError?:
+  skipSsrOnError?:
     | boolean
     | {
         fallback: ReactNode
@@ -100,9 +100,9 @@ export async function QueriesHydrationBoundary({
   try {
     await Promise.all(queries.map((query) => queryClient.ensureQueryData(query)))
   } catch {
-    if (skipSSROnError) {
+    if (skipSsrOnError) {
       return (
-        <ClientOnly fallback={skipSSROnError === true ? undefined : skipSSROnError.fallback}>{children}</ClientOnly>
+        <ClientOnly fallback={skipSsrOnError === true ? undefined : skipSsrOnError.fallback}>{children}</ClientOnly>
       )
     }
   }
