@@ -14,7 +14,7 @@ export const query = {
     }),
 }
 
-const isoFetch = async (input: string, init?: RequestInit) => {
+export const isoFetch = async (input: string, init?: RequestInit) => {
   const type = nextComponentType()
   switch (type) {
     case 'React Client Component (server)': {

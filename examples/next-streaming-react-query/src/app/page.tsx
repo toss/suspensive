@@ -1,9 +1,10 @@
 import { ErrorBoundary, Suspense } from '@suspensive/react'
 import { QueriesHydrationBoundary } from '@suspensive/react-query-5'
 import Image from 'next/image'
+import { EmptyBox, ErrorFallbackBox, LoadingBox, SkipSSROnErrorFallbackBox } from './_components/Boxes'
 import { Buttons } from './_components/Buttons'
 import { ReactClientComponent } from './_components/ReactClientComponent'
-import { query } from '~/query'
+import { isoFetch, query } from '~/query'
 
 export const dynamic = 'force-dynamic'
 
@@ -30,7 +31,7 @@ export default function Page() {
                 queries={[
                   {
                     ...query.text(1),
-                    queryFn: () => delay(1).then(() => Promise.reject(new Error('error'))),
+                    queryFn: () => isoFetch('/api/text?id=1&error=true').then(() => Promise.reject(new Error('error'))),
                   },
                 ]}
               >
@@ -48,7 +49,7 @@ export default function Page() {
                 queries={[
                   {
                     ...query.text(2),
-                    queryFn: () => delay(2).then(() => Promise.reject(new Error('error'))),
+                    queryFn: () => isoFetch('/api/text?id=1&error=true').then(() => Promise.reject(new Error('error'))),
                   },
                 ]}
                 skipSsrOnError={{
@@ -69,7 +70,7 @@ export default function Page() {
                 queries={[
                   {
                     ...query.text(3),
-                    queryFn: () => delay(3).then(() => Promise.reject(new Error('error'))),
+                    queryFn: () => isoFetch('/api/text?id=1&error=true').then(() => Promise.reject(new Error('error'))),
                   },
                 ]}
                 skipSsrOnError={false}
@@ -94,15 +95,3 @@ export default function Page() {
     </div>
   )
 }
-
-const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
-
-const EmptyBox = ({ children }: { children: React.ReactNode }) => (
-  <div className="h-15 border border-gray-900 bg-gray-100">{children}</div>
-)
-
-const LoadingBox = ({ children }: { children: React.ReactNode }) => <div className="bg-yellow-500">{children}</div>
-const ErrorFallbackBox = ({ children }: { children: React.ReactNode }) => <div className="bg-red-500">{children}</div>
-const SkipSSROnErrorFallbackBox = ({ children }: { children: React.ReactNode }) => (
-  <div className="bg-orange-500">{children}</div>
-)

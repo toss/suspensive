@@ -1,5 +1,5 @@
-import Link from 'next/link'
 import type { ReactNode } from 'react'
+import { Nav } from './_components/Nav'
 import { Providers } from './providers'
 import './globals.css'
 
@@ -12,14 +12,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     <html lang="en">
       <body className="mx-2">
         <Providers>
-          <ul style={{ display: 'flex', gap: '10px', margin: 0 }}>
-            <Link href="/">
-              <li style={{ listStyle: 'none' }}>home page</li>
-            </Link>
-            <Link href="/test">
-              <li style={{ listStyle: 'none' }}>test page</li>
-            </Link>
-          </ul>
+          <Nav />
           <div>{children}</div>
         </Providers>
       </body>

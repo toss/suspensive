@@ -10,9 +10,11 @@ const GETSchema = z.object({
 })
 export type GETResponse = z.infer<typeof GETSchema>
 export async function GET(request: Request) {
-  await sleep(50)
+  await sleep(40 + Math.random() * 60)
   const url = new URL(request.url)
-
+  if (url.searchParams.get('error') === 'true') {
+    return NextResponse.json('error', { status: 500 })
+  }
   return NextResponse.json(
     GETSchema.parse({
       id: url.searchParams.get('id'),
