@@ -11,7 +11,7 @@ export default function Page() {
   return (
     <div>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <h1>page</h1>
+        <h1>Next.js HTML Streaming + React Query</h1>
         <ReloadButton />
       </div>
       <Image

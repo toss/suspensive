@@ -1,17 +1,35 @@
 import { headers, nextComponentType } from '@suspensive/next'
 import { queryOptions } from '@tanstack/react-query'
 
-const baseURL = (() => {
-  if (typeof window !== 'undefined') return ''
-  if (process.env.NEXT_PUBLIC_STREAMING_HTML_URL) return `https://${process.env.NEXT_PUBLIC_STREAMING_HTML_URL}`
-  return 'http://localhost:4100'
-})()
+export async function getBaseUrl(): Promise<string> {
+  const type = nextComponentType()
+  switch (type) {
+    case 'React Server Component': {
+      if (process.env.INTERNAL_API_ORIGIN) return process.env.INTERNAL_API_ORIGIN
+      const nextHeaders = await headers()
+      const proto = nextHeaders.get('x-forwarded-proto') ?? 'http'
+      const host = nextHeaders.get('x-forwarded-host') ?? nextHeaders.get('host') ?? 'localhost:4100'
+      return `${proto}://${host}`
+    }
+    case 'React Client Component (server)': {
+      if (process.env.INTERNAL_API_ORIGIN) return process.env.INTERNAL_API_ORIGIN
+      throw new Error('React Client Component (server) is not supported')
+    }
+    case 'React Client Component (browser)': {
+      return process.env.NEXT_PUBLIC_API_ORIGIN ?? window.location.origin
+    }
+    default: {
+      throw new Error(`Unsupported component type: ${type}`)
+    }
+  }
+}
 
 export const query = {
   text: (id: number) =>
     queryOptions({
       queryKey: ['query.text', id],
-      queryFn: () => {
+      queryFn: async () => {
+        const baseURL = await getBaseUrl()
         return isoFetch(`${baseURL}/api/text?id=${id}`, {
           cache: 'no-store',
         }).then((res) => res.json()) as unknown as Promise<string>
