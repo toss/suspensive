@@ -2,34 +2,28 @@ import { ErrorBoundary, Suspense } from '@suspensive/react'
 import { QueriesHydrationBoundary } from '@suspensive/react-query-5'
 import Image from 'next/image'
 import { ReactClientComponent } from './_components/ReactClientComponent'
+import { ReloadButton } from './_components/ReloadButton'
 import { query } from '~/query'
 
 export const dynamic = 'force-dynamic'
 
-const LoadingBox = ({ children }: { children: React.ReactNode }) => (
-  <div style={{ border: '1px solid #ccc', padding: '10px', backgroundColor: 'yellow' }}>{children}</div>
-)
-const ErrorFallbackBox = ({ children }: { children: React.ReactNode }) => (
-  <div style={{ border: '1px solid #ccc', padding: '10px', backgroundColor: 'red' }}>{children}</div>
-)
-const SkipSSROnErrorFallbackBox = ({ children }: { children: React.ReactNode }) => (
-  <div style={{ border: '1px solid #ccc', padding: '10px', backgroundColor: 'green' }}>{children}</div>
-)
-
 export default function Page() {
   return (
     <div>
-      page
-      <h1>Title</h1>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <h1>page</h1>
+        <ReloadButton />
+      </div>
       <Image
-        height={300}
-        width={300}
+        height={200}
+        width={200}
         src="https://raw.githubusercontent.com/toss/suspensive/main/assets/readme_main.svg"
         alt=""
       />
       <div>
-        <h3>1. skipSSROnError true (default)</h3>
-        <div style={{ height: 30, backgroundColor: 'grey' }}>
+        <h3>🚧 1. skipSSROnError true (default)</h3>
+        <p>RSC fail → RCC(server) skip without fallback → RCC(browser) success</p>
+        <EmptyBox>
           <ErrorBoundary fallback={<ErrorFallbackBox>error fallback</ErrorFallbackBox>}>
             <Suspense fallback={<LoadingBox>loading...</LoadingBox>}>
               <QueriesHydrationBoundary
@@ -44,9 +38,10 @@ export default function Page() {
               </QueriesHydrationBoundary>
             </Suspense>
           </ErrorBoundary>
-        </div>
-        <h3>2. skipSSROnError with fallback</h3>
-        <div style={{ height: 30, backgroundColor: 'grey' }}>
+        </EmptyBox>
+        <h3>🚧 2. skipSSROnError with fallback</h3>
+        <p>RSC fail → RCC(server) skip with fallback → RCC(browser) success</p>
+        <EmptyBox>
           <ErrorBoundary fallback={<ErrorFallbackBox>error fallback</ErrorFallbackBox>}>
             <Suspense fallback={<LoadingBox>loading...</LoadingBox>}>
               <QueriesHydrationBoundary
@@ -64,9 +59,10 @@ export default function Page() {
               </QueriesHydrationBoundary>
             </Suspense>
           </ErrorBoundary>
-        </div>
-        <h3>3. skipSSROnError false</h3>
-        <div style={{ height: 30, backgroundColor: 'grey' }}>
+        </EmptyBox>
+        <h3>🚧 3. skipSSROnError false</h3>
+        <p>RSC fail → RCC(server) fail → RCC(browser) success</p>
+        <EmptyBox>
           <ErrorBoundary fallback={<ErrorFallbackBox>error fallback</ErrorFallbackBox>}>
             <Suspense fallback={<LoadingBox>loading...</LoadingBox>}>
               <QueriesHydrationBoundary
@@ -82,9 +78,10 @@ export default function Page() {
               </QueriesHydrationBoundary>
             </Suspense>
           </ErrorBoundary>
-        </div>
-        <h3>4. no error</h3>
-        <div style={{ height: 30, backgroundColor: 'grey' }}>
+        </EmptyBox>
+        <h3>✅ 4. no error (Best Practice)</h3>
+        <p>RSC success → RCC(server) cached → RCC(browser) cached</p>
+        <EmptyBox>
           <ErrorBoundary fallback={<ErrorFallbackBox>error fallback</ErrorFallbackBox>}>
             <Suspense fallback={<LoadingBox>loading...</LoadingBox>}>
               <QueriesHydrationBoundary queries={[query.text(4)]}>
@@ -92,10 +89,24 @@ export default function Page() {
               </QueriesHydrationBoundary>
             </Suspense>
           </ErrorBoundary>
-        </div>
+        </EmptyBox>
       </div>
     </div>
   )
 }
 
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
+
+const EmptyBox = ({ children }: { children: React.ReactNode }) => (
+  <div style={{ height: 30, backgroundColor: '#fafafa', border: '1px solid black' }}>{children}</div>
+)
+
+const LoadingBox = ({ children }: { children: React.ReactNode }) => (
+  <div style={{ backgroundColor: 'yellow' }}>{children}</div>
+)
+const ErrorFallbackBox = ({ children }: { children: React.ReactNode }) => (
+  <div style={{ backgroundColor: 'red' }}>{children}</div>
+)
+const SkipSSROnErrorFallbackBox = ({ children }: { children: React.ReactNode }) => (
+  <div style={{ backgroundColor: 'orange' }}>{children}</div>
+)
