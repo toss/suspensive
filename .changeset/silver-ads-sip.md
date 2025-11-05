@@ -4,4 +4,4 @@
 "@suspensive/react-query": minor
 ---
 
-feat(react-query): add QueriesHydrationBoundary
+feat(react-query): add `<QueriesHydrationBoundary/>`
