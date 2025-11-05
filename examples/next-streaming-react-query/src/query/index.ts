@@ -8,11 +8,11 @@ const baseURL = (() => {
 })()
 
 export const query = {
-  text: (ms: number) =>
+  text: (id: number) =>
     queryOptions({
-      queryKey: ['query.text', ms],
+      queryKey: ['query.text', id],
       queryFn: () => {
-        return isoFetch(`${baseURL}/api/text?wait=${ms}`, {
+        return isoFetch(`${baseURL}/api/text?id=${id}`, {
           cache: 'no-store',
         }).then((res) => res.json()) as unknown as Promise<string>
       },

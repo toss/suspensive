@@ -92,6 +92,7 @@ type QueriesHydrationBoundaryProps = {
   queries: WithRequired<QueryOptions<any, any, any, any>, 'queryKey'>[]
   children: ReactNode
   queryClient?: QueryClient // Optional (default: new QueryClient())
+  skipSSROnError?: boolean | { fallback: ReactNode } // Optional (default: true)
 }
 ```
 
@@ -117,6 +118,60 @@ const Page = async () => {
     >
       {/* ... */}
     </QueriesHydrationBoundary>
+  )
+}
+```
+
+### skipSSROnError
+
+Controls the behavior when an error occurs while fetching queries on the server. This option becomes clearer when you understand the 3 stages where data fetching occurs:
+
+1. **RSC (React Server Component)**: Query execution in `QueriesHydrationBoundary`
+2. **RCC (React Client Component) - Server**: Query execution in `useSuspenseQuery` if no cached data exists
+3. **RCC (React Client Component) - Browser**: Query execution in `useSuspenseQuery` if no cached or fresh data exists
+
+If stage 1 fails, stage 2 is likely to fail for the same reason. However, stage 3 (browser) might succeed (e.g., temporary network issues, CORS issues, etc.).
+
+- `true` (default): If stage 1 fails, skip SSR and retry in stage 3 (browser)
+- `false`: Even if stage 1 fails, proceed to stage 2 without hydration (retry fetching on server)
+- `{ fallback: ReactNode }`: If stage 1 fails, skip SSR and display a custom fallback UI while moving to stage 3
+
+```tsx
+import { QueriesHydrationBoundary } from '@suspensive/react-query'
+import { Suspense } from '@suspensive/react'
+
+const Page = async () => {
+  return (
+    <>
+      {/* Skip SSR and retry in browser if stage 1 fails (default behavior) */}
+      <Suspense fallback={<div>Loading...</div>}>
+        <QueriesHydrationBoundary queries={[userQuery]}>
+          <UserProfile />
+        </QueriesHydrationBoundary>
+      </Suspense>
+
+      {/* Skip SSR and retry in browser with custom fallback if stage 1 fails */}
+      <Suspense fallback={<div>Loading...</div>}>
+        <QueriesHydrationBoundary
+          queries={[postsQuery]}
+          skipSSROnError={{
+            fallback: <div>Unable to fetch data from server...</div>,
+          }}
+        >
+          <PostList />
+        </QueriesHydrationBoundary>
+      </Suspense>
+
+      {/* Retry in stage 2 (RCC server) even if stage 1 fails */}
+      <Suspense fallback={<div>Loading...</div>}>
+        <QueriesHydrationBoundary
+          queries={[commentsQuery]}
+          skipSSROnError={false}
+        >
+          <CommentList />
+        </QueriesHydrationBoundary>
+      </Suspense>
+    </>
   )
 }
 ```
