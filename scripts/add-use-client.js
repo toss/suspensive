@@ -1,7 +1,15 @@
-import { readFileSync, readdirSync, writeFileSync } from 'fs'
+import { readFileSync, readdirSync, writeFileSync, existsSync } from 'fs'
 import { join } from 'path'
 
-const distDir = join(process.cwd(), 'dist')
+// Get working directory from command line argument or use process.cwd()
+const workingDir = process.argv[2] || process.cwd()
+const distDir = join(workingDir, 'dist')
+
+if (!existsSync(distDir)) {
+  console.warn(`⚠️  dist directory not found at ${distDir}`)
+  process.exit(0)
+}
+
 const files = readdirSync(distDir)
 
 // Add 'use client' to ClientOnly chunk files
