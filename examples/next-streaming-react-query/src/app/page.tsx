@@ -11,7 +11,7 @@ export default function Page() {
   return (
     <div>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <h1>Next.js HTML Streaming + React Query</h1>
+        <h1 style={{ margin: 0, fontSize: 24 }}>Next.js HTML Streaming + React Query</h1>
         <ReloadButton />
       </div>
       <Image
@@ -20,7 +20,7 @@ export default function Page() {
         src="https://raw.githubusercontent.com/toss/suspensive/main/assets/readme_main.svg"
         alt=""
       />
-      <div>
+      <div style={{ fontSize: 12 }}>
         <h3>🚧 1. skipSsrOnError true (default)</h3>
         <p>RSC fail → RCC(server) skip without fallback → RCC(browser) success</p>
         <EmptyBox>
