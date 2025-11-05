@@ -10,18 +10,18 @@ export const dynamic = 'force-dynamic'
 export default function Page() {
   return (
     <div>
-      <h1 className="text-2xl font-bold">Next.js HTML Streaming + React Query</h1>
+      <h1 className="text-xl font-bold">Next.js HTML Streaming + React Query</h1>
       <div className="flex items-start justify-between">
         <Image
-          height={200}
-          width={200}
+          height={160}
+          width={160}
           src="https://raw.githubusercontent.com/toss/suspensive/main/assets/readme_main.svg"
           alt=""
         />
         <Buttons />
       </div>
       <div style={{ fontSize: 12 }}>
-        <h3 className="text-lg font-bold">🚧 1. skipSsrOnError true (default)</h3>
+        <h3 className="text-md font-bold">🚧 1. skipSsrOnError true (default)</h3>
         <p>RSC fail → RCC(server) skip without fallback → RCC(browser) success</p>
         <EmptyBox>
           <ErrorBoundary fallback={<ErrorFallbackBox>error fallback</ErrorFallbackBox>}>
@@ -39,7 +39,7 @@ export default function Page() {
             </Suspense>
           </ErrorBoundary>
         </EmptyBox>
-        <h3 className="text-lg font-bold">🚧 2. skipSsrOnError with fallback</h3>
+        <h3 className="text-md font-bold">🚧 2. skipSsrOnError with fallback</h3>
         <p>RSC fail → RCC(server) skip with fallback → RCC(browser) success</p>
         <EmptyBox>
           <ErrorBoundary fallback={<ErrorFallbackBox>error fallback</ErrorFallbackBox>}>
@@ -60,7 +60,7 @@ export default function Page() {
             </Suspense>
           </ErrorBoundary>
         </EmptyBox>
-        <h3 className="text-lg font-bold">🚧 3. skipSsrOnError false</h3>
+        <h3 className="text-md font-bold">🚧 3. skipSsrOnError false</h3>
         <p>RSC fail → RCC(server) fail → RCC(browser) success</p>
         <EmptyBox>
           <ErrorBoundary fallback={<ErrorFallbackBox>error fallback</ErrorFallbackBox>}>
@@ -79,7 +79,7 @@ export default function Page() {
             </Suspense>
           </ErrorBoundary>
         </EmptyBox>
-        <h3 className="text-lg font-bold">✅ 4. no error (Best Practice)</h3>
+        <h3 className="text-md font-bold">✅ 4. no error (Best Practice)</h3>
         <p>RSC success → RCC(server) cached → RCC(browser) cached</p>
         <EmptyBox>
           <ErrorBoundary fallback={<ErrorFallbackBox>error fallback</ErrorFallbackBox>}>
@@ -98,7 +98,7 @@ export default function Page() {
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
 const EmptyBox = ({ children }: { children: React.ReactNode }) => (
-  <div className="h-16 border border-gray-900 bg-gray-100">{children}</div>
+  <div className="h-15 border border-gray-900 bg-gray-100">{children}</div>
 )
 
 const LoadingBox = ({ children }: { children: React.ReactNode }) => <div className="bg-yellow-500">{children}</div>
