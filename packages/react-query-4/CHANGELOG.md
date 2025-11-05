@@ -1,5 +1,11 @@
 # @suspensive/react-query-4
 
+## 3.14.0
+
+### Minor Changes
+
+- [#1812](https://github.com/toss/suspensive/pull/1812) [`d0e4561`](https://github.com/toss/suspensive/commit/d0e45610a1078c9321ba7f86bcd8e3dd8c073e07) Thanks [@manudeli](https://github.com/manudeli)! - feat(react-query): add `<QueriesHydrationBoundary/>`
+
 ## 3.13.0
 
 ## 3.12.0
