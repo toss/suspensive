@@ -13,6 +13,8 @@ A component that prefetches multiple queries on the server and automatically hyd
 
 This is useful when you want to prefetch data on the server side and pass it to the client in React Server Components environments.
 
+> 💡 **Recommended reading**: Before using this component, we recommend reading the [TanStack Query Advanced Server Rendering guide](https://tanstack.com/query/latest/docs/framework/react/guides/advanced-ssr), which covers Server Components, streaming, and the Next.js App Router. Understanding these concepts will help you use `QueriesHydrationBoundary` more effectively.
+
 ## Basic Usage
 
 <Tabs items={['page.tsx (RSC)', 'UserProfile.tsx (RCC)', 'PostList.tsx (RCC)']}>
@@ -134,6 +136,8 @@ Controls the behavior when an error occurs while fetching queries on the server.
 3. **RCC (React Client Component) - Browser**: Query execution in `useSuspenseQuery` if no cached or fresh data exists
 
 If stage 1 fails, stage 2 is likely to fail for the same reason. However, stage 3 (browser) might succeed (e.g., authentication-related issues, etc.). Since the browser can retry and potentially succeed, it's better to use `skipSsrOnError` to skip RCC(server) and fetch directly from RCC(browser) when RSC fails.
+
+**Important**: When stage 1 succeeds (no error), the data is already hydrated to the client. In this case, you can verify in the browser's Network tab that no additional fetch requests are made in stages 2 and 3, as the data is served from the cache. This demonstrates the efficiency of server-side prefetching with `QueriesHydrationBoundary`.
 
 - `true` (default): If stage 1 fails, skip SSR and retry in stage 3 (browser)
 - `false`: Even if stage 1 fails, proceed to stage 2 without hydration (retry fetching on server)
@@ -385,6 +389,17 @@ Key benefits:
 2. **Parallel data fetching**: Uses `Promise.all` to process all queries in parallel
 3. **Type safety**: Requires queryKey to prevent mistakes
 4. **Consistent pattern**: Handles multiple queries consistently
+
+## Example
+
+Here's a live example demonstrating `QueriesHydrationBoundary` with Next.js streaming:
+
+![Next.js Streaming React Query Example](/img/next-streaming-react-query-example.gif)
+
+- **[Live Demo](https://next-streaming-react-query.suspensive.org)**: See it in action
+- **[Source Code](https://github.com/toss/suspensive/tree/main/examples/next-streaming-react-query)**: View the full implementation
+
+**Tip**: In the live demo, check the "4. no error (Best Practice)" case and open the browser's Developer Tools Network tab. You'll notice that no fetch requests are made because the data was successfully prefetched on the server and hydrated to the client, demonstrating the efficiency of `QueriesHydrationBoundary`.
 
 ## Disabling SSR
 
