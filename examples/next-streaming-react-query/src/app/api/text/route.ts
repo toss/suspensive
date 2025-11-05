@@ -3,11 +3,12 @@ import z from 'zod'
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
-export const GETSchema = z.object({
+const GETSchema = z.object({
   id: z.string(),
   requestFrom: z.string(),
   responseAt: z.string(),
 })
+export type GETResponse = z.infer<typeof GETSchema>
 export async function GET(request: Request) {
   await sleep(1000)
   const url = new URL(request.url)
