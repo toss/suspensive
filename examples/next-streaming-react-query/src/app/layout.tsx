@@ -10,7 +10,7 @@ export const metadata = {
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
-      <body>
+      <body className="mx-2">
         <Providers>
           <ul style={{ display: 'flex', gap: '10px', margin: 0 }}>
             <Link href="/">
@@ -20,7 +20,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
               <li style={{ listStyle: 'none' }}>test page</li>
             </Link>
           </ul>
-          <div style={{ border: '1px solid red' }}>{children}</div>
+          <div>{children}</div>
         </Providers>
       </body>
     </html>

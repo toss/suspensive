@@ -18,10 +18,12 @@
     "@suspensive/react-query-5": "workspace:*",
     "@tanstack/react-query": "catalog:react-query5",
     "@tanstack/react-query-devtools": "catalog:react-query5",
+    "date-fns": "^4.1.0",
     "next": "catalog:",
     "react": "catalog:react19",
     "react-dom": "catalog:react19",
-    "sharp": "catalog:"
+    "sharp": "catalog:",
+    "zod": "^3.25.76"
   },
   "devDependencies": {
     "@suspensive/eslint-config": "workspace:*",

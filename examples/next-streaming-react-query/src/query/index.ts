@@ -1,14 +1,16 @@
 import { headers, nextComponentType } from '@suspensive/next'
 import { queryOptions } from '@tanstack/react-query'
+import type z from 'zod'
+import type { GETSchema } from '~/app/api/text/route'
 
 export const query = {
   text: (id: number) =>
     queryOptions({
       queryKey: ['query.text', id],
       queryFn: async () => {
-        return isoFetch(`/api/text?id=${id}`, {
+        return isoFetch(`/api/text?id=${id}&from=${nextComponentType()}`, {
           cache: 'no-store',
-        }).then((res) => res.json()) as unknown as Promise<string>
+        }).then((res) => res.json()) as unknown as Promise<z.infer<typeof GETSchema>>
       },
     }),
 }
