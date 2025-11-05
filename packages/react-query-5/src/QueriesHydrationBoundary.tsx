@@ -7,6 +7,8 @@ import {
   type WithRequired,
   dehydrate,
 } from '@tanstack/react-query'
+import type { ReactNode } from 'react'
+import { ClientOnly } from './components/ClientOnly'
 
 /**
  * @experimental
@@ -16,11 +18,28 @@ export async function QueriesHydrationBoundary({
   queries,
   children,
   queryClient = new QueryClient(),
+  clientOnlyOnError = true,
   ...props
 }: {
   queries: WithRequired<QueryOptions<any, any, any, any>, 'queryKey'>[]
+  clientOnlyOnError?: boolean | { fallback: ReactNode }
 } & OmitKeyof<HydrationBoundaryProps, 'state'>) {
-  await Promise.all(queries.map((query) => queryClient.ensureQueryData(query)))
+  try {
+    await Promise.all(queries.map((query) => queryClient.ensureQueryData(query)))
+  } catch {
+    if (clientOnlyOnError) {
+      return (
+        <ClientOnly fallback={clientOnlyOnError === true ? undefined : clientOnlyOnError.fallback}>
+          {children}
+        </ClientOnly>
+      )
+    }
+    return (
+      <HydrationBoundary {...props} state={dehydrate(queryClient)}>
+        {children}
+      </HydrationBoundary>
+    )
+  }
   return (
     <HydrationBoundary {...props} state={dehydrate(queryClient)}>
       {children}

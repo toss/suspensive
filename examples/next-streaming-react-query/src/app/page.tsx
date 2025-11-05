@@ -1,95 +1,38 @@
-'use client'
-
-import { Suspense } from '@suspensive/react'
-import { SuspenseQuery } from '@suspensive/react-query-5'
-import { useQueryClient, useSuspenseQuery } from '@tanstack/react-query'
-import type { ReactNode } from 'react'
+import { ErrorBoundary, Suspense } from '@suspensive/react'
+import { QueriesHydrationBoundary } from '@suspensive/react-query-5'
+import Image from 'next/image'
+import { ReactClientComponent } from './_components/ReactClientComponent'
 import { query } from '~/query'
 
-const Text = ({ ms }: { ms: number }) => {
-  const { data } = useSuspenseQuery(query.text(ms))
-  return <p>result: {data}</p>
-}
-
-const Text2 = ({ children }: { children: ReactNode }) => <p>result: {children}</p>
+export const dynamic = 'force-dynamic'
 
 export default function Page() {
-  const queryClient = useQueryClient()
-
   return (
-    <>
-      <Suspense>
-        <Text ms={100} />
-      </Suspense>
-      <Suspense>
-        <Text ms={200} />
-      </Suspense>
-      <Suspense>
-        <Text ms={300} />
-      </Suspense>
-      <Suspense>
-        <Text ms={400} />
-      </Suspense>
-      <Suspense>
-        <Text ms={500} />
-      </Suspense>
-      <Suspense>
-        <Text ms={600} />
-      </Suspense>
-      <Suspense>
-        <Text ms={700} />
-      </Suspense>
-
-      <button
-        type="button"
-        onClick={() => {
-          queryClient.resetQueries()
-        }}
-      >
-        resetQueries all
-      </button>
-
-      <button
-        type="button"
-        onClick={() => {
-          queryClient.invalidateQueries(query.text(500))
-        }}
-      >
-        invalidate 500
-      </button>
-
-      <button
-        type="button"
-        onClick={() => {
-          queryClient.invalidateQueries(query.text(200))
-        }}
-      >
-        invalidate 200
-      </button>
-
-      <fieldset>
-        <legend>
-          combined <code>Suspense</code>-container
-        </legend>
-        <Suspense>
-          <Text ms={800} />
-          <Text ms={900} />
-          <Text ms={1000} />
-        </Suspense>
-      </fieldset>
-
-      <pre>{`Proposal: <SuspenseQuery /> Component`}</pre>
-      <ul>
-        <Suspense>
-          <SuspenseQuery {...query.text(1100)}>{({ data }) => <Text2>{data}</Text2>}</SuspenseQuery>
-        </Suspense>
-        <Suspense>
-          <SuspenseQuery {...query.text(1200)}>{({ data }) => <Text2>{data}</Text2>}</SuspenseQuery>
-        </Suspense>
-        <Suspense>
-          <SuspenseQuery {...query.text(1300)}>{({ data }) => <Text2>{data}</Text2>}</SuspenseQuery>
-        </Suspense>
-      </ul>
-    </>
+    <div>
+      page
+      <h1>Title</h1>
+      <Image
+        height={500}
+        width={500}
+        src="https://raw.githubusercontent.com/toss/suspensive/main/assets/readme_main.svg"
+        alt=""
+      />
+      <div>
+        <ErrorBoundary fallback={<div>error fallback</div>}>
+          <Suspense fallback={<div>loading...</div>}>
+            <QueriesHydrationBoundary queries={[query.text(200), query.text(1000)]}>
+              <ReactClientComponent ms={200} />
+            </QueriesHydrationBoundary>
+          </Suspense>
+        </ErrorBoundary>
+        <ErrorBoundary fallback={<div>error fallback</div>}>
+          <Suspense fallback={<div>loading...</div>}>
+            <QueriesHydrationBoundary queries={[query.text(100)]}>
+              <ReactClientComponent ms={100} />
+            </QueriesHydrationBoundary>
+          </Suspense>
+        </ErrorBoundary>
+      </div>
+    </div>
   )
 }

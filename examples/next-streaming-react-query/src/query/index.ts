@@ -11,23 +11,31 @@ export const query = {
   text: (ms: number) =>
     queryOptions({
       queryKey: ['query.text', ms],
-      queryFn: () =>
-        isoFetch(`${baseURL}/api/text?wait=${ms}`, {
+      queryFn: () => {
+        return isoFetch(`${baseURL}/api/text?wait=${ms}`, {
           cache: 'no-store',
-        }).then((res) => res.json()) as unknown as Promise<string>,
+        }).then((res) => res.json()) as unknown as Promise<string>
+      },
     }),
 }
 
 const isoFetch: typeof fetch = async (input: string | URL | Request, init?: RequestInit) => {
-  switch (nextComponentType()) {
-    case 'React Client Component (server)':
-      // throw new Error(`isoFetch: React Client Component (server) ${JSON.stringify({ input, init })}`)
+  const type = nextComponentType()
+  switch (type) {
+    case 'React Client Component (server)': {
+      // console.log(`${type}:`, { input, init })
+      await delay(1000).then(() => Promise.reject(new Error(`isoFetch: ${type} ${JSON.stringify({ input, init })}`)))
       return fetch(input, init)
-    case 'React Client Component (browser)':
+    }
+    case 'React Client Component (browser)': {
+      // console.log(`${type}:`, { input, init })
       return fetch(input, init)
+    }
     case 'React Server Component': {
       const nextHeaders = await headers()
-      console.log('isoFetch(React Server Component):', { result: Object.fromEntries(nextHeaders.entries()) })
+      // await delay(1000).then(() => Promise.reject(new Error(`isoFetch: ${type} ${JSON.stringify({ input, init })}`)))
+
+      console.log(`${type}:`, { date: new Date().toISOString(), error: false })
       const mergedHeaders = new Headers(init?.headers)
       nextHeaders.forEach((value, key) => mergedHeaders.set(key, value))
       return fetch(input, { ...init, headers: mergedHeaders })
@@ -35,3 +43,5 @@ const isoFetch: typeof fetch = async (input: string | URL | Request, init?: Requ
   }
   return fetch(input, init)
 }
+
+const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))

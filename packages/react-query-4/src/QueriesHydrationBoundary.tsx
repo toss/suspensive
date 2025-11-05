@@ -2,11 +2,13 @@ import {
   Hydrate,
   type HydrateProps,
   type OmitKeyof,
-  QueryClient,
+  type QueryClient,
   type QueryOptions,
   type WithRequired,
   dehydrate,
 } from '@tanstack/react-query'
+import type { ReactNode } from 'react'
+import { ClientOnly } from './components/ClientOnly'
 
 /**
  * @experimental
@@ -15,13 +17,32 @@ import {
 export async function QueriesHydrationBoundary({
   queries,
   children,
-  queryClient = new QueryClient(),
+  queryClient,
+  clientOnlyOnError = true,
   ...props
 }: {
-  queryClient?: QueryClient
+  queryClient: QueryClient
   queries: WithRequired<QueryOptions<any, any, any, any>, 'queryKey'>[]
+  clientOnlyOnError?: boolean | { fallback: ReactNode }
 } & OmitKeyof<HydrateProps, 'state'>) {
-  await Promise.all(queries.map((query) => queryClient.ensureQueryData(query)))
+  if (clientOnlyOnError) {
+    try {
+      await Promise.all(queries.map((query) => queryClient.ensureQueryData(query)))
+    } catch {
+      return (
+        <ClientOnly fallback={clientOnlyOnError === true ? undefined : clientOnlyOnError.fallback}>
+          {children}
+        </ClientOnly>
+      )
+    }
+    return (
+      <Hydrate {...props} state={dehydrate(queryClient)}>
+        {children}
+      </Hydrate>
+    )
+  }
+
+  await Promise.all(queries.map((query) => queryClient.prefetchQuery(query)))
   return (
     <Hydrate {...props} state={dehydrate(queryClient)}>
       {children}

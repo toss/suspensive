@@ -18,9 +18,6 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             <Link href="/test">
               <li>to test page</li>
             </Link>
-            <Link href="/PrefetchBoundary">
-              <li>to PrefetchBoundary page</li>
-            </Link>
           </ul>
           <div style={{ border: '1px solid red' }}>{children}</div>
         </Providers>
