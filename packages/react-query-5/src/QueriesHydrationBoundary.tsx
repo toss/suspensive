@@ -34,11 +34,6 @@ export async function QueriesHydrationBoundary({
         </ClientOnly>
       )
     }
-    return (
-      <HydrationBoundary {...props} state={dehydrate(queryClient)}>
-        {children}
-      </HydrationBoundary>
-    )
   }
   return (
     <HydrationBoundary {...props} state={dehydrate(queryClient)}>

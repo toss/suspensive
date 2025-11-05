@@ -25,24 +25,17 @@ export async function QueriesHydrationBoundary({
   queries: WithRequired<QueryOptions<any, any, any, any>, 'queryKey'>[]
   clientOnlyOnError?: boolean | { fallback: ReactNode }
 } & OmitKeyof<HydrateProps, 'state'>) {
-  if (clientOnlyOnError) {
-    try {
-      await Promise.all(queries.map((query) => queryClient.ensureQueryData(query)))
-    } catch {
+  try {
+    await Promise.all(queries.map((query) => queryClient.ensureQueryData(query)))
+  } catch {
+    if (clientOnlyOnError) {
       return (
         <ClientOnly fallback={clientOnlyOnError === true ? undefined : clientOnlyOnError.fallback}>
           {children}
         </ClientOnly>
       )
     }
-    return (
-      <Hydrate {...props} state={dehydrate(queryClient)}>
-        {children}
-      </Hydrate>
-    )
   }
-
-  await Promise.all(queries.map((query) => queryClient.prefetchQuery(query)))
   return (
     <Hydrate {...props} state={dehydrate(queryClient)}>
       {children}
