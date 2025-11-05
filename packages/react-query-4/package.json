@@ -39,7 +39,7 @@
     "src"
   ],
   "scripts": {
-    "build": "tsdown && node ../../scripts/add-use-client.ts",
+    "build": "tsdown && node ../../scripts/add-use-client.js",
     "ci:eslint": "eslint \"**/*.{ts,tsx,cts,mts}\"",
     "ci:test": "vitest run",
     "ci:type": "tsc --noEmit",
