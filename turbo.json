@@ -20,7 +20,7 @@
       "cache": false
     },
     "dev": {
-      "dependsOn": ["build"],
+      "dependsOn": ["^build"],
       "outputs": ["dist/**", "coverage/**"],
       "cache": false,
       "persistent": true

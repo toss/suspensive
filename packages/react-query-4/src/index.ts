@@ -1,5 +1,6 @@
 export { infiniteQueryOptions } from './infiniteQueryOptions'
 export type { SelectedInfiniteOptions, UnSelectedInfiniteOptions } from './infiniteQueryOptions'
+export { QueriesHydrationBoundary } from './QueriesHydrationBoundary'
 export { queryOptions } from './queryOptions'
 export type { SelectedQueryOptions, UnSelectedQueryOptions } from './queryOptions'
 export { usePrefetchInfiniteQuery } from './usePrefetchInfiniteQuery'

@@ -1,6 +1,7 @@
-import Link from 'next/link'
 import type { ReactNode } from 'react'
+import { Nav } from './_components/Nav'
 import { Providers } from './providers'
+import './globals.css'
 
 export const metadata = {
   title: 'Next HTML Streaming with Suspense',
@@ -9,20 +10,10 @@ export const metadata = {
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
-      <body>
+      <body className="mx-2">
         <Providers>
-          <ul>
-            <Link href="/">
-              <li>to home page</li>
-            </Link>
-            <Link href="/test">
-              <li>to test page</li>
-            </Link>
-            <Link href="/PrefetchBoundary">
-              <li>to PrefetchBoundary page</li>
-            </Link>
-          </ul>
-          <div style={{ border: '1px solid red' }}>{children}</div>
+          <Nav />
+          <div>{children}</div>
         </Providers>
       </body>
     </html>

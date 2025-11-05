@@ -1,3 +1,5 @@
+'use client'
+
 import { type FetchQueryOptions, type QueryKey, useQueryClient } from '@tanstack/react-query'
 
 /**

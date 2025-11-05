@@ -1,9 +1,25 @@
 import { NextResponse } from 'next/server'
+import z from 'zod'
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
+const GETSchema = z.object({
+  id: z.string(),
+  requestFrom: z.string(),
+  responseAt: z.string(),
+})
+export type GETResponse = z.infer<typeof GETSchema>
 export async function GET(request: Request) {
-  const ms = Number(new URL(request.url).searchParams.get('wait'))
-  await sleep(ms)
-  return NextResponse.json(`${new Date().toISOString()} success to get text waited after ${ms}ms`)
+  await sleep(40 + Math.random() * 60)
+  const url = new URL(request.url)
+  if (url.searchParams.get('error') === 'true') {
+    return NextResponse.json('error', { status: 500 })
+  }
+  return NextResponse.json(
+    GETSchema.parse({
+      id: url.searchParams.get('id'),
+      requestFrom: url.searchParams.get('from') ?? 'unknown',
+      responseAt: new Date().toISOString(),
+    })
+  )
 }
