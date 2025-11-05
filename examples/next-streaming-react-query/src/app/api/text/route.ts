@@ -10,7 +10,7 @@ const GETSchema = z.object({
 })
 export type GETResponse = z.infer<typeof GETSchema>
 export async function GET(request: Request) {
-  await sleep(1000)
+  await sleep(50)
   const url = new URL(request.url)
 
   return NextResponse.json(
