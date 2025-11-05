@@ -108,14 +108,7 @@ const queryClient = new QueryClient()
 
 const Page = async () => {
   return (
-    <QueriesHydrationBoundary
-      queryClient={queryClient}
-      queries={
-        [
-          /* ... */
-        ]
-      }
-    >
+    <QueriesHydrationBoundary queryClient={queryClient} queries={[]}>
       {/* ... */}
     </QueriesHydrationBoundary>
   )
@@ -208,11 +201,18 @@ const PostsPage = ({ userId }) => {
 // Need to separate each server component for HTML Streaming
 const UserProfileWithData = async ({ userId }) => {
   const queryClient = new QueryClient()
-  await queryClient.prefetchQuery(userQueryOptions(userId))
-  const dehydratedState = dehydrate(queryClient)
-
+  try {
+    await queryClient.ensureQueryData(userQueryOptions(userId))
+  } catch (error) {
+    return (
+      // If queryClient.ensureQueryData fails, use ClientOnly to prevent SSR and render on the browser directly
+      <ClientOnly fallback={<div>Loading user...</div>}>
+        <UserProfile userId={userId} />
+      </ClientOnly>
+    )
+  }
   return (
-    <HydrationBoundary state={dehydratedState}>
+    <HydrationBoundary state={dehydrate(queryClient)}>
       <UserProfile userId={userId} />
     </HydrationBoundary>
   )
@@ -220,11 +220,18 @@ const UserProfileWithData = async ({ userId }) => {
 
 const PostListWithData = async ({ userId }) => {
   const queryClient = new QueryClient()
-  await queryClient.prefetchQuery(postsQueryOptions(userId))
-  const dehydratedState = dehydrate(queryClient)
-
+  try {
+    await queryClient.ensureQueryData(postsQueryOptions(userId))
+  } catch (error) {
+    return (
+      // If queryClient.ensureQueryData fails, use ClientOnly to prevent SSR and render on the browser directly
+      <ClientOnly fallback={<div>Loading posts...</div>}>
+        <PostList userId={userId} />
+      </ClientOnly>
+    )
+  }
   return (
-    <HydrationBoundary state={dehydratedState}>
+    <HydrationBoundary state={dehydrate(queryClient)}>
       <PostList userId={userId} />
     </HydrationBoundary>
   )
