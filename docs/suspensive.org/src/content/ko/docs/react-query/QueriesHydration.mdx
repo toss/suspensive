@@ -1,11 +1,11 @@
 import { Tabs } from 'nextra/components'
 import { Callout, Sandpack } from '@/components'
 
-# QueriesHydrationBoundary
+# QueriesHydration
 
 <Callout type='experimental'>
 
-`<QueriesHydrationBoundary/>`는 실험 기능이므로 이 인터페이스는 변경될 수 있습니다.
+`<QueriesHydration/>`는 실험 기능이므로 이 인터페이스는 변경될 수 있습니다.
 
 </Callout>
 
@@ -13,15 +13,15 @@ import { Callout, Sandpack } from '@/components'
 
 React Server Components를 사용하는 환경에서 서버 측에서 데이터를 미리 불러와 클라이언트로 전달할 때 유용합니다.
 
-> 💡 **추천 읽기**: 이 컴포넌트를 사용하기 전에 [TanStack Query Advanced Server Rendering 가이드](https://tanstack.com/query/latest/docs/framework/react/guides/advanced-ssr)를 읽어보시는 것을 권장합니다. 이 가이드는 Server Components, streaming, 그리고 Next.js App Router에 대해 다룹니다. 이러한 개념을 이해하면 `QueriesHydrationBoundary`를 훨씬 더 편하게 사용할 수 있습니다.
+> 💡 **추천 읽기**: 이 컴포넌트를 사용하기 전에 [TanStack Query Advanced Server Rendering 가이드](https://tanstack.com/query/latest/docs/framework/react/guides/advanced-ssr)를 읽어보시는 것을 권장합니다. 이 가이드는 Server Components, streaming, 그리고 Next.js App Router에 대해 다룹니다. 이러한 개념을 이해하면 `QueriesHydration`를 훨씬 더 편하게 사용할 수 있습니다.
 
 ## 기본 사용법
 
 <Tabs items={['page.tsx (RSC)', 'UserProfile.tsx (RCC)', 'PostList.tsx (RCC)']}>
 <Tabs.Tab>
 
-```tsx /QueriesHydrationBoundary/
-import { QueriesHydrationBoundary } from '@suspensive/react-query'
+```tsx /QueriesHydration/
+import { QueriesHydration } from '@suspensive/react-query'
 import { Suspense } from '@suspensive/react'
 import { userQueryOptions, postsQueryOptions } from './queries'
 import { UserProfile, PostList } from './_components'
@@ -31,14 +31,14 @@ const PostsPage = ({ userId }) => {
   return (
     <>
       <Suspense fallback={<div>Loading user...</div>}>
-        <QueriesHydrationBoundary queries={[userQueryOptions(userId)]}>
+        <QueriesHydration queries={[userQueryOptions(userId)]}>
           <UserProfile userId={userId} />
-        </QueriesHydrationBoundary>
+        </QueriesHydration>
       </Suspense>
       <Suspense fallback={<div>Loading posts...</div>}>
-        <QueriesHydrationBoundary queries={[postsQueryOptions(userId)]}>
+        <QueriesHydration queries={[postsQueryOptions(userId)]}>
           <PostList userId={userId} />
-        </QueriesHydrationBoundary>
+        </QueriesHydration>
       </Suspense>
     </>
   )
@@ -100,7 +100,7 @@ export const PostList = ({ userId }) => {
 서버에서 미리 불러올 쿼리들의 배열입니다. 각 쿼리는 `queryKey`를 필수로 가져야 합니다.
 
 ```tsx
-type QueriesHydrationBoundaryProps = {
+type QueriesHydrationProps = {
   queries: WithRequired<QueryOptions<any, any, any, any>, 'queryKey'>[]
   children: ReactNode
   queryClient?: QueryClient // 선택사항 (기본값: new QueryClient())
@@ -114,15 +114,15 @@ type QueriesHydrationBoundaryProps = {
 
 ```tsx
 import { QueryClient } from '@tanstack/react-query'
-import { QueriesHydrationBoundary } from '@suspensive/react-query'
+import { QueriesHydration } from '@suspensive/react-query'
 
 const queryClient = new QueryClient()
 
 const Page = async () => {
   return (
-    <QueriesHydrationBoundary queryClient={queryClient} queries={[]}>
+    <QueriesHydration queryClient={queryClient} queries={[]}>
       {/* ... */}
-    </QueriesHydrationBoundary>
+    </QueriesHydration>
   )
 }
 ```
@@ -131,20 +131,20 @@ const Page = async () => {
 
 서버에서 쿼리를 불러오는 중 에러가 발생했을 때의 동작을 제어합니다. 이 옵션은 데이터 페칭이 발생하는 3단계 시점을 이해하면 더 명확합니다:
 
-1. **RSC(React Server Component)**: `QueriesHydrationBoundary`에서 쿼리 실행
+1. **RSC(React Server Component)**: `QueriesHydration`에서 쿼리 실행
 2. **RCC(React Client Component) - Server**: `useSuspenseQuery`에서 캐시된 데이터가 없으면 쿼리 실행
 3. **RCC(React Client Component) - Browser**: `useSuspenseQuery`에서 캐시나 fresh한 데이터가 없으면 쿼리 실행
 
 1단계에서 실패하면 2단계도 같은 원인으로 실패할 가능성이 높습니다. 하지만 3단계(브라우저)에서는 성공할 수 있습니다 (예: 인증 관련 이슈 등). 브라우저에서는 재시도를 통해 다시 성공할 가능성이 있어, `skipSsrOnError`를 통해 RSC에서 실패했다면 RCC(server)를 통하지 않고 바로 RCC(browser)에서 페칭하도록 하는 것이 더 좋습니다.
 
-**중요**: 1단계에서 성공한 경우(에러 없음), 데이터는 이미 클라이언트에 hydrate되어 있습니다. 이 경우 브라우저의 개발자도구 네트워크 탭에서 확인할 수 있듯이 2단계와 3단계에서 추가적인 fetch 요청이 발생하지 않습니다. 데이터가 캐시에서 제공되기 때문입니다. 이것이 `QueriesHydrationBoundary`를 사용한 서버 사이드 prefetching의 효율성을 보여줍니다.
+**중요**: 1단계에서 성공한 경우(에러 없음), 데이터는 이미 클라이언트에 hydrate되어 있습니다. 이 경우 브라우저의 개발자도구 네트워크 탭에서 확인할 수 있듯이 2단계와 3단계에서 추가적인 fetch 요청이 발생하지 않습니다. 데이터가 캐시에서 제공되기 때문입니다. 이것이 `QueriesHydration`를 사용한 서버 사이드 prefetching의 효율성을 보여줍니다.
 
 - `true` (기본값): 1단계에서 실패하면 SSR을 건너뛰고 3단계(브라우저)에서 재시도합니다
 - `false`: 1단계에서 실패해도 hydration 없이 2단계로 진행합니다 (서버에서 다시 페칭 시도)
 - `{ fallback: ReactNode }`: 1단계에서 실패하면 SSR을 건너뛰고 3단계로 가는 동안 커스텀 폴백 UI를 표시합니다
 
 ```tsx
-import { QueriesHydrationBoundary } from '@suspensive/react-query'
+import { QueriesHydration } from '@suspensive/react-query'
 import { Suspense } from '@suspensive/react'
 import { UserProfile, PostList, CommentList } from './_components'
 
@@ -153,31 +153,31 @@ const Page = async () => {
     <>
       {/* 1단계 실패 시 SSR을 건너뛰고 브라우저에서 재시도 (기본 동작) */}
       <Suspense fallback={<div>Loading...</div>}>
-        <QueriesHydrationBoundary queries={[userQuery]}>
+        <QueriesHydration queries={[userQuery]}>
           <UserProfile />
-        </QueriesHydrationBoundary>
+        </QueriesHydration>
       </Suspense>
 
       {/* 1단계 실패 시 커스텀 폴백과 함께 SSR을 건너뛰고 브라우저에서 재시도 */}
       <Suspense fallback={<div>Loading...</div>}>
-        <QueriesHydrationBoundary
+        <QueriesHydration
           queries={[postsQuery]}
           skipSsrOnError={{
             fallback: <div>서버에서 데이터를 불러올 수 없습니다...</div>,
           }}
         >
           <PostList />
-        </QueriesHydrationBoundary>
+        </QueriesHydration>
       </Suspense>
 
       {/* 1단계 실패 시에도 2단계(RCC server)에서 재시도 */}
       <Suspense fallback={<div>Loading...</div>}>
-        <QueriesHydrationBoundary
+        <QueriesHydration
           queries={[commentsQuery]}
           skipSsrOnError={false}
         >
           <CommentList />
-        </QueriesHydrationBoundary>
+        </QueriesHydration>
       </Suspense>
     </>
   )
@@ -303,15 +303,15 @@ export const PostList = ({ userId }) => {
 </Tabs.Tab>
 </Tabs>
 
-### QueriesHydrationBoundary 사용
+### QueriesHydration 사용
 
-`<QueriesHydrationBoundary/>`를 사용하면 이 모든 과정이 자동으로 처리됩니다:
+`<QueriesHydration/>`를 사용하면 이 모든 과정이 자동으로 처리됩니다:
 
 <Tabs items={['page.tsx (RSC)', 'UserProfile.tsx (RCC)', 'PostList.tsx (RCC)']}>
 <Tabs.Tab>
 
 ```tsx
-import { QueriesHydrationBoundary } from '@suspensive/react-query'
+import { QueriesHydration } from '@suspensive/react-query'
 import { Suspense } from '@suspensive/react'
 import { userQueryOptions, postsQueryOptions } from './queries'
 import { UserProfile, PostList } from './_components'
@@ -321,14 +321,14 @@ const PostsPage = ({ userId }) => {
   return (
     <>
       <Suspense fallback={<div>Loading user...</div>}>
-        <QueriesHydrationBoundary queries={[userQueryOptions(userId)]}>
+        <QueriesHydration queries={[userQueryOptions(userId)]}>
           <UserProfile userId={userId} />
-        </QueriesHydrationBoundary>
+        </QueriesHydration>
       </Suspense>
       <Suspense fallback={<div>Loading posts...</div>}>
-        <QueriesHydrationBoundary queries={[postsQueryOptions(userId)]}>
+        <QueriesHydration queries={[postsQueryOptions(userId)]}>
           <PostList userId={userId} />
-        </QueriesHydrationBoundary>
+        </QueriesHydration>
       </Suspense>
     </>
   )
@@ -392,21 +392,21 @@ export const PostList = ({ userId }) => {
 
 ## 예제
 
-Next.js streaming과 함께 `QueriesHydrationBoundary`를 사용하는 실제 예제입니다:
+Next.js streaming과 함께 `QueriesHydration`를 사용하는 실제 예제입니다:
 
 ![Next.js Streaming React Query Example](/img/next-streaming-react-query-example.gif)
 
 - **[라이브 데모](https://next-streaming-react-query.suspensive.org)**: 실제 동작 확인
 - **[소스 코드](https://github.com/toss/suspensive/tree/main/examples/next-streaming-react-query)**: 전체 구현 코드 확인
 
-**팁**: 라이브 데모에서 "4. no error (Best Practice)" 케이스를 확인하고 브라우저의 개발자도구 네트워크 탭을 열어보세요. 서버에서 성공적으로 prefetch되어 클라이언트에 hydrate된 데이터이기 때문에 fetch 요청이 발생하지 않는 것을 확인할 수 있습니다. 이것이 `QueriesHydrationBoundary`의 효율성을 보여줍니다.
+**팁**: 라이브 데모에서 "4. no error (Best Practice)" 케이스를 확인하고 브라우저의 개발자도구 네트워크 탭을 열어보세요. 서버에서 성공적으로 prefetch되어 클라이언트에 hydrate된 데이터이기 때문에 fetch 요청이 발생하지 않는 것을 확인할 수 있습니다. 이것이 `QueriesHydration`의 효율성을 보여줍니다.
 
 ## SSR 비활성화하기
 
-만약 특정 컴포넌트에서 서버 사이드 렌더링을 사용하지 않으려면, `<Suspense/>`에 `clientOnly` prop을 추가하기만 하면 됩니다. 이 경우 서버에서 데이터를 prefetch하지 않으므로 `QueriesHydrationBoundary`도 필요하지 않습니다:
+만약 특정 컴포넌트에서 서버 사이드 렌더링을 사용하지 않으려면, `<Suspense/>`에 `clientOnly` prop을 추가하기만 하면 됩니다. 이 경우 서버에서 데이터를 prefetch하지 않으므로 `QueriesHydration`도 필요하지 않습니다:
 
 ```tsx
-import { QueriesHydrationBoundary } from '@suspensive/react-query'
+import { QueriesHydration } from '@suspensive/react-query'
 import { Suspense } from '@suspensive/react'
 import { userQueryOptions, postsQueryOptions } from './queries'
 import { UserProfile, PostList } from './_components'
@@ -420,9 +420,9 @@ const PostsPage = ({ userId }) => {
       </Suspense>
       {/* PostList는 서버에서 prefetch되고 렌더링됩니다 */}
       <Suspense fallback={<div>Loading posts...</div>}>
-        <QueriesHydrationBoundary queries={[postsQueryOptions(userId)]}>
+        <QueriesHydration queries={[postsQueryOptions(userId)]}>
           <PostList userId={userId} />
-        </QueriesHydrationBoundary>
+        </QueriesHydration>
       </Suspense>
     </>
   )
@@ -433,7 +433,7 @@ const PostsPage = ({ userId }) => {
 
 - 해당 Suspense 경계 내의 컴포넌트는 서버에서 렌더링되지 않습니다
 - 클라이언트에서만 데이터를 페칭하고 렌더링합니다
-- 서버 사이드 prefetch가 필요 없으므로 `QueriesHydrationBoundary`를 사용하지 않아도 됩니다
+- 서버 사이드 prefetch가 필요 없으므로 `QueriesHydration`를 사용하지 않아도 됩니다
 
 ## 버전별 차이점
 
@@ -443,9 +443,9 @@ const PostsPage = ({ userId }) => {
 
 ```tsx
 import { HydrationBoundary } from '@tanstack/react-query'
-import { QueriesHydrationBoundary } from '@suspensive/react-query'
+import { QueriesHydration } from '@suspensive/react-query'
 
-// QueriesHydrationBoundary는 내부적으로 HydrationBoundary를 사용합니다
+// QueriesHydration는 내부적으로 HydrationBoundary를 사용합니다
 ```
 
 ### @tanstack/react-query v4
@@ -454,9 +454,9 @@ import { QueriesHydrationBoundary } from '@suspensive/react-query'
 
 ```tsx
 import { Hydrate } from '@tanstack/react-query'
-import { QueriesHydrationBoundary } from '@suspensive/react-query'
+import { QueriesHydration } from '@suspensive/react-query'
 
-// QueriesHydrationBoundary는 내부적으로 Hydrate를 사용합니다
+// QueriesHydration는 내부적으로 Hydrate를 사용합니다
 ```
 
 ## 주의사항
@@ -469,4 +469,4 @@ import { QueriesHydrationBoundary } from '@suspensive/react-query'
 
 | Version | Changes                                                       |
 | ------- | ------------------------------------------------------------- |
-| v2.17.0 | `<QueriesHydrationBoundary/>`가 실험 기능으로 추가되었습니다. |
+| v2.17.0 | `<QueriesHydration/>`가 실험 기능으로 추가되었습니다. |

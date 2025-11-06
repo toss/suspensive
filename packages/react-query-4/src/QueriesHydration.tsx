@@ -1,8 +1,8 @@
 import {
-  HydrationBoundary,
-  type HydrationBoundaryProps,
+  Hydrate,
+  type HydrateProps,
   type OmitKeyof,
-  QueryClient,
+  type QueryClient,
   type QueryOptions,
   type WithRequired,
   dehydrate,
@@ -16,7 +16,7 @@ import { ClientOnly } from './components/ClientOnly'
  * @experimental This component is experimental and may be changed or removed in the future.
  *
  * @description
- * QueriesHydrationBoundary is designed for React Server Components (RSC).
+ * QueriesHydration is designed for React Server Components (RSC).
  * It pre-fetches multiple queries on the server side and automatically hydrates
  * the data to the client, enabling seamless data synchronization between server and client.
  *
@@ -27,7 +27,7 @@ import { ClientOnly } from './components/ClientOnly'
  * ```tsx
  * // app/page.tsx (Server Component)
  * import { Suspense } from 'react'
- * import { QueriesHydrationBoundary } from '@suspensive/react-query'
+ * import { QueriesHydration } from '@suspensive/react-query'
  * import { queryOptions } from '@tanstack/react-query'
  *
  * const userQuery = queryOptions({
@@ -44,15 +44,15 @@ import { ClientOnly } from './components/ClientOnly'
  *   return (
  *     <>
  *       <Suspense fallback={<div>Loading user...</div>}>
- *         <QueriesHydrationBoundary queries={[userQuery]}>
+ *         <QueriesHydration queries={[userQuery]}>
  *           <UserProfile />
- *         </QueriesHydrationBoundary>
+ *         </QueriesHydration>
  *       </Suspense>
  *
  *       <Suspense fallback={<div>Loading posts...</div>}>
- *         <QueriesHydrationBoundary queries={[postsQuery]}>
+ *         <QueriesHydration queries={[postsQuery]}>
  *           <PostsList />
- *         </QueriesHydrationBoundary>
+ *         </QueriesHydration>
  *       </Suspense>
  *     </>
  *   )
@@ -63,24 +63,28 @@ import { ClientOnly } from './components/ClientOnly'
  * ```tsx
  * // With custom error fallback
  * <Suspense fallback={<div>Loading user...</div>}>
- *   <QueriesHydrationBoundary
+ *   <QueriesHydration
  *     queries={[userQuery]}
  *     skipSsrOnError={{ fallback: <div>Fetching on client...</div> }}
  *   >
  *     <UserProfile />
- *   </QueriesHydrationBoundary>
+ *   </QueriesHydration>
  * </Suspense>
  * ```
  *
- * @see {@link https://suspensive.org/docs/react-query/QueriesHydrationBoundary Documentation}
+ * @see {@link https://suspensive.org/docs/react-query/QueriesHydration Documentation}
  */
-export async function QueriesHydrationBoundary({
+export async function QueriesHydration({
   queries,
   children,
-  queryClient = new QueryClient(),
+  queryClient,
   skipSsrOnError = true,
   ...props
 }: {
+  /**
+   * The QueryClient instance to use for fetching queries.
+   */
+  queryClient: QueryClient
   /**
    * An array of query options to be fetched on the server. Each query must include a `queryKey`.
    */
@@ -96,7 +100,7 @@ export async function QueriesHydrationBoundary({
     | {
         fallback: ReactNode
       }
-} & OmitKeyof<HydrationBoundaryProps, 'state'>) {
+} & OmitKeyof<HydrateProps, 'state'>) {
   try {
     await Promise.all(queries.map((query) => queryClient.ensureQueryData(query)))
   } catch {
@@ -107,8 +111,8 @@ export async function QueriesHydrationBoundary({
     }
   }
   return (
-    <HydrationBoundary {...props} state={dehydrate(queryClient)}>
+    <Hydrate {...props} state={dehydrate(queryClient)}>
       {children}
-    </HydrationBoundary>
+    </Hydrate>
   )
 }

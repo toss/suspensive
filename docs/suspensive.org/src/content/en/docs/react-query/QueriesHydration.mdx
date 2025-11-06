@@ -1,11 +1,11 @@
 import { Tabs } from 'nextra/components'
 import { Callout, Sandpack } from '@/components'
 
-# QueriesHydrationBoundary
+# QueriesHydration
 
 <Callout type='experimental'>
 
-`<QueriesHydrationBoundary/>` is an experimental feature, so this interface may change.
+`<QueriesHydration/>` is an experimental feature, so this interface may change.
 
 </Callout>
 
@@ -13,15 +13,15 @@ A component that prefetches multiple queries on the server and automatically hyd
 
 This is useful when you want to prefetch data on the server side and pass it to the client in React Server Components environments.
 
-> 💡 **Recommended reading**: Before using this component, we recommend reading the [TanStack Query Advanced Server Rendering guide](https://tanstack.com/query/latest/docs/framework/react/guides/advanced-ssr), which covers Server Components, streaming, and the Next.js App Router. Understanding these concepts will help you use `QueriesHydrationBoundary` more effectively.
+> 💡 **Recommended reading**: Before using this component, we recommend reading the [TanStack Query Advanced Server Rendering guide](https://tanstack.com/query/latest/docs/framework/react/guides/advanced-ssr), which covers Server Components, streaming, and the Next.js App Router. Understanding these concepts will help you use `QueriesHydration` more effectively.
 
 ## Basic Usage
 
 <Tabs items={['page.tsx (RSC)', 'UserProfile.tsx (RCC)', 'PostList.tsx (RCC)']}>
 <Tabs.Tab>
 
-```tsx /QueriesHydrationBoundary/
-import { QueriesHydrationBoundary } from '@suspensive/react-query'
+```tsx /QueriesHydration/
+import { QueriesHydration } from '@suspensive/react-query'
 import { Suspense } from '@suspensive/react'
 import { userQueryOptions, postsQueryOptions } from './queries'
 import { UserProfile, PostList } from './_components'
@@ -31,14 +31,14 @@ const PostsPage = ({ userId }) => {
   return (
     <>
       <Suspense fallback={<div>Loading user...</div>}>
-        <QueriesHydrationBoundary queries={[userQueryOptions(userId)]}>
+        <QueriesHydration queries={[userQueryOptions(userId)]}>
           <UserProfile userId={userId} />
-        </QueriesHydrationBoundary>
+        </QueriesHydration>
       </Suspense>
       <Suspense fallback={<div>Loading posts...</div>}>
-        <QueriesHydrationBoundary queries={[postsQueryOptions(userId)]}>
+        <QueriesHydration queries={[postsQueryOptions(userId)]}>
           <PostList userId={userId} />
-        </QueriesHydrationBoundary>
+        </QueriesHydration>
       </Suspense>
     </>
   )
@@ -100,7 +100,7 @@ export const PostList = ({ userId }) => {
 An array of queries to be prefetched on the server. Each query must have a `queryKey`.
 
 ```tsx
-type QueriesHydrationBoundaryProps = {
+type QueriesHydrationProps = {
   queries: WithRequired<QueryOptions<any, any, any, any>, 'queryKey'>[]
   children: ReactNode
   queryClient?: QueryClient // Optional (default: new QueryClient())
@@ -114,15 +114,15 @@ Optionally, you can pass a QueryClient instance to use. If not provided, a new Q
 
 ```tsx
 import { QueryClient } from '@tanstack/react-query'
-import { QueriesHydrationBoundary } from '@suspensive/react-query'
+import { QueriesHydration } from '@suspensive/react-query'
 
 const queryClient = new QueryClient()
 
 const Page = async () => {
   return (
-    <QueriesHydrationBoundary queryClient={queryClient} queries={[]}>
+    <QueriesHydration queryClient={queryClient} queries={[]}>
       {/* ... */}
-    </QueriesHydrationBoundary>
+    </QueriesHydration>
   )
 }
 ```
@@ -131,20 +131,20 @@ const Page = async () => {
 
 Controls the behavior when an error occurs while fetching queries on the server. This option becomes clearer when you understand the 3 stages where data fetching occurs:
 
-1. **RSC (React Server Component)**: Query execution in `QueriesHydrationBoundary`
+1. **RSC (React Server Component)**: Query execution in `QueriesHydration`
 2. **RCC (React Client Component) - Server**: Query execution in `useSuspenseQuery` if no cached data exists
 3. **RCC (React Client Component) - Browser**: Query execution in `useSuspenseQuery` if no cached or fresh data exists
 
 If stage 1 fails, stage 2 is likely to fail for the same reason. However, stage 3 (browser) might succeed (e.g., authentication-related issues, etc.). Since the browser can retry and potentially succeed, it's better to use `skipSsrOnError` to skip RCC(server) and fetch directly from RCC(browser) when RSC fails.
 
-**Important**: When stage 1 succeeds (no error), the data is already hydrated to the client. In this case, you can verify in the browser's Network tab that no additional fetch requests are made in stages 2 and 3, as the data is served from the cache. This demonstrates the efficiency of server-side prefetching with `QueriesHydrationBoundary`.
+**Important**: When stage 1 succeeds (no error), the data is already hydrated to the client. In this case, you can verify in the browser's Network tab that no additional fetch requests are made in stages 2 and 3, as the data is served from the cache. This demonstrates the efficiency of server-side prefetching with `QueriesHydration`.
 
 - `true` (default): If stage 1 fails, skip SSR and retry in stage 3 (browser)
 - `false`: Even if stage 1 fails, proceed to stage 2 without hydration (retry fetching on server)
 - `{ fallback: ReactNode }`: If stage 1 fails, skip SSR and display a custom fallback UI while moving to stage 3
 
 ```tsx
-import { QueriesHydrationBoundary } from '@suspensive/react-query'
+import { QueriesHydration } from '@suspensive/react-query'
 import { Suspense } from '@suspensive/react'
 import { UserProfile, PostList, CommentList } from './_components'
 
@@ -153,31 +153,31 @@ const Page = async () => {
     <>
       {/* Skip SSR and retry in browser if stage 1 fails (default behavior) */}
       <Suspense fallback={<div>Loading...</div>}>
-        <QueriesHydrationBoundary queries={[userQuery]}>
+        <QueriesHydration queries={[userQuery]}>
           <UserProfile />
-        </QueriesHydrationBoundary>
+        </QueriesHydration>
       </Suspense>
 
       {/* Skip SSR and retry in browser with custom fallback if stage 1 fails */}
       <Suspense fallback={<div>Loading...</div>}>
-        <QueriesHydrationBoundary
+        <QueriesHydration
           queries={[postsQuery]}
           skipSsrOnError={{
             fallback: <div>Unable to fetch data from server...</div>,
           }}
         >
           <PostList />
-        </QueriesHydrationBoundary>
+        </QueriesHydration>
       </Suspense>
 
       {/* Retry in stage 2 (RCC server) even if stage 1 fails */}
       <Suspense fallback={<div>Loading...</div>}>
-        <QueriesHydrationBoundary
+        <QueriesHydration
           queries={[commentsQuery]}
           skipSsrOnError={false}
         >
           <CommentList />
-        </QueriesHydrationBoundary>
+        </QueriesHydration>
       </Suspense>
     </>
   )
@@ -303,15 +303,15 @@ export const PostList = ({ userId }) => {
 </Tabs.Tab>
 </Tabs>
 
-### Using QueriesHydrationBoundary
+### Using QueriesHydration
 
-With `<QueriesHydrationBoundary/>`, all of this is handled automatically:
+With `<QueriesHydration/>`, all of this is handled automatically:
 
 <Tabs items={['page.tsx (RSC)', 'UserProfile.tsx (RCC)', 'PostList.tsx (RCC)']}>
 <Tabs.Tab>
 
 ```tsx
-import { QueriesHydrationBoundary } from '@suspensive/react-query'
+import { QueriesHydration } from '@suspensive/react-query'
 import { Suspense } from '@suspensive/react'
 import { userQueryOptions, postsQueryOptions } from './queries'
 import { UserProfile, PostList } from './_components'
@@ -321,14 +321,14 @@ const PostsPage = ({ userId }) => {
   return (
     <>
       <Suspense fallback={<div>Loading user...</div>}>
-        <QueriesHydrationBoundary queries={[userQueryOptions(userId)]}>
+        <QueriesHydration queries={[userQueryOptions(userId)]}>
           <UserProfile userId={userId} />
-        </QueriesHydrationBoundary>
+        </QueriesHydration>
       </Suspense>
       <Suspense fallback={<div>Loading posts...</div>}>
-        <QueriesHydrationBoundary queries={[postsQueryOptions(userId)]}>
+        <QueriesHydration queries={[postsQueryOptions(userId)]}>
           <PostList userId={userId} />
-        </QueriesHydrationBoundary>
+        </QueriesHydration>
       </Suspense>
     </>
   )
@@ -392,21 +392,21 @@ Key benefits:
 
 ## Example
 
-Here's a live example demonstrating `QueriesHydrationBoundary` with Next.js streaming:
+Here's a live example demonstrating `QueriesHydration` with Next.js streaming:
 
 ![Next.js Streaming React Query Example](/img/next-streaming-react-query-example.gif)
 
 - **[Live Demo](https://next-streaming-react-query.suspensive.org)**: See it in action
 - **[Source Code](https://github.com/toss/suspensive/tree/main/examples/next-streaming-react-query)**: View the full implementation
 
-**Tip**: In the live demo, check the "4. no error (Best Practice)" case and open the browser's Developer Tools Network tab. You'll notice that no fetch requests are made because the data was successfully prefetched on the server and hydrated to the client, demonstrating the efficiency of `QueriesHydrationBoundary`.
+**Tip**: In the live demo, check the "4. no error (Best Practice)" case and open the browser's Developer Tools Network tab. You'll notice that no fetch requests are made because the data was successfully prefetched on the server and hydrated to the client, demonstrating the efficiency of `QueriesHydration`.
 
 ## Disabling SSR
 
-If you want to skip server-side rendering for a specific component, simply add the `clientOnly` prop to `<Suspense/>`. In this case, since you don't need to prefetch data on the server, you don't need `QueriesHydrationBoundary` either:
+If you want to skip server-side rendering for a specific component, simply add the `clientOnly` prop to `<Suspense/>`. In this case, since you don't need to prefetch data on the server, you don't need `QueriesHydration` either:
 
 ```tsx
-import { QueriesHydrationBoundary } from '@suspensive/react-query'
+import { QueriesHydration } from '@suspensive/react-query'
 import { Suspense } from '@suspensive/react'
 import { userQueryOptions, postsQueryOptions } from './queries'
 import { UserProfile, PostList } from './_components'
@@ -420,9 +420,9 @@ const PostsPage = ({ userId }) => {
       </Suspense>
       {/* PostList is prefetched and rendered on the server */}
       <Suspense fallback={<div>Loading posts...</div>}>
-        <QueriesHydrationBoundary queries={[postsQueryOptions(userId)]}>
+        <QueriesHydration queries={[postsQueryOptions(userId)]}>
           <PostList userId={userId} />
-        </QueriesHydrationBoundary>
+        </QueriesHydration>
       </Suspense>
     </>
   )
@@ -433,7 +433,7 @@ When using the `clientOnly` prop:
 
 - Components within that Suspense boundary will not be rendered on the server
 - Data will only be fetched and rendered on the client
-- You don't need `QueriesHydrationBoundary` since server-side prefetch is not needed
+- You don't need `QueriesHydration` since server-side prefetch is not needed
 
 ## Version Differences
 
@@ -443,9 +443,9 @@ In `@tanstack/react-query` v5, it uses the `HydrationBoundary` component.
 
 ```tsx
 import { HydrationBoundary } from '@tanstack/react-query'
-import { QueriesHydrationBoundary } from '@suspensive/react-query'
+import { QueriesHydration } from '@suspensive/react-query'
 
-// QueriesHydrationBoundary internally uses HydrationBoundary
+// QueriesHydration internally uses HydrationBoundary
 ```
 
 ### @tanstack/react-query v4
@@ -454,9 +454,9 @@ In `@tanstack/react-query` v4, it uses the `Hydrate` component.
 
 ```tsx
 import { Hydrate } from '@tanstack/react-query'
-import { QueriesHydrationBoundary } from '@suspensive/react-query'
+import { QueriesHydration } from '@suspensive/react-query'
 
-// QueriesHydrationBoundary internally uses Hydrate
+// QueriesHydration internally uses Hydrate
 ```
 
 ## Important Notes
@@ -469,4 +469,4 @@ import { QueriesHydrationBoundary } from '@suspensive/react-query'
 
 | Version | Changes                                                                  |
 | ------- | ------------------------------------------------------------------------ |
-| v2.17.0 | `<QueriesHydrationBoundary/>` has been added as an experimental feature. |
+| v2.17.0 | `<QueriesHydration/>` has been added as an experimental feature. |

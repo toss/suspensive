@@ -1,5 +1,5 @@
 import { ErrorBoundary, Suspense } from '@suspensive/react'
-import { QueriesHydrationBoundary } from '@suspensive/react-query-5'
+import { QueriesHydration } from '@suspensive/react-query-5'
 import Image from 'next/image'
 import { EmptyBox, ErrorFallbackBox, LoadingBox } from '../_components/Boxes'
 import { Buttons } from '../_components/Buttons'
@@ -20,36 +20,36 @@ export default function Page() {
         <EmptyBox>
           <ErrorBoundary fallback={<ErrorFallbackBox>error fallback</ErrorFallbackBox>}>
             <Suspense fallback={<LoadingBox>loading...</LoadingBox>}>
-              <QueriesHydrationBoundary queries={[query.text(11)]}>
+              <QueriesHydration queries={[query.text(11)]}>
                 <ReactClientComponent queryKeyId={11} />
-              </QueriesHydrationBoundary>
+              </QueriesHydration>
             </Suspense>
           </ErrorBoundary>
         </EmptyBox>
         <EmptyBox>
           <ErrorBoundary fallback={<ErrorFallbackBox>error fallback</ErrorFallbackBox>}>
             <Suspense fallback={<LoadingBox>loading...</LoadingBox>}>
-              <QueriesHydrationBoundary queries={[query.text(12)]}>
+              <QueriesHydration queries={[query.text(12)]}>
                 <ReactClientComponent queryKeyId={12} />
-              </QueriesHydrationBoundary>
+              </QueriesHydration>
             </Suspense>
           </ErrorBoundary>
         </EmptyBox>
         <EmptyBox>
           <ErrorBoundary fallback={<ErrorFallbackBox>error fallback</ErrorFallbackBox>}>
             <Suspense fallback={<LoadingBox>loading...</LoadingBox>}>
-              <QueriesHydrationBoundary queries={[query.text(13)]}>
+              <QueriesHydration queries={[query.text(13)]}>
                 <ReactClientComponent queryKeyId={13} />
-              </QueriesHydrationBoundary>
+              </QueriesHydration>
             </Suspense>
           </ErrorBoundary>
         </EmptyBox>
         <EmptyBox>
           <ErrorBoundary fallback={<ErrorFallbackBox>error fallback</ErrorFallbackBox>}>
             <Suspense fallback={<LoadingBox>loading...</LoadingBox>}>
-              <QueriesHydrationBoundary queries={[query.text(14)]}>
+              <QueriesHydration queries={[query.text(14)]}>
                 <ReactClientComponent queryKeyId={14} />
-              </QueriesHydrationBoundary>
+              </QueriesHydration>
             </Suspense>
           </ErrorBoundary>
         </EmptyBox>
