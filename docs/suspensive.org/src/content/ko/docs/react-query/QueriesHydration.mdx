@@ -172,10 +172,7 @@ const Page = async () => {
 
       {/* 1단계 실패 시에도 2단계(RCC server)에서 재시도 */}
       <Suspense fallback={<div>Loading...</div>}>
-        <QueriesHydration
-          queries={[commentsQuery]}
-          skipSsrOnError={false}
-        >
+        <QueriesHydration queries={[commentsQuery]} skipSsrOnError={false}>
           <CommentList />
         </QueriesHydration>
       </Suspense>
@@ -467,6 +464,6 @@ import { QueriesHydration } from '@suspensive/react-query'
 
 ### 버전 기록
 
-| Version | Changes                                                       |
-| ------- | ------------------------------------------------------------- |
+| Version | Changes                                               |
+| ------- | ----------------------------------------------------- |
 | v2.17.0 | `<QueriesHydration/>`가 실험 기능으로 추가되었습니다. |

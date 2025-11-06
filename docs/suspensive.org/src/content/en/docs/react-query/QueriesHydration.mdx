@@ -172,10 +172,7 @@ const Page = async () => {
 
       {/* Retry in stage 2 (RCC server) even if stage 1 fails */}
       <Suspense fallback={<div>Loading...</div>}>
-        <QueriesHydration
-          queries={[commentsQuery]}
-          skipSsrOnError={false}
-        >
+        <QueriesHydration queries={[commentsQuery]} skipSsrOnError={false}>
           <CommentList />
         </QueriesHydration>
       </Suspense>
@@ -467,6 +464,6 @@ import { QueriesHydration } from '@suspensive/react-query'
 
 ### Version History
 
-| Version | Changes                                                                  |
-| ------- | ------------------------------------------------------------------------ |
+| Version | Changes                                                          |
+| ------- | ---------------------------------------------------------------- |
 | v2.17.0 | `<QueriesHydration/>` has been added as an experimental feature. |
