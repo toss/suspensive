@@ -16,7 +16,7 @@ import { ClientOnly } from './components/ClientOnly'
  * @experimental This component is experimental and may be changed or removed in the future.
  *
  * @description
- * QueriesHydrationBoundary is designed for React Server Components (RSC).
+ * QueriesHydration is designed for React Server Components (RSC).
  * It pre-fetches multiple queries on the server side and automatically hydrates
  * the data to the client, enabling seamless data synchronization between server and client.
  *
@@ -27,32 +27,32 @@ import { ClientOnly } from './components/ClientOnly'
  * ```tsx
  * // app/page.tsx (Server Component)
  * import { Suspense } from 'react'
- * import { QueriesHydrationBoundary } from '@suspensive/react-query'
+ * import { QueriesHydration } from '@suspensive/react-query'
  * import { queryOptions } from '@tanstack/react-query'
  *
- * const userQuery = queryOptions({
- *   queryKey: ['user', id],
- *   queryFn: () => fetchUser(id)
+ * const userQueryOptions = (userId: string) => queryOptions({
+ *   queryKey: ['user', userId],
+ *   queryFn: () => fetchUser(userId)
  * })
  *
- * const postsQuery = queryOptions({
+ * const postsQueryOptions = () => queryOptions({
  *   queryKey: ['posts'],
  *   queryFn: () => fetchPosts()
  * })
  *
- * export default function Page() {
+ * export default function Page({ userId }: { userId: string }) {
  *   return (
  *     <>
  *       <Suspense fallback={<div>Loading user...</div>}>
- *         <QueriesHydrationBoundary queries={[userQuery]}>
+ *         <QueriesHydration queries={[userQueryOptions(userId)]}>
  *           <UserProfile />
- *         </QueriesHydrationBoundary>
+ *         </QueriesHydration>
  *       </Suspense>
  *
  *       <Suspense fallback={<div>Loading posts...</div>}>
- *         <QueriesHydrationBoundary queries={[postsQuery]}>
+ *         <QueriesHydration queries={[postsQueryOptions()]}>
  *           <PostsList />
- *         </QueriesHydrationBoundary>
+ *         </QueriesHydration>
  *       </Suspense>
  *     </>
  *   )
@@ -63,18 +63,18 @@ import { ClientOnly } from './components/ClientOnly'
  * ```tsx
  * // With custom error fallback
  * <Suspense fallback={<div>Loading user...</div>}>
- *   <QueriesHydrationBoundary
- *     queries={[userQuery]}
+ *   <QueriesHydration
+ *     queries={[userQueryOptions(userId)]}
  *     skipSsrOnError={{ fallback: <div>Fetching on client...</div> }}
  *   >
  *     <UserProfile />
- *   </QueriesHydrationBoundary>
+ *   </QueriesHydration>
  * </Suspense>
  * ```
  *
- * @see {@link https://suspensive.org/docs/react-query/QueriesHydrationBoundary Documentation}
+ * @see {@link https://suspensive.org/docs/react-query/QueriesHydration Documentation}
  */
-export async function QueriesHydrationBoundary({
+export async function QueriesHydration({
   queries,
   children,
   queryClient,

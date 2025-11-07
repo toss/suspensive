@@ -1,5 +1,5 @@
 import { ErrorBoundary, Suspense } from '@suspensive/react'
-import { QueriesHydrationBoundary } from '@suspensive/react-query-5'
+import { QueriesHydration } from '@suspensive/react-query-5'
 import Image from 'next/image'
 import { EmptyBox, ErrorFallbackBox, LoadingBox, SkipSSROnErrorFallbackBox } from './_components/Boxes'
 import { Buttons } from './_components/Buttons'
@@ -22,7 +22,7 @@ export default function Page() {
         <EmptyBox>
           <ErrorBoundary fallback={<ErrorFallbackBox>error fallback</ErrorFallbackBox>}>
             <Suspense fallback={<LoadingBox>loading...</LoadingBox>}>
-              <QueriesHydrationBoundary
+              <QueriesHydration
                 queries={[
                   {
                     ...query.text(1),
@@ -31,7 +31,7 @@ export default function Page() {
                 ]}
               >
                 <ReactClientComponent queryKeyId={1} />
-              </QueriesHydrationBoundary>
+              </QueriesHydration>
             </Suspense>
           </ErrorBoundary>
         </EmptyBox>
@@ -40,7 +40,7 @@ export default function Page() {
         <EmptyBox>
           <ErrorBoundary fallback={<ErrorFallbackBox>error fallback</ErrorFallbackBox>}>
             <Suspense fallback={<LoadingBox>loading...</LoadingBox>}>
-              <QueriesHydrationBoundary
+              <QueriesHydration
                 queries={[
                   {
                     ...query.text(2),
@@ -52,7 +52,7 @@ export default function Page() {
                 }}
               >
                 <ReactClientComponent queryKeyId={2} />
-              </QueriesHydrationBoundary>
+              </QueriesHydration>
             </Suspense>
           </ErrorBoundary>
         </EmptyBox>
@@ -61,7 +61,7 @@ export default function Page() {
         <EmptyBox>
           <ErrorBoundary fallback={<ErrorFallbackBox>error fallback</ErrorFallbackBox>}>
             <Suspense fallback={<LoadingBox>loading...</LoadingBox>}>
-              <QueriesHydrationBoundary
+              <QueriesHydration
                 queries={[
                   {
                     ...query.text(3),
@@ -71,7 +71,7 @@ export default function Page() {
                 skipSsrOnError={false}
               >
                 <ReactClientComponent queryKeyId={3} />
-              </QueriesHydrationBoundary>
+              </QueriesHydration>
             </Suspense>
           </ErrorBoundary>
         </EmptyBox>
@@ -80,9 +80,9 @@ export default function Page() {
         <EmptyBox>
           <ErrorBoundary fallback={<ErrorFallbackBox>error fallback</ErrorFallbackBox>}>
             <Suspense fallback={<LoadingBox>loading...</LoadingBox>}>
-              <QueriesHydrationBoundary queries={[query.text(4)]}>
+              <QueriesHydration queries={[query.text(4)]}>
                 <ReactClientComponent queryKeyId={4} />
-              </QueriesHydrationBoundary>
+              </QueriesHydration>
             </Suspense>
           </ErrorBoundary>
         </EmptyBox>
