@@ -1,5 +1,17 @@
 # @suspensive/react-query
 
+## 3.15.0
+
+### Minor Changes
+
+- [#1816](https://github.com/toss/suspensive/pull/1816) [`dfe0b04`](https://github.com/toss/suspensive/commit/dfe0b04d8bebc1646ae187347cdd75fbb09e2716) Thanks [@manudeli](https://github.com/manudeli)! - fix(react-query): rename QueriesHydrationBoundary → QueriesHydration
+
+### Patch Changes
+
+- Updated dependencies [[`dfe0b04`](https://github.com/toss/suspensive/commit/dfe0b04d8bebc1646ae187347cdd75fbb09e2716)]:
+  - @suspensive/react-query-4@3.15.0
+  - @suspensive/react-query-5@3.15.0
+
 ## 3.14.0
 
 ### Minor Changes
