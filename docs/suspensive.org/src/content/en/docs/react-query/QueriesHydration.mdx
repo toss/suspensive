@@ -112,7 +112,7 @@ type QueriesHydrationProps = {
 
 Optionally, you can pass a QueryClient instance to use. If not provided, a new QueryClient instance will be created.
 
-```tsx
+```tsx /QueriesHydration/
 import { QueryClient } from '@tanstack/react-query'
 import { QueriesHydration } from '@suspensive/react-query'
 
@@ -143,7 +143,7 @@ If stage 1 fails, stage 2 is likely to fail for the same reason. However, stage 
 - `false`: Even if stage 1 fails, proceed to stage 2 without hydration (retry fetching on server)
 - `{ fallback: ReactNode }`: If stage 1 fails, skip SSR and display a custom fallback UI while moving to stage 3
 
-```tsx
+```tsx /QueriesHydration/
 import { QueriesHydration } from '@suspensive/react-query'
 import { Suspense } from '@suspensive/react'
 import {
@@ -315,7 +315,7 @@ With `<QueriesHydration/>`, all of this is handled automatically:
 <Tabs items={['page.tsx (RSC)', 'UserProfile.tsx (RCC)', 'PostList.tsx (RCC)']}>
 <Tabs.Tab>
 
-```tsx
+```tsx /QueriesHydration/
 import { QueriesHydration } from '@suspensive/react-query'
 import { Suspense } from '@suspensive/react'
 import { userQueryOptions, postsQueryOptions } from './queries'
@@ -410,7 +410,7 @@ Here's a live example demonstrating `QueriesHydration` with Next.js streaming:
 
 If you want to skip server-side rendering for a specific component, simply add the `clientOnly` prop to `<Suspense/>`. In this case, since you don't need to prefetch data on the server, you don't need `QueriesHydration` either:
 
-```tsx
+```tsx /QueriesHydration/
 import { QueriesHydration } from '@suspensive/react-query'
 import { Suspense } from '@suspensive/react'
 import { userQueryOptions, postsQueryOptions } from './queries'

@@ -112,7 +112,7 @@ type QueriesHydrationProps = {
 
 선택적으로 사용할 QueryClient 인스턴스를 전달할 수 있습니다. 전달하지 않으면 새로운 QueryClient 인스턴스가 생성됩니다.
 
-```tsx
+```tsx /QueriesHydration/
 import { QueryClient } from '@tanstack/react-query'
 import { QueriesHydration } from '@suspensive/react-query'
 
@@ -143,7 +143,7 @@ const Page = async () => {
 - `false`: 1단계에서 실패해도 hydration 없이 2단계로 진행합니다 (서버에서 다시 페칭 시도)
 - `{ fallback: ReactNode }`: 1단계에서 실패하면 SSR을 건너뛰고 3단계로 가는 동안 커스텀 폴백 UI를 표시합니다
 
-```tsx
+```tsx /QueriesHydration/
 import { QueriesHydration } from '@suspensive/react-query'
 import { Suspense } from '@suspensive/react'
 import {
@@ -315,7 +315,7 @@ export const PostList = ({ userId }) => {
 <Tabs items={['page.tsx (RSC)', 'UserProfile.tsx (RCC)', 'PostList.tsx (RCC)']}>
 <Tabs.Tab>
 
-```tsx
+```tsx /QueriesHydration/
 import { QueriesHydration } from '@suspensive/react-query'
 import { Suspense } from '@suspensive/react'
 import { userQueryOptions, postsQueryOptions } from './queries'
@@ -410,7 +410,7 @@ Next.js streaming과 함께 `QueriesHydration`를 사용하는 실제 예제입�
 
 만약 특정 컴포넌트에서 서버 사이드 렌더링을 사용하지 않으려면, `<Suspense/>`에 `clientOnly` prop을 추가하기만 하면 됩니다. 이 경우 서버에서 데이터를 prefetch하지 않으므로 `QueriesHydration`도 필요하지 않습니다:
 
-```tsx
+```tsx /QueriesHydration/
 import { QueriesHydration } from '@suspensive/react-query'
 import { Suspense } from '@suspensive/react'
 import { userQueryOptions, postsQueryOptions } from './queries'
