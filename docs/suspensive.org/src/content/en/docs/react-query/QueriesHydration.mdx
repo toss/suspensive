@@ -146,14 +146,19 @@ If stage 1 fails, stage 2 is likely to fail for the same reason. However, stage 
 ```tsx
 import { QueriesHydration } from '@suspensive/react-query'
 import { Suspense } from '@suspensive/react'
+import {
+  userQueryOptions,
+  postsQueryOptions,
+  commentsQueryOptions,
+} from './queries'
 import { UserProfile, PostList, CommentList } from './_components'
 
-const Page = async () => {
+const Page = async ({ userId }: { userId: string }) => {
   return (
     <>
       {/* Skip SSR and retry in browser if stage 1 fails (default behavior) */}
       <Suspense fallback={<div>Loading...</div>}>
-        <QueriesHydration queries={[userQuery]}>
+        <QueriesHydration queries={[userQueryOptions(userId)]}>
           <UserProfile />
         </QueriesHydration>
       </Suspense>
@@ -161,7 +166,7 @@ const Page = async () => {
       {/* Skip SSR and retry in browser with custom fallback if stage 1 fails */}
       <Suspense fallback={<div>Loading...</div>}>
         <QueriesHydration
-          queries={[postsQuery]}
+          queries={[postsQueryOptions()]}
           skipSsrOnError={{
             fallback: <div>Unable to fetch data from server...</div>,
           }}
@@ -172,7 +177,10 @@ const Page = async () => {
 
       {/* Retry in stage 2 (RCC server) even if stage 1 fails */}
       <Suspense fallback={<div>Loading...</div>}>
-        <QueriesHydration queries={[commentsQuery]} skipSsrOnError={false}>
+        <QueriesHydration
+          queries={[commentsQueryOptions()]}
+          skipSsrOnError={false}
+        >
           <CommentList />
         </QueriesHydration>
       </Suspense>

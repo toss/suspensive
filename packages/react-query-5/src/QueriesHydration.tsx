@@ -30,27 +30,27 @@ import { ClientOnly } from './components/ClientOnly'
  * import { QueriesHydration } from '@suspensive/react-query'
  * import { queryOptions } from '@tanstack/react-query'
  *
- * const userQuery = queryOptions({
- *   queryKey: ['user', id],
- *   queryFn: () => fetchUser(id)
+ * const userQueryOptions = (userId: string) => queryOptions({
+ *   queryKey: ['user', userId],
+ *   queryFn: () => fetchUser(userId)
  * })
  *
- * const postsQuery = queryOptions({
+ * const postsQueryOptions = () => queryOptions({
  *   queryKey: ['posts'],
  *   queryFn: () => fetchPosts()
  * })
  *
- * export default function Page() {
+ * export default function Page({ userId }: { userId: string }) {
  *   return (
  *     <>
  *       <Suspense fallback={<div>Loading user...</div>}>
- *         <QueriesHydration queries={[userQuery]}>
+ *         <QueriesHydration queries={[userQueryOptions(userId)]}>
  *           <UserProfile />
  *         </QueriesHydration>
  *       </Suspense>
  *
  *       <Suspense fallback={<div>Loading posts...</div>}>
- *         <QueriesHydration queries={[postsQuery]}>
+ *         <QueriesHydration queries={[postsQueryOptions()]}>
  *           <PostsList />
  *         </QueriesHydration>
  *       </Suspense>
@@ -64,7 +64,7 @@ import { ClientOnly } from './components/ClientOnly'
  * // With custom error fallback
  * <Suspense fallback={<div>Loading user...</div>}>
  *   <QueriesHydration
- *     queries={[userQuery]}
+ *     queries={[userQueryOptions(userId)]}
  *     skipSsrOnError={{ fallback: <div>Fetching on client...</div> }}
  *   >
  *     <UserProfile />
