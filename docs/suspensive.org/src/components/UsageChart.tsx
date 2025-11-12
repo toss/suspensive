@@ -25,36 +25,58 @@ const SUSPENSIVE_PACKAGES = [
   '@suspensive/codemods',
 ]
 
-type PackageDownloads = {
-  package: string
+type TimeSeriesData = {
+  date: string
   downloads: number
 }
 
-const fetchPackageDownloads = async (
+type PackageTimeSeriesResponse = {
+  package: string
+  downloads: Array<{
+    downloads: number
+    day: string
+  }>
+}
+
+const fetchPackageTimeSeries = async (
   packageName: string
-): Promise<PackageDownloads> => {
-  // Use the npm registry API to get download stats for the last month
+): Promise<PackageTimeSeriesResponse> => {
+  // Fetch last 6 months of data for better growth curve visualization
   const response = await fetch(
-    `https://api.npmjs.org/downloads/point/last-month/${packageName}`
+    `https://api.npmjs.org/downloads/range/last-6-months/${packageName}`
   )
   if (!response.ok) {
     throw new Error(`Failed to fetch downloads for ${packageName}`)
   }
-  const data = await response.json()
-  return {
-    package: packageName,
-    downloads: data.downloads || 0,
-  }
+  const data = (await response.json()) as PackageTimeSeriesResponse
+  return data
 }
 
 const usageQueryOptions = () =>
   queryOptions({
-    queryKey: ['package-downloads'],
+    queryKey: ['package-downloads-timeseries'],
     queryFn: async () => {
+      // Fetch time series data for all packages
       const results = await Promise.all(
-        SUSPENSIVE_PACKAGES.map((pkg) => fetchPackageDownloads(pkg))
+        SUSPENSIVE_PACKAGES.map((pkg) => fetchPackageTimeSeries(pkg))
       )
-      return results
+
+      // Aggregate downloads by date across all packages
+      const dateMap = new Map<string, number>()
+
+      results.forEach((packageData) => {
+        packageData.downloads.forEach((day) => {
+          const currentTotal = dateMap.get(day.day) || 0
+          dateMap.set(day.day, currentTotal + day.downloads)
+        })
+      })
+
+      // Convert to array and sort by date
+      const timeSeriesData: TimeSeriesData[] = Array.from(dateMap.entries())
+        .map(([date, downloads]) => ({ date, downloads }))
+        .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
+
+      return timeSeriesData
     },
     staleTime: 1000 * 60 * 60, // Cache for 1 hour
   })
@@ -92,24 +114,19 @@ export const UsageChart = () => {
                     throw new Error('No download data available')
                   }
 
-                  // Sort by downloads descending
-                  const sortedData = [...data].sort(
-                    (a, b) => b.downloads - a.downloads
-                  )
-
                   return (
                     <>
                       <div className="flex w-[100%] items-center justify-center overflow-visible sm:hidden md:hidden lg:hidden">
-                        <BarChart data={sortedData} width={350} height={400} />
+                        <LineChart data={data} width={350} height={400} />
                       </div>
                       <div className="hidden w-[100%] items-center justify-center overflow-visible sm:flex md:hidden lg:hidden">
-                        <BarChart data={sortedData} width={600} height={450} />
+                        <LineChart data={data} width={600} height={450} />
                       </div>
                       <div className="hidden w-[100%] items-center justify-center overflow-visible sm:hidden md:flex lg:hidden">
-                        <BarChart data={sortedData} width={700} height={500} />
+                        <LineChart data={data} width={700} height={500} />
                       </div>
                       <div className="hidden w-[100%] items-center justify-center overflow-visible sm:hidden md:hidden lg:flex">
-                        <BarChart data={sortedData} width={800} height={550} />
+                        <LineChart data={data} width={800} height={550} />
                       </div>
                     </>
                   )
@@ -124,19 +141,19 @@ export const UsageChart = () => {
   )
 }
 
-type BarChartProps = {
-  data: PackageDownloads[]
+type LineChartProps = {
+  data: TimeSeriesData[]
   width: number
   height: number
 }
 
-const BarChart = ({ data, width, height }: BarChartProps) => {
+const LineChart = ({ data, width, height }: LineChartProps) => {
   const svgRef = useRef<SVGSVGElement | null>(null)
 
   useEffect(() => {
     if (data.length === 0) return
 
-    const margin = { top: 20, right: 30, bottom: 80, left: 80 }
+    const margin = { top: 20, right: 30, bottom: 50, left: 80 }
     const chartWidth = width - margin.left - margin.right
     const chartHeight = height - margin.top - margin.bottom
 
@@ -154,64 +171,87 @@ const BarChart = ({ data, width, height }: BarChartProps) => {
       .append('g')
       .attr('transform', `translate(${margin.left},${margin.top})`)
 
+    // Parse dates
+    const parseDate = d3.timeParse('%Y-%m-%d')
+    const parsedData = data.map((d) => ({
+      date: parseDate(d.date) as Date,
+      downloads: d.downloads,
+    }))
+
     // Create scales
     const x = d3
-      .scaleBand()
-      .domain(data.map((d) => d.package.replace('@suspensive/', '')))
+      .scaleTime()
+      .domain(d3.extent(parsedData, (d) => d.date) as [Date, Date])
       .range([0, chartWidth])
-      .padding(0.2)
 
     const y = d3
       .scaleLinear()
-      .domain([0, d3.max(data, (d) => d.downloads) || 0])
+      .domain([0, d3.max(parsedData, (d) => d.downloads) || 0])
       .nice()
       .range([chartHeight, 0])
 
-    // Add bars
-    g.selectAll('.bar')
-      .data(data)
-      .enter()
-      .append('rect')
-      .attr('class', 'bar')
-      .attr('x', (d) => x(d.package.replace('@suspensive/', '')) || 0)
-      .attr('y', (d) => y(d.downloads))
-      .attr('width', x.bandwidth())
-      .attr('height', (d) => chartHeight - y(d.downloads))
-      .attr('fill', 'rgb(59, 130, 246)')
-      .attr('opacity', 0.8)
-      .on('mouseover', function () {
-        d3.select(this).attr('opacity', 1)
-      })
-      .on('mouseout', function () {
-        d3.select(this).attr('opacity', 0.8)
-      })
+    // Create line generator
+    const line = d3
+      .line<{ date: Date; downloads: number }>()
+      .x((d) => x(d.date))
+      .y((d) => y(d.downloads))
+      .curve(d3.curveMonotoneX)
 
-    // Add value labels on top of bars
-    g.selectAll('.label')
-      .data(data)
-      .enter()
-      .append('text')
-      .attr('class', 'label')
-      .attr(
-        'x',
-        (d) =>
-          (x(d.package.replace('@suspensive/', '')) || 0) + x.bandwidth() / 2
-      )
-      .attr('y', (d) => y(d.downloads) - 5)
-      .attr('text-anchor', 'middle')
-      .attr('fill', 'currentColor')
-      .attr('font-size', '12px')
-      .text((d) => d.downloads.toLocaleString())
+    // Add gradient for area under curve
+    const gradient = svg
+      .append('defs')
+      .append('linearGradient')
+      .attr('id', 'area-gradient')
+      .attr('gradientUnits', 'userSpaceOnUse')
+      .attr('x1', 0)
+      .attr('y1', y(0))
+      .attr('x2', 0)
+      .attr('y2', y(d3.max(parsedData, (d) => d.downloads) || 0))
+
+    gradient
+      .append('stop')
+      .attr('offset', '0%')
+      .attr('stop-color', 'rgb(59, 130, 246)')
+      .attr('stop-opacity', 0.3)
+
+    gradient
+      .append('stop')
+      .attr('offset', '100%')
+      .attr('stop-color', 'rgb(59, 130, 246)')
+      .attr('stop-opacity', 0.05)
+
+    // Create area generator
+    const area = d3
+      .area<{ date: Date; downloads: number }>()
+      .x((d) => x(d.date))
+      .y0(chartHeight)
+      .y1((d) => y(d.downloads))
+      .curve(d3.curveMonotoneX)
+
+    // Add area
+    g.append('path')
+      .datum(parsedData)
+      .attr('fill', 'url(#area-gradient)')
+      .attr('d', area)
+
+    // Add line
+    g.append('path')
+      .datum(parsedData)
+      .attr('fill', 'none')
+      .attr('stroke', 'rgb(59, 130, 246)')
+      .attr('stroke-width', 2.5)
+      .attr('d', line)
 
     // Add X axis
     g.append('g')
       .attr('transform', `translate(0,${chartHeight})`)
-      .call(d3.axisBottom(x))
+      .call(
+        d3
+          .axisBottom(x)
+          .ticks(width > 600 ? 8 : 4)
+          .tickFormat((d) => d3.timeFormat('%b %Y')(d as Date))
+      )
       .selectAll('text')
-      .attr('transform', 'rotate(-45)')
-      .style('text-anchor', 'end')
-      .attr('dx', '-.8em')
-      .attr('dy', '.15em')
       .attr('fill', 'currentColor')
 
     // Add Y axis
@@ -220,7 +260,12 @@ const BarChart = ({ data, width, height }: BarChartProps) => {
         d3
           .axisLeft(y)
           .ticks(5)
-          .tickFormat((d) => (d as number).toLocaleString())
+          .tickFormat((d) => {
+            const num = d as number
+            if (num >= 1000000) return `${(num / 1000000).toFixed(1)}M`
+            if (num >= 1000) return `${(num / 1000).toFixed(0)}K`
+            return num.toLocaleString()
+          })
       )
       .selectAll('text')
       .attr('fill', 'currentColor')
@@ -234,7 +279,7 @@ const BarChart = ({ data, width, height }: BarChartProps) => {
       .style('text-anchor', 'middle')
       .attr('fill', 'currentColor')
       .attr('font-size', '14px')
-      .text('Downloads (Last Month)')
+      .text('Total Downloads')
 
     // Style axis lines
     svg
