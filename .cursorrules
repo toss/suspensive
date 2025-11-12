@@ -1,0 +1,251 @@
+# Suspensive - AI Assistant Guidelines
+
+## Project Overview
+
+Suspensive is a comprehensive library ecosystem for React Suspense, providing utilities, hooks, and components to simplify working with React's Suspense feature. The project is maintained by Toss (Viva Republica, Inc.) and is open source under the MIT license.
+
+**Website**: https://suspensive.org
+**Repository**: https://github.com/toss/suspensive
+**Documentation**: https://suspensive.org/docs
+
+## Core Concept
+
+Suspensive makes React Suspense easy to use by providing:
+- Declarative error boundaries with simplified fallback interfaces
+- Client-only rendering utilities for SSR environments
+- Enhanced Suspense components with SSR-safe features
+- Integration utilities for @tanstack/react-query
+- Hooks and utilities for managing async states
+
+## Monorepo Structure
+
+This is a pnpm workspace monorepo with the following key packages:
+
+### Main Packages (packages/)
+- **@suspensive/react**: Core React Suspense utilities
+  - Components: `<Suspense/>`, `<ErrorBoundary/>`, `<ErrorBoundaryGroup/>`, `<Delay/>`, `<ClientOnly/>`
+  - Hooks: `useErrorBoundary()`, `useIsClient()`, `wrap()`
+  - Features: SSR-safe Suspense, simplified error boundaries, declarative loading states
+
+- **@suspensive/react-query**: Integration with @tanstack/react-query
+  - Automatically detects and supports both v4 and v5 of @tanstack/react-query
+  - Components: `<SuspenseQuery/>`, `<SuspenseInfiniteQuery/>`, `<SuspenseQueries/>`
+  - Hooks: `useSuspenseQuery()`, `useSuspenseInfiniteQuery()`, `useSuspenseQueries()`
+  - Includes CLI tools for version switching
+
+- **@suspensive/react-query-4**: Internal package for react-query v4 support
+- **@suspensive/react-query-5**: Internal package for react-query v5 support
+
+- **@suspensive/react-dom**: DOM-specific utilities
+  - Components: `<InView/>`, `<FadeIn/>`
+
+- **@suspensive/react-native**: React Native specific utilities
+  - Testing utilities for React Native environments
+
+- **@suspensive/next**: Next.js specific utilities
+  - Integration helpers for Next.js apps
+
+- **@suspensive/jotai**: Jotai state management integration
+  - Suspense-friendly Jotai utilities
+
+- **@suspensive/codemods**: Code transformation utilities
+  - CLI tool for automated migrations
+  - Transforms for updating Suspensive APIs
+
+### Configuration Packages (configs/)
+- **@suspensive/tsconfig**: Shared TypeScript configurations
+- **@suspensive/tsdown**: Shared build configuration using tsdown
+- **@suspensive/eslint-config**: Shared ESLint configurations
+
+### Documentation (docs/)
+- **suspensive.org**: Next.js-based documentation website with Nextra
+  - Multilingual support (English, Korean)
+  - API documentation, guides, and examples
+  - Located in `docs/suspensive.org/`
+
+### Examples (examples/)
+- Working example applications demonstrating various use cases
+- Include Next.js apps, Vite apps, and React Native examples
+
+## Technology Stack
+
+- **Language**: TypeScript
+- **Build Tool**: tsdown (based on rolldown)
+- **Package Manager**: pnpm (version managed via corepack)
+- **Monorepo Tool**: Turborepo
+- **Testing**: Vitest with React Testing Library
+- **Documentation**: Next.js with Nextra
+- **Code Quality**: ESLint, Prettier, Sherif
+
+## Development Workflow
+
+### Setup
+```bash
+# Enable corepack for pnpm
+corepack enable && corepack prepare
+
+# Install dependencies
+pnpm install
+
+# Build all packages
+pnpm run build
+```
+
+### Common Commands
+- `pnpm run build`: Build all packages
+- `pnpm run dev`: Watch mode for development
+- `pnpm run ci:all`: Run all CI checks (lint, type-check, test, build)
+- `pnpm run ci:eslint`: Run ESLint
+- `pnpm run ci:type`: Run TypeScript type checking
+- `pnpm run ci:test`: Run tests
+- `pnpm run format`: Format code with Prettier
+
+### Package-specific commands
+Each package has these scripts:
+- `build`: Build the package
+- `ci:eslint`: Lint the package
+- `ci:test`: Test the package
+- `ci:type`: Type-check the package
+- `clean`: Clean build artifacts
+
+## Code Style and Conventions
+
+### Naming Conventions
+- Components: PascalCase (e.g., `ErrorBoundary`, `Suspense`)
+- Hooks: camelCase with `use` prefix (e.g., `useErrorBoundary`, `useIsClient`)
+- Utilities: camelCase (e.g., `wrap`)
+- Types: PascalCase with descriptive names
+- Files: Match export name (e.g., `ErrorBoundary.tsx` for ErrorBoundary component)
+
+### File Organization
+- Each component/hook gets its own file
+- Tests are co-located with source (`.spec.tsx` for runtime, `.test-d.tsx` for type tests)
+- Index files (`index.ts`) export public APIs
+- Internal utilities in subdirectories (e.g., `contexts/`, `hooks/`)
+
+### TypeScript
+- Strict mode enabled
+- Explicit return types for public APIs
+- Generic components properly typed
+- Type tests using `.test-d.tsx` files
+
+### React Patterns
+- Functional components with TypeScript
+- Props interfaces exported for extensibility
+- Proper use of React.ReactNode for children
+- Error boundaries as class components (React requirement)
+- Hooks follow React rules
+
+## Key Design Principles
+
+1. **Simplicity**: APIs should be intuitive and easy to use
+2. **Type Safety**: Strong TypeScript support with inference
+3. **SSR Compatibility**: All utilities work in SSR environments
+4. **Composability**: Components and hooks work well together
+5. **Performance**: Minimal bundle size, tree-shakeable
+6. **Developer Experience**: Great error messages and TypeScript autocomplete
+
+## Common Patterns
+
+### Error Boundary Pattern
+```typescript
+<ErrorBoundary fallback={(props) => <ErrorFallback {...props} />}>
+  <AsyncComponent />
+</ErrorBoundary>
+```
+
+### Suspense with SSR Safety
+```typescript
+<Suspense clientOnly fallback={<Loading />}>
+  <AsyncComponent />
+</Suspense>
+```
+
+### React Query Integration
+```typescript
+const { data } = useSuspenseQuery({ queryKey: ['key'], queryFn })
+// Guaranteed to return data (no undefined handling needed)
+```
+
+## Testing Strategy
+
+- **Unit Tests**: Vitest with React Testing Library
+- **Type Tests**: TypeScript compiler tests for type safety
+- **Browser Tests**: @vitest/browser for DOM testing
+- **Coverage**: Istanbul for code coverage
+
+## Documentation Guidelines
+
+- All public APIs must have JSDoc comments
+- MDX documentation in `docs/suspensive.org/src/content/`
+- Examples should be runnable and realistic
+- Support both English and Korean languages
+- Include migration guides for breaking changes
+
+## Version Management
+
+- Uses Changesets for version management
+- Conventional Commits for commit messages
+- Format: `<type>[optional scope]: <description>`
+- Types: feat, fix, docs, chore, test, refactor, etc.
+
+## Important Files
+
+- `package.json`: Root package configuration and scripts
+- `pnpm-workspace.yaml`: Workspace configuration
+- `turbo.json`: Turborepo pipeline configuration
+- `tsconfig.json`: TypeScript configuration
+- `.github/workflows/`: CI/CD pipelines
+
+## When Making Changes
+
+1. **Breaking Changes**: Update migration documentation
+2. **New Features**: Add examples and documentation
+3. **Bug Fixes**: Add regression tests
+4. **Dependencies**: Use `pnpm add -w` for root, `pnpm add --filter <package>` for specific packages
+5. **Tests**: Ensure all tests pass with `pnpm run ci:test`
+6. **Type Safety**: Verify with `pnpm run ci:type`
+7. **Linting**: Fix issues with `pnpm run ci:eslint`
+
+## Common Issues and Solutions
+
+### Issue: postinstall error for @suspensive/react-query
+Solution: Run `pnpm run build` to build packages first
+
+### Issue: pnpm not found
+Solution: Run `corepack enable && corepack prepare`
+
+### Issue: Type errors in examples
+Solution: Build packages first with `pnpm run build`, examples depend on built package types
+
+### Issue: Test failures in CI
+Solution: Ensure all packages are built before running tests
+
+## Package Dependencies
+
+- React 18+ or 19+ (peer dependency)
+- @tanstack/react-query 4.42.0+ or 5.82.0+ (for react-query packages)
+- Jotai (for jotai package)
+- Next.js (for next package)
+
+## AI Assistant Specific Notes
+
+When assisting with this codebase:
+
+1. **Always check which package** you're working in - changes in one package don't affect others until rebuilt
+2. **Build before testing**: The monorepo requires builds to be run before tests can access types
+3. **Follow the pattern**: Look at existing components/hooks for consistent patterns
+4. **Type safety matters**: Ensure all TypeScript types are correct and properly exported
+5. **Documentation is required**: Update MDX docs for any API changes
+6. **Examples help users**: Add or update examples when introducing new features
+7. **Respect the architecture**: Don't mix concerns between packages
+8. **SSR considerations**: Always consider Server-Side Rendering implications
+9. **Performance matters**: Keep bundle size minimal, avoid unnecessary dependencies
+10. **Community focus**: This is an open-source project - changes should benefit the broader community
+
+## Related Resources
+
+- React Suspense Docs: https://react.dev/reference/react/Suspense
+- TanStack Query Docs: https://tanstack.com/query/latest
+- Conventional Commits: https://www.conventionalcommits.org/
+- Changesets: https://github.com/changesets/changesets

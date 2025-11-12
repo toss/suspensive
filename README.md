@@ -18,6 +18,23 @@
 
 <br/>
 
+## 🤖 AI-Friendly Documentation
+
+Suspensive provides comprehensive AI-friendly documentation to help AI assistants understand and work with the codebase effectively:
+
+- **[.cursorrules](./.cursorrules)** - Complete project overview and development guidelines for AI assistants
+- **[.github/copilot/instructions.md](./.github/copilot/instructions.md)** - GitHub Copilot-specific instructions and patterns
+- **[AI_DEVELOPMENT_GUIDE.md](./AI_DEVELOPMENT_GUIDE.md)** - Quick reference guide for AI tools
+
+These resources help AI assistants:
+- Understand the monorepo structure and package relationships
+- Follow consistent code patterns and conventions
+- Navigate the development workflow
+- Make contextually appropriate suggestions
+- Maintain code quality and SSR compatibility
+
+<br/>
+
 ## Contributors
 
 Read our [Contributing Guide](./CONTRIBUTING.md) to familiarize yourself with Suspensive's development process, how to suggest bug fixes and improvements, and the steps for building and testing your changes.
