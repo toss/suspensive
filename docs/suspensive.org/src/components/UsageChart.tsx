@@ -38,6 +38,18 @@ type PackageTimeSeriesResponse = {
   }>
 }
 
+type GitHubStats = {
+  stars: number
+  forks: number
+  watchers: number
+}
+
+type StatsData = {
+  timeSeriesData: TimeSeriesData[]
+  totalDownloads: number
+  githubStats: GitHubStats
+}
+
 const fetchPackageTimeSeries = async (
   packageName: string
 ): Promise<PackageTimeSeriesResponse> => {
@@ -51,22 +63,40 @@ const fetchPackageTimeSeries = async (
   return data
 }
 
+const fetchGitHubStats = async (): Promise<GitHubStats> => {
+  const response = await fetch('https://api.github.com/repos/toss/suspensive')
+  if (!response.ok) {
+    throw new Error('Failed to fetch GitHub stats')
+  }
+  const data = await response.json()
+  return {
+    stars: data.stargazers_count || 0,
+    forks: data.forks_count || 0,
+    watchers: data.subscribers_count || 0,
+  }
+}
+
 const usageQueryOptions = () =>
   queryOptions({
-    queryKey: ['package-downloads-timeseries'],
+    queryKey: ['package-stats'],
     queryFn: async () => {
-      // Fetch time series data for all packages
-      const results = await Promise.all(
-        SUSPENSIVE_PACKAGES.map((pkg) => fetchPackageTimeSeries(pkg))
-      )
+      // Fetch time series data for all packages and GitHub stats in parallel
+      const [results, githubStats] = await Promise.all([
+        Promise.all(
+          SUSPENSIVE_PACKAGES.map((pkg) => fetchPackageTimeSeries(pkg))
+        ),
+        fetchGitHubStats(),
+      ])
 
       // Aggregate downloads by date across all packages
       const dateMap = new Map<string, number>()
+      let totalDownloads = 0
 
       results.forEach((packageData) => {
         packageData.downloads.forEach((day) => {
           const currentTotal = dateMap.get(day.day) || 0
           dateMap.set(day.day, currentTotal + day.downloads)
+          totalDownloads += day.downloads
         })
       })
 
@@ -75,7 +105,13 @@ const usageQueryOptions = () =>
         .map(([date, downloads]) => ({ date, downloads }))
         .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
 
-      return timeSeriesData
+      const statsData: StatsData = {
+        timeSeriesData,
+        totalDownloads,
+        githubStats,
+      }
+
+      return statsData
     },
     staleTime: 1000 * 60 * 60, // Cache for 1 hour
   })
@@ -109,25 +145,132 @@ export const UsageChart = () => {
             <Suspense clientOnly fallback={<></>}>
               <SuspenseQuery {...usageQueryOptions()}>
                 {({ data }) => {
-                  if (data.length === 0) {
+                  if (data.timeSeriesData.length === 0) {
                     throw new Error('No download data available')
                   }
 
                   return (
-                    <>
+                    <div className="w-full space-y-8">
+                      {/* Stats Cards */}
+                      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                        <a
+                          href="https://www.npmjs.com/org/suspensive"
+                          target="_blank"
+                          rel="noreferrer"
+                          className="group flex items-center gap-4 rounded-lg border border-gray-200 bg-white p-6 transition-all hover:border-blue-500 dark:border-gray-700 dark:bg-gray-800 dark:hover:border-blue-500"
+                        >
+                          <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-blue-100 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400">
+                            <svg
+                              className="h-6 w-6"
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3V10"
+                              />
+                            </svg>
+                          </div>
+                          <div>
+                            <div className="text-2xl font-bold text-gray-900 dark:text-white">
+                              {data.totalDownloads.toLocaleString()}
+                            </div>
+                            <div className="text-sm text-gray-600 dark:text-gray-400">
+                              NPM Downloads (Last Year)
+                            </div>
+                          </div>
+                        </a>
+
+                        <a
+                          href="https://github.com/toss/suspensive"
+                          target="_blank"
+                          rel="noreferrer"
+                          className="group flex items-center gap-4 rounded-lg border border-gray-200 bg-white p-6 transition-all hover:border-yellow-500 dark:border-gray-700 dark:bg-gray-800 dark:hover:border-yellow-500"
+                        >
+                          <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-yellow-100 text-yellow-600 dark:bg-yellow-900/30 dark:text-yellow-400">
+                            <svg
+                              className="h-6 w-6"
+                              fill="currentColor"
+                              viewBox="0 0 24 24"
+                            >
+                              <path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279-7.416-3.967-7.417 3.967 1.481-8.279-6.064-5.828 8.332-1.151z" />
+                            </svg>
+                          </div>
+                          <div>
+                            <div className="text-2xl font-bold text-gray-900 dark:text-white">
+                              {data.githubStats.stars.toLocaleString()}
+                            </div>
+                            <div className="text-sm text-gray-600 dark:text-gray-400">
+                              Stars on GitHub
+                            </div>
+                          </div>
+                        </a>
+
+                        <a
+                          href="https://github.com/toss/suspensive/network/dependents"
+                          target="_blank"
+                          rel="noreferrer"
+                          className="group flex items-center gap-4 rounded-lg border border-gray-200 bg-white p-6 transition-all hover:border-green-500 dark:border-gray-700 dark:bg-gray-800 dark:hover:border-green-500"
+                        >
+                          <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-green-100 text-green-600 dark:bg-green-900/30 dark:text-green-400">
+                            <svg
+                              className="h-6 w-6"
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
+                              />
+                            </svg>
+                          </div>
+                          <div>
+                            <div className="text-2xl font-bold text-gray-900 dark:text-white">
+                              {data.githubStats.watchers.toLocaleString()}
+                            </div>
+                            <div className="text-sm text-gray-600 dark:text-gray-400">
+                              Watchers on GitHub
+                            </div>
+                          </div>
+                        </a>
+                      </div>
+
+                      {/* Chart */}
                       <div className="flex w-[100%] items-center justify-center overflow-visible sm:hidden md:hidden lg:hidden">
-                        <LineChart data={data} width={350} height={400} />
+                        <LineChart
+                          data={data.timeSeriesData}
+                          width={350}
+                          height={400}
+                        />
                       </div>
                       <div className="hidden w-[100%] items-center justify-center overflow-visible sm:flex md:hidden lg:hidden">
-                        <LineChart data={data} width={600} height={450} />
+                        <LineChart
+                          data={data.timeSeriesData}
+                          width={600}
+                          height={450}
+                        />
                       </div>
                       <div className="hidden w-[100%] items-center justify-center overflow-visible sm:hidden md:flex lg:hidden">
-                        <LineChart data={data} width={700} height={500} />
+                        <LineChart
+                          data={data.timeSeriesData}
+                          width={700}
+                          height={500}
+                        />
                       </div>
                       <div className="hidden w-[100%] items-center justify-center overflow-visible sm:hidden md:hidden lg:flex">
-                        <LineChart data={data} width={800} height={550} />
+                        <LineChart
+                          data={data.timeSeriesData}
+                          width={800}
+                          height={550}
+                        />
                       </div>
-                    </>
+                    </div>
                   )
                 }}
               </SuspenseQuery>
