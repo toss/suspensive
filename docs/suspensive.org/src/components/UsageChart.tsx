@@ -38,12 +38,27 @@ type PackageTimeSeriesResponse = {
   }>
 }
 
+type DateRange =
+  | 'last-week'
+  | 'last-month'
+  | 'last-3-months'
+  | 'last-6-months'
+  | 'last-year'
+
+const DATE_RANGE_OPTIONS: Array<{ value: DateRange; label: string }> = [
+  { value: 'last-week', label: 'Last Week' },
+  { value: 'last-month', label: 'Last Month' },
+  { value: 'last-3-months', label: 'Last 3 Months' },
+  { value: 'last-6-months', label: 'Last 6 Months' },
+  { value: 'last-year', label: 'Last Year' },
+]
+
 const fetchPackageTimeSeries = async (
-  packageName: string
+  packageName: string,
+  dateRange: DateRange
 ): Promise<PackageTimeSeriesResponse> => {
-  // Fetch last 6 months of data for better growth curve visualization
   const response = await fetch(
-    `https://api.npmjs.org/downloads/range/last-6-months/${packageName}`
+    `https://api.npmjs.org/downloads/range/${dateRange}/${packageName}`
   )
   if (!response.ok) {
     throw new Error(`Failed to fetch downloads for ${packageName}`)
@@ -52,13 +67,13 @@ const fetchPackageTimeSeries = async (
   return data
 }
 
-const usageQueryOptions = () =>
+const usageQueryOptions = (dateRange: DateRange) =>
   queryOptions({
-    queryKey: ['package-downloads-timeseries'],
+    queryKey: ['package-downloads-timeseries', dateRange],
     queryFn: async () => {
       // Fetch time series data for all packages
       const results = await Promise.all(
-        SUSPENSIVE_PACKAGES.map((pkg) => fetchPackageTimeSeries(pkg))
+        SUSPENSIVE_PACKAGES.map((pkg) => fetchPackageTimeSeries(pkg, dateRange))
       )
 
       // Aggregate downloads by date across all packages
@@ -82,6 +97,7 @@ const usageQueryOptions = () =>
   })
 
 export const UsageChart = () => {
+  const [dateRange, setDateRange] = useState<DateRange>('last-6-months')
   const [queryClient] = useState(
     () =>
       new QueryClient({
@@ -108,7 +124,25 @@ export const UsageChart = () => {
             }
           >
             <Suspense clientOnly fallback={<></>}>
-              <SuspenseQuery {...usageQueryOptions()}>
+              <div className="mb-4 flex justify-center">
+                <div className="inline-flex rounded-lg border border-gray-200 bg-white p-1 dark:border-gray-700 dark:bg-gray-800">
+                  {DATE_RANGE_OPTIONS.map((option) => (
+                    <button
+                      key={option.value}
+                      type="button"
+                      onClick={() => setDateRange(option.value)}
+                      className={`rounded-md px-4 py-2 text-sm font-medium transition-colors ${
+                        dateRange === option.value
+                          ? 'bg-blue-500 text-white'
+                          : 'text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700'
+                      }`}
+                    >
+                      {option.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+              <SuspenseQuery {...usageQueryOptions(dateRange)}>
                 {({ data }) => {
                   if (data.length === 0) {
                     throw new Error('No download data available')
