@@ -10,6 +10,7 @@ import {
   SectionDescription,
   SectionTitle,
   TrustedBy,
+  UsageChart,
 } from '@/components'
 
 <HomePage
@@ -484,6 +485,26 @@ const DeepComponent = () => (
   title="사용 중인 기업"
   description="다음 기업에서 Suspensive를 사용하고 있습니다"
 />
+
+<SectionTitle>Suspensive 라이브러리 사용 현황</SectionTitle>
+<br />
+<SectionDescription>
+  모든 Suspensive 패키지의 월간 npm 다운로드 수
+</SectionDescription>
+<br />
+
+<div
+  style={{
+    textAlign: 'center',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  }}
+>
+  <UsageChart />
+</div>
+
+<div style={{ height: 60 }} />
 
 <SectionTitle>기여해주신 여러분들께 감사드립니다</SectionTitle>
 <br />

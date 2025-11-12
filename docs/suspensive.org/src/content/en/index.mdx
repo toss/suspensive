@@ -10,6 +10,7 @@ import {
   SectionDescription,
   SectionTitle,
   TrustedBy,
+  UsageChart,
 } from '@/components'
 
 <HomePage
@@ -480,6 +481,26 @@ const DeepComponent = () => (
 </Scrollycoding>
 
 <TrustedBy />
+
+<SectionTitle>Suspensive Libraries Usage</SectionTitle>
+<br />
+<SectionDescription>
+  Monthly npm downloads across all Suspensive packages
+</SectionDescription>
+<br />
+
+<div
+  style={{
+    textAlign: 'center',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  }}
+>
+  <UsageChart />
+</div>
+
+<div style={{ height: 60 }} />
 
 <SectionTitle>Thank you for contributing to Suspensive</SectionTitle>
 <br />
