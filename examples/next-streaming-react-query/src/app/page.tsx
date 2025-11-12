@@ -1,95 +1,92 @@
-'use client'
+import { ErrorBoundary, Suspense } from '@suspensive/react'
+import { QueriesHydration } from '@suspensive/react-query-5'
+import Image from 'next/image'
+import { EmptyBox, ErrorFallbackBox, LoadingBox, SkipSSROnErrorFallbackBox } from './_components/Boxes'
+import { Buttons } from './_components/Buttons'
+import { ReactClientComponent } from './_components/ReactClientComponent'
+import { isoFetch, query } from '~/query'
 
-import { Suspense } from '@suspensive/react'
-import { SuspenseQuery } from '@suspensive/react-query-5'
-import { useQueryClient, useSuspenseQuery } from '@tanstack/react-query'
-import type { ReactNode } from 'react'
-import { query } from '~/query'
-
-const Text = ({ ms }: { ms: number }) => {
-  const { data } = useSuspenseQuery(query.text(ms))
-  return <p>result: {data}</p>
-}
-
-const Text2 = ({ children }: { children: ReactNode }) => <p>result: {children}</p>
+export const dynamic = 'force-dynamic'
 
 export default function Page() {
-  const queryClient = useQueryClient()
-
   return (
-    <>
-      <Suspense>
-        <Text ms={100} />
-      </Suspense>
-      <Suspense>
-        <Text ms={200} />
-      </Suspense>
-      <Suspense>
-        <Text ms={300} />
-      </Suspense>
-      <Suspense>
-        <Text ms={400} />
-      </Suspense>
-      <Suspense>
-        <Text ms={500} />
-      </Suspense>
-      <Suspense>
-        <Text ms={600} />
-      </Suspense>
-      <Suspense>
-        <Text ms={700} />
-      </Suspense>
-
-      <button
-        type="button"
-        onClick={() => {
-          queryClient.resetQueries()
-        }}
-      >
-        resetQueries all
-      </button>
-
-      <button
-        type="button"
-        onClick={() => {
-          queryClient.invalidateQueries(query.text(500))
-        }}
-      >
-        invalidate 500
-      </button>
-
-      <button
-        type="button"
-        onClick={() => {
-          queryClient.invalidateQueries(query.text(200))
-        }}
-      >
-        invalidate 200
-      </button>
-
-      <fieldset>
-        <legend>
-          combined <code>Suspense</code>-container
-        </legend>
-        <Suspense>
-          <Text ms={800} />
-          <Text ms={900} />
-          <Text ms={1000} />
-        </Suspense>
-      </fieldset>
-
-      <pre>{`Proposal: <SuspenseQuery /> Component`}</pre>
-      <ul>
-        <Suspense>
-          <SuspenseQuery {...query.text(1100)}>{({ data }) => <Text2>{data}</Text2>}</SuspenseQuery>
-        </Suspense>
-        <Suspense>
-          <SuspenseQuery {...query.text(1200)}>{({ data }) => <Text2>{data}</Text2>}</SuspenseQuery>
-        </Suspense>
-        <Suspense>
-          <SuspenseQuery {...query.text(1300)}>{({ data }) => <Text2>{data}</Text2>}</SuspenseQuery>
-        </Suspense>
-      </ul>
-    </>
+    <div>
+      <h1 className="text-xl font-bold">Next.js HTML Streaming + React Query</h1>
+      <div className="flex items-start justify-between">
+        <Image width={160} height={96.25} src="/img/banner.png" alt="" />
+        <Buttons />
+      </div>
+      <div style={{ fontSize: 12 }}>
+        <h3 className="text-md font-bold">🚧 1. skipSsrOnError true (default)</h3>
+        <p>RSC fail → RCC(server) skip without fallback → RCC(browser) success</p>
+        <EmptyBox>
+          <ErrorBoundary fallback={<ErrorFallbackBox>error fallback</ErrorFallbackBox>}>
+            <Suspense fallback={<LoadingBox>loading...</LoadingBox>}>
+              <QueriesHydration
+                queries={[
+                  {
+                    ...query.text(1),
+                    queryFn: () => isoFetch('/api/text?id=1&error=true').then(() => Promise.reject(new Error('error'))),
+                  },
+                ]}
+              >
+                <ReactClientComponent queryKeyId={1} />
+              </QueriesHydration>
+            </Suspense>
+          </ErrorBoundary>
+        </EmptyBox>
+        <h3 className="text-md font-bold">🚧 2. skipSsrOnError with fallback</h3>
+        <p>RSC fail → RCC(server) skip with fallback → RCC(browser) success</p>
+        <EmptyBox>
+          <ErrorBoundary fallback={<ErrorFallbackBox>error fallback</ErrorFallbackBox>}>
+            <Suspense fallback={<LoadingBox>loading...</LoadingBox>}>
+              <QueriesHydration
+                queries={[
+                  {
+                    ...query.text(2),
+                    queryFn: () => isoFetch('/api/text?id=1&error=true').then(() => Promise.reject(new Error('error'))),
+                  },
+                ]}
+                skipSsrOnError={{
+                  fallback: <SkipSSROnErrorFallbackBox>skipSsrOnError fallback</SkipSSROnErrorFallbackBox>,
+                }}
+              >
+                <ReactClientComponent queryKeyId={2} />
+              </QueriesHydration>
+            </Suspense>
+          </ErrorBoundary>
+        </EmptyBox>
+        <h3 className="text-md font-bold">🚧 3. skipSsrOnError false</h3>
+        <p>RSC fail → RCC(server) fail → RCC(browser) success</p>
+        <EmptyBox>
+          <ErrorBoundary fallback={<ErrorFallbackBox>error fallback</ErrorFallbackBox>}>
+            <Suspense fallback={<LoadingBox>loading...</LoadingBox>}>
+              <QueriesHydration
+                queries={[
+                  {
+                    ...query.text(3),
+                    queryFn: () => isoFetch('/api/text?id=1&error=true').then(() => Promise.reject(new Error('error'))),
+                  },
+                ]}
+                skipSsrOnError={false}
+              >
+                <ReactClientComponent queryKeyId={3} />
+              </QueriesHydration>
+            </Suspense>
+          </ErrorBoundary>
+        </EmptyBox>
+        <h3 className="text-md font-bold">✅ 4. no error (Best Practice)</h3>
+        <p>RSC success → RCC(server) cached → RCC(browser) cached</p>
+        <EmptyBox>
+          <ErrorBoundary fallback={<ErrorFallbackBox>error fallback</ErrorFallbackBox>}>
+            <Suspense fallback={<LoadingBox>loading...</LoadingBox>}>
+              <QueriesHydration queries={[query.text(4)]}>
+                <ReactClientComponent queryKeyId={4} />
+              </QueriesHydration>
+            </Suspense>
+          </ErrorBoundary>
+        </EmptyBox>
+      </div>
+    </div>
   )
 }

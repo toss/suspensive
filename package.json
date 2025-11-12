@@ -29,7 +29,7 @@
     "ci:test": "turbo run ci:test",
     "ci:type": "turbo run ci:type",
     "clean": "turbo run clean",
-    "dev": "turbo watch ci:test",
+    "dev": "turbo watch dev",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "graph": "rimraf ./graph && mkdir graph && turbo run build --graph=graph/index.html",
     "packlint": "packlint sort -R",
