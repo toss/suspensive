@@ -7,12 +7,14 @@ You are working on **Suspensive**, a library that simplifies React Suspense usag
 ## Key Architecture Points
 
 ### Monorepo Structure
+
 - **Main packages** in `packages/`: react, react-query, react-dom, react-native, next, jotai, codemods
 - **Documentation** in `docs/suspensive.org/`: Next.js app with Nextra
 - **Examples** in `examples/`: Working demo applications
 - **Configs** in `configs/`: Shared configurations
 
 ### Core Libraries
+
 1. **@suspensive/react**: Core utilities (`<ErrorBoundary/>`, `<Suspense/>`, `<Delay/>`, etc.)
 2. **@suspensive/react-query**: TanStack Query integration with auto-detection for v4/v5
 3. **@suspensive/react-dom**: DOM utilities (`<InView/>`, `<FadeIn/>`)
@@ -33,6 +35,7 @@ pnpm run ci:all       # Full CI check
 ## Code Patterns to Follow
 
 ### Component Pattern
+
 ```typescript
 import type { ComponentProps, ReactNode } from 'react'
 
@@ -47,13 +50,15 @@ export const MyComponent = ({ children, fallback }: MyComponentProps) => {
 ```
 
 ### Hook Pattern
+
 ```typescript
-export const useMyHook = <T,>(initialValue: T) => {
+export const useMyHook = <T>(initialValue: T) => {
   // Implementation with proper TypeScript generics
 }
 ```
 
 ### Error Boundary Pattern
+
 ```typescript
 <ErrorBoundary fallback={({ error, reset }) => (
   <div>
@@ -83,6 +88,7 @@ export const useMyHook = <T,>(initialValue: T) => {
 ## Common Commands by Package
 
 Each package supports:
+
 - `build`: Build the package
 - `ci:eslint`: Lint
 - `ci:test`: Run tests
@@ -108,21 +114,25 @@ Each package supports:
 ## Package-Specific Notes
 
 ### @suspensive/react
+
 - Core package, no external dependencies
 - Must work in SSR and CSR environments
 - Focus on declarative APIs
 
 ### @suspensive/react-query
+
 - Auto-detects TanStack Query version (v4 or v5)
 - Wraps around react-query-4 and react-query-5 packages
 - Includes CLI tools for version management
 
 ### @suspensive/react-dom
+
 - Browser-only utilities
 - Uses Intersection Observer API
 - Handles viewport-based interactions
 
 ### Documentation Site
+
 - Built with Next.js 15 and Nextra
 - Supports i18n (English and Korean)
 - Uses Tailwind CSS for styling
@@ -130,7 +140,9 @@ Each package supports:
 ## Useful Patterns in Codebase
 
 ### Wrapping Components
+
 The library uses a pattern of wrapping React components to add functionality:
+
 ```typescript
 <Suspense fallback={<Loading />}>
   <AsyncComponent />
@@ -138,13 +150,17 @@ The library uses a pattern of wrapping React components to add functionality:
 ```
 
 ### Fallback Props
+
 Consistent pattern for fallback rendering:
+
 ```typescript
 fallback={({ error, reset }) => <ErrorUI error={error} onReset={reset} />}
 ```
 
 ### SSR Safety
+
 Use `clientOnly` prop for SSR-unsafe components:
+
 ```typescript
 <Suspense clientOnly fallback={<Loading />}>
   <ClientOnlyFeature />

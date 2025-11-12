@@ -19,15 +19,15 @@ Suspensive is a collection of utilities that make React Suspense easier to use. 
 
 ## Quick Package Reference
 
-| Package | Purpose | Key Exports |
-|---------|---------|-------------|
-| `@suspensive/react` | Core Suspense utilities | `<Suspense/>`, `<ErrorBoundary/>`, `<Delay/>`, `<ClientOnly/>` |
-| `@suspensive/react-query` | React Query integration | `useSuspenseQuery()`, `<SuspenseQuery/>` |
-| `@suspensive/react-dom` | DOM utilities | `<InView/>`, `<FadeIn/>` |
-| `@suspensive/react-native` | React Native utilities | Testing helpers |
-| `@suspensive/next` | Next.js integration | Next.js helpers |
-| `@suspensive/jotai` | Jotai integration | Jotai + Suspense utilities |
-| `@suspensive/codemods` | Code migrations | CLI for automated refactoring |
+| Package                    | Purpose                 | Key Exports                                                    |
+| -------------------------- | ----------------------- | -------------------------------------------------------------- |
+| `@suspensive/react`        | Core Suspense utilities | `<Suspense/>`, `<ErrorBoundary/>`, `<Delay/>`, `<ClientOnly/>` |
+| `@suspensive/react-query`  | React Query integration | `useSuspenseQuery()`, `<SuspenseQuery/>`                       |
+| `@suspensive/react-dom`    | DOM utilities           | `<InView/>`, `<FadeIn/>`                                       |
+| `@suspensive/react-native` | React Native utilities  | Testing helpers                                                |
+| `@suspensive/next`         | Next.js integration     | Next.js helpers                                                |
+| `@suspensive/jotai`        | Jotai integration       | Jotai + Suspense utilities                                     |
+| `@suspensive/codemods`     | Code migrations         | CLI for automated refactoring                                  |
 
 ## Directory Structure
 
@@ -88,14 +88,14 @@ suspensive/
 // Suspense-enabled query hook
 const { data } = useSuspenseQuery({
   queryKey: ['key'],
-  queryFn: fetchData
+  queryFn: fetchData,
 })
 // data is always defined (no undefined checks needed)
 
 // Suspense-enabled infinite query
 const { data, fetchNextPage } = useSuspenseInfiniteQuery({
   queryKey: ['key'],
-  queryFn: fetchPage
+  queryFn: fetchPage,
 })
 ```
 
@@ -116,6 +116,7 @@ const { data, fetchNextPage } = useSuspenseInfiniteQuery({
 ## Development Workflow
 
 ### Initial Setup
+
 ```bash
 # 1. Enable pnpm via corepack
 corepack enable && corepack prepare
@@ -128,6 +129,7 @@ pnpm run build
 ```
 
 ### Development Loop
+
 ```bash
 # Watch mode for development
 pnpm run dev
@@ -141,6 +143,7 @@ pnpm run ci:all
 ```
 
 ### Making Changes
+
 ```bash
 # 1. Make your changes
 # 2. Build if needed

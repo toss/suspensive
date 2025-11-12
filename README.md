@@ -27,6 +27,7 @@ Suspensive provides comprehensive AI-friendly documentation to help AI assistant
 - **[AI_DEVELOPMENT_GUIDE.md](./AI_DEVELOPMENT_GUIDE.md)** - Quick reference guide for AI tools
 
 These resources help AI assistants:
+
 - Understand the monorepo structure and package relationships
 - Follow consistent code patterns and conventions
 - Navigate the development workflow
