@@ -14,7 +14,7 @@ const files = readdirSync(distDir)
 
 // Add 'use client' to ClientOnly chunk files
 const clientOnlyFiles = files.filter(
-  (file) => file.startsWith('ClientOnly-') && (file.endsWith('.js') || file.endsWith('.cjs'))
+  (file) => file.startsWith('ClientOnly-') && (file.endsWith('.js') || file.endsWith('.mjs') || file.endsWith('.cjs'))
 )
 
 for (const file of clientOnlyFiles) {

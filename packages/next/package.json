@@ -20,9 +20,9 @@
   "exports": {
     ".": {
       "import": {
-        "types": "./dist/index.d.ts",
-        "react-server": "./dist/react-server.js",
-        "default": "./dist/index.js"
+        "types": "./dist/index.d.mts",
+        "react-server": "./dist/react-server.mjs",
+        "default": "./dist/index.mjs"
       },
       "require": {
         "types": "./dist/index.d.cts",
