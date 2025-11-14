@@ -1,5 +1,13 @@
 # @suspensive/react-query-4
 
+## 3.15.1
+
+### Patch Changes
+
+- [#1826](https://github.com/toss/suspensive/pull/1826) [`39d4343`](https://github.com/toss/suspensive/commit/39d434384afa2597fc717038dc267079b3ee6712) Thanks [@manudeli](https://github.com/manudeli)! - fix(\*): update tsdown
+
+- [#1824](https://github.com/toss/suspensive/pull/1824) [`fca3ab9`](https://github.com/toss/suspensive/commit/fca3ab9f18c405016cef971bbe9eba1c1f9a9db3) Thanks [@manudeli](https://github.com/manudeli)! - fix(react-query): make queryClient optional in QueriesHydration
+
 ## 3.15.0
 
 ### Minor Changes

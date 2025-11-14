@@ -1,5 +1,11 @@
 # @suspensive/react-native
 
+## 0.1.3
+
+### Patch Changes
+
+- [#1826](https://github.com/toss/suspensive/pull/1826) [`39d4343`](https://github.com/toss/suspensive/commit/39d434384afa2597fc717038dc267079b3ee6712) Thanks [@manudeli](https://github.com/manudeli)! - fix(\*): update tsdown
+
 ## 0.1.2
 
 ### Patch Changes
@@ -15,7 +21,6 @@
   This adds OIDC (OpenID Connect) authentication support for npm publishing in GitHub Actions. The implementation enables secure, tokenless publishing to npm using GitHub's OIDC tokens with provenance support.
 
   Key features:
-
   - **OIDC Authentication**: Uses GitHub Actions `id-token: write` permission for secure publishing
   - **Provenance Support**: Enables npm package provenance through `NPM_CONFIG_PROVENANCE=true`
   - **Backward Compatibility**: Maintains NPM_TOKEN as fallback for existing workflows
