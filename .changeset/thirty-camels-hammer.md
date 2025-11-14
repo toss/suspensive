@@ -1,5 +1,4 @@
 ---
-"@suspensive/tsdown": patch
 "@suspensive/jotai": patch
 "@suspensive/next": patch
 "@suspensive/react-dom": patch
