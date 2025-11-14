@@ -1,6 +1,6 @@
-import type { Options } from 'tsdown'
+import { defineConfig } from 'tsdown'
 
-export const options: Options = {
+export const options = defineConfig({
   banner: { js: '"use client"' },
   format: ['cjs', 'esm'],
   target: ['chrome51', 'firefox53', 'edge18', 'safari11', 'ios11', 'opera38', 'es6', 'node14'],
@@ -12,9 +12,9 @@ export const options: Options = {
   attw: true,
   publint: true,
   clean: true,
-}
+})
 
-export const scriptOptions: Options = {
+export const scriptOptions = defineConfig({
   format: 'cjs',
   target: ['node18'],
   entry: ['src/bin/*.{ts,tsx}', '!**/*.{spec,test,test-d}.*'],
@@ -22,4 +22,4 @@ export const scriptOptions: Options = {
   attw: true,
   publint: true,
   clean: true,
-}
+})

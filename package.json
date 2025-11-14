@@ -60,7 +60,7 @@
     "prettier-plugin-tailwindcss": "^0.6.13",
     "rimraf": "^6.0.1",
     "sherif": "^1.5.0",
-    "tsdown": "^0.15.4",
+    "tsdown": "^0.16.4",
     "turbo": "^2.5.4",
     "typescript": "^5.8.3",
     "vite": "^6.3.5",
