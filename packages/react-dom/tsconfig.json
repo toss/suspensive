@@ -2,6 +2,6 @@
   "extends": "@suspensive/tsconfig/react-library.json",
   "include": ["."],
   "compilerOptions": {
-    "types": ["@testing-library/jest-dom/vitest", "vitest/globals", "@vitest/browser/providers/playwright"]
+    "types": ["@testing-library/jest-dom/vitest", "vitest/globals", "@vitest/browser-playwright"]
   }
 }
