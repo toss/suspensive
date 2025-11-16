@@ -22,6 +22,8 @@ Nextra has been successfully removed from the codebase. All Nextra dependencies,
 - `@mdx-js/react@^3.1.0` - MDX React integration
 - `next-themes@^0.4.4` - Theme switching (replaces Nextra's theme system)
 - `@tailwindcss/typography@^0.5.16` - Typography plugin for MDX prose styling
+- `@radix-ui/react-accessible-icon@^1.1.0` - Accessible icon component
+- `@radix-ui/react-visually-hidden@^1.1.0` - Visually hidden utility
 
 ### 2. Configuration
 
@@ -88,9 +90,11 @@ Nextra has been successfully removed from the codebase. All Nextra dependencies,
 **Callout (`src/components/Callout.tsx`):**
 
 - Replaced Nextra's Callout component
-- Custom implementation using Lucide icons
+- Custom implementation using Lucide icons and Radix UI
+- Uses `@radix-ui/react-accessible-icon` for better accessibility
 - Supports: default, info, warning, error, deprecated, experimental
 - Styled with Tailwind CSS
+- Includes proper ARIA labels and semantic HTML
 
 **Logo Components:**
 
@@ -117,13 +121,6 @@ Nextra has been successfully removed from the codebase. All Nextra dependencies,
 
 ### 6. Types
 
-**src/types/meta.ts:**
-
-- Created custom `MetaRecord` type
-- Replaces `import type { MetaRecord } from 'nextra'`
-- Supports: page, menu, separator types
-- Used by all `_meta.tsx` files (18 files updated)
-
 **src/types/mdx.ts:**
 
 - Created custom `Heading` and `Metadata` types
@@ -131,14 +128,12 @@ Nextra has been successfully removed from the codebase. All Nextra dependencies,
 
 ### 7. Content Files
 
-Updated all `_meta.tsx` files to use custom types:
+**Removed all `_meta.tsx` files:**
 
-```
-src/content/en/_meta.tsx
-src/content/en/docs/_meta.tsx
-src/content/en/docs/react/_meta.tsx
-... (15 more files)
-```
+- Deleted 18 `_meta.tsx` files from `src/content/` directory
+- These were Nextra-specific convention files for navigation structure
+- No longer needed since we removed Nextra's page discovery system
+- Removed corresponding `MetaRecord` type from `src/types/meta.ts`
 
 ## Architecture Comparison
 
