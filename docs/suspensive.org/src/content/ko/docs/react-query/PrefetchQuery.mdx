@@ -6,7 +6,6 @@ React hook의 제약을 피해 JSX상에서도 usePrefetchQuery를 사용할 수
 
 ```jsx /PrefetchQuery/
 import { PrefetchQuery, useSuspenseQuery } from '@suspensive/react-query'
-import { InView } from '@suspensive/react-dom'
 
 const PostsPage = () => {
   const { data: posts } = useSuspenseQuery({
@@ -15,30 +14,22 @@ const PostsPage = () => {
   })
 
   return posts.map((post) => (
-    <InView>
-      {({ ref, isInView }) => (
-        <>
-          {isInView ? (
-            // 🚫 React hook의 제약으로 usePrefetchQuery를 사용하지 못합니다
-            // usePrefetchQuery({
-            //   queryKey: ['posts', post.id, 'comments'],
-            //   queryFn: () => getPostComments(post.id),
-            // })
+    <div key={post.id}>
+      {/* 🚫 React hook의 제약으로 usePrefetchQuery를 사용하지 못합니다
+      // usePrefetchQuery({
+      //   queryKey: ['posts', post.id, 'comments'],
+      //   queryFn: () => getPostComments(post.id),
+      // })
 
-            // ✅ Post Comments 페이지에 들어가기 전에 각각의 post comments query에 대해 usePrefetchQuery를 호출할 수 있습니다.
-            <PrefetchQuery
-              queryKey={['posts', post.id, 'comments']}
-              queryFn={() => getPostComments(post.id)}
-            />
-          ) : null}
-          <div ref={ref}>
-            <h2>{post.title}</h2>
-            <p>{post.description}</p>
-            <Link to={`/posts/${post.id}/comments`}>See comments</Link>
-          </div>
-        </>
-      )}
-    </InView>
+      // ✅ Post Comments 페이지에 들어가기 전에 각각의 post comments query에 대해 usePrefetchQuery를 호출할 수 있습니다. */}
+      <PrefetchQuery
+        queryKey={['posts', post.id, 'comments']}
+        queryFn={() => getPostComments(post.id)}
+      />
+      <h2>{post.title}</h2>
+      <p>{post.description}</p>
+      <Link to={`/posts/${post.id}/comments`}>See comments</Link>
+    </div>
   ))
 }
 ```
