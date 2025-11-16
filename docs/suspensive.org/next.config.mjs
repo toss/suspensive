@@ -24,4 +24,5 @@ const withMDX = createMDX({
 export default withMDX({
   reactStrictMode: true,
   pageExtensions: ['js', 'jsx', 'ts', 'tsx', 'md', 'mdx'],
+  transpilePackages: ['@suspensive/react', '@suspensive/react-query-4'],
 })

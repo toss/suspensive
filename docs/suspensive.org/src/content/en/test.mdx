@@ -1,0 +1,32 @@
+---
+title: Test Page
+---
+
+# Test Page
+
+This is a test page to verify that Nextra has been successfully removed and MDX is working with pure Next.js.
+
+## Features
+
+- Pure Next.js setup with @next/mdx
+- No Nextra dependencies
+- Custom theme provider using next-themes
+- Simplified layout
+
+## Code Example
+
+```tsx
+import { useState } from 'react'
+
+export function Counter() {
+  const [count, setCount] = useState(0)
+  
+  return (
+    <button onClick={() => setCount(count + 1)}>
+      Count: {count}
+    </button>
+  )
+}
+```
+
+This demonstrates that MDX processing is working correctly without Nextra.
