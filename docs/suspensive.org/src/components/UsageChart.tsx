@@ -88,20 +88,22 @@ const usageQueryOptions = () =>
         fetchGitHubStats(),
       ])
 
-      // Aggregate downloads by date across all packages
-      const dateMap = new Map<string, number>()
+      // Aggregate downloads by month across all packages
+      const monthMap = new Map<string, number>()
       let totalDownloads = 0
 
       results.forEach((packageData) => {
         packageData.downloads.forEach((day) => {
-          const currentTotal = dateMap.get(day.day) || 0
-          dateMap.set(day.day, currentTotal + day.downloads)
+          // Extract year-month from the date (e.g., "2024-01" from "2024-01-15")
+          const yearMonth = day.day.substring(0, 7)
+          const currentTotal = monthMap.get(yearMonth) || 0
+          monthMap.set(yearMonth, currentTotal + day.downloads)
           totalDownloads += day.downloads
         })
       })
 
       // Convert to array and sort by date
-      const timeSeriesData: TimeSeriesData[] = Array.from(dateMap.entries())
+      const timeSeriesData: TimeSeriesData[] = Array.from(monthMap.entries())
         .map(([date, downloads]) => ({ date, downloads }))
         .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
 
@@ -313,8 +315,8 @@ const LineChart = ({ data, width, height }: LineChartProps) => {
       .append('g')
       .attr('transform', `translate(${margin.left},${margin.top})`)
 
-    // Parse dates
-    const parseDate = d3.timeParse('%Y-%m-%d')
+    // Parse dates - handle both YYYY-MM (monthly) and YYYY-MM-DD (daily) formats
+    const parseDate = d3.timeParse('%Y-%m')
     const parsedData = data.map((d) => ({
       date: parseDate(d.date) as Date,
       downloads: d.downloads,
