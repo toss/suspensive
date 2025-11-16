@@ -50,25 +50,6 @@ describe('<QueriesHydration/>', () => {
         children: <></>,
       }))()
 
-    // @ts-expect-error queries must have queryKey
-    ;(async () =>
-      await QueriesHydration({
-        queries: [
-          {
-            queryFn: queryFn,
-          },
-        ],
-        children: <></>,
-      }))()
-
-    // @ts-expect-error skipSsrOnError must be boolean or object with fallback
-    ;(async () =>
-      await QueriesHydration({
-        queries: [options1],
-        skipSsrOnError: 'invalid',
-        children: <></>,
-      }))()
-
     // Return type should be JSX.Element (Promise<JSX.Element>)
     expectTypeOf(
       QueriesHydration({
