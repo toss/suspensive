@@ -92,10 +92,20 @@ const usageQueryOptions = () =>
       const monthMap = new Map<string, number>()
       let totalDownloads = 0
 
+      // Get current year-month to filter it out
+      const now = new Date()
+      const currentYearMonth = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`
+
       results.forEach((packageData) => {
         packageData.downloads.forEach((day) => {
           // Extract year-month from the date (e.g., "2024-01" from "2024-01-15")
           const yearMonth = day.day.substring(0, 7)
+
+          // Skip current month
+          if (yearMonth === currentYearMonth) {
+            return
+          }
+
           const currentTotal = monthMap.get(yearMonth) || 0
           monthMap.set(yearMonth, currentTotal + day.downloads)
           totalDownloads += day.downloads
@@ -385,6 +395,67 @@ const LineChart = ({ data, width, height }: LineChartProps) => {
       .attr('stroke', 'rgb(59, 130, 246)')
       .attr('stroke-width', 2.5)
       .attr('d', line)
+
+    // Create tooltip
+    const tooltip = d3
+      .select('body')
+      .selectAll('.chart-tooltip')
+      .data([null])
+      .join('div')
+      .attr('class', 'chart-tooltip')
+      .style('position', 'absolute')
+      .style('visibility', 'hidden')
+      .style('background-color', 'rgba(0, 0, 0, 0.8)')
+      .style('color', 'white')
+      .style('padding', '8px 12px')
+      .style('border-radius', '6px')
+      .style('font-size', '14px')
+      .style('pointer-events', 'none')
+      .style('z-index', '1000')
+      .style('transition', 'opacity 0.2s')
+
+    // Add interactive data points
+    g.selectAll('.data-point')
+      .data(parsedData)
+      .enter()
+      .append('circle')
+      .attr('class', 'data-point')
+      .attr('cx', (d) => x(d.date))
+      .attr('cy', (d) => y(d.downloads))
+      .attr('r', 4)
+      .attr('fill', 'rgb(59, 130, 246)')
+      .attr('stroke', 'white')
+      .attr('stroke-width', 2)
+      .style('cursor', 'pointer')
+      .style('transition', 'all 0.2s')
+      .on('mouseover', function (event, d) {
+        d3.select(this)
+          .transition()
+          .duration(200)
+          .attr('r', 6)
+          .attr('stroke-width', 3)
+
+        tooltip
+          .style('visibility', 'visible')
+          .html(
+            `<div style="font-weight: 600;">${d3.timeFormat('%B %Y')(d.date)}</div><div style="margin-top: 4px;">${d.downloads.toLocaleString()} downloads</div>`
+          )
+      })
+      .on('mousemove', function (event) {
+        const mouseEvent = event as MouseEvent
+        tooltip
+          .style('top', `${mouseEvent.pageY - 10}px`)
+          .style('left', `${mouseEvent.pageX + 10}px`)
+      })
+      .on('mouseout', function () {
+        d3.select(this)
+          .transition()
+          .duration(200)
+          .attr('r', 4)
+          .attr('stroke-width', 2)
+
+        tooltip.style('visibility', 'hidden')
+      })
 
     // Add X axis
     g.append('g')
