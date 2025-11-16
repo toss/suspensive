@@ -1,5 +1,5 @@
 import { QueryClient, dehydrate } from '@tanstack/react-query'
-import { render, screen, waitFor } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 import type { ComponentProps, ReactNode } from 'react'
 import { describe, expect, it, vi } from 'vitest'
 import { QueriesHydration } from './QueriesHydration'

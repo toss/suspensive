@@ -1,5 +1,4 @@
 import { queryOptions } from '@tanstack/react-query'
-import type { ReactNode } from 'react'
 import { describe, expectTypeOf, it } from 'vitest'
 import { QueriesHydration } from './QueriesHydration'
 import { queryFn, queryKey } from './test-utils'
@@ -16,7 +15,7 @@ describe('<QueriesHydration/>', () => {
     })
 
     // Should accept queries array with queryKey
-    ;(async () =>
+    void (async () =>
       await QueriesHydration({
         queries: [
           {
@@ -28,14 +27,14 @@ describe('<QueriesHydration/>', () => {
       }))()
 
     // Should accept multiple queries
-    ;(async () =>
+    void (async () =>
       await QueriesHydration({
         queries: [options1, options2],
         children: <></>,
       }))()
 
     // Should accept skipSsrOnError as boolean
-    ;(async () =>
+    void (async () =>
       await QueriesHydration({
         queries: [options1],
         skipSsrOnError: true,
@@ -43,7 +42,7 @@ describe('<QueriesHydration/>', () => {
       }))()
 
     // Should accept skipSsrOnError with fallback
-    ;(async () =>
+    void (async () =>
       await QueriesHydration({
         queries: [options1],
         skipSsrOnError: { fallback: <div>Loading...</div> },
