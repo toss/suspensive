@@ -47,6 +47,7 @@
   "devDependencies": {
     "@suspensive/eslint-config": "workspace:*",
     "@tailwindcss/postcss": "catalog:",
+    "@tailwindcss/typography": "^0.5.16",
     "@types/d3": "^7.4.3",
     "@types/react": "catalog:react19",
     "@types/react-dom": "catalog:react19",
