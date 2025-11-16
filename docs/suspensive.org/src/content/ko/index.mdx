@@ -293,32 +293,6 @@ const Page = () => (
 )
 ```
 
-# !!steps 기본 fallback이 바로 나오는 것보다는 FadeIn과 같은 효과를 주고 싶을 때가 있습니다.
-
-그렇다면 `FadeIn`을 활용해보면 어떨까요?
-
-```jsx ! Page.jsx
-import { Suspense, DefaultProps, DefaultPropsProvider } from '@suspensive/react'
-import { SuspenseQuery } from '@suspensive/react-query'
-import { FadeIn } from '@suspensive/react-dom'
-
-const defaultProps = new DefaultProps({
-  Suspense: {
-    fallback: <FadeIn>{(fadeIn) => <Spinner {...fadeIn} />}</FadeIn>,
-  },
-})
-
-const Page = () => (
-  <DefaultPropsProvider defaultProps={defaultProps}>
-    <Suspense clientOnly>
-      <SuspenseQuery {...notNeedSEOQueryOptions()}>
-        {({ data }) => <NotNeedSEO {...data} />}
-      </SuspenseQuery>
-    </Suspense>
-  </DefaultPropsProvider>
-)
-```
-
 # !!steps 당연히 기본 fallback을 Override하고 싶다면 그냥 넣어주면 됩니다.
 
 디자이너가 이 부분에 기본 `Spinner`보다 `Skeleton`으로 동작하도록 지원해달라고 하네요~! 그냥 넣으면 되어요.
@@ -326,11 +300,10 @@ const Page = () => (
 ```jsx ! Page.jsx
 import { Suspense, DefaultProps, DefaultPropsProvider } from '@suspensive/react'
 import { SuspenseQuery } from '@suspensive/react-query'
-import { FadeIn } from '@suspensive/react-dom'
 
 const defaultProps = new DefaultProps({
   Suspense: {
-    fallback: <FadeIn>{(fadeIn) => <Spinner {...fadeIn} />}</FadeIn>,
+    fallback: <Spinner />,
   },
 })
 
