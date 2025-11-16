@@ -1,4 +1,4 @@
-import type { MetaRecord } from 'nextra'
+import type { MetaRecord } from '@/types/meta'
 import type MetaEn from '../../../en/docs/react-query/_meta'
 
 export default {

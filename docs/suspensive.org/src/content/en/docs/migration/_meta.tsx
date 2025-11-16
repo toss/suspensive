@@ -1,4 +1,4 @@
-import type { MetaRecord } from 'nextra'
+import type { MetaRecord } from '@/types/meta'
 
 export default {
   'migrate-to-v3': { title: 'Migrating to v3' },

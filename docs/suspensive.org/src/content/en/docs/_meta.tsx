@@ -1,4 +1,4 @@
-import type { MetaRecord } from 'nextra'
+import type { MetaRecord } from '@/types/meta'
 
 export default {
   introduction: { title: 'What is Suspensive?' },

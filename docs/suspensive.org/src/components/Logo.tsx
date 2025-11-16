@@ -1,7 +1,7 @@
 'use client'
 
 import { useIsClient } from '@suspensive/react'
-import { useTheme } from 'nextra-theme-docs'
+import { useTheme } from '@/components/ThemeProvider'
 
 export const LogoImage = ({ size = 1 }: { size: number }) => {
   const baseWidth = 330 * size

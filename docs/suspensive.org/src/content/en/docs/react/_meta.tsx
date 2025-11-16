@@ -1,4 +1,4 @@
-import type { MetaRecord } from 'nextra'
+import type { MetaRecord } from '@/types/meta'
 
 export default {
   motivation: { title: 'Why need to use?' },

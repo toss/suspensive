@@ -1,5 +1,5 @@
 import { recmaCodeHike, remarkCodeHike } from 'codehike/mdx'
-import nextra from 'nextra'
+import createMDX from '@next/mdx'
 import { remarkSandpack } from 'remark-sandpack'
 
 /** @type {import('codehike/mdx').CodeHikeConfig} */
@@ -9,32 +9,19 @@ const chConfig = {
   },
 }
 
-const withNextra = nextra({
-  defaultShowCopyCode: true,
-  latex: true,
-  mdxOptions: {
+const withMDX = createMDX({
+  extension: /\.mdx?$/,
+  options: {
     remarkPlugins: [[remarkCodeHike, chConfig], remarkSandpack],
     recmaPlugins: [[recmaCodeHike, chConfig]],
     rehypePlugins: [],
-    rehypePrettyCodeOptions: {
-      theme: 'github-dark-default',
-      keepBackground: false,
-    },
   },
-  search: {
-    codeblocks: true,
-  },
-  codeHighlight: true,
-  readingTime: true,
 })
 
 /**
  * @type {import('next').NextConfig}
  */
-export default withNextra({
+export default withMDX({
   reactStrictMode: true,
-  i18n: {
-    locales: ['en', 'ko'],
-    defaultLocale: 'en',
-  },
+  pageExtensions: ['js', 'jsx', 'ts', 'tsx', 'md', 'mdx'],
 })
