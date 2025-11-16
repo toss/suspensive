@@ -11,10 +11,12 @@ Nextra has been successfully removed from the codebase. All Nextra dependencies,
 ### 1. Dependencies
 
 **Removed:**
+
 - `nextra@^4.6.0`
 - `nextra-theme-docs@^4.6.0`
 
 **Added:**
+
 - `@next/mdx@^15.5.6` - Official Next.js MDX plugin
 - `@mdx-js/loader@^3.1.0` - MDX loader
 - `@mdx-js/react@^3.1.0` - MDX React integration
@@ -24,12 +26,14 @@ Nextra has been successfully removed from the codebase. All Nextra dependencies,
 ### 2. Configuration
 
 **next.config.mjs:**
+
 - Replaced `nextra()` wrapper with `@next/mdx`'s `createMDX()`
 - Configured MDX with CodeHike and Sandpack plugins
 - Added `transpilePackages` for workspace dependencies
 - Added `pageExtensions` to handle MDX files
 
 **tailwind.config.ts:**
+
 - Created new Tailwind config with typography plugin
 - Configured dark mode with class strategy
 - Set up content paths for all source files
@@ -37,12 +41,14 @@ Nextra has been successfully removed from the codebase. All Nextra dependencies,
 ### 3. Infrastructure
 
 **Middleware (`src/middleware.ts`):**
+
 - Replaced `export { middleware } from 'nextra/locales'`
 - Implemented custom locale routing logic
 - Handles redirects to default locale (en)
 - Maintains same URL pattern: `/[locale]/[...path]`
 
 **Layout (`src/app/[lang]/layout.tsx`):**
+
 - Removed all Nextra theme components:
   - `Layout`, `Navbar`, `Footer`
   - `Search`, `LocaleSwitch`, `LastUpdated`
@@ -53,35 +59,41 @@ Nextra has been successfully removed from the codebase. All Nextra dependencies,
 - Kept analytics and scripts
 
 **Page Route (`src/app/[lang]/[[...mdxPath]]/page.tsx`):**
+
 - Replaced `importPage` and `generateStaticParamsFor` from Nextra
 - Implemented direct dynamic imports of MDX files
 - Simple path-based routing: `import('@/content/${lang}/${path}.mdx')`
 - Maintains catch-all route structure
 
 **MDX Components (`src/mdx-components.tsx`):**
+
 - Removed Nextra's `useMDXComponents` and theme components
 - Implemented standard MDX components function
 - Simple wrapper component for article structure
 
 **Not Found (`src/app/[lang]/not-found.tsx`):**
+
 - Replaced `export { NotFoundPage as default } from 'nextra-theme-docs'`
 - Created custom 404 page with basic styling
 
 ### 4. Components
 
 **ThemeProvider (`src/components/ThemeProvider.tsx`):**
+
 - New component using `next-themes`
-- Replaces `nextra-theme-docs` theme system  
+- Replaces `nextra-theme-docs` theme system
 - Provides `useTheme` hook
 - Supports system, light, and dark modes
 
 **Callout (`src/components/Callout.tsx`):**
+
 - Replaced Nextra's Callout component
 - Custom implementation using Lucide icons
 - Supports: default, info, warning, error, deprecated, experimental
 - Styled with Tailwind CSS
 
 **Logo Components:**
+
 - Updated `src/components/Logo.tsx`
 - Updated `src/app/[lang]/_components/Logo.tsx`
 - Updated `src/components/HomePage.tsx`
@@ -89,6 +101,7 @@ Nextra has been successfully removed from the codebase. All Nextra dependencies,
 - All now import from `@/components/ThemeProvider` instead of `nextra-theme-docs`
 
 **Dictionary Files:**
+
 - Updated `src/app/_dictionaries/en.tsx`
 - Updated `src/app/_dictionaries/ko.tsx`
 - Changed from `import { Link } from 'nextra-theme-docs'` to `import Link from 'next/link'`
@@ -96,6 +109,7 @@ Nextra has been successfully removed from the codebase. All Nextra dependencies,
 ### 5. Styles
 
 **src/app/[lang]/styles.css:**
+
 - Removed `@import 'nextra-theme-docs/style.css'`
 - Removed Nextra-specific class styles (`.nextra-nav-container`, `.nextra-sidebar`)
 - Added prose styles for MDX content
@@ -104,18 +118,21 @@ Nextra has been successfully removed from the codebase. All Nextra dependencies,
 ### 6. Types
 
 **src/types/meta.ts:**
+
 - Created custom `MetaRecord` type
 - Replaces `import type { MetaRecord } from 'nextra'`
 - Supports: page, menu, separator types
 - Used by all `_meta.tsx` files (18 files updated)
 
 **src/types/mdx.ts:**
+
 - Created custom `Heading` and `Metadata` types
 - Replaces Nextra's MDX types
 
 ### 7. Content Files
 
 Updated all `_meta.tsx` files to use custom types:
+
 ```
 src/content/en/_meta.tsx
 src/content/en/docs/_meta.tsx
@@ -156,6 +173,7 @@ Rendered Page
 ## What Was Removed
 
 ### Nextra Core Features:
+
 - Automatic page discovery from file system
 - Page map generation
 - Static params generation
@@ -165,6 +183,7 @@ Rendered Page
 - Default copy code buttons
 
 ### Nextra Theme Features:
+
 - Full documentation theme layout
 - Sidebar navigation
 - Table of Contents (TOC)
@@ -177,6 +196,7 @@ Rendered Page
 - Breadcrumbs
 
 ### Nextra Components:
+
 - `<Layout />`, `<Navbar />`, `<Footer />`
 - `<Search />`, `<LocaleSwitch />`
 - `<Head />`, `<LastUpdated />`
@@ -186,6 +206,7 @@ Rendered Page
 ## What Was Kept/Replaced
 
 ### Kept:
+
 - MDX content files (no changes needed)
 - CodeHike integration for code highlighting
 - Sandpack integration for live code
@@ -195,6 +216,7 @@ Rendered Page
 - Tailwind CSS styling
 
 ### Replaced:
+
 - Nextra → @next/mdx
 - Nextra theme → next-themes
 - Nextra components → Custom components
@@ -219,6 +241,7 @@ Rendered Page
 ## Testing Status
 
 ### ✅ Verified:
+
 - Dependencies installed successfully
 - Nextra completely removed from package.json
 - All imports updated
@@ -227,8 +250,9 @@ Rendered Page
 - Dev server starts successfully
 
 ### ⏸️ Pending (blocked by workspace package build issue):
+
 - Homepage rendering
-- Documentation page rendering  
+- Documentation page rendering
 - Theme switching
 - MDX component rendering
 - Full end-to-end testing
@@ -258,6 +282,7 @@ Rendered Page
 ### To Build Workspace Packages:
 
 Fix the `tsdown.config.ts` duplicate declaration issue:
+
 ```typescript
 // Remove the auto-generated __filename and __dirname
 // They're being added twice

@@ -22,6 +22,7 @@
     "start": "next start -p 4000"
   },
   "dependencies": {
+    "@chevrotain/regexp-to-ast": "^11.0.3",
     "@codesandbox/sandpack-react": "^2.20.0",
     "@mdx-js/loader": "^3.1.0",
     "@mdx-js/react": "^3.1.0",
@@ -31,7 +32,6 @@
     "@suspensive/react-query-4": "workspace:*",
     "@tanstack/react-query": "catalog:react-query4",
     "@tanstack/react-query-devtools": "catalog:react-query4",
-    "@chevrotain/regexp-to-ast": "^11.0.3",
     "clsx": "catalog:",
     "codehike": "^1.0.7",
     "d3": "^7.9.0",
