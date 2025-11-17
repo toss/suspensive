@@ -5,6 +5,7 @@ export default {
     type: 'page',
     display: 'hidden',
     theme: {
+      copyPage: false,
       layout: 'full',
       toc: false,
     },

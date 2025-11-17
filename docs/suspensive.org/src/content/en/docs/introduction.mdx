@@ -30,7 +30,6 @@ graph TD;
         A["@suspensive/react"]
     end
     subgraph BB ["Adapter Packages"]
-        B["@suspensive/react-dom"]
         C["@suspensive/react-query"]
         D["@suspensive/jotai"]
     end
@@ -39,7 +38,6 @@ graph TD;
         G["@suspensive/react-query-5"]
     end
 
-    A --> B
     A --> C
     A --> D
     C --> F
@@ -63,11 +61,6 @@ graph TD;
       <Table.Td>@suspensive/react</Table.Td>
       <Table.Td>Core suspense components</Table.Td>
       <Table.Td>ErrorBoundary, Suspense, Delay, ErrorBoundaryGroup</Table.Td>
-    </Table.Tr>
-    <Table.Tr>
-      <Table.Td>@suspensive/react-dom</Table.Td>
-      <Table.Td>DOM-specific components</Table.Td>
-      <Table.Td>InView</Table.Td>
     </Table.Tr>
     <Table.Tr>
       <Table.Td>@suspensive/react-query</Table.Td>
@@ -111,9 +104,6 @@ H[Suspense];
 I[ErrorBoundary];
 J[Delay];
 K[ErrorBoundaryGroup];
-end
-subgraph DD [Dom Components @suspensive/react-dom]
-L[InView];
 end
 
 C --> H;

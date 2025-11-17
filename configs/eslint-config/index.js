@@ -11,7 +11,7 @@ import vitest from '@vitest/eslint-plugin'
 import jestDom from 'eslint-plugin-jest-dom'
 import * as mdx from 'eslint-plugin-mdx'
 
-const ignores = ['**/.next/**', '**/build/**', '**/coverage/**', '**/dist/**']
+const ignores = ['**/.next/**', '**/build/**', '**/coverage/**', '**/dist/**', 'next-env.d.ts']
 
 export const suspensiveTypeScriptConfig = defineConfig([
   {

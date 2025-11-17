@@ -10,8 +10,8 @@ import { delay } from '~/utils'
 const searchParamsSchema = z.object({
   id: z.coerce
     .number({
-      invalid_type_error: 'searchParam: id type should be number',
-      required_error: 'searchParam: id is required',
+      error: (issue) =>
+        issue.input === undefined ? 'searchParam: id is required' : 'searchParam: id type should be number',
     })
     .int('searchParam: id type should be integer')
     .min(1, 'searchParam: id type should be number bigger than 1'),
@@ -19,15 +19,14 @@ const searchParamsSchema = z.object({
 export default ErrorBoundary.with(
   {
     shouldCatch: ZodError,
-    fallback: ({ error }) =>
-      error instanceof ZodError ? (
-        <div>
-          zod error:
-          {error.errors.map((error) => (
-            <p key={error.code}>{error.message}</p>
-          ))}
-        </div>
-      ) : null,
+    fallback: ({ error }) => (
+      <div>
+        zod error:
+        {error.issues.map((issue) => (
+          <p key={issue.code}>{issue.message}</p>
+        ))}
+      </div>
+    ),
   },
   Suspense.with({ fallback: <Spinner /> }, () => {
     const searchParams = useSearchParams()

@@ -2,7 +2,7 @@ import {
   Hydrate,
   type HydrateProps,
   type OmitKeyof,
-  type QueryClient,
+  QueryClient,
   type QueryOptions,
   type WithRequired,
   dehydrate,
@@ -77,14 +77,14 @@ import { ClientOnly } from './components/ClientOnly'
 export async function QueriesHydration({
   queries,
   children,
-  queryClient,
+  queryClient = new QueryClient(),
   skipSsrOnError = true,
   ...props
 }: {
   /**
    * The QueryClient instance to use for fetching queries.
    */
-  queryClient: QueryClient
+  queryClient?: QueryClient
   /**
    * An array of query options to be fetched on the server. Each query must include a `queryKey`.
    */

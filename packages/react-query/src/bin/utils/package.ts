@@ -39,7 +39,7 @@ export function getIndexFileContent(...paths: string[]): string {
   const basePath = path.resolve(...paths, 'dist').replace(/src/, '')
 
   try {
-    return fs.readFileSync(path.join(basePath, 'index.js'), 'utf-8')
+    return fs.readFileSync(path.join(basePath, 'index.mjs'), 'utf-8')
   } catch {
     throw new Error(`no such file or directory, open '${paths}'`)
   }

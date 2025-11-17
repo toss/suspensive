@@ -28,7 +28,7 @@ export const metadata = {
   description: 'All in one for React Suspense',
   metadataBase: new URL('https://suspensive.org'),
   openGraph: { images: '/img/banner.png' },
-  icons: '/img/favicon.ico',
+  icons: '/favicon.ico',
 } satisfies Metadata
 
 export default async function RootLayout({

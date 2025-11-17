@@ -292,32 +292,6 @@ const Page = () => (
 )
 ```
 
-# !!steps Sometimes, instead of the default fallback, you want to give a FadeIn-like effect.
-
-Then, how about using `FadeIn`?
-
-```jsx ! Page.jsx
-import { Suspense, DefaultProps, DefaultPropsProvider } from '@suspensive/react'
-import { SuspenseQuery } from '@suspensive/react-query'
-import { FadeIn } from '@suspensive/react-dom'
-
-const defaultProps = new DefaultProps({
-  Suspense: {
-    fallback: <FadeIn>{(fadeIn) => <Spinner {...fadeIn} />}</FadeIn>,
-  },
-})
-
-const Page = () => (
-  <DefaultPropsProvider defaultProps={defaultProps}>
-    <Suspense clientOnly>
-      <SuspenseQuery {...notNeedSEOQueryOptions()}>
-        {({ data }) => <NotNeedSEO {...data} />}
-      </SuspenseQuery>
-    </Suspense>
-  </DefaultPropsProvider>
-)
-```
-
 # !!steps Of course, if you want to override the default fallback, just add it.
 
 The designer asked me to support `Skeleton` instead of the default `Spinner` in this part~! Just add it.
@@ -325,11 +299,10 @@ The designer asked me to support `Skeleton` instead of the default `Spinner` in 
 ```jsx ! Page.jsx
 import { Suspense, DefaultProps, DefaultPropsProvider } from '@suspensive/react'
 import { SuspenseQuery } from '@suspensive/react-query'
-import { FadeIn } from '@suspensive/react-dom'
 
 const defaultProps = new DefaultProps({
   Suspense: {
-    fallback: <FadeIn>{(fadeIn) => <Spinner {...fadeIn} />}</FadeIn>,
+    fallback: <Spinner />,
   },
 })
 

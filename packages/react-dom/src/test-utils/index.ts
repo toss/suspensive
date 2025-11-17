@@ -50,32 +50,42 @@ afterEach(() => {
 }
 
 function setupIntersectionMocking(mockFn: typeof vi.fn) {
-  global.IntersectionObserver = mockFn((cb, options = {}) => {
-    const item = {
-      callback: cb,
-      elements: new Set<Element>(),
-      created: Date.now(),
-    }
-    const instance: IntersectionObserver = {
-      thresholds: Array.isArray(options.threshold) ? options.threshold : [options.threshold ?? 0],
-      root: options.root ?? null,
-      rootMargin: options.rootMargin ?? '',
-      observe: mockFn((element: Element) => {
+  class MockIntersectionObserver {
+    thresholds: number[] | readonly number[]
+    root: Element | Document | null
+    rootMargin: string
+    observe: ReturnType<typeof mockFn>
+    unobserve: ReturnType<typeof mockFn>
+    disconnect: ReturnType<typeof mockFn>
+    takeRecords: ReturnType<typeof mockFn>
+
+    constructor(cb: IntersectionObserverCallback, options: IntersectionObserverInit = {}) {
+      const item = {
+        callback: cb,
+        elements: new Set<Element>(),
+        created: Date.now(),
+      }
+      const instance = this as unknown as IntersectionObserver
+
+      this.thresholds = Array.isArray(options.threshold) ? options.threshold : [options.threshold ?? 0]
+      this.root = options.root ?? null
+      this.rootMargin = options.rootMargin ?? ''
+      this.observe = mockFn((element: Element) => {
         item.elements.add(element)
-      }),
-      unobserve: mockFn((element: Element) => {
+      })
+      this.unobserve = mockFn((element: Element) => {
         item.elements.delete(element)
-      }),
-      disconnect: mockFn(() => {
+      })
+      this.disconnect = mockFn(() => {
         observers.delete(instance)
-      }),
-      takeRecords: mockFn(),
+      })
+      this.takeRecords = mockFn()
+
+      observers.set(instance, item)
     }
+  }
 
-    observers.set(instance, item)
-
-    return instance
-  })
+  global.IntersectionObserver = MockIntersectionObserver as typeof IntersectionObserver
 
   isMocking = true
 }
