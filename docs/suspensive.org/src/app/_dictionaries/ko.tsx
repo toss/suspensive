@@ -1,4 +1,4 @@
-import { Link } from 'nextra-theme-docs'
+import Link from 'next/link'
 import type En from './en'
 
 export default {

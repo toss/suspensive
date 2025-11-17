@@ -1,6 +1,8 @@
+'use client'
+
 import { AnimatePresence, motion } from 'motion/react'
 import Image from 'next/image'
-import { useTheme } from 'nextra-theme-docs'
+import { useTheme } from 'next-themes'
 import { useState } from 'react'
 import checkSVG from '../../public/img/icons/check.svg'
 import checkBlackSVG from '../../public/img/icons/check_black.svg'

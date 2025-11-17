@@ -1,14 +1,19 @@
 'use client'
 
-import type { $NextraMetadata, Heading } from 'nextra'
 import { type ReactNode } from 'react'
 import { FadeIn } from './FadeIn'
 import { useMDXComponents as getMDXComponents } from '@/mdx-components'
 
+export type TOCItem = {
+  depth: number
+  value: string
+  id: string
+}
+
 type MDXContentProps = {
-  toc: Array<Heading>
+  toc: TOCItem[]
   sourceCode: string
-  metadata: $NextraMetadata
+  metadata: any
   isIndexPage: boolean
   mdxPath: string[]
   children: ReactNode
