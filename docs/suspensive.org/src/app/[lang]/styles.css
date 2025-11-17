@@ -35,27 +35,27 @@ body {
 }
 
 .prose h1 {
-  @apply text-4xl font-bold text-gray-900 dark:text-gray-100 mt-8 mb-4;
+  @apply mt-8 mb-4 text-4xl font-bold text-gray-900 dark:text-gray-100;
 }
 
 .prose h2 {
-  @apply text-3xl font-bold text-gray-900 dark:text-gray-100 mt-8 mb-4;
+  @apply mt-8 mb-4 text-3xl font-bold text-gray-900 dark:text-gray-100;
 }
 
 .prose h3 {
-  @apply text-2xl font-semibold text-gray-900 dark:text-gray-100 mt-6 mb-3;
+  @apply mt-6 mb-3 text-2xl font-semibold text-gray-900 dark:text-gray-100;
 }
 
 .prose h4 {
-  @apply text-xl font-semibold text-gray-900 dark:text-gray-100 mt-4 mb-2;
+  @apply mt-4 mb-2 text-xl font-semibold text-gray-900 dark:text-gray-100;
 }
 
 .prose h5 {
-  @apply text-lg font-semibold text-gray-900 dark:text-gray-100 mt-4 mb-2;
+  @apply mt-4 mb-2 text-lg font-semibold text-gray-900 dark:text-gray-100;
 }
 
 .prose h6 {
-  @apply text-base font-semibold text-gray-900 dark:text-gray-100 mt-4 mb-2;
+  @apply mt-4 mb-2 text-base font-semibold text-gray-900 dark:text-gray-100;
 }
 
 .prose p {
@@ -63,7 +63,7 @@ body {
 }
 
 .prose a {
-  @apply text-blue-600 hover:text-blue-500 dark:text-blue-400 dark:hover:text-blue-300 underline;
+  @apply text-blue-600 underline hover:text-blue-500 dark:text-blue-400 dark:hover:text-blue-300;
 }
 
 .prose ul {
@@ -79,15 +79,15 @@ body {
 }
 
 .prose blockquote {
-  @apply border-l-4 border-gray-300 dark:border-gray-700 pl-4 italic my-4;
+  @apply my-4 border-l-4 border-gray-300 pl-4 italic dark:border-gray-700;
 }
 
 .prose pre {
-  @apply rounded-lg bg-gray-900 dark:bg-gray-950 p-4 overflow-x-auto my-6;
+  @apply my-6 overflow-x-auto rounded-lg bg-gray-900 p-4 dark:bg-gray-950;
 }
 
 .prose code {
-  @apply rounded bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 text-sm font-mono;
+  @apply rounded bg-gray-100 px-1.5 py-0.5 font-mono text-sm dark:bg-gray-800;
 }
 
 .prose pre code {
@@ -95,11 +95,11 @@ body {
 }
 
 .prose img {
-  @apply rounded-lg my-6;
+  @apply my-6 rounded-lg;
 }
 
 .prose hr {
-  @apply border-gray-200 dark:border-gray-800 my-8;
+  @apply my-8 border-gray-200 dark:border-gray-800;
 }
 
 /* Animation utilities */
