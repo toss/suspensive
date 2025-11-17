@@ -1,4 +1,4 @@
-import { queryOptions } from '@tanstack/react-query'
+import { QueryClient, queryOptions } from '@tanstack/react-query'
 import { describe, expectTypeOf, it } from 'vitest'
 import { QueriesHydration } from './QueriesHydration'
 import { queryFn, queryKey } from './test-utils'
@@ -46,6 +46,22 @@ describe('<QueriesHydration/>', () => {
       await QueriesHydration({
         queries: [options1],
         skipSsrOnError: { fallback: <div>Loading...</div> },
+        children: <></>,
+      }))()
+
+    // Should accept undefined queryClient prop
+    void (async () =>
+      await QueriesHydration({
+        queries: [options1],
+        queryClient: undefined,
+        children: <></>,
+      }))()
+
+    // Should accept QueryClient instance for queryClient prop
+    void (async () =>
+      await QueriesHydration({
+        queries: [options1],
+        queryClient: new QueryClient(),
         children: <></>,
       }))()
 
