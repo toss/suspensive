@@ -1,0 +1,51 @@
+{
+  "title": "Documentation",
+  "pages": [
+    "introduction",
+    "---Packages",
+    "react",
+    "react-query",
+    "jotai",
+    "codemods",
+    "---More",
+    "migration",
+    "changelogs",
+    "contributors",
+    "links"
+  ],
+  "---Packages": {
+    "type": "separator",
+    "title": "Packages"
+  },
+  "---More": {
+    "type": "separator",
+    "title": "More"
+  },
+  "introduction": {
+    "title": "What is Suspensive?"
+  },
+  "react": {
+    "title": "@suspensive/react"
+  },
+  "react-query": {
+    "title": "@suspensive/react-query"
+  },
+  "jotai": {
+    "title": "@suspensive/jotai"
+  },
+  "codemods": {
+    "title": "@suspensive/codemods"
+  },
+  "migration": {
+    "title": "Migration guide"
+  },
+  "changelogs": {
+    "title": "Changelogs"
+  },
+  "contributors": {
+    "title": "Contributors"
+  },
+  "links": {
+    "title": "Related Links"
+  }
+}
