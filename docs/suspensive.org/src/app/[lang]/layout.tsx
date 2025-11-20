@@ -56,9 +56,9 @@ export default async function RootLayout({
         >
           <DocsLayout
             tree={source.pageTree}
+            githubUrl="https://github.com/toss/suspensive"
             nav={{
               title: <Logo />,
-              githubUrl: 'https://github.com/toss/suspensive',
             }}
             links={[
               {

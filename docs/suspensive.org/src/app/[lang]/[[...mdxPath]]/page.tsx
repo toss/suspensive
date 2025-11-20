@@ -20,13 +20,13 @@ export default async function Page(props: PageProps) {
 
   if (!page) notFound()
 
-  const MDX = page.data.exports.default
+  const pageData: any = page.data
 
   return (
     <DocsPage
-      toc={page.data.toc}
-      full={page.data.full}
-      lastUpdate={page.data.lastModified}
+      toc={pageData.toc}
+      full={pageData.full}
+      lastUpdate={pageData.lastModified}
       editOnGithub={{
         owner: 'toss',
         repo: 'suspensive',
@@ -34,8 +34,8 @@ export default async function Page(props: PageProps) {
       }}
     >
       <DocsBody>
-        <h1>{page.data.title}</h1>
-        <MDX />
+        <h1>{pageData.title}</h1>
+        <pageData.body />
       </DocsBody>
     </DocsPage>
   )
