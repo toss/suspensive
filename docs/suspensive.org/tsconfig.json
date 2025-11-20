@@ -16,7 +16,8 @@
     "module": "esnext",
     "resolveJsonModule": true,
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["src/*"],
+      "@/content/*": ["src/content/*"]
     },
     "plugins": [{ "name": "next" }],
     "strictNullChecks": true

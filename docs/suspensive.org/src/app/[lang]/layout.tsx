@@ -3,21 +3,16 @@ import { GoogleAnalytics, GoogleTagManager } from '@next/third-parties/google'
 import { ClientOnly } from '@suspensive/react'
 import type { Metadata } from 'next'
 import Script from 'next/script'
-import { Head, Search } from 'nextra/components'
-import { getPageMap } from 'nextra/page-map'
-import {
-  Footer,
-  LastUpdated,
-  Layout,
-  LocaleSwitch,
-  Navbar,
-} from 'nextra-theme-docs'
 import type { ReactNode } from 'react'
+import { RootProvider } from 'fumadocs-ui/provider'
+import { DocsLayout } from 'fumadocs-ui/layouts/docs'
+import { getSource } from '@/lib/source'
 import { getDictionary, getDirection } from '../_dictionaries/get-dictionary'
 import './styles.css'
 import { Logo } from './_components/Logo'
 import { SandPackCSS } from '@/components/Sandpack/SandPackCSS'
 import { STORAGE_KEYS } from '@/constants'
+import type { Locale } from '@/i18n'
 
 export const metadata = {
   title: {
@@ -36,62 +31,46 @@ export default async function RootLayout({
   params,
 }: {
   children: ReactNode
-  params: Promise<{ lang: 'en' | 'ko' }>
+  params: Promise<{ lang: Locale }>
 }) {
   const { lang } = await params
   const dictionary = await getDictionary(lang)
-  const pageMap = await getPageMap(lang)
+  const source = getSource(lang)
 
   return (
     <html lang={lang} dir={getDirection(lang)} suppressHydrationWarning>
-      <Head backgroundColor={{ dark: 'rgb(0,0,0)' }}>
+      <head>
         <ClientOnly>
           <SandPackCSS />
         </ClientOnly>
-      </Head>
+      </head>
       <body>
-        <Layout
-          darkMode
-          search={<Search placeholder={dictionary.search.placeholder} />}
-          navbar={
-            <Navbar
-              logo={<Logo />}
-              projectLink="https://github.com/toss/suspensive"
-              chatLink="https://discord.gg/RFcR9WWmCH"
-            >
-              <LocaleSwitch />
-            </Navbar>
-          }
-          footer={
-            <Footer>
-              MIT {new Date().getFullYear()} © Viva Republica, Inc.
-            </Footer>
-          }
-          docsRepositoryBase="https://github.com/toss/suspensive/tree/main/docs/suspensive.org"
-          i18n={[
-            { locale: 'en', name: 'English' },
-            { locale: 'ko', name: '한국어' },
-          ]}
-          sidebar={{
-            defaultMenuCollapseLevel: 2,
-            autoCollapse: true,
-            toggleButton: true,
+        <RootProvider
+          search={{
+            enabled: true,
           }}
-          toc={{
-            ...dictionary.toc,
-            float: true,
-          }}
-          editLink={dictionary.editPage}
-          pageMap={pageMap}
-          nextThemes={{
-            defaultTheme: 'system',
+          theme={{
+            enabled: true,
             storageKey: STORAGE_KEYS.THEME,
           }}
-          feedback={{ content: '' }}
-          lastUpdated={<LastUpdated>{dictionary.lastUpdated}</LastUpdated>}
         >
-          {children}
-        </Layout>
+          <DocsLayout
+            tree={source.pageTree}
+            nav={{
+              title: <Logo />,
+              githubUrl: 'https://github.com/toss/suspensive',
+            }}
+            links={[
+              {
+                text: 'Discord',
+                url: 'https://discord.gg/RFcR9WWmCH',
+              },
+            ]}
+            i18n
+          >
+            {children}
+          </DocsLayout>
+        </RootProvider>
         <GoogleTagManager gtmId="G-NYQZGKRL0Y" />
         <GoogleAnalytics gaId="G-NYQZGKRL0Y" />
         <ClientOnly>
