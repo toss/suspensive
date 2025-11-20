@@ -1,5 +1,5 @@
 @import 'tailwindcss';
-@import 'nextra-theme-docs/style.css';
+@import 'fumadocs-ui/style.css';
 
 .scrollbar-none {
   -ms-overflow-style: none; /* IE and Edge */
@@ -44,20 +44,4 @@ pre {
 
 .a {
   @apply text-blue-400 hover:text-blue-300;
-}
-
-.nextra-nav-container {
-  @apply border-gray-200 bg-white;
-}
-
-.nextra-sidebar {
-  @apply bg-white;
-}
-
-.dark .nextra-nav-container {
-  @apply border-gray-700 bg-gray-900;
-}
-
-.dark .nextra-sidebar {
-  @apply bg-black;
 }

@@ -10,7 +10,6 @@ const chConfig = {
 }
 
 export default defineConfig({
-  generateManifest: true,
   lastModifiedTime: 'git',
   mdxOptions: {
     remarkPlugins: [[remarkCodeHike, chConfig], remarkSandpack],
@@ -20,10 +19,4 @@ export default defineConfig({
 
 export const docs = defineDocs({
   dir: 'src/content',
-  // Disable image optimization to avoid fetching external images during build
-  remark: {
-    images: {
-      enabled: false,
-    },
-  },
 })

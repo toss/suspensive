@@ -8,7 +8,6 @@ var chConfig = {
   }
 };
 var source_config_default = defineConfig({
-  generateManifest: true,
   lastModifiedTime: "git",
   mdxOptions: {
     remarkPlugins: [[remarkCodeHike, chConfig], remarkSandpack],
@@ -16,13 +15,7 @@ var source_config_default = defineConfig({
   }
 });
 var docs = defineDocs({
-  dir: "src/content",
-  // Disable image optimization to avoid fetching external images during build
-  remark: {
-    images: {
-      enabled: false
-    }
-  }
+  dir: "src/content"
 });
 export {
   source_config_default as default,

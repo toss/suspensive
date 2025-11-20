@@ -1,4 +1,4 @@
-import { getSource, enSource, koSource } from '@/lib/source'
+import { getSource, source } from '@/lib/source'
 import type { Locale } from '@/i18n'
 import { DocsPage, DocsBody } from 'fumadocs-ui/page'
 import { notFound } from 'next/navigation'
@@ -15,12 +15,12 @@ type PageProps = Readonly<{
 
 export default async function Page(props: PageProps) {
   const params = await props.params
-  const source = getSource(params.lang)
-  const page = source.getPage(params.mdxPath)
+  const pageSource = getSource(params.lang)
+  const page = pageSource.getPage(params.mdxPath)
 
   if (!page) notFound()
 
-  const MDX = page.data.body
+  const MDX = page.data.exports.default
 
   return (
     <DocsPage
@@ -42,23 +42,24 @@ export default async function Page(props: PageProps) {
 }
 
 export async function generateStaticParams(): Promise<PageParams[]> {
-  const enPages = enSource.getPages().map((page) => ({
-    lang: 'en' as const,
-    mdxPath: page.slugs,
-  }))
+  const pages = source.getPages().map((page) => {
+    const pathParts = page.url.split('/')
+    const lang = pathParts[1] as Locale // url starts with /docs
+    const mdxPath = pathParts.slice(2)
 
-  const koPages = koSource.getPages().map((page) => ({
-    lang: 'ko' as const,
-    mdxPath: page.slugs,
-  }))
+    return {
+      lang,
+      mdxPath: mdxPath.length > 0 ? mdxPath : undefined,
+    }
+  })
 
-  return [...enPages, ...koPages]
+  return pages
 }
 
 export async function generateMetadata(props: PageProps): Promise<Metadata> {
   const params = await props.params
-  const source = getSource(params.lang)
-  const page = source.getPage(params.mdxPath)
+  const pageSource = getSource(params.lang)
+  const page = pageSource.getPage(params.mdxPath)
 
   if (!page) notFound()
 
