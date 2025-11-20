@@ -16,14 +16,14 @@ export default defineConfig({
     remarkPlugins: [[remarkCodeHike, chConfig], remarkSandpack],
     recmaPlugins: [[recmaCodeHike, chConfig]],
   },
-  docs: [
-    {
-      dir: 'src/content/en',
-      output: 'src/content/en/.map.ts',
+})
+
+export const docs = defineDocs({
+  dir: 'src/content',
+  // Disable image optimization to avoid fetching external images during build
+  remark: {
+    images: {
+      enabled: false,
     },
-    {
-      dir: 'src/content/ko',
-      output: 'src/content/ko/.map.ts',
-    },
-  ],
+  },
 })

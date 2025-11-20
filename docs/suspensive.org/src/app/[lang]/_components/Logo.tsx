@@ -2,7 +2,7 @@
 
 import { useIsClient } from '@suspensive/react'
 import { motion } from 'motion/react'
-import { useTheme } from 'nextra-theme-docs'
+import { useTheme } from 'next-themes'
 
 export const Logo = () => {
   const { resolvedTheme } = useTheme()

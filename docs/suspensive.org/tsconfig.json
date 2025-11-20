@@ -17,7 +17,8 @@
     "resolveJsonModule": true,
     "paths": {
       "@/*": ["src/*"],
-      "@/content/*": ["src/content/*"]
+      "@/content/*": ["src/content/*"],
+      "@/.source": [".source"]
     },
     "plugins": [{ "name": "next" }],
     "strictNullChecks": true

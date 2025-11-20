@@ -1,26 +1,17 @@
-import { map as enMap } from '@/content/en/.map'
-import { map as koMap } from '@/content/ko/.map'
-import { createMDXSource, defaultSchemas } from 'fumadocs-mdx'
+import { docs } from '@/.source'
 import { loader } from 'fumadocs-core/source'
+import { icons } from 'lucide-react'
+import { createElement } from 'react'
 
-export const enSource = loader({
+export const source = loader({
   baseUrl: '/docs',
-  source: createMDXSource(enMap, {
-    schema: {
-      frontmatter: defaultSchemas.frontmatter,
-    },
-  }),
-})
-
-export const koSource = loader({
-  baseUrl: '/docs',
-  source: createMDXSource(koMap, {
-    schema: {
-      frontmatter: defaultSchemas.frontmatter,
-    },
-  }),
+  icon(icon) {
+    if (icon && icon in icons)
+      return createElement(icons[icon as keyof typeof icons])
+  },
+  source: docs,
 })
 
 export function getSource(lang: string) {
-  return lang === 'ko' ? koSource : enSource
+  return source
 }
