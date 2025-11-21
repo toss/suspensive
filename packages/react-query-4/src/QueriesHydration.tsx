@@ -124,10 +124,17 @@ export async function QueriesHydration({
     const fetchPromise = Promise.all(queries.map((query) => queryClient.ensureQueryData(query)))
 
     if (timeout !== undefined) {
+      let timeoutId: ReturnType<typeof setTimeout> | undefined
       const timeoutPromise = new Promise<never>((_, reject) => {
-        setTimeout(() => reject(new Error(`Query timeout after ${timeout}ms`)), timeout)
+        timeoutId = setTimeout(() => reject(new Error(`Query timeout after ${timeout}ms`)), timeout)
       })
-      await Promise.race([fetchPromise, timeoutPromise])
+      try {
+        await Promise.race([fetchPromise, timeoutPromise])
+      } finally {
+        if (timeoutId !== undefined) {
+          clearTimeout(timeoutId)
+        }
+      }
     } else {
       await fetchPromise
     }
