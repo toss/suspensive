@@ -1,19 +1,19 @@
-import { Callout as NextraCallout } from 'nextra/components'
+import { Callout as FumadocsCallout } from 'fumadocs-ui/components/callout'
 import type { ComponentPropsWithoutRef } from 'react'
 
 type CalloutProps = Omit<
-  ComponentPropsWithoutRef<typeof NextraCallout>,
+  ComponentPropsWithoutRef<typeof FumadocsCallout>,
   'type'
 > & {
   type:
     | 'deprecated'
     | 'experimental'
-    | ComponentPropsWithoutRef<typeof NextraCallout>['type']
+    | ComponentPropsWithoutRef<typeof FumadocsCallout>['type']
 }
 
 export const Callout = ({ type, ...props }: CalloutProps) => {
   const definedType =
     type === 'deprecated' ? 'error' : type === 'experimental' ? 'warning' : type
 
-  return <NextraCallout {...props} type={definedType} />
+  return <FumadocsCallout {...props} type={definedType} />
 }

@@ -4,7 +4,7 @@ import { ClientOnly, Delay } from '@suspensive/react'
 import { ArrowRight } from 'lucide-react'
 import { motion } from 'motion/react'
 import Link from 'next/link'
-import { useTheme } from 'nextra-theme-docs'
+import { useTheme } from 'next-themes'
 import { type ReactNode, useEffect, useRef } from 'react'
 import { BorderTrail } from './BorderTrail'
 import { GlowEffect } from './GlowEffect'
@@ -14,7 +14,7 @@ import { NpmInstallCopyButton } from './NpmInstallCopyButton'
 import { Spotlight } from './Spotlight'
 import { Tilt } from './Tilt'
 
-const CodeBlockClassName = 'nextra-code'
+const CodeBlockClassName = 'fumadocs-code'
 
 const escapeHtml = (text: string) =>
   text.replace(/</g, '&lt;').replace(/>/g, '&gt;')

@@ -1,6 +1,6 @@
-import { recmaCodeHike, remarkCodeHike } from 'codehike/mdx'
+import { defineConfig, defineDocs } from 'fumadocs-mdx/config'
+import { remarkCodeHike, recmaCodeHike } from 'codehike/mdx'
 import { remarkSandpack } from 'remark-sandpack'
-import { createMDX } from 'fumadocs-mdx/next'
 
 /** @type {import('codehike/mdx').CodeHikeConfig} */
 const chConfig = {
@@ -9,17 +9,14 @@ const chConfig = {
   },
 }
 
-const withMDX = createMDX({
+export default defineConfig({
+  lastModifiedTime: 'git',
   mdxOptions: {
     remarkPlugins: [[remarkCodeHike, chConfig], remarkSandpack],
     recmaPlugins: [[recmaCodeHike, chConfig]],
-    rehypePlugins: [],
   },
 })
 
-/**
- * @type {import('next').NextConfig}
- */
-export default withMDX({
-  reactStrictMode: true,
+export const docs = defineDocs({
+  dir: 'src/content',
 })
