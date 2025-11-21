@@ -122,7 +122,15 @@ export async function QueriesHydration({
     if (timeout !== undefined) {
       let timeoutId: ReturnType<typeof setTimeout> | undefined
       const timeoutPromise = new Promise<never>((_, reject) => {
-        timeoutId = setTimeout(() => reject(new Error(`Query timeout after ${timeout}ms`)), timeout)
+        timeoutId = setTimeout(
+          () =>
+            reject(
+              new Error(
+                `Queries timed out after ${timeout}ms. ${queries.length} ${queries.length === 1 ? 'query' : 'queries'} failed to complete in time.`
+              )
+            ),
+          timeout
+        )
       })
       try {
         await Promise.race([fetchPromise, timeoutPromise])
