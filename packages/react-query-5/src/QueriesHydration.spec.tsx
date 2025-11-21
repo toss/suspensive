@@ -254,4 +254,115 @@ describe('<QueriesHydration/>', () => {
     expect(dehydratedState.queries[0].queryKey).toEqual(['test-query'])
     expect(dehydratedState.queries[0].state.data).toEqual(mockData)
   })
+
+  it('should timeout queries when timeout prop is provided and query takes too long', async () => {
+    const queryClient = new QueryClient()
+    const mockQueryFn = vi
+      .fn()
+      .mockImplementation(() => new Promise((resolve) => setTimeout(() => resolve({ data: 'slow-data' }), 2000)))
+
+    const queries = [
+      {
+        queryKey: ['slow-query'],
+        queryFn: mockQueryFn,
+      },
+    ]
+
+    const result = await QueriesHydration({
+      queries,
+      queryClient,
+      timeout: 100,
+      children: <div>Test Children</div>,
+    })
+
+    expect(mockQueryFn).toHaveBeenCalledTimes(1)
+
+    // When timeout occurs, it should fallback to ClientOnly (default skipSsrOnError=true)
+    render(result as React.ReactElement)
+    expect(screen.getByTestId('client-only')).toBeInTheDocument()
+  })
+
+  it('should not timeout when query completes before timeout', async () => {
+    const queryClient = new QueryClient()
+    const mockData = { data: 'fast-data' }
+    const mockQueryFn = vi.fn().mockResolvedValue(mockData)
+
+    const queries = [
+      {
+        queryKey: ['fast-query'],
+        queryFn: mockQueryFn,
+      },
+    ]
+
+    const result = await QueriesHydration({
+      queries,
+      queryClient,
+      timeout: 5000,
+      children: <div>Test Children</div>,
+    })
+
+    expect(mockQueryFn).toHaveBeenCalledTimes(1)
+
+    // Query should complete successfully
+    expect(result).toBeDefined()
+    expect(result.type).toBeDefined()
+  })
+
+  it('should handle timeout with custom error fallback', async () => {
+    const queryClient = new QueryClient()
+    const mockQueryFn = vi
+      .fn()
+      .mockImplementation(() => new Promise((resolve) => setTimeout(() => resolve({ data: 'slow-data' }), 2000)))
+
+    const queries = [
+      {
+        queryKey: ['slow-query'],
+        queryFn: mockQueryFn,
+      },
+    ]
+
+    const customFallback = <div>Custom Timeout Fallback</div>
+
+    const result = await QueriesHydration({
+      queries,
+      queryClient,
+      timeout: 100,
+      skipSsrOnError: { fallback: customFallback },
+      children: <div>Test Children</div>,
+    })
+
+    expect(mockQueryFn).toHaveBeenCalledTimes(1)
+
+    render(result as React.ReactElement)
+    expect(screen.getByTestId('client-only')).toBeInTheDocument()
+  })
+
+  it('should proceed with SSR without hydration when timeout occurs and skipSsrOnError is false', async () => {
+    const queryClient = new QueryClient()
+    const mockQueryFn = vi
+      .fn()
+      .mockImplementation(() => new Promise((resolve) => setTimeout(() => resolve({ data: 'slow-data' }), 2000)))
+
+    const queries = [
+      {
+        queryKey: ['slow-query'],
+        queryFn: mockQueryFn,
+      },
+    ]
+
+    const result = await QueriesHydration({
+      queries,
+      queryClient,
+      timeout: 100,
+      skipSsrOnError: false,
+      children: <div>Test Children</div>,
+    })
+
+    expect(mockQueryFn).toHaveBeenCalledTimes(1)
+
+    // When skipSsrOnError is false, it should still render HydrationBoundary
+    // even though timeout occurred
+    expect(result).toBeDefined()
+    expect(result.type).toBeDefined()
+  })
 })

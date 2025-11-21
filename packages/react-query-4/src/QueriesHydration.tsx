@@ -72,6 +72,19 @@ import { ClientOnly } from './components/ClientOnly'
  * </Suspense>
  * ```
  *
+ * @example
+ * ```tsx
+ * // With timeout
+ * <Suspense fallback={<div>Loading user...</div>}>
+ *   <QueriesHydration
+ *     queries={[userQueryOptions(userId)]}
+ *     timeout={5000}
+ *   >
+ *     <UserProfile />
+ *   </QueriesHydration>
+ * </Suspense>
+ * ```
+ *
  * @see {@link https://suspensive.org/docs/react-query/QueriesHydration Documentation}
  */
 export async function QueriesHydration({
@@ -79,6 +92,7 @@ export async function QueriesHydration({
   children,
   queryClient = new QueryClient(),
   skipSsrOnError = true,
+  timeout,
   ...props
 }: {
   /**
@@ -100,9 +114,23 @@ export async function QueriesHydration({
     | {
         fallback: ReactNode
       }
+  /**
+   * Maximum time in milliseconds to wait for queries to complete.
+   * If queries take longer than this, they will timeout and be handled according to `skipSsrOnError`.
+   */
+  timeout?: number
 } & OmitKeyof<HydrateProps, 'state'>) {
   try {
-    await Promise.all(queries.map((query) => queryClient.ensureQueryData(query)))
+    const fetchPromise = Promise.all(queries.map((query) => queryClient.ensureQueryData(query)))
+
+    if (timeout !== undefined) {
+      const timeoutPromise = new Promise<never>((_, reject) => {
+        setTimeout(() => reject(new Error(`Query timeout after ${timeout}ms`)), timeout)
+      })
+      await Promise.race([fetchPromise, timeoutPromise])
+    } else {
+      await fetchPromise
+    }
   } catch {
     if (skipSsrOnError) {
       return (
