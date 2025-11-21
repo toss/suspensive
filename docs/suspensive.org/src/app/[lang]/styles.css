@@ -1,5 +1,4 @@
 @import 'tailwindcss';
-@import 'nextra-theme-docs/style.css';
 
 .scrollbar-none {
   -ms-overflow-style: none; /* IE and Edge */
@@ -30,34 +29,91 @@ body {
   @apply bg-black text-white transition-colors;
 }
 
-pre {
-  @apply rounded-lg bg-zinc-900;
+/* Prose styles for MDX content */
+.prose {
+  @apply max-w-none text-gray-700 dark:text-gray-300;
 }
 
-.dark pre {
-  @apply border-gray-900 bg-inherit;
+.prose h1 {
+  @apply mt-8 mb-4 text-4xl font-bold text-gray-900 dark:text-gray-100;
 }
 
-.dark code {
-  @apply border-gray-900;
+.prose h2 {
+  @apply mt-8 mb-4 text-3xl font-bold text-gray-900 dark:text-gray-100;
 }
 
-.a {
-  @apply text-blue-400 hover:text-blue-300;
+.prose h3 {
+  @apply mt-6 mb-3 text-2xl font-semibold text-gray-900 dark:text-gray-100;
 }
 
-.nextra-nav-container {
-  @apply border-gray-200 bg-white;
+.prose h4 {
+  @apply mt-4 mb-2 text-xl font-semibold text-gray-900 dark:text-gray-100;
 }
 
-.nextra-sidebar {
-  @apply bg-white;
+.prose h5 {
+  @apply mt-4 mb-2 text-lg font-semibold text-gray-900 dark:text-gray-100;
 }
 
-.dark .nextra-nav-container {
-  @apply border-gray-700 bg-gray-900;
+.prose h6 {
+  @apply mt-4 mb-2 text-base font-semibold text-gray-900 dark:text-gray-100;
 }
 
-.dark .nextra-sidebar {
-  @apply bg-black;
+.prose p {
+  @apply my-4 leading-7;
+}
+
+.prose a {
+  @apply text-blue-600 underline hover:text-blue-500 dark:text-blue-400 dark:hover:text-blue-300;
+}
+
+.prose ul {
+  @apply my-4 list-disc pl-6;
+}
+
+.prose ol {
+  @apply my-4 list-decimal pl-6;
+}
+
+.prose li {
+  @apply my-2;
+}
+
+.prose blockquote {
+  @apply my-4 border-l-4 border-gray-300 pl-4 italic dark:border-gray-700;
+}
+
+.prose pre {
+  @apply my-6 overflow-x-auto rounded-lg bg-gray-900 p-4 dark:bg-gray-950;
+}
+
+.prose code {
+  @apply rounded bg-gray-100 px-1.5 py-0.5 font-mono text-sm dark:bg-gray-800;
+}
+
+.prose pre code {
+  @apply bg-transparent p-0;
+}
+
+.prose img {
+  @apply my-6 rounded-lg;
+}
+
+.prose hr {
+  @apply my-8 border-gray-200 dark:border-gray-800;
+}
+
+/* Animation utilities */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.3s ease-out;
 }

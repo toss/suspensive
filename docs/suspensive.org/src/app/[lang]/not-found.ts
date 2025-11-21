@@ -1,1 +1,3 @@
-export { NotFoundPage as default } from 'nextra-theme-docs'
+'use client'
+
+export { default } from 'next/error'

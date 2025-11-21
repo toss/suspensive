@@ -1,4 +1,4 @@
-import { Link } from 'nextra-theme-docs'
+import Link from 'next/link'
 
 export default {
   toc: {

@@ -9,10 +9,10 @@ const dictionaries = {
 } as const satisfies Record<string, () => Promise<{ default: typeof En }>>
 
 export const getDictionary = async (
-  locale: keyof typeof dictionaries
+  locale: keyof typeof dictionaries = 'en'
 ): Promise<typeof En> => (await dictionaries[locale]()).default
 
-export const getDirection = (locale: keyof typeof dictionaries) => {
+export const getDirection = (locale: keyof typeof dictionaries = 'en') => {
   switch (locale) {
     case 'en':
     case 'ko':

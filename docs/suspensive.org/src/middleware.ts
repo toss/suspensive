@@ -1,4 +1,26 @@
-export { middleware } from 'nextra/locales'
+import { type NextRequest, NextResponse } from 'next/server'
+
+const locales = ['en', 'ko']
+const defaultLocale = 'en'
+
+export function middleware(request: NextRequest) {
+  const { pathname } = request.nextUrl
+
+  // Check if the pathname already has a locale
+  const pathnameHasLocale = locales.some(
+    (locale) => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`
+  )
+
+  if (pathnameHasLocale) {
+    return NextResponse.next()
+  }
+
+  // Redirect to default locale if no locale is present
+  const locale = defaultLocale
+  request.nextUrl.pathname = `/${locale}${pathname}`
+
+  return NextResponse.redirect(request.nextUrl)
+}
 
 export const config = {
   matcher: [
