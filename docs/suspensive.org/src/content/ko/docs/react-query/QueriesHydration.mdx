@@ -189,6 +189,43 @@ const Page = async ({ userId }: { userId: number }) => {
 }
 ```
 
+### 타임아웃 구현하기
+
+`QueriesHydration`에 타임아웃을 추가하려면, 지정된 시간 후에 reject되는 타임아웃 쿼리를 `queryOptions`로 구현하면 됩니다:
+
+```tsx /QueriesHydration/
+import { QueriesHydration } from '@suspensive/react-query'
+import { Suspense } from '@suspensive/react'
+import { queryOptions } from '@tanstack/react-query'
+import { userQueryOptions } from './queries'
+import { UserProfile } from './_components'
+
+const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
+
+const timeoutQueryOptions = (ms: number) =>
+  queryOptions({
+    queryKey: ['__timeout__'],
+    queryFn: () => sleep(ms).then(() => Promise.reject(new Error('timeout'))),
+  })
+
+const Page = async ({ userId }: { userId: number }) => {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <QueriesHydration
+        queries={[
+          userQueryOptions(userId),
+          timeoutQueryOptions(5000), // 5초 후 타임아웃
+        ]}
+      >
+        <UserProfile />
+      </QueriesHydration>
+    </Suspense>
+  )
+}
+```
+
+타임아웃 쿼리가 지정된 시간 후에 reject되면, `QueriesHydration`은 `skipSsrOnError` 설정에 따라 에러를 처리하여 클라이언트 사이드 렌더링으로 폴백할 수 있습니다.
+
 ## 동기: 서버 컴포넌트에서 여러 쿼리를 간편하게 프리페칭하기
 
 React Server Components 환경에서는 서버에서 데이터를 미리 불러와 초기 로딩 상태를 제거할 수 있습니다. 하지만 여러 개의 쿼리를 수동으로 prefetch하고 dehydrate하는 작업은 번거롭습니다.
