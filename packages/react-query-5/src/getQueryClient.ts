@@ -11,6 +11,12 @@ let browserQueryClient: QueryClient | undefined = undefined
  * as it prevents sharing QueryClient state between requests on the server while
  * maintaining a single instance in the browser to preserve cache across re-renders.
  *
+ * @remarks
+ * In the browser environment, the config parameter is only used when creating the initial
+ * QueryClient instance. Subsequent calls with different configs will return the existing
+ * instance and the new config will be ignored. This is intentional to maintain a stable
+ * singleton across re-renders.
+ *
  * @param config - Optional QueryClientConfig to customize the QueryClient instance
  * @returns A QueryClient instance
  *
