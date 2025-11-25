@@ -74,11 +74,20 @@ import { ClientOnly } from './components/ClientOnly'
  *
  * @example
  * ```tsx
- * // With timeout
+ * // With timeout - implementing timeout via queryOptions
+ * const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
+ *
+ * const timeoutQueryOptions = (ms: number) => queryOptions({
+ *   queryKey: ['__timeout__'],
+ *   queryFn: () => sleep(ms).then(() => Promise.reject(new Error('timeout')))
+ * })
+ *
  * <Suspense fallback={<div>Loading user...</div>}>
  *   <QueriesHydration
- *     queries={[userQueryOptions(userId)]}
- *     timeout={5000}
+ *     queries={[
+ *       userQueryOptions(userId),
+ *       timeoutQueryOptions(5000)  // Timeout after 5 seconds
+ *     ]}
  *   >
  *     <UserProfile />
  *   </QueriesHydration>
@@ -92,7 +101,6 @@ export async function QueriesHydration({
   children,
   queryClient = new QueryClient(),
   skipSsrOnError = true,
-  timeout,
   ...props
 }: {
   /**
@@ -110,38 +118,9 @@ export async function QueriesHydration({
     | {
         fallback: ReactNode
       }
-  /**
-   * Maximum time in milliseconds to wait for queries to complete.
-   * If queries take longer than this, they will timeout and be handled according to `skipSsrOnError`.
-   */
-  timeout?: number
 } & OmitKeyof<HydrationBoundaryProps, 'state'>) {
   try {
-    const fetchPromise = Promise.all(queries.map((query) => queryClient.ensureQueryData(query)))
-
-    if (timeout !== undefined) {
-      let timeoutId: ReturnType<typeof setTimeout> | undefined
-      const timeoutPromise = new Promise<never>((_, reject) => {
-        timeoutId = setTimeout(
-          () =>
-            reject(
-              new Error(
-                `Queries timed out after ${timeout}ms. ${queries.length} ${queries.length === 1 ? 'query' : 'queries'} failed to complete in time.`
-              )
-            ),
-          timeout
-        )
-      })
-      try {
-        await Promise.race([fetchPromise, timeoutPromise])
-      } finally {
-        if (timeoutId !== undefined) {
-          clearTimeout(timeoutId)
-        }
-      }
-    } else {
-      await fetchPromise
-    }
+    await Promise.all(queries.map((query) => queryClient.ensureQueryData(query)))
   } catch {
     if (skipSsrOnError) {
       return (
