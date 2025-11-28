@@ -11,6 +11,7 @@ export default {
     type: 'separator',
     title: 'API Reference',
   },
+  getQueryClient: { title: 'getQueryClient' },
   mutationOptions: { title: 'mutationOptions' },
   usePrefetchQuery: { title: 'usePrefetchQuery' },
   usePrefetchInfiniteQuery: { title: 'usePrefetchInfiniteQuery' },
@@ -23,7 +24,6 @@ export default {
   QueriesHydration: { title: '<QueriesHydration/>' },
   QueryClientConsumer: { title: '<QueryClientConsumer/>' },
   IsFetching: { title: '<IsFetching/>' },
-  getQueryClient: { title: 'getQueryClient' },
   '--- Deprecated': {
     type: 'separator',
     title: 'Deprecated',
