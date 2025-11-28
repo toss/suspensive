@@ -68,6 +68,29 @@ describe('getQueryClient', () => {
     expect(queryClient1).toBe(queryClient2)
     expect(queryClient2.getDefaultOptions().queries?.staleTime).toBe(5000)
   })
+
+  it('should use provided cacheTime value in browser environment (not Infinity)', async () => {
+    const { getQueryClient } = await import('./getQueryClient')
+    const config = {
+      defaultOptions: {
+        queries: {
+          cacheTime: 5000,
+        },
+      },
+    }
+    const queryClient = getQueryClient(config)
+    // In browser, cacheTime should use the provided value, not Infinity
+    expect(queryClient.getDefaultOptions().queries?.cacheTime).toBe(5000)
+    expect(queryClient.getDefaultOptions().queries?.cacheTime).not.toBe(Infinity)
+  })
+
+  it('should not set cacheTime to Infinity in browser environment when no config provided', async () => {
+    const { getQueryClient } = await import('./getQueryClient')
+    const queryClient = getQueryClient()
+    // In browser, cacheTime should use default value (not Infinity)
+    // Default cacheTime in React Query v4 is 5 minutes (300000ms)
+    expect(queryClient.getDefaultOptions().queries?.cacheTime).not.toBe(Infinity)
+  })
 })
 
 describe('getQueryClient (server environment)', () => {
@@ -113,5 +136,25 @@ describe('getQueryClient (server environment)', () => {
 
     expect(queryClient1.getDefaultOptions().queries?.staleTime).toBe(5000)
     expect(queryClient2.getDefaultOptions().queries?.staleTime).toBe(10000)
+  })
+
+  it('should set cacheTime to Infinity in server environment to prevent OOM', async () => {
+    const { getQueryClient } = await import('./getQueryClient')
+    const queryClient = getQueryClient()
+    expect(queryClient.getDefaultOptions().queries?.cacheTime).toBe(Infinity)
+  })
+
+  it('should override cacheTime to Infinity even if config provides different value in server environment', async () => {
+    const { getQueryClient } = await import('./getQueryClient')
+    const config = {
+      defaultOptions: {
+        queries: {
+          cacheTime: 5000,
+        },
+      },
+    }
+    const queryClient = getQueryClient(config)
+    // cacheTime should be Infinity regardless of config to prevent OOM on server
+    expect(queryClient.getDefaultOptions().queries?.cacheTime).toBe(Infinity)
   })
 })

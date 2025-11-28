@@ -23,6 +23,7 @@ export default {
   QueriesHydration: { title: '<QueriesHydration/>' },
   QueryClientConsumer: { title: '<QueryClientConsumer/>' },
   IsFetching: { title: '<IsFetching/>' },
+  getQueryClient: { title: 'getQueryClient' },
   '--- Deprecated': {
     type: 'separator',
     title: 'Deprecated',
