@@ -1,6 +1,12 @@
-import { Callout, Sandpack } from '@/components'
+import { Callout } from '@/components'
 
 # getQueryClient
+
+<Callout type='experimental'>
+
+`getQueryClient`는 실험 기능이므로 인터페이스가 변경될 수 있습니다.
+
+</Callout>
 
 서버 환경에서 안전하게 QueryClient 인스턴스를 관리하는 유틸리티 함수입니다.
 
@@ -8,6 +14,24 @@ import { Callout, Sandpack } from '@/components'
 - **브라우저 환경**: 싱글톤 QueryClient 인스턴스를 반환 (없으면 생성)
 
 이 패턴은 Next.js와 같은 SSR 프레임워크에서 React Query를 올바르게 사용하기 위해 필수적입니다. 서버에서 요청 간 QueryClient 상태를 공유하지 않으면서, 브라우저에서는 리렌더링 간 캐시를 유지하기 위해 단일 인스턴스를 유지합니다.
+
+<Callout type='important'>
+
+**서버에서의 OOM 방지**
+
+서버 환경에서 `getQueryClient`는 Out of Memory (OOM) 문제를 방지하기 위해 자동으로 캐시에서 쿼리 데이터를 제거하는 시간(`gcTime` 또는 `cacheTime`)을 `Infinity`로 설정합니다. 이는 중요한 안전 조치입니다:
+
+1. **서버 환경은 여러 동시 요청을 처리합니다**: 각 사용자가 고유한 격리된 컨텍스트를 가지는 브라우저와 달리, 서버는 많은 요청을 동시에 처리합니다. 캐시 항목이 너무 일찍 제거되면, 서버가 다른 요청에 대해 동일한 데이터를 여러 번 다시 가져와야 할 수 있어 불필요한 메모리 사용과 잠재적인 OOM으로 이어질 수 있습니다.
+
+2. **요청 격리**: 각 서버 요청은 자체 QueryClient 인스턴스를 가지므로, 요청이 완료되면 캐시 항목이 자동으로 정리됩니다. 캐시 제거 시간을 `Infinity`로 설정하면 조기 제거 없이 전체 요청 생명주기 동안 데이터를 사용할 수 있습니다.
+
+3. **setTimeout 스케줄링 방지**: TanStack Query는 캐시에서 쿼리 데이터를 제거하기 위해 `setTimeout`을 사용합니다. `gcTime`이 유한한 값이면, 서버에서 많은 동시 요청이 들어올 때마다 수많은 `setTimeout`이 스케줄링되어 CPU와 메모리 리소스를 과도하게 소비할 수 있습니다. `Infinity`로 설정하면 [`isValidTimeout`](https://github.com/TanStack/query/blob/main/packages/query-core/src/utils.ts) 검사를 통해 [`scheduleGc`](https://github.com/TanStack/query/blob/main/packages/query-core/src/removable.ts#L13-L21)에서 `setTimeout` 스케줄링 자체가 방지되어 이러한 성능 저하를 완전히 방지할 수 있습니다.
+
+이 동작은 **자동이며 재정의할 수 없습니다** - config에서 캐시 제거 시간을 다른 값으로 제공하더라도, 서버에서는 `Infinity`로 설정됩니다. (v4에서는 `cacheTime`, v5에서는 `gcTime` 옵션을 사용합니다. 버전별 차이는 아래 섹션을 참고하세요.)
+
+> 💡 **관련 문서**: 서버에서의 높은 메모리 소비와 서버에서 `gcTime`이 기본적으로 `Infinity`로 설정되는 이유에 대한 자세한 내용은 [TanStack Query SSR 가이드 - 서버에서의 높은 메모리 소비](https://tanstack.com/query/latest/docs/framework/react/guides/ssr#high-memory-consumption-on-server) 섹션을 참고하세요. 고급 서버 렌더링 패턴에 대해서는 [고급 SSR 가이드](https://tanstack.com/query/latest/docs/framework/react/guides/advanced-ssr)도 확인해보세요.
+
+</Callout>
 
 ## 기본 사용법
 
@@ -56,23 +80,14 @@ function Providers({ children }: { children: React.ReactNode }) {
 
 ## 서버 환경 동작
 
-### 자동 cacheTime/gcTime 설정
+### OOM 방지를 위한 캐시 제거 시간 설정
 
-<Callout type='important'>
+서버 환경에서 `getQueryClient`는 메모리 누수와 OOM(Out of Memory) 오류를 방지하기 위해 QueryClient 캐시에서 쿼리 데이터를 제거하는 시간을 `Infinity`로 설정합니다. 이는 서버가 많은 동시 요청을 처리할 때 발생할 수 있는 메모리 문제를 해결하기 위한 핵심 안전 조치입니다.
 
-**서버에서의 OOM 방지**
+`gcTime`(v5) 또는 `cacheTime`(v4)은 TanStack Query가 QueryClient의 캐시에서 쿼리 데이터를 제거하기까지의 시간을 의미합니다. 서버에서 이 값을 `Infinity`로 설정하면:
 
-서버 환경에서 `getQueryClient`는 Out of Memory (OOM) 문제를 방지하기 위해 자동으로 `cacheTime` (v4) 또는 `gcTime` (v5)을 `Infinity`로 설정합니다. 이는 중요한 안전 조치입니다:
-
-1. **서버 환경은 여러 동시 요청을 처리합니다**: 각 사용자가 고유한 격리된 컨텍스트를 가지는 브라우저와 달리, 서버는 많은 요청을 동시에 처리합니다. 캐시 항목이 너무 일찍 가비지 컬렉션되면, 서버가 다른 요청에 대해 동일한 데이터를 여러 번 다시 가져와야 할 수 있어 불필요한 메모리 사용과 잠재적인 OOM으로 이어질 수 있습니다.
-
-2. **요청 격리**: 각 서버 요청은 자체 QueryClient 인스턴스를 가지므로, 요청이 완료되면 캐시 항목이 자동으로 정리됩니다. `cacheTime`/`gcTime`을 `Infinity`로 설정하면 조기 가비지 컬렉션 없이 전체 요청 생명주기 동안 데이터를 사용할 수 있습니다.
-
-3. **메모리 안전성**: 캐시 항목을 전체 요청 기간 동안 유지함으로써, 서버가 높은 부하 하에서 메모리 누수나 OOM 오류로 이어질 수 있는 오래된 캐시 항목을 축적하는 것을 방지합니다.
-
-이 동작은 **자동이며 재정의할 수 없습니다** - config에서 다른 `cacheTime` 또는 `gcTime` 값을 제공하더라도, 서버에서는 `Infinity`로 설정됩니다.
-
-</Callout>
+- 캐시에서 데이터가 자동으로 제거되지 않아 요청 완료 전까지 데이터가 유지됩니다
+- TanStack Query 내부에서 [`isValidTimeout`](https://github.com/TanStack/query/blob/main/packages/query-core/src/utils.ts) 검사를 통해 [`scheduleGc`](https://github.com/TanStack/query/blob/main/packages/query-core/src/removable.ts#L13-L21)에서 `setTimeout` 스케줄링이 방지되어, 많은 동시 요청 시 발생할 수 있는 `setTimeout`으로 인한 성능 저하를 완전히 제거합니다
 
 ```tsx /getQueryClient/
 import { getQueryClient } from '@suspensive/react-query'
@@ -81,14 +96,16 @@ import { getQueryClient } from '@suspensive/react-query'
 const queryClient = getQueryClient({
   defaultOptions: {
     queries: {
-      cacheTime: 5000, // 서버에서는 Infinity로 재정의됩니다
-      // 또는 v5에서는 gcTime: 5000
+      // 서버에서는 캐시 제거 시간이 Infinity로 설정되어
+      // 요청 완료 전까지 캐시가 유지되고 setTimeout 스케줄링이 방지됩니다
+      gcTime: 5000, // v5: 서버에서는 Infinity로 재정의됩니다
+      // v4에서는 cacheTime이 사용되며, 마찬가지로 Infinity로 재정의됩니다
     },
   },
 })
 
-// 서버: cacheTime/gcTime은 항상 Infinity
-// 브라우저: cacheTime/gcTime은 제공된 값(또는 기본값)을 사용
+// 서버: 캐시 제거 시간은 항상 Infinity (OOM 방지)
+// 브라우저: 제공된 값(또는 기본값)을 사용
 ```
 
 ### 요청마다 새로운 인스턴스
@@ -124,63 +141,6 @@ const queryClient2 = getQueryClient()
 
 // queryClient1 === queryClient2 (동일한 인스턴스)
 ```
-
-## 완전한 예제
-
-<Sandpack>
-
-```tsx App.tsx active
-import { getQueryClient } from '@suspensive/react-query'
-import { QueryClientProvider } from '@tanstack/react-query'
-import { PostsList } from './PostsList'
-
-function App() {
-  const queryClient = getQueryClient({
-    defaultOptions: {
-      queries: {
-        staleTime: 1000 * 60 * 5, // 5분
-        retry: 1,
-      },
-    },
-  })
-
-  return (
-    <QueryClientProvider client={queryClient}>
-      <PostsList />
-    </QueryClientProvider>
-  )
-}
-
-export default App
-```
-
-```tsx PostsList.tsx
-'use client'
-
-import { useSuspenseQuery } from '@suspensive/react-query'
-
-const postsQueryOptions = {
-  queryKey: ['posts'] as const,
-  queryFn: async () => {
-    const res = await fetch('https://jsonplaceholder.typicode.com/posts')
-    return res.json()
-  },
-}
-
-export function PostsList() {
-  const { data: posts } = useSuspenseQuery(postsQueryOptions)
-
-  return (
-    <ul>
-      {posts.map((post: { id: number; title: string }) => (
-        <li key={post.id}>{post.title}</li>
-      ))}
-    </ul>
-  )
-}
-```
-
-</Sandpack>
 
 ## 사용 사례
 
@@ -287,4 +247,4 @@ const queryClient = getQueryClient({
 
 - **브라우저 싱글톤**: 브라우저 인스턴스는 싱글톤이므로 첫 번째 호출 이후의 config 변경은 무시됩니다. 첫 번째 호출에서 QueryClient를 구성하세요.
 
-- **자동 OOM 방지**: 서버에서 `cacheTime`/`gcTime`을 `Infinity`로 재정의하는 것은 자동이며 비활성화할 수 없습니다. 이는 메모리 문제를 방지하기 위한 안전 기능입니다.
+- **자동 OOM 방지**: 서버에서 캐시 제거 시간을 `Infinity`로 재정의하는 것은 자동이며 비활성화할 수 없습니다. 이는 메모리 문제를 방지하기 위한 안전 기능입니다. (v4에서는 `cacheTime`, v5에서는 `gcTime` 옵션을 사용합니다.)
