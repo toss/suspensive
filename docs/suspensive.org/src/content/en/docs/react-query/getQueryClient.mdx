@@ -17,19 +17,7 @@ This pattern is essential for proper React Query usage with SSR frameworks like 
 
 <Callout type='important'>
 
-**OOM Prevention on Server**
-
-On the server, `getQueryClient` automatically sets the cache removal time (`gcTime` or `cacheTime`) to `Infinity` to prevent Out of Memory (OOM) issues. This is a critical safety measure because:
-
-1. **Server environments handle multiple concurrent requests**: Unlike browsers where each user has their own isolated context, servers process many requests simultaneously. If cache entries are removed too early, the server might need to refetch the same data multiple times for different requests, leading to unnecessary memory usage and potential OOM.
-
-2. **Request isolation**: Each server request gets its own QueryClient instance, so cache entries are automatically cleaned up when the request completes. Setting the cache removal time to `Infinity` ensures that data remains available throughout the entire request lifecycle without premature removal.
-
-3. **Preventing setTimeout scheduling performance cost**: TanStack Query uses `setTimeout` to schedule removal of query data from the cache. If `gcTime` has a finite value, each concurrent request on the server would schedule numerous `setTimeout` calls, consuming excessive CPU and memory resources. By setting it to `Infinity`, the [`isValidTimeout`](https://github.com/TanStack/query/blob/main/packages/query-core/src/utils.ts) check prevents `setTimeout` scheduling in [`scheduleGc`](https://github.com/TanStack/query/blob/main/packages/query-core/src/removable.ts#L13-L21) entirely, completely eliminating this performance cost.
-
-This behavior is **automatic and cannot be overridden** - even if you provide a different cache removal time value in your config, it will be set to `Infinity` on the server. (In v4, the `cacheTime` option is used; in v5, the `gcTime` option is used. See the Version Differences section below for details.)
-
-> 💡 **Related documentation**: For more information about high memory consumption on server and why `gcTime` defaults to `Infinity` on the server, see the [TanStack Query SSR Guide - High memory consumption on server](https://tanstack.com/query/latest/docs/framework/react/guides/ssr#high-memory-consumption-on-server) section. You can also check out the [Advanced SSR Guide](https://tanstack.com/query/latest/docs/framework/react/guides/advanced-ssr) for advanced server rendering patterns.
+Sharing a QueryClient between requests on the server can lead to **serious security vulnerabilities**. `getQueryClient` creates a new QueryClient instance for each request to prevent data leakage between users and exposure of sensitive information. See the [Server-Side Behavior](#server-side-behavior) section below for details.
 
 </Callout>
 
@@ -80,14 +68,30 @@ In the browser environment, the config parameter is only used when creating the 
 
 ## Server-Side Behavior
 
+### Preventing Security Issues (Highest Priority)
+
+Sharing a QueryClient between requests on the server can lead to serious security vulnerabilities:
+
+- **Data leakage between users**: One user's data may be exposed to another user
+- **Sensitive information exposure**: Authentication tokens, personal information, etc. may be included in another user's request
+- **Incorrect cache state**: Cached data from a previous request may be incorrectly returned to the next request
+
+`getQueryClient` creates a new QueryClient instance for each request to completely prevent these security issues.
+
+> 💡 **Related documentation**: For more information about why QueryClient should not be shared between requests on the server, see the [TanStack Query SSR Guide - Initial Setup](https://tanstack.com/query/latest/docs/framework/react/guides/ssr#initial-setup) section.
+
 ### Setting Cache Removal Time to Prevent OOM
 
-On the server, `getQueryClient` sets the cache removal time to `Infinity` to prevent memory leaks and OOM (Out of Memory) errors. This is a critical safety measure to address memory issues that can occur when servers handle many concurrent requests.
+On the server, `getQueryClient` sets the cache removal time to `Infinity` to prevent memory leaks and OOM (Out of Memory) errors. This is an additional safety measure to address memory issues that can occur when servers handle many concurrent requests.
 
 `gcTime` (v5) or `cacheTime` (v4) represents the time until TanStack Query removes query data from the QueryClient's cache. By setting this to `Infinity` on the server:
 
 - Data is not automatically removed from the cache, keeping it available until the request completes
 - The [`isValidTimeout`](https://github.com/TanStack/query/blob/main/packages/query-core/src/utils.ts) check in TanStack Query prevents `setTimeout` scheduling in [`scheduleGc`](https://github.com/TanStack/query/blob/main/packages/query-core/src/removable.ts#L13-L21), completely eliminating the performance cost that would occur with many concurrent requests
+
+This behavior is **automatic and cannot be overridden** - even if you provide a different cache removal time value in your config, it will be set to `Infinity` on the server. (In v4, the `cacheTime` option is used; in v5, the `gcTime` option is used. See the Version Differences section below for details.)
+
+> 💡 **Related documentation**: For more information about high memory consumption on server and why `gcTime` defaults to `Infinity` on the server, see the [TanStack Query SSR Guide - High memory consumption on server](https://tanstack.com/query/latest/docs/framework/react/guides/ssr#high-memory-consumption-on-server) section.
 
 ```tsx /getQueryClient/
 import { getQueryClient } from '@suspensive/react-query'
