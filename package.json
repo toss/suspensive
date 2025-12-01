@@ -46,7 +46,7 @@
     "@types/node": "^24.10.1",
     "@vitest/browser-playwright": "^4.0.9",
     "@vitest/coverage-istanbul": "^4.0.9",
-    "@vitest/ui": "^4.0.9",
+    "@vitest/ui": "^4.0.14",
     "broken-link-checker": "^0.7.8",
     "eslint": "^9.39.1",
     "husky": "^9.1.7",
