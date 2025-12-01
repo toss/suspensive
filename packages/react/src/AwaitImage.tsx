@@ -1,12 +1,13 @@
 import type { ReactNode } from 'react'
 import { use } from './utils/use'
 
-// TODO: implement cache value
-const imageCache = new Map<string, Promise<HTMLImageElement>>()
+export const imageCache = new Map<string, Promise<HTMLImageElement>>()
 
 function preloadImage(src: string): Promise<HTMLImageElement> {
   const cached = imageCache.get(src)
-  if (cached) return cached
+  if (cached) {
+    return cached
+  }
 
   const imageLoadPromise = new Promise<HTMLImageElement>((resolve, reject) => {
     const img = new Image()

@@ -4,7 +4,7 @@ type Usable<T> = PromiseLike<T> & {
   reason?: unknown
 }
 
-// eslint-disable-next-line @eslint-react/hooks-extra/no-unnecessary-use-prefix
+// eslint-disable-next-line @eslint-react/no-unnecessary-use-prefix
 export function use<T>(usable: Usable<T>): T {
   if (usable.status === 'pending') {
     // eslint-disable-next-line @typescript-eslint/only-throw-error
