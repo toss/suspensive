@@ -22,6 +22,6 @@
     "eslint-plugin-mdx": "^3.6.2",
     "eslint-plugin-prettier": "^5.5.4",
     "eslint-plugin-react-hooks": "^7.0.1",
-    "typescript-eslint": "^8.46.4"
+    "typescript-eslint": "^8.48.0"
   }
 }
