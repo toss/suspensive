@@ -8,8 +8,10 @@ import {
 import { baseTemplate } from './baseTemplate'
 import { CustomPreset } from './CustomPreset'
 
-interface SandpackProps
-  extends Omit<SandpackProviderProps, 'template' | 'customSetup' | 'options'> {
+interface SandpackProps extends Omit<
+  SandpackProviderProps,
+  'template' | 'customSetup' | 'options'
+> {
   dependencies?: Record<string, string>
   devDependencies?: Record<string, string>
   providerOptions?: SandpackProviderProps
