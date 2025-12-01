@@ -1,5 +1,11 @@
 # @suspensive/react-query-5
 
+## 3.16.0
+
+### Minor Changes
+
+- [#1843](https://github.com/toss/suspensive/pull/1843) [`ff45cf9`](https://github.com/toss/suspensive/commit/ff45cf938b0558ce4620a1273007b340a0db354a) Thanks [@manudeli](https://github.com/manudeli)! - feat(react-query): add getQueryClient
+
 ## 3.15.1
 
 ### Patch Changes

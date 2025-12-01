@@ -1,3 +1,4 @@
+export { getQueryClient } from './getQueryClient'
 export { infiniteQueryOptions } from './infiniteQueryOptions'
 export { QueriesHydration } from './QueriesHydration'
 export { queryOptions } from './queryOptions'

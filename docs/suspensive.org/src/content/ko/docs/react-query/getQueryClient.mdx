@@ -1,0 +1,254 @@
+import { Callout } from '@/components'
+
+# getQueryClient
+
+<Callout type='experimental'>
+
+`getQueryClient`는 실험 기능이므로 인터페이스가 변경될 수 있습니다.
+
+</Callout>
+
+서버 환경에서 안전하게 QueryClient 인스턴스를 관리하는 유틸리티 함수입니다.
+
+- **서버 환경**: 각 요청마다 새로운 QueryClient 인스턴스를 생성
+- **브라우저 환경**: 싱글톤 QueryClient 인스턴스를 반환 (없으면 생성)
+
+이 패턴은 Next.js와 같은 SSR 프레임워크에서 React Query를 올바르게 사용하기 위해 필수적입니다. 서버에서 요청 간 QueryClient 상태를 공유하지 않으면서, 브라우저에서는 리렌더링 간 캐시를 유지하기 위해 단일 인스턴스를 유지합니다.
+
+<Callout type='important'>
+
+서버에서 QueryClient를 요청 간 공유하면 **심각한 보안 취약점**이 발생할 수 있습니다. `getQueryClient`는 각 요청마다 새로운 QueryClient 인스턴스를 생성하여 사용자 간 데이터 누수와 민감한 정보 노출을 방지합니다. 자세한 내용은 아래 [서버 환경 동작](#서버-환경-동작) 섹션을 참고하세요.
+
+</Callout>
+
+## 기본 사용법
+
+```tsx /getQueryClient/
+import { getQueryClient } from '@suspensive/react-query'
+import { QueryClientProvider } from '@tanstack/react-query'
+
+function Providers({ children }: { children: React.ReactNode }) {
+  const queryClient = getQueryClient()
+  return (
+    <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+  )
+}
+```
+
+## 설정
+
+`QueryClientConfig`를 전달하여 QueryClient 인스턴스를 커스터마이징할 수 있습니다:
+
+```tsx /getQueryClient/
+import { getQueryClient } from '@suspensive/react-query'
+import { QueryClientProvider } from '@tanstack/react-query'
+
+function Providers({ children }: { children: React.ReactNode }) {
+  const queryClient = getQueryClient({
+    defaultOptions: {
+      queries: {
+        staleTime: 5000,
+        retry: 3,
+      },
+    },
+  })
+  return (
+    <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+  )
+}
+```
+
+<Callout type='warning'>
+
+**브라우저 환경 동작**
+
+브라우저 환경에서는 config 파라미터가 초기 QueryClient 인스턴스를 생성할 때만 사용됩니다. 이후 다른 config로 호출해도 기존 인스턴스가 반환되며 새로운 config는 무시됩니다. 이는 리렌더링 간 안정적인 싱글톤을 유지하기 위한 의도적인 동작입니다.
+
+</Callout>
+
+## 서버 환경 동작
+
+### 보안 문제 방지 (최우선)
+
+서버에서 QueryClient를 요청 간 공유하면 심각한 보안 취약점이 발생할 수 있습니다:
+
+- **사용자 간 데이터 누수**: 한 사용자의 데이터가 다른 사용자에게 노출될 수 있습니다
+- **민감한 정보 노출**: 인증 토큰, 개인 정보 등이 다른 사용자의 요청에 포함될 수 있습니다
+- **잘못된 캐시 상태**: 이전 요청의 캐시 데이터가 다음 요청에 잘못 반환될 수 있습니다
+
+`getQueryClient`는 각 요청마다 새로운 QueryClient 인스턴스를 생성함으로써 이러한 보안 문제를 완전히 방지합니다.
+
+> 💡 **관련 문서**: 서버에서 QueryClient를 요청 간 공유하면 안 되는 이유에 대한 자세한 내용은 [TanStack Query SSR 가이드 - Initial Setup](https://tanstack.com/query/latest/docs/framework/react/guides/ssr#initial-setup) 섹션을 참고하세요.
+
+### OOM 방지를 위한 캐시 제거 시간 설정
+
+서버 환경에서 `getQueryClient`는 메모리 누수와 OOM(Out of Memory) 오류를 방지하기 위해 QueryClient 캐시에서 쿼리 데이터를 제거하는 시간을 `Infinity`로 설정합니다. 이는 서버가 많은 동시 요청을 처리할 때 발생할 수 있는 메모리 문제를 해결하기 위한 추가적인 안전 조치입니다.
+
+`gcTime`(v5) 또는 `cacheTime`(v4)은 TanStack Query가 QueryClient의 캐시에서 쿼리 데이터를 제거하기까지의 시간을 의미합니다. 서버에서 이 값을 `Infinity`로 설정하면:
+
+- 캐시에서 데이터가 자동으로 제거되지 않아 요청 완료 전까지 데이터가 유지됩니다
+- TanStack Query 내부에서 [`isValidTimeout`](https://github.com/TanStack/query/blob/main/packages/query-core/src/utils.ts) 검사를 통해 [`scheduleGc`](https://github.com/TanStack/query/blob/main/packages/query-core/src/removable.ts#L13-L21)에서 `setTimeout` 스케줄링이 방지되어, 많은 동시 요청 시 발생할 수 있는 `setTimeout`으로 인한 성능 저하를 완전히 제거합니다
+
+이 동작은 **자동이며 재정의할 수 없습니다** - config에서 캐시 제거 시간을 다른 값으로 제공하더라도, 서버에서는 `Infinity`로 설정됩니다. (v4에서는 `cacheTime`, v5에서는 `gcTime` 옵션을 사용합니다. 버전별 차이는 아래 섹션을 참고하세요.)
+
+> 💡 **관련 문서**: 서버에서의 높은 메모리 소비와 서버에서 `gcTime`이 기본적으로 `Infinity`로 설정되는 이유에 대한 자세한 내용은 [TanStack Query SSR 가이드 - 서버에서의 높은 메모리 소비](https://tanstack.com/query/latest/docs/framework/react/guides/ssr#high-memory-consumption-on-server) 섹션을 참고하세요.
+
+```tsx /getQueryClient/
+import { getQueryClient } from '@suspensive/react-query'
+
+// 서버 환경
+const queryClient = getQueryClient({
+  defaultOptions: {
+    queries: {
+      // 서버에서는 캐시 제거 시간이 Infinity로 설정되어
+      // 요청 완료 전까지 캐시가 유지되고 setTimeout 스케줄링이 방지됩니다
+      gcTime: 5000, // v5: 서버에서는 Infinity로 재정의됩니다
+      // v4에서는 cacheTime이 사용되며, 마찬가지로 Infinity로 재정의됩니다
+    },
+  },
+})
+
+// 서버: 캐시 제거 시간은 항상 Infinity (OOM 방지)
+// 브라우저: 제공된 값(또는 기본값)을 사용
+```
+
+### 요청마다 새로운 인스턴스
+
+서버에서 `getQueryClient`는 각 호출마다 새로운 QueryClient 인스턴스를 생성합니다. 이를 통해:
+
+- 각 요청이 격리된 캐시 상태를 가집니다
+- 다른 사용자 요청 간 데이터 누수가 없습니다
+- 요청 완료 시 적절한 정리가 수행됩니다
+
+```tsx /getQueryClient/
+// 서버 환경
+const queryClient1 = getQueryClient()
+const queryClient2 = getQueryClient()
+
+// queryClient1 !== queryClient2 (다른 인스턴스)
+```
+
+## 브라우저 환경 동작
+
+### 싱글톤 패턴
+
+브라우저에서 `getQueryClient`는 여러 호출에 걸쳐 동일한 QueryClient 인스턴스를 반환합니다. 이를 통해:
+
+- 리렌더링 간 캐시가 유지됩니다
+- 일관된 상태 관리가 가능합니다
+- 최적의 성능을 제공합니다
+
+```tsx /getQueryClient/
+// 브라우저 환경
+const queryClient1 = getQueryClient()
+const queryClient2 = getQueryClient()
+
+// queryClient1 === queryClient2 (동일한 인스턴스)
+```
+
+## 사용 사례
+
+### Next.js App Router
+
+```tsx /getQueryClient/
+// app/providers.tsx
+'use client'
+
+import { getQueryClient } from '@suspensive/react-query'
+import { QueryClientProvider } from '@tanstack/react-query'
+import { ReactNode } from 'react'
+
+export function Providers({ children }: { children: ReactNode }) {
+  const queryClient = getQueryClient()
+  return (
+    <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+  )
+}
+```
+
+```tsx
+// app/layout.tsx
+import { Providers } from './providers'
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
+  return (
+    <html lang="en">
+      <body>
+        <Providers>{children}</Providers>
+      </body>
+    </html>
+  )
+}
+```
+
+### 커스텀 설정과 함께 사용
+
+```tsx /getQueryClient/
+import { getQueryClient } from '@suspensive/react-query'
+import { QueryClientProvider } from '@tanstack/react-query'
+
+function Providers({ children }: { children: React.ReactNode }) {
+  const queryClient = getQueryClient({
+    defaultOptions: {
+      queries: {
+        staleTime: 1000 * 60 * 5, // 5분
+        gcTime: 1000 * 60 * 10, // 10분 (v5)
+        // cacheTime: 1000 * 60 * 10, // 10분 (v4)
+        retry: 2,
+        refetchOnWindowFocus: false,
+      },
+      mutations: {
+        retry: 1,
+      },
+    },
+  })
+
+  return (
+    <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+  )
+}
+```
+
+## 버전 차이
+
+### @tanstack/react-query v4
+
+v4에서는 캐시 시간 옵션이 `cacheTime`이라고 불립니다:
+
+```tsx
+// 서버: cacheTime은 자동으로 Infinity로 설정됩니다
+const queryClient = getQueryClient({
+  defaultOptions: {
+    queries: {
+      cacheTime: 5000, // 서버에서는 Infinity로 재정의됩니다
+    },
+  },
+})
+```
+
+### @tanstack/react-query v5
+
+v5에서는 캐시 시간 옵션이 `gcTime` (garbage collection time)이라고 불립니다:
+
+```tsx
+// 서버: gcTime은 자동으로 Infinity로 설정됩니다
+const queryClient = getQueryClient({
+  defaultOptions: {
+    queries: {
+      gcTime: 5000, // 서버에서는 Infinity로 재정의됩니다
+    },
+  },
+})
+```
+
+## 중요 사항
+
+- **서버 안전성**: SSR 환경에서 `new QueryClient()`를 직접 생성하는 대신 항상 `getQueryClient`를 사용하여 적절한 요청 격리와 OOM 방지를 보장하세요.
+
+- **브라우저 싱글톤**: 브라우저 인스턴스는 싱글톤이므로 첫 번째 호출 이후의 config 변경은 무시됩니다. 첫 번째 호출에서 QueryClient를 구성하세요.
+
+- **자동 OOM 방지**: 서버에서 캐시 제거 시간을 `Infinity`로 재정의하는 것은 자동이며 비활성화할 수 없습니다. 이는 메모리 문제를 방지하기 위한 안전 기능입니다. (v4에서는 `cacheTime`, v5에서는 `gcTime` 옵션을 사용합니다.)
