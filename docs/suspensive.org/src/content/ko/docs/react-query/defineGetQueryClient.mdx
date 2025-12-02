@@ -1,10 +1,10 @@
 import { Callout } from '@/components'
 
-# getQueryClient
+# defineGetQueryClient
 
 <Callout type='experimental'>
 
-`getQueryClient`는 실험 기능이므로 인터페이스가 변경될 수 있습니다.
+`defineGetQueryClient`는 실험 기능이므로 인터페이스가 변경될 수 있습니다.
 
 </Callout>
 
@@ -23,37 +23,73 @@ import { Callout } from '@/components'
 
 ## 기본 사용법
 
-```tsx /getQueryClient/
-import { getQueryClient } from '@suspensive/react-query'
-import { QueryClientProvider } from '@tanstack/react-query'
+먼저 프로젝트에 `get-query-client.ts` 파일을 만듭니다:
 
-function Providers({ children }: { children: React.ReactNode }) {
+```tsx
+// get-query-client.ts
+import { defineGetQueryClient } from '@suspensive/react-query'
+
+export const { getQueryClient } = defineGetQueryClient()
+```
+
+그런 다음 코드에서 import하여 사용합니다:
+
+```tsx
+// app/providers.tsx
+'use client'
+
+import { QueryClientProvider } from '@tanstack/react-query'
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import { getQueryClient } from '@/app/get-query-client'
+import type * as React from 'react'
+
+export default function Providers({ children }: { children: React.ReactNode }) {
   const queryClient = getQueryClient()
+
   return (
-    <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+    <QueryClientProvider client={queryClient}>
+      {children}
+      <ReactQueryDevtools />
+    </QueryClientProvider>
   )
 }
 ```
 
 ## 설정
 
-`QueryClientConfig`를 전달하여 QueryClient 인스턴스를 커스터마이징할 수 있습니다:
+`defineGetQueryClient`에 `QueryClientConfig`를 전달하여 QueryClient 인스턴스를 커스터마이징할 수 있습니다:
 
-```tsx /getQueryClient/
-import { getQueryClient } from '@suspensive/react-query'
-import { QueryClientProvider } from '@tanstack/react-query'
+```tsx
+// get-query-client.ts
+import { defineGetQueryClient } from '@suspensive/react-query'
 
-function Providers({ children }: { children: React.ReactNode }) {
-  const queryClient = getQueryClient({
-    defaultOptions: {
-      queries: {
-        staleTime: 5000,
-        retry: 3,
-      },
+export const { getQueryClient } = defineGetQueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 5000,
+      retry: 3,
     },
-  })
+  },
+})
+```
+
+```tsx
+// app/providers.tsx
+'use client'
+
+import { QueryClientProvider } from '@tanstack/react-query'
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import { getQueryClient } from '@/app/get-query-client'
+import type * as React from 'react'
+
+export default function Providers({ children }: { children: React.ReactNode }) {
+  const queryClient = getQueryClient()
+
   return (
-    <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+    <QueryClientProvider client={queryClient}>
+      {children}
+      <ReactQueryDevtools />
+    </QueryClientProvider>
   )
 }
 ```
@@ -62,7 +98,7 @@ function Providers({ children }: { children: React.ReactNode }) {
 
 **브라우저 환경 동작**
 
-브라우저 환경에서는 config 파라미터가 초기 QueryClient 인스턴스를 생성할 때만 사용됩니다. 이후 다른 config로 호출해도 기존 인스턴스가 반환되며 새로운 config는 무시됩니다. 이는 리렌더링 간 안정적인 싱글톤을 유지하기 위한 의도적인 동작입니다.
+브라우저 환경에서는 `defineGetQueryClient` 호출 시 전달한 config가 QueryClient 인스턴스를 생성하는 데 사용됩니다. `getQueryClient` 함수는 인자를 받지 않으며 항상 동일한 싱글톤 인스턴스를 반환합니다. 이는 리렌더링 간 안정적인 싱글톤을 유지하기 위한 의도적인 동작입니다.
 
 </Callout>
 
@@ -93,11 +129,12 @@ function Providers({ children }: { children: React.ReactNode }) {
 
 > 💡 **관련 문서**: 서버에서의 높은 메모리 소비와 서버에서 `gcTime`이 기본적으로 `Infinity`로 설정되는 이유에 대한 자세한 내용은 [TanStack Query SSR 가이드 - 서버에서의 높은 메모리 소비](https://tanstack.com/query/latest/docs/framework/react/guides/ssr#high-memory-consumption-on-server) 섹션을 참고하세요.
 
-```tsx /getQueryClient/
-import { getQueryClient } from '@suspensive/react-query'
+```tsx
+// get-query-client.ts
+import { defineGetQueryClient } from '@suspensive/react-query'
 
-// 서버 환경
-const queryClient = getQueryClient({
+// Config는 getQueryClient가 아닌 defineGetQueryClient에 전달됩니다
+export const { getQueryClient } = defineGetQueryClient({
   defaultOptions: {
     queries: {
       // 서버에서는 캐시 제거 시간이 Infinity로 설정되어
@@ -120,7 +157,14 @@ const queryClient = getQueryClient({
 - 다른 사용자 요청 간 데이터 누수가 없습니다
 - 요청 완료 시 적절한 정리가 수행됩니다
 
-```tsx /getQueryClient/
+```tsx
+// get-query-client.ts
+import { defineGetQueryClient } from '@suspensive/react-query'
+
+export const { getQueryClient } = defineGetQueryClient()
+```
+
+```tsx
 // 서버 환경
 const queryClient1 = getQueryClient()
 const queryClient2 = getQueryClient()
@@ -138,7 +182,14 @@ const queryClient2 = getQueryClient()
 - 일관된 상태 관리가 가능합니다
 - 최적의 성능을 제공합니다
 
-```tsx /getQueryClient/
+```tsx
+// get-query-client.ts
+import { defineGetQueryClient } from '@suspensive/react-query'
+
+export const { getQueryClient } = defineGetQueryClient()
+```
+
+```tsx
 // 브라우저 환경
 const queryClient1 = getQueryClient()
 const queryClient2 = getQueryClient()
@@ -150,18 +201,30 @@ const queryClient2 = getQueryClient()
 
 ### Next.js App Router
 
-```tsx /getQueryClient/
+```tsx
+// get-query-client.ts
+import { defineGetQueryClient } from '@suspensive/react-query'
+
+export const { getQueryClient } = defineGetQueryClient()
+```
+
+```tsx
 // app/providers.tsx
 'use client'
 
-import { getQueryClient } from '@suspensive/react-query'
 import { QueryClientProvider } from '@tanstack/react-query'
-import { ReactNode } from 'react'
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import { getQueryClient } from '@/app/get-query-client'
+import type * as React from 'react'
 
-export function Providers({ children }: { children: ReactNode }) {
+export default function Providers({ children }: { children: React.ReactNode }) {
   const queryClient = getQueryClient()
+
   return (
-    <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+    <QueryClientProvider client={queryClient}>
+      {children}
+      <ReactQueryDevtools />
+    </QueryClientProvider>
   )
 }
 ```
@@ -187,28 +250,43 @@ export default function RootLayout({
 
 ### 커스텀 설정과 함께 사용
 
-```tsx /getQueryClient/
-import { getQueryClient } from '@suspensive/react-query'
-import { QueryClientProvider } from '@tanstack/react-query'
+```tsx
+// get-query-client.ts
+import { defineGetQueryClient } from '@suspensive/react-query'
 
-function Providers({ children }: { children: React.ReactNode }) {
-  const queryClient = getQueryClient({
-    defaultOptions: {
-      queries: {
-        staleTime: 1000 * 60 * 5, // 5분
-        gcTime: 1000 * 60 * 10, // 10분 (v5)
-        // cacheTime: 1000 * 60 * 10, // 10분 (v4)
-        retry: 2,
-        refetchOnWindowFocus: false,
-      },
-      mutations: {
-        retry: 1,
-      },
+export const { getQueryClient } = defineGetQueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 1000 * 60 * 5, // 5분
+      gcTime: 1000 * 60 * 10, // 10분 (v5)
+      // cacheTime: 1000 * 60 * 10, // 10분 (v4)
+      retry: 2,
+      refetchOnWindowFocus: false,
     },
-  })
+    mutations: {
+      retry: 1,
+    },
+  },
+})
+```
+
+```tsx
+// app/providers.tsx
+'use client'
+
+import { QueryClientProvider } from '@tanstack/react-query'
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import { getQueryClient } from '@/app/get-query-client'
+import type * as React from 'react'
+
+export default function Providers({ children }: { children: React.ReactNode }) {
+  const queryClient = getQueryClient()
 
   return (
-    <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+    <QueryClientProvider client={queryClient}>
+      {children}
+      <ReactQueryDevtools />
+    </QueryClientProvider>
   )
 }
 ```
@@ -217,11 +295,21 @@ function Providers({ children }: { children: React.ReactNode }) {
 
 ### @tanstack/react-query v4
 
-v4에서는 캐시 시간 옵션이 `cacheTime`이라고 불립니다:
+v4에서는 `defineGetQueryClient` 함수를 사용하며, 캐시 시간 옵션이 `cacheTime`이라고 불립니다:
 
 ```tsx
+// get-query-client.ts
+import { defineGetQueryClient } from '@suspensive/react-query'
+
+export const { getQueryClient } = defineGetQueryClient()
+```
+
+```tsx
+// get-query-client.ts
+import { defineGetQueryClient } from '@suspensive/react-query'
+
 // 서버: cacheTime은 자동으로 Infinity로 설정됩니다
-const queryClient = getQueryClient({
+export const { getQueryClient } = defineGetQueryClient({
   defaultOptions: {
     queries: {
       cacheTime: 5000, // 서버에서는 Infinity로 재정의됩니다
@@ -230,13 +318,44 @@ const queryClient = getQueryClient({
 })
 ```
 
+```tsx
+// app/providers.tsx
+'use client'
+
+import { QueryClientProvider } from '@tanstack/react-query'
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import { getQueryClient } from '@/app/get-query-client'
+import type * as React from 'react'
+
+export default function Providers({ children }: { children: React.ReactNode }) {
+  const queryClient = getQueryClient()
+
+  return (
+    <QueryClientProvider client={queryClient}>
+      {children}
+      <ReactQueryDevtools />
+    </QueryClientProvider>
+  )
+}
+```
+
 ### @tanstack/react-query v5
 
-v5에서는 캐시 시간 옵션이 `gcTime` (garbage collection time)이라고 불립니다:
+v5에서는 `defineGetQueryClient` 함수를 사용하며, 캐시 시간 옵션이 `gcTime` (garbage collection time)이라고 불립니다:
 
 ```tsx
+// get-query-client.ts
+import { defineGetQueryClient } from '@suspensive/react-query'
+
+export const { getQueryClient } = defineGetQueryClient()
+```
+
+```tsx
+// get-query-client.ts
+import { defineGetQueryClient } from '@suspensive/react-query'
+
 // 서버: gcTime은 자동으로 Infinity로 설정됩니다
-const queryClient = getQueryClient({
+export const { getQueryClient } = defineGetQueryClient({
   defaultOptions: {
     queries: {
       gcTime: 5000, // 서버에서는 Infinity로 재정의됩니다
@@ -245,10 +364,39 @@ const queryClient = getQueryClient({
 })
 ```
 
+```tsx
+// app/providers.tsx
+'use client'
+
+import { QueryClientProvider } from '@tanstack/react-query'
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import { getQueryClient } from '@/app/get-query-client'
+import type * as React from 'react'
+
+export default function Providers({ children }: { children: React.ReactNode }) {
+  const queryClient = getQueryClient()
+
+  return (
+    <QueryClientProvider client={queryClient}>
+      {children}
+      <ReactQueryDevtools />
+    </QueryClientProvider>
+  )
+}
+```
+
 ## 중요 사항
 
 - **서버 안전성**: SSR 환경에서 `new QueryClient()`를 직접 생성하는 대신 항상 `getQueryClient`를 사용하여 적절한 요청 격리와 OOM 방지를 보장하세요.
 
-- **브라우저 싱글톤**: 브라우저 인스턴스는 싱글톤이므로 첫 번째 호출 이후의 config 변경은 무시됩니다. 첫 번째 호출에서 QueryClient를 구성하세요.
+<Callout type='error'>
+
+**전역 변수로 사용하지 마세요**
+
+`getQueryClient`를 사용하더라도 App Router에서 `export const queryClient = getQueryClient()`처럼 전역 변수에 저장하고 다른 곳에서 import해서 사용하면 동일한 보안 위험이 발생합니다. 서버에서 QueryClient 인스턴스가 요청 간 공유되어 사용자 간 데이터 누수가 발생할 수 있습니다. 전역 변수에 저장하지 말고 필요한 곳에서 직접 `getQueryClient()`를 호출하세요.
+
+</Callout>
+
+- **브라우저 싱글톤**: 브라우저 인스턴스는 싱글톤입니다. `getQueryClient`는 인자를 받지 않으므로 `defineGetQueryClient`를 호출할 때 QueryClient를 구성하세요.
 
 - **자동 OOM 방지**: 서버에서 캐시 제거 시간을 `Infinity`로 재정의하는 것은 자동이며 비활성화할 수 없습니다. 이는 메모리 문제를 방지하기 위한 안전 기능입니다. (v4에서는 `cacheTime`, v5에서는 `gcTime` 옵션을 사용합니다.)

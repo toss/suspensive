@@ -1,4 +1,4 @@
-export { getQueryClient } from '@suspensive/react-query-5'
+export { defineGetQueryClient } from '@suspensive/react-query-5'
 export { queryOptions } from '@suspensive/react-query-5'
 export { infiniteQueryOptions } from '@suspensive/react-query-5'
 export { useSuspenseQuery } from '@suspensive/react-query-5'

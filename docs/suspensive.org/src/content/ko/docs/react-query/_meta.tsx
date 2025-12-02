@@ -12,7 +12,7 @@ export default {
     type: 'separator',
     title: 'API 문서',
   },
-  getQueryClient: { title: 'getQueryClient' },
+  defineGetQueryClient: { title: 'defineGetQueryClient' },
   mutationOptions: { title: 'mutationOptions' },
   usePrefetchQuery: { title: 'usePrefetchQuery' },
   usePrefetchInfiniteQuery: { title: 'usePrefetchInfiniteQuery' },
