@@ -8,8 +8,6 @@ import { getQueryClient } from './get-query-client'
 export function Providers(props: { children: ReactNode }) {
   const queryClient = getQueryClient()
 
-  console.log({ ddd: queryClient.getDefaultOptions() })
-
   return (
     <QueryClientProvider client={queryClient}>
       {props.children}
