@@ -4,4 +4,4 @@
 "@suspensive/react-query": minor
 ---
 
-feat(react-query): remove `getQueryClient` & add `defineGetQueryClient`
+feat(react-query): remove `getQueryClient` & add `createGetQueryClient`

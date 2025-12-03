@@ -1,4 +1,4 @@
-export { defineGetQueryClient } from './defineGetQueryClient'
+export { createGetQueryClient } from './createGetQueryClient'
 export { infiniteQueryOptions } from './infiniteQueryOptions'
 export type { SelectedInfiniteOptions, UnSelectedInfiniteOptions } from './infiniteQueryOptions'
 export { QueriesHydration } from './QueriesHydration'

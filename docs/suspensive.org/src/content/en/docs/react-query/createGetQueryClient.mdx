@@ -1,10 +1,10 @@
 import { Callout } from '@/components'
 
-# defineGetQueryClient
+# createGetQueryClient
 
 <Callout type='experimental'>
 
-`defineGetQueryClient` is an experimental feature, so this interface may change.
+`createGetQueryClient` is an experimental feature, so this interface may change.
 
 </Callout>
 
@@ -27,9 +27,9 @@ First, create a `get-query-client.ts` file in your project:
 
 ```tsx
 // get-query-client.ts
-import { defineGetQueryClient } from '@suspensive/react-query'
+import { createGetQueryClient } from '@suspensive/react-query'
 
-export const { getQueryClient } = defineGetQueryClient()
+export const { getQueryClient } = createGetQueryClient()
 ```
 
 Then, import and use it in your code:
@@ -57,13 +57,13 @@ export default function Providers({ children }: { children: React.ReactNode }) {
 
 ## Configuration
 
-You can pass a `QueryClientConfig` to `defineGetQueryClient` to customize the QueryClient instance:
+You can pass a `QueryClientConfig` to `createGetQueryClient` to customize the QueryClient instance:
 
 ```tsx
 // get-query-client.ts
-import { defineGetQueryClient } from '@suspensive/react-query'
+import { createGetQueryClient } from '@suspensive/react-query'
 
-export const { getQueryClient } = defineGetQueryClient({
+export const { getQueryClient } = createGetQueryClient({
   defaultOptions: {
     queries: {
       staleTime: 5000,
@@ -98,7 +98,7 @@ export default function Providers({ children }: { children: React.ReactNode }) {
 
 **Browser Environment Behavior**
 
-In the browser environment, the config provided when calling `defineGetQueryClient` is used to create the QueryClient instance. The `getQueryClient` function does not accept any arguments and will always return the same singleton instance. This is intentional to maintain a stable singleton across re-renders.
+In the browser environment, the config provided when calling `createGetQueryClient` is used to create the QueryClient instance. The `getQueryClient` function does not accept any arguments and will always return the same singleton instance. This is intentional to maintain a stable singleton across re-renders.
 
 </Callout>
 
@@ -131,10 +131,10 @@ This behavior is **automatic and cannot be overridden** - even if you provide a 
 
 ```tsx
 // get-query-client.ts
-import { defineGetQueryClient } from '@suspensive/react-query'
+import { createGetQueryClient } from '@suspensive/react-query'
 
-// Config is passed to defineGetQueryClient, not getQueryClient
-export const { getQueryClient } = defineGetQueryClient({
+// Config is passed to createGetQueryClient, not getQueryClient
+export const { getQueryClient } = createGetQueryClient({
   defaultOptions: {
     queries: {
       // On server, cache removal time is set to Infinity
@@ -159,9 +159,9 @@ On the server, `getQueryClient` creates a new QueryClient instance for each call
 
 ```tsx
 // get-query-client.ts
-import { defineGetQueryClient } from '@suspensive/react-query'
+import { createGetQueryClient } from '@suspensive/react-query'
 
-export const { getQueryClient } = defineGetQueryClient()
+export const { getQueryClient } = createGetQueryClient()
 ```
 
 ```tsx
@@ -184,9 +184,9 @@ In the browser, `getQueryClient` returns the same QueryClient instance across mu
 
 ```tsx
 // get-query-client.ts
-import { defineGetQueryClient } from '@suspensive/react-query'
+import { createGetQueryClient } from '@suspensive/react-query'
 
-export const { getQueryClient } = defineGetQueryClient()
+export const { getQueryClient } = createGetQueryClient()
 ```
 
 ```tsx
@@ -203,9 +203,9 @@ const queryClient2 = getQueryClient()
 
 ```tsx
 // get-query-client.ts
-import { defineGetQueryClient } from '@suspensive/react-query'
+import { createGetQueryClient } from '@suspensive/react-query'
 
-export const { getQueryClient } = defineGetQueryClient()
+export const { getQueryClient } = createGetQueryClient()
 ```
 
 ```tsx
@@ -252,9 +252,9 @@ export default function RootLayout({
 
 ```tsx
 // get-query-client.ts
-import { defineGetQueryClient } from '@suspensive/react-query'
+import { createGetQueryClient } from '@suspensive/react-query'
 
-export const { getQueryClient } = defineGetQueryClient({
+export const { getQueryClient } = createGetQueryClient({
   defaultOptions: {
     queries: {
       staleTime: 1000 * 60 * 5, // 5 minutes
@@ -295,21 +295,21 @@ export default function Providers({ children }: { children: React.ReactNode }) {
 
 ### @tanstack/react-query v4
 
-In v4, use the `defineGetQueryClient` function, and the cache time option is called `cacheTime`:
+In v4, use the `createGetQueryClient` function, and the cache time option is called `cacheTime`:
 
 ```tsx
 // get-query-client.ts
-import { defineGetQueryClient } from '@suspensive/react-query'
+import { createGetQueryClient } from '@suspensive/react-query'
 
-export const { getQueryClient } = defineGetQueryClient()
+export const { getQueryClient } = createGetQueryClient()
 ```
 
 ```tsx
 // get-query-client.ts
-import { defineGetQueryClient } from '@suspensive/react-query'
+import { createGetQueryClient } from '@suspensive/react-query'
 
 // Server: cacheTime is automatically set to Infinity
-export const { getQueryClient } = defineGetQueryClient({
+export const { getQueryClient } = createGetQueryClient({
   defaultOptions: {
     queries: {
       cacheTime: 5000, // Overridden to Infinity on server
@@ -341,21 +341,21 @@ export default function Providers({ children }: { children: React.ReactNode }) {
 
 ### @tanstack/react-query v5
 
-In v5, use the `defineGetQueryClient` function, and the cache time option is called `gcTime` (garbage collection time):
+In v5, use the `createGetQueryClient` function, and the cache time option is called `gcTime` (garbage collection time):
 
 ```tsx
 // get-query-client.ts
-import { defineGetQueryClient } from '@suspensive/react-query'
+import { createGetQueryClient } from '@suspensive/react-query'
 
-export const { getQueryClient } = defineGetQueryClient()
+export const { getQueryClient } = createGetQueryClient()
 ```
 
 ```tsx
 // get-query-client.ts
-import { defineGetQueryClient } from '@suspensive/react-query'
+import { createGetQueryClient } from '@suspensive/react-query'
 
 // Server: gcTime is automatically set to Infinity
-export const { getQueryClient } = defineGetQueryClient({
+export const { getQueryClient } = createGetQueryClient({
   defaultOptions: {
     queries: {
       gcTime: 5000, // Overridden to Infinity on server
@@ -397,6 +397,6 @@ Even if you use `getQueryClient`, storing it in a global variable like `export c
 
 </Callout>
 
-- **Browser singleton**: The browser instance is a singleton. Configure your QueryClient when calling `defineGetQueryClient`, as `getQueryClient` does not accept any arguments.
+- **Browser singleton**: The browser instance is a singleton. Configure your QueryClient when calling `createGetQueryClient`, as `getQueryClient` does not accept any arguments.
 
 - **Automatic OOM prevention**: The cache removal time override to `Infinity` on the server is automatic and cannot be disabled. This is a safety feature to prevent memory issues. (In v4, the `cacheTime` option is used; in v5, the `gcTime` option is used.)

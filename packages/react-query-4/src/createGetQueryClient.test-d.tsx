@@ -1,9 +1,9 @@
 import type { QueryClient } from '@tanstack/react-query'
-import { defineGetQueryClient } from './defineGetQueryClient'
+import { createGetQueryClient } from './createGetQueryClient'
 
 describe('getQueryClient', () => {
   it('type check', () => {
-    const { getQueryClient } = defineGetQueryClient({ defaultOptions: { queries: { staleTime: 5000 } } })
+    const { getQueryClient } = createGetQueryClient({ defaultOptions: { queries: { staleTime: 5000 } } })
 
     const queryClient = getQueryClient()
     expectTypeOf(queryClient).toEqualTypeOf<QueryClient>()

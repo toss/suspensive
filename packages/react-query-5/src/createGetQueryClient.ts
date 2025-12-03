@@ -15,9 +15,9 @@ import { QueryClient, type QueryClientConfig, isServer } from '@tanstack/react-q
  * ```tsx
  * // Create a get-query-client.ts file in your project:
  * // get-query-client.ts
- * import { defineGetQueryClient } from '@suspensive/react-query'
+ * import { createGetQueryClient } from '@suspensive/react-query'
  *
- * export const { getQueryClient } = defineGetQueryClient()
+ * export const { getQueryClient } = createGetQueryClient()
  *
  * @example
  * ```tsx
@@ -42,9 +42,9 @@ import { QueryClient, type QueryClientConfig, isServer } from '@tanstack/react-q
  * }
  * ```
  *
- * @see {@link https://suspensive.org/docs/react-query/defineGetQueryClient Suspensive Docs}
+ * @see {@link https://suspensive.org/docs/react-query/createGetQueryClient Suspensive Docs}
  */
-export function defineGetQueryClient(config: QueryClientConfig = {}) {
+export function createGetQueryClient(config: QueryClientConfig = {}) {
   let browserQueryClient: QueryClient | undefined
   const getQueryClientConfig = isServer
     ? {

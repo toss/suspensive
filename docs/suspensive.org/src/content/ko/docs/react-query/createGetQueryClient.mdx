@@ -1,10 +1,10 @@
 import { Callout } from '@/components'
 
-# defineGetQueryClient
+# createGetQueryClient
 
 <Callout type='experimental'>
 
-`defineGetQueryClient`는 실험 기능이므로 인터페이스가 변경될 수 있습니다.
+`createGetQueryClient`는 실험 기능이므로 인터페이스가 변경될 수 있습니다.
 
 </Callout>
 
@@ -27,9 +27,9 @@ import { Callout } from '@/components'
 
 ```tsx
 // get-query-client.ts
-import { defineGetQueryClient } from '@suspensive/react-query'
+import { createGetQueryClient } from '@suspensive/react-query'
 
-export const { getQueryClient } = defineGetQueryClient()
+export const { getQueryClient } = createGetQueryClient()
 ```
 
 그런 다음 코드에서 import하여 사용합니다:
@@ -57,13 +57,13 @@ export default function Providers({ children }: { children: React.ReactNode }) {
 
 ## 설정
 
-`defineGetQueryClient`에 `QueryClientConfig`를 전달하여 QueryClient 인스턴스를 커스터마이징할 수 있습니다:
+`createGetQueryClient`에 `QueryClientConfig`를 전달하여 QueryClient 인스턴스를 커스터마이징할 수 있습니다:
 
 ```tsx
 // get-query-client.ts
-import { defineGetQueryClient } from '@suspensive/react-query'
+import { createGetQueryClient } from '@suspensive/react-query'
 
-export const { getQueryClient } = defineGetQueryClient({
+export const { getQueryClient } = createGetQueryClient({
   defaultOptions: {
     queries: {
       staleTime: 5000,
@@ -98,7 +98,7 @@ export default function Providers({ children }: { children: React.ReactNode }) {
 
 **브라우저 환경 동작**
 
-브라우저 환경에서는 `defineGetQueryClient` 호출 시 전달한 config가 QueryClient 인스턴스를 생성하는 데 사용됩니다. `getQueryClient` 함수는 인자를 받지 않으며 항상 동일한 싱글톤 인스턴스를 반환합니다. 이는 리렌더링 간 안정적인 싱글톤을 유지하기 위한 의도적인 동작입니다.
+브라우저 환경에서는 `createGetQueryClient` 호출 시 전달한 config가 QueryClient 인스턴스를 생성하는 데 사용됩니다. `getQueryClient` 함수는 인자를 받지 않으며 항상 동일한 싱글톤 인스턴스를 반환합니다. 이는 리렌더링 간 안정적인 싱글톤을 유지하기 위한 의도적인 동작입니다.
 
 </Callout>
 
@@ -131,10 +131,10 @@ export default function Providers({ children }: { children: React.ReactNode }) {
 
 ```tsx
 // get-query-client.ts
-import { defineGetQueryClient } from '@suspensive/react-query'
+import { createGetQueryClient } from '@suspensive/react-query'
 
-// Config는 getQueryClient가 아닌 defineGetQueryClient에 전달됩니다
-export const { getQueryClient } = defineGetQueryClient({
+// Config는 getQueryClient가 아닌 createGetQueryClient에 전달됩니다
+export const { getQueryClient } = createGetQueryClient({
   defaultOptions: {
     queries: {
       // 서버에서는 캐시 제거 시간이 Infinity로 설정되어
@@ -159,9 +159,9 @@ export const { getQueryClient } = defineGetQueryClient({
 
 ```tsx
 // get-query-client.ts
-import { defineGetQueryClient } from '@suspensive/react-query'
+import { createGetQueryClient } from '@suspensive/react-query'
 
-export const { getQueryClient } = defineGetQueryClient()
+export const { getQueryClient } = createGetQueryClient()
 ```
 
 ```tsx
@@ -184,9 +184,9 @@ const queryClient2 = getQueryClient()
 
 ```tsx
 // get-query-client.ts
-import { defineGetQueryClient } from '@suspensive/react-query'
+import { createGetQueryClient } from '@suspensive/react-query'
 
-export const { getQueryClient } = defineGetQueryClient()
+export const { getQueryClient } = createGetQueryClient()
 ```
 
 ```tsx
@@ -203,9 +203,9 @@ const queryClient2 = getQueryClient()
 
 ```tsx
 // get-query-client.ts
-import { defineGetQueryClient } from '@suspensive/react-query'
+import { createGetQueryClient } from '@suspensive/react-query'
 
-export const { getQueryClient } = defineGetQueryClient()
+export const { getQueryClient } = createGetQueryClient()
 ```
 
 ```tsx
@@ -252,9 +252,9 @@ export default function RootLayout({
 
 ```tsx
 // get-query-client.ts
-import { defineGetQueryClient } from '@suspensive/react-query'
+import { createGetQueryClient } from '@suspensive/react-query'
 
-export const { getQueryClient } = defineGetQueryClient({
+export const { getQueryClient } = createGetQueryClient({
   defaultOptions: {
     queries: {
       staleTime: 1000 * 60 * 5, // 5분
@@ -295,21 +295,21 @@ export default function Providers({ children }: { children: React.ReactNode }) {
 
 ### @tanstack/react-query v4
 
-v4에서는 `defineGetQueryClient` 함수를 사용하며, 캐시 시간 옵션이 `cacheTime`이라고 불립니다:
+v4에서는 `createGetQueryClient` 함수를 사용하며, 캐시 시간 옵션이 `cacheTime`이라고 불립니다:
 
 ```tsx
 // get-query-client.ts
-import { defineGetQueryClient } from '@suspensive/react-query'
+import { createGetQueryClient } from '@suspensive/react-query'
 
-export const { getQueryClient } = defineGetQueryClient()
+export const { getQueryClient } = createGetQueryClient()
 ```
 
 ```tsx
 // get-query-client.ts
-import { defineGetQueryClient } from '@suspensive/react-query'
+import { createGetQueryClient } from '@suspensive/react-query'
 
 // 서버: cacheTime은 자동으로 Infinity로 설정됩니다
-export const { getQueryClient } = defineGetQueryClient({
+export const { getQueryClient } = createGetQueryClient({
   defaultOptions: {
     queries: {
       cacheTime: 5000, // 서버에서는 Infinity로 재정의됩니다
@@ -341,21 +341,21 @@ export default function Providers({ children }: { children: React.ReactNode }) {
 
 ### @tanstack/react-query v5
 
-v5에서는 `defineGetQueryClient` 함수를 사용하며, 캐시 시간 옵션이 `gcTime` (garbage collection time)이라고 불립니다:
+v5에서는 `createGetQueryClient` 함수를 사용하며, 캐시 시간 옵션이 `gcTime` (garbage collection time)이라고 불립니다:
 
 ```tsx
 // get-query-client.ts
-import { defineGetQueryClient } from '@suspensive/react-query'
+import { createGetQueryClient } from '@suspensive/react-query'
 
-export const { getQueryClient } = defineGetQueryClient()
+export const { getQueryClient } = createGetQueryClient()
 ```
 
 ```tsx
 // get-query-client.ts
-import { defineGetQueryClient } from '@suspensive/react-query'
+import { createGetQueryClient } from '@suspensive/react-query'
 
 // 서버: gcTime은 자동으로 Infinity로 설정됩니다
-export const { getQueryClient } = defineGetQueryClient({
+export const { getQueryClient } = createGetQueryClient({
   defaultOptions: {
     queries: {
       gcTime: 5000, // 서버에서는 Infinity로 재정의됩니다
@@ -397,6 +397,6 @@ export default function Providers({ children }: { children: React.ReactNode }) {
 
 </Callout>
 
-- **브라우저 싱글톤**: 브라우저 인스턴스는 싱글톤입니다. `getQueryClient`는 인자를 받지 않으므로 `defineGetQueryClient`를 호출할 때 QueryClient를 구성하세요.
+- **브라우저 싱글톤**: 브라우저 인스턴스는 싱글톤입니다. `getQueryClient`는 인자를 받지 않으므로 `createGetQueryClient`를 호출할 때 QueryClient를 구성하세요.
 
 - **자동 OOM 방지**: 서버에서 캐시 제거 시간을 `Infinity`로 재정의하는 것은 자동이며 비활성화할 수 없습니다. 이는 메모리 문제를 방지하기 위한 안전 기능입니다. (v4에서는 `cacheTime`, v5에서는 `gcTime` 옵션을 사용합니다.)
