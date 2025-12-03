@@ -3,6 +3,7 @@
  * When thrown inside a React component wrapped with Suspense,
  * it causes the Suspense boundary to stay in suspended state indefinitely.
  */
+// eslint-disable-next-line @typescript-eslint/no-empty-function
 const infiniteThenable = { then() {} }
 
 /**
