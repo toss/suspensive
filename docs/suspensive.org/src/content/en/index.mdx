@@ -456,6 +456,96 @@ const DeepComponent = () => (
 
 </Scrollycoding>
 
+<SectionDescription>lazy</SectionDescription>
+<br />
+
+<Scrollycoding>
+
+# !!steps When using React's lazy, you may want to preload components before they are rendered.
+
+React's `lazy` doesn't provide a built-in way to preload components.
+
+```jsx ! Page.jsx
+import { lazy, Suspense } from 'react'
+
+const HeavyComponent = lazy(() => import('./HeavyComponent'))
+
+const Page = () => (
+  <div>
+    <button>Hover here</button>
+    <Suspense fallback={<div>Loading...</div>}>
+      <HeavyComponent />
+    </Suspense>
+  </div>
+)
+```
+
+# !!steps Suspensive's lazy provides a load method for preloading components.
+
+Just call `Component.load()` to preload the component before it's rendered.
+
+```jsx ! Page.jsx
+import { lazy, Suspense } from '@suspensive/react'
+
+const HeavyComponent = lazy(() => import('./HeavyComponent'))
+
+const Page = () => (
+  <div>
+    <button onMouseEnter={() => HeavyComponent.load()}>
+      Hover here to preload
+    </button>
+    <Suspense fallback={<div>Loading...</div>}>
+      <HeavyComponent />
+    </Suspense>
+  </div>
+)
+```
+
+# !!steps You can also handle component loading success and failure with callbacks.
+
+Use `onSuccess` and `onError` callbacks for logging, analytics, or error handling.
+
+```jsx ! Page.jsx
+import { lazy, Suspense, ErrorBoundary } from '@suspensive/react'
+
+const UserProfile = lazy(() => import('./UserProfile'), {
+  onSuccess: () => console.log('Component loaded successfully'),
+  onError: ({ error }) => console.error('Loading failed:', error),
+})
+
+const Page = () => (
+  <ErrorBoundary fallback={<div>Something went wrong</div>}>
+    <Suspense fallback={<div>Loading...</div>}>
+      <UserProfile />
+    </Suspense>
+  </ErrorBoundary>
+)
+```
+
+# !!steps For version skew issues in production, use reloadOnError.
+
+When deployments cause chunk loading failures, `reloadOnError` automatically retries by reloading the page.
+
+```jsx ! Page.jsx
+import { lazy, reloadOnError, Suspense } from '@suspensive/react'
+
+const VersionSkewSafeComponent = lazy(
+  () => import('./VersionSkewSafeComponent'),
+  reloadOnError({
+    retry: 3,
+    retryDelay: 1000,
+  })
+)
+
+const Page = () => (
+  <Suspense fallback={<div>Loading...</div>}>
+    <VersionSkewSafeComponent />
+  </Suspense>
+)
+```
+
+</Scrollycoding>
+
 <TrustedBy />
 
 <SectionTitle>Thank you for contributing to Suspensive</SectionTitle>
