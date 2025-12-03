@@ -31,5 +31,4 @@ jobs:
           publish: pnpm run changeset:publish
           setupGitUser: false
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
           NPM_CONFIG_PROVENANCE: true
