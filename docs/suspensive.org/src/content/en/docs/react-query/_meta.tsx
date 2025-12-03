@@ -11,7 +11,7 @@ export default {
     type: 'separator',
     title: 'API Reference',
   },
-  getQueryClient: { title: 'getQueryClient' },
+  createGetQueryClient: { title: 'createGetQueryClient' },
   mutationOptions: { title: 'mutationOptions' },
   usePrefetchQuery: { title: 'usePrefetchQuery' },
   usePrefetchInfiniteQuery: { title: 'usePrefetchInfiniteQuery' },
