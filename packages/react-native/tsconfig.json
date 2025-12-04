@@ -1,7 +1,0 @@
-{
-  "extends": "@suspensive/tsconfig/react-library.json",
-  "include": ["."],
-  "compilerOptions": {
-    "types": ["vitest/globals"]
-  }
-}
