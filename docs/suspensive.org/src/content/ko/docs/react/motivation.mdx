@@ -1,30 +1,401 @@
-import { Steps } from 'nextra/components'
+import { Callout, Steps, Tabs } from 'nextra/components'
 
 # 어떤 이유로 사용하나요?
 
-@suspensive/react는 아래와 같은 동기로 사용됩니다.
+@suspensive/react는 React Suspense와 에러 바운더리를 더 쉽게 사용할 수 있도록 강력하고 선언적인 컴포넌트를 제공합니다. 현대 React 애플리케이션에서 흔히 겪는 문제들을 해결합니다. 사용해야 하는 이유는 다음과 같습니다:
+
+## 주요 장점
+
+### 🎯 간소화된 에러 처리
+
+대안들보다 깔끔하고 직관적인 API로 에러를 선언적으로 처리하면서도 더욱 강력합니다.
+
+### ⚡ 향상된 Suspense 제어
+
+타이밍 제어, SSR 지원, 애플리케이션 전체의 기본 props 관리를 통해 로딩 상태를 세밀하게 조정합니다.
+
+### 🔄 조율된 에러 관리
+
+복잡한 prop drilling이나 상태 관리 없이 여러 에러 바운더리를 한번에 쉽게 리셋할 수 있습니다.
+
+### 🎨 개선된 개발자 경험
+
+타입 안정성과 선언적 패턴을 유지하면서 보일러플레이트 코드를 덜 작성합니다.
+
+## @suspensive/react가 해결하는 흔한 문제들
 
 <Steps>
 
-### React Suspense는 때에 따라 서버사이드 렌더링을 피할 필요가 있습니다.
+### 문제 1: 서버사이드 렌더링에서의 React Suspense
 
-React Suspense를 Next.js와 같은 서버사이드 렌더링 환경에서 사용해본 적이 있다면 아마 종종 아래 사진과 같은 에러를 겪게 된 적이 있을 겁니다.
+**과제:** Next.js와 같은 SSR 환경에서 React Suspense를 사용할 때, Suspense의 동작이 서버와 클라이언트에서 다르기 때문에 종종 하이드레이션 에러가 발생합니다.
+
 ![Example banner](/img/suspense-in-ssr-error.png)
 
-이것이 [`<Suspense/>`](/docs/react/Suspense)의 clientOnly를 이 라이브러리에 추가한 이유입니다.
+**해결책:** [`<Suspense clientOnly/>`](/docs/react/Suspense)를 사용하여 SSR/CSR 차이를 안전하게 처리합니다.
 
-### ErrorBoundary를 더욱 단순하게 사용하고 싶습니다.
+<Tabs items={['@suspensive/react 없이', '@suspensive/react 사용']}>
+<Tabs.Tab>
 
-[bvaughn/react-error-boundary](https://github.com/bvaughn/react-error-boundary)는 React의 Error Boundary개념을 선언적으로 제공하는 인기있는 라이브러리입니다. bvaughn/react-error-boundary의 ErrorBoundary는 fallback prop을 위해 FallbackComponent, fallbackRender, fallback와 같은 다양한 이름으로 이를 제공합니다. 기존 ErrorBoundary의 다소 복잡한 fallback interface를 @suspensive/react의 `<ErrorBoundary/>`와 같이 더 단순하게 사용하고 싶었습니다.
+```tsx
+// ❌ 문제 발생: SSR 에러가 발생할 수 있음
+import { Suspense } from 'react'
 
-이것이 [`<ErrorBoundary/>`](/docs/react/ErrorBoundary)를 이 라이브러리에 추가한 이유입니다.
+function MyComponent() {
+  return (
+    <Suspense fallback={<Loading />}>
+      <ClientOnlyComponent />
+    </Suspense>
+  )
+}
+```
 
-### `<ErrorBoundary/>`의 fallback 외부에서 다수의 `<ErrorBoundary/>`를 reset하고 싶습니다.
+</Tabs.Tab>
+<Tabs.Tab>
 
-`<ErrorBoundary/>`를 reset하려면 `<ErrorBoundary/>`의 fallback에 주어지는 reset을 사용하면 됩니다.
+```tsx
+// ✅ 안전함: SSR/CSR 차이를 자동으로 처리
+import { Suspense } from '@suspensive/react'
 
-그러나 fallback 외부에서 다수의 `<ErrorBoundary/>`을 reset하려면 각 `<ErrorBoundary/>`의 props인 resetKeys에 새 resetKey를 제공해야 합니다. 하지만 @suspensive/react가 제공하는 `<ErrorBoundaryGroup/>`을 사용하면 이렇게 번거롭게 reset할 필요가 없습니다. `<ErrorBoundaryGroup/>`은 여러 `<ErrorBoundary/>`를 쉽게 재설정합니다.
+function MyComponent() {
+  return (
+    <Suspense clientOnly fallback={<Loading />}>
+      <ClientOnlyComponent />
+    </Suspense>
+  )
+}
+```
 
-이것이 [`<ErrorBoundaryGroup/>`](/docs/react/ErrorBoundaryGroup)를 이 라이브러리에 추가한 이유입니다.
+</Tabs.Tab>
+</Tabs>
+
+`clientOnly` prop은 서버에서 fallback을 렌더링하고 클라이언트에서만 실제 콘텐츠를 하이드레이트하여 하이드레이션 불일치를 방지합니다.
+
+### 문제 2: 복잡한 ErrorBoundary API
+
+**과제:** [react-error-boundary](https://github.com/bvaughn/react-error-boundary)와 같은 인기 있는 에러 바운더리 라이브러리는 fallback을 정의하는 여러 방법(FallbackComponent, fallbackRender, fallback)이 있어 API를 배우고 일관되게 사용하기 어렵습니다.
+
+**해결책:** [`<ErrorBoundary/>`](/docs/react/ErrorBoundary)는 단일하고 직관적인 `fallback` prop을 제공합니다.
+
+<Tabs items={['react-error-boundary', '@suspensive/react']}>
+<Tabs.Tab>
+
+```tsx
+// fallback을 정의하는 여러 방법 (혼란스러움)
+import { ErrorBoundary } from 'react-error-boundary'
+
+// 옵션 1: FallbackComponent
+<ErrorBoundary FallbackComponent={ErrorFallback}>
+  <App />
+</ErrorBoundary>
+
+// 옵션 2: fallbackRender
+<ErrorBoundary fallbackRender={({ error }) => <div>{error.message}</div>}>
+  <App />
+</ErrorBoundary>
+
+// 옵션 3: fallback
+<ErrorBoundary fallback={<div>에러가 발생했습니다</div>}>
+  <App />
+</ErrorBoundary>
+```
+
+</Tabs.Tab>
+<Tabs.Tab>
+
+```tsx
+// ✅ 간단함: 하나의 일관된 방법
+import { ErrorBoundary } from '@suspensive/react'
+;<ErrorBoundary
+  fallback={({ error, reset }) => (
+    <div>
+      <p>{error.message}</p>
+      <button onClick={reset}>다시 시도</button>
+    </div>
+  )}
+>
+  <App />
+</ErrorBoundary>
+```
+
+</Tabs.Tab>
+</Tabs>
+
+### 문제 3: 여러 ErrorBoundary 리셋하기
+
+**과제:** 여러 에러 바운더리를 한번에 리셋해야 할 때(예: 네비게이션 후 또는 전역 액션), 일반적으로 각 바운더리에 대해 resetKeys를 수동으로 관리해야 합니다.
+
+**해결책:** [`<ErrorBoundaryGroup/>`](/docs/react/ErrorBoundaryGroup)을 사용하여 단일 액션으로 그룹화된 모든 바운더리를 리셋합니다.
+
+<Tabs items={['ErrorBoundaryGroup 없이', 'ErrorBoundaryGroup 사용']}>
+<Tabs.Tab>
+
+```tsx
+// ❌ 수동: 각 바운더리에 대해 resetKeys 관리 필요
+function App() {
+  const [resetKey, setResetKey] = useState(0)
+
+  return (
+    <div>
+      <button onClick={() => setResetKey((prev) => prev + 1)}>모두 리셋</button>
+      <ErrorBoundary resetKeys={[resetKey]} fallback={<Error1 />}>
+        <Section1 />
+      </ErrorBoundary>
+      <ErrorBoundary resetKeys={[resetKey]} fallback={<Error2 />}>
+        <Section2 />
+      </ErrorBoundary>
+      <ErrorBoundary resetKeys={[resetKey]} fallback={<Error3 />}>
+        <Section3 />
+      </ErrorBoundary>
+    </div>
+  )
+}
+```
+
+</Tabs.Tab>
+<Tabs.Tab>
+
+```tsx
+// ✅ 자동: 하나의 그룹이 모든 바운더리를 제어
+import { ErrorBoundaryGroup, ErrorBoundary } from '@suspensive/react'
+
+function App() {
+  return (
+    <ErrorBoundaryGroup>
+      {(group) => (
+        <>
+          <button onClick={group.reset}>모두 리셋</button>
+          <ErrorBoundary fallback={<Error1 />}>
+            <Section1 />
+          </ErrorBoundary>
+          <ErrorBoundary fallback={<Error2 />}>
+            <Section2 />
+          </ErrorBoundary>
+          <ErrorBoundary fallback={<Error3 />}>
+            <Section3 />
+          </ErrorBoundary>
+        </>
+      )}
+    </ErrorBoundaryGroup>
+  )
+}
+```
+
+</Tabs.Tab>
+</Tabs>
+
+### 문제 4: 로딩 상태 타이밍 관리
+
+**과제:** 때때로 로딩 스피너가 너무 빠르게 깜빡여서 사용자 경험이 나빠집니다. 스피너를 보여주는 것을 지연시키거나 여러 로딩 상태를 조율해야 합니다.
+
+**해결책:** [`<Delay/>`](/docs/react/Delay)를 사용하여 로딩 UI가 나타나는 시점을 제어합니다.
+
+```tsx
+import { Suspense, Delay } from '@suspensive/react'
+
+function App() {
+  return (
+    <Suspense
+      fallback={
+        // 깜빡임을 방지하기 위해 200ms 후에만 스피너 표시
+        <Delay ms={200}>
+          <Spinner />
+        </Delay>
+      }
+    >
+      <UserProfile />
+    </Suspense>
+  )
+}
+```
+
+### 문제 5: 모든 곳에서 Fallback Props 반복
+
+**과제:** 대규모 애플리케이션에서는 여러 곳에서 동일한 fallback UI를 사용하는 경우가 많아 반복적인 코드가 발생합니다.
+
+**해결책:** [`<DefaultPropsProvider/>`](/docs/react/DefaultPropsProvider)를 사용하여 기본값을 한 번만 설정합니다.
+
+<Tabs items={['DefaultPropsProvider 없이', 'DefaultPropsProvider 사용']}>
+<Tabs.Tab>
+
+```tsx
+// ❌ 반복적: 모든 곳에서 동일한 fallback
+function App() {
+  return (
+    <>
+      <Suspense fallback={<Spinner />}>
+        <Page1 />
+      </Suspense>
+      <Suspense fallback={<Spinner />}>
+        <Page2 />
+      </Suspense>
+      <Suspense fallback={<Spinner />}>
+        <Page3 />
+      </Suspense>
+    </>
+  )
+}
+```
+
+</Tabs.Tab>
+<Tabs.Tab>
+
+```tsx
+// ✅ DRY: 기본 fallback을 한 번만 설정
+import { DefaultPropsProvider, Suspense } from '@suspensive/react'
+
+function App() {
+  return (
+    <DefaultPropsProvider Suspense={{ fallback: <Spinner /> }}>
+      <Suspense>
+        <Page1 />
+      </Suspense>
+      <Suspense>
+        <Page2 />
+      </Suspense>
+      <Suspense>
+        <Page3 />
+      </Suspense>
+    </DefaultPropsProvider>
+  )
+}
+```
+
+</Tabs.Tab>
+</Tabs>
 
 </Steps>
+
+## 실제 사용 사례
+
+### 사용 사례 1: TanStack Query와 데이터 페칭
+
+TanStack Query를 Suspense와 함께 사용할 때, @suspensive/react는 에러 처리와 로딩 상태를 훨씬 깔끔하게 만듭니다:
+
+```tsx
+import { Suspense, ErrorBoundary, Delay } from '@suspensive/react'
+import { useSuspenseQuery } from '@tanstack/react-query'
+
+function UserProfile({ userId }) {
+  const { data: user } = useSuspenseQuery({
+    queryKey: ['user', userId],
+    queryFn: () => fetchUser(userId),
+  })
+
+  return <div>{user.name}</div>
+}
+
+function App() {
+  return (
+    <ErrorBoundary
+      fallback={({ error, reset }) => (
+        <div>
+          <p>사용자를 불러오는데 실패했습니다: {error.message}</p>
+          <button onClick={reset}>다시 시도</button>
+        </div>
+      )}
+    >
+      <Suspense
+        fallback={
+          <Delay ms={200}>
+            <LoadingSpinner />
+          </Delay>
+        }
+      >
+        <UserProfile userId={123} />
+      </Suspense>
+    </ErrorBoundary>
+  )
+}
+```
+
+### 사용 사례 2: 다중 섹션 대시보드
+
+여러 독립적인 데이터 소스가 있는 대시보드를 구축할 때:
+
+```tsx
+import { ErrorBoundaryGroup, ErrorBoundary, Suspense } from '@suspensive/react'
+
+function Dashboard() {
+  return (
+    <ErrorBoundaryGroup>
+      {(group) => (
+        <div>
+          <button onClick={group.reset}>모든 섹션 새로고침</button>
+
+          <ErrorBoundary fallback={<SectionError />}>
+            <Suspense fallback={<SectionSkeleton />}>
+              <AnalyticsSection />
+            </Suspense>
+          </ErrorBoundary>
+
+          <ErrorBoundary fallback={<SectionError />}>
+            <Suspense fallback={<SectionSkeleton />}>
+              <RevenueSection />
+            </Suspense>
+          </ErrorBoundary>
+
+          <ErrorBoundary fallback={<SectionError />}>
+            <Suspense fallback={<SectionSkeleton />}>
+              <UsersSection />
+            </Suspense>
+          </ErrorBoundary>
+        </div>
+      )}
+    </ErrorBoundaryGroup>
+  )
+}
+```
+
+### 사용 사례 3: SSR에서의 점진적 향상
+
+서버와 클라이언트에서 다른 동작이 필요한 컴포넌트의 경우:
+
+```tsx
+import { Suspense, ClientOnly } from '@suspensive/react'
+
+function App() {
+  return (
+    <div>
+      {/* 서버와 클라이언트 모두에서 항상 렌더링 */}
+      <Header />
+
+      {/* 서버에서는 건너뛰고 클라이언트에서만 렌더링 */}
+      <Suspense clientOnly fallback={<SkeletonChart />}>
+        <InteractiveChart />
+      </Suspense>
+
+      {/* 또는 ClientOnly를 사용하여 더 많은 제어 */}
+      <ClientOnly fallback={<StaticMap />}>
+        <InteractiveMap />
+      </ClientOnly>
+
+      <Footer />
+    </div>
+  )
+}
+```
+
+## 왜 @suspensive/react를 선택해야 하나요?
+
+<Callout type="info">
+  **결론:** @suspensive/react는 보일러플레이트를 줄이고, 더 나은 타입 안정성을
+  제공하며, 대안들에 비해 더 직관적인 API를 제공합니다—React의 Suspense 및 더
+  넓은 React 생태계와 완벽하게 호환되면서 말이죠.
+</Callout>
+
+- ✅ **적은 코드**: 수동 구현에 비해 30-50% 적은 코드 작성
+- ✅ **타입 안전**: 우수한 타입 추론을 갖춘 완전한 TypeScript 지원
+- ✅ **생태계 통합**: TanStack Query, Next.js 및 기타 인기 도구와 원활하게 작동
+- ✅ **성능**: React를 제외한 의존성이 없는 경량
+- ✅ **실전 검증**: Toss와 같은 회사에서 프로덕션에 사용 중
+- ✅ **활발한 개발**: 정기적인 업데이트와 반응이 빠른 유지보수자
+
+## 다음 단계
+
+시작할 준비가 되셨나요? 다음을 확인하세요:
+
+- [설치 가이드](/docs/react/installation) - 몇 분 안에 설정하기
+- [Suspense API](/docs/react/Suspense) - 향상된 Suspense 기능 배우기
+- [ErrorBoundary API](/docs/react/ErrorBoundary) - 에러 처리 마스터하기
+- [예제 저장소](https://github.com/toss/suspensive/tree/main/examples) - 실제 구현 보기
