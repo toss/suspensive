@@ -24,13 +24,11 @@
     "react": "catalog:react19",
     "react-dom": "catalog:react19",
     "react-error-boundary": "^6.0.0",
-    "sharp": "catalog:",
     "usehooks-ts": "^3.1.1",
     "zod": "^4.1.12"
   },
   "devDependencies": {
     "@suspensive/eslint-config": "workspace:*",
-    "@suspensive/tsconfig": "workspace:*",
     "@tailwindcss/postcss": "catalog:",
     "@types/react": "catalog:react19",
     "@types/react-dom": "catalog:react19",

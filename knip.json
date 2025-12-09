@@ -1,20 +1,14 @@
 {
   "$schema": "https://unpkg.com/knip@5/schema.json",
-  "ignoreWorkspaces": ["examples/**"],
   "ignore": ["**/test-utils/**", "scripts/**"],
   "ignoreDependencies": ["prettier-plugin-sort-re-exports"],
   "workspaces": {
     ".": {
-      "ignore": ["packlint.config.mjs"],
-      "ignoreDependencies": ["vite"]
+      "ignore": ["packlint.config.mjs"]
     },
     "docs/suspensive.org": {
-      "ignoreDependencies": ["sharp", "postcss", "server-only", "tailwindcss"],
+      "ignoreDependencies": ["sharp", "postcss", "server-only"],
       "entry": ["src/**/*.{ts,tsx,mdx}"]
-    },
-    "packages/react-native": {
-      "ignoreDependencies": ["ts-node"],
-      "ignore": ["babel.config.cjs"]
     },
     "packages/react-dom": {
       "ignoreDependencies": ["react-dom", "@types/react-dom"],
@@ -25,6 +19,15 @@
     },
     "packages/codemods": {
       "ignore": ["**/testfixtures/**", "**/getTestfixtures.ts"]
+    },
+    "examples/vite-react-18-suspense-prerender-siblings-problem": {
+      "ignoreDependencies": ["globals"]
+    },
+    "examples/next-streaming-react-query": {
+      "ignoreDependencies": ["postcss"]
+    },
+    "examples/visualization": {
+      "ignoreDependencies": ["postcss"]
     }
   }
 }
