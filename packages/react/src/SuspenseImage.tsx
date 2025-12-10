@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react'
 import { use } from './utils/use'
 
-export const imageCache = new Map<string, Promise<HTMLImageElement>>()
+const imageCache = new Map<string, Promise<HTMLImageElement>>()
 
 function preloadImage(src: string): Promise<HTMLImageElement> {
   const cached = imageCache.get(src)
@@ -23,7 +23,13 @@ function preloadImage(src: string): Promise<HTMLImageElement> {
   return imageLoadPromise
 }
 
-export function AwaitImage({ src, children }: { src: string; children: (img: HTMLImageElement) => ReactNode }) {
+export interface SuspenseImageProps {
+  src: string
+  children: (img: HTMLImageElement) => ReactNode
+}
+
+export function SuspenseImage({ src, children }: SuspenseImageProps) {
   const img = use(preloadImage(src))
+
   return <>{children(img)}</>
 }
