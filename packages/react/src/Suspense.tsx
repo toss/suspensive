@@ -40,7 +40,7 @@ export const Suspense = Object.assign(
             <Component {...props} />
           </Suspense>
         ),
-        { displayName: `Suspense.with(${Component.displayName || Component.name || 'Component'})` }
+        { displayName: `${Suspense.displayName}.with(${Component.displayName || Component.name || 'Component'})` }
       ),
   }
 )

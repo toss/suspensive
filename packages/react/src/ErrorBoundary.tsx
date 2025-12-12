@@ -260,7 +260,7 @@ export const ErrorBoundary = Object.assign(
             <Component {...props} />
           </ErrorBoundary>
         ),
-        { displayName: `ErrorBoundary.with(${Component.displayName || Component.name || 'Component'})` }
+        { displayName: `${ErrorBoundary.displayName}.with(${Component.displayName || Component.name || 'Component'})` }
       ),
     Consumer: ({ children }: { children: (errorBoundary: ReturnType<typeof useErrorBoundary>) => ReactNode }) => (
       <>{children(useErrorBoundary())}</>
