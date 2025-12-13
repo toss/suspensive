@@ -9,6 +9,7 @@ export default {
     title: 'API Reference',
   },
   Suspense: { title: '<Suspense/>' },
+  SuspenseImage: { title: '<SuspenseImage/>' },
   ErrorBoundary: { title: '<ErrorBoundary/>' },
   ErrorBoundaryGroup: { title: '<ErrorBoundaryGroup/>' },
   Delay: { title: '<Delay/>' },
