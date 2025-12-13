@@ -7,6 +7,31 @@ export interface SuspenseImageProps {
   children: (img: HTMLImageElement) => ReactNode
 }
 
+/**
+ * A component that loads images with Suspense support
+ *
+ * @experimental This is experimental feature.
+ *
+ * @description
+ * SuspenseImage loads an image asynchronously and suspends rendering until the image is loaded.
+ * The component uses an internal cache to avoid reloading the same image multiple times.
+ * In SSR environments, it returns a mock object immediately to ensure the image tag is included in the server-rendered HTML.
+ *
+ * @example
+ * ```tsx
+ * import { SuspenseImage, Suspense } from '@suspensive/react'
+ *
+ * function ImageExample() {
+ *   return (
+ *     <Suspense fallback={<div>Loading image...</div>}>
+ *       <SuspenseImage src="https://example.com/image.jpg">
+ *         {(img) => <img src={img.src} alt="Example" />}
+ *       </SuspenseImage>
+ *     </Suspense>
+ *   )
+ * }
+ * ```
+ */
 export function SuspenseImage({ src, children }: SuspenseImageProps) {
   return <>{children(useSuspenseImage(src))}</>
 }
@@ -43,6 +68,38 @@ function preloadImage(src: string): Promise<HTMLImageElement> {
   return imageLoadPromise
 }
 
+/**
+ * A hook that loads an image with Suspense support
+ *
+ * @experimental This is experimental feature.
+ *
+ * @description
+ * useSuspenseImage loads an image asynchronously and suspends the component until the image is loaded.
+ * The hook uses an internal cache to avoid reloading the same image multiple times.
+ * In SSR environments, it returns a mock object immediately to ensure the image tag is included in the server-rendered HTML.
+ *
+ * @example
+ * ```tsx
+ * import { useSuspenseImage, Suspense } from '@suspensive/react'
+ *
+ * function ImageComponent() {
+ *   const img = useSuspenseImage('https://example.com/image.jpg')
+ *
+ *   return <img src={img.src} alt="Example" />
+ * }
+ *
+ * function App() {
+ *   return (
+ *     <Suspense fallback={<div>Loading image...</div>}>
+ *       <ImageComponent />
+ *     </Suspense>
+ *   )
+ * }
+ * ```
+ *
+ * @param src - The source URL of the image to load
+ * @returns The loaded HTMLImageElement. In SSR, returns a mock object with the src property.
+ */
 export function useSuspenseImage(src: string): HTMLImageElement {
   const isClient = useIsClient()
   if (!isClient) {
