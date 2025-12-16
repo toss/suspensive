@@ -49,7 +49,7 @@ export const Delay = Object.assign(
   {
     displayName: 'Delay',
     with: <TProps extends ComponentProps<ComponentType> = Record<string, never>>(
-      delayProps: PropsWithoutChildren<DelayProps> = {},
+      delayProps: PropsWithoutChildren<DelayProps>,
       Component: ComponentType<TProps>
     ) =>
       Object.assign(

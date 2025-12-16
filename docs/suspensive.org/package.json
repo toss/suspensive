@@ -23,7 +23,7 @@
   },
   "dependencies": {
     "@codesandbox/sandpack-react": "^2.20.0",
-    "@next/third-parties": "^15.5.6",
+    "@next/third-parties": "^15.5.9",
     "@suspensive/react": "workspace:*",
     "@suspensive/react-query-5": "workspace:*",
     "@tanstack/react-query": "catalog:react-query5",
@@ -33,14 +33,14 @@
     "d3": "^7.9.0",
     "lucide-react": "^0.553.0",
     "motion": "^12.23.24",
-    "next": "^15.5.7",
+    "next": "^15.5.9",
     "nextra": "^4.6.0",
     "nextra-theme-docs": "^4.6.0",
     "react": "catalog:react19",
     "react-dom": "catalog:react19",
     "remark-sandpack": "^0.0.5",
     "sharp": "catalog:",
-    "zod": "^3.25.47"
+    "zod": "3.22.4"
   },
   "devDependencies": {
     "@suspensive/eslint-config": "workspace:*",
