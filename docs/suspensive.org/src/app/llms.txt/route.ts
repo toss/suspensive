@@ -29,17 +29,19 @@ function getAllMdxFiles(
 
       // Generate URL from file path
       const relativePath = path.relative(baseDir, fullPath)
-      const urlPath = relativePath
+      let urlPath = relativePath
         .replace(/\\/g, '/')
         .replace(/\.mdx?$/, '')
         .replace(/\/index$/, '')
 
-      let url = `https://suspensive.org/${locale}/${urlPath}`
-
       // Handle index files at root
-      if (urlPath === 'index') {
-        url = `https://suspensive.org/${locale}`
+      if (urlPath === 'index' || urlPath === '') {
+        urlPath = ''
       }
+
+      const url = urlPath
+        ? `https://suspensive.org/${locale}/${urlPath}`
+        : `https://suspensive.org/${locale}`
 
       files.push({
         path: fullPath,
@@ -54,7 +56,8 @@ function getAllMdxFiles(
 
 function stripFrontmatter(content: string): string {
   // Remove frontmatter (YAML between --- markers)
-  const frontmatterRegex = /^---\n[\s\S]*?\n---\n/
+  // Handle both \n and \r\n line endings
+  const frontmatterRegex = /^---\r?\n[\s\S]*?\r?\n---\r?\n/
   return content.replace(frontmatterRegex, '').trim()
 }
 
@@ -85,7 +88,7 @@ function generateLlmsTxt(): string {
   return output
 }
 
-export async function GET() {
+export function GET() {
   try {
     const content = generateLlmsTxt()
 
