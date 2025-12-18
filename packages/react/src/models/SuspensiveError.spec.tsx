@@ -1,3 +1,4 @@
+import { CustomError } from '../test-utils'
 import { SuspensiveError } from './SuspensiveError'
 
 describe('SuspensiveError.assert', () => {
@@ -9,7 +10,12 @@ describe('SuspensiveError.assert', () => {
       expectTypeOf(isRandomlyTrue).toEqualTypeOf<true>()
       expect(isRandomlyTrue).toBe(true)
     } catch (error) {
+      // eslint-disable-next-line vitest/no-conditional-expect
       expect(error).toBeInstanceOf(SuspensiveError)
+      // eslint-disable-next-line vitest/no-conditional-expect
+      expect(error).toBeInstanceOf(Error)
+      // eslint-disable-next-line vitest/no-conditional-expect
+      expect(error).not.toBeInstanceOf(CustomError)
     }
   })
   it('should make assertion if condition is right', () => {
@@ -20,10 +26,8 @@ describe('SuspensiveError.assert', () => {
     expect(isAlwaysTrue).toBe(true)
   })
   it('should throw SuspensiveError if condition is not right', () => {
-    try {
+    expect(() => {
       SuspensiveError.assert(Math.random() > 2, 'Math.random() should be greater than 2')
-    } catch (error) {
-      expect(error).toBeInstanceOf(SuspensiveError)
-    }
+    }).toThrowError(SuspensiveError)
   })
 })

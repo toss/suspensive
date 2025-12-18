@@ -251,7 +251,7 @@ export const ErrorBoundary = Object.assign(
       TProps extends ComponentProps<ComponentType> = Record<string, never>,
       TShouldCatch extends ShouldCatch = ShouldCatch,
     >(
-      errorBoundaryProps: PropsWithoutChildren<ErrorBoundaryProps<TShouldCatch>> = { fallback: undefined },
+      errorBoundaryProps: PropsWithoutChildren<ErrorBoundaryProps<TShouldCatch>>,
       Component: ComponentType<TProps>
     ) =>
       Object.assign(
