@@ -1,5 +1,11 @@
 # @suspensive/react
 
+## 3.17.1
+
+### Patch Changes
+
+- [#1860](https://github.com/toss/suspensive/pull/1860) [`9b0aa6a`](https://github.com/toss/suspensive/commit/9b0aa6a424b857635220017fe8b853c878814b24) Thanks [@manudeli](https://github.com/manudeli)! - fix: update package dependencies and configurations
+
 ## 3.17.0
 
 ## 3.16.0
