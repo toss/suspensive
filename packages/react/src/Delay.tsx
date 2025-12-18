@@ -58,7 +58,7 @@ export const Delay = Object.assign(
             <Component {...props} />
           </Delay>
         ),
-        { displayName: `Delay.with(${Component.displayName || Component.name || 'Component'})` }
+        { displayName: `${Delay.displayName}.with(${Component.displayName || Component.name || 'Component'})` }
       ),
   }
 )

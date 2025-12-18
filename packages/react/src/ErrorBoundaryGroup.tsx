@@ -63,7 +63,9 @@ export const ErrorBoundaryGroup = Object.assign(
             <Component {...props} />
           </ErrorBoundaryGroup>
         ),
-        { displayName: `ErrorBoundaryGroup.with(${Component.displayName || Component.name || 'Component'})` }
+        {
+          displayName: `${ErrorBoundaryGroup.displayName}.with(${Component.displayName || Component.name || 'Component'})`,
+        }
       ),
     Consumer: ({
       children,
