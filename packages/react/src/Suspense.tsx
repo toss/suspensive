@@ -31,7 +31,7 @@ export const Suspense = Object.assign(
   {
     displayName: 'Suspense',
     with: <TProps extends ComponentProps<ComponentType> = Record<string, never>>(
-      suspenseProps: PropsWithoutChildren<SuspenseProps> = {},
+      suspenseProps: PropsWithoutChildren<SuspenseProps>,
       Component: ComponentType<TProps>
     ) =>
       Object.assign(

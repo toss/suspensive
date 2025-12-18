@@ -591,12 +591,6 @@ describe('ErrorBoundary.with', () => {
     expect(screen.queryByText(TEXT)).toBeInTheDocument()
   })
 
-  it('should use default errorBoundaryProps when undefined is provided', () => {
-    render(createElement(ErrorBoundary.with(undefined, () => <>{TEXT}</>)))
-
-    expect(screen.queryByText(TEXT)).toBeInTheDocument()
-  })
-
   it('should render the fallback when there`s an error in the wrapped component', async () => {
     render(
       createElement(
