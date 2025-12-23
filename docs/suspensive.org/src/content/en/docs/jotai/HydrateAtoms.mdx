@@ -1,0 +1,195 @@
+import { Callout } from '@/components'
+
+# HydrateAtoms
+
+<Callout type="experimental">
+  `HydrateAtoms` is experimental and the interface may change.
+</Callout>
+
+The HydrateAtoms component is a wrapper around Jotai's [useHydrateAtoms](https://jotai.org/docs/utilities/ssr#usehydrateatoms) hook. It hydrates initial values from SSR into Jotai atoms, preventing state mismatch between server and client.
+
+### props.atomValues
+
+You can pass an array of tuples or a Map containing atom-value pairs to hydrate.
+
+```tsx /HydrateAtoms/
+import { AtomValue, HydrateAtoms } from '@suspensive/jotai'
+import { atom } from 'jotai'
+
+const userIdAtom = atom('')
+
+// Server Component
+const Page = async () => {
+  const userId = await getSessionUserId()
+
+  return (
+    <HydrateAtoms atomValues={[[userIdAtom, userId]]}>
+      <AtomValue atom={userIdAtom}>
+        {(userId) => <div>userId: {userId}</div>}
+      </AtomValue>
+    </HydrateAtoms>
+  )
+}
+```
+
+You can also use a Map:
+
+```tsx /HydrateAtoms/
+import { AtomValue, HydrateAtoms } from '@suspensive/jotai'
+import { atom } from 'jotai'
+
+const userIdAtom = atom('')
+
+// Server Component
+const Page = async () => {
+  const userId = await getSessionUserId()
+  const atomValues = new Map([[userIdAtom, userId]])
+
+  return (
+    <HydrateAtoms atomValues={atomValues}>
+      <AtomValue atom={userIdAtom}>
+        {(userId) => <div>userId: {userId}</div>}
+      </AtomValue>
+    </HydrateAtoms>
+  )
+}
+```
+
+### props.options
+
+You can pass options to configure the hydration behavior. This is the same options object that `useHydrateAtoms` accepts.
+
+- `store`: Specify a custom Jotai store to hydrate atoms into
+- `dangerouslyForceHydrate`: When `true`, forces re-hydration even if atoms have already been hydrated
+
+```tsx /HydrateAtoms/
+import { AtomValue, HydrateAtoms } from '@suspensive/jotai'
+import { atom, createStore } from 'jotai'
+import { Provider } from 'jotai/react'
+
+const userIdAtom = atom('')
+const customStore = createStore()
+
+// Server Component
+const Page = async () => {
+  const userId = await getSessionUserId()
+
+  return (
+    <Provider store={customStore}>
+      <HydrateAtoms
+        atomValues={[[userIdAtom, userId]]}
+        options={{ store: customStore, dangerouslyForceHydrate: true }}
+      >
+        <AtomValue atom={userIdAtom}>
+          {(userId) => <div>userId: {userId}</div>}
+        </AtomValue>
+      </HydrateAtoms>
+    </Provider>
+  )
+}
+```
+
+### props.children
+
+The children will be rendered after atoms are hydrated.
+
+```tsx /HydrateAtoms/
+import { AtomValue, HydrateAtoms } from '@suspensive/jotai'
+import { atom } from 'jotai'
+
+const userIdAtom = atom('')
+
+// Server Component
+const Page = async () => {
+  const userId = await getSessionUserId()
+
+  return (
+    <HydrateAtoms atomValues={[[userIdAtom, userId]]}>
+      <AtomValue atom={userIdAtom}>
+        {(userId) => <div>userId: {userId}</div>}
+      </AtomValue>
+    </HydrateAtoms>
+  )
+}
+```
+
+### Motivation
+
+When building SSR applications with Jotai, you need to ensure that the initial atom values from the server match those on the client to prevent hydration mismatches.
+
+Without HydrateAtoms, you would need to manually call `useHydrateAtoms` in every component that needs server-side data:
+
+```tsx
+// Without HydrateAtoms - requires manual hydration
+import { useHydrateAtoms } from 'jotai/utils'
+import { atom, useAtomValue } from 'jotai'
+
+const userIdAtom = atom('')
+
+// Server Component
+const Page = async () => {
+  const userId = await getSessionUserId()
+
+  return <UserInfo userId={userId} />
+}
+
+// Client Component
+const UserInfo = ({ userId }: { userId: string }) => {
+  useHydrateAtoms([[userIdAtom, userId]])
+  const visibleUserId = useAtomValue(userIdAtom)
+
+  return <div>userId: {visibleUserId}</div>
+}
+```
+
+With HydrateAtoms, you can declaratively hydrate atoms at the boundary of your component tree:
+
+```tsx /HydrateAtoms/
+// With HydrateAtoms - declarative hydration
+import { AtomValue, HydrateAtoms } from '@suspensive/jotai'
+import { atom } from 'jotai'
+
+const userIdAtom = atom('')
+
+// Server Component
+const Page = async () => {
+  const userId = await getSessionUserId()
+
+  return (
+    <HydrateAtoms atomValues={[[userIdAtom, userId]]}>
+      <AtomValue atom={userIdAtom}>
+        {(userId) => <div>userId: {userId}</div>}
+      </AtomValue>
+    </HydrateAtoms>
+  )
+}
+```
+
+### Usage with Suspense
+
+When you use async atoms that depend on hydrated values, you can combine HydrateAtoms with Suspense. The hydrated values from the server are available synchronously, while async atoms that fetch additional data on the client trigger Suspense.
+
+```tsx /HydrateAtoms/
+import { Atom, HydrateAtoms } from '@suspensive/jotai'
+import { Suspense } from '@suspensive/react'
+import { atom } from 'jotai'
+
+const userIdAtom = atom('')
+const userDetailAtom = atom(async (get) => {
+  const userId = get(userIdAtom)
+  return await fetchUserDetail(userId)
+})
+
+// Server Component
+const Page = async () => {
+  const userId = await getSessionUserId()
+
+  return (
+    <HydrateAtoms atomValues={[[userIdAtom, userId]]}>
+      <Suspense fallback={'pending...'}>
+        <Atom atom={userDetailAtom}>{([user]) => <div>{user.name}</div>}</Atom>
+      </Suspense>
+    </HydrateAtoms>
+  )
+}
+```
