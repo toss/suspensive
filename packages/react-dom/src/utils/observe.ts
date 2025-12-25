@@ -120,7 +120,7 @@ export function observe(
     }
 
     if (elements.size === 0) {
-      // No more elements are being observer by this instance, so destroy it
+      // No more elements are being observed by this instance, so destroy it
       observer.disconnect()
       observerMap.delete(id)
     }
