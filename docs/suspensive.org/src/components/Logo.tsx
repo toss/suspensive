@@ -3,7 +3,7 @@
 import { useIsClient } from '@suspensive/react'
 import { useTheme } from 'nextra-theme-docs'
 
-export const LogoImage = ({ size = 1 }: { size: number }) => {
+export const LogoImage = ({ size }: { size: number }) => {
   const baseWidth = 330 * size
   const baseHeight = 43.7 * size
   const { resolvedTheme } = useTheme()

@@ -54,7 +54,7 @@ export const ErrorBoundaryGroup = Object.assign(
   {
     displayName: 'ErrorBoundaryGroup',
     with: <TProps extends ComponentProps<ComponentType> = Record<string, never>>(
-      errorBoundaryGroupProps: PropsWithoutChildren<ErrorBoundaryGroupProps> = {},
+      errorBoundaryGroupProps: PropsWithoutChildren<ErrorBoundaryGroupProps>,
       Component: ComponentType<TProps>
     ) =>
       Object.assign(
@@ -63,7 +63,9 @@ export const ErrorBoundaryGroup = Object.assign(
             <Component {...props} />
           </ErrorBoundaryGroup>
         ),
-        { displayName: `ErrorBoundaryGroup.with(${Component.displayName || Component.name || 'Component'})` }
+        {
+          displayName: `${ErrorBoundaryGroup.displayName}.with(${Component.displayName || Component.name || 'Component'})`,
+        }
       ),
     Consumer: ({
       children,

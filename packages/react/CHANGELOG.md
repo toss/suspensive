@@ -1,5 +1,17 @@
 # @suspensive/react
 
+## 3.17.2
+
+### Patch Changes
+
+- [#1857](https://github.com/toss/suspensive/pull/1857) [`372b93e`](https://github.com/toss/suspensive/commit/372b93e3050cece8802a183dc0849a0247a556cd) Thanks [@sukvvon](https://github.com/sukvvon)! - refactor(react): use 'displayName' variable reference in '.with()' method
+
+## 3.17.1
+
+### Patch Changes
+
+- [#1860](https://github.com/toss/suspensive/pull/1860) [`9b0aa6a`](https://github.com/toss/suspensive/commit/9b0aa6a424b857635220017fe8b853c878814b24) Thanks [@manudeli](https://github.com/manudeli)! - fix: update package dependencies and configurations
+
 ## 3.17.0
 
 ## 3.16.0

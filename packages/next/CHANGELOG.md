@@ -1,5 +1,11 @@
 # @suspensive/next
 
+## 0.0.4
+
+### Patch Changes
+
+- [#1860](https://github.com/toss/suspensive/pull/1860) [`9b0aa6a`](https://github.com/toss/suspensive/commit/9b0aa6a424b857635220017fe8b853c878814b24) Thanks [@manudeli](https://github.com/manudeli)! - fix: update package dependencies and configurations
+
 ## 0.0.3
 
 ### Patch Changes

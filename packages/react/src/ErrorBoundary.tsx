@@ -251,7 +251,7 @@ export const ErrorBoundary = Object.assign(
       TProps extends ComponentProps<ComponentType> = Record<string, never>,
       TShouldCatch extends ShouldCatch = ShouldCatch,
     >(
-      errorBoundaryProps: PropsWithoutChildren<ErrorBoundaryProps<TShouldCatch>> = { fallback: undefined },
+      errorBoundaryProps: PropsWithoutChildren<ErrorBoundaryProps<TShouldCatch>>,
       Component: ComponentType<TProps>
     ) =>
       Object.assign(
@@ -260,7 +260,7 @@ export const ErrorBoundary = Object.assign(
             <Component {...props} />
           </ErrorBoundary>
         ),
-        { displayName: `ErrorBoundary.with(${Component.displayName || Component.name || 'Component'})` }
+        { displayName: `${ErrorBoundary.displayName}.with(${Component.displayName || Component.name || 'Component'})` }
       ),
     Consumer: ({ children }: { children: (errorBoundary: ReturnType<typeof useErrorBoundary>) => ReactNode }) => (
       <>{children(useErrorBoundary())}</>
