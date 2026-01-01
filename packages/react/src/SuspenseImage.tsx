@@ -38,6 +38,10 @@ export function SuspenseImage({ src, children }: SuspenseImageProps) {
 
 const imageCache = new Map<string, Promise<HTMLImageElement>>()
 
+/**
+ * Use clearImageCache only internally.
+ * @private
+ */
 export function clearImageCache() {
   imageCache.clear()
 }
