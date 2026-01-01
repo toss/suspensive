@@ -21,13 +21,15 @@ export interface SuspenseImageProps {
  * ```tsx
  * import { SuspenseImage, Suspense } from '@suspensive/react'
  *
- * function ImageExample() {
+ * function App() {
  *   return (
- *     <Suspense fallback={<div>Loading image...</div>}>
- *       <SuspenseImage src="https://example.com/image.jpg">
- *         {(img) => <img src={img.src} alt="Example" />}
- *       </SuspenseImage>
- *     </Suspense>
+ *    <ErrorBoundary fallback={<div>Failed to load image</div>}>
+ *      <Suspense fallback={<div>Loading image...</div>}>
+ *        <SuspenseImage src="https://example.com/image.jpg">
+ *           {(img) => <img src={img.src} alt="Example" />}
+ *         </SuspenseImage>
+ *       </Suspense>
+ *    </ErrorBoundary>
  *   )
  * }
  * ```
@@ -94,9 +96,11 @@ function preloadImage(src: string): Promise<HTMLImageElement> {
  *
  * function App() {
  *   return (
- *     <Suspense fallback={<div>Loading image...</div>}>
- *       <ImageComponent />
- *     </Suspense>
+ *     <ErrorBoundary fallback={<div>Failed to load image</div>}>
+ *       <Suspense fallback={<div>Loading image...</div>}>
+ *         <ImageComponent />
+ *       </Suspense>
+ *     </ErrorBoundary>
  *   )
  * }
  * ```

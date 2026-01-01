@@ -8,24 +8,29 @@ import { Callout, Sandpack } from '@/components'
 
 </Callout>
 
-Suspense를 지원하여 이미지를 비동기로 로드하는 컴포넌트와 훅입니다. `SuspenseImage`는 이미지가 로드될 때까지 렌더링을 중단하여 매끄러운 로딩 경험을 제공합니다.
+Suspense를 지원하여 이미지를 비동기로 로드하는 컴포넌트와 훅입니다.
 
-`SuspenseImage` 컴포넌트와 `useSuspenseImage` 훅 모두 내부 캐시를 사용하여 동일한 이미지를 여러 번 다시 로드하는 것을 방지합니다. SSR 환경에서는 서버 렌더링된 HTML에 이미지 태그가 포함되도록 반환합니다.
+- 내부 캐시를 사용하여 동일한 이미지를 여러 번 다시 로드하는 것을 방지합니다.
+- Suspense를 발생시켜 이미지가 로드될 때까지 렌더링을 중단합니다.
+- SSR 환경에서는 서버 렌더링된 `<img>` 태그를 반환합니다.
 
 ## SuspenseImage
 
-`SuspenseImage` 컴포넌트는 이미지를 비동기로 로드하고 이미지가 로드될 때까지 렌더링을 중단합니다. 렌더 prop 패턴을 사용하여 로드된 이미지 요소를 제공합니다.
+이미지를 비동기로 로드하고 이미지가 로드될 때까지 렌더링을 중단합니다. Render Prop 패턴을 사용하여 로드된 이미지 요소를 제공합니다.
 
 ```tsx /SuspenseImage/
 import { SuspenseImage, Suspense } from '@suspensive/react'
 
-function ImageExample() {
+function App() {
   return (
-    <Suspense fallback={<div>이미지 로딩 중...</div>}>
-      <SuspenseImage src="https://example.com/image.jpg">
-        {(img) => <img src={img.src} alt="Example" />}
-      </SuspenseImage>
-    </Suspense>
+    <ErrorBoundary fallback={<div>이미지를 불러올 수 없습니다</div>}>
+      <Suspense fallback={<div>이미지 로딩 중...</div>}>
+        <SuspenseImage src="https://example.com/image.jpg">
+          {/** 이미지 로드가 성공된 상태를 보장하여 선언적으로 요소에 접근할 수 있습니다 */}
+          {(img) => <img src={img.src} alt="Example" />}
+        </SuspenseImage>
+      </Suspense>
+    </ErrorBoundary>
   )
 }
 ```
@@ -35,7 +40,7 @@ function ImageExample() {
 ```tsx Example.tsx active
 import { SuspenseImage, Suspense } from '@suspensive/react'
 
-export function ImageExample() {
+export function App() {
   return (
     <Suspense fallback={<div style={{ padding: 20 }}>이미지 로딩 중...</div>}>
       <SuspenseImage src="https://picsum.photos/400/300">
@@ -54,22 +59,15 @@ export function ImageExample() {
 
 </Sandpack>
 
-### props.src
-
-로드할 이미지의 소스 URL입니다.
-
-### props.children
-
-로드된 `HTMLImageElement`를 받아 React 노드를 반환하는 렌더 prop입니다.
-
 ## useSuspenseImage
 
-`useSuspenseImage` 훅은 이미지를 비동기로 로드하고 이미지가 로드될 때까지 컴포넌트를 중단합니다. 로드된 `HTMLImageElement`를 직접 반환합니다.
+이미지를 비동기로 로드하고 이미지가 로드될 때까지 컴포넌트를 중단합니다. 로드된 `HTMLImageElement`를 직접 반환합니다.
 
 ```tsx /useSuspenseImage/
 import { useSuspenseImage, Suspense } from '@suspensive/react'
 
 function ImageComponent() {
+  // Suspense를 발생시켜 이미지가 로드될 때까지 컴포넌트 렌더를 중단합니다.
   const img = useSuspenseImage('https://example.com/image.jpg')
 
   return <img src={img.src} alt="Example" />
@@ -77,9 +75,11 @@ function ImageComponent() {
 
 function App() {
   return (
-    <Suspense fallback={<div>이미지 로딩 중...</div>}>
-      <ImageComponent />
-    </Suspense>
+    <ErrorBoundary fallback={<div>이미지를 불러올 수 없습니다</div>}>
+      <Suspense fallback={<div>이미지 로딩 중...</div>}>
+        <ImageComponent />
+      </Suspense>
+    </ErrorBoundary>
   )
 }
 ```
@@ -112,14 +112,6 @@ export function App() {
 
 </Sandpack>
 
-### 매개변수
-
-- `src` (string): 로드할 이미지의 소스 URL
-
-### 반환값
-
-- `HTMLImageElement`: 로드된 이미지 요소. SSR에서는 `src` 속성을 가진 모의 객체를 반환합니다.
-
 ## 이미지 캐싱
 
 `SuspenseImage`와 `useSuspenseImage` 모두 내부 캐시를 사용하여 동일한 이미지를 여러 번 다시 로드하는 것을 방지합니다. 이미지가 한 번 로드되면, 동일한 이미지에 대한 후속 요청은 캐시된 버전을 사용합니다.
@@ -142,12 +134,22 @@ function MultipleImages() {
 
 ## 서버사이드 렌더링 (SSR)
 
-SSR 환경에서 `SuspenseImage`와 `useSuspenseImage`는 중단 대신 즉시 모의 객체를 반환합니다. 이렇게 하면 SEO를 위해 서버 렌더링된 HTML에 `<img>` 태그가 포함됩니다.
+SSR 환경에서 `SuspenseImage`와 `useSuspenseImage`는 중단 대신 즉시 임시 태그를 반환합니다. 이렇게 하면 SEO를 위해 서버 렌더링된 HTML에 `<img>` 태그가 포함됩니다.
 
-모의 객체는 다음과 같은 구조를 가집니다:
+임시 태그는 `src` 속성을 가진 객체로, `complete` 속성은 `false`입니다:
 
 ```tsx
 { src: string, complete: false } as HTMLImageElement
 ```
 
 이를 통해 초기 HTML에 이미지 태그가 존재하면서, 실제 이미지 로딩은 클라이언트 측에서 발생합니다.
+
+## 주의사항
+
+- 내부 캐시는 메모리에만 존재하며, 페이지 새로고침 시 초기화됩니다.
+
+## 버전 기록
+
+| Version | Changes                                            |
+| ------- | -------------------------------------------------- |
+| v3.18.0 | `<SuspenseImage/>`가 실험 기능으로 추가되었습니다. |

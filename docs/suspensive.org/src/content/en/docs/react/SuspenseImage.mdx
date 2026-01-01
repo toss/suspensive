@@ -8,24 +8,29 @@ import { Callout, Sandpack } from '@/components'
 
 </Callout>
 
-`SuspenseImage` is a component and hook that load images asynchronously with support for React Suspense. Rendering is suspended until the image is fully loaded, providing a smooth loading experience.
+A component and hook for loading images asynchronously with Suspense support.
 
-Both the `SuspenseImage` component and the `useSuspenseImage` hook use an internal cache to prevent the same image from being loaded multiple times. In SSR environments, they ensure that an `<img>` tag is included in the server-rendered HTML.
+- Uses an internal cache to prevent reloading the same image multiple times.
+- Triggers Suspense to suspend rendering until the image is loaded.
+- In SSR environments, returns a server-rendered `<img>` tag.
 
 ## SuspenseImage
 
-The `SuspenseImage` component loads an image asynchronously and suspends rendering until the image is ready. It uses the render prop pattern to provide the loaded image element.
+Loads an image asynchronously and suspends rendering until the image is loaded. Uses the Render Prop pattern to provide the loaded image element.
 
 ```tsx /SuspenseImage/
 import { SuspenseImage, Suspense } from '@suspensive/react'
 
-function ImageExample() {
+function App() {
   return (
-    <Suspense fallback={<div>Loading image...</div>}>
-      <SuspenseImage src="https://example.com/image.jpg">
-        {(img) => <img src={img.src} alt="Example" />}
-      </SuspenseImage>
-    </Suspense>
+    <ErrorBoundary fallback={<div>Failed to load image</div>}>
+      <Suspense fallback={<div>Loading image...</div>}>
+        <SuspenseImage src="https://example.com/image.jpg">
+          {/** Guarantees the image is loaded, allowing declarative access to the element */}
+          {(img) => <img src={img.src} alt="Example" />}
+        </SuspenseImage>
+      </Suspense>
+    </ErrorBoundary>
   )
 }
 ```
@@ -35,7 +40,7 @@ function ImageExample() {
 ```tsx Example.tsx active
 import { SuspenseImage, Suspense } from '@suspensive/react'
 
-export function ImageExample() {
+export function App() {
   return (
     <Suspense fallback={<div style={{ padding: 20 }}>Loading image...</div>}>
       <SuspenseImage src="https://picsum.photos/400/300">
@@ -54,22 +59,15 @@ export function ImageExample() {
 
 </Sandpack>
 
-### props.src
-
-The source URL of the image to load.
-
-### props.children
-
-A render prop that receives the loaded `HTMLImageElement` and returns a React node.
-
 ## useSuspenseImage
 
-The `useSuspenseImage` hook loads an image asynchronously and suspends the component until the image is ready. It returns the loaded `HTMLImageElement` directly.
+Loads an image asynchronously and suspends the component until the image is loaded. Returns the loaded `HTMLImageElement` directly.
 
 ```tsx /useSuspenseImage/
 import { useSuspenseImage, Suspense } from '@suspensive/react'
 
 function ImageComponent() {
+  // Triggers Suspense to suspend component rendering until the image is loaded.
   const img = useSuspenseImage('https://example.com/image.jpg')
 
   return <img src={img.src} alt="Example" />
@@ -77,9 +75,11 @@ function ImageComponent() {
 
 function App() {
   return (
-    <Suspense fallback={<div>Loading image...</div>}>
-      <ImageComponent />
-    </Suspense>
+    <ErrorBoundary fallback={<div>Failed to load image</div>}>
+      <Suspense fallback={<div>Loading image...</div>}>
+        <ImageComponent />
+      </Suspense>
+    </ErrorBoundary>
   )
 }
 ```
@@ -112,24 +112,16 @@ export function App() {
 
 </Sandpack>
 
-### Parameters
-
-- `src` (string): The source URL of the image to load.
-
-### Return value
-
-- `HTMLImageElement`: The loaded image element. In SSR environments, a mock object with a `src` property is returned.
-
 ## Image Caching
 
-Both `SuspenseImage` and `useSuspenseImage` use an internal cache to avoid reloading the same image multiple times. Once an image has been loaded, subsequent requests for the same image will reuse the cached version.
+Both `SuspenseImage` and `useSuspenseImage` use an internal cache to prevent reloading the same image multiple times. Once an image is loaded, subsequent requests for the same image will use the cached version.
 
 ```tsx /caching/
 import { useSuspenseImage, Suspense } from '@suspensive/react'
 
 function MultipleImages() {
   const img1 = useSuspenseImage('https://example.com/image.jpg')
-  const img2 = useSuspenseImage('https://example.com/image.jpg') // uses cache
+  const img2 = useSuspenseImage('https://example.com/image.jpg') // Uses cache
 
   return (
     <>
@@ -142,12 +134,22 @@ function MultipleImages() {
 
 ## Server-Side Rendering (SSR)
 
-In SSR environments, `SuspenseImage` and `useSuspenseImage` return a mock object immediately instead of suspending. This ensures that an `<img>` tag is included in the server-rendered HTML for SEO purposes.
+In SSR environments, `SuspenseImage` and `useSuspenseImage` return a mock object immediately instead of suspending. This ensures the `<img>` tag is included in the server-rendered HTML for SEO purposes.
 
-The mock object has the following shape:
+The mock object has a `src` property with `complete` set to `false`:
 
 ```tsx
 { src: string, complete: false } as HTMLImageElement
 ```
 
-This allows the initial HTML to contain the image tag, while the actual image loading occurs on the client side.
+This allows the image tag to be present in the initial HTML while the actual image loading occurs on the client side.
+
+## Important Notes
+
+- The internal cache exists only in memory and is cleared on page refresh.
+
+## Version History
+
+| Version | Changes                                                  |
+| ------- | -------------------------------------------------------- |
+| v3.18.0 | `<SuspenseImage/>` was added as an experimental feature. |
