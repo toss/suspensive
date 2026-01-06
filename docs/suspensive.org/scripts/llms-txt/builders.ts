@@ -4,7 +4,7 @@ import { getMetaForCategory } from './meta-parser'
 import type { DocInfo } from './types'
 
 function formatDocLink(doc: DocInfo): string {
-  return `- [${doc.title}](${doc.path}.md): ${doc.description}`
+  return `- [${doc.title}](${doc.path}.md)`
 }
 
 export function buildLLMsTxt(docs: DocInfo[]): string {
@@ -14,9 +14,10 @@ export function buildLLMsTxt(docs: DocInfo[]): string {
   const lines = [
     '# Suspensive',
     '',
-    '> Comprehensive libraries for React Suspense, ErrorBoundary, and data fetching integrations',
+    '> All in one for React Suspense',
     '',
-    'Suspensive provides components and hooks to simplify React Suspense implementation, error handling, and integrations with TanStack Query and Jotai.',
+    'Suspensive is a comprehensive collection of libraries designed to simplify and enhance the use of React Suspense.',
+    'Suspensive contains several packages that provide components, hooks, and utilities to streamline the implementation of suspense-based features, error handling, and integrations with popular data fetching libraries.',
     '',
   ]
 

@@ -18,7 +18,11 @@ function extractFirstSentence(content: string): string {
       trimmed.startsWith('import ') ||
       trimmed.startsWith('<') ||
       trimmed.startsWith('---') ||
-      trimmed.startsWith('>')
+      trimmed.startsWith('>') ||
+      trimmed.startsWith('- ') ||
+      trimmed.startsWith('* ') ||
+      /^[\w]+=/.test(trimmed) || // JSX attributes like title="..."
+      trimmed.startsWith('/>')
 
     if (isSkippable) continue
 
