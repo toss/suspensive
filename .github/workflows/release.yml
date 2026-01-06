@@ -2,21 +2,23 @@ name: Changesets PR or Publish
 
 on:
   push:
-    branches: [v2, main, beta]
+    branches: [main, beta, next]
 env:
   TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
   TURBO_TEAM: ${{ vars.TURBO_TEAM }}
 
 jobs:
   build:
+    if: github.repository == 'toss/suspensive'
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: write
+      pull-requests: write
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: ./.github/actions/pnpm-setup-node
       - run: pnpm install
-      - run: |
-          git config --global user.name "Jonghyeon Ko"
-          git config --global user.email "jonghyeon@toss.im"
       - name: Create Changesets Pull Request or Publish to NPM
         id: changesets
         uses: changesets/action@v1
@@ -25,7 +27,6 @@ jobs:
           commit: 'chore: version packages'
           version: pnpm run changeset:version
           publish: pnpm run changeset:publish
-          setupGitUser: false
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_CONFIG_PROVENANCE: true
