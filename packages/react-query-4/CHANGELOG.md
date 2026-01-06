@@ -216,6 +216,14 @@
 ### Major Changes
 
 - [#1424](https://github.com/toss/suspensive/pull/1424) [`59a809d`](https://github.com/toss/suspensive/commit/59a809d8e91e92ef7b1dd0a874d65c0707bf371e) Thanks [@manudeli](https://github.com/manudeli)! - feat(v3): remove deprecated interfaces
+## 2.18.14
+
+### Patch Changes
+
+- [#1866](https://github.com/toss/suspensive/pull/1866) [`9e7fce0`](https://github.com/toss/suspensive/commit/9e7fce0193e4a3fcecb04b91de8e332107ee5d39) Thanks [@manudeli](https://github.com/manudeli)! - fix(react-query): update peer dependencies for react-query-\* packages to use wildcard version
+
+- Updated dependencies []:
+  - @suspensive/react@2.18.14
 
 ## 2.18.13
 

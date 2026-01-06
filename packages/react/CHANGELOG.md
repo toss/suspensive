@@ -260,6 +260,7 @@
 ### Minor Changes
 
 - [#1409](https://github.com/toss/suspensive/pull/1409) [`124238c`](https://github.com/toss/suspensive/commit/124238c66056fd036765a2725ea3383236d19fec) Thanks [@manudeli](https://github.com/manudeli)! - feat(react): prevent recursive expose fallback when fallback throw error
+## 2.18.14
 
 ## 2.18.13
 
