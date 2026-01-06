@@ -1,7 +1,7 @@
 import fs from 'node:fs'
 import path from 'node:path'
-import { transformNextraComponents } from '../nextra-transform'
 import { DOCS_DIR, ROOT_CATEGORY } from './config'
+import { transformNextraComponents } from './nextra-transform'
 import type { DocInfo, MetaEntry } from './types'
 
 function extractTitle(content: string, fallback: string): string {
