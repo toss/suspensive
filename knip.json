@@ -22,10 +22,6 @@
     "packages/react-query-5": {
       "ignoreDependencies": ["@suspensive/react", "@tanstack/react-query"]
     },
-    "packages/react-native": {
-      "ignoreDependencies": ["ts-node"],
-      "ignore": ["babel.config.cjs"]
-    },
     "packages/react-dom": {
       "ignoreDependencies": ["react-dom", "@types/react-dom"]
     },

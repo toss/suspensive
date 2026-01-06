@@ -11,12 +11,7 @@
       "@suspensive/jotai"
     ]
   ],
-  "ignore": [
-    "@suspensive/suspensive.org",
-    "@suspensive/next-streaming-react-query",
-    "@suspensive/react-native-playground",
-    "@suspensive/visualization"
-  ],
+  "ignore": ["@suspensive/suspensive.org", "@suspensive/next-streaming-react-query", "@suspensive/visualization"],
   "linked": [],
   "access": "restricted",
   "baseBranch": "main",

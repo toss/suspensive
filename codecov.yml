@@ -28,10 +28,6 @@ component_management:
       name: '@suspensive/react-dom'
       paths:
         - packages/react-dom/**
-    - component_id: react-native
-      name: '@suspensive/react-native'
-      paths:
-        - packages/react-native/**
     - component_id: react-query
       name: '@suspensive/react-query'
       paths:

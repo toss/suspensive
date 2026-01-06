@@ -35,14 +35,6 @@ catalogs:
     # react-dom
     "react-dom": "^19.1.0"
     "@types/react-dom": "^19.1.2"
-    # react-native
-    "@react-navigation/native": "^7.0.14"
-    "expo": "^52.0.24"
-    "expo-router": "^4.0.16"
-    "react-native": "^0.76.6"
-    "react-native-web": "^0.19.13"
-    "jest-expo": "^52.0.2"
-    "@testing-library/react-native": "^12.9.0"
 
   # react-query
   react-query4:

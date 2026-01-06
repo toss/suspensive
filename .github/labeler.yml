@@ -2,8 +2,6 @@
   - "packages/react/**/*"
 "@suspensive/react-dom":
   - "packages/react-dom/**/*"
-"@suspensive/react-native":
-  - "packages/react-native/**/*"
 "@suspensive/react-query":
   - "packages/react-query/**/*"
 "@suspensive/react-query-4":
