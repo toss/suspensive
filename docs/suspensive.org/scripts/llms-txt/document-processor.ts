@@ -9,30 +9,72 @@ function extractTitle(content: string, fallback: string): string {
   return match?.[1] ?? fallback
 }
 
+function isSkippableLine(trimmed: string): boolean {
+  return (
+    !trimmed ||
+    trimmed.startsWith('#') ||
+    trimmed.startsWith('import ') ||
+    trimmed.startsWith('<') ||
+    trimmed.startsWith('---') ||
+    trimmed.startsWith('>') ||
+    trimmed.startsWith('- ') ||
+    trimmed.startsWith('* ') ||
+    /^[\w]+=/.test(trimmed) || // JSX attributes like title="..."
+    trimmed.startsWith('/>')
+  )
+}
+
+const SENTENCE_ENDINGS = new Set(['.', '!', '?'])
+
+// Find index of first sentence-ending punctuation, ignoring those inside [] or ``
+function findSentenceEnd(text: string): number {
+  let bracketDepth = 0
+  let inCode = false
+
+  for (let i = 0; i < text.length; i++) {
+    const char = text[i]
+
+    if (char === '`') {
+      inCode = !inCode
+      continue
+    }
+
+    if (inCode) continue
+
+    if (char === '[') bracketDepth++
+    else if (char === ']') bracketDepth = Math.max(0, bracketDepth - 1)
+    else if (bracketDepth === 0 && SENTENCE_ENDINGS.has(char)) return i
+  }
+
+  return -1
+}
+
 function extractFirstSentence(content: string): string {
   for (const line of content.split('\n')) {
     const trimmed = line.trim()
-    const isSkippable =
-      !trimmed ||
-      trimmed.startsWith('#') ||
-      trimmed.startsWith('import ') ||
-      trimmed.startsWith('<') ||
-      trimmed.startsWith('---') ||
-      trimmed.startsWith('>') ||
-      trimmed.startsWith('- ') ||
-      trimmed.startsWith('* ') ||
-      /^[\w]+=/.test(trimmed) || // JSX attributes like title="..."
-      trimmed.startsWith('/>')
+    if (isSkippableLine(trimmed)) continue
 
-    if (isSkippable) continue
-
-    // Extracts first sentence while preserving markdown links [text](url) and inline code `code`
-    const sentencePattern =
-      /^(?:[^.!?\[\]`]|\[[^\]]*\](?:\([^)]*\))?|`[^`]*`)+[.!?]/
-    const match = trimmed.match(sentencePattern)
-    return match ? match[0] : trimmed
+    const endIndex = findSentenceEnd(trimmed)
+    return endIndex >= 0 ? trimmed.slice(0, endIndex + 1) : trimmed
   }
   return ''
+}
+
+export function extractFirstParagraph(content: string): string {
+  const lines: string[] = []
+  let foundContent = false
+
+  for (const line of content.split('\n')) {
+    const trimmed = line.trim()
+    if (isSkippableLine(trimmed)) {
+      if (foundContent) break
+      continue
+    }
+    foundContent = true
+    lines.push(trimmed)
+  }
+
+  return lines.join(' ')
 }
 
 function cleanContent(content: string): string {
