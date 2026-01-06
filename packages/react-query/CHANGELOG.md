@@ -1,5 +1,16 @@
 # @suspensive/react-query
 
+## 2.18.14
+
+### Patch Changes
+
+- [#1866](https://github.com/toss/suspensive/pull/1866) [`9e7fce0`](https://github.com/toss/suspensive/commit/9e7fce0193e4a3fcecb04b91de8e332107ee5d39) Thanks [@manudeli](https://github.com/manudeli)! - fix(react-query): update peer dependencies for react-query-\* packages to use wildcard version
+
+- Updated dependencies [[`9e7fce0`](https://github.com/toss/suspensive/commit/9e7fce0193e4a3fcecb04b91de8e332107ee5d39)]:
+  - @suspensive/react-query-4@2.18.14
+  - @suspensive/react-query-5@2.18.14
+  - @suspensive/react@2.18.14
+
 ## 2.18.13
 
 ### Patch Changes
