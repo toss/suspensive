@@ -3,10 +3,18 @@ import path from 'node:path'
 import { DOCS_DIR, ROOT_CATEGORY } from './config'
 import type { MetaEntry } from './types'
 
+export function getMetaForCategory(category: string): MetaEntry[] {
+  const metaPath =
+    category === ROOT_CATEGORY
+      ? path.join(DOCS_DIR, '_meta.tsx')
+      : path.join(DOCS_DIR, category, '_meta.tsx')
+  return parseMetaFile(metaPath)
+}
+
 /**
  * Parses Nextra _meta.tsx file and returns entries in order
  */
-export function parseMetaFile(metaPath: string): MetaEntry[] {
+function parseMetaFile(metaPath: string): MetaEntry[] {
   if (!fs.existsSync(metaPath)) return []
 
   const content = fs.readFileSync(metaPath, 'utf-8')
@@ -32,12 +40,4 @@ export function parseMetaFile(metaPath: string): MetaEntry[] {
   }
 
   return entries
-}
-
-export function getMetaForCategory(category: string): MetaEntry[] {
-  const metaPath =
-    category === ROOT_CATEGORY
-      ? path.join(DOCS_DIR, '_meta.tsx')
-      : path.join(DOCS_DIR, category, '_meta.tsx')
-  return parseMetaFile(metaPath)
 }
