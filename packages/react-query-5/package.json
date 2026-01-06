@@ -1,6 +1,6 @@
 {
   "name": "@suspensive/react-query-5",
-  "version": "3.17.2",
+  "version": "3.17.3",
   "description": "Suspensive interfaces for @tanstack/react-query@5",
   "keywords": [
     "suspensive",

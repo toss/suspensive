@@ -1,5 +1,15 @@
 # @suspensive/react-query
 
+## 3.17.3
+
+### Patch Changes
+
+- [#1868](https://github.com/toss/suspensive/pull/1868) [`1d43e8d`](https://github.com/toss/suspensive/commit/1d43e8de9541b1f3d20d621744ecd1e8934a3a8a) Thanks [@manudeli](https://github.com/manudeli)! - chore: to resolve latest tag problem
+
+- Updated dependencies [[`1d43e8d`](https://github.com/toss/suspensive/commit/1d43e8de9541b1f3d20d621744ecd1e8934a3a8a)]:
+  - @suspensive/react-query-4@3.17.3
+  - @suspensive/react-query-5@3.17.3
+
 ## 3.17.2
 
 ### Patch Changes
@@ -478,6 +488,7 @@
 - Updated dependencies [[`59a809d`](https://github.com/toss/suspensive/commit/59a809d8e91e92ef7b1dd0a874d65c0707bf371e)]:
   - @suspensive/react-query-4@3.0.0-next.0
   - @suspensive/react-query-5@3.0.0-next.0
+
 ## 2.18.14
 
 ### Patch Changes
