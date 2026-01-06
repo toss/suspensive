@@ -276,9 +276,6 @@ importers:
       '@types/react-dom':
         specifier: catalog:react19
         version: 19.2.3(@types/react@19.2.7)
-      glob:
-        specifier: ^13.0.0
-        version: 13.0.0
       pagefind:
         specifier: ^1.4.0
         version: 1.4.0

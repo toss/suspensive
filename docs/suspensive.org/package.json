@@ -48,7 +48,6 @@
     "@types/d3": "^7.4.3",
     "@types/react": "catalog:react19",
     "@types/react-dom": "catalog:react19",
-    "glob": "^13.0.0",
     "pagefind": "^1.4.0",
     "tailwindcss": "catalog:"
   }
