@@ -60,23 +60,6 @@ function extractFirstSentence(content: string): string {
   return ''
 }
 
-export function extractFirstParagraph(content: string): string {
-  const lines: string[] = []
-  let foundContent = false
-
-  for (const line of content.split('\n')) {
-    const trimmed = line.trim()
-    if (isSkippableLine(trimmed)) {
-      if (foundContent) break
-      continue
-    }
-    foundContent = true
-    lines.push(trimmed)
-  }
-
-  return lines.join(' ')
-}
-
 function cleanContent(content: string): string {
   const transformed = transformNextraComponents(content)
   return transformed.replace(/\n{3,}/g, '\n\n').trim()
