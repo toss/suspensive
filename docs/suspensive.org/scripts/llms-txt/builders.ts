@@ -1,7 +1,7 @@
-import { ROOT_CATEGORY } from './config'
-import { groupByCategory, sortByMeta } from './document-processor'
-import { getMetaForCategory } from './meta-parser'
-import type { DocInfo } from './types'
+import { ROOT_CATEGORY } from './config.ts'
+import { groupByCategory, sortByMeta } from './document-processor.ts'
+import { getMetaForCategory } from './meta-parser.ts'
+import type { DocInfo } from './types.ts'
 
 function formatDocLink(doc: DocInfo): string {
   return `- [${doc.title}](${doc.path}.md)`

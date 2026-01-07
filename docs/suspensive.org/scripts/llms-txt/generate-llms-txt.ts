@@ -1,10 +1,10 @@
 import fs from 'node:fs'
 import { glob } from 'node:fs/promises'
 import path from 'node:path'
-import { buildLLMsFullTxt, buildLLMsTxt } from './builders'
-import { DOCS_DIR, PUBLIC_DIR } from './config'
-import { processDocument } from './document-processor'
-import type { DocInfo } from './types'
+import { buildLLMsFullTxt, buildLLMsTxt } from './builders.ts'
+import { DOCS_DIR, PUBLIC_DIR } from './config.ts'
+import { processDocument } from './document-processor.ts'
+import type { DocInfo } from './types.ts'
 
 function writeIndividualFiles(docs: DocInfo[]): void {
   const outputDir = path.join(PUBLIC_DIR, 'docs')

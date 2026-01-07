@@ -1,8 +1,8 @@
 import fs from 'node:fs'
 import path from 'node:path'
-import { DOCS_DIR, ROOT_CATEGORY } from './config'
-import { transformNextraComponents } from './nextra-transform'
-import type { DocInfo, MetaEntry } from './types'
+import { DOCS_DIR, ROOT_CATEGORY } from './config.ts'
+import { transformNextraComponents } from './nextra-transform.ts'
+import type { DocInfo, MetaEntry } from './types.ts'
 
 function extractTitle(content: string, fallback: string): string {
   const match = content.match(/^#\s+(.+)$/m)

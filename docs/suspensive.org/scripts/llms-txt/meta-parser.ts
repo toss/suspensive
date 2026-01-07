@@ -1,7 +1,7 @@
 import fs from 'node:fs'
 import path from 'node:path'
-import { DOCS_DIR, ROOT_CATEGORY } from './config'
-import type { MetaEntry } from './types'
+import { DOCS_DIR, ROOT_CATEGORY } from './config.ts'
+import type { MetaEntry } from './types.ts'
 
 export function getMetaForCategory(category: string): MetaEntry[] {
   const metaPath =
