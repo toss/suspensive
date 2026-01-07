@@ -1,5 +1,11 @@
 # @suspensive/react-dom
 
+## 3.17.3
+
+### Patch Changes
+
+- [#1868](https://github.com/toss/suspensive/pull/1868) [`1d43e8d`](https://github.com/toss/suspensive/commit/1d43e8de9541b1f3d20d621744ecd1e8934a3a8a) Thanks [@manudeli](https://github.com/manudeli)! - chore: to resolve latest tag problem
+
 ## 3.17.2
 
 ## 3.17.1

@@ -12,6 +12,7 @@
     "esModuleInterop": true,
     "isolatedModules": true,
     "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
     "jsx": "preserve",
     "module": "esnext",
     "resolveJsonModule": true,
