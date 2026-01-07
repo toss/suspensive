@@ -548,10 +548,10 @@ importers:
         specifier: ^13.0.0
         version: 13.1.0(commander@13.1.0)
       '@suspensive/react-query-4':
-        specifier: workspace:^3.17.2
+        specifier: workspace:^3.17.3
         version: link:../react-query-4
       '@suspensive/react-query-5':
-        specifier: workspace:^3.17.2
+        specifier: workspace:^3.17.3
         version: link:../react-query-5
       '@tanstack/react-query':
         specifier: ^4.42.0 || ^5.82.0

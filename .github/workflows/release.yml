@@ -2,7 +2,7 @@ name: Changesets PR or Publish
 
 on:
   push:
-    branches: [main, beta, next]
+    branches: [v2, main, beta, next]
 env:
   TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
   TURBO_TEAM: ${{ vars.TURBO_TEAM }}
