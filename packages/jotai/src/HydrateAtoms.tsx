@@ -6,7 +6,7 @@ import type { ReactNode } from 'react'
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type AnyWritableAtom = WritableAtom<any, any[], any>
 
-type UseHydrateAtomsProps<TValues> = {
+type HydrateAtomsProps<TValues> = {
   children: ReactNode
   values: TValues
   options?: Parameters<typeof useHydrateAtoms>[1]
@@ -39,26 +39,26 @@ export function HydrateAtoms<T extends (readonly [AnyWritableAtom, ...unknown[]]
   children,
   values,
   options,
-}: UseHydrateAtomsProps<InferAtomTuples<T>>): ReactNode
+}: HydrateAtomsProps<InferAtomTuples<T>>): ReactNode
 
 export function HydrateAtoms<T extends Map<AnyWritableAtom, unknown>>({
   children,
   values,
   options,
-}: UseHydrateAtomsProps<T>): ReactNode
+}: HydrateAtomsProps<T>): ReactNode
 
 // eslint-disable-next-line @typescript-eslint/unified-signatures
 export function HydrateAtoms<T extends Iterable<readonly [AnyWritableAtom, ...unknown[]]>>({
   children,
   values,
   options,
-}: UseHydrateAtomsProps<InferAtomTuples<T>>): ReactNode
+}: HydrateAtomsProps<InferAtomTuples<T>>): ReactNode
 
 export function HydrateAtoms<T extends Iterable<readonly [AnyWritableAtom, ...unknown[]]>>({
   children,
   values,
   options,
-}: UseHydrateAtomsProps<T>): ReactNode {
+}: HydrateAtomsProps<T>): ReactNode {
   useHydrateAtoms(values as Parameters<typeof useHydrateAtoms>[0], options)
 
   return <>{children}</>
