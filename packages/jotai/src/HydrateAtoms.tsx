@@ -1,25 +1,10 @@
+import type { INTERNAL_InferAtomTuples as InferAtomTuples } from 'jotai/react/utils/useHydrateAtoms'
 import { useHydrateAtoms } from 'jotai/utils'
 import type { WritableAtom } from 'jotai/vanilla'
 import type { ReactNode } from 'react'
 
-/**
- * @see https://github.com/pmndrs/jotai/blob/main/src/react/utils/useHydrateAtoms.ts
- */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type AnyWritableAtom = WritableAtom<any, any[], any>
-
-/**
- * @see https://github.com/pmndrs/jotai/blob/main/src/react/utils/useHydrateAtoms.ts
- */
-type InferAtomTuples<T> = {
-  [K in keyof T]: T[K] extends readonly [infer A, ...infer Rest]
-    ? A extends WritableAtom<unknown, infer Args, unknown>
-      ? Rest extends Args
-        ? readonly [A, ...Rest]
-        : never
-      : T[K]
-    : never
-}
 
 type UseHydrateAtomsProps<TValues> = {
   children: ReactNode
