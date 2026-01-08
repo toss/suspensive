@@ -8,7 +8,7 @@ import { Callout } from '@/components'
 
 The HydrateAtoms component is a wrapper around Jotai's [useHydrateAtoms](https://jotai.org/docs/utilities/ssr#usehydrateatoms) hook. It hydrates initial values from SSR into Jotai atoms, preventing state mismatch between server and client.
 
-### props.atomValues
+### props.values
 
 You can pass an array of tuples or a Map containing atom-value pairs to hydrate.
 
@@ -23,7 +23,7 @@ const Page = async () => {
   const userId = await getSessionUserId()
 
   return (
-    <HydrateAtoms atomValues={[[userIdAtom, userId]]}>
+    <HydrateAtoms values={[[userIdAtom, userId]]}>
       <AtomValue atom={userIdAtom}>
         {(userId) => <div>userId: {userId}</div>}
       </AtomValue>
@@ -43,10 +43,10 @@ const userIdAtom = atom('')
 // Server Component
 const Page = async () => {
   const userId = await getSessionUserId()
-  const atomValues = new Map([[userIdAtom, userId]])
+  const values = new Map([[userIdAtom, userId]])
 
   return (
-    <HydrateAtoms atomValues={atomValues}>
+    <HydrateAtoms values={values}>
       <AtomValue atom={userIdAtom}>
         {(userId) => <div>userId: {userId}</div>}
       </AtomValue>
@@ -77,7 +77,7 @@ const Page = async () => {
   return (
     <Provider store={customStore}>
       <HydrateAtoms
-        atomValues={[[userIdAtom, userId]]}
+        values={[[userIdAtom, userId]]}
         options={{ store: customStore, dangerouslyForceHydrate: true }}
       >
         <AtomValue atom={userIdAtom}>
@@ -104,7 +104,7 @@ const Page = async () => {
   const userId = await getSessionUserId()
 
   return (
-    <HydrateAtoms atomValues={[[userIdAtom, userId]]}>
+    <HydrateAtoms values={[[userIdAtom, userId]]}>
       <AtomValue atom={userIdAtom}>
         {(userId) => <div>userId: {userId}</div>}
       </AtomValue>
@@ -156,7 +156,7 @@ const Page = async () => {
   const userId = await getSessionUserId()
 
   return (
-    <HydrateAtoms atomValues={[[userIdAtom, userId]]}>
+    <HydrateAtoms values={[[userIdAtom, userId]]}>
       <AtomValue atom={userIdAtom}>
         {(userId) => <div>userId: {userId}</div>}
       </AtomValue>
@@ -185,7 +185,7 @@ const Page = async () => {
   const userId = await getSessionUserId()
 
   return (
-    <HydrateAtoms atomValues={[[userIdAtom, userId]]}>
+    <HydrateAtoms values={[[userIdAtom, userId]]}>
       <Suspense fallback={'pending...'}>
         <Atom atom={userDetailAtom}>{([user]) => <div>{user.name}</div>}</Atom>
       </Suspense>

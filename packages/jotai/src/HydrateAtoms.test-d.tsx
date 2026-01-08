@@ -19,37 +19,37 @@ const store = createStore()
 describe('<HydrateAtoms />', () => {
   it('type check', () => {
     ;(() => {
-      const atomValues = [[countAtom, 10]] as const
+      const values = [[countAtom, 10]] as const
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const _hydrateAtoms = useHydrateAtoms(atomValues)
+      const _hydrateAtoms = useHydrateAtoms(values)
       return (
-        <HydrateAtoms atomValues={atomValues}>
+        <HydrateAtoms values={values}>
           <></>
         </HydrateAtoms>
       )
     })()
     ;(() => {
-      const atomValues = [
+      const values = [
         [countAtom, 10],
         [nameAtom, 'test'],
       ] as const
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const _hydrateAtoms = useHydrateAtoms(atomValues)
+      const _hydrateAtoms = useHydrateAtoms(values)
       return (
-        <HydrateAtoms atomValues={atomValues}>
+        <HydrateAtoms values={values}>
           <></>
         </HydrateAtoms>
       )
     })()
     ;(() => {
-      const atomValues = new Map<typeof countAtom | typeof nameAtom, number | string>([
+      const values = new Map<typeof countAtom | typeof nameAtom, number | string>([
         [countAtom, 10],
         [nameAtom, 'test'],
       ])
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const _hydrateAtoms = useHydrateAtoms(atomValues)
+      const _hydrateAtoms = useHydrateAtoms(values)
       return (
-        <HydrateAtoms atomValues={atomValues}>
+        <HydrateAtoms values={values}>
           <></>
         </HydrateAtoms>
       )
@@ -59,77 +59,77 @@ describe('<HydrateAtoms />', () => {
         yield [countAtom, 10] as const
         yield [nameAtom, 'test'] as const
       }
-      const atomValues = [...generateAtomValues()]
+      const values = [...generateAtomValues()]
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const _hydrateAtoms = useHydrateAtoms(atomValues)
+      const _hydrateAtoms = useHydrateAtoms(values)
       return (
-        <HydrateAtoms atomValues={atomValues}>
+        <HydrateAtoms values={values}>
           <></>
         </HydrateAtoms>
       )
     })()
     ;(() => (
-      <HydrateAtoms atomValues={[[booleanAtom, false]]}>
+      <HydrateAtoms values={[[booleanAtom, false]]}>
         <></>
       </HydrateAtoms>
     ))()
     ;(() => (
-      <HydrateAtoms atomValues={[[writeOnlySingleArgAtom, 10]]}>
+      <HydrateAtoms values={[[writeOnlySingleArgAtom, 10]]}>
         <></>
       </HydrateAtoms>
     ))()
     ;(() => (
-      <HydrateAtoms atomValues={[[writeOnlyDoubleArgAtom, 10, 20]]}>
+      <HydrateAtoms values={[[writeOnlyDoubleArgAtom, 10, 20]]}>
         <></>
       </HydrateAtoms>
     ))()
     ;(() => {
-      const atomValues = [[countAtom, 10]] as const
+      const values = [[countAtom, 10]] as const
       const options = { store }
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const _hydrateAtoms = useHydrateAtoms(atomValues, options)
+      const _hydrateAtoms = useHydrateAtoms(values, options)
       return (
-        <HydrateAtoms atomValues={atomValues} options={options}>
+        <HydrateAtoms values={values} options={options}>
           <></>
         </HydrateAtoms>
       )
     })()
     ;(() => {
-      const atomValues = [[countAtom, 10]] as const
+      const values = [[countAtom, 10]] as const
       const options = { dangerouslyForceHydrate: true }
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const _hydrateAtoms = useHydrateAtoms(atomValues, options)
+      const _hydrateAtoms = useHydrateAtoms(values, options)
       return (
-        <HydrateAtoms atomValues={atomValues} options={options}>
+        <HydrateAtoms values={values} options={options}>
           <></>
         </HydrateAtoms>
       )
     })()
     ;(() => {
-      const atomValues = [[countAtom, 10]] as const
+      const values = [[countAtom, 10]] as const
       const options = { store, dangerouslyForceHydrate: true }
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const _hydrateAtoms = useHydrateAtoms(atomValues, options)
+      const _hydrateAtoms = useHydrateAtoms(values, options)
       return (
-        <HydrateAtoms atomValues={atomValues} options={options}>
+        <HydrateAtoms values={values} options={options}>
           <></>
         </HydrateAtoms>
       )
     })()
 
     expectTypeOf(
-      <HydrateAtoms atomValues={[[countAtom, 10]]}>
+      <HydrateAtoms values={[[countAtom, 10]]}>
         <></>
       </HydrateAtoms>
     ).toEqualTypeOf<React.JSX.Element>()
     expectTypeOf(
-      <HydrateAtoms atomValues={[[countAtom, 10]]}>
+      <HydrateAtoms values={[[countAtom, 10]]}>
         <></>
       </HydrateAtoms>
     ).not.toEqualTypeOf<ReactNode>()
     expectTypeOf(
       <HydrateAtoms
-        atomValues={[
+        values={[
           [countAtom, 10],
           [nameAtom, 'test'],
         ]}
@@ -139,7 +139,7 @@ describe('<HydrateAtoms />', () => {
     ).toEqualTypeOf<React.JSX.Element>()
     expectTypeOf(
       <HydrateAtoms
-        atomValues={[
+        values={[
           [countAtom, 10],
           [nameAtom, 'test'],
         ]}
@@ -148,42 +148,42 @@ describe('<HydrateAtoms />', () => {
       </HydrateAtoms>
     ).not.toEqualTypeOf<ReactNode>()
     expectTypeOf(
-      <HydrateAtoms atomValues={new Map([[countAtom, 10]])}>
+      <HydrateAtoms values={new Map([[countAtom, 10]])}>
         <></>
       </HydrateAtoms>
     ).toEqualTypeOf<React.JSX.Element>()
     expectTypeOf(
-      <HydrateAtoms atomValues={new Map([[countAtom, 10]])}>
+      <HydrateAtoms values={new Map([[countAtom, 10]])}>
         <></>
       </HydrateAtoms>
     ).not.toEqualTypeOf<ReactNode>()
     expectTypeOf(
-      <HydrateAtoms atomValues={[[countAtom, 10]]} options={{ store }}>
+      <HydrateAtoms values={[[countAtom, 10]]} options={{ store }}>
         <></>
       </HydrateAtoms>
     ).toEqualTypeOf<React.JSX.Element>()
     expectTypeOf(
-      <HydrateAtoms atomValues={[[countAtom, 10]]} options={{ store }}>
+      <HydrateAtoms values={[[countAtom, 10]]} options={{ store }}>
         <></>
       </HydrateAtoms>
     ).not.toEqualTypeOf<ReactNode>()
     expectTypeOf(
-      <HydrateAtoms atomValues={[[countAtom, 10]]} options={{ dangerouslyForceHydrate: true }}>
+      <HydrateAtoms values={[[countAtom, 10]]} options={{ dangerouslyForceHydrate: true }}>
         <></>
       </HydrateAtoms>
     ).toEqualTypeOf<React.JSX.Element>()
     expectTypeOf(
-      <HydrateAtoms atomValues={[[countAtom, 10]]} options={{ dangerouslyForceHydrate: true }}>
+      <HydrateAtoms values={[[countAtom, 10]]} options={{ dangerouslyForceHydrate: true }}>
         <></>
       </HydrateAtoms>
     ).not.toEqualTypeOf<ReactNode>()
     expectTypeOf(
-      <HydrateAtoms atomValues={[[countAtom, 10]]} options={{ store, dangerouslyForceHydrate: true }}>
+      <HydrateAtoms values={[[countAtom, 10]]} options={{ store, dangerouslyForceHydrate: true }}>
         <></>
       </HydrateAtoms>
     ).toEqualTypeOf<React.JSX.Element>()
     expectTypeOf(
-      <HydrateAtoms atomValues={[[countAtom, 10]]} options={{ store, dangerouslyForceHydrate: true }}>
+      <HydrateAtoms values={[[countAtom, 10]]} options={{ store, dangerouslyForceHydrate: true }}>
         <></>
       </HydrateAtoms>
     ).not.toEqualTypeOf<ReactNode>()

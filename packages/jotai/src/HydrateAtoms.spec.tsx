@@ -13,13 +13,13 @@ describe('<HydrateAtoms />', () => {
 
   afterEach(() => vi.useRealTimers())
 
-  it('should hydrate atom values from atomValues prop', () => {
+  it('should hydrate atom values from values prop', () => {
     const countAtom = atom(0)
     const nameAtom = atom('')
 
     render(
       <HydrateAtoms
-        atomValues={[
+        values={[
           [countAtom, 10],
           [nameAtom, 'test'],
         ]}
@@ -39,7 +39,7 @@ describe('<HydrateAtoms />', () => {
 
     render(
       <HydrateAtoms
-        atomValues={
+        values={
           [
             [countAtom, 10],
             [statusAtom, 'fulfilled'],
@@ -55,17 +55,17 @@ describe('<HydrateAtoms />', () => {
     expect(screen.getByText('status: fulfilled')).toBeInTheDocument()
   })
 
-  it('should accept Map as atomValues', () => {
+  it('should accept Map as values', () => {
     const countAtom = atom(0)
     const nameAtom = atom('')
 
-    const atomValuesMap = new Map<typeof countAtom | typeof nameAtom, number | string>([
+    const valuesMap = new Map<typeof countAtom | typeof nameAtom, number | string>([
       [countAtom, 20],
       [nameAtom, 'from map'],
     ])
 
     render(
-      <HydrateAtoms atomValues={atomValuesMap}>
+      <HydrateAtoms values={valuesMap}>
         <AtomValue atom={countAtom}>{(count) => <span>count: {count}</span>}</AtomValue>
         <AtomValue atom={nameAtom}>{(name) => <span>name: {name}</span>}</AtomValue>
       </HydrateAtoms>
@@ -79,7 +79,7 @@ describe('<HydrateAtoms />', () => {
     const userAtom = atom({ name: '', age: 0 })
 
     render(
-      <HydrateAtoms atomValues={[[userAtom, { name: 'john', age: 30 }]]}>
+      <HydrateAtoms values={[[userAtom, { name: 'john', age: 30 }]]}>
         <AtomValue atom={userAtom}>
           {(user) => (
             <div>
@@ -105,7 +105,7 @@ describe('<HydrateAtoms />', () => {
     )
 
     render(
-      <HydrateAtoms atomValues={[[writableAtom, 10, 20]]}>
+      <HydrateAtoms values={[[writableAtom, 10, 20]]}>
         <AtomValue atom={writableAtom}>{(value) => <span>value: {value}</span>}</AtomValue>
       </HydrateAtoms>
     )
@@ -118,7 +118,7 @@ describe('<HydrateAtoms />', () => {
     const doubleAtom = atom((get) => get(countAtom) * 2)
 
     render(
-      <HydrateAtoms atomValues={[[countAtom, 21]]}>
+      <HydrateAtoms values={[[countAtom, 21]]}>
         <AtomValue atom={countAtom}>{(count) => <span>count: {count}</span>}</AtomValue>
         <AtomValue atom={doubleAtom}>{(double) => <span>double: {double}</span>}</AtomValue>
       </HydrateAtoms>
@@ -134,7 +134,7 @@ describe('<HydrateAtoms />', () => {
     countAtom.onMount = onMountFn
 
     render(
-      <HydrateAtoms atomValues={[[countAtom, 42]]}>
+      <HydrateAtoms values={[[countAtom, 42]]}>
         <AtomValue atom={countAtom}>{(count) => <div>count: {count}</div>}</AtomValue>
       </HydrateAtoms>
     )
@@ -149,7 +149,7 @@ describe('<HydrateAtoms />', () => {
 
     render(
       <Provider store={customStore}>
-        <HydrateAtoms atomValues={[[countAtom, 100]]} options={{ store: customStore }}>
+        <HydrateAtoms values={[[countAtom, 100]]} options={{ store: customStore }}>
           <AtomValue atom={countAtom}>{(count) => <span>count: {count}</span>}</AtomValue>
         </HydrateAtoms>
       </Provider>
@@ -164,7 +164,7 @@ describe('<HydrateAtoms />', () => {
 
     const { rerender } = render(
       <Provider store={customStore}>
-        <HydrateAtoms atomValues={[[countAtom, 10]]} options={{ store: customStore }}>
+        <HydrateAtoms values={[[countAtom, 10]]} options={{ store: customStore }}>
           <AtomValue atom={countAtom}>{(count) => <span>count: {count}</span>}</AtomValue>
         </HydrateAtoms>
       </Provider>
@@ -174,7 +174,7 @@ describe('<HydrateAtoms />', () => {
 
     rerender(
       <Provider store={customStore}>
-        <HydrateAtoms atomValues={[[countAtom, 20]]} options={{ store: customStore, dangerouslyForceHydrate: true }}>
+        <HydrateAtoms values={[[countAtom, 20]]} options={{ store: customStore, dangerouslyForceHydrate: true }}>
           <AtomValue atom={countAtom}>{(count) => <span>count: {count}</span>}</AtomValue>
         </HydrateAtoms>
       </Provider>
@@ -189,7 +189,7 @@ describe('<HydrateAtoms />', () => {
 
     const { rerender } = render(
       <Provider store={customStore}>
-        <HydrateAtoms atomValues={[[countAtom, 10]]} options={{ store: customStore }}>
+        <HydrateAtoms values={[[countAtom, 10]]} options={{ store: customStore }}>
           <AtomValue atom={countAtom}>{(count) => <span>count: {count}</span>}</AtomValue>
         </HydrateAtoms>
       </Provider>
@@ -199,7 +199,7 @@ describe('<HydrateAtoms />', () => {
 
     rerender(
       <Provider store={customStore}>
-        <HydrateAtoms atomValues={[[countAtom, 99]]} options={{ store: customStore }}>
+        <HydrateAtoms values={[[countAtom, 99]]} options={{ store: customStore }}>
           <AtomValue atom={countAtom}>{(count) => <span>count: {count}</span>}</AtomValue>
         </HydrateAtoms>
       </Provider>
@@ -218,7 +218,7 @@ describe('<HydrateAtoms />', () => {
 
     await act(() =>
       render(
-        <HydrateAtoms atomValues={[[userAtom, { name: 'John', age: 25 }]]}>
+        <HydrateAtoms values={[[userAtom, { name: 'John', age: 25 }]]}>
           <Suspense fallback={<span>loading...</span>}>
             <Atom atom={derivedUserAtom}>
               {([derivedUser]) => (

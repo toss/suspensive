@@ -21,9 +21,9 @@ type InferAtomTuples<T> = {
     : never
 }
 
-type UseHydrateAtomsProps<TAtomValues> = {
+type UseHydrateAtomsProps<TValues> = {
   children: ReactNode
-  atomValues: TAtomValues
+  values: TValues
   options?: Parameters<typeof useHydrateAtoms>[1]
 }
 
@@ -44,7 +44,7 @@ type UseHydrateAtomsProps<TAtomValues> = {
  * const nameAtom = atom('')
  *
  * const Example = () => (
- *   <HydrateAtoms atomValues={[[countAtom, 10], [nameAtom, 'test']]}>
+ *   <HydrateAtoms values={[[countAtom, 10], [nameAtom, 'test']]}>
  *     <App />
  *   </HydrateAtoms>
  * )
@@ -52,29 +52,29 @@ type UseHydrateAtomsProps<TAtomValues> = {
  */
 export function HydrateAtoms<T extends (readonly [AnyWritableAtom, ...unknown[]])[]>({
   children,
-  atomValues,
+  values,
   options,
 }: UseHydrateAtomsProps<InferAtomTuples<T>>): ReactNode
 
 export function HydrateAtoms<T extends Map<AnyWritableAtom, unknown>>({
   children,
-  atomValues,
+  values,
   options,
 }: UseHydrateAtomsProps<T>): ReactNode
 
 // eslint-disable-next-line @typescript-eslint/unified-signatures
 export function HydrateAtoms<T extends Iterable<readonly [AnyWritableAtom, ...unknown[]]>>({
   children,
-  atomValues,
+  values,
   options,
 }: UseHydrateAtomsProps<InferAtomTuples<T>>): ReactNode
 
 export function HydrateAtoms<T extends Iterable<readonly [AnyWritableAtom, ...unknown[]]>>({
   children,
-  atomValues,
+  values,
   options,
 }: UseHydrateAtomsProps<T>): ReactNode {
-  useHydrateAtoms(atomValues as Parameters<typeof useHydrateAtoms>[0], options)
+  useHydrateAtoms(values as Parameters<typeof useHydrateAtoms>[0], options)
 
   return <>{children}</>
 }
