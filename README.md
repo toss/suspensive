@@ -1,6 +1,6 @@
 <div align="center">
   <a href="https://suspensive.org" title="Suspensive - All in one for React Suspense">
-    <img src="https://github.com/toss/suspensive/blob/main/assets/readme_main.svg?raw=true" alt="Suspensive - All in one for React Suspense" height="400" />
+    <img src="https://github.com/toss/suspensive/blob/main/docs/suspensive.org/public/img/banner.png?raw=true" alt="Suspensive - All in one for React Suspense" height="400" />
   </a>
   <br/>
   <br/>
