@@ -27,6 +27,10 @@ import {
       title: '서버 사이드 렌더링에서도 쉽게',
       desc: 'Suspensive는 개발자가 서버 사이드 렌더링 환경에서도 React Suspense를 점진적으로 채택할 수 있도록 clientOnly를 제공합니다.',
     },
+    {
+      title: 'Suspense를 위한 Primitives',
+      desc: '`lazy`를 사용하면 로딩 콜백과 함께 컴포넌트를 사전 로딩할 수 있어 코드 스플리팅이 더욱 편리해집니다.',
+    },
   ]}
 >
 
@@ -448,6 +452,96 @@ const DeepComponent = () => (
       <ThrowZodErrorOrErrorComponent />
     </ErrorBoundary>
   </ErrorBoundary>
+)
+```
+
+</Scrollycoding>
+
+<SectionDescription>lazy</SectionDescription>
+<br />
+
+<Scrollycoding>
+
+# !!steps React의 lazy를 사용할 때, 컴포넌트가 렌더링되기 전에 미리 로드하고 싶을 수 있습니다.
+
+React의 `lazy`는 컴포넌트를 미리 로드하는 기본 제공 방법이 없습니다.
+
+```jsx ! Page.jsx
+import { lazy, Suspense } from 'react'
+
+const HeavyComponent = lazy(() => import('./HeavyComponent'))
+
+const Page = () => (
+  <div>
+    <button>여기에 마우스를 올리세요</button>
+    <Suspense fallback={<div>로딩 중...</div>}>
+      <HeavyComponent />
+    </Suspense>
+  </div>
+)
+```
+
+# !!steps Suspensive의 lazy는 컴포넌트를 미리 로드할 수 있는 load 메서드를 제공합니다.
+
+`Component.load()`를 호출하면 컴포넌트가 렌더링되기 전에 미리 로드할 수 있습니다.
+
+```jsx ! Page.jsx
+import { lazy, Suspense } from '@suspensive/react'
+
+const HeavyComponent = lazy(() => import('./HeavyComponent'))
+
+const Page = () => (
+  <div>
+    <button onMouseEnter={() => HeavyComponent.load()}>
+      마우스를 올리면 미리 로드
+    </button>
+    <Suspense fallback={<div>로딩 중...</div>}>
+      <HeavyComponent />
+    </Suspense>
+  </div>
+)
+```
+
+# !!steps 컴포넌트 로딩 성공과 실패를 콜백으로 처리할 수도 있습니다.
+
+로깅, 분석 또는 에러 처리를 위해 `onSuccess`와 `onError` 콜백을 사용하세요.
+
+```jsx ! Page.jsx
+import { lazy, Suspense, ErrorBoundary } from '@suspensive/react'
+
+const UserProfile = lazy(() => import('./UserProfile'), {
+  onSuccess: () => console.log('컴포넌트가 성공적으로 로드되었습니다'),
+  onError: ({ error }) => console.error('로딩 실패:', error),
+})
+
+const Page = () => (
+  <ErrorBoundary fallback={<div>문제가 발생했습니다</div>}>
+    <Suspense fallback={<div>로딩 중...</div>}>
+      <UserProfile />
+    </Suspense>
+  </ErrorBoundary>
+)
+```
+
+# !!steps 프로덕션에서 버전 차이 문제가 발생하면 reloadOnError를 사용하세요.
+
+배포로 인해 청크 로딩이 실패하면 `reloadOnError`가 자동으로 페이지를 새로고침하여 재시도합니다.
+
+```jsx ! Page.jsx
+import { lazy, reloadOnError, Suspense } from '@suspensive/react'
+
+const VersionSkewSafeComponent = lazy(
+  () => import('./VersionSkewSafeComponent'),
+  reloadOnError({
+    retry: 3,
+    retryDelay: 1000,
+  })
+)
+
+const Page = () => (
+  <Suspense fallback={<div>로딩 중...</div>}>
+    <VersionSkewSafeComponent />
+  </Suspense>
 )
 ```
 
