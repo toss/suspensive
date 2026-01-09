@@ -9,5 +9,6 @@ export default {
   },
   Atom: { title: '<Atom/>' },
   AtomValue: { title: '<AtomValue/>' },
+  HydrateAtoms: { title: '<HydrateAtoms/>' },
   SetAtom: { title: '<SetAtom/>' },
 } satisfies MetaRecord
