@@ -5,11 +5,15 @@ import { motion } from 'motion/react'
 interface TrustedByProps {
   title?: string
   description?: string
+  callToActionText?: string
+  addCompanyButtonText?: string
 }
 
 export const TrustedBy = ({
   title = 'Trusted by',
   description = 'Used by teams at these companies',
+  callToActionText = 'Using Suspensive at your company?',
+  addCompanyButtonText = 'Add your company',
 }: TrustedByProps) => {
   // Initial set of companies - this can be expanded as companies add themselves
   const companies = [
@@ -60,16 +64,14 @@ export const TrustedBy = ({
       </div>
 
       <div className="mt-12 text-center">
-        <p className="mb-4 text-sm opacity-60">
-          Using Suspensive at your company?
-        </p>
+        <p className="mb-4 text-sm opacity-60">{callToActionText}</p>
         <a
           href="https://github.com/toss/suspensive/edit/main/docs/suspensive.org/src/components/TrustedBy.tsx"
           target="_blank"
           rel="noopener noreferrer"
           className="inline-flex items-center gap-2 rounded-lg border border-blue-600 px-4 py-2 text-sm font-medium text-blue-600 transition-colors hover:bg-blue-50 dark:border-blue-400 dark:text-blue-400 dark:hover:bg-blue-400/10"
         >
-          Add your company
+          {addCompanyButtonText}
         </a>
       </div>
     </motion.section>
