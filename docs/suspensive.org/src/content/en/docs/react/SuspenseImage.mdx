@@ -1,0 +1,155 @@
+import { Callout, Sandpack } from '@/components'
+
+# SuspenseImage
+
+<Callout type='experimental'>
+
+`SuspenseImage` is an experimental feature, and this interface may change.
+
+</Callout>
+
+A component and hook for loading images asynchronously with Suspense support.
+
+- Uses an internal cache to prevent reloading the same image multiple times.
+- Triggers Suspense to suspend rendering until the image is loaded.
+- In SSR environments, returns a server-rendered `<img>` tag.
+
+## SuspenseImage
+
+Loads an image asynchronously and suspends rendering until the image is loaded. Uses the Render Prop pattern to provide the loaded image element.
+
+```tsx /SuspenseImage/
+import { SuspenseImage, Suspense } from '@suspensive/react'
+
+function App() {
+  return (
+    <ErrorBoundary fallback={<div>Failed to load image</div>}>
+      <Suspense fallback={<div>Loading image...</div>}>
+        <SuspenseImage src="https://example.com/image.jpg">
+          {/** Guarantees the image is loaded, allowing declarative access to the element */}
+          {(img) => <img src={img.src} alt="Example" />}
+        </SuspenseImage>
+      </Suspense>
+    </ErrorBoundary>
+  )
+}
+```
+
+<Sandpack>
+
+```tsx Example.tsx active
+import { SuspenseImage, Suspense } from '@suspensive/react'
+
+export function App() {
+  return (
+    <Suspense fallback={<div style={{ padding: 20 }}>Loading image...</div>}>
+      <SuspenseImage src="https://picsum.photos/400/300">
+        {(img) => (
+          <img
+            src={img.src}
+            alt="Example"
+            style={{ maxWidth: '100%', height: 'auto' }}
+          />
+        )}
+      </SuspenseImage>
+    </Suspense>
+  )
+}
+```
+
+</Sandpack>
+
+## useSuspenseImage
+
+Loads an image asynchronously and suspends the component until the image is loaded. Returns the loaded `HTMLImageElement` directly.
+
+```tsx /useSuspenseImage/
+import { useSuspenseImage, Suspense } from '@suspensive/react'
+
+function ImageComponent() {
+  // Triggers Suspense to suspend component rendering until the image is loaded.
+  const img = useSuspenseImage('https://example.com/image.jpg')
+
+  return <img src={img.src} alt="Example" />
+}
+
+function App() {
+  return (
+    <ErrorBoundary fallback={<div>Failed to load image</div>}>
+      <Suspense fallback={<div>Loading image...</div>}>
+        <ImageComponent />
+      </Suspense>
+    </ErrorBoundary>
+  )
+}
+```
+
+<Sandpack>
+
+```tsx Example.tsx active
+import { useSuspenseImage, Suspense } from '@suspensive/react'
+
+function ImageComponent() {
+  const img = useSuspenseImage('https://picsum.photos/400/300')
+
+  return (
+    <img
+      src={img.src}
+      alt="Example"
+      style={{ maxWidth: '100%', height: 'auto' }}
+    />
+  )
+}
+
+export function App() {
+  return (
+    <Suspense fallback={<div style={{ padding: 20 }}>Loading image...</div>}>
+      <ImageComponent />
+    </Suspense>
+  )
+}
+```
+
+</Sandpack>
+
+## Image Caching
+
+Both `SuspenseImage` and `useSuspenseImage` use an internal cache to prevent reloading the same image multiple times. Once an image is loaded, subsequent requests for the same image will use the cached version.
+
+```tsx /caching/
+import { useSuspenseImage, Suspense } from '@suspensive/react'
+
+function MultipleImages() {
+  const img1 = useSuspenseImage('https://example.com/image.jpg')
+  const img2 = useSuspenseImage('https://example.com/image.jpg') // Uses cache
+
+  return (
+    <>
+      <img src={img1.src} alt="Image 1" />
+      <img src={img2.src} alt="Image 2" />
+    </>
+  )
+}
+```
+
+## Server-Side Rendering (SSR)
+
+In SSR environments, `SuspenseImage` and `useSuspenseImage` return a mock object immediately instead of suspending. This ensures the `<img>` tag is included in the server-rendered HTML for SEO purposes.
+
+The mock object has a `src` property with `complete` set to `false`:
+
+```tsx
+{ src: string, complete: false } as HTMLImageElement
+```
+
+This allows the image tag to be present in the initial HTML while the actual image loading occurs on the client side.
+
+## Important Notes
+
+- The internal cache exists only in memory and is cleared on page refresh.
+
+## Version History
+
+| Version | Changes                                                  |
+| ------- | -------------------------------------------------------- |
+| v3.18.0 | `<SuspenseImage/>` was added as an experimental feature. |
