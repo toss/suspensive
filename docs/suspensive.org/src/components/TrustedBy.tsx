@@ -3,10 +3,10 @@
 import { motion } from 'motion/react'
 
 interface TrustedByProps {
-  title?: string
-  description?: string
-  callToActionText?: string
-  addCompanyButtonText?: string
+  title: string
+  description: string
+  callToActionText: string
+  addCompanyButtonText: string
 }
 
 export const TrustedBy = ({
