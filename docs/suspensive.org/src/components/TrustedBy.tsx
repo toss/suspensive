@@ -10,10 +10,10 @@ interface TrustedByProps {
 }
 
 export const TrustedBy = ({
-  title = 'Trusted by',
-  description = 'Used by teams at these companies',
-  callToActionText = 'Using Suspensive at your company?',
-  addCompanyButtonText = 'Add your company',
+  title,
+  description,
+  callToActionText,
+  addCompanyButtonText,
 }: TrustedByProps) => {
   // Initial set of companies - this can be expanded as companies add themselves
   const companies = [
