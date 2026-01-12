@@ -4,6 +4,7 @@ import {
   type OmitKeyof,
   QueryClient,
   type QueryOptions,
+  type UseInfiniteQueryOptions,
   type WithRequired,
   dehydrate,
 } from '@tanstack/react-query'
@@ -84,7 +85,10 @@ export async function QueriesHydration({
   /**
    * An array of query options to be fetched on the server. Each query must include a `queryKey`.
    */
-  queries: WithRequired<QueryOptions<any, any, any, any>, 'queryKey'>[]
+  queries: (
+    | WithRequired<QueryOptions<any, any, any, any>, 'queryKey'>
+    | WithRequired<UseInfiniteQueryOptions<any, any, any, any, any>, 'queryKey'>
+  )[]
   /**
    * Controls error handling behavior:
    * - `true` (default): Skips SSR and falls back to client-side rendering when server fetch fails
@@ -98,7 +102,11 @@ export async function QueriesHydration({
       }
 } & OmitKeyof<HydrationBoundaryProps, 'state'>) {
   try {
-    await Promise.all(queries.map((query) => queryClient.ensureQueryData(query)))
+    await Promise.all(
+      queries.map((query) =>
+        'getNextPageParam' in query ? queryClient.fetchInfiniteQuery(query) : queryClient.fetchQuery(query)
+      )
+    )
   } catch {
     if (skipSsrOnError) {
       return (
