@@ -14,7 +14,6 @@
   },
   "dependencies": {
     "@suspensive/react": "workspace:*",
-    "@suspensive/react-dom": "workspace:*",
     "@suspensive/react-query-5": "workspace:*",
     "@tanstack/react-query": "catalog:react-query5",
     "@tanstack/react-query-devtools": "catalog:react-query5",
