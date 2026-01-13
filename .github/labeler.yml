@@ -1,9 +1,6 @@
 '@suspensive/react':
   - changed-files:
       - any-glob-to-any-file: 'packages/react/**/*'
-'@suspensive/react-dom':
-  - changed-files:
-      - any-glob-to-any-file: 'packages/react-dom/**/*'
 '@suspensive/react-query':
   - changed-files:
       - any-glob-to-any-file: 'packages/react-query/**/*'
