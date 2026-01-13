@@ -397,9 +397,9 @@ describe('<ErrorBoundary/>', () => {
     render(
       <ErrorBoundary fallback={({ error }) => <>{error.message} of Parent</>} onError={onErrorParent}>
         <ErrorBoundary
-          // Testing edge case: matchError returns false when errorMatcher is not boolean or function
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-assignment
-          shouldCatch={null as any}
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-expect-error
+          shouldCatch={null}
           fallback={({ error }) => <>{error.message} of Child</>}
           onError={onErrorChild}
         >
