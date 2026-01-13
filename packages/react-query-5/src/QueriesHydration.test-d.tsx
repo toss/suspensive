@@ -1,4 +1,4 @@
-import { QueryClient, queryOptions } from '@tanstack/react-query'
+import { QueryClient, infiniteQueryOptions, queryOptions } from '@tanstack/react-query'
 import { describe, expectTypeOf, it } from 'vitest'
 import { QueriesHydration } from './QueriesHydration'
 import { queryFn, queryKey } from './test-utils'
@@ -17,12 +17,7 @@ describe('<QueriesHydration/>', () => {
     // Should accept queries array with queryKey
     void (async () =>
       await QueriesHydration({
-        queries: [
-          {
-            queryKey: queryKey,
-            queryFn: queryFn,
-          },
-        ],
+        queries: [{ queryKey, queryFn }],
         children: <></>,
       }))()
 
@@ -62,6 +57,26 @@ describe('<QueriesHydration/>', () => {
       await QueriesHydration({
         queries: [options1],
         queryClient: new QueryClient(),
+        children: <></>,
+      }))()
+
+    // Should accept infiniteQueryOptions
+    const infiniteOptions = infiniteQueryOptions({
+      queryKey: ['infinite'],
+      queryFn: queryFn,
+      initialPageParam: 0,
+      getNextPageParam: () => null,
+    })
+    void (async () =>
+      await QueriesHydration({
+        queries: [infiniteOptions],
+        children: <></>,
+      }))()
+
+    // Should accept mixed queries and infiniteQueryOptions
+    void (async () =>
+      await QueriesHydration({
+        queries: [options1, infiniteOptions],
         children: <></>,
       }))()
 

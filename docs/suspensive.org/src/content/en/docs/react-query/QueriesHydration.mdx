@@ -17,6 +17,8 @@ This is useful when you want to prefetch data on the server side and pass it to 
 
 ## Basic Usage
 
+Use `queryOptions` with `QueriesHydration` to prefetch data on the server. For better HTML Streaming, wrap each component with its own `Suspense` and `QueriesHydration`:
+
 <Tabs items={['page.tsx (RSC)', 'UserProfile.tsx (RCC)', 'PostList.tsx (RCC)']}>
 <Tabs.Tab>
 
@@ -93,15 +95,61 @@ export const PostList = ({ userId }: { userId: number }) => {
 </Tabs.Tab>
 </Tabs>
 
+### Using Infinite Queries
+
+You can also use `infiniteQueryOptions` with `QueriesHydration`. You can mix regular queries and infinite queries in the same array. For better HTML Streaming, wrap each component with its own `Suspense` and `QueriesHydration`:
+
+```tsx /QueriesHydration/
+import { QueriesHydration } from '@suspensive/react-query'
+import { Suspense } from '@suspensive/react'
+import { queryOptions, infiniteQueryOptions } from '@tanstack/react-query'
+import { UserProfile, InfinitePostList } from './_components'
+
+const userQueryOptions = (userId: string) =>
+  queryOptions({
+    queryKey: ['user', userId],
+    queryFn: () => fetchUser(userId),
+  })
+
+const postsInfiniteQueryOptions = (userId: string) =>
+  infiniteQueryOptions({
+    queryKey: ['posts', userId],
+    queryFn: ({ pageParam = 0 }) => fetchPosts(userId, pageParam),
+    getNextPageParam: (lastPage, allPages) => lastPage.nextCursor,
+    initialPageParam: 0,
+  })
+
+// Server Component
+const PostsPage = ({ userId }: { userId: string }) => {
+  return (
+    <>
+      <Suspense fallback={<div>Loading user...</div>}>
+        <QueriesHydration queries={[userQueryOptions(userId)]}>
+          <UserProfile userId={userId} />
+        </QueriesHydration>
+      </Suspense>
+      <Suspense fallback={<div>Loading posts...</div>}>
+        <QueriesHydration queries={[postsInfiniteQueryOptions(userId)]}>
+          <InfinitePostList userId={userId} />
+        </QueriesHydration>
+      </Suspense>
+    </>
+  )
+}
+```
+
 ## Props
 
 ### queries
 
-An array of queries to be prefetched on the server. Each query must have a `queryKey`.
+An array of queries or infinite queries to be prefetched on the server. Each query must have a `queryKey`. You can mix regular queries and infinite queries in the same array.
 
 ```tsx
 type QueriesHydrationProps = {
-  queries: WithRequired<QueryOptions<any, any, any, any>, 'queryKey'>[]
+  queries: (
+    | WithRequired<QueryOptions<any, any, any, any>, 'queryKey'>
+    | WithRequired<UseInfiniteQueryOptions<any, any, any, any, any>, 'queryKey'>
+  )[]
   children: ReactNode
   queryClient?: QueryClient // Optional (default: new QueryClient())
   skipSsrOnError?: boolean | { fallback: ReactNode } // Optional (default: true)

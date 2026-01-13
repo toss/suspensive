@@ -17,6 +17,8 @@ React Server Components를 사용하는 환경에서 서버 측에서 데이터�
 
 ## 기본 사용법
 
+`QueriesHydration`에서 `queryOptions`를 사용하여 서버에서 데이터를 미리 불러올 수 있습니다. HTML Streaming을 최대화하려면 각 컴포넌트를 별도의 `Suspense`와 `QueriesHydration`으로 감싸는 것이 좋습니다:
+
 <Tabs items={['page.tsx (RSC)', 'UserProfile.tsx (RCC)', 'PostList.tsx (RCC)']}>
 <Tabs.Tab>
 
@@ -93,15 +95,61 @@ export const PostList = ({ userId }: { userId: number }) => {
 </Tabs.Tab>
 </Tabs>
 
+### Infinite Query 사용하기
+
+`QueriesHydration`에서 `infiniteQueryOptions`도 사용할 수 있습니다. 일반 쿼리와 infinite 쿼리를 같은 배열에 섞어서 사용할 수 있습니다. HTML Streaming을 최대화하려면 각 컴포넌트를 별도의 `Suspense`와 `QueriesHydration`으로 감싸는 것이 좋습니다:
+
+```tsx /QueriesHydration/
+import { QueriesHydration } from '@suspensive/react-query'
+import { Suspense } from '@suspensive/react'
+import { queryOptions, infiniteQueryOptions } from '@tanstack/react-query'
+import { UserProfile, InfinitePostList } from './_components'
+
+const userQueryOptions = (userId: string) =>
+  queryOptions({
+    queryKey: ['user', userId],
+    queryFn: () => fetchUser(userId),
+  })
+
+const postsInfiniteQueryOptions = (userId: string) =>
+  infiniteQueryOptions({
+    queryKey: ['posts', userId],
+    queryFn: ({ pageParam = 0 }) => fetchPosts(userId, pageParam),
+    getNextPageParam: (lastPage, allPages) => lastPage.nextCursor,
+    initialPageParam: 0,
+  })
+
+// 서버 컴포넌트
+const PostsPage = ({ userId }: { userId: string }) => {
+  return (
+    <>
+      <Suspense fallback={<div>Loading user...</div>}>
+        <QueriesHydration queries={[userQueryOptions(userId)]}>
+          <UserProfile userId={userId} />
+        </QueriesHydration>
+      </Suspense>
+      <Suspense fallback={<div>Loading posts...</div>}>
+        <QueriesHydration queries={[postsInfiniteQueryOptions(userId)]}>
+          <InfinitePostList userId={userId} />
+        </QueriesHydration>
+      </Suspense>
+    </>
+  )
+}
+```
+
 ## Props
 
 ### queries
 
-서버에서 미리 불러올 쿼리들의 배열입니다. 각 쿼리는 `queryKey`를 필수로 가져야 합니다.
+서버에서 미리 불러올 쿼리 또는 infinite 쿼리들의 배열입니다. 각 쿼리는 `queryKey`를 필수로 가져야 합니다. 일반 쿼리와 infinite 쿼리를 같은 배열에 섞어서 사용할 수 있습니다.
 
 ```tsx
 type QueriesHydrationProps = {
-  queries: WithRequired<QueryOptions<any, any, any, any>, 'queryKey'>[]
+  queries: (
+    | WithRequired<QueryOptions<any, any, any, any>, 'queryKey'>
+    | WithRequired<UseInfiniteQueryOptions<any, any, any, any, any>, 'queryKey'>
+  )[]
   children: ReactNode
   queryClient?: QueryClient // 선택사항 (기본값: new QueryClient())
   skipSsrOnError?: boolean | { fallback: ReactNode } // 선택사항 (기본값: true)
