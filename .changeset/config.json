@@ -5,7 +5,6 @@
   "fixed": [
     [
       "@suspensive/react",
-      "@suspensive/react-dom",
       "@suspensive/react-query",
       "@suspensive/react-query-4",
       "@suspensive/react-query-5",

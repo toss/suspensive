@@ -24,10 +24,6 @@ component_management:
       name: '@suspensive/react'
       paths:
         - packages/react/**
-    - component_id: react-dom
-      name: '@suspensive/react-dom'
-      paths:
-        - packages/react-dom/**
     - component_id: react-query
       name: '@suspensive/react-query'
       paths:
