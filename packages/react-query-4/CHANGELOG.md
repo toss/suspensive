@@ -1,5 +1,11 @@
 # @suspensive/react-query-4
 
+## 3.18.0
+
+### Minor Changes
+
+- [#1874](https://github.com/toss/suspensive/pull/1874) [`8260f86`](https://github.com/toss/suspensive/commit/8260f8627967b7626a8a5e97c5e976e8e0012f63) Thanks [@manudeli](https://github.com/manudeli)! - feat(react-query): add support for infinite queries in QueriesHydration
+
 ## 3.17.3
 
 ### Patch Changes
