@@ -389,6 +389,31 @@ describe('<ErrorBoundary/>', () => {
     expect(screen.queryByText('This is expected')).not.toBeInTheDocument()
     expect(screen.queryByText("ErrorBoundary(react-error-boundary)'s fallback before error")).toBeInTheDocument()
   })
+
+  it('should return false when errorMatcher is neither boolean nor function', () => {
+    const onErrorParent = vi.fn()
+    const onErrorChild = vi.fn()
+
+    render(
+      <ErrorBoundary fallback={({ error }) => <>{error.message} of Parent</>} onError={onErrorParent}>
+        <ErrorBoundary
+          // Testing edge case: matchError returns false when errorMatcher is not boolean or function
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-assignment
+          shouldCatch={null as any}
+          fallback={({ error }) => <>{error.message} of Child</>}
+          onError={onErrorChild}
+        >
+          {createElement(() => {
+            throw new Error(ERROR_MESSAGE)
+          })}
+        </ErrorBoundary>
+      </ErrorBoundary>
+    )
+
+    expect(onErrorChild).toBeCalledTimes(0)
+    expect(onErrorParent).toBeCalledTimes(1)
+    expect(screen.queryByText(`${ERROR_MESSAGE} of Parent`)).toBeInTheDocument()
+  })
 })
 
 describe('<ErrorBoundary.Consumer/>', () => {
