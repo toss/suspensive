@@ -17,6 +17,8 @@ This is useful when you want to prefetch data on the server side and pass it to 
 
 ## Basic Usage
 
+Use `queryOptions` with `QueriesHydration` to prefetch data on the server. For better HTML Streaming, wrap each component with its own `Suspense` and `QueriesHydration`:
+
 <Tabs items={['page.tsx (RSC)', 'UserProfile.tsx (RCC)', 'PostList.tsx (RCC)']}>
 <Tabs.Tab>
 
