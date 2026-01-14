@@ -21,8 +21,6 @@ jobs:
       - uses: actions/checkout@v5
       - uses: ./.github/actions/pnpm-setup-node
       - run: pnpm install
-      - if: matrix.command == 'ci:test'
-        run: pnpm playwright install
       - run: pnpm run ${{ matrix.command }}
       - if: matrix.command == 'ci:test'
         uses: codecov/codecov-action@v5
