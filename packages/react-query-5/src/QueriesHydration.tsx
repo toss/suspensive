@@ -73,6 +73,28 @@ import { ClientOnly } from './components/ClientOnly'
  * </Suspense>
  * ```
  *
+ * @example
+ * ```tsx
+ * // With timeout - implementing timeout via queryOptions
+ * const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
+ *
+ * const timeoutQueryOptions = (ms: number) => queryOptions({
+ *   queryKey: ['__timeout__'],
+ *   queryFn: () => sleep(ms).then(() => Promise.reject(new Error('timeout')))
+ * })
+ *
+ * <Suspense fallback={<div>Loading user...</div>}>
+ *   <QueriesHydration
+ *     queries={[
+ *       userQueryOptions(userId),
+ *       timeoutQueryOptions(5000)  // Timeout after 5 seconds
+ *     ]}
+ *   >
+ *     <UserProfile />
+ *   </QueriesHydration>
+ * </Suspense>
+ * ```
+ *
  * @see {@link https://suspensive.org/docs/react-query/QueriesHydration Documentation}
  */
 export async function QueriesHydration({
