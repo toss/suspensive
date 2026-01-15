@@ -14,7 +14,7 @@
     "@cspell/eslint-plugin": "^9.4.0",
     "@eslint-react/eslint-plugin": "^2.3.13",
     "@next/eslint-plugin-next": "catalog:",
-    "@vitest/eslint-plugin": "^1.5.2",
+    "@vitest/eslint-plugin": "^1.6.6",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-jest-dom": "^5.5.0",
