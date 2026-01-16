@@ -35,3 +35,6 @@ onlyBuiltDependencies:
   - esbuild
   - msw
   - sharp
+
+patchedDependencies:
+  '@theguild/remark-mermaid': patches/@theguild__remark-mermaid.patch
