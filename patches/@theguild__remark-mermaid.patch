@@ -1,0 +1,28 @@
+diff --git a/dist/mermaid.js b/dist/mermaid.js
+index 1753db256fae9d39aec08eadb34df5d07a2fa2e3..089dfded316bcbc234cda44c44370099d1ee19ef 100644
+--- a/dist/mermaid.js
++++ b/dist/mermaid.js
+@@ -27,8 +27,21 @@ function Mermaid({ chart }) {
+       return;
+     }
+     const htmlElement = document.documentElement;
+-    const observer = new MutationObserver(renderChart);
+-    observer.observe(htmlElement, { attributes: true });
++    const isDark = () =>
++      htmlElement.classList.contains("dark") ||
++      htmlElement.getAttribute("data-theme") === "dark";
++    let prevIsDark = isDark();
++    const observer = new MutationObserver(() => {
++      const nextIsDark = isDark();
++      if (nextIsDark !== prevIsDark) {
++        prevIsDark = nextIsDark;
++        renderChart();
++      }
++    });
++    observer.observe(htmlElement, {
++      attributes: true,
++      attributeFilter: ["class", "data-theme"],
++    });
+     renderChart();
+     return () => {
+       observer.disconnect();
