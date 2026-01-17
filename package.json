@@ -44,8 +44,8 @@
     "@testing-library/react": "^16.3.1",
     "@testing-library/user-event": "^14.6.1",
     "@types/node": "^24.10.1",
-    "@vitest/coverage-istanbul": "^4.0.16",
-    "@vitest/ui": "^4.0.16",
+    "@vitest/coverage-istanbul": "^4.0.17",
+    "@vitest/ui": "^4.0.17",
     "broken-link-checker": "^0.7.8",
     "eslint": "^9.39.2",
     "husky": "^9.1.7",
@@ -61,7 +61,7 @@
     "tsdown": "^0.18.0",
     "turbo": "^2.6.3",
     "typescript": "^5.8.3",
-    "vite": "^7.3.0",
-    "vitest": "^4.0.16"
+    "vite": "^7.3.1",
+    "vitest": "^4.0.17"
   }
 }
