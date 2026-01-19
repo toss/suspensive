@@ -1,4 +1,4 @@
-import { QueryClient, dehydrate } from '@tanstack/react-query'
+import { QueryClient, dehydrate, infiniteQueryOptions } from '@tanstack/react-query'
 import { render, screen } from '@testing-library/react'
 import type { ComponentProps, ReactNode } from 'react'
 import { describe, expect, it, vi } from 'vitest'
@@ -253,5 +253,105 @@ describe('<QueriesHydration/>', () => {
     expect(dehydratedState.queries).toHaveLength(1)
     expect(dehydratedState.queries[0].queryKey).toEqual(['test-query'])
     expect(dehydratedState.queries[0].state.data).toEqual(mockData)
+  })
+
+  it('should fetch infiniteQueryOptions and hydrate them successfully', async () => {
+    const queryClient = new QueryClient()
+    const mockInfiniteQueryFn = vi.fn().mockResolvedValue({ data: 'page-1' })
+
+    const infiniteOptions = infiniteQueryOptions({
+      queryKey: ['infinite-query'],
+      queryFn: mockInfiniteQueryFn,
+      initialPageParam: 0,
+      getNextPageParam: () => null,
+    })
+
+    const result = await QueriesHydration({
+      queries: [infiniteOptions],
+      queryClient,
+      children: <div>Test Children</div>,
+    })
+
+    expect(mockInfiniteQueryFn).toHaveBeenCalledTimes(1)
+    expect(result).toBeDefined()
+    expect(result.type).toBeDefined()
+  })
+
+  it('should handle mixed queries and infiniteQueryOptions', async () => {
+    const queryClient = new QueryClient()
+    const mockQueryFn = vi.fn().mockResolvedValue({ data: 'regular-data' })
+    const mockInfiniteQueryFn = vi.fn().mockResolvedValue({ data: 'infinite-data' })
+
+    const queries = [
+      {
+        queryKey: ['regular-query'],
+        queryFn: mockQueryFn,
+      },
+      infiniteQueryOptions({
+        queryKey: ['infinite-query'],
+        queryFn: mockInfiniteQueryFn,
+        initialPageParam: 0,
+        getNextPageParam: () => null,
+      }),
+    ]
+
+    const result = await QueriesHydration({
+      queries,
+      queryClient,
+      children: <div>Test Children</div>,
+    })
+
+    expect(mockQueryFn).toHaveBeenCalledTimes(1)
+    expect(mockInfiniteQueryFn).toHaveBeenCalledTimes(1)
+    expect(result).toBeDefined()
+  })
+
+  it('should skip SSR when infiniteQueryOptions fails and skipSsrOnError is true', async () => {
+    const queryClient = new QueryClient()
+    const mockInfiniteQueryFn = vi.fn().mockRejectedValue(new Error('Infinite query failed'))
+
+    const infiniteOptions = infiniteQueryOptions({
+      queryKey: ['failing-infinite-query'],
+      queryFn: mockInfiniteQueryFn,
+      initialPageParam: 0,
+      getNextPageParam: () => null,
+    })
+
+    const result = await QueriesHydration({
+      queries: [infiniteOptions],
+      queryClient,
+      children: <div>Test Children</div>,
+    })
+
+    expect(mockInfiniteQueryFn).toHaveBeenCalledTimes(1)
+
+    render(result as React.ReactElement)
+    expect(screen.getByTestId('client-only')).toBeInTheDocument()
+  })
+
+  it('should dehydrate infiniteQueryOptions state correctly', async () => {
+    const queryClient = new QueryClient()
+    const mockInfiniteQueryFn = vi.fn().mockResolvedValue({ data: 'page-1' })
+
+    const infiniteOptions = infiniteQueryOptions({
+      queryKey: ['infinite-query'],
+      queryFn: mockInfiniteQueryFn,
+      initialPageParam: 0,
+      getNextPageParam: () => null,
+    })
+
+    await QueriesHydration({
+      queries: [infiniteOptions],
+      queryClient,
+      children: <div>Test Children</div>,
+    })
+
+    const dehydratedState = dehydrate(queryClient)
+    expect(dehydratedState.queries).toHaveLength(1)
+    expect(dehydratedState.queries[0].queryKey).toEqual(['infinite-query'])
+    expect(dehydratedState.queries[0].state.data).toEqual({
+      pages: [{ data: 'page-1' }],
+      pageParams: [0],
+    })
   })
 })
