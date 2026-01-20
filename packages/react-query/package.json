@@ -56,8 +56,12 @@
   "types": "dist/index.d.mts",
   "typesVersions": {
     "*": {
-      "v4": ["./dist/v4.d.mts"],
-      "v5": ["./dist/v5.d.mts"]
+      "v4": [
+        "./dist/v4.d.mts"
+      ],
+      "v5": [
+        "./dist/v5.d.mts"
+      ]
     }
   },
   "bin": {
