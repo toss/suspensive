@@ -29,11 +29,37 @@
         "default": "./dist/index.cjs"
       }
     },
+    "./v4": {
+      "import": {
+        "types": "./dist/v4.d.mts",
+        "default": "./dist/v4.mjs"
+      },
+      "require": {
+        "types": "./dist/v4.d.cts",
+        "default": "./dist/v4.cjs"
+      }
+    },
+    "./v5": {
+      "import": {
+        "types": "./dist/v5.d.mts",
+        "default": "./dist/v5.mjs"
+      },
+      "require": {
+        "types": "./dist/v5.d.cts",
+        "default": "./dist/v5.cjs"
+      }
+    },
     "./package.json": "./package.json"
   },
   "main": "dist/index.cjs",
   "module": "dist/index.mjs",
   "types": "dist/index.d.mts",
+  "typesVersions": {
+    "*": {
+      "v4": ["./dist/v4.d.mts"],
+      "v5": ["./dist/v5.d.mts"]
+    }
+  },
   "bin": {
     "suspensive-react-query": "dist/bin/cli.cjs",
     "srq": "dist/bin/cli.cjs"

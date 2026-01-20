@@ -35,15 +35,12 @@ describe('postinstall', () => {
     expect(mockConsoleError).not.toHaveBeenCalled()
   })
 
-  it('should use default v5 exports when @tanstack/react-query@^5 is installed', async () => {
+  it('should switch to @suspensive/react-query-5 when @tanstack/react-query@^5 is installed', async () => {
     await runPostInstall('5.2.3')
 
     expect(mockGetTanStackReactQueryPackageJson).toHaveBeenCalledTimes(1)
-    expect(mockSwitchVersion).not.toHaveBeenCalled()
-    expect(mockConsoleLog).toHaveBeenCalledWith(
-      '[@suspensive/react-query]',
-      'Detected @tanstack/react-query v5. Using default v5 exports.'
-    )
+    expect(mockSwitchVersion).toHaveBeenCalledWith(5)
+    expect(mockSwitchVersion).toHaveBeenCalledTimes(1)
     expect(mockConsoleError).not.toHaveBeenCalled()
   })
 

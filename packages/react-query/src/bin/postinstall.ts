@@ -11,7 +11,7 @@ try {
       switchVersion(4)
       break
     case '5':
-      logger.log('Detected @tanstack/react-query v5. Using default v5 exports.')
+      switchVersion(5)
       break
     default:
       logger.error(`version v${version} is not supported.`)
