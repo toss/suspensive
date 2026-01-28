@@ -108,7 +108,7 @@ describe('<ErrorBoundary/>', () => {
       const example = (
         <ErrorBoundary
           shouldCatch={CustomError}
-          onError={(error) => {
+          onCatch={(error) => {
             expectTypeOf(error).toEqualTypeOf<CustomError>()
           }}
           fallback={({ error }) => {
@@ -126,7 +126,7 @@ describe('<ErrorBoundary/>', () => {
       const example = (
         <ErrorBoundary
           shouldCatch={CustomError}
-          onError={(error) => {
+          onCatch={(error) => {
             expectTypeOf(error).toEqualTypeOf<CustomError>()
           }}
           fallback={({ error }) => {
@@ -145,7 +145,7 @@ describe('<ErrorBoundary/>', () => {
       const example = (
         <ErrorBoundary
           shouldCatch={[CustomError, (e) => isAnotherError(e), isAnotherError, (e) => e instanceof AnotherError]}
-          onError={(error) => {
+          onCatch={(error) => {
             expectTypeOf(error).toEqualTypeOf<CustomError | AnotherError>()
           }}
           fallback={({ error }) => {
@@ -185,7 +185,7 @@ describe('<ErrorBoundary/>', () => {
       const example = (
         <ErrorBoundary
           shouldCatch={AnotherError}
-          onError={(error) => {
+          onCatch={(error) => {
             expectTypeOf(error).toEqualTypeOf<AnotherError>()
           }}
           fallback={({ error }) => {
@@ -204,7 +204,7 @@ describe('<ErrorBoundary/>', () => {
       const example = (
         <ErrorBoundary
           shouldCatch={ThirdError}
-          onError={(error) => {
+          onCatch={(error) => {
             expectTypeOf(error).toEqualTypeOf<ThirdError>()
           }}
           fallback={({ error }) => {
@@ -223,7 +223,7 @@ describe('<ErrorBoundary/>', () => {
       const example = (
         <ErrorBoundary
           shouldCatch={FifthError<string>}
-          onError={(error) => {
+          onCatch={(error) => {
             expectTypeOf(error).toEqualTypeOf<FifthError<string>>()
           }}
           fallback={({ error }) => {
@@ -244,7 +244,7 @@ describe('<ErrorBoundary/>', () => {
       const example = (
         <ErrorBoundary
           shouldCatch={isAnotherError}
-          onError={(error) => {
+          onCatch={(error) => {
             expectTypeOf(error).toEqualTypeOf<AnotherError>()
           }}
           fallback={({ error }) => {
@@ -262,7 +262,7 @@ describe('<ErrorBoundary/>', () => {
       const example = (
         <ErrorBoundary
           shouldCatch={isAnotherErrorWithErrorParam}
-          onError={(error) => {
+          onCatch={(error) => {
             expectTypeOf(error).toEqualTypeOf<AnotherError>()
           }}
           fallback={({ error }) => {
@@ -280,7 +280,7 @@ describe('<ErrorBoundary/>', () => {
       const example = (
         <ErrorBoundary
           shouldCatch={isThirdError}
-          onError={(error) => {
+          onCatch={(error) => {
             expectTypeOf(error).toEqualTypeOf<ThirdError>()
           }}
           fallback={({ error }) => {
@@ -299,7 +299,7 @@ describe('<ErrorBoundary/>', () => {
       const example = (
         <ErrorBoundary
           shouldCatch={customErrorCallback}
-          onError={(error) => {
+          onCatch={(error) => {
             expectTypeOf(error).toEqualTypeOf<CustomError>()
           }}
           fallback={({ error }) => {
@@ -318,7 +318,7 @@ describe('<ErrorBoundary/>', () => {
       const example = (
         <ErrorBoundary
           shouldCatch={[CustomError, AnotherError]}
-          onError={(error) => {
+          onCatch={(error) => {
             expectTypeOf(error).toEqualTypeOf<CustomError | AnotherError>()
           }}
           fallback={({ error }) => {
@@ -342,7 +342,7 @@ describe('<ErrorBoundary/>', () => {
       const example = (
         <ErrorBoundary
           shouldCatch={[CustomError, AnotherError, ThirdError]}
-          onError={(error) => {
+          onCatch={(error) => {
             expectTypeOf(error).toEqualTypeOf<CustomError | AnotherError | ThirdError>()
           }}
           fallback={({ error }) => {
@@ -370,7 +370,7 @@ describe('<ErrorBoundary/>', () => {
       const example = (
         <ErrorBoundary
           shouldCatch={[CustomError, isAnotherError]}
-          onError={(error) => {
+          onCatch={(error) => {
             expectTypeOf(error).toEqualTypeOf<CustomError | AnotherError>()
           }}
           fallback={({ error }) => {
@@ -394,7 +394,7 @@ describe('<ErrorBoundary/>', () => {
       const example = (
         <ErrorBoundary
           shouldCatch={[isAnotherError, isThirdError, isFourthError]}
-          onError={(error) => {
+          onCatch={(error) => {
             expectTypeOf(error).toEqualTypeOf<AnotherError | ThirdError | FourthError>()
           }}
           fallback={({ error }) => {
@@ -422,7 +422,7 @@ describe('<ErrorBoundary/>', () => {
       const example = (
         <ErrorBoundary
           shouldCatch={[CustomError, customErrorCallback]}
-          onError={(error) => {
+          onCatch={(error) => {
             expectTypeOf(error).toEqualTypeOf<CustomError>()
           }}
           fallback={({ error }) => {
@@ -440,7 +440,7 @@ describe('<ErrorBoundary/>', () => {
       const example = (
         <ErrorBoundary
           shouldCatch={[CustomError, true]}
-          onError={(error) => {
+          onCatch={(error) => {
             expectTypeOf(error).toEqualTypeOf<CustomError | Error>()
           }}
           fallback={({ error }) => {
@@ -475,7 +475,7 @@ describe('<ErrorBoundary/>', () => {
       const example = (
         <ErrorBoundary
           shouldCatch={[CustomError, AnotherError, isThirdError, isFourthError]}
-          onError={(error) => {
+          onCatch={(error) => {
             expectTypeOf(error).toEqualTypeOf<CustomError | AnotherError | ThirdError | FourthError>()
           }}
           fallback={({ error }) => {
@@ -521,7 +521,7 @@ describe('<ErrorBoundary/>', () => {
       const example = (
         <ErrorBoundary
           shouldCatch={[CustomError]}
-          onError={(error) => {
+          onCatch={(error) => {
             expectTypeOf(error).toEqualTypeOf<CustomError>()
           }}
           fallback={({ error }) => {
@@ -540,7 +540,7 @@ describe('<ErrorBoundary/>', () => {
       const example = (
         <ErrorBoundary
           shouldCatch={[isAnotherError]}
-          onError={(error) => {
+          onCatch={(error) => {
             expectTypeOf(error).toEqualTypeOf<AnotherError>()
           }}
           fallback={({ error }) => {
@@ -560,7 +560,7 @@ describe('<ErrorBoundary/>', () => {
       const example = (
         <ErrorBoundary
           shouldCatch={Error}
-          onError={(error) => {
+          onCatch={(error) => {
             expectTypeOf(error).toEqualTypeOf<Error>()
           }}
           fallback={({ error }) => {
@@ -578,7 +578,7 @@ describe('<ErrorBoundary/>', () => {
       const example = (
         <ErrorBoundary
           shouldCatch={[Error, CustomError, AnotherError]}
-          onError={(error) => {
+          onCatch={(error) => {
             expectTypeOf(error).toEqualTypeOf<Error | CustomError | AnotherError>()
           }}
           fallback={({ error }) => {
@@ -602,7 +602,7 @@ describe('<ErrorBoundary/>', () => {
       const example = (
         <ErrorBoundary
           shouldCatch={[CustomError, FifthError<number>]}
-          onError={(error) => {
+          onCatch={(error) => {
             expectTypeOf(error).toEqualTypeOf<CustomError | FifthError<number>>()
           }}
           fallback={({ error }) => {
@@ -690,7 +690,7 @@ describe('<ErrorBoundary/>', () => {
       const WrappedComponent = ErrorBoundary.with(
         {
           shouldCatch: CustomError,
-          onError: (error) => {
+          onCatch: (error) => {
             expectTypeOf(error).toEqualTypeOf<CustomError>()
           },
           fallback: ({ error }) => {
@@ -709,7 +709,7 @@ describe('<ErrorBoundary/>', () => {
       const WrappedComponent = ErrorBoundary.with(
         {
           shouldCatch: CustomError,
-          onError: (error) => {
+          onCatch: (error) => {
             expectTypeOf(error).toEqualTypeOf<CustomError>()
           },
           fallback: ({ error }) => {
@@ -729,7 +729,7 @@ describe('<ErrorBoundary/>', () => {
       const WrappedComponent = ErrorBoundary.with(
         {
           shouldCatch: [CustomError, (e) => isAnotherError(e), isAnotherError, (e) => e instanceof AnotherError],
-          onError: (error) => {
+          onCatch: (error) => {
             expectTypeOf(error).toEqualTypeOf<CustomError | AnotherError>()
           },
           fallback: ({ error }) => {
@@ -771,7 +771,7 @@ describe('<ErrorBoundary/>', () => {
       const WrappedComponent = ErrorBoundary.with(
         {
           shouldCatch: AnotherError,
-          onError: (error) => {
+          onCatch: (error) => {
             expectTypeOf(error).toEqualTypeOf<AnotherError>()
           },
           fallback: ({ error }) => {
@@ -791,7 +791,7 @@ describe('<ErrorBoundary/>', () => {
       const WrappedComponent = ErrorBoundary.with(
         {
           shouldCatch: ThirdError,
-          onError: (error) => {
+          onCatch: (error) => {
             expectTypeOf(error).toEqualTypeOf<ThirdError>()
           },
           fallback: ({ error }) => {
@@ -811,7 +811,7 @@ describe('<ErrorBoundary/>', () => {
       const WrappedComponent = ErrorBoundary.with(
         {
           shouldCatch: FifthError<string>,
-          onError: (error) => {
+          onCatch: (error) => {
             expectTypeOf(error).toEqualTypeOf<FifthError<string>>()
           },
           fallback: ({ error }) => {
@@ -833,7 +833,7 @@ describe('<ErrorBoundary/>', () => {
       const WrappedComponent = ErrorBoundary.with(
         {
           shouldCatch: isAnotherError,
-          onError: (error) => {
+          onCatch: (error) => {
             expectTypeOf(error).toEqualTypeOf<AnotherError>()
           },
           fallback: ({ error }) => {
@@ -852,7 +852,7 @@ describe('<ErrorBoundary/>', () => {
       const WrappedComponent = ErrorBoundary.with(
         {
           shouldCatch: isAnotherErrorWithErrorParam,
-          onError: (error) => {
+          onCatch: (error) => {
             expectTypeOf(error).toEqualTypeOf<AnotherError>()
           },
           fallback: ({ error }) => {
@@ -871,7 +871,7 @@ describe('<ErrorBoundary/>', () => {
       const WrappedComponent = ErrorBoundary.with(
         {
           shouldCatch: isThirdError,
-          onError: (error) => {
+          onCatch: (error) => {
             expectTypeOf(error).toEqualTypeOf<ThirdError>()
           },
           fallback: ({ error }) => {
@@ -891,7 +891,7 @@ describe('<ErrorBoundary/>', () => {
       const WrappedComponent = ErrorBoundary.with(
         {
           shouldCatch: customErrorCallback,
-          onError: (error) => {
+          onCatch: (error) => {
             expectTypeOf(error).toEqualTypeOf<CustomError>()
           },
           fallback: ({ error }) => {
@@ -911,7 +911,7 @@ describe('<ErrorBoundary/>', () => {
       const WrappedComponent = ErrorBoundary.with(
         {
           shouldCatch: [CustomError, AnotherError],
-          onError: (error) => {
+          onCatch: (error) => {
             expectTypeOf(error).toEqualTypeOf<CustomError | AnotherError>()
           },
           fallback: ({ error }) => {
@@ -936,7 +936,7 @@ describe('<ErrorBoundary/>', () => {
       const WrappedComponent = ErrorBoundary.with(
         {
           shouldCatch: [CustomError, AnotherError, ThirdError],
-          onError: (error) => {
+          onCatch: (error) => {
             expectTypeOf(error).toEqualTypeOf<CustomError | AnotherError | ThirdError>()
           },
           fallback: ({ error }) => {
@@ -965,7 +965,7 @@ describe('<ErrorBoundary/>', () => {
       const WrappedComponent = ErrorBoundary.with(
         {
           shouldCatch: [CustomError, isAnotherError],
-          onError: (error) => {
+          onCatch: (error) => {
             expectTypeOf(error).toEqualTypeOf<CustomError | AnotherError>()
           },
           fallback: ({ error }) => {
@@ -990,7 +990,7 @@ describe('<ErrorBoundary/>', () => {
       const WrappedComponent = ErrorBoundary.with(
         {
           shouldCatch: [isAnotherError, isThirdError, isFourthError],
-          onError: (error) => {
+          onCatch: (error) => {
             expectTypeOf(error).toEqualTypeOf<AnotherError | ThirdError | FourthError>()
           },
           fallback: ({ error }) => {
@@ -1019,7 +1019,7 @@ describe('<ErrorBoundary/>', () => {
       const WrappedComponent = ErrorBoundary.with(
         {
           shouldCatch: [CustomError, customErrorCallback],
-          onError: (error) => {
+          onCatch: (error) => {
             expectTypeOf(error).toEqualTypeOf<CustomError>()
           },
           fallback: ({ error }) => {
@@ -1038,7 +1038,7 @@ describe('<ErrorBoundary/>', () => {
       const WrappedComponent = ErrorBoundary.with(
         {
           shouldCatch: [CustomError, true],
-          onError: (error) => {
+          onCatch: (error) => {
             expectTypeOf(error).toEqualTypeOf<CustomError | Error>()
           },
           fallback: ({ error }) => {
@@ -1075,7 +1075,7 @@ describe('<ErrorBoundary/>', () => {
       const WrappedComponent = ErrorBoundary.with(
         {
           shouldCatch: [CustomError, AnotherError, isThirdError, isFourthError],
-          onError: (error) => {
+          onCatch: (error) => {
             expectTypeOf(error).toEqualTypeOf<CustomError | AnotherError | ThirdError | FourthError>()
           },
           fallback: ({ error }) => {
@@ -1123,7 +1123,7 @@ describe('<ErrorBoundary/>', () => {
       const WrappedComponent = ErrorBoundary.with(
         {
           shouldCatch: [CustomError],
-          onError: (error) => {
+          onCatch: (error) => {
             expectTypeOf(error).toEqualTypeOf<CustomError>()
           },
           fallback: ({ error }) => {
@@ -1143,7 +1143,7 @@ describe('<ErrorBoundary/>', () => {
       const WrappedComponent = ErrorBoundary.with(
         {
           shouldCatch: [isAnotherError],
-          onError: (error) => {
+          onCatch: (error) => {
             expectTypeOf(error).toEqualTypeOf<AnotherError>()
           },
           fallback: ({ error }) => {
@@ -1164,7 +1164,7 @@ describe('<ErrorBoundary/>', () => {
       const WrappedComponent = ErrorBoundary.with(
         {
           shouldCatch: Error,
-          onError: (error) => {
+          onCatch: (error) => {
             expectTypeOf(error).toEqualTypeOf<Error>()
           },
           fallback: ({ error }) => {
@@ -1183,7 +1183,7 @@ describe('<ErrorBoundary/>', () => {
       const WrappedComponent = ErrorBoundary.with(
         {
           shouldCatch: [Error, CustomError, AnotherError],
-          onError: (error) => {
+          onCatch: (error) => {
             expectTypeOf(error).toEqualTypeOf<Error | CustomError | AnotherError>()
           },
           fallback: ({ error }) => {
@@ -1208,7 +1208,7 @@ describe('<ErrorBoundary/>', () => {
       const WrappedComponent = ErrorBoundary.with(
         {
           shouldCatch: [CustomError, FifthError<number>],
-          onError: (error) => {
+          onCatch: (error) => {
             expectTypeOf(error).toEqualTypeOf<CustomError | FifthError<number>>()
           },
           fallback: ({ error }) => {

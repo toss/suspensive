@@ -15,7 +15,7 @@ import { Callout, Sandpack } from '@/components'
 | 에러 및 리셋 기능이 있는 Fallback UI | ✅                | ✅                     | ✅                     | ⚠️ (수동)              |
 | resetKeys로 리셋                     | ✅                | ✅                     | ❌                     | ⚠️ (수동)              |
 | onReset 콜백                         | ✅                | ✅                     | ✅                     | ⚠️ (수동)              |
-| onError 콜백                         | ✅                | ✅                     | ✅                     | ✅ (componentDidCatch) |
+| onCatch 콜백                         | ✅                | ✅ (onError)           | ✅ (onError)           | ✅ (componentDidCatch) |
 | 조건부 에러 캐칭 (shouldCatch)       | ✅                | ❌                     | ❌                     | ⚠️ (수동)              |
 | Fallback 에러 처리                   | ✅ (부모로 전달)  | ❌ (재귀적)            | ❌ (재귀적)            | ⚠️ (수동)              |
 | useErrorBoundary 훅                  | ✅                | ✅                     | ❌                     | ❌                     |
@@ -214,7 +214,7 @@ const SentryExample = () => (
         {error.message}
       </div>
     )}
-    onError={(error, componentStack, eventId) => {
+    onCatch={(error, componentStack, eventId) => {
       // 에러가 자동으로 Sentry로 전송됨
       console.log('에러 캐치:', eventId)
     }}
@@ -235,7 +235,7 @@ const SuspensiveExample = () => (
         {error.message}
       </div>
     )}
-    onError={(error, errorInfo) => {
+    onCatch={(error, errorInfo) => {
       const eventId = Sentry.captureReactException(error, errorInfo)
       console.log('에러 캐치:', eventId)
     }}
@@ -290,7 +290,7 @@ const SuspensiveExample = () => (
     fallback={({ error, reset }) => (
       <FallbackComponent error={error} reset={reset} />
     )}
-    onError={(error, errorInfo) => logErrorToService(error, errorInfo)}
+    onCatch={(error, errorInfo) => logErrorToService(error, errorInfo)}
   >
     <YourComponent />
   </ErrorBoundary>
@@ -598,11 +598,11 @@ export const fetchSomething = () => {
 
 </Sandpack>
 
-### props.onError
+### props.onCatch
 
 `<ErrorBoundary/>`가 error를 잡을 때 호출되는 callback입니다.
 
-```tsx /onError/
+```tsx /onCatch/
 import { ErrorBoundary } from '@suspensive/react'
 
 const logError = (error: Error, info: ErrorInfo) => {
@@ -610,7 +610,7 @@ const logError = (error: Error, info: ErrorInfo) => {
 }
 
 const Example = (
-  <ErrorBoundary fallback={ErrorBoundaryFallback} onError={logError}>
+  <ErrorBoundary fallback={ErrorBoundaryFallback} onCatch={logError}>
     <ErrorAfter2s />
   </ErrorBoundary>
 )
@@ -635,7 +635,7 @@ export const Example = () => {
           {props.error.message}
         </>
       )}
-      onError={logError}
+      onCatch={logError}
     >
       <ErrorAfter2s />
     </ErrorBoundary>

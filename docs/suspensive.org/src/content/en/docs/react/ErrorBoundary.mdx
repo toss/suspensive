@@ -15,7 +15,7 @@ this component can handle any errors in children.
 | Fallback UI with error & reset           | ✅                | ✅                     | ✅                     | ⚠️ (Manual)            |
 | Reset with resetKeys                     | ✅                | ✅                     | ❌                     | ⚠️ (Manual)            |
 | onReset callback                         | ✅                | ✅                     | ✅                     | ⚠️ (Manual)            |
-| onError callback                         | ✅                | ✅                     | ✅                     | ✅ (componentDidCatch) |
+| onCatch callback                         | ✅                | ✅ (onError)           | ✅ (onError)           | ✅ (componentDidCatch) |
 | Conditional error catching (shouldCatch) | ✅                | ❌                     | ❌                     | ⚠️ (Manual)            |
 | Fallback error handling                  | ✅ (To parent)    | ❌ (Recursive)         | ❌ (Recursive)         | ⚠️ (Manual)            |
 | useErrorBoundary hook                    | ✅                | ✅                     | ❌                     | ❌                     |
@@ -214,7 +214,7 @@ const SentryExample = () => (
         {error.message}
       </div>
     )}
-    onError={(error, componentStack, eventId) => {
+    onCatch={(error, componentStack, eventId) => {
       // Error automatically sent to Sentry
       console.log('Error caught:', eventId)
     }}
@@ -235,7 +235,7 @@ const SuspensiveExample = () => (
         {error.message}
       </div>
     )}
-    onError={(error, errorInfo) => {
+    onCatch={(error, errorInfo) => {
       const eventId = Sentry.captureReactException(error, errorInfo)
       console.log('Error caught:', eventId)
     }}
@@ -290,7 +290,7 @@ const SuspensiveExample = () => (
     fallback={({ error, reset }) => (
       <FallbackComponent error={error} reset={reset} />
     )}
-    onError={(error, errorInfo) => logErrorToService(error, errorInfo)}
+    onCatch={(error, errorInfo) => logErrorToService(error, errorInfo)}
   >
     <YourComponent />
   </ErrorBoundary>
@@ -595,11 +595,11 @@ export const fetchSomething = () => {
 
 </Sandpack>
 
-### props.onError
+### props.onCatch
 
 This is a callback called when `<ErrorBoundary/>` catches an error.
 
-```tsx /onError/
+```tsx /onCatch/
 import { ErrorBoundary } from '@suspensive/react'
 
 const logError = (error: Error, info: ErrorInfo) => {
@@ -607,7 +607,7 @@ const logError = (error: Error, info: ErrorInfo) => {
 }
 
 const Example = (
-  <ErrorBoundary fallback={ErrorBoundaryFallback} onError={logError}>
+  <ErrorBoundary fallback={ErrorBoundaryFallback} onCatch={logError}>
     <ErrorAfter2s />
   </ErrorBoundary>
 )
@@ -632,7 +632,7 @@ export const Example = () => {
           {props.error.message}
         </>
       )}
-      onError={logError}
+      onCatch={logError}
     >
       <ErrorAfter2s />
     </ErrorBoundary>
