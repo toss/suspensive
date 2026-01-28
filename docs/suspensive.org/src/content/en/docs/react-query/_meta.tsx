@@ -3,9 +3,6 @@ import type { MetaRecord } from 'nextra'
 export default {
   motivation: { title: 'Why need to use?' },
   installation: { title: 'Installation' },
-  'tanstack-query-compatibility': {
-    title: 'Support both TanStack Query v4 and 5',
-  },
   migration: { title: 'Migration guide' },
   '--- API Reference': {
     type: 'separator',
@@ -24,13 +21,4 @@ export default {
   QueriesHydration: { title: '<QueriesHydration/>' },
   QueryClientConsumer: { title: '<QueryClientConsumer/>' },
   IsFetching: { title: '<IsFetching/>' },
-  '--- Deprecated': {
-    type: 'separator',
-    title: 'Deprecated',
-  },
-  queryOptions: { title: 'queryOptions' },
-  infiniteQueryOptions: { title: 'infiniteQueryOptions' },
-  useSuspenseQuery: { title: 'useSuspenseQuery' },
-  useSuspenseQueries: { title: 'useSuspenseQueries' },
-  useSuspenseInfiniteQuery: { title: 'useSuspenseInfiniteQuery' },
 } satisfies MetaRecord

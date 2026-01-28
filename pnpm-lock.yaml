@@ -506,43 +506,6 @@ importers:
         specifier: ^6.0.0
         version: 6.0.0(react@19.2.3)
 
-  packages/react-query:
-    dependencies:
-      '@commander-js/extra-typings':
-        specifier: ^13.0.0
-        version: 13.1.0(commander@13.1.0)
-      '@suspensive/react-query-4':
-        specifier: workspace:^3.18.0
-        version: link:../react-query-4
-      '@suspensive/react-query-5':
-        specifier: workspace:^3.18.0
-        version: link:../react-query-5
-      '@tanstack/react-query':
-        specifier: ^4.42.0 || ^5.82.0
-        version: 5.90.9(react@19.2.3)
-      cli-table3:
-        specifier: ^0.6.5
-        version: 0.6.5
-      commander:
-        specifier: ^13.0.0
-        version: 13.1.0
-    devDependencies:
-      '@suspensive/eslint-config':
-        specifier: workspace:*
-        version: link:../../configs/eslint-config
-      '@suspensive/tsconfig':
-        specifier: workspace:*
-        version: link:../../configs/tsconfig
-      '@suspensive/tsdown':
-        specifier: workspace:*
-        version: link:../../configs/tsdown
-      '@types/react':
-        specifier: catalog:react19
-        version: 19.2.7
-      react:
-        specifier: catalog:react19
-        version: 19.2.3
-
   packages/react-query-4:
     devDependencies:
       '@suspensive/eslint-config':
@@ -1435,10 +1398,6 @@ packages:
     peerDependencies:
       react: ^16.8.0 || ^17 || ^18 || ^19
       react-dom: ^16.8.0 || ^17 || ^18 || ^19
-
-  '@colors/colors@1.5.0':
-    resolution: {integrity: sha512-ooWCrlZP11i8GImSjTHYHLkvFDP48nS4+204nGb1RiX/WXYHmJA2III9/e2DWVabCESdW7hBAEzHRqUn9OUVvQ==}
-    engines: {node: '>=0.1.90'}
 
   '@commander-js/extra-typings@13.1.0':
     resolution: {integrity: sha512-q5P52BYb1hwVWE6dtID7VvuJWrlfbCv4klj7BjUUOqMz4jbSZD4C9fJ9lRjL2jnBGTg+gDDlaXN51rkWcLk4fg==}
@@ -4128,10 +4087,6 @@ packages:
   cli-cursor@5.0.0:
     resolution: {integrity: sha512-aCj4O5wKyszjMmDT4tZj93kxyydN/K5zPWSCe6/0AV/AA1pqe5ZBIw0a2ZfPQV7lL5/yb5HsUreJ6UFAF1tEQw==}
     engines: {node: '>=18'}
-
-  cli-table3@0.6.5:
-    resolution: {integrity: sha512-+W/5efTR7y5HRD7gACw9yQjqMVvEMLBHmboM/kPWam+H+Hmyrgjh6YncVKK122YZkXrLudzTuAukUw9FnMf7IQ==}
-    engines: {node: 10.* || >= 12.*}
 
   cli-table@0.3.11:
     resolution: {integrity: sha512-IqLQi4lO0nIB4tcdTpN4LCB9FI3uqrJZK7RC515EnhZ6qBaglkIgICb1wjeAqpdoOabm1+SuQtkXIPdYC93jhQ==}
@@ -10235,9 +10190,6 @@ snapshots:
       react-dom: 19.2.3(react@19.2.3)
       react-is: 17.0.2
 
-  '@colors/colors@1.5.0':
-    optional: true
-
   '@commander-js/extra-typings@13.1.0(commander@13.1.0)':
     dependencies:
       commander: 13.1.0
@@ -13041,12 +12993,6 @@ snapshots:
   cli-cursor@5.0.0:
     dependencies:
       restore-cursor: 5.1.0
-
-  cli-table3@0.6.5:
-    dependencies:
-      string-width: 4.2.3
-    optionalDependencies:
-      '@colors/colors': 1.5.0
 
   cli-table@0.3.11:
     dependencies:

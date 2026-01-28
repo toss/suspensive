@@ -4,9 +4,6 @@ import type MetaEn from '../../../en/docs/react-query/_meta'
 export default {
   motivation: { title: '어떤 이유로 사용하나요?' },
   installation: { title: '설치하기' },
-  'tanstack-query-compatibility': {
-    title: 'TanStack Query v4, 5를 모두 지원',
-  },
   migration: { title: '마이그레이션 가이드' },
   '--- API Reference': {
     type: 'separator',
@@ -25,13 +22,4 @@ export default {
   QueriesHydration: { title: '<QueriesHydration/>' },
   QueryClientConsumer: { title: '<QueryClientConsumer/>' },
   IsFetching: { title: '<IsFetching/>' },
-  '--- Deprecated': {
-    type: 'separator',
-    title: 'Deprecated',
-  },
-  queryOptions: { title: 'queryOptions' },
-  infiniteQueryOptions: { title: 'infiniteQueryOptions' },
-  useSuspenseQuery: { title: 'useSuspenseQuery' },
-  useSuspenseQueries: { title: 'useSuspenseQueries' },
-  useSuspenseInfiniteQuery: { title: 'useSuspenseInfiniteQuery' },
 } satisfies typeof MetaEn satisfies MetaRecord
