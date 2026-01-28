@@ -10,8 +10,6 @@ export default {
   },
   createGetQueryClient: { title: 'createGetQueryClient' },
   mutationOptions: { title: 'mutationOptions' },
-  usePrefetchQuery: { title: 'usePrefetchQuery' },
-  usePrefetchInfiniteQuery: { title: 'usePrefetchInfiniteQuery' },
   SuspenseQuery: { title: '<SuspenseQuery/>' },
   SuspenseQueries: { title: '<SuspenseQueries/>' },
   SuspenseInfiniteQuery: { title: '<SuspenseInfiniteQuery/>' },

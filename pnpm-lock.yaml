@@ -26,8 +26,8 @@ catalogs:
       version: 4.1.17
   react-query4:
     '@tanstack/react-query':
-      specifier: 4.42.0
-      version: 4.42.0
+      specifier: 4.43.0
+      version: 4.43.0
   react-query5:
     '@tanstack/react-query':
       specifier: ^5.90.9
@@ -238,7 +238,7 @@ importers:
         version: 4.6.0(next@15.5.9(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(typescript@5.9.2)
       nextra-theme-docs:
         specifier: ^4.6.0
-        version: 4.6.0(@types/react@19.2.7)(next@15.5.9(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(nextra@4.6.0(next@15.5.9(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(typescript@5.9.2))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(use-sync-external-store@1.5.0(react@19.2.3))
+        version: 4.6.0(@types/react@19.2.7)(next@15.5.9(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(nextra@4.6.0(next@15.5.9(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(typescript@5.9.2))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(use-sync-external-store@1.6.0(react@19.2.3))
       react:
         specifier: catalog:react19
         version: 19.2.3
@@ -519,7 +519,7 @@ importers:
         version: link:../../configs/tsdown
       '@tanstack/react-query':
         specifier: catalog:react-query4
-        version: 4.42.0(react-dom@19.2.3(react@19.2.3))(react-native@0.76.9(@babel/core@7.28.5)(@babel/preset-env@7.28.3(@babel/core@7.28.5))(@types/react@19.2.7)(react@19.2.3))(react@19.2.3)
+        version: 4.43.0(react-dom@19.2.3(react@19.2.3))(react-native@0.76.9(@babel/core@7.28.5)(@babel/preset-env@7.28.3(@babel/core@7.28.5))(@types/react@19.2.7)(react@19.2.3))(react@19.2.3)
       '@types/react':
         specifier: catalog:react19
         version: 19.2.7
@@ -3131,8 +3131,8 @@ packages:
   '@tailwindcss/postcss@4.1.17':
     resolution: {integrity: sha512-+nKl9N9mN5uJ+M7dBOOCzINw94MPstNR/GtIhz1fpZysxL/4a+No64jCBD6CPN+bIHWFx3KWuu8XJRrj/572Dw==}
 
-  '@tanstack/query-core@4.41.0':
-    resolution: {integrity: sha512-193R4Jp9hjvlij6LryxrB5Mpbffd2L9PeWh3KlIy/hJV4SkBOfiQZ+jc5qAZLDCrdbkA5FjGj+UoDYw6TcNnyA==}
+  '@tanstack/query-core@4.43.0':
+    resolution: {integrity: sha512-m1QeUUIpNXDYxmfuuWNFZLky0EwVmbE0hj8ulZ2nIGA1183raJgDCn0IKlxug80NotRqzodxAaoYTKHbE1/P/Q==}
 
   '@tanstack/query-core@5.90.9':
     resolution: {integrity: sha512-UFOCQzi6pRGeVTVlPNwNdnAvT35zugcIydqjvFUzG62dvz2iVjElmNp/hJkUoM5eqbUPfSU/GJIr/wbvD8bTUw==}
@@ -3146,8 +3146,8 @@ packages:
       '@tanstack/react-query': ^5.90.2
       react: ^18 || ^19
 
-  '@tanstack/react-query@4.42.0':
-    resolution: {integrity: sha512-j0tiofkzE3CSrYKmVRaKuwGgvCE+P2OOEDlhmfjeZf5ufcuFHwYwwgw3j08n4WYPVZ+OpsHblcFYezhKA3jDwg==}
+  '@tanstack/react-query@4.43.0':
+    resolution: {integrity: sha512-Lj8luFKHQL27oZbw5T8xdTbsfAPp2+bCtSCa2bAVvIwnvNfRP0hpB1GxfKFgCktat8lPcYBHAu8eMTXzz2sQtQ==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
       react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
@@ -8488,6 +8488,11 @@ packages:
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
 
+  use-sync-external-store@1.6.0:
+    resolution: {integrity: sha512-Pp6GSwGP/NrPIrxVFAIkOQeyw8lFenOHijQWkUTrDvrF4ALqylP2C/KCkeS9dpUM3KvYRQhna5vt7IL95+ZQ9w==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+
   usehooks-ts@3.1.1:
     resolution: {integrity: sha512-I4diPp9Cq6ieSUH2wu+fDAVQO43xwtulo+fKEidHUwZPnYImbtkTjzIJYcDcJqxgmX31GVqNFURodvcgHcW0pA==}
     engines: {node: '>=16.15.0'}
@@ -11807,7 +11812,7 @@ snapshots:
       postcss: 8.5.6
       tailwindcss: 4.1.17
 
-  '@tanstack/query-core@4.41.0': {}
+  '@tanstack/query-core@4.43.0': {}
 
   '@tanstack/query-core@5.90.9': {}
 
@@ -11819,11 +11824,11 @@ snapshots:
       '@tanstack/react-query': 5.90.9(react@19.2.3)
       react: 19.2.3
 
-  '@tanstack/react-query@4.42.0(react-dom@19.2.3(react@19.2.3))(react-native@0.76.9(@babel/core@7.28.5)(@babel/preset-env@7.28.3(@babel/core@7.28.5))(@types/react@19.2.7)(react@19.2.3))(react@19.2.3)':
+  '@tanstack/react-query@4.43.0(react-dom@19.2.3(react@19.2.3))(react-native@0.76.9(@babel/core@7.28.5)(@babel/preset-env@7.28.3(@babel/core@7.28.5))(@types/react@19.2.7)(react@19.2.3))(react@19.2.3)':
     dependencies:
-      '@tanstack/query-core': 4.41.0
+      '@tanstack/query-core': 4.43.0
       react: 19.2.3
-      use-sync-external-store: 1.5.0(react@19.2.3)
+      use-sync-external-store: 1.6.0(react@19.2.3)
     optionalDependencies:
       react-dom: 19.2.3(react@19.2.3)
       react-native: 0.76.9(@babel/core@7.28.5)(@babel/preset-env@7.28.3(@babel/core@7.28.5))(@types/react@19.2.7)(react@19.2.3)
@@ -16422,7 +16427,7 @@ snapshots:
       - '@babel/core'
       - babel-plugin-macros
 
-  nextra-theme-docs@4.6.0(@types/react@19.2.7)(next@15.5.9(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(nextra@4.6.0(next@15.5.9(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(typescript@5.9.2))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(use-sync-external-store@1.5.0(react@19.2.3)):
+  nextra-theme-docs@4.6.0(@types/react@19.2.7)(next@15.5.9(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(nextra@4.6.0(next@15.5.9(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(typescript@5.9.2))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(use-sync-external-store@1.6.0(react@19.2.3)):
     dependencies:
       '@headlessui/react': 2.2.8(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
       clsx: 2.1.1
@@ -16434,7 +16439,7 @@ snapshots:
       react-dom: 19.2.3(react@19.2.3)
       scroll-into-view-if-needed: 3.1.0
       zod: 4.0.0-beta.20250424T163858
-      zustand: 5.0.8(@types/react@19.2.7)(react@19.2.3)(use-sync-external-store@1.5.0(react@19.2.3))
+      zustand: 5.0.8(@types/react@19.2.7)(react@19.2.3)(use-sync-external-store@1.6.0(react@19.2.3))
     transitivePeerDependencies:
       - '@types/react'
       - immer
@@ -18597,6 +18602,10 @@ snapshots:
     dependencies:
       react: 19.2.3
 
+  use-sync-external-store@1.6.0(react@19.2.3):
+    dependencies:
+      react: 19.2.3
+
   usehooks-ts@3.1.1(react@19.2.3):
     dependencies:
       lodash.debounce: 4.0.8
@@ -18962,10 +18971,10 @@ snapshots:
 
   zod@4.2.1: {}
 
-  zustand@5.0.8(@types/react@19.2.7)(react@19.2.3)(use-sync-external-store@1.5.0(react@19.2.3)):
+  zustand@5.0.8(@types/react@19.2.7)(react@19.2.3)(use-sync-external-store@1.6.0(react@19.2.3)):
     optionalDependencies:
       '@types/react': 19.2.7
       react: 19.2.3
-      use-sync-external-store: 1.5.0(react@19.2.3)
+      use-sync-external-store: 1.6.0(react@19.2.3)
 
   zwitch@2.0.4: {}
