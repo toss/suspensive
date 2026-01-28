@@ -55,7 +55,7 @@
     "react": "catalog:react19"
   },
   "peerDependencies": {
-    "@tanstack/react-query": "^5.82.0",
+    "@tanstack/react-query": "^5",
     "react": "^18 || ^19"
   },
   "publishConfig": {
