@@ -31,18 +31,12 @@ graph TD;
         A["@suspensive/react"]
     end
     subgraph BB ["Adapter Packages"]
-        C["@suspensive/react-query"]
+        C["@suspensive/react-query-4,5"]
         D["@suspensive/jotai"]
-    end
-    subgraph CC ["Version-Specific Packages"]
-        F["@suspensive/react-query-4"]
-        G["@suspensive/react-query-5"]
     end
 
     A --> C
     A --> D
-    C --> F
-    C --> G
 ```
 
 ### 패키지 책임
@@ -64,10 +58,10 @@ graph TD;
       <Table.Td>ErrorBoundary, Suspense, Delay, ErrorBoundaryGroup</Table.Td>
     </Table.Tr>
     <Table.Tr>
-      <Table.Td>@suspensive/react-query</Table.Td>
+      <Table.Td>@suspensive/react-query-4,5</Table.Td>
       <Table.Td>TanStack Query integration</Table.Td>
       <Table.Td>
-        SuspenseQuery, SuspenseInfiniteQuery, Version detection
+        SuspenseQuery, SuspenseInfiniteQuery, QueriesHydration
       </Table.Td>
     </Table.Tr>
     <Table.Tr>
@@ -92,7 +86,7 @@ graph TD;
 subgraph AA [Data Fetching @suspensive/react-query]
 A[queryOptions];
 B[infiniteQueryOptions];
-C[useSuspenseQuery, SuspenseQuery];
+C[SuspenseQuery];
 D[useSuspenseInfiniteQuery, SuspenseInfiniteQuery];
 E[useSuspenseQueries, SuspenseQueries];
 end
@@ -125,46 +119,6 @@ Suspensive는 다음과 같은 버전의 종속성을 지원합니다:
 - React 18 및 React 19
 - TanStack Query v4 및 v5
 - Jotai v2
-
-이 라이브러리는 이러한 종속성의 자동 어댑트를 통해 설치된 특정 버전에 맞게 자동으로 적용됩니다.
-
-## 데이터 흐름 패턴
-
-Suspensive에서는 React Suspense를 통한 비동기 상태 처리를 중심으로 하는 패턴을 따릅니다. 다음은 SuspenseQuery 같은 구성 요소를 사용할 때 데이터가 흐르는 방식을 보여주는 시퀀스 다이어그램입니다:
-
-```mermaid
-sequenceDiagram
-    participant App as Application Component
-    participant SQ as SuspenseQuery
-    participant S as Suspense
-    participant EB as ErrorBoundary
-    participant TQ as TanStack Query
-    participant API as External Data Source
-
-    App ->> SQ: Render with query config
-    SQ ->> TQ: Configure with suspense:true
-    TQ ->> API: Fetch data
-
-    alt [Loading]
-        API -->> TQ: Still loading
-        TQ -->> SQ: Throw promise
-        SQ -->> S: Promise caught
-        S ->> App: Render fallback UI
-    end
-
-    alt [Error]
-        API -->> TQ: Error response
-        TQ -->> SQ: Throw error
-        SQ -->> EB: Error caught
-        EB ->> App: Render error UI
-    end
-
-    alt [Success]
-        API -->> TQ: Data response
-        TQ -->> SQ: Return data
-        SQ -->> App: Render with data
-    end
-```
 
 ## 주요 이점
 
