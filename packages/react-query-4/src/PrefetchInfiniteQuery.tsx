@@ -1,7 +1,11 @@
 'use client'
 
-import { type FetchInfiniteQueryOptions, type QueryKey } from '@tanstack/react-query'
-import { usePrefetchInfiniteQuery } from './usePrefetchInfiniteQuery'
+import {
+  type FetchInfiniteQueryOptions,
+  type QueryKey,
+  type WithRequired,
+  usePrefetchInfiniteQuery,
+} from '@tanstack/react-query'
 
 /**
  * A component that allows you to use `usePrefetchInfiniteQuery` in JSX, avoiding the limitations of React hooks.
@@ -16,7 +20,7 @@ export function PrefetchInfiniteQuery<
   TError = unknown,
   TData = TQueryFnData,
   TQueryKey extends QueryKey = QueryKey,
->(options: FetchInfiniteQueryOptions<TQueryFnData, TError, TData, TQueryKey>) {
+>(options: WithRequired<FetchInfiniteQueryOptions<TQueryFnData, TError, TData, TQueryKey>, 'queryKey'>) {
   usePrefetchInfiniteQuery(options)
   return <></>
 }
