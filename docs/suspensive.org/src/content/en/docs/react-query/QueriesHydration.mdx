@@ -153,7 +153,7 @@ type QueriesHydrationProps = {
   children: ReactNode
   queryClient?: QueryClient // Optional (default: new QueryClient())
   skipSsrOnError?: boolean | { fallback: ReactNode } // Optional (default: true)
-  timeout?: number // Optional (default: 100_000, unit: ms)
+  timeout?: number // Optional (unit: ms)
 }
 ```
 
@@ -240,7 +240,7 @@ const Page = async ({ userId }: { userId: number }) => {
 
 ### timeout
 
-Limits the time allowed for fetching queries on the server. An error is thrown if query fetching exceeds this limit. The default value is 100_000ms.
+Limits the time allowed for fetching queries on the server. An error is thrown if query fetching exceeds this limit. When not set, no timeout is applied.
 
 When `skipSsrOnError` is true or passed as `{ fallback: ReactNode }`, exceeding the timeout causes the server to give up rendering and the browser will attempt to render instead.
 
