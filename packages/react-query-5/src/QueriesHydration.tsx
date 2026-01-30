@@ -109,19 +109,22 @@ export async function QueriesHydration({
    */
   timeout?: number
 } & OmitKeyof<HydrationBoundaryProps, 'state'>) {
+  const { promise: timeoutPromise, clearDelayedError } = delayedError(timeout)
   try {
-    const queriesPromises = Promise.all(
+    const queriesPromise = Promise.all(
       queries.map((query) =>
         'getNextPageParam' in query ? queryClient.fetchInfiniteQuery(query) : queryClient.fetchQuery(query)
       )
     )
-    await Promise.race([queriesPromises, delayedError(timeout)])
+    await Promise.race([queriesPromise, timeoutPromise])
   } catch {
     if (skipSsrOnError) {
       return (
         <ClientOnly fallback={skipSsrOnError === true ? undefined : skipSsrOnError.fallback}>{children}</ClientOnly>
       )
     }
+  } finally {
+    clearDelayedError()
   }
   return (
     <HydrationBoundary {...props} state={dehydrate(queryClient)}>
@@ -130,5 +133,10 @@ export async function QueriesHydration({
   )
 }
 
-const delayedError = (timeout: number) =>
-  new Promise((_, reject) => setTimeout(() => reject(new Error('Timeout')), timeout))
+const delayedError = (timeout: number) => {
+  let timeoutId: ReturnType<typeof setTimeout>
+  const promise = new Promise<never>((_, reject) => {
+    timeoutId = setTimeout(() => reject(new Error('Timeout')), timeout)
+  })
+  return { promise, clearDelayedError: () => clearTimeout(timeoutId) }
+}
