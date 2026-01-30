@@ -237,6 +237,43 @@ const Page = async ({ userId }: { userId: number }) => {
 }
 ```
 
+### Implementing Timeout
+
+To add a timeout to `QueriesHydration`, you can implement it via `queryOptions` by adding a timeout query that rejects after a specified duration:
+
+```tsx /QueriesHydration/
+import { QueriesHydration } from '@suspensive/react-query'
+import { Suspense } from '@suspensive/react'
+import { queryOptions } from '@tanstack/react-query'
+import { userQueryOptions } from './queries'
+import { UserProfile } from './_components'
+
+const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
+
+const timeoutQueryOptions = (ms: number) =>
+  queryOptions({
+    queryKey: ['__timeout__'],
+    queryFn: () => sleep(ms).then(() => Promise.reject(new Error('timeout'))),
+  })
+
+const Page = async ({ userId }: { userId: number }) => {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <QueriesHydration
+        queries={[
+          userQueryOptions(userId),
+          timeoutQueryOptions(5000), // Timeout after 5 seconds
+        ]}
+      >
+        <UserProfile />
+      </QueriesHydration>
+    </Suspense>
+  )
+}
+```
+
+When the timeout query rejects after the specified time, `QueriesHydration` will handle the error according to the `skipSsrOnError` configuration, allowing fallback to client-side rendering.
+
 ## Motivation: Simplify prefetching multiple queries in Server Components
 
 In React Server Components environments, you can prefetch data on the server to eliminate initial loading states. However, manually prefetching and dehydrating multiple queries is cumbersome.
