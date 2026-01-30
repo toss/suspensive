@@ -1,8 +1,28 @@
 'use client'
 
-import { type QueryKey, type UseSuspenseInfiniteQueryResult, useSuspenseInfiniteQuery } from '@tanstack/react-query'
+import {
+  type OmitKeyof,
+  type QueryKey,
+  type UseInfiniteQueryOptions,
+  type UseSuspenseInfiniteQueryResult,
+  type WithRequired,
+  useSuspenseInfiniteQuery,
+} from '@tanstack/react-query'
 import type { ReactNode } from 'react'
-import { type UseSuspenseInfiniteQueryOptions } from './useSuspenseInfiniteQuery'
+
+type UseSuspenseInfiniteQueryOptions<
+  TQueryFnData = unknown,
+  TError = unknown,
+  TData = TQueryFnData,
+  TQueryKey extends QueryKey = QueryKey,
+> = WithRequired<
+  OmitKeyof<
+    UseInfiniteQueryOptions<TQueryFnData, TError, TData, TQueryFnData, TQueryKey>,
+    'suspense' | 'useErrorBoundary' | 'enabled' | 'placeholderData' | 'networkMode' | 'initialData'
+  >,
+  'queryKey'
+>
+
 /**
  * We provide these components to clearly express what causes suspense at the same depth.
  * `<SuspenseInfiniteQuery/>` serves to make `useSuspenseInfiniteQuery` easier to use in jsx.
