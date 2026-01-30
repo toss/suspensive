@@ -117,14 +117,14 @@ export async function QueriesHydration({
       )
     )
     await Promise.race([queriesPromise, timeoutPromise])
+    clearDelayedError()
   } catch {
+    clearDelayedError()
     if (skipSsrOnError) {
       return (
         <ClientOnly fallback={skipSsrOnError === true ? undefined : skipSsrOnError.fallback}>{children}</ClientOnly>
       )
     }
-  } finally {
-    clearDelayedError()
   }
   return (
     <HydrationBoundary {...props} state={dehydrate(queryClient)}>
