@@ -153,7 +153,7 @@ type QueriesHydrationProps = {
   children: ReactNode
   queryClient?: QueryClient // 선택사항 (기본값: new QueryClient())
   skipSsrOnError?: boolean | { fallback: ReactNode } // 선택사항 (기본값: true)
-  timeout?: number // 선택사항 (기본값: 100_000)
+  timeout?: number // 선택사항 (기본값: 100_000, 단위: ms)
 }
 ```
 
