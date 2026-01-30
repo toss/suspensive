@@ -1,4 +1,4 @@
-import { QueryClient, dehydrate, infiniteQueryOptions } from '@tanstack/react-query'
+import { QueryClient, QueryClientProvider, dehydrate, infiniteQueryOptions } from '@tanstack/react-query'
 import { render, screen } from '@testing-library/react'
 import type { ComponentProps, ReactNode } from 'react'
 import { describe, expect, it, vi } from 'vitest'
@@ -350,5 +350,42 @@ describe('<QueriesHydration/>', () => {
       pages: [{ data: 'page-1' }],
       pageParams: [undefined],
     })
+  })
+
+  it('should timeout when query takes longer than the timeout', async () => {
+    const serverQueryClient = new QueryClient()
+    const timeoutMs = 100
+    const queryDelayMs = 200
+    const mockQueryFn = vi
+      .fn()
+      .mockImplementation(
+        () => new Promise((resolve) => setTimeout(() => resolve({ data: 'test-data' }), queryDelayMs))
+      )
+
+    const queries = [
+      {
+        queryKey: ['test-query'],
+        queryFn: mockQueryFn,
+      },
+    ]
+
+    const ClientChild = () => {
+      return <div>Client Child</div>
+    }
+
+    const result = await QueriesHydration({
+      queries,
+      queryClient: serverQueryClient,
+      timeout: timeoutMs,
+      children: <ClientChild />,
+    })
+
+    expect(mockQueryFn).toHaveBeenCalledTimes(1)
+    expect(screen.queryByText('Client Child')).not.toBeInTheDocument()
+
+    const clientQueryClient = new QueryClient()
+    render(<QueryClientProvider client={clientQueryClient}>{result as React.ReactElement}</QueryClientProvider>)
+    expect(screen.getByTestId('client-only')).toBeInTheDocument()
+    expect(screen.getByText('Client Child')).toBeInTheDocument()
   })
 })

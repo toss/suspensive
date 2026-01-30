@@ -354,4 +354,28 @@ describe('<QueriesHydration/>', () => {
       pageParams: [0],
     })
   })
+
+  it('should timeout when query takes longer than the timeout', async () => {
+    const queryClient = new QueryClient()
+    const timeoutMs = 100
+    const queryDelayMs = 200
+    const mockQueryFn = vi
+      .fn()
+      .mockImplementation(
+        () => new Promise((resolve) => setTimeout(() => resolve({ data: 'test-data' }), queryDelayMs))
+      )
+
+    const queries = [{ queryKey: ['test-query'], queryFn: mockQueryFn }]
+
+    const result = await QueriesHydration({
+      queries,
+      queryClient,
+      timeout: timeoutMs,
+      children: <div>Test Children</div>,
+    })
+
+    expect(mockQueryFn).toHaveBeenCalledTimes(1)
+    render(result as React.ReactElement)
+    expect(screen.getByTestId('client-only')).toBeInTheDocument()
+  })
 })

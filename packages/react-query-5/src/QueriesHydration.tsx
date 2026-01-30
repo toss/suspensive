@@ -80,6 +80,7 @@ export async function QueriesHydration({
   children,
   queryClient = new QueryClient(),
   skipSsrOnError = true,
+  timeout = 100_000,
   ...props
 }: {
   /**
@@ -101,13 +102,20 @@ export async function QueriesHydration({
     | {
         fallback: ReactNode
       }
+  /**
+   * The timeout in milliseconds for the query.
+   * If the query takes longer than the timeout, it will be considered as an error.
+   * Defaults to 100_000.
+   */
+  timeout?: number
 } & OmitKeyof<HydrationBoundaryProps, 'state'>) {
   try {
-    await Promise.all(
+    const queriesPromises = Promise.all(
       queries.map((query) =>
         'getNextPageParam' in query ? queryClient.fetchInfiniteQuery(query) : queryClient.fetchQuery(query)
       )
     )
+    await Promise.race([queriesPromises, delayedError(timeout)])
   } catch {
     if (skipSsrOnError) {
       return (
@@ -121,3 +129,6 @@ export async function QueriesHydration({
     </HydrationBoundary>
   )
 }
+
+const delayedError = (timeout: number) =>
+  new Promise((_, reject) => setTimeout(() => reject(new Error('Timeout')), timeout))
