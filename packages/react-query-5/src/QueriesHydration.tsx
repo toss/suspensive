@@ -105,7 +105,7 @@ export async function QueriesHydration({
   /**
    * The timeout in milliseconds for the query.
    * If the query takes longer than the timeout, it will be considered as an error.
-   * Defaults to 100_000.
+   * @default 100_000
    */
   timeout?: number
 } & OmitKeyof<HydrationBoundaryProps, 'state'>) {
