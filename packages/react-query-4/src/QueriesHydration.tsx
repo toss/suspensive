@@ -113,17 +113,17 @@ export async function QueriesHydration({
    */
   timeout?: number
 } & OmitKeyof<HydrateProps, 'state'>) {
-  const { promise: timeoutPromise, clearDelayedError } = delayedError(timeout)
+  const timeoutController = createTimeoutController(timeout, `QueriesHydration: timeout after ${timeout} ms)`)
   try {
     const queriesPromise = Promise.all(
       queries.map((query) =>
         'getNextPageParam' in query ? queryClient.fetchInfiniteQuery(query) : queryClient.fetchQuery(query)
       )
     )
-    await Promise.race([queriesPromise, timeoutPromise])
-    clearDelayedError()
+    await Promise.race([queriesPromise, timeoutController.promise])
+    timeoutController.clear()
   } catch {
-    clearDelayedError()
+    timeoutController.clear()
     if (skipSsrOnError) {
       return (
         <ClientOnly fallback={skipSsrOnError === true ? undefined : skipSsrOnError.fallback}>{children}</ClientOnly>
@@ -137,10 +137,12 @@ export async function QueriesHydration({
   )
 }
 
-const delayedError = (timeout: number) => {
-  let timeoutId: ReturnType<typeof setTimeout>
-  const promise = new Promise<never>((_, reject) => {
-    timeoutId = setTimeout(() => reject(new Error('Timeout')), timeout)
-  })
-  return { promise, clearDelayedError: () => clearTimeout(timeoutId) }
+const createTimeoutController = (ms: number, errorMessage: string) => {
+  let timerId: ReturnType<typeof setTimeout> | undefined
+  return {
+    promise: new Promise<never>((_, reject) => {
+      timerId = setTimeout(() => reject(new Error(errorMessage)), ms)
+    }),
+    clear: () => timerId != null && clearTimeout(timerId),
+  }
 }
