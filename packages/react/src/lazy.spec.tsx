@@ -604,11 +604,10 @@ describe('lazy', () => {
       await act(() => vi.advanceTimersByTimeAsync(100))
       expect(screen.getByText('error')).toBeInTheDocument()
 
-      // Should remove invalid value, but currentRetryCount becomes NaN, so it won't retry
-      // This is the actual behavior - when NaN is found, it's removed but currentRetryCount is still NaN
-      expect(storage.getItem(loadFunction.toString())).toBeNull()
+      // Should remove invalid value and reset retry count to 0, so it retries normally
+      expect(storage.getItem(loadFunction.toString())).toBe('1')
       await act(() => vi.advanceTimersByTimeAsync(1))
-      expect(mockReload).toHaveBeenCalledTimes(0)
+      expect(mockReload).toHaveBeenCalledTimes(1)
     })
 
     it('should not reload when retry count exceeds limit', async () => {

@@ -209,8 +209,11 @@ export const reloadOnError = ({
         const storedValue = reloadStorage.getItem(storageKey)
         if (storedValue) {
           const reloadCount = parseInt(storedValue, 10)
-          if (Number.isNaN(reloadCount)) reloadStorage.removeItem(storageKey)
-          currentRetryCount = reloadCount
+          if (Number.isNaN(reloadCount)) {
+            reloadStorage.removeItem(storageKey)
+          } else {
+            currentRetryCount = reloadCount
+          }
         }
       }
 
