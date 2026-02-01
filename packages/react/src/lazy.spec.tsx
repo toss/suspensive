@@ -349,7 +349,7 @@ describe('lazy', () => {
       expect(callOrder).toEqual(['individual', 'factory'])
     })
 
-    it('should execute default onSuccess first, then component onSuccess', async () => {
+    it('should execute component onSuccess first, then default onSuccess', async () => {
       const mockImport = importCache.createImport({ failureCount: 0, failureDelay: 50, successDelay: 100 })
       const callOrder: string[] = []
       const defaultOnSuccess = vi.fn().mockImplementation(() => {
