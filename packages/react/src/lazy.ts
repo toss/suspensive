@@ -3,7 +3,7 @@ import { noop } from './utils/noop'
 
 interface LazyOptions {
   onSuccess?: ({ load }: { load: () => Promise<void> }) => void
-  onError?: ({ error, load }: { error: unknown; load: () => Promise<void> }) => undefined
+  onError?: ({ error, load }: { error: unknown; load: () => Promise<void> }) => void
 }
 
 /**
