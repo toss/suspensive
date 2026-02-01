@@ -11,8 +11,6 @@ interface LazyOptions {
  *
  * The default `lazy` export is equivalent to `createLazy({})`.
  *
- * @experimental This is experimental feature.
- *
  * @description
  * The created lazy function will execute individual callbacks first, then default callbacks.
  * For onSuccess: individual onSuccess → default onSuccess
@@ -81,8 +79,6 @@ export const createLazy =
  * A wrapper around React.lazy that provides error handling and success callbacks
  *
  * This is equivalent to `createLazy({})` - a lazy function with no default options.
- *
- * @experimental This is experimental feature.
  *
  * @example
  * ```tsx
@@ -164,8 +160,6 @@ interface ReloadOnErrorOptions extends LazyOptions {
 
 /**
  * Options for reloading page if the component fails to load.
- *
- * @experimental This is experimental feature.
  *
  * @example
  * ```tsx
