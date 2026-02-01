@@ -59,7 +59,7 @@ export const createLazy =
       defaultOptions.onError?.({ error, load })
     }
 
-    const loadNoReturn = () => load().then(noop)
+    const loadNoReturn = Object.assign(() => load().then(noop), { toString: () => load.toString() })
     return Object.assign(
       originalLazy(() =>
         load().then(
