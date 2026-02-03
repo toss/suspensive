@@ -388,4 +388,47 @@ describe('<QueriesHydration/>', () => {
     expect(screen.getByTestId('client-only')).toBeInTheDocument()
     expect(screen.getByText('Client Child')).toBeInTheDocument()
   })
+
+  it('should pass AbortSignal to queryFn when timeout is set', async () => {
+    const serverQueryClient = new QueryClient()
+    const timeoutMs = 100
+    const mockQueryFn = vi.fn().mockImplementation(({ signal }: { signal?: AbortSignal }) => {
+      return new Promise((resolve, reject) => {
+        const timerId = setTimeout(() => resolve({ data: 'test-data' }), 200)
+        if (signal) {
+          signal.addEventListener('abort', () => {
+            clearTimeout(timerId)
+            reject(new Error('Query cancelled'))
+          })
+        }
+      })
+    })
+
+    const queries = [
+      {
+        queryKey: ['test-query-with-signal'],
+        queryFn: mockQueryFn,
+      },
+    ]
+
+    const result = await QueriesHydration({
+      queries,
+      queryClient: serverQueryClient,
+      timeout: timeoutMs,
+      children: <div>Child</div>,
+    })
+
+    // Verify that queryFn was called with a signal
+    expect(mockQueryFn).toHaveBeenCalledTimes(1)
+    expect(mockQueryFn).toHaveBeenCalledWith(
+      expect.objectContaining({
+        signal: expect.any(AbortSignal),
+      })
+    )
+
+    // Verify that it fell back to ClientOnly due to timeout
+    const clientQueryClient = new QueryClient()
+    render(<QueryClientProvider client={clientQueryClient}>{result}</QueryClientProvider>)
+    expect(screen.getByTestId('client-only')).toBeInTheDocument()
+  })
 })

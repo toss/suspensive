@@ -115,9 +115,12 @@ export async function QueriesHydration({
       : undefined
   try {
     const queriesPromise = Promise.all(
-      queries.map((query) =>
-        'getNextPageParam' in query ? queryClient.fetchInfiniteQuery(query) : queryClient.fetchQuery(query)
-      )
+      queries.map((query) => {
+        const queryWithSignal = timeoutController ? { ...query, signal: timeoutController.signal } : query
+        return 'getNextPageParam' in queryWithSignal
+          ? queryClient.fetchInfiniteQuery(queryWithSignal)
+          : queryClient.fetchQuery(queryWithSignal)
+      })
     )
     await (timeoutController != null ? Promise.race([queriesPromise, timeoutController.promise]) : queriesPromise)
     timeoutController?.clear()
@@ -138,10 +141,15 @@ export async function QueriesHydration({
 
 const createTimeoutController = (ms: number, errorMessage: string) => {
   let timerId: ReturnType<typeof setTimeout> | undefined
+  const abortController = new AbortController()
   return {
     promise: new Promise<never>((_, reject) => {
-      timerId = setTimeout(() => reject(new Error(errorMessage)), ms)
+      timerId = setTimeout(() => {
+        abortController.abort()
+        reject(new Error(errorMessage))
+      }, ms)
     }),
     clear: () => timerId != null && clearTimeout(timerId),
+    signal: abortController.signal,
   }
 }
