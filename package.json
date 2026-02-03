@@ -57,7 +57,7 @@
     "prettier-plugin-sort-re-exports": "^0.1.0",
     "prettier-plugin-tailwindcss": "^0.7.2",
     "rimraf": "^6.1.2",
-    "sherif": "^1.9.0",
+    "sherif": "^1.10.0",
     "tsdown": "^0.18.0",
     "turbo": "^2.6.3",
     "typescript": "^5.8.3",
