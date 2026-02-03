@@ -153,6 +153,7 @@ type QueriesHydrationProps = {
   children: ReactNode
   queryClient?: QueryClient // 선택사항 (기본값: new QueryClient())
   skipSsrOnError?: boolean | { fallback: ReactNode } // 선택사항 (기본값: true)
+  timeout?: number // 선택사항 (단위: ms)
 }
 ```
 
@@ -230,6 +231,32 @@ const Page = async ({ userId }: { userId: number }) => {
           skipSsrOnError={false}
         >
           <CommentList />
+        </QueriesHydration>
+      </Suspense>
+    </>
+  )
+}
+```
+
+### timeout
+
+서버에서 쿼리를 불러오는 시간을 제한합니다. 쿼리를 불러오는 시간이 제한 시간을 초과하면 에러가 발생합니다. 설정하지 않으면 timeout이 적용되지 않습니다.
+
+`skipSsrOnError`가 true 혹은 `{ fallback: ReactNode }` 형태로 전달되었을 때, 쿼리를 불러오는 시간이 제한 시간을 초과하면 서버에서 렌더링을 포기하고, 브라우저에서 렌더링을 시도합니다.
+
+```tsx /QueriesHydration/
+import { QueriesHydration } from '@suspensive/react-query'
+import { Suspense } from '@suspensive/react'
+import { userQueryOptions, postsQueryOptions } from './queries'
+import { UserProfile, PostList } from './_components'
+
+const Page = async ({ userId }: { userId: number }) => {
+  return (
+    <>
+      <Suspense fallback={<div>Loading...</div>}>
+        {/* 쿼리를 1000ms 이상 불러오면 에러가 발생합니다 */}
+        <QueriesHydration queries={[userQueryOptions(userId)]} timeout={1000}>
+          <UserProfile />
         </QueriesHydration>
       </Suspense>
     </>
