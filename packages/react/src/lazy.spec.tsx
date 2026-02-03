@@ -349,7 +349,7 @@ describe('lazy', () => {
       expect(callOrder).toEqual(['individual', 'factory'])
     })
 
-    it('should execute default onSuccess first, then component onSuccess', async () => {
+    it('should execute component onSuccess first, then default onSuccess', async () => {
       const mockImport = importCache.createImport({ failureCount: 0, failureDelay: 50, successDelay: 100 })
       const callOrder: string[] = []
       const defaultOnSuccess = vi.fn().mockImplementation(() => {
@@ -604,11 +604,10 @@ describe('lazy', () => {
       await act(() => vi.advanceTimersByTimeAsync(100))
       expect(screen.getByText('error')).toBeInTheDocument()
 
-      // Should remove invalid value, but currentRetryCount becomes NaN, so it won't retry
-      // This is the actual behavior - when NaN is found, it's removed but currentRetryCount is still NaN
-      expect(storage.getItem(loadFunction.toString())).toBeNull()
+      // Should remove invalid value and reset retry count to 0, so it retries normally
+      expect(storage.getItem(loadFunction.toString())).toBe('1')
       await act(() => vi.advanceTimersByTimeAsync(1))
-      expect(mockReload).toHaveBeenCalledTimes(0)
+      expect(mockReload).toHaveBeenCalledTimes(1)
     })
 
     it('should not reload when retry count exceeds limit', async () => {
@@ -634,6 +633,39 @@ describe('lazy', () => {
       // Should not reload because retry count (1) >= retry limit (1)
       await act(() => vi.advanceTimersByTimeAsync(1))
       expect(mockReload).toHaveBeenCalledTimes(0)
+    })
+
+    it('should use separate storage keys for different lazy components', async () => {
+      const lazy = createLazy(reloadOnError({ storage, reload: mockReload, retry: 1 }))
+      const mockImport = importCache.createImport({ failureCount: 10, failureDelay: 50, successDelay: 50 })
+
+      const Component1 = lazy(() => mockImport('/component-1'))
+      const Component2 = lazy(() => mockImport('/component-2'))
+
+      render(
+        <ErrorBoundary fallback={<div>error1</div>}>
+          <Component1 />
+        </ErrorBoundary>
+      )
+
+      await act(() => vi.advanceTimersByTimeAsync(50))
+      expect(screen.getByText('error1')).toBeInTheDocument()
+
+      await act(() => vi.advanceTimersByTimeAsync(1))
+      expect(mockReload).toHaveBeenCalledTimes(1)
+
+      // Component2 should still be able to retry (not affected by Component1's retry count)
+      render(
+        <ErrorBoundary fallback={<div>error2</div>}>
+          <Component2 />
+        </ErrorBoundary>
+      )
+
+      await act(() => vi.advanceTimersByTimeAsync(50))
+      expect(screen.getByText('error2')).toBeInTheDocument()
+
+      await act(() => vi.advanceTimersByTimeAsync(1))
+      expect(mockReload).toHaveBeenCalledTimes(2)
     })
 
     it('should throw error when storage is not provided and window.sessionStorage does not exist', () => {

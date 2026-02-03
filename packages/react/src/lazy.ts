@@ -3,15 +3,13 @@ import { noop } from './utils/noop'
 
 interface LazyOptions {
   onSuccess?: ({ load }: { load: () => Promise<void> }) => void
-  onError?: ({ error, load }: { error: unknown; load: () => Promise<void> }) => undefined
+  onError?: ({ error, load }: { error: unknown; load: () => Promise<void> }) => void
 }
 
 /**
  * Creates a lazy function with custom default options
  *
  * The default `lazy` export is equivalent to `createLazy({})`.
- *
- * @experimental This is experimental feature.
  *
  * @description
  * The created lazy function will execute individual callbacks first, then default callbacks.
@@ -59,7 +57,7 @@ export const createLazy =
       defaultOptions.onError?.({ error, load })
     }
 
-    const loadNoReturn = () => load().then(noop)
+    const loadNoReturn = Object.assign(() => load().then(noop), { toString: () => load.toString() })
     return Object.assign(
       originalLazy(() =>
         load().then(
@@ -81,8 +79,6 @@ export const createLazy =
  * A wrapper around React.lazy that provides error handling and success callbacks
  *
  * This is equivalent to `createLazy({})` - a lazy function with no default options.
- *
- * @experimental This is experimental feature.
  *
  * @example
  * ```tsx
@@ -165,8 +161,6 @@ interface ReloadOnErrorOptions extends LazyOptions {
 /**
  * Options for reloading page if the component fails to load.
  *
- * @experimental This is experimental feature.
- *
  * @example
  * ```tsx
  * import { createLazy, reloadOnError } from '@suspensive/react'
@@ -209,8 +203,11 @@ export const reloadOnError = ({
         const storedValue = reloadStorage.getItem(storageKey)
         if (storedValue) {
           const reloadCount = parseInt(storedValue, 10)
-          if (Number.isNaN(reloadCount)) reloadStorage.removeItem(storageKey)
-          currentRetryCount = reloadCount
+          if (Number.isNaN(reloadCount)) {
+            reloadStorage.removeItem(storageKey)
+          } else {
+            currentRetryCount = reloadCount
+          }
         }
       }
 
