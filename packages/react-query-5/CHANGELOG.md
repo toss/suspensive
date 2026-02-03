@@ -1,5 +1,11 @@
 # @suspensive/react-query-5
 
+## 4.0.0-next.0
+
+### Major Changes
+
+- [#1890](https://github.com/toss/suspensive/pull/1890) [`e5dcb2a`](https://github.com/toss/suspensive/commit/e5dcb2a91b1dfb1eedce7b2766b967288726a149) Thanks [@manudeli](https://github.com/manudeli)! - feat(react-query): remove @suspensive/react-query & remove unnecessary apis of @suspensive/react-query-\*
+
 ## 3.19.0
 
 ### Minor Changes
