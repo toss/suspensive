@@ -1,0 +1,21 @@
+{
+  "mode": "pre",
+  "tag": "next",
+  "initialVersions": {
+    "@suspensive/eslint-config": "0.0.1",
+    "@suspensive/tsconfig": "0.0.0-development",
+    "@suspensive/tsdown": "0.0.0",
+    "@suspensive/suspensive.org": "0.0.0",
+    "@suspensive/next-streaming-react-query": "0.0.0",
+    "@suspensive/visualization": "0.0.0",
+    "@suspensive/vite-react-18-suspense-prerender-siblings-problem": "0.0.0",
+    "@suspensive/codemods": "3.18.0",
+    "@suspensive/jotai": "3.18.0",
+    "@suspensive/next": "0.0.5",
+    "@suspensive/react": "3.18.0",
+    "@suspensive/react-query": "3.18.0",
+    "@suspensive/react-query-4": "3.18.0",
+    "@suspensive/react-query-5": "3.18.0"
+  },
+  "changesets": []
+}
