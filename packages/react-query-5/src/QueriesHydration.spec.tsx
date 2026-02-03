@@ -392,46 +392,38 @@ describe('<QueriesHydration/>', () => {
     expect(screen.getByText('Client Child')).toBeInTheDocument()
   })
 
-  it('should pass AbortSignal to queryFn when timeout is set', async () => {
+  it('should cancel queries using cancelQueries when timeout occurs', async () => {
     const serverQueryClient = new QueryClient()
+    const cancelQueriesSpy = vi.spyOn(serverQueryClient, 'cancelQueries')
     const timeoutMs = 100
-    const mockQueryFn = vi.fn().mockImplementation(({ signal }: { signal?: AbortSignal }) => {
-      return new Promise((resolve, reject) => {
-        const timerId = setTimeout(() => resolve({ data: 'test-data' }), 200)
-        if (signal) {
-          signal.addEventListener('abort', () => {
-            clearTimeout(timerId)
-            reject(new Error('Query cancelled'))
-          })
-        }
-      })
-    })
+    const queryDelayMs = 200
+    const mockQueryFn = vi
+      .fn()
+      .mockImplementation(
+        () => new Promise((resolve) => setTimeout(() => resolve({ data: 'test-data' }), queryDelayMs))
+      )
 
     const queries = [
       {
-        queryKey: ['test-query-with-signal'],
+        queryKey: ['test-query-1'],
+        queryFn: mockQueryFn,
+      },
+      {
+        queryKey: ['test-query-2'],
         queryFn: mockQueryFn,
       },
     ]
 
-    const result = await QueriesHydration({
+    await QueriesHydration({
       queries,
       queryClient: serverQueryClient,
       timeout: timeoutMs,
       children: <div>Child</div>,
     })
 
-    // Verify that queryFn was called with a signal
-    expect(mockQueryFn).toHaveBeenCalledTimes(1)
-    expect(mockQueryFn).toHaveBeenCalledWith(
-      expect.objectContaining({
-        signal: expect.any(AbortSignal),
-      })
-    )
-
-    // Verify that it fell back to ClientOnly due to timeout
-    const clientQueryClient = new QueryClient()
-    render(<QueryClientProvider client={clientQueryClient}>{result}</QueryClientProvider>)
-    expect(screen.getByTestId('client-only')).toBeInTheDocument()
+    // Verify that cancelQueries was called for each query
+    expect(cancelQueriesSpy).toHaveBeenCalledTimes(2)
+    expect(cancelQueriesSpy).toHaveBeenCalledWith({ queryKey: ['test-query-1'] })
+    expect(cancelQueriesSpy).toHaveBeenCalledWith({ queryKey: ['test-query-2'] })
   })
 })

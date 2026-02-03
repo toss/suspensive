@@ -115,16 +115,17 @@ export async function QueriesHydration({
 } & OmitKeyof<HydrateProps, 'state'>) {
   const timeoutController =
     timeout != null && timeout >= 0
-      ? createTimeoutController(timeout, `QueriesHydration: timeout after ${timeout} ms)`)
+      ? createTimeoutController(timeout, `QueriesHydration: timeout after ${timeout} ms)`, () => {
+          queries.forEach((query) => {
+            void queryClient.cancelQueries({ queryKey: query.queryKey })
+          })
+        })
       : undefined
   try {
     const queriesPromise = Promise.all(
-      queries.map((query) => {
-        const queryWithSignal = timeoutController ? { ...query, signal: timeoutController.signal } : query
-        return 'getNextPageParam' in queryWithSignal
-          ? queryClient.fetchInfiniteQuery(queryWithSignal)
-          : queryClient.fetchQuery(queryWithSignal)
-      })
+      queries.map((query) =>
+        'getNextPageParam' in query ? queryClient.fetchInfiniteQuery(query) : queryClient.fetchQuery(query)
+      )
     )
     await (timeoutController != null ? Promise.race([queriesPromise, timeoutController.promise]) : queriesPromise)
     timeoutController?.clear()
@@ -143,17 +144,15 @@ export async function QueriesHydration({
   )
 }
 
-const createTimeoutController = (ms: number, errorMessage: string) => {
+const createTimeoutController = (ms: number, errorMessage: string, onTimeout: () => void) => {
   let timerId: ReturnType<typeof setTimeout> | undefined
-  const abortController = new AbortController()
   return {
     promise: new Promise<never>((_, reject) => {
       timerId = setTimeout(() => {
-        abortController.abort()
+        onTimeout()
         reject(new Error(errorMessage))
       }, ms)
     }),
     clear: () => timerId != null && clearTimeout(timerId),
-    signal: abortController.signal,
   }
 }
