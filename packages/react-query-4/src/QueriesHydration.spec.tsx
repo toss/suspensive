@@ -384,7 +384,7 @@ describe('<QueriesHydration/>', () => {
     expect(screen.queryByText('Client Child')).not.toBeInTheDocument()
 
     const clientQueryClient = new QueryClient()
-    render(<QueryClientProvider client={clientQueryClient}>{result as React.ReactElement}</QueryClientProvider>)
+    render(<QueryClientProvider client={clientQueryClient}>{result}</QueryClientProvider>)
     expect(screen.getByTestId('client-only')).toBeInTheDocument()
     expect(screen.getByText('Client Child')).toBeInTheDocument()
   })
