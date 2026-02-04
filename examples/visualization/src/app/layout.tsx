@@ -29,6 +29,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                   <Link href="/react/Delay">{`<Delay/>`}</Link>
                 </li>
                 <li>
+                  <Link href="/react/Suspend">{`<Suspend/>`}</Link>
+                </li>
+                <li>
                   <Link href="/react/ErrorBoundary/shouldCatch">{`<ErrorBoundary/>`} shouldCatch prop</Link>
                 </li>
                 <li>
