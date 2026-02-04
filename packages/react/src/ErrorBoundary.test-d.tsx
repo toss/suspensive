@@ -1231,3 +1231,83 @@ describe('<ErrorBoundary/>', () => {
     })
   })
 })
+
+describe('errorBoundaryProps', () => {
+  it('should return props with correct types', () => {
+    const { errorBoundaryProps } = require('./ErrorBoundary')
+
+    const props = errorBoundaryProps({
+      fallback: <div>Error</div>,
+    })
+
+    expectTypeOf(props).toMatchTypeOf<{
+      fallback: ReactNode
+    }>()
+  })
+
+  it('should preserve type inference for shouldCatch with CustomError', () => {
+    const { errorBoundaryProps } = require('./ErrorBoundary')
+
+    const props = errorBoundaryProps({
+      fallback: ({ error }: { error: CustomError; reset: () => void }) => <div>{error.message}</div>,
+      shouldCatch: CustomError,
+    })
+
+    expectTypeOf(props).toMatchTypeOf<{
+      fallback: ReactNode
+      shouldCatch?: typeof CustomError
+    }>()
+  })
+
+  it('should work with function fallback that has typed error', () => {
+    const { errorBoundaryProps } = require('./ErrorBoundary')
+
+    const props = errorBoundaryProps({
+      fallback: ({ error, reset }: { error: CustomError; reset: () => void }) => (
+        <div>
+          {error.message}
+          <button onClick={reset}>Reset</button>
+        </div>
+      ),
+      shouldCatch: CustomError,
+    })
+
+    expectTypeOf(props.fallback).toMatchTypeOf<
+      ReactNode | ((props: { error: CustomError; reset: () => void }) => ReactNode)
+    >()
+  })
+
+  it('should accept all ErrorBoundary props except children', () => {
+    const { errorBoundaryProps } = require('./ErrorBoundary')
+
+    const props = errorBoundaryProps({
+      fallback: <div>Error</div>,
+      resetKeys: ['key1', 'key2'],
+      onError: (error: CustomError) => console.error(error),
+      onReset: () => console.log('reset'),
+      shouldCatch: CustomError,
+    })
+
+    expectTypeOf(props).toMatchTypeOf<{
+      fallback: ReactNode
+      resetKeys?: unknown[]
+      onError?: (error: CustomError, info: unknown) => void
+      onReset?: () => void
+      shouldCatch?: typeof CustomError
+    }>()
+  })
+
+  it('should work with array of error matchers', () => {
+    const { errorBoundaryProps } = require('./ErrorBoundary')
+
+    const props = errorBoundaryProps({
+      fallback: ({ error }: { error: Error; reset: () => void }) => <div>{error.message}</div>,
+      shouldCatch: [CustomError, (error: Error) => error instanceof Error],
+    })
+
+    expectTypeOf(props).toMatchTypeOf<{
+      fallback: ReactNode
+      shouldCatch?: [typeof CustomError, (error: Error) => boolean]
+    }>()
+  })
+})

@@ -5,6 +5,7 @@ import { ErrorBoundary as ReactErrorBoundary } from 'react-error-boundary'
 import {
   ErrorBoundary,
   type ErrorBoundaryFallbackProps,
+  errorBoundaryProps,
   useErrorBoundary,
   useErrorBoundaryFallbackProps,
 } from './ErrorBoundary'
@@ -638,5 +639,77 @@ describe('ErrorBoundary.with', () => {
 
     expect(ErrorBoundary.with({ fallback: () => <></> }, Component).displayName).toBe('ErrorBoundary.with(Custom)')
     expect(ErrorBoundary.with({ fallback: () => <></> }, () => <></>).displayName).toBe('ErrorBoundary.with(Component)')
+  })
+})
+
+describe('errorBoundaryProps', () => {
+  beforeEach(() => vi.useFakeTimers())
+
+  afterEach(() => {
+    vi.useRealTimers()
+    Throw.reset()
+  })
+
+  it('should return the props object passed to it', () => {
+    const props = errorBoundaryProps({
+      fallback: <div>Error</div>,
+      onError: vi.fn(),
+      onReset: vi.fn(),
+    })
+
+    expect(props).toEqual({
+      fallback: <div>Error</div>,
+      onError: expect.any(Function),
+      onReset: expect.any(Function),
+    })
+  })
+
+  it('should work with function fallback', () => {
+    const fallbackComponent = ({ error }: ErrorBoundaryFallbackProps) => <div>{error.message}</div>
+    const props = errorBoundaryProps({
+      fallback: fallbackComponent,
+    })
+
+    expect(props.fallback).toBe(fallbackComponent)
+  })
+
+  it('should preserve type inference for shouldCatch', () => {
+    const props = errorBoundaryProps({
+      fallback: <div>Error</div>,
+      shouldCatch: CustomError,
+    })
+
+    expect(props.shouldCatch).toBe(CustomError)
+  })
+
+  it('should work with resetKeys', () => {
+    const resetKeys = ['key1', 'key2']
+    const props = errorBoundaryProps({
+      fallback: <div>Error</div>,
+      resetKeys,
+    })
+
+    expect(props.resetKeys).toEqual(resetKeys)
+  })
+
+  it('should integrate with ErrorBoundary component', async () => {
+    const onError = vi.fn()
+    const props = errorBoundaryProps({
+      fallback: (props) => <>{props.error.message}</>,
+      onError,
+    })
+
+    render(
+      <ErrorBoundary {...props}>
+        <Throw.Error message={ERROR_MESSAGE} after={100}>
+          {TEXT}
+        </Throw.Error>
+      </ErrorBoundary>
+    )
+
+    expect(screen.queryByText(TEXT)).toBeInTheDocument()
+    await act(() => vi.advanceTimersByTime(100))
+    expect(screen.queryByText(ERROR_MESSAGE)).toBeInTheDocument()
+    expect(onError).toHaveBeenCalledTimes(1)
   })
 })
