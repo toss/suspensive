@@ -34,7 +34,7 @@ export async function transformRunner(transform?: string, path?: string, options
 
   if (transform && !TRANSFORMER_INQUIRER_CHOICES.find((x) => x.title === transform)) {
     console.error('Invalid transform choice, pick one of:')
-    console.error(TRANSFORMER_INQUIRER_CHOICES.map((x) => `- ${+x.title}`).join('\n'))
+    console.error(TRANSFORMER_INQUIRER_CHOICES.map((x) => `- ${x.title}`).join('\n'))
     process.exit(1)
   }
 
