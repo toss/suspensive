@@ -3,13 +3,20 @@ import {
   type HydrationBoundaryProps,
   type OmitKeyof,
   QueryClient,
+  type QueryKey,
   type QueryOptions,
   type UseInfiniteQueryOptions,
   type WithRequired,
   dehydrate,
+  hashKey,
 } from '@tanstack/react-query'
 import type { ReactNode } from 'react'
 import { ClientOnly } from './components/ClientOnly'
+
+type HydrationQuery = (
+  | WithRequired<QueryOptions<any, any, any, any>, 'queryKey'>
+  | WithRequired<UseInfiniteQueryOptions<any, any, any, any, any>, 'queryKey'>
+) & { queryKey: QueryKey }
 
 /**
  * A server component that fetches multiple queries on the server and hydrates them to the client.
@@ -87,10 +94,7 @@ export async function QueriesHydration({
    * An array of query options or infinite query options to be fetched on the server. Each query must include a `queryKey`.
    * You can mix regular queries and infinite queries in the same array.
    */
-  queries: (
-    | WithRequired<QueryOptions<any, any, any, any>, 'queryKey'>
-    | WithRequired<UseInfiniteQueryOptions<any, any, any, any, any>, 'queryKey'>
-  )[]
+  queries: HydrationQuery[]
   /**
    * Controls error handling behavior:
    * - `true` (default): Skips SSR and falls back to client-side rendering when server fetch fails
@@ -111,7 +115,7 @@ export async function QueriesHydration({
 } & OmitKeyof<HydrationBoundaryProps, 'state'>) {
   const timeoutController =
     timeout != null && timeout >= 0
-      ? createTimeoutController(timeout, `QueriesHydration: timeout after ${timeout} ms)`)
+      ? createTimeoutController(timeout, `QueriesHydration: timeout after ${timeout} ms`)
       : undefined
   try {
     const queriesPromise = Promise.all(
@@ -120,14 +124,21 @@ export async function QueriesHydration({
       )
     )
     await (timeoutController != null ? Promise.race([queriesPromise, timeoutController.promise]) : queriesPromise)
-    timeoutController?.clear()
-  } catch {
-    timeoutController?.clear()
+  } catch (error) {
+    if (timeoutController?.isTimeoutError(error)) {
+      const timeoutQueryHashes = new Set(queries.map((query) => hashKey(normalizeQueryKey(query.queryKey))))
+
+      void queryClient.cancelQueries({
+        predicate: (query) => timeoutQueryHashes.has(query.queryHash),
+      })
+    }
     if (skipSsrOnError) {
       return (
         <ClientOnly fallback={skipSsrOnError === true ? undefined : skipSsrOnError.fallback}>{children}</ClientOnly>
       )
     }
+  } finally {
+    timeoutController?.clear()
   }
   return (
     <HydrationBoundary {...props} state={dehydrate(queryClient)}>
@@ -138,10 +149,14 @@ export async function QueriesHydration({
 
 const createTimeoutController = (ms: number, errorMessage: string) => {
   let timerId: ReturnType<typeof setTimeout> | undefined
+  const timeoutError = new Error(errorMessage)
   return {
     promise: new Promise<never>((_, reject) => {
-      timerId = setTimeout(() => reject(new Error(errorMessage)), ms)
+      timerId = setTimeout(() => reject(timeoutError), ms)
     }),
     clear: () => timerId != null && clearTimeout(timerId),
+    isTimeoutError: (error: unknown) => error === timeoutError,
   }
 }
+
+const normalizeQueryKey = (queryKey: unknown): QueryKey => (Array.isArray(queryKey) ? queryKey : [queryKey])
