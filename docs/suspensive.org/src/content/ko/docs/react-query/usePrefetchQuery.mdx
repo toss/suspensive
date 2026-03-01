@@ -46,16 +46,10 @@ export const Example = () => {
 
   return (
     <div>
-      <button
-        onClick={() => setPostId((prev) => prev - 1)}
-        disabled={postId === 1}
-      >
+      <button onClick={() => setPostId((prev) => prev - 1)} disabled={postId === 1}>
         Previous Post
       </button>
-      <button
-        onClick={() => setPostId((prev) => prev + 1)}
-        disabled={postId === 100}
-      >
+      <button onClick={() => setPostId((prev) => prev + 1)} disabled={postId === 100}>
         Next Post
       </button>
       <Suspense fallback={<div>Loading...</div>}>

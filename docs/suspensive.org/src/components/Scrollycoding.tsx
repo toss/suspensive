@@ -11,11 +11,7 @@ import {
   Pre,
   getPreRef,
 } from 'codehike/code'
-import {
-  Selectable,
-  Selection,
-  SelectionProvider,
-} from 'codehike/utils/selection'
+import { Selectable, Selection, SelectionProvider } from 'codehike/utils/selection'
 import {
   type TokenTransitionsSnapshot,
   calculateTransitions,
@@ -41,19 +37,12 @@ export class SmoothPre extends Component<CustomPreProps> {
     return getStartingSnapshot(this.ref.current)
   }
 
-  componentDidUpdate(
-    prevProps: never,
-    prevState: never,
-    snapshot: TokenTransitionsSnapshot
-  ) {
+  componentDidUpdate(prevProps: never, prevState: never, snapshot: TokenTransitionsSnapshot) {
     const transitions = calculateTransitions(this.ref.current, snapshot)
     transitions.forEach(({ element, keyframes, options }) => {
       const { translateX, translateY, ...kf } = keyframes as any
       if (translateX && translateY) {
-        kf.translate = [
-          `${translateX[0]}px ${translateY[0]}px`,
-          `${translateX[1]}px ${translateY[1]}px`,
-        ]
+        kf.translate = [`${translateX[0]}px ${translateY[0]}px`, `${translateX[1]}px ${translateY[1]}px`]
       }
       // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
       element.animate(kf, {
@@ -90,10 +79,7 @@ export function Scrollycoding(props: unknown) {
           ))}
         </div>
 
-        <div
-          className="rounded-xl border-2 border-[#ffffff08] bg-[#ffffff04]"
-          style={{ flex: 2 }}
-        >
+        <div className="rounded-xl border-2 border-[#ffffff08] bg-[#ffffff04]" style={{ flex: 2 }}>
           <div className="scrollbar-none sticky top-16 overflow-auto">
             <Selection
               from={steps.map((step) => (
@@ -143,9 +129,7 @@ export function Scrollycoding(props: unknown) {
 const tokenTransitions: AnnotationHandler = {
   name: 'token-transitions',
   PreWithRef: SmoothPre,
-  Token: (props) => (
-    <InnerToken merge={props} style={{ display: 'inline-block' }} />
-  ),
+  Token: (props) => <InnerToken merge={props} style={{ display: 'inline-block' }} />,
 }
 const wordWrap: AnnotationHandler = {
   name: 'word-wrap',
@@ -162,21 +146,13 @@ const wordWrap: AnnotationHandler = {
   Token: (props) => <InnerToken merge={props} style={{ textIndent: 0 }} />,
 }
 function Code({ codeblock }: { codeblock: HighlightedCode }) {
-  return (
-    <Pre
-      code={codeblock}
-      handlers={[tokenTransitions, wordWrap]}
-      className="min-h-[40rem] p-6"
-    />
-  )
+  return <Pre code={codeblock} handlers={[tokenTransitions, wordWrap]} className="min-h-[40rem] p-6" />
 }
 
 const tokenTransitionsMobile: AnnotationHandler = {
   name: 'token-transitions',
   PreWithRef: SmoothPre,
-  Token: (props) => (
-    <InnerToken merge={props} style={{ display: 'inline-block' }} />
-  ),
+  Token: (props) => <InnerToken merge={props} style={{ display: 'inline-block' }} />,
 }
 const wordWrapMobile: AnnotationHandler = {
   name: 'word-wrap',
@@ -194,11 +170,5 @@ const wordWrapMobile: AnnotationHandler = {
   Token: (props) => <InnerToken merge={props} style={{ textIndent: 0 }} />,
 }
 function CodeMobile({ codeblock }: { codeblock: HighlightedCode }) {
-  return (
-    <Pre
-      code={codeblock}
-      handlers={[tokenTransitionsMobile, wordWrapMobile]}
-      className="min-h-[40rem] p-2"
-    />
-  )
+  return <Pre code={codeblock} handlers={[tokenTransitionsMobile, wordWrapMobile]} className="min-h-[40rem] p-2" />
 }

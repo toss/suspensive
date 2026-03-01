@@ -31,7 +31,6 @@
     "eslint.config.mjs",
     "next.config.mjs",
     "postcss.config.js",
-    "prettier.config.mjs",
     "theme.config.tsx"
   ],
   "exclude": ["node_modules"]

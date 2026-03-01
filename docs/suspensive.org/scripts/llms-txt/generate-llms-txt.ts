@@ -23,15 +23,10 @@ async function main() {
   const docs = files.map(processDocument)
 
   fs.writeFileSync(path.join(PUBLIC_DIR, 'llms.txt'), buildLLMsTxt(docs))
-  fs.writeFileSync(
-    path.join(PUBLIC_DIR, 'llms-full.txt'),
-    buildLLMsFullTxt(docs)
-  )
+  fs.writeFileSync(path.join(PUBLIC_DIR, 'llms-full.txt'), buildLLMsFullTxt(docs))
   writeIndividualFiles(docs)
 
-  console.log(
-    `✅ Generated llms.txt, llms-full.txt, and ${docs.length} individual .md files`
-  )
+  console.log(`✅ Generated llms.txt, llms-full.txt, and ${docs.length} individual .md files`)
 }
 
 main().catch(console.error)

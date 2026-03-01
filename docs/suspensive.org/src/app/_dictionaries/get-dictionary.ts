@@ -8,9 +8,8 @@ const dictionaries = {
   ko: () => import('./ko'),
 } as const satisfies Record<string, () => Promise<{ default: typeof En }>>
 
-export const getDictionary = async (
-  locale: keyof typeof dictionaries
-): Promise<typeof En> => (await dictionaries[locale]()).default
+export const getDictionary = async (locale: keyof typeof dictionaries): Promise<typeof En> =>
+  (await dictionaries[locale]()).default
 
 export const getDirection = (locale: keyof typeof dictionaries) => {
   switch (locale) {

@@ -34,11 +34,7 @@ export const NpmInstallCopyButton = () => {
       <motion.div className="absolute -right-8 flex items-center justify-center">
         <AnimatePresence>
           {isHovered ? (
-            <motion.span
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-            >
+            <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
               <Image
                 src={
                   resolvedTheme === 'dark'

@@ -1,11 +1,6 @@
 'use client'
 import clsx from 'clsx'
-import {
-  type SpringOptions,
-  motion,
-  useSpring,
-  useTransform,
-} from 'motion/react'
+import { type SpringOptions, motion, useSpring, useTransform } from 'motion/react'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 
 export type SpotlightProps = {
@@ -14,11 +9,7 @@ export type SpotlightProps = {
   springOptions?: SpringOptions
 }
 
-export function Spotlight({
-  className,
-  size = 200,
-  springOptions = { bounce: 0 },
-}: SpotlightProps) {
+export function Spotlight({ className, size = 200, springOptions = { bounce: 0 } }: SpotlightProps) {
   const containerRef = useRef<HTMLDivElement>(null)
   const [isHovered, setIsHovered] = useState(false)
   const [parentElement, setParentElement] = useState<HTMLElement | null>(null)

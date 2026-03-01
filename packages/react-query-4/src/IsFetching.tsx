@@ -8,6 +8,7 @@ import type { ReactNode } from 'react'
  */
 export const IsFetching = ({
   children,
+  ...props
 }: QueryFilters & { children: (isFetching: ReturnType<typeof useIsFetching>) => ReactNode }) => (
-  <>{children(useIsFetching())}</>
+  <>{children(useIsFetching(props))}</>
 )

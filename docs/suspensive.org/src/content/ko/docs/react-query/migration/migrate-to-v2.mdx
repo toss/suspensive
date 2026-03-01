@@ -90,10 +90,7 @@ const PostsPage = ({ authorId }) => (
       <SuspenseQuery {...userQueryOptions(authorId)}>
         {({ data: author }) => <AuthorProfile {...author} />}
       </SuspenseQuery>
-      <SuspenseQuery
-        {...postsQueryOptions(authorId)}
-        select={(posts) => posts.filter(({ isShow }) => isShow)}
-      >
+      <SuspenseQuery {...postsQueryOptions(authorId)} select={(posts) => posts.filter(({ isShow }) => isShow)}>
         {({ data: posts }) => posts.map((post) => <PostListItem {...post} />)}
       </SuspenseQuery>
     </Suspense>

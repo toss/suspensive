@@ -195,11 +195,7 @@ If stage 1 fails, stage 2 is likely to fail for the same reason. However, stage 
 ```tsx /QueriesHydration/
 import { QueriesHydration } from '@suspensive/react-query'
 import { Suspense } from '@suspensive/react'
-import {
-  userQueryOptions,
-  postsQueryOptions,
-  commentsQueryOptions,
-} from './queries'
+import { userQueryOptions, postsQueryOptions, commentsQueryOptions } from './queries'
 import { UserProfile, PostList, CommentList } from './_components'
 
 const Page = async ({ userId }: { userId: number }) => {
@@ -226,10 +222,7 @@ const Page = async ({ userId }: { userId: number }) => {
 
       {/* Retry in stage 2 (RCC server) even if stage 1 fails */}
       <Suspense fallback={<div>Loading...</div>}>
-        <QueriesHydration
-          queries={[commentsQueryOptions()]}
-          skipSsrOnError={false}
-        >
+        <QueriesHydration queries={[commentsQueryOptions()]} skipSsrOnError={false}>
           <CommentList />
         </QueriesHydration>
       </Suspense>
@@ -274,11 +267,7 @@ In React Server Components environments, you can prefetch data on the server to 
 <Tabs.Tab>
 
 ```tsx
-import {
-  QueryClient,
-  dehydrate,
-  HydrationBoundary,
-} from '@tanstack/react-query'
+import { QueryClient, dehydrate, HydrationBoundary } from '@tanstack/react-query'
 import { Suspense } from '@suspensive/react'
 import { userQueryOptions, postsQueryOptions } from './queries'
 import { UserProfile, PostList } from './_components'
@@ -481,49 +470,34 @@ When handling dependent queries, wrapping each component with a separate `Querie
 import { QueryClient } from '@tanstack/react-query'
 import { QueriesHydration } from '@suspensive/react-query'
 import { Suspense } from '@suspensive/react'
-import {
-  productQueryOptions,
-  productReviewsQueryOptions,
-  relatedProductsQueryOptions,
-} from './queries'
+import { productQueryOptions, productReviewsQueryOptions, relatedProductsQueryOptions } from './queries'
 import { ProductInfo, ProductReviews, RelatedProducts } from './_components'
 
 const ProductPage = async ({ productId }: { productId: string }) => {
   const queryClient = new QueryClient()
 
   // 1. First, fetch product information
-  const product = await queryClient.ensureQueryData(
-    productQueryOptions(productId)
-  )
+  const product = await queryClient.ensureQueryData(productQueryOptions(productId))
 
   return (
     <>
       {/* Product information */}
       <Suspense fallback={<div>Loading product...</div>}>
-        <QueriesHydration
-          queryClient={queryClient}
-          queries={[productQueryOptions(productId)]}
-        >
+        <QueriesHydration queryClient={queryClient} queries={[productQueryOptions(productId)]}>
           <ProductInfo productId={productId} />
         </QueriesHydration>
       </Suspense>
 
       {/* Product reviews: depends on product information (e.g., filtered by product category) */}
       <Suspense fallback={<div>Loading reviews...</div>}>
-        <QueriesHydration
-          queryClient={queryClient}
-          queries={[productReviewsQueryOptions(productId)]}
-        >
+        <QueriesHydration queryClient={queryClient} queries={[productReviewsQueryOptions(productId)]}>
           <ProductReviews productId={productId} />
         </QueriesHydration>
       </Suspense>
 
       {/* Related products: depends on product information (same category) */}
       <Suspense fallback={<div>Loading related products...</div>}>
-        <QueriesHydration
-          queryClient={queryClient}
-          queries={[relatedProductsQueryOptions(product.categoryId)]}
-        >
+        <QueriesHydration queryClient={queryClient} queries={[relatedProductsQueryOptions(product.categoryId)]}>
           <RelatedProducts categoryId={product.categoryId} />
         </QueriesHydration>
       </Suspense>
@@ -566,9 +540,7 @@ import { productReviewsQueryOptions } from './queries'
 
 export const ProductReviews = ({ productId }: { productId: string }) => {
   // Data prefetched on the server is automatically hydrated
-  const { data: reviews } = useSuspenseQuery(
-    productReviewsQueryOptions(productId)
-  )
+  const { data: reviews } = useSuspenseQuery(productReviewsQueryOptions(productId))
 
   return (
     <div>
@@ -597,9 +569,7 @@ import { relatedProductsQueryOptions } from './queries'
 
 export const RelatedProducts = ({ categoryId }: { categoryId: string }) => {
   // Data prefetched on the server is automatically hydrated
-  const { data: relatedProducts } = useSuspenseQuery(
-    relatedProductsQueryOptions(categoryId)
-  )
+  const { data: relatedProducts } = useSuspenseQuery(relatedProductsQueryOptions(categoryId))
 
   return (
     <div>

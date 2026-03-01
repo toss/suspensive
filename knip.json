@@ -1,7 +1,6 @@
 {
   "$schema": "https://unpkg.com/knip@5/schema.json",
   "ignore": ["**/test-utils/**", "scripts/**"],
-  "ignoreDependencies": ["prettier-plugin-sort-re-exports"],
   "workspaces": {
     ".": {
       "ignore": ["packlint.config.mjs"]

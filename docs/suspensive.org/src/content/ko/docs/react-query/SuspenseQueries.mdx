@@ -12,9 +12,7 @@ import { PostListItem, UserProfile } from '~/components'
 const PostsPage = ({ userId }) => (
   <ErrorBoundary fallback={({ error }) => <>{error.message}</>}>
     <Suspense fallback="loading...">
-      <SuspenseQueries
-        queries={[userQueryOptions(userId), postsQueryOptions(userId)]}
-      >
+      <SuspenseQueries queries={[userQueryOptions(userId), postsQueryOptions(userId)]}>
         {([{ data: user }, { data: posts }]) => (
           <>
             <UserProfile {...user} />
@@ -47,16 +45,11 @@ export const Example = () => {
       <button onClick={() => setUserId((id) => id - 1)} disabled={userId === 1}>
         Previous User
       </button>
-      <button
-        onClick={() => setUserId((id) => id + 1)}
-        disabled={userId === 10}
-      >
+      <button onClick={() => setUserId((id) => id + 1)} disabled={userId === 10}>
         Next User
       </button>
       <Suspense fallback={<div>Loading...</div>}>
-        <SuspenseQueries
-          queries={[userQueryOptions(userId), postsQueryOptions(userId)]}
-        >
+        <SuspenseQueries queries={[userQueryOptions(userId), postsQueryOptions(userId)]}>
           {([{ data: user }, { data: posts }]) => (
             <>
               <UserProfile {...user} />
@@ -122,9 +115,7 @@ export type Post = {
 }
 
 export const getPosts = async (userId: number): Promise<Post[]> => {
-  const response = await fetch(
-    `https://jsonplaceholder.typicode.com/posts?userId=${userId}`
-  )
+  const response = await fetch(`https://jsonplaceholder.typicode.com/posts?userId=${userId}`)
 
   if (!response.ok) {
     throw new Error('An error occurred')
@@ -160,9 +151,7 @@ export type User = {
 }
 
 export const getUser = async (id: number): Promise<User> => {
-  const response = await fetch(
-    `https://jsonplaceholder.typicode.com/users/${id}`
-  )
+  const response = await fetch(`https://jsonplaceholder.typicode.com/users/${id}`)
 
   if (!response.ok) {
     throw new Error('An error occurred')
