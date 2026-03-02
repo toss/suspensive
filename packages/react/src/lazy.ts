@@ -1,9 +1,8 @@
 import { type ComponentType, type LazyExoticComponent, lazy as originalLazy } from 'react'
-import { noop } from './utils/noop'
 
 interface LazyOptions {
-  onSuccess?: ({ load }: { load: () => Promise<void> }) => void
-  onError?: ({ error, load }: { error: unknown; load: () => Promise<void> }) => void
+  onSuccess?: ({ load }: { load: () => Promise<{ default: ComponentType<any> }> }) => void
+  onError?: ({ error, load }: { error: unknown; load: () => Promise<{ default: ComponentType<any> }> }) => void
 }
 
 /**
@@ -45,33 +44,32 @@ export const createLazy =
     load: () => Promise<{ default: T }>,
     options?: LazyOptions
   ): LazyExoticComponent<T> & {
-    load: () => Promise<void>
+    load: () => Promise<{ default: T }>
   } => {
-    const composedOnSuccess = ({ load }: { load: () => Promise<void> }) => {
+    const composedOnSuccess = () => {
       options?.onSuccess?.({ load })
       defaultOptions.onSuccess?.({ load })
     }
 
-    const composedOnError = ({ error, load }: { error: unknown; load: () => Promise<void> }) => {
+    const composedOnError = (error: unknown) => {
       options?.onError?.({ error, load })
       defaultOptions.onError?.({ error, load })
     }
 
-    const loadNoReturn = Object.assign(() => load().then(noop), { toString: () => load.toString() })
     return Object.assign(
       originalLazy(() =>
         load().then(
           (loaded) => {
-            composedOnSuccess({ load: loadNoReturn })
+            composedOnSuccess()
             return loaded
           },
           (error: unknown) => {
-            composedOnError({ error: error, load: loadNoReturn })
+            composedOnError(error)
             throw error
           }
         )
       ),
-      { load: loadNoReturn }
+      { load }
     )
   }
 
@@ -117,7 +115,7 @@ export const createLazy =
  * ```
  *
  * @returns A lazy component with additional `load` method for preloading
- * @property {() => Promise<void>} load - Preloads the component without rendering it. Useful for prefetching components in the background.
+ * @property load - Preloads the component without rendering it. Useful for prefetching components in the background.
  */
 export const lazy = createLazy({})
 
