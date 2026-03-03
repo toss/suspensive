@@ -23,11 +23,11 @@ class ImportCache {
 
   createImport(options: ImportOptions) {
     return vi
-      .fn<(path: string) => Promise<{ default: ComponentType<any> }>>()
+      .fn<(path: string) => Promise<{ default: ComponentType<{ x: string }> }>>()
       .mockImplementation((path: string) => this.import(path, options))
   }
 
-  private async import(path: string, options: ImportOptions): Promise<{ default: ComponentType<any> }> {
+  private async import(path: string, options: ImportOptions): Promise<{ default: ComponentType<{ x: string }> }> {
     const data = this.pathData.get(path) || { cache: null, attempt: 0, failureCount: 0 }
 
     if (data.cache) {
@@ -54,7 +54,7 @@ class ImportCache {
     path: string,
     attempt: number,
     { failureCount, failureDelay, successDelay }: ImportOptions
-  ): Promise<{ default: ComponentType<any> }> {
+  ): Promise<{ default: ComponentType<{ x: string }> }> {
     if (attempt < failureCount) {
       await sleep(failureDelay)
 
@@ -63,7 +63,13 @@ class ImportCache {
 
     await sleep(successDelay)
 
-    return { default: () => <div>Component from {path}</div> }
+    return {
+      default: ({ x }: { x: string }) => (
+        <div>
+          Component from {path} {x}
+        </div>
+      ),
+    }
   }
 
   clear() {
@@ -146,7 +152,7 @@ describe('lazy', () => {
           </button>
           {isShow ? (
             <Suspense fallback={<div>loading...</div>}>
-              <Component />
+              <Component x="test" />
             </Suspense>
           ) : (
             <div>not loaded</div>
@@ -179,21 +185,21 @@ describe('lazy', () => {
       const Component1 = lazy(() => mockImport('/cached-component1'))
       const Component2 = lazy(() => mockImport('/cached-component2'))
 
-      render(<Component1 />)
+      render(<Component1 x="test" />)
 
       expect(importCache.getAttempt('/cached-component1')).toBe(1)
       expect(importCache.isCached('/cached-component1')).toBe(false)
       await act(() => vi.advanceTimersByTimeAsync(100))
       expect(importCache.isCached('/cached-component1')).toBe(true)
 
-      render(<Component2 />)
+      render(<Component2 x="test" />)
 
       expect(importCache.getAttempt('/cached-component2')).toBe(1)
       expect(importCache.isCached('/cached-component2')).toBe(false)
       await act(() => vi.advanceTimersByTimeAsync(100))
       expect(importCache.isCached('/cached-component2')).toBe(true)
 
-      render(<Component1 />)
+      render(<Component1 x="test" />)
 
       expect(importCache.getAttempt('/cached-component1')).toBe(1)
       expect(importCache.isCached('/cached-component1')).toBe(true)
@@ -211,7 +217,7 @@ describe('lazy', () => {
       render(
         <ErrorBoundary fallback={<div>error</div>}>
           <Suspense fallback={<div>loading...</div>}>
-            <Component1 />
+            <Component1 x="test" />
           </Suspense>
         </ErrorBoundary>
       )
@@ -225,7 +231,7 @@ describe('lazy', () => {
       render(
         <ErrorBoundary fallback={<div>error</div>}>
           <Suspense fallback={<div>loading...</div>}>
-            <Component2 />
+            <Component2 x="test" />
           </Suspense>
         </ErrorBoundary>
       )
@@ -241,7 +247,7 @@ describe('lazy', () => {
 
       render(
         <ErrorBoundary fallback={<div>error</div>}>
-          <Component />
+          <Component x="test" />
         </ErrorBoundary>
       )
 
@@ -258,7 +264,7 @@ describe('lazy', () => {
 
       const Component = lazy(() => mockImport('/test-component'))
 
-      render(<Component />)
+      render(<Component x="test" />)
 
       await act(() => vi.advanceTimersByTimeAsync(100))
       expect(screen.getByText('Component from /test-component')).toBeInTheDocument()
@@ -275,7 +281,7 @@ describe('lazy', () => {
 
       render(
         <ErrorBoundary fallback={<div>error</div>}>
-          <Component />
+          <Component x="test" />
         </ErrorBoundary>
       )
 
@@ -293,7 +299,7 @@ describe('lazy', () => {
 
       const Component = lazy(() => mockImport('/test-component'), { onSuccess })
 
-      render(<Component />)
+      render(<Component x="test" />)
 
       await act(() => vi.advanceTimersByTimeAsync(100))
       expect(screen.getByText('Component from /test-component')).toBeInTheDocument()
@@ -309,7 +315,7 @@ describe('lazy', () => {
 
       render(
         <ErrorBoundary fallback={<div>error</div>}>
-          <Component />
+          <Component x="test" />
         </ErrorBoundary>
       )
 
@@ -337,7 +343,7 @@ describe('lazy', () => {
 
       render(
         <ErrorBoundary fallback={<div>error</div>}>
-          <Component />
+          <Component x="test" />
         </ErrorBoundary>
       )
 
@@ -364,7 +370,7 @@ describe('lazy', () => {
         onSuccess: individualOnSuccess,
       })
 
-      render(<Component />)
+      render(<Component x="test" />)
 
       await act(() => vi.advanceTimersByTimeAsync(100))
       expect(screen.getByText('Component from /test-component')).toBeInTheDocument()
@@ -381,7 +387,7 @@ describe('lazy', () => {
 
       const Component = lazy(() => mockImport('/test-component'))
 
-      render(<Component />)
+      render(<Component x="test" />)
 
       await act(() => vi.advanceTimersByTimeAsync(100))
       expect(screen.getByText('Component from /test-component')).toBeInTheDocument()
@@ -398,7 +404,7 @@ describe('lazy', () => {
 
       render(
         <ErrorBoundary fallback={<div>error</div>}>
-          <Component />
+          <Component x="test" />
         </ErrorBoundary>
       )
 
@@ -414,7 +420,7 @@ describe('lazy', () => {
 
       const Component = lazy(() => mockImport('/test-component'))
 
-      expect(() => render(<Component />)).not.toThrow()
+      expect(() => render(<Component x="test" />)).not.toThrow()
 
       await act(() => vi.advanceTimersByTimeAsync(100))
       expect(screen.getByText('Component from /test-component')).toBeInTheDocument()
@@ -434,7 +440,7 @@ describe('lazy', () => {
 
       render(
         <ErrorBoundary fallback={<div>error</div>}>
-          <Component1 />
+          <Component1 x="test" />
         </ErrorBoundary>
       )
 
@@ -450,7 +456,7 @@ describe('lazy', () => {
 
       render(
         <ErrorBoundary fallback={<div>error</div>}>
-          <Component2 />
+          <Component2 x="test" />
         </ErrorBoundary>
       )
 
@@ -470,7 +476,7 @@ describe('lazy', () => {
 
       render(
         <ErrorBoundary fallback={<div>error</div>}>
-          <Component1 />
+          <Component1 x="test" />
         </ErrorBoundary>
       )
 
@@ -486,7 +492,7 @@ describe('lazy', () => {
 
       render(
         <ErrorBoundary fallback={<div>error</div>}>
-          <Component2 />
+          <Component2 x="test" />
         </ErrorBoundary>
       )
 
@@ -505,8 +511,8 @@ describe('lazy', () => {
       const Component = lazy(() => mockImport('/test-component'))
       const Component2 = lazy(() => mockImport('/test-component'))
 
-      expect(() => render(<Component />)).not.toThrow()
-      expect(() => render(<Component2 />)).not.toThrow()
+      expect(() => render(<Component x="test" />)).not.toThrow()
+      expect(() => render(<Component2 x="test" />)).not.toThrow()
 
       expect(mockReload).toHaveBeenCalledTimes(0)
       expect(storage.length).toBe(0)
@@ -522,7 +528,7 @@ describe('lazy', () => {
 
         render(
           <ErrorBoundary fallback={<div>error</div>}>
-            <Component />
+            <Component x="test" />
           </ErrorBoundary>
         )
 
@@ -549,7 +555,7 @@ describe('lazy', () => {
 
       render(
         <ErrorBoundary fallback={<div>error</div>}>
-          <Component />
+          <Component x="test" />
         </ErrorBoundary>
       )
 
@@ -570,7 +576,7 @@ describe('lazy', () => {
 
       render(
         <ErrorBoundary fallback={<div>error</div>}>
-          <Component />
+          <Component x="test" />
         </ErrorBoundary>
       )
 
@@ -595,7 +601,7 @@ describe('lazy', () => {
 
       render(
         <ErrorBoundary fallback={<div>error</div>}>
-          <Component />
+          <Component x="test" />
         </ErrorBoundary>
       )
 
@@ -621,7 +627,7 @@ describe('lazy', () => {
 
       render(
         <ErrorBoundary fallback={<div>error</div>}>
-          <Component />
+          <Component x="test" />
         </ErrorBoundary>
       )
 
@@ -644,7 +650,7 @@ describe('lazy', () => {
 
       render(
         <ErrorBoundary fallback={<div>error1</div>}>
-          <Component1 />
+          <Component1 x="test" />
         </ErrorBoundary>
       )
 
@@ -657,7 +663,7 @@ describe('lazy', () => {
       // Component2 should still be able to retry (not affected by Component1's retry count)
       render(
         <ErrorBoundary fallback={<div>error2</div>}>
-          <Component2 />
+          <Component2 x="test" />
         </ErrorBoundary>
       )
 
@@ -706,7 +712,7 @@ describe('lazy', () => {
 
         render(
           <ErrorBoundary fallback={<div>error</div>}>
-            <Component />
+            <Component x="test" />
           </ErrorBoundary>
         )
 
@@ -739,7 +745,7 @@ describe('lazy', () => {
 
         render(
           <ErrorBoundary fallback={<div>error</div>}>
-            <Component />
+            <Component x="test" />
           </ErrorBoundary>
         )
 
@@ -777,7 +783,7 @@ describe('lazy', () => {
 
         render(
           <ErrorBoundary fallback={<div>error</div>}>
-            <Component />
+            <Component x="test" />
           </ErrorBoundary>
         )
 
@@ -804,7 +810,7 @@ describe('lazy', () => {
 
         render(
           <ErrorBoundary fallback={<div>error</div>}>
-            <Component2 />
+            <Component2 x="test" />
           </ErrorBoundary>
         )
 

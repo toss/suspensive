@@ -1,8 +1,8 @@
 import { type ComponentType, type LazyExoticComponent, lazy as originalLazy } from 'react'
 
-interface LazyOptions {
-  onSuccess?: ({ load }: { load: () => Promise<{ default: ComponentType<any> }> }) => void
-  onError?: ({ error, load }: { error: unknown; load: () => Promise<{ default: ComponentType<any> }> }) => void
+interface LazyOptions<TComponentType extends ComponentType<any>> {
+  onSuccess?: ({ load }: { load: () => Promise<{ default: TComponentType }> }) => void
+  onError?: ({ error, load }: { error: unknown; load: () => Promise<{ default: TComponentType }> }) => void
 }
 
 /**
@@ -39,12 +39,12 @@ interface LazyOptions {
  * ```
  */
 export const createLazy =
-  (defaultOptions: LazyOptions) =>
-  <T extends ComponentType<any>>(
-    load: () => Promise<{ default: T }>,
-    options?: LazyOptions
-  ): LazyExoticComponent<T> & {
-    load: () => Promise<{ default: T }>
+  (defaultOptions: LazyOptions<ComponentType<any>>) =>
+  <TComponentType extends ComponentType<any>>(
+    load: () => Promise<{ default: TComponentType }>,
+    options?: LazyOptions<TComponentType>
+  ): LazyExoticComponent<TComponentType> & {
+    load: () => Promise<{ default: TComponentType }>
   } => {
     const composedOnSuccess = () => {
       options?.onSuccess?.({ load })
@@ -125,7 +125,7 @@ interface ReloadOnErrorStorage {
   removeItem: (key: string) => void
 }
 
-interface ReloadOnErrorOptions extends LazyOptions {
+interface ReloadOnErrorOptions extends LazyOptions<ComponentType<any>> {
   /**
    * The number of times to retry the loading of the component. \
    * If `true`, the component will be retried indefinitely.
@@ -173,7 +173,7 @@ export const reloadOnError = ({
   storage,
   reload,
   ...options
-}: ReloadOnErrorOptions): LazyOptions => {
+}: ReloadOnErrorOptions): LazyOptions<ComponentType<any>> => {
   const reloadStorage = (() => {
     if (storage) return storage
     if (typeof window !== 'undefined' && 'sessionStorage' in window) return window.sessionStorage
