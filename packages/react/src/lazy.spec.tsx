@@ -66,7 +66,7 @@ class ImportCache {
     return {
       default: ({ x }: { x: string }) => (
         <div>
-          Component from {path} {x}
+          Component from {path} x:{x}
         </div>
       ),
     }
@@ -164,18 +164,18 @@ describe('lazy', () => {
     render(<Example />)
 
     expect(screen.getByText('not loaded')).toBeInTheDocument()
-    expect(screen.queryByText('Component from /test-component')).not.toBeInTheDocument()
+    expect(screen.queryByText('Component from /test-component x:test')).not.toBeInTheDocument()
 
     screen.getByRole('button', { name: 'load' }).click()
     expect(screen.getByText('not loaded')).toBeInTheDocument()
-    expect(screen.queryByText('Component from /test-component')).not.toBeInTheDocument()
+    expect(screen.queryByText('Component from /test-component x:test')).not.toBeInTheDocument()
 
     screen.getByRole('button', { name: 'show' }).click()
     expect(screen.getByText('not loaded')).toBeInTheDocument()
     await act(() => vi.advanceTimersByTimeAsync(0))
     expect(screen.getByText('loading...')).toBeInTheDocument()
     await act(() => vi.advanceTimersByTimeAsync(100))
-    expect(screen.getByText('Component from /test-component')).toBeInTheDocument()
+    expect(screen.getByText('Component from /test-component x:test')).toBeInTheDocument()
     expect(screen.queryByText('not loaded')).not.toBeInTheDocument()
   })
 
@@ -238,7 +238,7 @@ describe('lazy', () => {
 
       expect(screen.getByText('loading...')).toBeInTheDocument()
       await act(() => vi.advanceTimersByTimeAsync(200))
-      expect(screen.getByText('Component from /test-component')).toBeInTheDocument()
+      expect(screen.getByText('Component from /test-component x:test')).toBeInTheDocument()
     })
 
     it('should handle permanently failing imports', async () => {
@@ -267,7 +267,7 @@ describe('lazy', () => {
       render(<Component x="test" />)
 
       await act(() => vi.advanceTimersByTimeAsync(100))
-      expect(screen.getByText('Component from /test-component')).toBeInTheDocument()
+      expect(screen.getByText('Component from /test-component x:test')).toBeInTheDocument()
 
       expect(onSuccess).toHaveBeenCalledTimes(1)
     })
@@ -302,7 +302,7 @@ describe('lazy', () => {
       render(<Component x="test" />)
 
       await act(() => vi.advanceTimersByTimeAsync(100))
-      expect(screen.getByText('Component from /test-component')).toBeInTheDocument()
+      expect(screen.getByText('Component from /test-component x:test')).toBeInTheDocument()
 
       expect(onSuccess).toHaveBeenCalledTimes(1)
     })
@@ -373,7 +373,7 @@ describe('lazy', () => {
       render(<Component x="test" />)
 
       await act(() => vi.advanceTimersByTimeAsync(100))
-      expect(screen.getByText('Component from /test-component')).toBeInTheDocument()
+      expect(screen.getByText('Component from /test-component x:test')).toBeInTheDocument()
 
       expect(defaultOnSuccess).toHaveBeenCalledTimes(1)
       expect(individualOnSuccess).toHaveBeenCalledTimes(1)
@@ -390,7 +390,7 @@ describe('lazy', () => {
       render(<Component x="test" />)
 
       await act(() => vi.advanceTimersByTimeAsync(100))
-      expect(screen.getByText('Component from /test-component')).toBeInTheDocument()
+      expect(screen.getByText('Component from /test-component x:test')).toBeInTheDocument()
 
       expect(defaultOnSuccess).toHaveBeenCalledTimes(1)
     })
@@ -423,7 +423,7 @@ describe('lazy', () => {
       expect(() => render(<Component x="test" />)).not.toThrow()
 
       await act(() => vi.advanceTimersByTimeAsync(100))
-      expect(screen.getByText('Component from /test-component')).toBeInTheDocument()
+      expect(screen.getByText('Component from /test-component x:test')).toBeInTheDocument()
     })
   })
 
@@ -499,7 +499,7 @@ describe('lazy', () => {
       expect(mockImport).toHaveBeenCalledTimes(2)
 
       await act(() => vi.advanceTimersByTimeAsync(50))
-      expect(screen.getByText('Component from /test-component')).toBeInTheDocument()
+      expect(screen.getByText('Component from /test-component x:test')).toBeInTheDocument()
 
       expect(mockReload).toHaveBeenCalledTimes(1)
     })
@@ -817,7 +817,7 @@ describe('lazy', () => {
         expect(mockImport).toHaveBeenCalledTimes(2)
 
         await act(() => vi.advanceTimersByTimeAsync(100))
-        expect(screen.getByText('Component from /test-component')).toBeInTheDocument()
+        expect(screen.getByText('Component from /test-component x:test')).toBeInTheDocument()
 
         expect(defaultOnError).toHaveBeenCalledTimes(1)
         expect(individualOnError).toHaveBeenCalledTimes(1)
