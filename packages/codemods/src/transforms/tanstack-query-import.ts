@@ -13,7 +13,7 @@ const IMPORT_TO_CHANGE = [
   'UseSuspenseInfiniteQueryOptions',
   'usePrefetchQuery',
   'queryOptions',
-  'infiniteQueryOption',
+  'infiniteQueryOptions',
 ]
 
 const REMOVE_DEPRECATED_IMPORTS = [
