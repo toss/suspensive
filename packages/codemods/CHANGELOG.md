@@ -1,5 +1,11 @@
 # @suspensive/codemods
 
+## 3.19.1
+
+### Patch Changes
+
+- [#1906](https://github.com/toss/suspensive/pull/1906) [`d95a2ee`](https://github.com/toss/suspensive/commit/d95a2ee6cb3696f53a5988af410037be9f8772fa) Thanks [@saengmotmi](https://github.com/saengmotmi)! - fix(codemods): correct transform output and import mapping typos
+
 ## 3.19.0
 
 ## 3.18.0
