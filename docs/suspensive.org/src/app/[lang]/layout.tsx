@@ -5,13 +5,7 @@ import type { Metadata } from 'next'
 import Script from 'next/script'
 import { Head, Search } from 'nextra/components'
 import { getPageMap } from 'nextra/page-map'
-import {
-  Footer,
-  LastUpdated,
-  Layout,
-  LocaleSwitch,
-  Navbar,
-} from 'nextra-theme-docs'
+import { Footer, LastUpdated, Layout, LocaleSwitch, Navbar } from 'nextra-theme-docs'
 import type { ReactNode } from 'react'
 import { getDictionary, getDirection } from '../_dictionaries/get-dictionary'
 import './styles.css'
@@ -62,11 +56,7 @@ export default async function RootLayout({
               <LocaleSwitch />
             </Navbar>
           }
-          footer={
-            <Footer>
-              MIT {new Date().getFullYear()} © Viva Republica, Inc.
-            </Footer>
-          }
+          footer={<Footer>MIT {new Date().getFullYear()} © Viva Republica, Inc.</Footer>}
           docsRepositoryBase="https://github.com/toss/suspensive/tree/main/docs/suspensive.org"
           i18n={[
             { locale: 'en', name: 'English' },

@@ -12,8 +12,7 @@ export default {
   },
   banner: (
     <span>
-      👀 Suspensive v3에서의 변경을 확인하세요.{' '}
-      <Link href="/ko/docs/migration/migrate-to-v3">더보기</Link>
+      👀 Suspensive v3에서의 변경을 확인하세요. <Link href="/ko/docs/migration/migrate-to-v3">더보기</Link>
     </span>
   ),
   lastUpdated: '수정된 날짜:',

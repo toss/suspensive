@@ -4,7 +4,6 @@ import importPlugin from 'eslint-plugin-import'
 import jsdoc from 'eslint-plugin-jsdoc'
 import reactHooks from 'eslint-plugin-react-hooks'
 import tseslint from 'typescript-eslint'
-import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended'
 import next from '@next/eslint-plugin-next'
 import cspellConfigs from '@cspell/eslint-plugin/configs'
 import vitest from '@vitest/eslint-plugin'
@@ -109,7 +108,6 @@ export const suspensiveTypeScriptConfig = defineConfig([
       ],
     },
   },
-  eslintPluginPrettierRecommended,
 ])
 
 export const suspensiveReactTypeScriptConfig = defineConfig([
