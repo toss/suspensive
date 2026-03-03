@@ -1,5 +1,19 @@
 # @suspensive/react-query-4
 
+## 3.19.2
+
+### Patch Changes
+
+- [#1905](https://github.com/toss/suspensive/pull/1905) [`e7a1b88`](https://github.com/toss/suspensive/commit/e7a1b8837799ccb72cbc904f121d460aba749dbe) Thanks [@saengmotmi](https://github.com/saengmotmi)! - fix(react-query-4): forward filters in IsFetching
+
+## 3.19.1
+
+## 3.19.0
+
+### Minor Changes
+
+- [#1893](https://github.com/toss/suspensive/pull/1893) [`ea4faf0`](https://github.com/toss/suspensive/commit/ea4faf038c35909cc48040a89f5e1f6a504e75c3) Thanks [@bluejoyq](https://github.com/bluejoyq)! - feat(react-query): add timeout prop to QueriesHydration
+
 ## 3.18.0
 
 ### Minor Changes

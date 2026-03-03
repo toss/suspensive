@@ -1,5 +1,29 @@
 # @suspensive/react-query
 
+## 3.19.2
+
+### Patch Changes
+
+- Updated dependencies [[`e7a1b88`](https://github.com/toss/suspensive/commit/e7a1b8837799ccb72cbc904f121d460aba749dbe)]:
+  - @suspensive/react-query-4@3.19.2
+  - @suspensive/react-query-5@3.19.2
+
+## 3.19.1
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @suspensive/react-query-4@3.19.1
+  - @suspensive/react-query-5@3.19.1
+
+## 3.19.0
+
+### Patch Changes
+
+- Updated dependencies [[`ea4faf0`](https://github.com/toss/suspensive/commit/ea4faf038c35909cc48040a89f5e1f6a504e75c3)]:
+  - @suspensive/react-query-4@3.19.0
+  - @suspensive/react-query-5@3.19.0
+
 ## 3.18.0
 
 ### Patch Changes

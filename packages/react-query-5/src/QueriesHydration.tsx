@@ -80,6 +80,7 @@ export async function QueriesHydration({
   children,
   queryClient = new QueryClient(),
   skipSsrOnError = true,
+  timeout,
   ...props
 }: {
   /**
@@ -101,14 +102,27 @@ export async function QueriesHydration({
     | {
         fallback: ReactNode
       }
+  /**
+   * The timeout in milliseconds for the query.
+   * If the query takes longer than the timeout, it will be considered as an error.
+   * When not set, no timeout is applied.
+   */
+  timeout?: number
 } & OmitKeyof<HydrationBoundaryProps, 'state'>) {
+  const timeoutController =
+    timeout != null && timeout >= 0
+      ? createTimeoutController(timeout, `QueriesHydration: timeout after ${timeout} ms)`)
+      : undefined
   try {
-    await Promise.all(
+    const queriesPromise = Promise.all(
       queries.map((query) =>
         'getNextPageParam' in query ? queryClient.fetchInfiniteQuery(query) : queryClient.fetchQuery(query)
       )
     )
+    await (timeoutController != null ? Promise.race([queriesPromise, timeoutController.promise]) : queriesPromise)
+    timeoutController?.clear()
   } catch {
+    timeoutController?.clear()
     if (skipSsrOnError) {
       return (
         <ClientOnly fallback={skipSsrOnError === true ? undefined : skipSsrOnError.fallback}>{children}</ClientOnly>
@@ -120,4 +134,14 @@ export async function QueriesHydration({
       {children}
     </HydrationBoundary>
   )
+}
+
+const createTimeoutController = (ms: number, errorMessage: string) => {
+  let timerId: ReturnType<typeof setTimeout> | undefined
+  return {
+    promise: new Promise<never>((_, reject) => {
+      timerId = setTimeout(() => reject(new Error(errorMessage)), ms)
+    }),
+    clear: () => timerId != null && clearTimeout(timerId),
+  }
 }
