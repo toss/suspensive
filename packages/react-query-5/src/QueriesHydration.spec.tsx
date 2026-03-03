@@ -1,4 +1,4 @@
-import { QueryClient, QueryClientProvider, dehydrate, infiniteQueryOptions } from '@tanstack/react-query'
+import { QueryClient, QueryClientProvider, dehydrate, hashKey, infiniteQueryOptions } from '@tanstack/react-query'
 import { render, screen } from '@testing-library/react'
 import type { ComponentProps, ReactNode } from 'react'
 import { describe, expect, it, vi } from 'vitest'
@@ -357,6 +357,7 @@ describe('<QueriesHydration/>', () => {
 
   it('should timeout when query takes longer than the timeout', async () => {
     const serverQueryClient = new QueryClient()
+    const cancelQueriesSpy = vi.spyOn(serverQueryClient, 'cancelQueries')
     const timeoutMs = 100
     const queryDelayMs = 200
     const mockQueryFn = vi
@@ -384,11 +385,83 @@ describe('<QueriesHydration/>', () => {
     })
 
     expect(mockQueryFn).toHaveBeenCalledTimes(1)
+    expect(cancelQueriesSpy).toHaveBeenCalledTimes(1)
+    const timeoutCancelFilters = cancelQueriesSpy.mock.calls[0]?.[0]
+    expect(timeoutCancelFilters).toEqual(expect.objectContaining({ predicate: expect.any(Function) }))
+    const timeoutPredicate = timeoutCancelFilters?.predicate as ((query: { queryHash: string }) => boolean) | undefined
+    expect(timeoutPredicate?.({ queryHash: hashKey(['test-query']) })).toBe(true)
+    expect(timeoutPredicate?.({ queryHash: hashKey(['other-query']) })).toBe(false)
     expect(screen.queryByText('Client Child')).not.toBeInTheDocument()
 
     const clientQueryClient = new QueryClient()
     render(<QueryClientProvider client={clientQueryClient}>{result}</QueryClientProvider>)
     expect(screen.getByTestId('client-only')).toBeInTheDocument()
     expect(screen.getByText('Client Child')).toBeInTheDocument()
+  })
+
+  it('should not cancel queries when error is not caused by timeout', async () => {
+    const serverQueryClient = new QueryClient()
+    const cancelQueriesSpy = vi.spyOn(serverQueryClient, 'cancelQueries')
+    const mockQueryFn = vi.fn().mockRejectedValue(new Error('Query failed immediately'))
+
+    await QueriesHydration({
+      queries: [
+        {
+          queryKey: ['test-query'],
+          queryFn: mockQueryFn,
+        },
+      ],
+      queryClient: serverQueryClient,
+      timeout: 1000,
+      children: <div>Client Child</div>,
+    })
+
+    expect(mockQueryFn).toHaveBeenCalledTimes(1)
+    expect(cancelQueriesSpy).not.toHaveBeenCalled()
+  })
+
+  it('should cancel all query keys when multiple queries timeout', async () => {
+    const serverQueryClient = new QueryClient()
+    const cancelQueriesSpy = vi.spyOn(serverQueryClient, 'cancelQueries')
+    const timeoutMs = 100
+    const queryDelayMs = 200
+    const slowQueryFn1 = vi
+      .fn()
+      .mockImplementation(
+        () => new Promise((resolve) => setTimeout(() => resolve({ data: 'test-data-1' }), queryDelayMs))
+      )
+    const slowQueryFn2 = vi
+      .fn()
+      .mockImplementation(
+        () => new Promise((resolve) => setTimeout(() => resolve({ data: 'test-data-2' }), queryDelayMs))
+      )
+
+    await QueriesHydration({
+      queries: [
+        {
+          queryKey: ['test-query-1'],
+          queryFn: slowQueryFn1,
+        },
+        {
+          queryKey: ['test-query-2'],
+          queryFn: slowQueryFn2,
+        },
+      ],
+      queryClient: serverQueryClient,
+      timeout: timeoutMs,
+      children: <div>Client Child</div>,
+    })
+
+    expect(slowQueryFn1).toHaveBeenCalledTimes(1)
+    expect(slowQueryFn2).toHaveBeenCalledTimes(1)
+    expect(cancelQueriesSpy).toHaveBeenCalledTimes(1)
+    const multiTimeoutCancelFilters = cancelQueriesSpy.mock.calls[0]?.[0]
+    expect(multiTimeoutCancelFilters).toEqual(expect.objectContaining({ predicate: expect.any(Function) }))
+    const multiTimeoutPredicate = multiTimeoutCancelFilters?.predicate as
+      | ((query: { queryHash: string }) => boolean)
+      | undefined
+    expect(multiTimeoutPredicate?.({ queryHash: hashKey(['test-query-1']) })).toBe(true)
+    expect(multiTimeoutPredicate?.({ queryHash: hashKey(['test-query-2']) })).toBe(true)
+    expect(multiTimeoutPredicate?.({ queryHash: hashKey(['other-query']) })).toBe(false)
   })
 })
