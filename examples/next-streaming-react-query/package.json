@@ -22,7 +22,7 @@
     "next": "catalog:",
     "react": "catalog:react19",
     "react-dom": "catalog:react19",
-    "zod": "^4.1.12"
+    "zod": "^3.22.5"
   },
   "devDependencies": {
     "@suspensive/eslint-config": "workspace:*",
