@@ -2,4 +2,4 @@
 "@suspensive/react": minor
 ---
 
-feat(ErrorBoundary): add ErrorBoundary.Observer
+feat(react): add ErrorBoundary.Observer
