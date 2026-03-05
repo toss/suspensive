@@ -944,19 +944,48 @@ This is an experimental feature.
 
 `ErrorBoundary.Observer` is a component that observes errors from all nested `<ErrorBoundary/>` components. It does not catch or handle errors — it simply observes them, making it ideal for integrating with error reporting tools like Sentry.
 
-Both `ErrorBoundary.Observer`'s `onError` and each `<ErrorBoundary/>`'s own `onError` will be called when an error is caught.
+Previously, you had to attach `onError` prop individually to each `<ErrorBoundary/>`. To observe errors across the entire app, you had to repeatedly pass the same handler to every ErrorBoundary.
+
+```tsx
+import { ErrorBoundary } from '@suspensive/react'
+import * as Sentry from '@sentry/react'
+
+// Before: repeated onError on every ErrorBoundary
+function App() {
+  return (
+    <ErrorBoundary
+      fallback={<FallbackA />}
+      onError={Sentry.captureReactException} // repeated every time
+    >
+      <ErrorBoundary
+        fallback={<FallbackB />}
+        onError={Sentry.captureReactException} // repeated every time
+      >
+        <YourComponent />
+      </ErrorBoundary>
+    </ErrorBoundary>
+  )
+}
+```
+
+With `ErrorBoundary.Observer`, you can observe errors from all nested `<ErrorBoundary/>` components at once. Both `ErrorBoundary.Observer`'s `onError` and each `<ErrorBoundary/>`'s own `onError` will be called when an error is caught.
 
 ```tsx /ErrorBoundary.Observer/
 import { ErrorBoundary } from '@suspensive/react'
 import * as Sentry from '@sentry/react'
 
-const Example = () => (
-  <ErrorBoundary.Observer onError={Sentry.captureReactException}>
-    <ErrorBoundary fallback={({ error }) => <>{error.message}</>}>
-      <YourComponent />
-    </ErrorBoundary>
-  </ErrorBoundary.Observer>
-)
+// After: single Observer wraps all ErrorBoundaries
+function App() {
+  return (
+    <ErrorBoundary.Observer onError={Sentry.captureReactException}>
+      <ErrorBoundary fallback={<FallbackA />}>
+        <ErrorBoundary fallback={<FallbackB />}>
+          <YourComponent />
+        </ErrorBoundary>
+      </ErrorBoundary>
+    </ErrorBoundary.Observer>
+  )
+}
 ```
 
 ### Nested ErrorBoundary.Observer
