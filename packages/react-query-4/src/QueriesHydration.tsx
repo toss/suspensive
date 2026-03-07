@@ -115,7 +115,11 @@ export async function QueriesHydration({
 } & OmitKeyof<HydrateProps, 'state'>) {
   const timeoutController =
     timeout != null && timeout >= 0
-      ? createTimeoutController(timeout, `QueriesHydration: timeout after ${timeout} ms)`)
+      ? createTimeoutController(timeout, `QueriesHydration: timeout after ${timeout} ms)`, () => {
+          queries.forEach((query) => {
+            void queryClient.cancelQueries({ queryKey: query.queryKey })
+          })
+        })
       : undefined
   try {
     const queriesPromise = Promise.all(
@@ -140,11 +144,14 @@ export async function QueriesHydration({
   )
 }
 
-const createTimeoutController = (ms: number, errorMessage: string) => {
+const createTimeoutController = (ms: number, errorMessage: string, onTimeout: () => void) => {
   let timerId: ReturnType<typeof setTimeout> | undefined
   return {
     promise: new Promise<never>((_, reject) => {
-      timerId = setTimeout(() => reject(new Error(errorMessage)), ms)
+      timerId = setTimeout(() => {
+        onTimeout()
+        reject(new Error(errorMessage))
+      }, ms)
     }),
     clear: () => timerId != null && clearTimeout(timerId),
   }
