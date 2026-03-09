@@ -602,6 +602,90 @@ describe('useErrorBoundaryFallbackProps', () => {
   })
 })
 
+describe('<ErrorBoundary.Observer/>', () => {
+  beforeEach(() => vi.useFakeTimers())
+
+  afterEach(() => {
+    vi.useRealTimers()
+    Throw.reset()
+  })
+
+  it('should call Observer onError when ErrorBoundary catches error', async () => {
+    const captureOnError = vi.fn()
+    const localOnError = vi.fn()
+
+    render(
+      <ErrorBoundary.Observer onError={captureOnError}>
+        <ErrorBoundary fallback={<>{FALLBACK}</>} onError={localOnError}>
+          <Throw.Error message={ERROR_MESSAGE} after={100}>
+            {TEXT}
+          </Throw.Error>
+        </ErrorBoundary>
+      </ErrorBoundary.Observer>
+    )
+
+    expect(captureOnError).toHaveBeenCalledTimes(0)
+    expect(localOnError).toHaveBeenCalledTimes(0)
+    await act(() => vi.advanceTimersByTime(100))
+    expect(captureOnError).toHaveBeenCalledTimes(1)
+    expect(localOnError).toHaveBeenCalledTimes(1)
+  })
+
+  it('should call local onError before Observer onError', async () => {
+    const callOrder: string[] = []
+
+    render(
+      <ErrorBoundary.Observer onError={() => callOrder.push('observer')}>
+        <ErrorBoundary fallback={<>{FALLBACK}</>} onError={() => callOrder.push('local')}>
+          <Throw.Error message={ERROR_MESSAGE} after={100}>
+            {TEXT}
+          </Throw.Error>
+        </ErrorBoundary>
+      </ErrorBoundary.Observer>
+    )
+
+    await act(() => vi.advanceTimersByTime(100))
+    expect(callOrder).toEqual(['local', 'observer'])
+  })
+
+  it('should call nested Observer onError in bubble order (inner to outer)', async () => {
+    const callOrder: string[] = []
+
+    render(
+      <ErrorBoundary.Observer onError={() => callOrder.push('outer')}>
+        <ErrorBoundary.Observer onError={() => callOrder.push('inner')}>
+          <ErrorBoundary fallback={<>{FALLBACK}</>} onError={() => callOrder.push('local')}>
+            <Throw.Error message={ERROR_MESSAGE} after={100}>
+              {TEXT}
+            </Throw.Error>
+          </ErrorBoundary>
+        </ErrorBoundary.Observer>
+      </ErrorBoundary.Observer>
+    )
+
+    await act(() => vi.advanceTimersByTime(100))
+    expect(callOrder).toEqual(['local', 'inner', 'outer'])
+  })
+
+  it('should work without local onError on ErrorBoundary', async () => {
+    const captureOnError = vi.fn()
+
+    render(
+      <ErrorBoundary.Observer onError={captureOnError}>
+        <ErrorBoundary fallback={<>{FALLBACK}</>}>
+          <Throw.Error message={ERROR_MESSAGE} after={100}>
+            {TEXT}
+          </Throw.Error>
+        </ErrorBoundary>
+      </ErrorBoundary.Observer>
+    )
+
+    await act(() => vi.advanceTimersByTime(100))
+    expect(captureOnError).toHaveBeenCalledTimes(1)
+    expect(screen.queryByText(FALLBACK)).toBeInTheDocument()
+  })
+})
+
 describe('ErrorBoundary.with', () => {
   beforeEach(() => vi.useFakeTimers())
 
