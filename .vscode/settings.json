@@ -1,5 +1,5 @@
 {
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.defaultFormatter": "oxc.oxc-vscode",
   "editor.formatOnSave": true,
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "explicit"
@@ -8,6 +8,6 @@
   "eslint.workingDirectories": [{ "mode": "auto" }],
   "vitest.disableWorkspaceWarning": true,
   "[yaml]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "oxc.oxc-vscode"
   }
 }

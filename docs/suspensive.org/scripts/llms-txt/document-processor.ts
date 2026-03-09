@@ -98,15 +98,10 @@ export function groupByCategory(docs: DocInfo[]): Map<string, DocInfo[]> {
   return groups
 }
 
-export function sortByMeta(
-  docs: DocInfo[],
-  metaEntries: MetaEntry[]
-): DocInfo[] {
+export function sortByMeta(docs: DocInfo[], metaEntries: MetaEntry[]): DocInfo[] {
   if (metaEntries.length === 0) return docs
 
-  const orderMap = new Map(
-    metaEntries.map((entry, index) => [entry.key, index])
-  )
+  const orderMap = new Map(metaEntries.map((entry, index) => [entry.key, index]))
 
   return [...docs].sort((a, b) => {
     const aOrder = orderMap.get(a.slug) ?? Infinity
