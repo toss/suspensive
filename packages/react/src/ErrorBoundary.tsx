@@ -319,3 +319,23 @@ export const useErrorBoundaryFallbackProps = <TError extends Error = Error>(): E
     [errorBoundary.error, errorBoundary.reset]
   )
 }
+
+/**
+ * This utility function is a helper for creating ErrorBoundary props with proper type inference.
+ * It simply returns the props object passed to it, but helps with type inference.
+ * @see {@link https://suspensive.org/docs/react/ErrorBoundary Suspensive Docs}
+ * @example
+ * ```tsx
+ * const errorBoundary = errorBoundaryProps({
+ *   fallback: ({ error }) => <div>{error.message}</div>,
+ *   onError: (error) => console.error(error),
+ * })
+ *
+ * <ErrorBoundary {...errorBoundary}>
+ *   <MyComponent />
+ * </ErrorBoundary>
+ * ```
+ */
+export const errorBoundaryProps = <TShouldCatch extends ShouldCatch = true>(
+  props: PropsWithoutChildren<ErrorBoundaryProps<TShouldCatch>>
+) => props
