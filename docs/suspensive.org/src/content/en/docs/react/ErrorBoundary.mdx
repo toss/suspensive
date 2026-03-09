@@ -404,41 +404,6 @@ const Example = () => (
 
 </Callout>
 
-<Callout>
-
-Use `<ErrorBoundary/>` fallback props without prop drilling
-
-#### useErrorBoundaryFallbackProps
-
-If component using `reset` method and `error` object is nested, prop drilling cannot be avoided.
-The `useErrorBoundaryFallbackProps` allows you to access the `reset` method and `error` objects without prop drilling.
-
-```tsx /useErrorBoundaryFallbackProps/
-import { ErrorBoundary, useErrorBoundaryFallbackProps } from '@suspensive/react'
-
-const Nested = () => {
-  const { reset, error } = useErrorBoundaryFallbackProps()
-
-  return (
-    <>
-      <button onClick={reset}>Try again</button>
-      {error.message}
-    </>
-  )
-}
-
-// There's no need to pass fallback Prop here!
-const ErrorBoundaryFallback = () => <Nested />
-
-const Example = () => (
-  <ErrorBoundary fallback={ErrorBoundaryFallback}>
-    <Error />
-  </ErrorBoundary>
-)
-```
-
-</Callout>
-
 ### props.resetKeys
 
 If you want to reset `<ErrorBoundary/>` by component where is outside of `<ErrorBoundary/>`'s fallback. Inject any resetKey in resetKeys. resetKeys work only when at least one element of array is changed. you don't need to worry about provide new array as resetKeys like how useEffect's dependency array work.
@@ -1000,11 +965,85 @@ export const fetchSomething = () => {
 
 </Sandpack>
 
-<Callout>
+## useErrorBoundaryFallbackProps
 
-Controlling multiple `<ErrorBoundary/>`s
+A hook that allows you to access the `error` object and `reset` method without prop drilling inside `<ErrorBoundary/>`'s fallback.
 
-`<ErrorBoundary/>` is more powerful when used with `<ErrorBoundaryGroup/>`. Control multiple `<ErrorBoundary/>`s with `<ErrorBoundaryGroup/>`.  
-Details are introduced in [`<ErrorBoundaryGroup/>` page](/docs/react/ErrorBoundaryGroup).
+In Next.js React Server Component environments, callback functions cannot be passed as props from server components to client components. This makes it impossible to pass a function component as `<ErrorBoundary/>`'s `fallback` to receive `error` and `reset`. `useErrorBoundaryFallbackProps` allows you to access `error` and `reset` inside the fallback without this limitation.
+
+It also eliminates the prop drilling problem when fallback components are deeply nested, removing the need to pass `error` and `reset` through multiple layers.
+
+```tsx /useErrorBoundaryFallbackProps/
+import { ErrorBoundary, useErrorBoundaryFallbackProps } from '@suspensive/react'
+
+const ErrorBoundaryFallback = () => {
+  const { reset, error } = useErrorBoundaryFallbackProps()
+
+  return (
+    <>
+      <button onClick={reset}>Try again</button>
+      {error.message}
+    </>
+  )
+}
+
+// In RSC, you need to pass JSX directly to fallback instead of a callback
+const Example = () => (
+  <ErrorBoundary fallback={<ErrorBoundaryFallback />}>
+    <ErrorAfter2s />
+  </ErrorBoundary>
+)
+```
+
+<Sandpack>
+
+```tsx Example.tsx active
+import { ErrorBoundary, useErrorBoundaryFallbackProps } from '@suspensive/react'
+import { useState, useEffect } from 'react'
+
+const ErrorBoundaryFallback = () => {
+  const { reset, error } = useErrorBoundaryFallbackProps()
+
+  return (
+    <div>
+      <p>{error.message}</p>
+      <button onClick={reset}>Try again</button>
+    </div>
+  )
+}
+
+export const Example = () => (
+  <ErrorBoundary fallback={<ErrorBoundaryFallback />}>
+    <ErrorAfter2s />
+  </ErrorBoundary>
+)
+
+const ErrorAfter2s = () => {
+  const [asyncState, setAsyncState] = useState<
+    { isError: true; error: Error } | { isError: false; error: null }
+  >({
+    isError: false,
+    error: null,
+  })
+
+  useEffect(() => {
+    setTimeout(() => {
+      setAsyncState({ isError: true, error: new Error('An error occurred') })
+    }, 2000)
+  }, [])
+
+  if (asyncState.isError) {
+    throw asyncState.error
+  }
+
+  return <>No error</>
+}
+```
+
+</Sandpack>
+
+<Callout type='warning'>
+
+`useErrorBoundaryFallbackProps` must be called inside `<ErrorBoundary/>`'s `fallback`. Calling it in `<ErrorBoundary/>`'s `children` or outside of `<ErrorBoundary/>` will throw an error.
 
 </Callout>
