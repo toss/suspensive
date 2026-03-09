@@ -391,4 +391,39 @@ describe('<QueriesHydration/>', () => {
     expect(screen.getByTestId('client-only')).toBeInTheDocument()
     expect(screen.getByText('Client Child')).toBeInTheDocument()
   })
+
+  it('should cancel queries using cancelQueries when timeout occurs', async () => {
+    const serverQueryClient = new QueryClient()
+    const cancelQueriesSpy = vi.spyOn(serverQueryClient, 'cancelQueries')
+    const timeoutMs = 100
+    const queryDelayMs = 200
+    const mockQueryFn = vi
+      .fn()
+      .mockImplementation(
+        () => new Promise((resolve) => setTimeout(() => resolve({ data: 'test-data' }), queryDelayMs))
+      )
+
+    const queries = [
+      {
+        queryKey: ['test-query-1'],
+        queryFn: mockQueryFn,
+      },
+      {
+        queryKey: ['test-query-2'],
+        queryFn: mockQueryFn,
+      },
+    ]
+
+    await QueriesHydration({
+      queries,
+      queryClient: serverQueryClient,
+      timeout: timeoutMs,
+      children: <div>Child</div>,
+    })
+
+    // Verify that cancelQueries was called for each query
+    expect(cancelQueriesSpy).toHaveBeenCalledTimes(2)
+    expect(cancelQueriesSpy).toHaveBeenCalledWith({ queryKey: ['test-query-1'] })
+    expect(cancelQueriesSpy).toHaveBeenCalledWith({ queryKey: ['test-query-2'] })
+  })
 })
