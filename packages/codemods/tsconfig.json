@@ -1,6 +1,7 @@
 {
   "extends": "@suspensive/tsconfig/base.json",
   "compilerOptions": {
+    "moduleResolution": "node",
     "types": ["vitest/globals"]
   },
   "include": ["**/*.ts"]
