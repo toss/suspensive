@@ -3,6 +3,7 @@
 "@suspensive/react-query": patch
 "@suspensive/react-query-4": patch
 "@suspensive/react-query-5": patch
+"@suspensive/jotai": patch
 "@suspensive/next": patch
 "@suspensive/codemods": patch
 ---
