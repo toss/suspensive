@@ -3,7 +3,7 @@ import { Callout, Sandpack } from '@/components'
 
 # ErrorBoundary
 
-this component can handle any errors in children.
+This component can handle any errors in children.
 
 ## Comparison
 
@@ -406,7 +406,7 @@ const Example = () => (
 
 ### props.resetKeys
 
-If you want to reset `<ErrorBoundary/>` by component where is outside of `<ErrorBoundary/>`'s fallback. Inject any resetKey in resetKeys. resetKeys work only when at least one element of array is changed. you don't need to worry about provide new array as resetKeys like how useEffect's dependency array work.
+If you want to reset `<ErrorBoundary/>` by a component that is outside of `<ErrorBoundary/>`'s fallback. Pass any resetKey into resetKeys. resetKeys work only when at least one element of array is changed. you don't need to worry about providing a new array as resetKeys like how useEffect's dependency array work.
 
 ```tsx /resetKeys/
 import { ErrorBoundary } from '@suspensive/react'
@@ -722,7 +722,7 @@ export const Example = () => {
 </Tabs.Tab>
 </Tabs>
 
-You can also apply multiple criteria through array.
+You can also apply multiple criteria through an array.
 
 ```tsx /shouldCatch/
 import { ErrorBoundary } from '@suspensive/react'
@@ -888,7 +888,7 @@ const Example = ErrorBoundary.with({ fallback: ErrorBoundaryFallback }, () => {
 
 ### useErrorBoundary().setError
 
-In children of `<ErrorBoundary/>`, we can use useErrorBoundary().setError to make `<ErrorBoundary/>` aware of the Error without throw.
+In children of `<ErrorBoundary/>`, we can use useErrorBoundary().setError to make `<ErrorBoundary/>` aware of the Error without throwing.
 
 ```tsx /useErrorBoundary/
 import { ErrorBoundary, useErrorBoundary } from '@suspensive/react'

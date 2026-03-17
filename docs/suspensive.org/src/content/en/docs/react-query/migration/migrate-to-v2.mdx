@@ -57,7 +57,7 @@ import { PostListItem } from '~/components'
 const PostList = ({ userId }) => {
    // We need to create this component just for data-fetching.
    const { data: posts } = useSuspenseQuery({
-     ...postsQueryOptions(userId);
+     ...postsQueryOptions(userId),
      select: (posts) => posts.filter(({ isShow }) => isShow),
    })
 
@@ -126,7 +126,7 @@ const postQueryOptions = (postId) =>
 // You can use queryOptions directly in useQuery, useQueries, useSuspenseQuery, useSuspenseQueries, SuspenseQuery.
 const post1Query = useQuery(postQueryOptions(1))
 const { data: post1 } = useSuspenseQuery({
-   ...postQueryOptions(1);
+   ...postQueryOptions(1),
    refetchInterval: 2000, // Extensibility is clearly expressed in usage.
 })
 const [post1Query, post2Query] = useQueries({

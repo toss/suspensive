@@ -1,29 +1,35 @@
-import { Steps } from 'nextra/components'
+# Motivation
 
-# Why need to use?
+React already has great primitives — Suspense, ErrorBoundary, lazy. But using them in real applications quickly exposes gaps. @suspensive/react fills those gaps.
 
-@suspensive/react is used with the following motivation:
+### Suspense breaks in SSR
 
-<Steps>
+Use `<Suspense>` in Next.js and you'll hit this error:
 
-### React Suspense need to avoid Server side rendering sometimes.
-
-If you have used React Suspense in SSR environment like Next.js, you may encounter error like below.
 ![Example banner](/img/suspense-in-ssr-error.png)
 
-It's why [clientOnly prop of `<Suspense/>`](/docs/react/Suspense) is added in this library.
+With Suspensive's [`<Suspense/>`](/docs/react/Suspense), a single `clientOnly` prop skips SSR cleanly — no workarounds needed.
 
-### ErrorBoundary more simply
+### ErrorBoundary is too complicated
 
-[bvaughn/react-error-boundary](https://github.com/bvaughn/react-error-boundary) that provide ErrorBoundary is popular library to use React's error-boundary concept declaratively. ErrorBoundary of bvaughn/react-error-boundary have fallback prop named like FallbackComponent, fallbackRender, fallback. We wanted to use the existing ErrorBoundary's somewhat complex fallback interface in something simpler like @suspensive/react's `<ErrorBoundary/>`.
+`react-error-boundary` offers three different fallback interfaces. With Suspensive's [`<ErrorBoundary/>`](/docs/react/ErrorBoundary), you get one `fallback` prop, plus `shouldCatch` to filter which errors to handle.
 
-It's why [`<ErrorBoundary/>`](/docs/react/ErrorBoundary) is added in this library.
+### Resetting ErrorBoundaries is painful
 
-### Resetting multiple `<ErrorBoundary/>`s outside of fallback itself easily
+Managing `resetKeys` across multiple `<ErrorBoundary/>`s is tedious. With Suspensive's [`<ErrorBoundaryGroup/>`](/docs/react/ErrorBoundaryGroup), a single call resets all of them.
 
-To reset `<ErrorBoundary/>`, you can use reset method provided by fallback prop of `<ErrorBoundary/>`.
-but If you want to reset multiple `<ErrorBoundary/>`s outside of its fallback, you have to provide new element of resetKeys to props of each `<ErrorBoundary/>`s. but If you use @suspensive/react's `<ErrorBoundaryGroup/>`, You don't need to do this tiresome. `<ErrorBoundaryGroup/>` will reset multiple `<ErrorBoundary/>`s easily.
+### Loading spinners flash
 
-It's why [`<ErrorBoundaryGroup/>`](/docs/react/ErrorBoundaryGroup) is added in this library.
+A spinner that appears for 50ms is worse than no spinner. With Suspensive's [`<Delay/>`](/docs/react/Delay), brief loading states are hidden so users only see spinners when they actually need to wait.
 
-</Steps>
+### Client-only code causes hydration mismatches
+
+With Suspensive's [`<ClientOnly/>`](/docs/react/ClientOnly) and [`useIsClient`](/docs/react/useIsClient), you get safe client-side rendering — no more `typeof window !== 'undefined'` scattered across your code.
+
+### Same props, everywhere
+
+Stop passing the same `fallback` to every `<Suspense/>`. With Suspensive's [`<DefaultPropsProvider/>`](/docs/react/DefaultPropsProvider), you set defaults once for all Suspensive components.
+
+### `React.lazy` can't preload or recover
+
+With Suspensive's [`lazy`](/docs/react/lazy), you get `.load()` for preloading and automatic retry on chunk failures — the kind of thing you only discover you need in production.

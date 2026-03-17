@@ -250,7 +250,7 @@ import { PostListItem } from '~/components'
 const PostList = ({ userId }) => {
    // We need to create this component just for data-fetching.
    const { data: posts } = useSuspenseQuery({
-     ...postsQueryOptions(userId);
+     ...postsQueryOptions(userId),
      select: (posts) => posts.filter(({ isPublic }) => isPublic),
    })
 
