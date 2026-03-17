@@ -70,12 +70,10 @@ const matchError = (errorMatcher: ErrorMatcher, error: Error): error is InferErr
   }
   if (typeof errorMatcher === 'function') {
     try {
-      if (errorMatcher === Error || errorMatcher.prototype instanceof Error) {
-        return error instanceof errorMatcher
+      if (error instanceof errorMatcher) {
+        return true
       }
-    } catch {
-      // If accessing prototype throws, it's not a constructor. This can happen with proxy objects or in restricted environments.
-    }
+    } catch {}
     return (errorMatcher as ErrorValidator | ErrorTypeGuard<InferError<typeof errorMatcher>>)(error)
   }
   return false
