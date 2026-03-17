@@ -1,5 +1,7 @@
 # @suspensive/codemods
 
+## 3.19.5
+
 ## 3.19.4
 
 ### Patch Changes
