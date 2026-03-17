@@ -1,5 +1,4 @@
 'use client'
-
 import {
   type SuspenseQueriesOptions as original_SuspenseQueriesOptions,
   type SuspenseQueriesResults as original_SuspenseQueriesResults,

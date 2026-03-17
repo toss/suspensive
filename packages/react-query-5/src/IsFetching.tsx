@@ -1,5 +1,4 @@
 'use client'
-
 import { type QueryFilters, useIsFetching } from '@tanstack/react-query'
 import type { ReactNode } from 'react'
 
