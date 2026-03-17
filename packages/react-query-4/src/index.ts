@@ -1,7 +1,7 @@
 export { createGetQueryClient } from './createGetQueryClient'
 export { infiniteQueryOptions } from './infiniteQueryOptions'
 export type { SelectedInfiniteOptions, UnSelectedInfiniteOptions } from './infiniteQueryOptions'
-export { QueriesHydration } from './QueriesHydration'
+export { HydrateQueries } from './HydrateQueries'
 export { queryOptions } from './queryOptions'
 export type { SelectedQueryOptions, UnSelectedQueryOptions } from './queryOptions'
 export { usePrefetchInfiniteQuery } from './usePrefetchInfiniteQuery'
