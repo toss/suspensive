@@ -12,6 +12,7 @@ export const options = defineConfig({
   attw: true,
   publint: true,
   clean: true,
+  unbundle: true,
 })
 
 export const scriptOptions = defineConfig({
