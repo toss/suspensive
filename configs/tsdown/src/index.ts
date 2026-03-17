@@ -1,7 +1,6 @@
 import { defineConfig } from 'tsdown'
 
 export const options = defineConfig({
-  banner: { js: '"use client"' },
   format: ['cjs', 'esm'],
   target: ['chrome51', 'firefox53', 'edge18', 'safari11', 'ios11', 'opera38', 'es6', 'node14'],
   entry: ['src/*.{ts,tsx}', '!**/*.{spec,test,test-d}.*'],
@@ -12,6 +11,7 @@ export const options = defineConfig({
   attw: true,
   publint: true,
   clean: true,
+  unbundle: true,
 })
 
 export const scriptOptions = defineConfig({
