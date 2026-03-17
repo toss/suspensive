@@ -1,5 +1,11 @@
 # @suspensive/react
 
+## 3.19.5
+
+### Patch Changes
+
+- [#1918](https://github.com/toss/suspensive/pull/1918) [`47571c4`](https://github.com/toss/suspensive/commit/47571c47877d3616a3812a8079facf08d0129269) Thanks [@manudeli](https://github.com/manudeli)! - fix(\*): remove banner option from tsdown configurations and add 'use client' directive to multiple React components
+
 ## 3.19.4
 
 ### Patch Changes
