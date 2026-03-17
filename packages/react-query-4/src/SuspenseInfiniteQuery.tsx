@@ -1,5 +1,4 @@
 'use client'
-
 import { type QueryKey, type UseSuspenseInfiniteQueryResult, useSuspenseInfiniteQuery } from '@tanstack/react-query'
 import type { ReactNode } from 'react'
 import { type UseSuspenseInfiniteQueryOptions } from './useSuspenseInfiniteQuery'

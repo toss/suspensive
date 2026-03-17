@@ -1,5 +1,4 @@
 'use client'
-
 import { type ComponentProps, type ComponentType, type SuspenseProps as ReactSuspenseProps, useContext } from 'react'
 import { SuspenseDefaultPropsContext } from './contexts/DefaultPropsContexts'
 import type { PropsWithoutChildren } from './utility-types/PropsWithoutChildren'
