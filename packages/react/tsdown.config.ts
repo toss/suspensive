@@ -1,4 +1,4 @@
 import { options } from '@suspensive/tsdown'
 import { defineConfig } from 'tsdown'
 
-export default defineConfig({ ...options, unbundle: true })
+export default defineConfig(options)
