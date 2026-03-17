@@ -1,5 +1,11 @@
 # @suspensive/next
 
+## 0.0.7
+
+### Patch Changes
+
+- [#1921](https://github.com/toss/suspensive/pull/1921) [`8d82753`](https://github.com/toss/suspensive/commit/8d8275349327f1bfce0659d0944a485bcb21cabb) Thanks [@manudeli](https://github.com/manudeli)! - fix(tsdown): enable unbundling option in configuration
+
 ## 0.0.6
 
 ### Patch Changes

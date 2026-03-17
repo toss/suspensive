@@ -1,5 +1,11 @@
 # @suspensive/react-query-5
 
+## 3.19.4
+
+### Patch Changes
+
+- [#1921](https://github.com/toss/suspensive/pull/1921) [`8d82753`](https://github.com/toss/suspensive/commit/8d8275349327f1bfce0659d0944a485bcb21cabb) Thanks [@manudeli](https://github.com/manudeli)! - fix(tsdown): enable unbundling option in configuration
+
 ## 3.19.3
 
 ### Patch Changes
