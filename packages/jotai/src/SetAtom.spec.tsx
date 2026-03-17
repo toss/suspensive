@@ -1,7 +1,7 @@
 import { act, fireEvent, render, screen } from '@testing-library/react'
 import { atom } from 'jotai'
 import { Suspense } from 'react'
-import { AtomValue } from './AtomValue'
+import { ReadAtom } from './ReadAtom'
 import { SetAtom } from './SetAtom'
 import { sleep } from './test-utils'
 
@@ -15,7 +15,7 @@ describe('<SetAtom />', () => {
 
     render(
       <>
-        <AtomValue atom={countAtom}>{(count) => <div>count: {count}</div>}</AtomValue>
+        <ReadAtom atom={countAtom}>{(count) => <div>count: {count}</div>}</ReadAtom>
         <SetAtom atom={countAtom}>
           {(setCount) => (
             <>
@@ -54,7 +54,7 @@ describe('<SetAtom />', () => {
 
     render(
       <>
-        <AtomValue atom={baseAtom}>{(value) => <div>base: {value}</div>}</AtomValue>
+        <ReadAtom atom={baseAtom}>{(value) => <div>base: {value}</div>}</ReadAtom>
         <SetAtom atom={customWriteAtom}>
           {(setValue) => (
             <button type="button" onClick={() => setValue(5)}>
@@ -97,7 +97,7 @@ describe('<SetAtom />', () => {
     await act(() =>
       render(
         <Suspense fallback={<div>loading...</div>}>
-          <AtomValue atom={asyncWritableAtom}>{(value) => <div>value: {value}</div>}</AtomValue>
+          <ReadAtom atom={asyncWritableAtom}>{(value) => <div>value: {value}</div>}</ReadAtom>
           <SetAtom atom={asyncWritableAtom}>
             {(setValue) => (
               // eslint-disable-next-line @typescript-eslint/no-misused-promises

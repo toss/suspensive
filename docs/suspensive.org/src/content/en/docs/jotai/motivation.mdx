@@ -29,12 +29,12 @@ const MyPage = () => (
 
 ### Compatible with Jotai's Extension Libraries
 
-Jotai offers various extension libraries like [tRPC](https://jotai.org/docs/extensions/trpc), [Query](https://jotai.org/docs/extensions/query), and [Cache](https://jotai.org/docs/extensions/cache). Atoms from extension libraries are compatible with @suspensive/jotai's `<Atom/>`, `<SetAtom/>`, `<AtomValue/>`.
+Jotai offers various extension libraries like [tRPC](https://jotai.org/docs/extensions/trpc), [Query](https://jotai.org/docs/extensions/query), and [Cache](https://jotai.org/docs/extensions/cache). Atoms from extension libraries are compatible with @suspensive/jotai's `<Atom/>`, `<SetAtom/>`, `<ReadAtom/>`.
 
 Below is an example using the extension library [jotai-tanstack-query](https://github.com/jotaijs/jotai-tanstack-query) introduced in [Query](https://jotai.org/docs/extensions/query#suspense).
 
 ```tsx
-import { AtomValue } from '@suspensive/jotai'
+import { ReadAtom } from '@suspensive/jotai'
 import { Suspense, ErrorBoundary } from '@suspensive/react'
 import { UserProfile } from '~/components'
 import { userQueryAtom } from '~/queries' {/* Used 'atomWithSuspenseQuery' from 'jotai-tanstack-query'. */}
@@ -42,9 +42,9 @@ import { userQueryAtom } from '~/queries' {/* Used 'atomWithSuspenseQuery' from 
 const MyPage = () => (
   <ErrorBoundary fallback={({ error }) => <>{error.message}</>}>
     <Suspense fallback={'pending...'}>
-      <AtomValue atom={userQueryAtom}> {/* Atoms from extension libraries are also compatible. */}
+      <ReadAtom atom={userQueryAtom}> {/* Atoms from extension libraries are also compatible. */}
         {({ data: user }) => <UserProfile key={user.id} {...user} />}
-      </AtomValue>
+      </ReadAtom>
     </Suspense>
   </ErrorBoundary>
 )

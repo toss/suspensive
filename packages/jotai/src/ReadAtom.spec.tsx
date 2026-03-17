@@ -1,10 +1,10 @@
 import { act, render, screen } from '@testing-library/react'
 import { atom } from 'jotai'
 import { Suspense } from 'react'
-import { AtomValue } from './AtomValue'
+import { ReadAtom } from './ReadAtom'
 import { sleep } from './test-utils'
 
-describe('<AtomValue />', () => {
+describe('<ReadAtom />', () => {
   beforeEach(() => vi.useFakeTimers())
 
   afterEach(() => vi.useRealTimers())
@@ -12,7 +12,7 @@ describe('<AtomValue />', () => {
   it('should render with a primitive atom', () => {
     const countAtom = atom(10)
 
-    render(<AtomValue atom={countAtom}>{(count) => <div>count: {count}</div>}</AtomValue>)
+    render(<ReadAtom atom={countAtom}>{(count) => <div>count: {count}</div>}</ReadAtom>)
 
     expect(screen.getByText('count: 10')).toBeInTheDocument()
   })
@@ -21,7 +21,7 @@ describe('<AtomValue />', () => {
     const baseAtom = atom(10)
     const derivedAtom = atom((get) => get(baseAtom) * 2)
 
-    render(<AtomValue atom={derivedAtom}>{(value) => <div>value: {value}</div>}</AtomValue>)
+    render(<ReadAtom atom={derivedAtom}>{(value) => <div>value: {value}</div>}</ReadAtom>)
 
     expect(screen.getByText('value: 20')).toBeInTheDocument()
   })
@@ -30,7 +30,7 @@ describe('<AtomValue />', () => {
     const testAtom = atom('abc')
     const children = vi.fn(() => <div>Test</div>)
 
-    render(<AtomValue atom={testAtom}>{children}</AtomValue>)
+    render(<ReadAtom atom={testAtom}>{children}</ReadAtom>)
 
     expect(children).toHaveBeenCalledWith('abc')
     expect(screen.getByText('Test')).toBeInTheDocument()
@@ -45,7 +45,7 @@ describe('<AtomValue />', () => {
     await act(() =>
       render(
         <Suspense fallback={<div>loading...</div>}>
-          <AtomValue atom={asyncAtom}>{(value) => <div>value: {value}</div>}</AtomValue>
+          <ReadAtom atom={asyncAtom}>{(value) => <div>value: {value}</div>}</ReadAtom>
         </Suspense>
       )
     )

@@ -8,6 +8,6 @@ export default {
     title: 'API Reference',
   },
   Atom: { title: '<Atom/>' },
-  AtomValue: { title: '<AtomValue/>' },
+  ReadAtom: { title: '<ReadAtom/>' },
   SetAtom: { title: '<SetAtom/>' },
 } satisfies MetaRecord

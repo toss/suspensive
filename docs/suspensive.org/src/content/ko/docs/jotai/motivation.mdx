@@ -29,12 +29,12 @@ const MyPage = () => (
 
 ### Jotai의 확장 라이브러리(Extension Library)와 함께 사용할 수 있습니다.
 
-Jotai에는 [tRPC](https://jotai.org/docs/extensions/trpc), [Query](https://jotai.org/docs/extensions/query), [Cache](https://jotai.org/docs/extensions/cache) 등 다양한 확장 라이브러리가 있습니다. 확장 라이브러리의 atom도 @suspensive/jotai의 `<Atom/>`, `<SetAtom/>`, `<AtomValue/>`와 모두 호환됩니다.
+Jotai에는 [tRPC](https://jotai.org/docs/extensions/trpc), [Query](https://jotai.org/docs/extensions/query), [Cache](https://jotai.org/docs/extensions/cache) 등 다양한 확장 라이브러리가 있습니다. 확장 라이브러리의 atom도 @suspensive/jotai의 `<Atom/>`, `<SetAtom/>`, `<ReadAtom/>`와 모두 호환됩니다.
 
 아래 예시는 [Query](https://jotai.org/docs/extensions/query#suspense)에서 소개된 확장 라이브러리인 [jotai-tanstack-query](https://github.com/jotaijs/jotai-tanstack-query)를 활용한 예시입니다.
 
 ```tsx
-import { AtomValue } from '@suspensive/jotai'
+import { ReadAtom } from '@suspensive/jotai'
 import { Suspense, ErrorBoundary } from '@suspensive/react'
 import { UserProfile } from '~/components'
 import { userQueryAtom } from '~/queries' {/* 'jotai-tanstack-query'의 atomWithSuspenseQuery를 사용했습니다. */}
@@ -42,9 +42,9 @@ import { userQueryAtom } from '~/queries' {/* 'jotai-tanstack-query'의 atomWith
 const MyPage = () => (
   <ErrorBoundary fallback={({ error }) => <>{error.message}</>}>
     <Suspense fallback={'pending...'}>
-      <AtomValue atom={userQueryAtom}> {/* 확장 라이브러리의 atom도 호환됩니다. */}
+      <ReadAtom atom={userQueryAtom}> {/* 확장 라이브러리의 atom도 호환됩니다. */}
         {({ data: user }) => <UserProfile key={user.id} {...user} />}
-      </AtomValue>
+      </ReadAtom>
     </Suspense>
   </ErrorBoundary>
 )

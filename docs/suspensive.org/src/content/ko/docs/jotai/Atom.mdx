@@ -67,13 +67,13 @@ const PaymentPage = () => (
 
 ```tsx
 // payment/components/UserInfo.tsx
-import { useAtomValue } from '@suspensive/jotai'
+import { useReadAtom } from '@suspensive/jotai'
 import { UserAddress } from '~/components'
 import { userAsyncAtom } from '~/atoms'
 
 // 이 컴포넌트를 사용하는 입장에서 UserInfo라는 이름만으로 내부적으로 어떤 Atom을 사용하고, Suspense가 발생할지 예상하기 어렵습니다.
 const UserInfo = () => {
-  const data = useAtomValue(userAsyncAtom)
+  const data = useReadAtom(userAsyncAtom)
 
   return <UserAddress {...data} />
 }

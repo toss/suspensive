@@ -1,30 +1,30 @@
 import { Callout } from '@/components'
 
-# AtomValue
+# ReadAtom
 
-The AtomValue component provides an interface similar to Jotai's [useAtomValue](https://jotai.org/docs/core/use-atom#useatomvalue) hook as props, allowing declarative usage.
+The ReadAtom component provides an interface similar to Jotai's [useReadAtom](https://jotai.org/docs/core/use-atom#useatomvalue) hook as props, allowing declarative usage.
 
 ### props.atom
 
 You can use Jotai's atom as is.
 
-```tsx /AtomValue/
-import { AtomValue } from '@suspensive/jotai'
+```tsx /ReadAtom/
+import { ReadAtom } from '@suspensive/jotai'
 import { atom } from 'jotai'
 
 const countAtom = atom(1)
 
 const Example = () => {
   return (
-    <AtomValue atom={countAtom}>{(count) => <>count: {count}</>}</AtomValue>
+    <ReadAtom atom={countAtom}>{(count) => <>count: {count}</>}</ReadAtom>
   )
 }
 ```
 
 For Async Atom, it delegates the pending state of the Promise to the parent Suspense until the Promise resolves.
 
-```tsx /AtomValue/
-import { AtomValue } from '@suspensive/jotai'
+```tsx /ReadAtom/
+import { ReadAtom } from '@suspensive/jotai'
 import { Suspense } from '@suspensive/react'
 import { atom } from 'jotai'
 
@@ -36,13 +36,13 @@ const asyncDoubleCountAtom = atom(async (get) => {
 
 const Example = () => (
   <Suspense fallback={'pending...'}>
-    <AtomValue atom={asyncDoubleCountAtom}>
+    <ReadAtom atom={asyncDoubleCountAtom}>
       {(count) => <>count: {count}</>}
-    </AtomValue>
+    </ReadAtom>
   </Suspense>
 )
 ```
 
 ### Motivation
 
-Similar to [`<Atom/>`](https://suspensive.org/docs/jotai/Atom), `<AtomValue/>` also does not clearly reveal which atoms are used internally in child components and whether they trigger Suspense.
+Similar to [`<Atom/>`](https://suspensive.org/docs/jotai/Atom), `<ReadAtom/>` also does not clearly reveal which atoms are used internally in child components and whether they trigger Suspense.
