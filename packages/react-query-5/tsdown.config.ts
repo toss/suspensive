@@ -9,7 +9,6 @@ const packageDir = __dirname
 
 export default defineConfig({
   ...options,
-  banner: undefined,
   entry: ['src/**/*.{ts,tsx}', '!**/*.{spec,test,test-d}.*', '!**/test-utils/**/*'],
   onSuccess: `node ${join(__dirname, '..', '..', 'scripts', 'add-use-client.js')} ${packageDir}`,
 })

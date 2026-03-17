@@ -1,3 +1,5 @@
+'use client'
+
 import { type ExtractAtomArgs, type ExtractAtomResult, type WritableAtom, useSetAtom } from 'jotai'
 import type { ReactNode } from 'react'
 import type { ChildrenRenderProps, SetAtom as TSetAtom } from './utility-types'

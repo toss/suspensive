@@ -1,3 +1,5 @@
+'use client'
+
 /* eslint-disable @typescript-eslint/unified-signatures */
 import {
   type ExtractAtomArgs,

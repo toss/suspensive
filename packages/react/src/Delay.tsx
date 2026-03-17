@@ -1,3 +1,5 @@
+'use client'
+
 import { type ComponentProps, type ComponentType, type ReactNode, useContext, useState } from 'react'
 import { DelayDefaultPropsContext } from './contexts/DefaultPropsContexts'
 import { useTimeout } from './hooks/useTimeout'
