@@ -1,5 +1,7 @@
 # @suspensive/jotai
 
+## 3.19.6
+
 ## 3.19.5
 
 ### Patch Changes

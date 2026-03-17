@@ -1,5 +1,11 @@
 # @suspensive/react
 
+## 3.19.6
+
+### Patch Changes
+
+- [#1919](https://github.com/toss/suspensive/pull/1919) [`c7fe4e3`](https://github.com/toss/suspensive/commit/c7fe4e3d1e08c80c9042c49bff8213a22e1d78a8) Thanks [@manudeli](https://github.com/manudeli)! - fix(react): handle transpiled Error subclasses in shouldCatch prop
+
 ## 3.19.5
 
 ### Patch Changes
