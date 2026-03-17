@@ -1,5 +1,11 @@
 # @suspensive/react-query-5
 
+## 3.19.3
+
+### Patch Changes
+
+- [#1913](https://github.com/toss/suspensive/pull/1913) [`0034bd7`](https://github.com/toss/suspensive/commit/0034bd700f16157b89b748cb668cf4a97e97b34f) Thanks [@manudeli](https://github.com/manudeli)! - fix(\*): tsdown 0.18.0 -> 0.21.3
+
 ## 3.19.2
 
 ## 3.19.1
