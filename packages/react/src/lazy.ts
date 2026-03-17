@@ -1,3 +1,5 @@
+'use client'
+
 import { type ComponentType, type LazyExoticComponent, lazy as originalLazy } from 'react'
 import { noop } from './utils/noop'
 

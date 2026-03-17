@@ -1,3 +1,5 @@
+'use client'
+
 import type { ComponentProps, ComponentType, ReactNode } from 'react'
 import { useIsClient } from './useIsClient'
 import type { PropsWithoutChildren } from './utility-types/PropsWithoutChildren'
