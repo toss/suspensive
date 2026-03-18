@@ -121,15 +121,15 @@ export async function QueriesHydration({
       )
     )
     await (timeoutController != null ? Promise.race([queriesPromise, timeoutController.promise]) : queriesPromise)
+    timeoutController?.clear()
   } catch {
+    timeoutController?.clear()
     queries.forEach((query) => void queryClient.cancelQueries(query))
     if (skipSsrOnError) {
       return (
         <ClientOnly fallback={skipSsrOnError === true ? undefined : skipSsrOnError.fallback}>{children}</ClientOnly>
       )
     }
-  } finally {
-    timeoutController?.clear()
   }
   return (
     <Hydrate {...props} state={dehydrate(queryClient)}>
