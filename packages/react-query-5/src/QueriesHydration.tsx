@@ -106,11 +106,8 @@ export async function QueriesHydration({
    * The timeout in milliseconds for the query.
    * If the query takes longer than the timeout, it will be considered as an error.
    * When not set, no timeout is applied.
-   *
-   * When a number is provided, cancellation is enabled by default.
-   * Use an object to control cancellation: `{ ms: 3000, cancel: false }`.
    */
-  timeout?: number | { ms: number; cancel: boolean }
+  timeout?: number
 } & OmitKeyof<HydrationBoundaryProps, 'state'>) {
   const timeoutController = createTimeoutController(timeout)
   try {
@@ -120,8 +117,8 @@ export async function QueriesHydration({
       )
     )
     await (timeoutController != null ? Promise.race([queriesPromise, timeoutController.promise]) : queriesPromise)
-  } catch (error) {
-    if (timeoutController?.shouldCancel(error)) queries.forEach((query) => void queryClient.cancelQueries(query))
+  } catch {
+    queries.forEach((query) => void queryClient.cancelQueries(query))
     if (skipSsrOnError) {
       return (
         <ClientOnly fallback={skipSsrOnError === true ? undefined : skipSsrOnError.fallback}>{children}</ClientOnly>
@@ -137,18 +134,15 @@ export async function QueriesHydration({
   )
 }
 
-const createTimeoutController = (timeout: number | { ms: number; cancel: boolean } | undefined) => {
-  const normalized = typeof timeout === 'number' ? { ms: timeout, cancel: true } : timeout
-  if (normalized == null || normalized.ms < 0) {
+const createTimeoutController = (ms: number | undefined) => {
+  if (ms == null || ms < 0) {
     return undefined
   }
   let timerId: ReturnType<typeof setTimeout> | undefined
-  const timeoutError = new Error(`QueriesHydration: timeout after ${normalized.ms} ms`)
   return {
     promise: new Promise<never>((_, reject) => {
-      timerId = setTimeout(() => reject(timeoutError), normalized.ms)
+      timerId = setTimeout(() => reject(new Error(`QueriesHydration: timeout after ${ms} ms`)), ms)
     }),
-    shouldCancel: (error: unknown) => normalized.cancel && error === timeoutError,
     clear: () => timerId != null && clearTimeout(timerId),
   }
 }

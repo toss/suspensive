@@ -418,7 +418,7 @@ describe('<QueriesHydration/>', () => {
     expect(cancelQueriesSpy).toHaveBeenCalledWith(queries[1])
   })
 
-  it('should not cancel queries when error is not caused by timeout', async () => {
+  it('should cancel queries when query fails without timeout', async () => {
     const queryClient = new QueryClient()
     const cancelQueriesSpy = vi.spyOn(queryClient, 'cancelQueries')
 
@@ -427,26 +427,9 @@ describe('<QueriesHydration/>', () => {
         queryKey: ['failing-query'],
         queryFn: () => Promise.reject(new Error('network error')),
       },
-    ]
-
-    await QueriesHydration({
-      queries,
-      queryClient,
-      timeout: 5000,
-      children: <div>children</div>,
-    })
-
-    expect(cancelQueriesSpy).not.toHaveBeenCalled()
-  })
-
-  it('should not cancel queries when error occurs without timeout option', async () => {
-    const queryClient = new QueryClient()
-    const cancelQueriesSpy = vi.spyOn(queryClient, 'cancelQueries')
-
-    const queries = [
       {
-        queryKey: ['failing-query'],
-        queryFn: () => Promise.reject(new Error('network error')),
+        queryKey: ['slow-query'],
+        queryFn: () => new Promise((resolve) => setTimeout(() => resolve({ data: 'slow' }), 200)),
       },
     ]
 
@@ -456,7 +439,9 @@ describe('<QueriesHydration/>', () => {
       children: <div>children</div>,
     })
 
-    expect(cancelQueriesSpy).not.toHaveBeenCalled()
+    expect(cancelQueriesSpy).toHaveBeenCalledTimes(2)
+    expect(cancelQueriesSpy).toHaveBeenCalledWith(queries[0])
+    expect(cancelQueriesSpy).toHaveBeenCalledWith(queries[1])
   })
 
   it('should not cancel queries on successful fetch', async () => {
@@ -554,50 +539,5 @@ describe('<QueriesHydration/>', () => {
     expect(cancelQueriesSpy).toHaveBeenCalledWith(queries[0])
     // skipSsrOnError is false, so it should render Hydrate, not ClientOnly
     expect(result.type).not.toEqual(expect.objectContaining({ name: 'ClientOnly' }))
-  })
-
-  it('should cancel queries when timeout is provided as object with cancel: true', async () => {
-    const queryClient = new QueryClient()
-    const cancelQueriesSpy = vi.spyOn(queryClient, 'cancelQueries')
-
-    const queries = [
-      {
-        queryKey: ['slow-query'],
-        queryFn: () => new Promise((resolve) => setTimeout(() => resolve({ data: 'slow' }), 200)),
-      },
-    ]
-
-    await QueriesHydration({
-      queries,
-      queryClient,
-      timeout: { ms: 100, cancel: true },
-      children: <div>children</div>,
-    })
-
-    expect(cancelQueriesSpy).toHaveBeenCalledTimes(1)
-    expect(cancelQueriesSpy).toHaveBeenCalledWith(queries[0])
-  })
-
-  it('should not cancel queries when timeout is provided as object with cancel: false', async () => {
-    const queryClient = new QueryClient()
-    const cancelQueriesSpy = vi.spyOn(queryClient, 'cancelQueries')
-
-    const queries = [
-      {
-        queryKey: ['slow-query'],
-        queryFn: () => new Promise((resolve) => setTimeout(() => resolve({ data: 'slow' }), 200)),
-      },
-    ]
-
-    const result = await QueriesHydration({
-      queries,
-      queryClient,
-      timeout: { ms: 100, cancel: false },
-      children: <div>children</div>,
-    })
-
-    expect(cancelQueriesSpy).not.toHaveBeenCalled()
-    render(result as React.ReactElement)
-    expect(screen.getByTestId('client-only')).toBeInTheDocument()
   })
 })
