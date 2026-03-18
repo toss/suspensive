@@ -110,13 +110,13 @@ export async function QueriesHydration({
    * The timeout in milliseconds for the query.
    * If the query takes longer than the timeout, it will be considered as an error.
    * When not set, no timeout is applied.
+   *
+   * When a number is provided, cancellation is enabled by default.
+   * Use an object to control cancellation: `{ ms: 3000, cancel: false }`.
    */
-  timeout?: number
+  timeout?: number | { ms: number; cancel: boolean }
 } & OmitKeyof<HydrateProps, 'state'>) {
-  const timeoutController =
-    timeout != null && timeout >= 0
-      ? createTimeoutController(timeout, `QueriesHydration: timeout after ${timeout} ms)`)
-      : undefined
+  const timeoutController = createTimeoutController(timeout)
   try {
     const queriesPromise = Promise.all(
       queries.map((query) =>
@@ -124,14 +124,15 @@ export async function QueriesHydration({
       )
     )
     await (timeoutController != null ? Promise.race([queriesPromise, timeoutController.promise]) : queriesPromise)
-    timeoutController?.clear()
-  } catch {
-    timeoutController?.clear()
+  } catch (error) {
+    if (timeoutController?.shouldCancel(error)) queries.forEach((query) => void queryClient.cancelQueries(query))
     if (skipSsrOnError) {
       return (
         <ClientOnly fallback={skipSsrOnError === true ? undefined : skipSsrOnError.fallback}>{children}</ClientOnly>
       )
     }
+  } finally {
+    timeoutController?.clear()
   }
   return (
     <Hydrate {...props} state={dehydrate(queryClient)}>
@@ -140,12 +141,18 @@ export async function QueriesHydration({
   )
 }
 
-const createTimeoutController = (ms: number, errorMessage: string) => {
+const createTimeoutController = (timeout: number | { ms: number; cancel: boolean } | undefined) => {
+  const normalized = typeof timeout === 'number' ? { ms: timeout, cancel: true } : timeout
+  if (normalized == null || normalized.ms < 0) {
+    return undefined
+  }
   let timerId: ReturnType<typeof setTimeout> | undefined
+  const timeoutError = new Error(`QueriesHydration: timeout after ${normalized.ms} ms`)
   return {
     promise: new Promise<never>((_, reject) => {
-      timerId = setTimeout(() => reject(new Error(errorMessage)), ms)
+      timerId = setTimeout(() => reject(timeoutError), normalized.ms)
     }),
+    shouldCancel: (error: unknown) => normalized.cancel && error === timeoutError,
     clear: () => timerId != null && clearTimeout(timerId),
   }
 }
