@@ -6,7 +6,7 @@ import { Callout } from '@/components'
 
 ### props.fallback
 
-fallback works the same as fallback of original React's Suspense.
+fallback works the same as the fallback of React's original Suspense.
 
 ```tsx /Suspense/
 import { Suspense } from '@suspensive/react'
@@ -29,7 +29,7 @@ Control multiple `<Suspense/>`s default fallback with `<DefaultPropsProvider/>`.
 
 ### Avoid Server side rendering (clientOnly)
 
-If you use clientOnly prop, `<Suspense/>` will return fallback in server and return children in client.
+If you use the clientOnly prop, `<Suspense/>` will return fallback in server and return children in client.
 
 ```tsx /clientOnly/
 import { Suspense } from '@suspensive/react'
@@ -58,7 +58,7 @@ https://x.com/TkDodo/status/1741068994981826947?t=XmG17etMUL2m0JFim03vqw&s=19
 
 Migration support SSR gradually (`<Suspense clientOnly/>` -> `<Suspense/>`)
 
-If you want to use Suspense working in both SSR/CSR, You can change `<Suspense clientOnly/>` to `<Suspense/>` gradually.
+If you want to use Suspense working in both SSR/CSR, you can change `<Suspense clientOnly/>` to `<Suspense/>` gradually.
 
 </Callout>
 
@@ -71,7 +71,7 @@ If you want to use Suspense working in both SSR/CSR, You can change `<Suspense c
 import { Suspense } from '@suspensive/react'
 
 const Example = Suspense.with({ fallback: <Spinner /> }, () => {
-  // code make suspending
+  // code that triggers suspense
 
   return <>...</>
 })

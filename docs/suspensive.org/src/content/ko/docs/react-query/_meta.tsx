@@ -2,7 +2,7 @@ import type { MetaRecord } from 'nextra'
 import type MetaEn from '../../../en/docs/react-query/_meta'
 
 export default {
-  motivation: { title: '어떤 이유로 사용하나요?' },
+  motivation: { title: '동기' },
   installation: { title: '설치하기' },
   'tanstack-query-compatibility': {
     title: 'TanStack Query v4, 5를 모두 지원',

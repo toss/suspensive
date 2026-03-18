@@ -1,30 +1,35 @@
-import { Steps } from 'nextra/components'
+# 동기
 
-# 어떤 이유로 사용하나요?
+React에는 이미 훌륭한 기본 요소들이 있습니다 — Suspense, ErrorBoundary, lazy. 하지만 실제 애플리케이션에서 사용하면 빈틈이 드러납니다. @suspensive/react는 그 빈틈을 채웁니다.
 
-@suspensive/react는 아래와 같은 동기로 사용됩니다.
+### Suspense는 SSR에서 깨집니다
 
-<Steps>
+Next.js에서 `<Suspense>`를 사용하면 이런 에러를 만나게 됩니다:
 
-### React Suspense는 때에 따라 서버사이드 렌더링을 피할 필요가 있습니다.
-
-React Suspense를 Next.js와 같은 서버사이드 렌더링 환경에서 사용해본 적이 있다면 아마 종종 아래 사진과 같은 에러를 겪게 된 적이 있을 겁니다.
 ![Example banner](/img/suspense-in-ssr-error.png)
 
-이것이 [`<Suspense/>`](/docs/react/Suspense)의 clientOnly를 이 라이브러리에 추가한 이유입니다.
+Suspensive의 [`<Suspense/>`](/docs/react/Suspense)를 활용하면 `clientOnly` prop 하나로 SSR 문제를 깔끔하게 해결할 수 있습니다 — 별도의 우회가 필요 없습니다.
 
-### ErrorBoundary를 더욱 단순하게 사용하고 싶습니다.
+### ErrorBoundary가 너무 복잡합니다
 
-[bvaughn/react-error-boundary](https://github.com/bvaughn/react-error-boundary)는 React의 Error Boundary개념을 선언적으로 제공하는 인기있는 라이브러리입니다. bvaughn/react-error-boundary의 ErrorBoundary는 fallback prop을 위해 FallbackComponent, fallbackRender, fallback와 같은 다양한 이름으로 이를 제공합니다. 기존 ErrorBoundary의 다소 복잡한 fallback interface를 @suspensive/react의 `<ErrorBoundary/>`와 같이 더 단순하게 사용하고 싶었습니다.
+`react-error-boundary`는 세 가지 fallback 인터페이스를 제공합니다. Suspensive의 [`<ErrorBoundary/>`](/docs/react/ErrorBoundary)를 활용하면 하나의 `fallback` prop으로 통합하고, `shouldCatch`로 처리할 에러를 선택할 수 있습니다.
 
-이것이 [`<ErrorBoundary/>`](/docs/react/ErrorBoundary)를 이 라이브러리에 추가한 이유입니다.
+### ErrorBoundary 초기화가 번거롭습니다
 
-### `<ErrorBoundary/>`의 fallback 외부에서 다수의 `<ErrorBoundary/>`를 reset하고 싶습니다.
+여러 `<ErrorBoundary/>`의 `resetKeys`를 각각 관리하는 것은 고됩니다. Suspensive의 [`<ErrorBoundaryGroup/>`](/docs/react/ErrorBoundaryGroup)을 활용하면 한 번의 호출로 모두 초기화할 수 있습니다.
 
-`<ErrorBoundary/>`를 reset하려면 `<ErrorBoundary/>`의 fallback에 주어지는 reset을 사용하면 됩니다.
+### 로딩 스피너가 깜빡입니다
 
-그러나 fallback 외부에서 다수의 `<ErrorBoundary/>`을 reset하려면 각 `<ErrorBoundary/>`의 props인 resetKeys에 새 resetKey를 제공해야 합니다. 하지만 @suspensive/react가 제공하는 `<ErrorBoundaryGroup/>`을 사용하면 이렇게 번거롭게 reset할 필요가 없습니다. `<ErrorBoundaryGroup/>`은 여러 `<ErrorBoundary/>`를 쉽게 재설정합니다.
+50ms만 보이는 스피너는 없느니만 못합니다. Suspensive의 [`<Delay/>`](/docs/react/Delay)를 활용하면 짧은 로딩 상태를 숨겨서, 진짜 기다려야 할 때만 스피너를 보여줄 수 있습니다.
 
-이것이 [`<ErrorBoundaryGroup/>`](/docs/react/ErrorBoundaryGroup)를 이 라이브러리에 추가한 이유입니다.
+### 클라이언트 전용 코드가 hydration 불일치를 일으킵니다
 
-</Steps>
+Suspensive의 [`<ClientOnly/>`](/docs/react/ClientOnly)와 [`useIsClient`](/docs/react/useIsClient)를 활용하면 안전하게 클라이언트에서만 렌더링할 수 있습니다 — 코드 곳곳에 `typeof window !== 'undefined'`를 흩뿌릴 필요가 없습니다.
+
+### 같은 props를 반복 전달하고 있습니다
+
+모든 `<Suspense/>`에 같은 `fallback`을 넘기지 마세요. Suspensive의 [`<DefaultPropsProvider/>`](/docs/react/DefaultPropsProvider)를 활용하면 한 번만 설정하면 됩니다.
+
+### `React.lazy`는 사전 로딩도 에러 복구도 안 됩니다
+
+Suspensive의 [`lazy`](/docs/react/lazy)를 활용하면 `.load()`로 사전 로딩하고, 청크 로딩 실패 시 자동 재시도할 수 있습니다 — 프로덕션에서야 비로소 필요하다는 걸 알게 되는 기능입니다.
