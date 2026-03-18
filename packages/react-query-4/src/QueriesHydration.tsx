@@ -113,7 +113,7 @@ export async function QueriesHydration({
    */
   timeout?: number
 } & OmitKeyof<HydrateProps, 'state'>) {
-  const timeoutController = createTimeoutController(timeout)
+  const timeoutController = timeout != null && timeout >= 0 ? createTimeoutController(timeout) : undefined
   try {
     const queriesPromise = Promise.all(
       queries.map((query) =>
@@ -138,10 +138,7 @@ export async function QueriesHydration({
   )
 }
 
-const createTimeoutController = (ms: number | undefined) => {
-  if (ms == null || ms < 0) {
-    return undefined
-  }
+const createTimeoutController = (ms: number) => {
   let timerId: ReturnType<typeof setTimeout> | undefined
   return {
     promise: new Promise<never>((_, reject) => {
