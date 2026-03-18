@@ -1,5 +1,7 @@
 # @suspensive/jotai
 
+## 4.0.0-next.0
+
 ## 3.19.0
 
 ## 3.18.0
