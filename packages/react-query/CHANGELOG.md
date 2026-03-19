@@ -1,5 +1,17 @@
 # @suspensive/react-query
 
+## 3.20.0
+
+### Minor Changes
+
+- [#1927](https://github.com/toss/suspensive/pull/1927) [`34607e4`](https://github.com/toss/suspensive/commit/34607e46788aa26a62da09e8b301cb68a5de615f) Thanks [@manudeli](https://github.com/manudeli)! - feat(react-query): add timeout cancellation support to QueriesHydration
+
+### Patch Changes
+
+- Updated dependencies [[`34607e4`](https://github.com/toss/suspensive/commit/34607e46788aa26a62da09e8b301cb68a5de615f)]:
+  - @suspensive/react-query-4@3.20.0
+  - @suspensive/react-query-5@3.20.0
+
 ## 3.19.6
 
 ### Patch Changes
