@@ -11,7 +11,8 @@ export default {
   },
   banner: (
     <span>
-      👀 Check out the changes in Suspensive v3. <Link href="/en/docs/migration/migrate-to-v3">read more</Link>
+      👀 Check out the changes in Suspensive v3.{' '}
+      <Link href="/en/docs/migration/migrate-to-v3">read more</Link>
     </span>
   ),
   lastUpdated: 'Last updated on',

@@ -16,7 +16,8 @@ import { Tilt } from './Tilt'
 
 const CodeBlockClassName = 'nextra-code'
 
-const escapeHtml = (text: string) => text.replace(/</g, '&lt;').replace(/>/g, '&gt;')
+const escapeHtml = (text: string) =>
+  text.replace(/</g, '&lt;').replace(/>/g, '&gt;')
 
 const backtickToCodeBlock = (text: string) =>
   text.replace(/`([^`]+)`/g, `<code class="${CodeBlockClassName}">$1</code>`)
@@ -87,7 +88,12 @@ export const HomePage = ({
                             duration: 0.1,
                           }}
                         />
-                        <Magnetic intensity={0.04} springOptions={{ bounce: 0.1 }} actionArea="global" range={300}>
+                        <Magnetic
+                          intensity={0.04}
+                          springOptions={{ bounce: 0.1 }}
+                          actionArea="global"
+                          range={300}
+                        >
                           <span className="flex items-center gap-2">
                             {buttonText} <ArrowRight className="h4 w-4" />
                           </span>
@@ -198,7 +204,9 @@ const StarCanvasFar = () => {
       for (let sx = 0; sx <= maxSX; ++sx) {
         for (let sy = 0; sy <= maxSY; ++sy) {
           const { velocity, distance, pos, size } = getVertex(sx, sy)
-          const scalar = Math.sqrt(velocity[0] * velocity[0] + velocity[1] * velocity[1])
+          const scalar = Math.sqrt(
+            velocity[0] * velocity[0] + velocity[1] * velocity[1]
+          )
           const totalDistance = (distTime * scalar) / 1000
           const isReverse = Math.floor(totalDistance / distance) % 2 !== 0
           let nextDistance = totalDistance % distance
@@ -259,7 +267,12 @@ const StarCanvasFar = () => {
     }
   }, [])
 
-  return <canvas ref={canvasRef} className="pointer-events-none fixed top-0 right-0 bottom-0 left-0 opacity-70" />
+  return (
+    <canvas
+      ref={canvasRef}
+      className="pointer-events-none fixed top-0 right-0 bottom-0 left-0 opacity-70"
+    />
+  )
 }
 
 const TILE_CLOSE = 600
@@ -283,8 +296,10 @@ const StarCanvasClose = () => {
 
       // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
       if (!vertexMap[id]) {
-        const x = TILE_CLOSE * sx + TILE_CLOSE * 1.5 * Math.random() - TILE_CLOSE * 0.75
-        const y = TILE_CLOSE * sy + TILE_CLOSE * 1.5 * Math.random() - TILE_CLOSE * 0.75
+        const x =
+          TILE_CLOSE * sx + TILE_CLOSE * 1.5 * Math.random() - TILE_CLOSE * 0.75
+        const y =
+          TILE_CLOSE * sy + TILE_CLOSE * 1.5 * Math.random() - TILE_CLOSE * 0.75
         const z = Math.random() * 1
         const vx = 1 + Math.random() * 200
         const vy = 1 + Math.random() * 200
@@ -314,7 +329,9 @@ const StarCanvasClose = () => {
       for (let sx = 0; sx <= maxSX; ++sx) {
         for (let sy = 0; sy <= maxSY; ++sy) {
           const { velocity, distance, pos, size } = getVertex(sx, sy)
-          const scalar = Math.sqrt(velocity[0] * velocity[0] + velocity[1] * velocity[1])
+          const scalar = Math.sqrt(
+            velocity[0] * velocity[0] + velocity[1] * velocity[1]
+          )
           const totalDistance = (distTime * scalar) / 1000
           const isReverse = Math.floor(totalDistance / distance) % 2 !== 0
           let nextDistance = totalDistance % distance
@@ -378,7 +395,9 @@ const StarCanvasClose = () => {
   return (
     <canvas
       ref={canvasRef}
-      className={'pointer-events-none fixed top-0 right-0 bottom-0 left-0 opacity-0 transition-opacity duration-100'}
+      className={
+        'pointer-events-none fixed top-0 right-0 bottom-0 left-0 opacity-0 transition-opacity duration-100'
+      }
     />
   )
 }

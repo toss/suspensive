@@ -17,7 +17,7 @@ export default defineConfig({
   sortTailwindcss: {
     attributes: ['class', 'className'],
     functions: ['clsx'],
-    preserveWhitespace: true,
+    preserveWhitespace: false,
   },
   ignorePatterns: [
     'packages/codemods/src/transforms/testfixtures/**',
@@ -30,5 +30,13 @@ export default defineConfig({
     '.changeset/*.md',
     'packages/**/CHANGELOG.md',
     '**/*/next-env.d.ts',
+  ],
+  overrides: [
+    {
+      files: ['docs/suspensive.org/**/*'],
+      options: {
+        printWidth: 80,
+      },
+    },
   ],
 })

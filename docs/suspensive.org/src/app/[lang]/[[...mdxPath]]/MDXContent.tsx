@@ -16,10 +16,25 @@ type MDXContentProps = {
 
 const MDXComponents = getMDXComponents()
 
-export function MDXContent({ toc, sourceCode, metadata, isIndexPage, mdxPath, children }: MDXContentProps) {
+export function MDXContent({
+  toc,
+  sourceCode,
+  metadata,
+  isIndexPage,
+  mdxPath,
+  children,
+}: MDXContentProps) {
   return (
-    <MDXComponents.wrapper toc={toc} metadata={metadata} sourceCode={isIndexPage ? '' : sourceCode}>
-      {isIndexPage ? children : <FadeIn key={mdxPath.join('/')}>{children}</FadeIn>}
+    <MDXComponents.wrapper
+      toc={toc}
+      metadata={metadata}
+      sourceCode={isIndexPage ? '' : sourceCode}
+    >
+      {isIndexPage ? (
+        children
+      ) : (
+        <FadeIn key={mdxPath.join('/')}>{children}</FadeIn>
+      )}
     </MDXComponents.wrapper>
   )
 }

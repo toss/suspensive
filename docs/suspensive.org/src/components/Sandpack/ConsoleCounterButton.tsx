@@ -5,7 +5,10 @@ interface ConsoleCounterButtonProps {
   counter: number
 }
 
-export const ConsoleCounterButton = ({ onClick, counter }: ConsoleCounterButtonProps) => {
+export const ConsoleCounterButton = ({
+  onClick,
+  counter,
+}: ConsoleCounterButtonProps) => {
   return (
     <RoundedButton className="relative" onClick={onClick}>
       <ConsoleIcon />

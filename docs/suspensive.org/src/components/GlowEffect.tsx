@@ -30,7 +30,9 @@ export function GlowEffect() {
           repeatType: 'mirror',
         },
       }}
-      className={'pointer-events-none absolute inset-0 h-full w-full scale-[var(--scale)] transform-gpu blur-sm'}
+      className={
+        'pointer-events-none absolute inset-0 h-full w-full scale-[var(--scale)] transform-gpu blur-sm'
+      }
     />
   )
 }

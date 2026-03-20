@@ -9,7 +9,12 @@ interface TrustedByProps {
   addCompanyButtonText: string
 }
 
-export const TrustedBy = ({ title, description, callToActionText, addCompanyButtonText }: TrustedByProps) => {
+export const TrustedBy = ({
+  title,
+  description,
+  callToActionText,
+  addCompanyButtonText,
+}: TrustedByProps) => {
   // Initial set of companies - this can be expanded as companies add themselves
   const companies = [
     {

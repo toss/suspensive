@@ -12,7 +12,12 @@ export const Logo = () => {
   return isClient ? (
     <motion.div>
       <div className="relative flex items-center gap-1">
-        <svg width={36} height={36} viewBox="0 0 8070 7286" xmlns="http://www.w3.org/2000/svg">
+        <svg
+          width={36}
+          height={36}
+          viewBox="0 0 8070 7286"
+          xmlns="http://www.w3.org/2000/svg"
+        >
           <path
             fillRule="evenodd"
             clipRule="evenodd"

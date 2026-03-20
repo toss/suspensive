@@ -64,7 +64,9 @@ export function buildLLMsFullTxt(docs: DocInfo[]): string {
     }
   }
 
-  const sections = sortedDocs.map((doc) => `---\n\n## ${doc.title}\n\nURL: ${doc.path}\n\n${doc.content}`)
+  const sections = sortedDocs.map(
+    (doc) => `---\n\n## ${doc.title}\n\nURL: ${doc.path}\n\n${doc.content}`
+  )
 
   return `# Suspensive - Full Documentation\n\n${sections.join('\n\n')}\n`
 }
