@@ -3,7 +3,7 @@
   "ignore": ["**/test-utils/**", "scripts/**"],
   "workspaces": {
     ".": {
-      "ignore": ["packlint.config.mjs"]
+      "ignore": ["packlint.config.mjs", "oxfmt.config.ts"]
     },
     "docs/suspensive.org": {
       "ignoreDependencies": ["sharp", "postcss", "server-only"],
