@@ -36,7 +36,7 @@ export const suspensiveTypeScriptConfig = defineConfig([
     plugins: {
       jsdoc: jsdoc,
       '@typescript-eslint': tseslint.plugin,
-      stylistic: stylistic.plugin,
+      '@stylistic': stylistic,
     },
     rules: {
       '@cspell/spellchecker': [
