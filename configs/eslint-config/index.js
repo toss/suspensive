@@ -77,7 +77,7 @@ export const suspensiveTypeScriptConfig = defineConfig([
       '@typescript-eslint/restrict-template-expressions': 'off',
       '@typescript-eslint/no-deprecated': 'warn',
       '@typescript-eslint/no-empty-function': 'warn',
-      '@typescript-eslint/no-extra-semi': 'warn',
+      // '@typescript-eslint/no-extra-semi': 'warn',
       '@typescript-eslint/no-empty-interface': 'warn',
       '@typescript-eslint/ban-ts-comment': ['error', { minimumDescriptionLength: 3 }],
       '@typescript-eslint/triple-slash-reference': 'warn',

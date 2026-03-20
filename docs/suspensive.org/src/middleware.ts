@@ -1,5 +1,5 @@
 import { type NextRequest, NextResponse } from 'next/server'
-import { middleware as nextraMiddleware } from 'nextra/locales'
+import { proxy } from 'nextra/locales'
 
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
@@ -9,7 +9,7 @@ export function middleware(request: NextRequest) {
     return NextResponse.next()
   }
 
-  return nextraMiddleware(request)
+  return proxy(request)
 }
 
 export const config = {
