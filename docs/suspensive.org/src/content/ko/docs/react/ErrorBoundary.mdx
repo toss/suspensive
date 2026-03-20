@@ -960,9 +960,7 @@ export const Example = () => (
 )
 
 const ErrorAfter2s = () => {
-  const [asyncState, setAsyncState] = useState<
-    { isError: true; error: Error } | { isError: false; error: null }
-  >({
+  const [asyncState, setAsyncState] = useState<{ isError: true; error: Error } | { isError: false; error: null }>({
     isError: false,
     error: null,
   })
