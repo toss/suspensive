@@ -1,5 +1,4 @@
 'use client'
-
 import type { headers as nextHeaders } from 'next/headers'
 
 /**

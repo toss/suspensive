@@ -1,12 +1,12 @@
 import type { MetaRecord } from 'nextra'
 
 export default {
-  motivation: { title: 'Why need to use?' },
+  motivation: { title: 'Motivation' },
   installation: { title: 'Installation' },
   'tanstack-query-compatibility': {
-    title: 'Support both TanStack Query v4 and 5',
+    title: 'TanStack Query v4 & v5 Support',
   },
-  migration: { title: 'Migration guide' },
+  migration: { title: 'Migration Guide' },
   '--- API Reference': {
     type: 'separator',
     title: 'API Reference',

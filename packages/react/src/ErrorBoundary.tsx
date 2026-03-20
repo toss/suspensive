@@ -1,3 +1,4 @@
+'use client'
 import {
   Component,
   type ComponentProps,
@@ -69,14 +70,28 @@ const matchError = (errorMatcher: ErrorMatcher, error: Error): error is InferErr
     return errorMatcher
   }
   if (typeof errorMatcher === 'function') {
+    // 1. Native Error constructor: prototype chain is intact
     try {
       if (errorMatcher === Error || errorMatcher.prototype instanceof Error) {
         return error instanceof errorMatcher
       }
     } catch {
-      // If accessing prototype throws, it's not a constructor. This can happen with proxy objects or in restricted environments.
+      // If accessing prototype throws, it's not a constructor
     }
-    return (errorMatcher as ErrorValidator | ErrorTypeGuard<InferError<typeof errorMatcher>>)(error)
+    // 2. Transpiled Error constructor: prototype chain is broken but instanceof still works
+    try {
+      if (error instanceof errorMatcher) {
+        return true
+      }
+    } catch {
+      // instanceof can throw if prototype is not an object (e.g., arrow functions)
+    }
+    // 3. Validator / type-guard function
+    try {
+      return (errorMatcher as ErrorValidator | ErrorTypeGuard<InferError<typeof errorMatcher>>)(error)
+    } catch {
+      return false
+    }
   }
   return false
 }

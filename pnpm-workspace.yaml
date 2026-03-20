@@ -19,15 +19,15 @@ catalogs:
     react-dom: 18.3.1
     '@types/react-dom': 18.3.1
   react19:
-    react: ^19.2.3
-    '@types/react': ^19.2.7
-    react-dom: ^19.2.3
+    react: ^19.2.4
+    '@types/react': ^19.2.14
+    react-dom: ^19.2.4
     '@types/react-dom': ^19.2.3
   react-query4:
-    '@tanstack/react-query': 4.42.0
+    '@tanstack/react-query': 4.43.0
   react-query5:
-    '@tanstack/react-query': ^5.90.9
-    '@tanstack/react-query-devtools': ^5.90.2
+    '@tanstack/react-query': ^5.90.21
+    '@tanstack/react-query-devtools': ^5.91.3
 
 onlyBuiltDependencies:
   - '@tailwindcss/oxide'

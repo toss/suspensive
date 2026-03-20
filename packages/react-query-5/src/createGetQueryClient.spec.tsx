@@ -1,45 +1,32 @@
 import { QueryClient } from '@tanstack/react-query'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
+import { createGetQueryClient } from './createGetQueryClient'
 
-// Mock isServer from @tanstack/react-query
-vi.mock('@tanstack/react-query', async () => {
-  const actual = await vi.importActual('@tanstack/react-query')
+const mock = { isServer: false }
+
+vi.mock(import('@tanstack/react-query'), async (importOriginal) => {
+  const actual = await importOriginal()
   return {
     ...actual,
-    isServer: false,
+    get isServer() {
+      return mock.isServer
+    },
   }
 })
 
-describe('getQueryClient', () => {
+describe('getQueryClient (browser environment)', () => {
   beforeEach(() => {
-    // Reset modules to clear the browserQueryClient singleton
-    vi.resetModules()
+    mock.isServer = false
   })
 
-  it('should return a QueryClient instance', async () => {
-    const { createGetQueryClient } = await import('./createGetQueryClient')
+  it('should return the same QueryClient instance on multiple calls', () => {
     const { getQueryClient } = createGetQueryClient()
-    const queryClient = getQueryClient()
-    expect(queryClient).toBeInstanceOf(QueryClient)
+    expect(getQueryClient()).toBe(getQueryClient())
   })
 
-  it('should return the same QueryClient instance on multiple calls in browser environment', async () => {
-    const { createGetQueryClient } = await import('./createGetQueryClient')
-    const { getQueryClient } = createGetQueryClient()
-    const queryClient1 = getQueryClient()
-    const queryClient2 = getQueryClient()
-    expect(queryClient1).toBe(queryClient2)
-  })
-
-  it('should apply config when creating initial QueryClient', async () => {
-    const { createGetQueryClient } = await import('./createGetQueryClient')
+  it('should apply config', () => {
     const { getQueryClient } = createGetQueryClient({
-      defaultOptions: {
-        queries: {
-          staleTime: 5000,
-          retry: 3,
-        },
-      },
+      defaultOptions: { queries: { staleTime: 5000, retry: 3 } },
     })
     const queryClient = getQueryClient()
     expect(queryClient).toBeInstanceOf(QueryClient)
@@ -47,72 +34,33 @@ describe('getQueryClient', () => {
     expect(queryClient.getDefaultOptions().queries?.retry).toBe(3)
   })
 
-  it('should use provided gcTime value in browser environment (not Infinity)', async () => {
-    const { createGetQueryClient } = await import('./createGetQueryClient')
+  it('should not set gcTime to Infinity', () => {
     const { getQueryClient } = createGetQueryClient({
-      defaultOptions: {
-        queries: {
-          gcTime: 5000,
-        },
-      },
+      defaultOptions: { queries: { gcTime: 5000 } },
     })
-    const queryClient = getQueryClient()
-    // In browser, gcTime should use the provided value, not Infinity
-    expect(queryClient.getDefaultOptions().queries?.gcTime).toBe(5000)
-    expect(queryClient.getDefaultOptions().queries?.gcTime).not.toBe(Infinity)
-  })
-
-  it('should not set gcTime to Infinity in browser environment when no config provided', async () => {
-    const { createGetQueryClient } = await import('./createGetQueryClient')
-    const { getQueryClient } = createGetQueryClient()
-    const queryClient = getQueryClient()
-    // In browser, gcTime should use default value (not Infinity)
-    // Default gcTime in React Query v4 is 5 minutes (300000ms)
-    expect(queryClient.getDefaultOptions().queries?.gcTime).not.toBe(Infinity)
+    expect(getQueryClient().getDefaultOptions().queries?.gcTime).toBe(5000)
   })
 })
 
 describe('getQueryClient (server environment)', () => {
   beforeEach(() => {
-    vi.resetModules()
-    // Mock isServer as true for server tests
-    vi.doMock('@tanstack/react-query', async () => {
-      const actual = await vi.importActual('@tanstack/react-query')
-      return {
-        ...actual,
-        isServer: true,
-      }
-    })
+    mock.isServer = true
   })
 
-  it('should return new QueryClient instance on each call in server environment', async () => {
-    const { createGetQueryClient } = await import('./createGetQueryClient')
+  it('should return new QueryClient instance on each call', () => {
     const { getQueryClient } = createGetQueryClient()
-    const queryClient1 = getQueryClient()
-    const queryClient2 = getQueryClient()
-    expect(queryClient1).toBeInstanceOf(QueryClient)
-    expect(queryClient2).toBeInstanceOf(QueryClient)
-    expect(queryClient1).not.toBe(queryClient2)
+    expect(getQueryClient()).not.toBe(getQueryClient())
   })
 
-  it('should set gcTime to Infinity in server environment to prevent OOM', async () => {
-    const { createGetQueryClient } = await import('./createGetQueryClient')
+  it('should set gcTime to Infinity to prevent OOM', () => {
     const { getQueryClient } = createGetQueryClient()
-    const queryClient = getQueryClient()
-    expect(queryClient.getDefaultOptions().queries?.gcTime).toBe(Infinity)
+    expect(getQueryClient().getDefaultOptions().queries?.gcTime).toBe(Infinity)
   })
 
-  it('should override gcTime to Infinity even if config provides different value in server environment', async () => {
-    const { createGetQueryClient } = await import('./createGetQueryClient')
+  it('should override gcTime to Infinity even if config provides different value', () => {
     const { getQueryClient } = createGetQueryClient({
-      defaultOptions: {
-        queries: {
-          gcTime: 5000,
-        },
-      },
+      defaultOptions: { queries: { gcTime: 5000 } },
     })
-    const queryClient = getQueryClient()
-    // gcTime should be Infinity regardless of config to prevent OOM on server
-    expect(queryClient.getDefaultOptions().queries?.gcTime).toBe(Infinity)
+    expect(getQueryClient().getDefaultOptions().queries?.gcTime).toBe(Infinity)
   })
 })

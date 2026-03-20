@@ -1,9 +1,9 @@
 import type { MetaRecord } from 'nextra'
 
 export default {
-  motivation: { title: 'Why need to use?' },
+  motivation: { title: 'Motivation' },
   installation: { title: 'Installation' },
-  migration: { title: 'Migration guide' },
+  migration: { title: 'Migration Guide' },
   '--- API Reference': {
     type: 'separator',
     title: 'API Reference',

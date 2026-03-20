@@ -160,7 +160,7 @@ const Example = () => {
 ```
 
 The return type of useQueries (query1.data, query2.data) will always be a success case thanks to this component's parents, `<Suspense/>` and `<ErrorBoundary/>`.
-But @tanstack/react-query doesn't express this typologically.
+But @tanstack/react-query doesn't express this in its TypeScript types.
 
 That's why @suspensive/react-query provides **useSuspenseQueries**.
 

@@ -397,41 +397,6 @@ const Example = () => (
 
 </Callout>
 
-<Callout>
-
-`<ErrorBoundary/>` fallback props을 prop drilling 없이 사용하기
-
-#### useErrorBoundaryFallbackProps
-
-`error` 객체와 `reset` 메소드를 사용하려는 컴포넌트가 중첩되면 prop drilling을 피할 수 없습니다.
-이 때, `useErrorBoundaryFallbackProps`을 통해, prop drilling 없이 `reset` 메소드와 `error` 객체에 접근할 수 있습니다.
-
-```tsx /useErrorBoundaryFallbackProps/
-import { ErrorBoundary, useErrorBoundaryFallbackProps } from '@suspensive/react'
-
-const Nested = () => {
-  const { reset, error } = useErrorBoundaryFallbackProps()
-
-  return (
-    <>
-      <button onClick={reset}>Try again</button>
-      {error.message}
-    </>
-  )
-}
-
-// 여기서 fallbackProp 을 전달할 필요가 없어집니다!
-const ErrorBoundaryFallback = () => <Nested />
-
-const Example = () => (
-  <ErrorBoundary fallback={ErrorBoundaryFallback}>
-    <ErrorAfter2s />
-  </ErrorBoundary>
-)
-```
-
-</Callout>
-
 ### props.resetKeys
 
 `<ErrorBoundary/>`의 fallback 외부에 있는 컴포넌트가 `<ErrorBoundary/>`를 reset하려면 resetKeys배열에 resetKey를 할당하면 됩니다. resetKeys는 배열의 하나 이상의 요소가 변경된 경우에만 작동합니다. useEffect의 종속성 배열이 작동하는 방식과 같이 resetKeys로 매 렌더링마다 새 배열을 주입하는 것을 걱정할 필요도 없습니다.
@@ -941,11 +906,85 @@ export const fetchSomething = () => {
 
 </Sandpack>
 
-<Callout>
+## useErrorBoundaryFallbackProps
 
-다수의 `<ErrorBoundary/>`를 제어하기
+`<ErrorBoundary/>`의 fallback 내에서 `error` 객체와 `reset` 메소드에 prop drilling 없이 접근할 수 있게 해주는 훅입니다.
 
-`<ErrorBoundary/>`은 `<ErrorBoundaryGroup/>`과 사용하면 더 강력하게 사용할 수 있습니다. `<ErrorBoundaryGroup/>`로 다수의 `<ErrorBoundary/>`를 제어하세요.  
-자세한 내용은 [`<ErrorBoundaryGroup/>`페이지](/docs/react/ErrorBoundaryGroup)에서 소개합니다.
+Next.js의 React Server Component 환경에서는 서버 컴포넌트에서 클라이언트 컴포넌트로 callback 함수를 props로 전달할 수 없습니다. 이로 인해 `<ErrorBoundary/>`의 `fallback`에 함수형 컴포넌트를 전달하여 `error`와 `reset`을 받는 것이 불가능합니다. `useErrorBoundaryFallbackProps`를 사용하면 이러한 제약 없이 fallback 내부에서 `error`와 `reset`에 접근할 수 있습니다.
+
+또한 fallback 컴포넌트가 깊게 중첩되는 경우에도, `error`와 `reset`을 여러 단계에 걸쳐 전달해야 하는 prop drilling 문제를 해결합니다.
+
+```tsx /useErrorBoundaryFallbackProps/
+import { ErrorBoundary, useErrorBoundaryFallbackProps } from '@suspensive/react'
+
+const ErrorBoundaryFallback = () => {
+  const { reset, error } = useErrorBoundaryFallbackProps()
+
+  return (
+    <>
+      <button onClick={reset}>Try again</button>
+      {error.message}
+    </>
+  )
+}
+
+// RSC에서는 fallback에 callback을 전달하지 않고 JSX를 직접 사용해야 합니다
+const Example = () => (
+  <ErrorBoundary fallback={<ErrorBoundaryFallback />}>
+    <ErrorAfter2s />
+  </ErrorBoundary>
+)
+```
+
+<Sandpack>
+
+```tsx Example.tsx active
+import { ErrorBoundary, useErrorBoundaryFallbackProps } from '@suspensive/react'
+import { useState, useEffect } from 'react'
+
+const ErrorBoundaryFallback = () => {
+  const { reset, error } = useErrorBoundaryFallbackProps()
+
+  return (
+    <div>
+      <p>{error.message}</p>
+      <button onClick={reset}>Try again</button>
+    </div>
+  )
+}
+
+export const Example = () => (
+  <ErrorBoundary fallback={<ErrorBoundaryFallback />}>
+    <ErrorAfter2s />
+  </ErrorBoundary>
+)
+
+const ErrorAfter2s = () => {
+  const [asyncState, setAsyncState] = useState<
+    { isError: true; error: Error } | { isError: false; error: null }
+  >({
+    isError: false,
+    error: null,
+  })
+
+  useEffect(() => {
+    setTimeout(() => {
+      setAsyncState({ isError: true, error: new Error('에러가 발생했습니다') })
+    }, 2000)
+  }, [])
+
+  if (asyncState.isError) {
+    throw asyncState.error
+  }
+
+  return <>No error</>
+}
+```
+
+</Sandpack>
+
+<Callout type='warning'>
+
+`useErrorBoundaryFallbackProps`는 반드시 `<ErrorBoundary/>`의 `fallback` 내부에서 호출해야 합니다. `<ErrorBoundary/>`의 `children` 또는 `<ErrorBoundary/>` 외부에서 호출하면 에러가 발생합니다.
 
 </Callout>
