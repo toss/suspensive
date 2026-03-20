@@ -44,7 +44,8 @@ const Example = () => (
 When using the clientOnly prop, the useIsClient hook is used internally, and useIsClient uses getSnapshot and getServerSnapshot of useSyncExternalStore to ensure that it is a client.
 
 ```tsx /useIsClient/
-const useIsClient = () => useSyncExternalStore(emptySubscribe, getSnapshot, getServerSnapshot)
+const useIsClient = () =>
+  useSyncExternalStore(emptySubscribe, getSnapshot, getServerSnapshot)
 
 const emptySubscribe = () => noop
 const getSnapshot = () => true

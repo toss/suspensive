@@ -13,7 +13,9 @@ import { Callout } from '@/components'
 ```tsx /IsFetching basic/
 import { IsFetching } from '@suspensive/react-query'
 
-const GlobalFetchingIndicator = () => <IsFetching>{(isFetching) => (isFetching ? <Spinner /> : null)}</IsFetching>
+const GlobalFetchingIndicator = () => (
+  <IsFetching>{(isFetching) => (isFetching ? <Spinner /> : null)}</IsFetching>
+)
 ```
 
 ### 필터 (QueryFilters)
@@ -24,7 +26,9 @@ TanStack Query의 `useIsFetching`가 받는 `QueryFilters`와 동일한 필터(`
 import { IsFetching } from '@suspensive/react-query'
 
 const PostsFetchingIndicator = () => (
-  <IsFetching queryKey={['posts']}>{(isFetching) => (isFetching ? <Spinner /> : null)}</IsFetching>
+  <IsFetching queryKey={['posts']}>
+    {(isFetching) => (isFetching ? <Spinner /> : null)}
+  </IsFetching>
 )
 ```
 

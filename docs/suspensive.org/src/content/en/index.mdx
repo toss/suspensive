@@ -3,7 +3,13 @@ title: All-in-one for React Suspense
 ---
 
 import Link from 'next/link'
-import { HomePage, Scrollycoding, SectionDescription, SectionTitle, TrustedBy } from '@/components'
+import {
+  HomePage,
+  Scrollycoding,
+  SectionDescription,
+  SectionTitle,
+  TrustedBy,
+} from '@/components'
 
 <HomePage
   buttonText="Get Started"
@@ -25,8 +31,12 @@ import { HomePage, Scrollycoding, SectionDescription, SectionTitle, TrustedBy } 
 
 <SectionTitle>Best Practices for Using Suspense</SectionTitle>
 <br />
-<SectionDescription>Focus on success case, not on the error, loading case.</SectionDescription>
-<SectionDescription>Focus on the success case — let Suspensive handle loading and errors.</SectionDescription>
+<SectionDescription>
+  Focus on success case, not on the error, loading case.
+</SectionDescription>
+<SectionDescription>
+  Focus on the success case — let Suspensive handle loading and errors.
+</SectionDescription>
 <br />
 
 <Scrollycoding>
@@ -45,7 +55,11 @@ const Page = () => {
   })
   const promotionsQuery = useQuery(promotionsQueryOptions())
 
-  if (userQuery.isLoading || postsQuery.isLoading || promotionsQuery.isLoading) {
+  if (
+    userQuery.isLoading ||
+    postsQuery.isLoading ||
+    promotionsQuery.isLoading
+  ) {
     return 'loading...'
   }
 
@@ -148,7 +162,9 @@ const PostList = ({ userId }) => {
 
 const PromotionList = ({ userId }) => {
   const { data: promotions } = useSuspenseQuery(promotionsQueryOptions())
-  return promotions.map((promotion) => <PromotionListItem key={promotion.id} {...promotion} />)
+  return promotions.map((promotion) => (
+    <PromotionListItem key={promotion.id} {...promotion} />
+  ))
 }
 ```
 
@@ -165,16 +181,25 @@ import { SuspenseQuery } from '@suspensive/react-query'
 const Page = () => (
   <ErrorBoundary fallback="error">
     <Suspense fallback="loading...">
-      <SuspenseQuery {...userQueryOptions()}>{({ data: user }) => <UserProfile {...user} />}</SuspenseQuery>
-      <SuspenseQuery {...postsQueryOptions()} select={(posts) => posts.filter(({ isPublic }) => isPublic)}>
-        {({ data: posts }) => posts.map((post) => <PostListItem key={post.id} {...post} />)}
+      <SuspenseQuery {...userQueryOptions()}>
+        {({ data: user }) => <UserProfile {...user} />}
+      </SuspenseQuery>
+      <SuspenseQuery
+        {...postsQueryOptions()}
+        select={(posts) => posts.filter(({ isPublic }) => isPublic)}
+      >
+        {({ data: posts }) =>
+          posts.map((post) => <PostListItem key={post.id} {...post} />)
+        }
       </SuspenseQuery>
       <SuspenseQuery
         {...promotionsQueryOptions()}
         select={(promotions) => promotions.filter(({ isPublic }) => isPublic)}
       >
         {({ data: promotions }) =>
-          promotions.map((promotion) => <PromotionListItem key={promotion.id} {...promotion} />)
+          promotions.map((promotion) => (
+            <PromotionListItem key={promotion.id} {...promotion} />
+          ))
         }
       </SuspenseQuery>
     </Suspense>
@@ -200,7 +225,9 @@ import { SuspenseQuery } from '@suspensive/react-query'
 
 const Page = () => (
   <Suspense fallback={<Spinner />}>
-    <SuspenseQuery {...notNeedSEOQueryOptions()}>{({ data }) => <NotNeedSEO {...data} />}</SuspenseQuery>
+    <SuspenseQuery {...notNeedSEOQueryOptions()}>
+      {({ data }) => <NotNeedSEO {...data} />}
+    </SuspenseQuery>
   </Suspense>
 )
 ```
@@ -216,7 +243,9 @@ import { SuspenseQuery } from '@suspensive/react-query'
 const Page = () => (
   <Suspense fallback={<Spinner />}>
     <ClientOnly fallback={<InsteadOfChildrenOnlyInServer />}>
-      <SuspenseQuery {...notNeedSEOQueryOptions()}>{({ data }) => <NotNeedSEO {...data} />}</SuspenseQuery>
+      <SuspenseQuery {...notNeedSEOQueryOptions()}>
+        {({ data }) => <NotNeedSEO {...data} />}
+      </SuspenseQuery>
     </ClientOnly>
   </Suspense>
 )
@@ -232,7 +261,9 @@ import { SuspenseQuery } from '@suspensive/react-query'
 
 const Page = () => (
   <Suspense fallback={<Spinner />} clientOnly>
-    <SuspenseQuery {...notNeedSEOQueryOptions()}>{({ data }) => <NotNeedSEO {...data} />}</SuspenseQuery>
+    <SuspenseQuery {...notNeedSEOQueryOptions()}>
+      {({ data }) => <NotNeedSEO {...data} />}
+    </SuspenseQuery>
   </Suspense>
 )
 ```
@@ -255,7 +286,9 @@ const defaultProps = new DefaultProps({
 const Page = () => (
   <DefaultPropsProvider defaultProps={defaultProps}>
     <Suspense clientOnly>
-      <SuspenseQuery {...notNeedSEOQueryOptions()}>{({ data }) => <NotNeedSEO {...data} />}</SuspenseQuery>
+      <SuspenseQuery {...notNeedSEOQueryOptions()}>
+        {({ data }) => <NotNeedSEO {...data} />}
+      </SuspenseQuery>
     </Suspense>
   </DefaultPropsProvider>
 )
@@ -278,7 +311,9 @@ const defaultProps = new DefaultProps({
 const Page = () => (
   <DefaultPropsProvider defaultProps={defaultProps}>
     <Suspense fallback={<Skeleton />} clientOnly>
-      <SuspenseQuery {...notNeedSEOQueryOptions()}>{({ data }) => <NotNeedSEO {...data} />}</SuspenseQuery>
+      <SuspenseQuery {...notNeedSEOQueryOptions()}>
+        {({ data }) => <NotNeedSEO {...data} />}
+      </SuspenseQuery>
     </Suspense>
   </DefaultPropsProvider>
 )
@@ -303,7 +338,9 @@ const Page = () => {
 
   return (
     <Fragment>
-      <button onClick={() => setResetKey((prev) => prev + 1)}>error reset</button>
+      <button onClick={() => setResetKey((prev) => prev + 1)}>
+        error reset
+      </button>
       <ErrorBoundary resetKeys={[resetKey]} fallback="error">
         <ThrowErrorComponent />
       </ErrorBoundary>
@@ -373,7 +410,10 @@ const Page = () => (
 const DeepComponent = () => (
   <ErrorBoundary fallback="error">
     <ThrowErrorComponent />
-    <ErrorBoundary shouldCatch={ZodError} fallback="this will be render on ZodError in children">
+    <ErrorBoundary
+      shouldCatch={ZodError}
+      fallback="this will be render on ZodError in children"
+    >
       <ThrowZodErrorComponent />
     </ErrorBoundary>
   </ErrorBoundary>
@@ -435,7 +475,11 @@ const DeepComponent = () => (
   }}
 >
   <div style={{ height: 20 }} />
-  <Link href="https://github.com/toss/suspensive/graphs/contributors" target="_blank" style={{ textAlign: 'center' }}>
+  <Link
+    href="https://github.com/toss/suspensive/graphs/contributors"
+    target="_blank"
+    style={{ textAlign: 'center' }}
+  >
     <img src="https://contrib.rocks/image?repo=toss/suspensive" alt="" />
   </Link>
 </div>

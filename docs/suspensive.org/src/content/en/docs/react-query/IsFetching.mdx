@@ -13,7 +13,9 @@ Render-prop component that exposes the number of queries currently fetching (fro
 ```tsx /IsFetching basic/
 import { IsFetching } from '@suspensive/react-query'
 
-const GlobalFetchingIndicator = () => <IsFetching>{(isFetching) => (isFetching ? <Spinner /> : null)}</IsFetching>
+const GlobalFetchingIndicator = () => (
+  <IsFetching>{(isFetching) => (isFetching ? <Spinner /> : null)}</IsFetching>
+)
 ```
 
 ### Filters (QueryFilters)
@@ -24,7 +26,9 @@ You can scope the indicator with the same filters accepted by TanStack Query's `
 import { IsFetching } from '@suspensive/react-query'
 
 const PostsFetchingIndicator = () => (
-  <IsFetching queryKey={['posts']}>{(isFetching) => (isFetching ? <Spinner /> : null)}</IsFetching>
+  <IsFetching queryKey={['posts']}>
+    {(isFetching) => (isFetching ? <Spinner /> : null)}
+  </IsFetching>
 )
 ```
 

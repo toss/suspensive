@@ -18,24 +18,39 @@ const defaultProps = new DefaultProps({
 })
 
 function App() {
-  return <DefaultPropsProvider defaultProps={defaultProps}>...</DefaultPropsProvider>
+  return (
+    <DefaultPropsProvider defaultProps={defaultProps}>...</DefaultPropsProvider>
+  )
 }
 ```
 
 <Sandpack>
 
 ```tsx Example.tsx active
-import { DefaultProps, DefaultPropsProvider, Suspense, Delay } from '@suspensive/react'
+import {
+  DefaultProps,
+  DefaultPropsProvider,
+  Suspense,
+  Delay,
+} from '@suspensive/react'
 import { SuspenseQuery } from '@suspensive/react-query'
 import { fetch1sQueryOptions } from './queries'
 
 const defaultProps = new DefaultProps({
   Delay: {
     ms: 1200,
-    fallback: <div style={{ padding: 10, background: 'lightyellow' }}>Loading additional content...</div>,
+    fallback: (
+      <div style={{ padding: 10, background: 'lightyellow' }}>
+        Loading additional content...
+      </div>
+    ),
   },
   Suspense: {
-    fallback: <div style={{ padding: 10, background: 'lightblue' }}>Fetching post...</div>,
+    fallback: (
+      <div style={{ padding: 10, background: 'lightblue' }}>
+        Fetching post...
+      </div>
+    ),
     clientOnly: false,
   },
 })

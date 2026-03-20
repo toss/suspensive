@@ -40,7 +40,9 @@ import { userQueryAtom } from '~/queries' // atomWithSuspenseQuery from jotai-ta
 const MyPage = () => (
   <ErrorBoundary fallback={({ error }) => <>{error.message}</>}>
     <Suspense fallback={'pending...'}>
-      <AtomValue atom={userQueryAtom}>{({ data: user }) => <UserProfile key={user.id} {...user} />}</AtomValue>
+      <AtomValue atom={userQueryAtom}>
+        {({ data: user }) => <UserProfile key={user.id} {...user} />}
+      </AtomValue>
     </Suspense>
   </ErrorBoundary>
 )

@@ -47,7 +47,11 @@ const Example = () => (
 )
 
 const Throw = {
-  Error: ({ message, after = 0, children }: PropsWithChildren<{ message: string; after?: number }>) => {
+  Error: ({
+    message,
+    after = 0,
+    children,
+  }: PropsWithChildren<{ message: string; after?: number }>) => {
     const [isNeedThrow, setIsNeedThrow] = useState(after === 0)
     if (isNeedThrow) {
       throw new Error(message)

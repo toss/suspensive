@@ -5,7 +5,10 @@ import { Callout, Sandpack } from '@/components'
 The usePrefetchInfiniteQuery does not return anything, it should be used just to fire a prefetch during render, before a suspense boundary that wraps a component that uses useSuspenseInfiniteQuery.
 
 ```jsx /usePrefetchInfiniteQuery/
-import { usePrefetchInfiniteQuery, useSuspenseInfiniteQuery } from '@suspensive/react-query'
+import {
+  usePrefetchInfiniteQuery,
+  useSuspenseInfiniteQuery,
+} from '@suspensive/react-query'
 
 const PostsPage = ({ postId }) => {
   usePrefetchInfiniteQuery({
