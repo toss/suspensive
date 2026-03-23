@@ -13,7 +13,7 @@
     "isolatedModules": true,
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
-    "jsx": "preserve",
+    "jsx": "react-jsx",
     "module": "esnext",
     "resolveJsonModule": true,
     "paths": {
@@ -31,7 +31,8 @@
     "eslint.config.mjs",
     "next.config.mjs",
     "postcss.config.js",
-    "theme.config.tsx"
+    "theme.config.tsx",
+    ".next/dev/types/**/*.ts"
   ],
   "exclude": ["node_modules"]
 }
