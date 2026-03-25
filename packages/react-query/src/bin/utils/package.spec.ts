@@ -76,6 +76,7 @@ describe('package', () => {
       'PrefetchInfiniteQuery',
       'Mutation',
       'IsFetching',
+      'HydrationBoundary',
     ]
 
     const version5APIs = [
@@ -97,6 +98,7 @@ describe('package', () => {
       'PrefetchInfiniteQuery',
       'Mutation',
       'IsFetching',
+      'Hydrate',
     ]
 
     it('should get the target @suspensive/react-query version 5 APIs', () => {

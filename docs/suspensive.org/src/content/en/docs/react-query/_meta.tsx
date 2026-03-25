@@ -21,6 +21,8 @@ export default {
   Mutation: { title: '<Mutation/>' },
   PrefetchQuery: { title: '<PrefetchQuery/>' },
   PrefetchInfiniteQuery: { title: '<PrefetchInfiniteQuery/>' },
+  Hydrate: { title: '<Hydrate/>' },
+  HydrationBoundary: { title: '<HydrationBoundary/>' },
   QueriesHydration: { title: '<QueriesHydration/>' },
   QueryClientConsumer: { title: '<QueryClientConsumer/>' },
   IsFetching: { title: '<IsFetching/>' },

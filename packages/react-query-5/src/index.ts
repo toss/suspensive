@@ -1,4 +1,5 @@
 export { createGetQueryClient } from './createGetQueryClient'
+export { HydrationBoundary } from './HydrationBoundary'
 export { infiniteQueryOptions } from './infiniteQueryOptions'
 export { QueriesHydration } from './QueriesHydration'
 export { queryOptions } from './queryOptions'
