@@ -666,30 +666,6 @@ When using the `clientOnly` prop:
 - Data will only be fetched and rendered on the client
 - You don't need `Hydrate` since server-side prefetch is not needed
 
-## Version Differences
-
-### @tanstack/react-query v5
-
-In `@tanstack/react-query` v5, it uses the `HydrationBoundary` component.
-
-```tsx
-import { HydrationBoundary } from '@tanstack/react-query'
-import { Hydrate } from '@suspensive/react-query'
-
-// Hydrate internally uses HydrationBoundary
-```
-
-### @tanstack/react-query v4
-
-In `@tanstack/react-query` v4, it uses the `Hydrate` component.
-
-```tsx
-import { Hydrate } from '@tanstack/react-query'
-import { Hydrate } from '@suspensive/react-query'
-
-// Hydrate internally uses Hydrate
-```
-
 ## Important Notes
 
 - This component is an **async server component**.

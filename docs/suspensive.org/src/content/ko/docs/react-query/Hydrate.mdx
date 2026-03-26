@@ -666,30 +666,6 @@ const PostsPage = ({ userId }: { userId: number }) => {
 - 클라이언트에서만 데이터를 페칭하고 렌더링합니다
 - 서버 사이드 prefetch가 필요 없으므로 `Hydrate`를 사용하지 않아도 됩니다
 
-## 버전별 차이점
-
-### @tanstack/react-query v5
-
-`@tanstack/react-query` v5에서는 `HydrationBoundary` 컴포넌트를 사용합니다.
-
-```tsx
-import { HydrationBoundary } from '@tanstack/react-query'
-import { Hydrate } from '@suspensive/react-query'
-
-// Hydrate는 내부적으로 HydrationBoundary를 사용합니다
-```
-
-### @tanstack/react-query v4
-
-`@tanstack/react-query` v4에서는 `Hydrate` 컴포넌트를 사용합니다.
-
-```tsx
-import { Hydrate } from '@tanstack/react-query'
-import { Hydrate } from '@suspensive/react-query'
-
-// Hydrate는 내부적으로 Hydrate를 사용합니다
-```
-
 ## 주의사항
 
 - 이 컴포넌트는 **async 서버 컴포넌트**입니다.
