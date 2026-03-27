@@ -35,7 +35,7 @@ pre {
 }
 
 pre button {
-  @apply text-white;
+  @apply text-gray-400 hover:text-white;
 }
 
 .dark pre {
