@@ -37,4 +37,24 @@ export default withNextra({
     locales: ['en', 'ko'],
     defaultLocale: 'en',
   },
+  rewrites() {
+    return [
+      {
+        source: '/_pagefind/:path*',
+        destination: '/_next/static/pagefind/:path*',
+      },
+      {
+        source: '/llms.txt',
+        destination: '/_next/static/llms.txt',
+      },
+      {
+        source: '/llms-full.txt',
+        destination: '/_next/static/llms-full.txt',
+      },
+      {
+        source: '/docs/:path*.md',
+        destination: '/_next/static/docs/:path*.md',
+      },
+    ]
+  },
 })

@@ -4,7 +4,7 @@
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
-      "outputs": ["dist/**", ".next/**", "public/_pagefind/**"]
+      "outputs": ["dist/**", ".next/**"]
     },
     "ci:eslint": {
       "dependsOn": ["build"]
