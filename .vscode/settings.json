@@ -2,7 +2,7 @@
   "editor.defaultFormatter": "oxc.oxc-vscode",
   "editor.formatOnSave": true,
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": "explicit",
+    "source.fixAll.eslint": "explicit"
   },
   "eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact", "mdx"],
   "eslint.workingDirectories": [{ "mode": "auto" }],
@@ -18,5 +18,5 @@
   "[mdx]": { "editor.defaultFormatter": "oxc.oxc-vscode" },
   "[html]": { "editor.defaultFormatter": "oxc.oxc-vscode" },
   "[css]": { "editor.defaultFormatter": "oxc.oxc-vscode" },
-  "[scss]": { "editor.defaultFormatter": "oxc.oxc-vscode" },
+  "[scss]": { "editor.defaultFormatter": "oxc.oxc-vscode" }
 }
