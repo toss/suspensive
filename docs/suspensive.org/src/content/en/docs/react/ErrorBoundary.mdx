@@ -1,3 +1,7 @@
+---
+description: 'Declarative ErrorBoundary component with shouldCatch filtering, resetKeys, onError callbacks, and ErrorBoundaryGroup integration. Alternative to react-error-boundary.'
+---
+
 import { Tabs } from 'nextra/components'
 import { Callout, Sandpack } from '@/components'
 
@@ -632,7 +636,13 @@ export const ErrorAfter2s = () => {
 
 </Sandpack>
 
-### props.shouldCatch
+### props.shouldCatch — Unique to Suspensive
+
+<Callout type='info'>
+
+**Not available in react-error-boundary or @sentry/react.** `shouldCatch` is a feature unique to `@suspensive/react` that enables layered error handling — parent and child ErrorBoundaries can handle different error types. See the [full comparison](/docs/react/comparison).
+
+</Callout>
 
 shouldCatch determines whether `<ErrorBoundary/>` should catch errors based on conditions.
 

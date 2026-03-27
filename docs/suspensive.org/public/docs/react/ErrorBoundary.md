@@ -405,7 +405,9 @@ const Example = (
 )
 ```
 
-### props.shouldCatch
+### props.shouldCatch — Unique to Suspensive
+
+> **Info:** **Not available in react-error-boundary or @sentry/react.** `shouldCatch` is a feature unique to `@suspensive/react` that enables layered error handling — parent and child ErrorBoundaries can handle different error types. See the [full comparison](/docs/react/comparison).
 
 shouldCatch determines whether `<ErrorBoundary/>` should catch errors based on conditions.
 

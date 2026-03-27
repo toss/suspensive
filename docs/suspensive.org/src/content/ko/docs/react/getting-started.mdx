@@ -1,0 +1,113 @@
+---
+description: '5분 만에 Suspensive를 시작하세요. ErrorBoundary, Suspense, SuspenseQuery로 첫 번째 Suspense 바운더리를 만들어 보세요.'
+---
+
+import { Steps } from 'nextra/components'
+import { Callout } from '@/components'
+
+# 시작하기
+
+Suspensive로 5분 만에 비동기 안전한 React 페이지를 만들어 보세요.
+
+<Steps>
+
+### 패키지 설치
+
+```shell npm2yarn
+npm install @suspensive/react @suspensive/react-query @tanstack/react-query
+```
+
+### ErrorBoundary와 Suspense로 앱 감싸기
+
+수동 로딩/에러 상태 체크를 선언적 바운더리로 대체하세요:
+
+```tsx
+import { ErrorBoundary, Suspense } from '@suspensive/react'
+
+function App() {
+  return (
+    <ErrorBoundary
+      fallback={({ error, reset }) => (
+        <div>
+          <p>Something went wrong: {error.message}</p>
+          <button onClick={reset}>Try again</button>
+        </div>
+      )}
+    >
+      <Suspense fallback={<div>Loading...</div>}>
+        <UserProfile />
+      </Suspense>
+    </ErrorBoundary>
+  )
+}
+```
+
+### SuspenseQuery로 데이터 페칭
+
+`<SuspenseQuery/>`를 사용해 비동기 데이터를 JSX로 렌더링하세요. hook도, 래퍼 컴포넌트도 필요 없습니다:
+
+```tsx
+import { SuspenseQuery } from '@suspensive/react-query'
+
+function UserProfile() {
+  return (
+    <SuspenseQuery queryKey={['user']} queryFn={fetchUser}>
+      {({ data: user }) => (
+        <div>
+          <h2>{user.name}</h2>
+          <p>{user.email}</p>
+        </div>
+      )}
+    </SuspenseQuery>
+  )
+}
+```
+
+### clientOnly로 SSR 안전성 확보
+
+Next.js 또는 다른 SSR 프레임워크를 사용하고 있다면, 하이드레이션 문제를 방지하세요:
+
+```tsx
+import { Suspense } from '@suspensive/react'
+
+function Page() {
+  return (
+    <Suspense fallback={<Skeleton />} clientOnly>
+      <UserProfile />
+    </Suspense>
+  )
+}
+```
+
+### ErrorBoundaryGroup으로 에러 바운더리 일괄 리셋
+
+prop drilling 없이 여러 에러 바운더리를 한 번에 리셋하세요:
+
+```tsx
+import { ErrorBoundary, ErrorBoundaryGroup } from '@suspensive/react'
+
+function Dashboard() {
+  return (
+    <ErrorBoundaryGroup>
+      <ErrorBoundaryGroup.Consumer>
+        {({ reset }) => <button onClick={reset}>Reset All</button>}
+      </ErrorBoundaryGroup.Consumer>
+      <ErrorBoundary fallback={<UserError />}>
+        <UserSection />
+      </ErrorBoundary>
+      <ErrorBoundary fallback={<StatsError />}>
+        <StatsSection />
+      </ErrorBoundary>
+    </ErrorBoundaryGroup>
+  )
+}
+```
+
+</Steps>
+
+## 다음 단계
+
+- **[`<Suspense/>`](/docs/react/Suspense)** — clientOnly와 DefaultProps를 지원하는 SSR 안전한 Suspense
+- **[`<ErrorBoundary/>`](/docs/react/ErrorBoundary)** — shouldCatch 필터링을 지원하는 고급 에러 처리
+- **[`<SuspenseQuery/>`](/docs/react-query/SuspenseQuery)** — 같은 깊이에서의 선언적 데이터 페칭
+- **[Suspensive vs react-error-boundary](/docs/react/comparison)** — 상세한 기능 비교

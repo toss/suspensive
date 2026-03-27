@@ -4,8 +4,12 @@ import { proxy as nextraProxy } from 'nextra/locales'
 export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl
 
-  // Skip i18n proxy for .md and .txt files (LLMs.txt)
-  if (pathname.endsWith('.md') || pathname.endsWith('.txt')) {
+  // Skip i18n proxy for .md, .txt (LLMs.txt), and .xml (sitemap) files
+  if (
+    pathname.endsWith('.md') ||
+    pathname.endsWith('.txt') ||
+    pathname.endsWith('.xml')
+  ) {
     return NextResponse.next()
   }
 

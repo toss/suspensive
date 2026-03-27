@@ -1,8 +1,25 @@
-import { Callout } from '@/components'
+---
+description: 'Enhanced React Suspense component with SSR support, clientOnly prop, and DefaultPropsProvider integration. Drop-in replacement for React.Suspense.'
+---
+
+import { Callout, Sandpack } from '@/components'
 
 # Suspense
 
-@suspensive/react's `<Suspense/>` will be just [Suspense of original React](https://react.dev/reference/react/Suspense).
+@suspensive/react's `<Suspense/>` is a drop-in replacement for [React's Suspense](https://react.dev/reference/react/Suspense) — with additional features that solve real-world problems.
+
+## When to use this instead of React.Suspense
+
+|                                                    | React.Suspense | @suspensive/react Suspense |
+| -------------------------------------------------- | -------------- | -------------------------- |
+| Basic suspense boundary                            | ✅             | ✅                         |
+| SSR-safe rendering (`clientOnly`)                  | ❌             | ✅                         |
+| Global default fallback via `DefaultPropsProvider` | ❌             | ✅                         |
+| HOC pattern (`Suspense.with`)                      | ❌             | ✅                         |
+
+If you're using Next.js or any SSR framework, React's `<Suspense>` can cause hydration mismatches. Suspensive's `clientOnly` prop solves this in one line — no need for `dynamic(() => import(...), { ssr: false })` or manual `useEffect` guards.
+
+---
 
 ### props.fallback
 
@@ -17,6 +34,37 @@ const Example = () => (
   </Suspense>
 )
 ```
+
+<Sandpack>
+
+```tsx Example.tsx active
+import { Suspense } from '@suspensive/react'
+import { use } from 'react'
+
+export const Example = () => (
+  <Suspense fallback={<div style={{ padding: 20 }}>Loading...</div>}>
+    <ResolveAfter2s />
+  </Suspense>
+)
+
+const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
+let promise: Promise<string> | null = null
+const fetchData = () => {
+  if (!promise) {
+    promise = sleep(2000).then(() => 'Data loaded!')
+  }
+  return promise
+}
+
+const ResolveAfter2s = () => {
+  const data = use(fetchData())
+  return (
+    <div style={{ padding: 20, backgroundColor: 'lightgreen' }}>{data}</div>
+  )
+}
+```
+
+</Sandpack>
 
 <Callout>
 

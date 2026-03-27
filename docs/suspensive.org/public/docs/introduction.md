@@ -136,3 +136,5 @@ style T color:#1AA3FF,text-decoration:underline
 style Z color:#1AA3FF,text-decoration:underline
 style Y color:#1AA3FF,text-decoration:underline
 ```
+
+> **Info:** **Ready to get started?** Follow the [Getting Started guide](/docs/react/getting-started) to set up Suspensive in 5 minutes, or see how it compares to [react-error-boundary](/docs/react/comparison).

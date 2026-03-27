@@ -4,7 +4,20 @@ url: /docs/react/Suspense
 
 # Suspense
 
-@suspensive/react's `<Suspense/>` will be just [Suspense of original React](https://react.dev/reference/react/Suspense).
+@suspensive/react's `<Suspense/>` is a drop-in replacement for [React's Suspense](https://react.dev/reference/react/Suspense) — with additional features that solve real-world problems.
+
+## When to use this instead of React.Suspense
+
+|                                                    | React.Suspense | @suspensive/react Suspense |
+| -------------------------------------------------- | -------------- | -------------------------- |
+| Basic suspense boundary                            | ✅             | ✅                         |
+| SSR-safe rendering (`clientOnly`)                  | ❌             | ✅                         |
+| Global default fallback via `DefaultPropsProvider` | ❌             | ✅                         |
+| HOC pattern (`Suspense.with`)                      | ❌             | ✅                         |
+
+If you're using Next.js or any SSR framework, React's `<Suspense>` can cause hydration mismatches. Suspensive's `clientOnly` prop solves this in one line — no need for `dynamic(() => import(...), { ssr: false })` or manual `useEffect` guards.
+
+---
 
 ### props.fallback
 

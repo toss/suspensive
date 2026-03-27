@@ -4,6 +4,39 @@ url: /docs/react/Delay
 
 # Delay
 
+## Why Delay?
+
+When data loads fast (under 200ms), showing a spinner creates a **flash-of-loading-state** — a brief flicker that feels broken rather than responsive. `<Delay/>` solves this by holding back the loading UI until it's actually needed.
+
+**Recommended `ms` values:**
+
+- **100–300ms** for most UI — hides spinners on fast networks, shows them on slow ones
+- **500ms+** for non-critical sections where delayed feedback is acceptable
+
+`<Delay/>` is designed to work with `<Suspense/>`:
+
+```tsx
+<Suspense
+  fallback={
+    <Delay ms={200}>
+      {({ isDelayed }) => (
+        <Spinner
+          style={{ opacity: isDelayed ? 1 : 0, transition: 'opacity 200ms' }}
+        />
+      )}
+    </Delay>
+  }
+>
+  <Content />
+</Suspense>
+```
+
+Using the render prop pattern with `isDelayed` enables smooth fade-in transitions instead of abrupt appearances.
+
+---
+
+## Usage
+
 This component can be used in two ways:
 
 1. Delay the exposure of children.

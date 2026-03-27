@@ -24,7 +24,7 @@ export const NpmInstallCopyButton = () => {
       }}
       whileHover={{ opacity: 1 }}
       initial={{ opacity: 0 }}
-      animate={{ opacity: 0.5 }}
+      animate={{ opacity: 0.7 }}
       onClick={() => {
         navigator.clipboard.writeText(npmInstallScript)
         setIsClicked(true)

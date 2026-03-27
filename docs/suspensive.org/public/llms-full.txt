@@ -141,6 +141,8 @@ style Z color:#1AA3FF,text-decoration:underline
 style Y color:#1AA3FF,text-decoration:underline
 ```
 
+> **Info:** **Ready to get started?** Follow the [Getting Started guide](/docs/react/getting-started) to set up Suspensive in 5 minutes, or see how it compares to [react-error-boundary](/docs/react/comparison).
+
 ---
 
 ## Motivation
@@ -238,13 +240,293 @@ npm install @suspensive/react
 
 ---
 
+## Getting Started
+
+URL: /docs/react/getting-started
+
+# Getting Started
+
+Build your first async-safe React page with Suspensive in 5 minutes.
+
+### Install packages
+
+```shell npm2yarn
+npm install @suspensive/react @suspensive/react-query @tanstack/react-query
+```
+
+### Wrap your app with ErrorBoundary and Suspense
+
+Replace manual loading/error state checks with declarative boundaries:
+
+```tsx
+import { ErrorBoundary, Suspense } from '@suspensive/react'
+
+function App() {
+  return (
+    <ErrorBoundary
+      fallback={({ error, reset }) => (
+        <div>
+          <p>Something went wrong: {error.message}</p>
+          <button onClick={reset}>Try again</button>
+        </div>
+      )}
+    >
+      <Suspense fallback={<div>Loading...</div>}>
+        <UserProfile />
+      </Suspense>
+    </ErrorBoundary>
+  )
+}
+```
+
+### Fetch data with SuspenseQuery
+
+Use `<SuspenseQuery/>` to render async data as JSX — no hooks, no wrapper components:
+
+```tsx
+import { SuspenseQuery } from '@suspensive/react-query'
+
+function UserProfile() {
+  return (
+    <SuspenseQuery queryKey={['user']} queryFn={fetchUser}>
+      {({ data: user }) => (
+        <div>
+          <h2>{user.name}</h2>
+          <p>{user.email}</p>
+        </div>
+      )}
+    </SuspenseQuery>
+  )
+}
+```
+
+### Add SSR safety with clientOnly
+
+If you're using Next.js or another SSR framework, prevent hydration issues:
+
+```tsx
+import { Suspense } from '@suspensive/react'
+
+function Page() {
+  return (
+    <Suspense fallback={<Skeleton />} clientOnly>
+      <UserProfile />
+    </Suspense>
+  )
+}
+```
+
+### Group error boundaries for coordinated resets
+
+Reset multiple error boundaries at once without prop drilling:
+
+```tsx
+import { ErrorBoundary, ErrorBoundaryGroup } from '@suspensive/react'
+
+function Dashboard() {
+  return (
+    <ErrorBoundaryGroup>
+      <ErrorBoundaryGroup.Consumer>
+        {({ reset }) => <button onClick={reset}>Reset All</button>}
+      </ErrorBoundaryGroup.Consumer>
+      <ErrorBoundary fallback={<UserError />}>
+        <UserSection />
+      </ErrorBoundary>
+      <ErrorBoundary fallback={<StatsError />}>
+        <StatsSection />
+      </ErrorBoundary>
+    </ErrorBoundaryGroup>
+  )
+}
+```
+
+## Next Steps
+
+- **[`<Suspense/>`](/docs/react/Suspense)** — SSR-safe Suspense with clientOnly and DefaultProps support
+- **[`<ErrorBoundary/>`](/docs/react/ErrorBoundary)** — Advanced error handling with shouldCatch filtering
+- **[`<SuspenseQuery/>`](/docs/react-query/SuspenseQuery)** — Declarative data fetching at the same depth
+- **[Suspensive vs react-error-boundary](/docs/react/comparison)** — Detailed feature comparison
+
+---
+
+## Suspensive vs react-error-boundary
+
+URL: /docs/react/comparison
+
+# Suspensive vs react-error-boundary
+
+Choosing an error boundary library for React? Here's how `@suspensive/react` compares to `react-error-boundary`, `@sentry/react`, and React's built-in class component approach.
+
+## Feature Comparison
+
+| Feature                                  | @suspensive/react | react-error-boundary   | @sentry/react          | React Class Component  |
+| ---------------------------------------- | ----------------- | ---------------------- | ---------------------- | ---------------------- |
+| Basic error catching                     | ✅                | ✅                     | ✅                     | ✅                     |
+| Fallback UI with error & reset           | ✅                | ✅                     | ✅                     | ⚠️ (Manual)            |
+| Reset with resetKeys                     | ✅                | ✅                     | ❌                     | ⚠️ (Manual)            |
+| onReset callback                         | ✅                | ✅                     | ✅                     | ⚠️ (Manual)            |
+| onError callback                         | ✅                | ✅                     | ✅                     | ✅ (componentDidCatch) |
+| Conditional error catching (shouldCatch) | ✅                | ❌                     | ❌                     | ⚠️ (Manual)            |
+| Fallback error handling                  | ✅ (To parent)    | ❌ (Recursive)         | ❌ (Recursive)         | ⚠️ (Manual)            |
+| useErrorBoundary hook                    | ✅                | ✅                     | ❌                     | ❌                     |
+| useErrorBoundaryFallbackProps hook       | ✅                | ❌                     | ❌                     | ❌                     |
+| ErrorBoundaryGroup                       | ✅                | ❌                     | ❌                     | ❌                     |
+| HOC support                              | ✅ (with)         | ✅ (withErrorBoundary) | ✅ (withErrorBoundary) | ❌                     |
+| TypeScript error type inference          | ✅ (Advanced)     | ✅ (Basic)             | ✅ (Basic)             | ⚠️ (Manual)            |
+| Declarative API                          | ✅                | ✅                     | ✅                     | ❌                     |
+| Automatic error reporting                | ❌                | ❌                     | ✅ (To Sentry)         | ❌                     |
+
+## What Makes Suspensive Different
+
+### shouldCatch — Catch Only the Errors You Want
+
+Unlike any other solution, `@suspensive/react` lets you filter which errors an ErrorBoundary catches. Pass an Error constructor, a callback, or a boolean:
+
+```tsx
+// Only catch validation errors in this boundary
+<ErrorBoundary shouldCatch={ZodError} fallback={<ValidationErrorUI />}>
+  <Form />
+</ErrorBoundary>
+
+// Catch everything except network errors
+<ErrorBoundary
+  shouldCatch={(error) => !(error instanceof NetworkError)}
+  fallback={<GeneralErrorUI />}
+>
+  <App />
+</ErrorBoundary>
+```
+
+This enables layered error handling strategies where parent and child boundaries handle different error types — something impossible with `react-error-boundary`.
+
+### ErrorBoundaryGroup — Reset Multiple Boundaries at Once
+
+Managing multiple error boundaries? With `react-error-boundary`, you need to pass `resetKeys` through props to every boundary. With Suspensive, just wrap them in an `ErrorBoundaryGroup`:
+
+```tsx
+<ErrorBoundaryGroup>
+  <ErrorBoundaryGroup.Consumer>
+    {({ reset }) => <button onClick={reset}>Reset All</button>}
+  </ErrorBoundaryGroup.Consumer>
+  <ErrorBoundary fallback={<UserError />}>
+    <UserSection />
+  </ErrorBoundary>
+  <ErrorBoundary fallback={<PostsError />}>
+    <PostsSection />
+  </ErrorBoundary>
+</ErrorBoundaryGroup>
+```
+
+No prop drilling. No state management. All boundaries reset together.
+
+### Safe Fallback Error Handling
+
+In `react-error-boundary`, if your fallback component throws an error, it causes a recursive catch loop. In `@suspensive/react`, errors thrown in fallback components are passed to the **parent** ErrorBoundary — providing predictable, safe error propagation.
+
+### useErrorBoundaryFallbackProps — No Prop Drilling in Fallbacks
+
+Access `error` and `reset` anywhere inside a fallback tree without passing props:
+
+```tsx
+const DeepFallbackChild = () => {
+  const { error, reset } = useErrorBoundaryFallbackProps()
+  return <button onClick={reset}>{error.message}</button>
+}
+```
+
+This is especially useful in React Server Component environments where you can't pass callback functions as props.
+
+## Code Comparison
+
+#### @suspensive/react
+
+```tsx
+import { ErrorBoundary } from '@suspensive/react'
+
+const App = () => (
+  <ErrorBoundary
+    fallback={({ error, reset }) => (
+      <div>
+        <p>{error.message}</p>
+        <button onClick={reset}>Retry</button>
+      </div>
+    )}
+    onError={(error) => logToService(error)}
+  >
+    <MyComponent />
+  </ErrorBoundary>
+)
+```
+
+#### react-error-boundary
+
+```tsx
+import { ErrorBoundary } from 'react-error-boundary'
+
+const App = () => (
+  <ErrorBoundary
+    fallbackRender={({ error, resetErrorBoundary }) => (
+      <div>
+        <p>{error.message}</p>
+        <button onClick={resetErrorBoundary}>Retry</button>
+      </div>
+    )}
+    onError={(error) => logToService(error)}
+  >
+    <MyComponent />
+  </ErrorBoundary>
+)
+```
+
+## Beyond ErrorBoundary
+
+Suspensive isn't just an ErrorBoundary library. It's a complete toolkit for React's async rendering:
+
+- **[`<Suspense/>`](/docs/react/Suspense)** — Enhanced React Suspense with SSR support and `clientOnly` prop
+- **[`<Delay/>`](/docs/react/Delay)** — Prevent flash-of-loading-state UX issues
+- **[`<ClientOnly/>`](/docs/react/ClientOnly)** — Safe client-side only rendering
+- **[`<SuspenseQuery/>`](/docs/react-query/SuspenseQuery)** — Declarative data fetching without hook constraints
+- **[`<DefaultPropsProvider/>`](/docs/react/DefaultPropsProvider)** — Global default fallbacks for all Suspense/Delay components
+
+## Migration from react-error-boundary
+
+Migrating is straightforward — the API is similar by design:
+
+| react-error-boundary                                | @suspensive/react      |
+| --------------------------------------------------- | ---------------------- |
+| `fallbackRender` / `FallbackComponent` / `fallback` | `fallback` (unified)   |
+| `resetErrorBoundary`                                | `reset`                |
+| `withErrorBoundary()`                               | `ErrorBoundary.with()` |
+| `useErrorBoundary()`                                | `useErrorBoundary()`   |
+
+```bash
+npm install @suspensive/react
+```
+
+See the full [ErrorBoundary API reference](/docs/react/ErrorBoundary) for detailed documentation.
+
+---
+
 ## Suspense
 
 URL: /docs/react/Suspense
 
 # Suspense
 
-@suspensive/react's `<Suspense/>` will be just [Suspense of original React](https://react.dev/reference/react/Suspense).
+@suspensive/react's `<Suspense/>` is a drop-in replacement for [React's Suspense](https://react.dev/reference/react/Suspense) — with additional features that solve real-world problems.
+
+## When to use this instead of React.Suspense
+
+|                                                    | React.Suspense | @suspensive/react Suspense |
+| -------------------------------------------------- | -------------- | -------------------------- |
+| Basic suspense boundary                            | ✅             | ✅                         |
+| SSR-safe rendering (`clientOnly`)                  | ❌             | ✅                         |
+| Global default fallback via `DefaultPropsProvider` | ❌             | ✅                         |
+| HOC pattern (`Suspense.with`)                      | ❌             | ✅                         |
+
+If you're using Next.js or any SSR framework, React's `<Suspense>` can cause hydration mismatches. Suspensive's `clientOnly` prop solves this in one line — no need for `dynamic(() => import(...), { ssr: false })` or manual `useEffect` guards.
+
+---
 
 ### props.fallback
 
@@ -720,7 +1002,9 @@ const Example = (
 )
 ```
 
-### props.shouldCatch
+### props.shouldCatch — Unique to Suspensive
+
+> **Info:** **Not available in react-error-boundary or @sentry/react.** `shouldCatch` is a feature unique to `@suspensive/react` that enables layered error handling — parent and child ErrorBoundaries can handle different error types. See the [full comparison](/docs/react/comparison).
 
 shouldCatch determines whether `<ErrorBoundary/>` should catch errors based on conditions.
 
@@ -1031,6 +1315,39 @@ const Example = () => {
 URL: /docs/react/Delay
 
 # Delay
+
+## Why Delay?
+
+When data loads fast (under 200ms), showing a spinner creates a **flash-of-loading-state** — a brief flicker that feels broken rather than responsive. `<Delay/>` solves this by holding back the loading UI until it's actually needed.
+
+**Recommended `ms` values:**
+
+- **100–300ms** for most UI — hides spinners on fast networks, shows them on slow ones
+- **500ms+** for non-critical sections where delayed feedback is acceptable
+
+`<Delay/>` is designed to work with `<Suspense/>`:
+
+```tsx
+<Suspense
+  fallback={
+    <Delay ms={200}>
+      {({ isDelayed }) => (
+        <Spinner
+          style={{ opacity: isDelayed ? 1 : 0, transition: 'opacity 200ms' }}
+        />
+      )}
+    </Delay>
+  }
+>
+  <Content />
+</Suspense>
+```
+
+Using the render prop pattern with `isDelayed` enables smooth fade-in transitions instead of abrupt appearances.
+
+---
+
+## Usage
 
 This component can be used in two ways:
 
@@ -1480,7 +1797,7 @@ URL: /docs/react/migration/migrate-to-v2
 
 ## What's new
 
-### New [`wrap`](/docs/react/wrap) builder [#270](https://github.com/toss/suspensive/pull/270)
+### New [`wrap`](https://v2.suspensive.org/docs/react/wrap) builder [#270](https://github.com/toss/suspensive/pull/270)
 
 A new feature that wraps a component in `<Suspense/>`, `<ErrorBoundary/>`, and `<ErrorBoundaryGroup/>` all at once.
 
@@ -1633,7 +1950,7 @@ So, you can split by two like this.
 
 ### Removed `withSuspense`, `withDelay`, `withErrorBoundary`, `withErrorBoundaryGroup`
 
-These all HOCs can be replaced beautifully by new HOC builder [`wrap`](/docs/react/wrap) in v2.
+These all HOCs can be replaced beautifully by new HOC builder [`wrap`](https://v2.suspensive.org/docs/react/wrap) in v2.
 
 ```diff
 + import { wrap } from '@suspensive/react'
@@ -2020,509 +2337,6 @@ npm install @suspensive/react-query@npm:@suspensive/react-query-4 @tanstack/reac
 ```
 
 > **Info:** By using npm aliases, the import path remains `@suspensive/react-query` across your codebase. When upgrading your @tanstack/react-query version, you only need to change the alias in package.json — no code changes required.
-
----
-
-## createGetQueryClient
-
-URL: /docs/react-query/createGetQueryClient
-
-# createGetQueryClient
-
-> **Experimental:** `createGetQueryClient` is an experimental feature, so this interface may change.
-
-A utility function to manage QueryClient instances in a server-safe manner.
-
-- **On the server**: Always creates a new QueryClient instance for each request
-- **In the browser**: Returns a singleton QueryClient instance, creating one if it doesn't exist
-
-This pattern is essential for proper React Query usage with SSR frameworks like Next.js, as it prevents sharing QueryClient state between requests on the server while maintaining a single instance in the browser to preserve cache across re-renders.
-
-> **Important:** Sharing a QueryClient between requests on the server can lead to **serious security vulnerabilities**. `getQueryClient` creates a new QueryClient instance for each request to prevent data leakage between users and exposure of sensitive information. See the [Server-Side Behavior](#server-side-behavior) section below for details.
-
-## Basic Usage
-
-First, create a `get-query-client.ts` file in your project:
-
-```tsx
-// get-query-client.ts
-import { createGetQueryClient } from '@suspensive/react-query'
-
-export const { getQueryClient } = createGetQueryClient()
-```
-
-Then, import and use it in your code:
-
-```tsx
-// app/providers.tsx
-'use client'
-
-import { QueryClientProvider } from '@tanstack/react-query'
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
-import { getQueryClient } from '@/app/get-query-client'
-import type * as React from 'react'
-
-export default function Providers({ children }: { children: React.ReactNode }) {
-  const queryClient = getQueryClient()
-
-  return (
-    <QueryClientProvider client={queryClient}>
-      {children}
-      <ReactQueryDevtools />
-    </QueryClientProvider>
-  )
-}
-```
-
-## Configuration
-
-You can pass a `QueryClientConfig` to `createGetQueryClient` to customize the QueryClient instance:
-
-```tsx
-// get-query-client.ts
-import { createGetQueryClient } from '@suspensive/react-query'
-
-export const { getQueryClient } = createGetQueryClient({
-  defaultOptions: {
-    queries: {
-      staleTime: 5000,
-      retry: 3,
-    },
-  },
-})
-```
-
-```tsx
-// app/providers.tsx
-'use client'
-
-import { QueryClientProvider } from '@tanstack/react-query'
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
-import { getQueryClient } from '@/app/get-query-client'
-import type * as React from 'react'
-
-export default function Providers({ children }: { children: React.ReactNode }) {
-  const queryClient = getQueryClient()
-
-  return (
-    <QueryClientProvider client={queryClient}>
-      {children}
-      <ReactQueryDevtools />
-    </QueryClientProvider>
-  )
-}
-```
-
-> **Warning:** **Browser Environment Behavior**
-> 
-> In the browser environment, the config provided when calling `createGetQueryClient` is used to create the QueryClient instance. The `getQueryClient` function does not accept any arguments and will always return the same singleton instance. This is intentional to maintain a stable singleton across re-renders.
-
-## Server-Side Behavior
-
-### Preventing Security Issues (Highest Priority)
-
-Sharing a QueryClient between requests on the server can lead to serious security vulnerabilities:
-
-- **Data leakage between users**: One user's data may be exposed to another user
-- **Sensitive information exposure**: Authentication tokens, personal information, etc. may be included in another user's request
-- **Incorrect cache state**: Cached data from a previous request may be incorrectly returned to the next request
-
-`getQueryClient` creates a new QueryClient instance for each request to completely prevent these security issues.
-
-> 💡 **Related documentation**: For more information about why QueryClient should not be shared between requests on the server, see the [TanStack Query SSR Guide - Initial Setup](https://tanstack.com/query/latest/docs/framework/react/guides/ssr#initial-setup) section.
-
-### Setting Cache Removal Time to Prevent OOM
-
-On the server, `getQueryClient` sets the cache removal time to `Infinity` to prevent memory leaks and OOM (Out of Memory) errors. This is an additional safety measure to address memory issues that can occur when servers handle many concurrent requests.
-
-`gcTime` (v5) or `cacheTime` (v4) represents the time until TanStack Query removes query data from the QueryClient's cache. By setting this to `Infinity` on the server:
-
-- Data is not automatically removed from the cache, keeping it available until the request completes
-- The [`isValidTimeout`](https://github.com/TanStack/query/blob/main/packages/query-core/src/utils.ts) check in TanStack Query prevents `setTimeout` scheduling in [`scheduleGc`](https://github.com/TanStack/query/blob/main/packages/query-core/src/removable.ts#L13-L21), completely eliminating the performance cost that would occur with many concurrent requests
-
-This behavior is **automatic and cannot be overridden** - even if you provide a different cache removal time value in your config, it will be set to `Infinity` on the server. (In v4, the `cacheTime` option is used; in v5, the `gcTime` option is used. See the Version Differences section below for details.)
-
-> 💡 **Related documentation**: For more information about high memory consumption on server and why `gcTime` defaults to `Infinity` on the server, see the [TanStack Query SSR Guide - High memory consumption on server](https://tanstack.com/query/latest/docs/framework/react/guides/ssr#high-memory-consumption-on-server) section.
-
-```tsx
-// get-query-client.ts
-import { createGetQueryClient } from '@suspensive/react-query'
-
-// Config is passed to createGetQueryClient, not getQueryClient
-export const { getQueryClient } = createGetQueryClient({
-  defaultOptions: {
-    queries: {
-      // On server, cache removal time is set to Infinity
-      // to keep cache alive until the request completes and prevent setTimeout scheduling
-      gcTime: 5000, // v5: This will be overridden to Infinity on server
-      // In v4, cacheTime is used and also overridden to Infinity
-    },
-  },
-})
-
-// On server: Cache removal time is always Infinity (OOM prevention)
-// On browser: Uses the provided value (or default)
-```
-
-### New Instance Per Request
-
-On the server, `getQueryClient` creates a new QueryClient instance for each call. This ensures that:
-
-- Each request has isolated cache state
-- No data leaks between different user requests
-- Proper cleanup when the request completes
-
-```tsx
-// get-query-client.ts
-import { createGetQueryClient } from '@suspensive/react-query'
-
-export const { getQueryClient } = createGetQueryClient()
-```
-
-```tsx
-// Server environment
-const queryClient1 = getQueryClient()
-const queryClient2 = getQueryClient()
-
-// queryClient1 !== queryClient2 (different instances)
-```
-
-## Browser-Side Behavior
-
-### Singleton Pattern
-
-In the browser, `getQueryClient` returns the same QueryClient instance across multiple calls. This ensures:
-
-- Cache is preserved across re-renders
-- Consistent state management
-- Optimal performance
-
-```tsx
-// get-query-client.ts
-import { createGetQueryClient } from '@suspensive/react-query'
-
-export const { getQueryClient } = createGetQueryClient()
-```
-
-```tsx
-// Browser environment
-const queryClient1 = getQueryClient()
-const queryClient2 = getQueryClient()
-
-// queryClient1 === queryClient2 (same instance)
-```
-
-## Use Cases
-
-### Next.js App Router
-
-```tsx
-// get-query-client.ts
-import { createGetQueryClient } from '@suspensive/react-query'
-
-export const { getQueryClient } = createGetQueryClient()
-```
-
-```tsx
-// app/providers.tsx
-'use client'
-
-import { QueryClientProvider } from '@tanstack/react-query'
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
-import { getQueryClient } from '@/app/get-query-client'
-import type * as React from 'react'
-
-export default function Providers({ children }: { children: React.ReactNode }) {
-  const queryClient = getQueryClient()
-
-  return (
-    <QueryClientProvider client={queryClient}>
-      {children}
-      <ReactQueryDevtools />
-    </QueryClientProvider>
-  )
-}
-```
-
-```tsx
-// app/layout.tsx
-import { Providers } from './providers'
-
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
-  return (
-    <html lang="en">
-      <body>
-        <Providers>{children}</Providers>
-      </body>
-    </html>
-  )
-}
-```
-
-### With Custom Configuration
-
-```tsx
-// get-query-client.ts
-import { createGetQueryClient } from '@suspensive/react-query'
-
-export const { getQueryClient } = createGetQueryClient({
-  defaultOptions: {
-    queries: {
-      staleTime: 1000 * 60 * 5, // 5 minutes
-      gcTime: 1000 * 60 * 10, // 10 minutes (v5)
-      // cacheTime: 1000 * 60 * 10, // 10 minutes (v4)
-      retry: 2,
-      refetchOnWindowFocus: false,
-    },
-    mutations: {
-      retry: 1,
-    },
-  },
-})
-```
-
-```tsx
-// app/providers.tsx
-'use client'
-
-import { QueryClientProvider } from '@tanstack/react-query'
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
-import { getQueryClient } from '@/app/get-query-client'
-import type * as React from 'react'
-
-export default function Providers({ children }: { children: React.ReactNode }) {
-  const queryClient = getQueryClient()
-
-  return (
-    <QueryClientProvider client={queryClient}>
-      {children}
-      <ReactQueryDevtools />
-    </QueryClientProvider>
-  )
-}
-```
-
-## Version Differences
-
-### @tanstack/react-query v4
-
-In v4, use the `createGetQueryClient` function, and the cache time option is called `cacheTime`:
-
-```tsx
-// get-query-client.ts
-import { createGetQueryClient } from '@suspensive/react-query'
-
-export const { getQueryClient } = createGetQueryClient()
-```
-
-```tsx
-// get-query-client.ts
-import { createGetQueryClient } from '@suspensive/react-query'
-
-// Server: cacheTime is automatically set to Infinity
-export const { getQueryClient } = createGetQueryClient({
-  defaultOptions: {
-    queries: {
-      cacheTime: 5000, // Overridden to Infinity on server
-    },
-  },
-})
-```
-
-```tsx
-// app/providers.tsx
-'use client'
-
-import { QueryClientProvider } from '@tanstack/react-query'
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
-import { getQueryClient } from '@/app/get-query-client'
-import type * as React from 'react'
-
-export default function Providers({ children }: { children: React.ReactNode }) {
-  const queryClient = getQueryClient()
-
-  return (
-    <QueryClientProvider client={queryClient}>
-      {children}
-      <ReactQueryDevtools />
-    </QueryClientProvider>
-  )
-}
-```
-
-### @tanstack/react-query v5
-
-In v5, use the `createGetQueryClient` function, and the cache time option is called `gcTime` (garbage collection time):
-
-```tsx
-// get-query-client.ts
-import { createGetQueryClient } from '@suspensive/react-query'
-
-export const { getQueryClient } = createGetQueryClient()
-```
-
-```tsx
-// get-query-client.ts
-import { createGetQueryClient } from '@suspensive/react-query'
-
-// Server: gcTime is automatically set to Infinity
-export const { getQueryClient } = createGetQueryClient({
-  defaultOptions: {
-    queries: {
-      gcTime: 5000, // Overridden to Infinity on server
-    },
-  },
-})
-```
-
-```tsx
-// app/providers.tsx
-'use client'
-
-import { QueryClientProvider } from '@tanstack/react-query'
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
-import { getQueryClient } from '@/app/get-query-client'
-import type * as React from 'react'
-
-export default function Providers({ children }: { children: React.ReactNode }) {
-  const queryClient = getQueryClient()
-
-  return (
-    <QueryClientProvider client={queryClient}>
-      {children}
-      <ReactQueryDevtools />
-    </QueryClientProvider>
-  )
-}
-```
-
-## Important Notes
-
-- **Server safety**: Always use `getQueryClient` instead of creating `new QueryClient()` directly in SSR environments to ensure proper request isolation and OOM prevention.
-
-> **Error:** **Never use QueryClient as a global variable**
-> 
-> Even if you use `getQueryClient`, storing it in a global variable like `export const queryClient = getQueryClient()` in App Router and importing it elsewhere will cause the same security risks. The QueryClient instance will be shared between requests on the server, leading to data leakage between users. Always call `getQueryClient()` directly where you need it, rather than storing it in a global variable.
-
-- **Browser singleton**: The browser instance is a singleton. Configure your QueryClient when calling `createGetQueryClient`, as `getQueryClient` does not accept any arguments.
-
-- **Automatic OOM prevention**: The cache removal time override to `Infinity` on the server is automatic and cannot be disabled. This is a safety feature to prevent memory issues. (In v4, the `cacheTime` option is used; in v5, the `gcTime` option is used.)
-
----
-
-## mutationOptions
-
-URL: /docs/react-query/mutationOptions
-
-# mutationOptions
-
-`mutationOptions` helps you easily reuse and consistently manage option objects for Mutations. This provides similar benefits to the ones offered by [`queryOptions`](/docs/react-query/queryOptions).
-
-```jsx /mutationOptions/
-import { mutationOptions, useMutation, Mutation } from '@suspensive/react-query'
-
-const editPostMutationOptions = (postId: number) =>
-  mutationOptions({
-    mutationFn: (content: string) => fetch(`https://example.com/posts/${postId}`, {
-      method: 'PATCH',
-      body: JSON.stringify({ content }),
-    }).then(res => res.json()),
-  })
-
-// You can directly use mutationOptions without creating custom mutation hooks.
-const editPostMutation = useMutation(editPostMutationOptions(1))
-
-// Directly use mutationOptions with <Mutation />.
-const Example = () => (
-  <Mutation {...editPostMutationOptions(1)}>
-    {({ mutate, isLoading }) => (
-      <div>
-        <p>{isLoading ? 'Updating...' : 'Latest updated'}</p>
-        <textarea onBlur={(e) => mutate(e.target.value)} disabled={isLoading} />
-      </div>
-    )}
-  </Mutation>
-)
-```
-
----
-
-## usePrefetchQuery
-
-URL: /docs/react-query/usePrefetchQuery
-
-# usePrefetchQuery
-
-The usePrefetchQuery does not return anything, it should be used just to fire a prefetch during render, before a suspense boundary that wraps a component that uses useSuspenseQuery.
-
-```jsx /usePrefetchQuery/
-import { usePrefetchQuery, useSuspenseQuery } from '@suspensive/react-query'
-
-const PostPage = ({ postId }) => {
-  usePrefetchQuery({
-    queryKey: ['posts', postId],
-    queryFn: () => getPost(postId),
-  }) // Prefetch query before suspense boundary
-
-  return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <Post postId={postId} />
-    </Suspense>
-  )
-}
-
-export const Post = ({ postId }) => {
-  const { data } = useSuspenseQuery({
-    queryKey: ['posts', postId],
-    queryFn: () => getPost(postId),
-  })
-
-  return <>...</>
-}
-```
-
----
-
-## usePrefetchInfiniteQuery
-
-URL: /docs/react-query/usePrefetchInfiniteQuery
-
-# usePrefetchInfiniteQuery
-
-The usePrefetchInfiniteQuery does not return anything, it should be used just to fire a prefetch during render, before a suspense boundary that wraps a component that uses useSuspenseInfiniteQuery.
-
-```jsx /usePrefetchInfiniteQuery/
-import {
-  usePrefetchInfiniteQuery,
-  useSuspenseInfiniteQuery,
-} from '@suspensive/react-query'
-
-const PostsPage = ({ postId }) => {
-  usePrefetchInfiniteQuery({
-    queryKey: ['posts'],
-    queryFn: () => getPosts(),
-  }) // Prefetch query before suspense boundary
-
-  return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <Posts />
-    </Suspense>
-  )
-}
-
-export const Posts = () => {
-  const postsInfiniteQuery = useSuspenseInfiniteQuery({
-    queryKey: ['posts'],
-    queryFn: () => getPosts(),
-  })
-
-  return <>...</>
-}
-```
 
 ---
 
@@ -3737,6 +3551,509 @@ const PostsFetchingIndicator = () => (
 
 - **children**: `(isFetching: number) => ReactNode`
 - **...QueryFilters**: Same shape as TanStack Query's `QueryFilters` for `useIsFetching`.
+
+---
+
+## createGetQueryClient
+
+URL: /docs/react-query/createGetQueryClient
+
+# createGetQueryClient
+
+> **Experimental:** `createGetQueryClient` is an experimental feature, so this interface may change.
+
+A utility function to manage QueryClient instances in a server-safe manner.
+
+- **On the server**: Always creates a new QueryClient instance for each request
+- **In the browser**: Returns a singleton QueryClient instance, creating one if it doesn't exist
+
+This pattern is essential for proper React Query usage with SSR frameworks like Next.js, as it prevents sharing QueryClient state between requests on the server while maintaining a single instance in the browser to preserve cache across re-renders.
+
+> **Important:** Sharing a QueryClient between requests on the server can lead to **serious security vulnerabilities**. `getQueryClient` creates a new QueryClient instance for each request to prevent data leakage between users and exposure of sensitive information. See the [Server-Side Behavior](#server-side-behavior) section below for details.
+
+## Basic Usage
+
+First, create a `get-query-client.ts` file in your project:
+
+```tsx
+// get-query-client.ts
+import { createGetQueryClient } from '@suspensive/react-query'
+
+export const { getQueryClient } = createGetQueryClient()
+```
+
+Then, import and use it in your code:
+
+```tsx
+// app/providers.tsx
+'use client'
+
+import { QueryClientProvider } from '@tanstack/react-query'
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import { getQueryClient } from '@/app/get-query-client'
+import type * as React from 'react'
+
+export default function Providers({ children }: { children: React.ReactNode }) {
+  const queryClient = getQueryClient()
+
+  return (
+    <QueryClientProvider client={queryClient}>
+      {children}
+      <ReactQueryDevtools />
+    </QueryClientProvider>
+  )
+}
+```
+
+## Configuration
+
+You can pass a `QueryClientConfig` to `createGetQueryClient` to customize the QueryClient instance:
+
+```tsx
+// get-query-client.ts
+import { createGetQueryClient } from '@suspensive/react-query'
+
+export const { getQueryClient } = createGetQueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 5000,
+      retry: 3,
+    },
+  },
+})
+```
+
+```tsx
+// app/providers.tsx
+'use client'
+
+import { QueryClientProvider } from '@tanstack/react-query'
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import { getQueryClient } from '@/app/get-query-client'
+import type * as React from 'react'
+
+export default function Providers({ children }: { children: React.ReactNode }) {
+  const queryClient = getQueryClient()
+
+  return (
+    <QueryClientProvider client={queryClient}>
+      {children}
+      <ReactQueryDevtools />
+    </QueryClientProvider>
+  )
+}
+```
+
+> **Warning:** **Browser Environment Behavior**
+> 
+> In the browser environment, the config provided when calling `createGetQueryClient` is used to create the QueryClient instance. The `getQueryClient` function does not accept any arguments and will always return the same singleton instance. This is intentional to maintain a stable singleton across re-renders.
+
+## Server-Side Behavior
+
+### Preventing Security Issues (Highest Priority)
+
+Sharing a QueryClient between requests on the server can lead to serious security vulnerabilities:
+
+- **Data leakage between users**: One user's data may be exposed to another user
+- **Sensitive information exposure**: Authentication tokens, personal information, etc. may be included in another user's request
+- **Incorrect cache state**: Cached data from a previous request may be incorrectly returned to the next request
+
+`getQueryClient` creates a new QueryClient instance for each request to completely prevent these security issues.
+
+> 💡 **Related documentation**: For more information about why QueryClient should not be shared between requests on the server, see the [TanStack Query SSR Guide - Initial Setup](https://tanstack.com/query/latest/docs/framework/react/guides/ssr#initial-setup) section.
+
+### Setting Cache Removal Time to Prevent OOM
+
+On the server, `getQueryClient` sets the cache removal time to `Infinity` to prevent memory leaks and OOM (Out of Memory) errors. This is an additional safety measure to address memory issues that can occur when servers handle many concurrent requests.
+
+`gcTime` (v5) or `cacheTime` (v4) represents the time until TanStack Query removes query data from the QueryClient's cache. By setting this to `Infinity` on the server:
+
+- Data is not automatically removed from the cache, keeping it available until the request completes
+- The [`isValidTimeout`](https://github.com/TanStack/query/blob/main/packages/query-core/src/utils.ts) check in TanStack Query prevents `setTimeout` scheduling in [`scheduleGc`](https://github.com/TanStack/query/blob/main/packages/query-core/src/removable.ts#L13-L21), completely eliminating the performance cost that would occur with many concurrent requests
+
+This behavior is **automatic and cannot be overridden** - even if you provide a different cache removal time value in your config, it will be set to `Infinity` on the server. (In v4, the `cacheTime` option is used; in v5, the `gcTime` option is used. See the Version Differences section below for details.)
+
+> 💡 **Related documentation**: For more information about high memory consumption on server and why `gcTime` defaults to `Infinity` on the server, see the [TanStack Query SSR Guide - High memory consumption on server](https://tanstack.com/query/latest/docs/framework/react/guides/ssr#high-memory-consumption-on-server) section.
+
+```tsx
+// get-query-client.ts
+import { createGetQueryClient } from '@suspensive/react-query'
+
+// Config is passed to createGetQueryClient, not getQueryClient
+export const { getQueryClient } = createGetQueryClient({
+  defaultOptions: {
+    queries: {
+      // On server, cache removal time is set to Infinity
+      // to keep cache alive until the request completes and prevent setTimeout scheduling
+      gcTime: 5000, // v5: This will be overridden to Infinity on server
+      // In v4, cacheTime is used and also overridden to Infinity
+    },
+  },
+})
+
+// On server: Cache removal time is always Infinity (OOM prevention)
+// On browser: Uses the provided value (or default)
+```
+
+### New Instance Per Request
+
+On the server, `getQueryClient` creates a new QueryClient instance for each call. This ensures that:
+
+- Each request has isolated cache state
+- No data leaks between different user requests
+- Proper cleanup when the request completes
+
+```tsx
+// get-query-client.ts
+import { createGetQueryClient } from '@suspensive/react-query'
+
+export const { getQueryClient } = createGetQueryClient()
+```
+
+```tsx
+// Server environment
+const queryClient1 = getQueryClient()
+const queryClient2 = getQueryClient()
+
+// queryClient1 !== queryClient2 (different instances)
+```
+
+## Browser-Side Behavior
+
+### Singleton Pattern
+
+In the browser, `getQueryClient` returns the same QueryClient instance across multiple calls. This ensures:
+
+- Cache is preserved across re-renders
+- Consistent state management
+- Optimal performance
+
+```tsx
+// get-query-client.ts
+import { createGetQueryClient } from '@suspensive/react-query'
+
+export const { getQueryClient } = createGetQueryClient()
+```
+
+```tsx
+// Browser environment
+const queryClient1 = getQueryClient()
+const queryClient2 = getQueryClient()
+
+// queryClient1 === queryClient2 (same instance)
+```
+
+## Use Cases
+
+### Next.js App Router
+
+```tsx
+// get-query-client.ts
+import { createGetQueryClient } from '@suspensive/react-query'
+
+export const { getQueryClient } = createGetQueryClient()
+```
+
+```tsx
+// app/providers.tsx
+'use client'
+
+import { QueryClientProvider } from '@tanstack/react-query'
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import { getQueryClient } from '@/app/get-query-client'
+import type * as React from 'react'
+
+export default function Providers({ children }: { children: React.ReactNode }) {
+  const queryClient = getQueryClient()
+
+  return (
+    <QueryClientProvider client={queryClient}>
+      {children}
+      <ReactQueryDevtools />
+    </QueryClientProvider>
+  )
+}
+```
+
+```tsx
+// app/layout.tsx
+import { Providers } from './providers'
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
+  return (
+    <html lang="en">
+      <body>
+        <Providers>{children}</Providers>
+      </body>
+    </html>
+  )
+}
+```
+
+### With Custom Configuration
+
+```tsx
+// get-query-client.ts
+import { createGetQueryClient } from '@suspensive/react-query'
+
+export const { getQueryClient } = createGetQueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 1000 * 60 * 5, // 5 minutes
+      gcTime: 1000 * 60 * 10, // 10 minutes (v5)
+      // cacheTime: 1000 * 60 * 10, // 10 minutes (v4)
+      retry: 2,
+      refetchOnWindowFocus: false,
+    },
+    mutations: {
+      retry: 1,
+    },
+  },
+})
+```
+
+```tsx
+// app/providers.tsx
+'use client'
+
+import { QueryClientProvider } from '@tanstack/react-query'
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import { getQueryClient } from '@/app/get-query-client'
+import type * as React from 'react'
+
+export default function Providers({ children }: { children: React.ReactNode }) {
+  const queryClient = getQueryClient()
+
+  return (
+    <QueryClientProvider client={queryClient}>
+      {children}
+      <ReactQueryDevtools />
+    </QueryClientProvider>
+  )
+}
+```
+
+## Version Differences
+
+### @tanstack/react-query v4
+
+In v4, use the `createGetQueryClient` function, and the cache time option is called `cacheTime`:
+
+```tsx
+// get-query-client.ts
+import { createGetQueryClient } from '@suspensive/react-query'
+
+export const { getQueryClient } = createGetQueryClient()
+```
+
+```tsx
+// get-query-client.ts
+import { createGetQueryClient } from '@suspensive/react-query'
+
+// Server: cacheTime is automatically set to Infinity
+export const { getQueryClient } = createGetQueryClient({
+  defaultOptions: {
+    queries: {
+      cacheTime: 5000, // Overridden to Infinity on server
+    },
+  },
+})
+```
+
+```tsx
+// app/providers.tsx
+'use client'
+
+import { QueryClientProvider } from '@tanstack/react-query'
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import { getQueryClient } from '@/app/get-query-client'
+import type * as React from 'react'
+
+export default function Providers({ children }: { children: React.ReactNode }) {
+  const queryClient = getQueryClient()
+
+  return (
+    <QueryClientProvider client={queryClient}>
+      {children}
+      <ReactQueryDevtools />
+    </QueryClientProvider>
+  )
+}
+```
+
+### @tanstack/react-query v5
+
+In v5, use the `createGetQueryClient` function, and the cache time option is called `gcTime` (garbage collection time):
+
+```tsx
+// get-query-client.ts
+import { createGetQueryClient } from '@suspensive/react-query'
+
+export const { getQueryClient } = createGetQueryClient()
+```
+
+```tsx
+// get-query-client.ts
+import { createGetQueryClient } from '@suspensive/react-query'
+
+// Server: gcTime is automatically set to Infinity
+export const { getQueryClient } = createGetQueryClient({
+  defaultOptions: {
+    queries: {
+      gcTime: 5000, // Overridden to Infinity on server
+    },
+  },
+})
+```
+
+```tsx
+// app/providers.tsx
+'use client'
+
+import { QueryClientProvider } from '@tanstack/react-query'
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import { getQueryClient } from '@/app/get-query-client'
+import type * as React from 'react'
+
+export default function Providers({ children }: { children: React.ReactNode }) {
+  const queryClient = getQueryClient()
+
+  return (
+    <QueryClientProvider client={queryClient}>
+      {children}
+      <ReactQueryDevtools />
+    </QueryClientProvider>
+  )
+}
+```
+
+## Important Notes
+
+- **Server safety**: Always use `getQueryClient` instead of creating `new QueryClient()` directly in SSR environments to ensure proper request isolation and OOM prevention.
+
+> **Error:** **Never use QueryClient as a global variable**
+> 
+> Even if you use `getQueryClient`, storing it in a global variable like `export const queryClient = getQueryClient()` in App Router and importing it elsewhere will cause the same security risks. The QueryClient instance will be shared between requests on the server, leading to data leakage between users. Always call `getQueryClient()` directly where you need it, rather than storing it in a global variable.
+
+- **Browser singleton**: The browser instance is a singleton. Configure your QueryClient when calling `createGetQueryClient`, as `getQueryClient` does not accept any arguments.
+
+- **Automatic OOM prevention**: The cache removal time override to `Infinity` on the server is automatic and cannot be disabled. This is a safety feature to prevent memory issues. (In v4, the `cacheTime` option is used; in v5, the `gcTime` option is used.)
+
+---
+
+## mutationOptions
+
+URL: /docs/react-query/mutationOptions
+
+# mutationOptions
+
+`mutationOptions` helps you easily reuse and consistently manage option objects for Mutations. This provides similar benefits to the ones offered by [`queryOptions`](/docs/react-query/queryOptions).
+
+```jsx /mutationOptions/
+import { mutationOptions, useMutation, Mutation } from '@suspensive/react-query'
+
+const editPostMutationOptions = (postId: number) =>
+  mutationOptions({
+    mutationFn: (content: string) => fetch(`https://example.com/posts/${postId}`, {
+      method: 'PATCH',
+      body: JSON.stringify({ content }),
+    }).then(res => res.json()),
+  })
+
+// You can directly use mutationOptions without creating custom mutation hooks.
+const editPostMutation = useMutation(editPostMutationOptions(1))
+
+// Directly use mutationOptions with <Mutation />.
+const Example = () => (
+  <Mutation {...editPostMutationOptions(1)}>
+    {({ mutate, isLoading }) => (
+      <div>
+        <p>{isLoading ? 'Updating...' : 'Latest updated'}</p>
+        <textarea onBlur={(e) => mutate(e.target.value)} disabled={isLoading} />
+      </div>
+    )}
+  </Mutation>
+)
+```
+
+---
+
+## usePrefetchQuery
+
+URL: /docs/react-query/usePrefetchQuery
+
+# usePrefetchQuery
+
+The usePrefetchQuery does not return anything, it should be used just to fire a prefetch during render, before a suspense boundary that wraps a component that uses useSuspenseQuery.
+
+```jsx /usePrefetchQuery/
+import { usePrefetchQuery, useSuspenseQuery } from '@suspensive/react-query'
+
+const PostPage = ({ postId }) => {
+  usePrefetchQuery({
+    queryKey: ['posts', postId],
+    queryFn: () => getPost(postId),
+  }) // Prefetch query before suspense boundary
+
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <Post postId={postId} />
+    </Suspense>
+  )
+}
+
+export const Post = ({ postId }) => {
+  const { data } = useSuspenseQuery({
+    queryKey: ['posts', postId],
+    queryFn: () => getPost(postId),
+  })
+
+  return <>...</>
+}
+```
+
+---
+
+## usePrefetchInfiniteQuery
+
+URL: /docs/react-query/usePrefetchInfiniteQuery
+
+# usePrefetchInfiniteQuery
+
+The usePrefetchInfiniteQuery does not return anything, it should be used just to fire a prefetch during render, before a suspense boundary that wraps a component that uses useSuspenseInfiniteQuery.
+
+```jsx /usePrefetchInfiniteQuery/
+import {
+  usePrefetchInfiniteQuery,
+  useSuspenseInfiniteQuery,
+} from '@suspensive/react-query'
+
+const PostsPage = ({ postId }) => {
+  usePrefetchInfiniteQuery({
+    queryKey: ['posts'],
+    queryFn: () => getPosts(),
+  }) // Prefetch query before suspense boundary
+
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <Posts />
+    </Suspense>
+  )
+}
+
+export const Posts = () => {
+  const postsInfiniteQuery = useSuspenseInfiniteQuery({
+    queryKey: ['posts'],
+    queryFn: () => getPosts(),
+  })
+
+  return <>...</>
+}
+```
 
 ---
 
