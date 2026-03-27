@@ -3,9 +3,6 @@ import type { MetaRecord } from 'nextra'
 export default {
   motivation: { title: 'Motivation' },
   installation: { title: 'Installation' },
-  'tanstack-query-compatibility': {
-    title: 'TanStack Query v4 & v5 Support',
-  },
   migration: { title: 'Migration Guide' },
   '--- API Reference': {
     type: 'separator',
