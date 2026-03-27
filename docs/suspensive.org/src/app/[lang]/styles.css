@@ -34,6 +34,11 @@ pre {
   @apply rounded-lg bg-zinc-900;
 }
 
+/* pre always has a dark background, so ensure the copy button icon is visible in both light and dark modes */
+pre button {
+  @apply text-gray-400 hover:text-gray-100;
+}
+
 .dark pre {
   @apply border-gray-900 bg-inherit;
 }
