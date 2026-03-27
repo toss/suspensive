@@ -1,15 +1,15 @@
 import { type NextRequest, NextResponse } from 'next/server'
-import { middleware as nextraMiddleware } from 'nextra/locales'
+import { proxy as nextraProxy } from 'nextra/locales'
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl
 
-  // Skip i18n middleware for .md and .txt files (LLMs.txt)
+  // Skip i18n proxy for .md and .txt files (LLMs.txt)
   if (pathname.endsWith('.md') || pathname.endsWith('.txt')) {
     return NextResponse.next()
   }
 
-  return nextraMiddleware(request)
+  return nextraProxy(request)
 }
 
 export const config = {
