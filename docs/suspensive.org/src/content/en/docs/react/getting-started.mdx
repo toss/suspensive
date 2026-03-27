@@ -1,5 +1,5 @@
 ---
-description: 'Get started with Suspensive in 5 minutes. Build your first Suspense boundary with ErrorBoundary, Suspense, and SuspenseQuery.'
+description: 'Get started with Suspensive in 3 minutes. Build your first Suspense boundary with ErrorBoundary and Suspense.'
 ---
 
 import { Steps } from 'nextra/components'
@@ -7,14 +7,14 @@ import { Callout } from '@/components'
 
 # Getting Started
 
-Build your first async-safe React page with Suspensive in 5 minutes.
+Build your first async-safe React page with Suspensive in 3 minutes.
 
 <Steps>
 
 ### Install packages
 
 ```shell npm2yarn
-npm install @suspensive/react @suspensive/react-query @tanstack/react-query
+npm install @suspensive/react
 ```
 
 ### Wrap your app with ErrorBoundary and Suspense
@@ -38,27 +38,6 @@ function App() {
         <UserProfile />
       </Suspense>
     </ErrorBoundary>
-  )
-}
-```
-
-### Fetch data with SuspenseQuery
-
-Use `<SuspenseQuery/>` to render async data as JSX — no hooks, no wrapper components:
-
-```tsx
-import { SuspenseQuery } from '@suspensive/react-query'
-
-function UserProfile() {
-  return (
-    <SuspenseQuery queryKey={['user']} queryFn={fetchUser}>
-      {({ data: user }) => (
-        <div>
-          <h2>{user.name}</h2>
-          <p>{user.email}</p>
-        </div>
-      )}
-    </SuspenseQuery>
   )
 }
 ```
@@ -109,5 +88,4 @@ function Dashboard() {
 
 - **[`<Suspense/>`](/docs/react/Suspense)** — SSR-safe Suspense with clientOnly and DefaultProps support
 - **[`<ErrorBoundary/>`](/docs/react/ErrorBoundary)** — Advanced error handling with shouldCatch filtering
-- **[`<SuspenseQuery/>`](/docs/react-query/SuspenseQuery)** — Declarative data fetching at the same depth
 - **[Suspensive vs react-error-boundary](/docs/react/comparison)** — Detailed feature comparison
