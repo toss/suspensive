@@ -1,5 +1,4 @@
 import { Table } from 'nextra/components'
-import { Callout } from '@/components'
 
 # 동기
 
@@ -25,13 +24,7 @@ TanStack Query는 강력하지만, 실제 애플리케이션에서 사용하면 
 
 ### v5는 구형 브라우저를 지원하지 않습니다
 
-<Callout type='info'>
-
-2.2.0 버전부터 @suspensive/react-query는 TanStack Query v4와 v5를 모두 지원합니다. 구형 브라우저를 지원하려면 v4와 함께 사용하세요.
-
-</Callout>
-
-TanStack Query v5는 ES private fields 때문에 Safari >= 15를 요구하지만, 많은 팀이 여전히 Safari 12–14를 지원해야 합니다. Suspensive의 [v4 & v5 지원](/docs/react-query/tanstack-query-compatibility)을 활용하면 v5 인터페이스를 사용하면서도 구형 브라우저 호환성을 유지할 수 있습니다.
+TanStack Query v5는 ES private fields 때문에 Safari >= 15를 요구하지만, 많은 팀이 여전히 Safari 12–14를 지원해야 합니다. [@suspensive/react-query-4를 설치](/docs/react-query/installation)하면 v5 인터페이스를 사용하면서도 구형 브라우저 호환성을 유지할 수 있습니다.
 
 <details>
 <summary>브라우저 호환성 비교</summary>
