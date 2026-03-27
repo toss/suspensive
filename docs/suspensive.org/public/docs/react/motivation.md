@@ -1,0 +1,39 @@
+---
+url: /docs/react/motivation
+---
+
+# Motivation
+
+React already has great primitives — Suspense, ErrorBoundary, lazy. But using them in real applications quickly exposes gaps. @suspensive/react fills those gaps.
+
+### Suspense breaks in SSR
+
+Use `<Suspense>` in Next.js and you'll hit this error:
+
+![Example banner](/img/suspense-in-ssr-error.png)
+
+With Suspensive's [`<Suspense/>`](/docs/react/Suspense), a single `clientOnly` prop skips SSR cleanly — no workarounds needed.
+
+### ErrorBoundary is too complicated
+
+`react-error-boundary` offers three different fallback interfaces. With Suspensive's [`<ErrorBoundary/>`](/docs/react/ErrorBoundary), you get one `fallback` prop, plus `shouldCatch` to filter which errors to handle.
+
+### Resetting ErrorBoundaries is painful
+
+Managing `resetKeys` across multiple `<ErrorBoundary/>`s is tedious. With Suspensive's [`<ErrorBoundaryGroup/>`](/docs/react/ErrorBoundaryGroup), a single call resets all of them.
+
+### Loading spinners flash
+
+A spinner that appears for 50ms is worse than no spinner. With Suspensive's [`<Delay/>`](/docs/react/Delay), brief loading states are hidden so users only see spinners when they actually need to wait.
+
+### Client-only code causes hydration mismatches
+
+With Suspensive's [`<ClientOnly/>`](/docs/react/ClientOnly) and [`useIsClient`](/docs/react/useIsClient), you get safe client-side rendering — no more `typeof window !== 'undefined'` scattered across your code.
+
+### Same props, everywhere
+
+Stop passing the same `fallback` to every `<Suspense/>`. With Suspensive's [`<DefaultPropsProvider/>`](/docs/react/DefaultPropsProvider), you set defaults once for all Suspensive components.
+
+### `React.lazy` can't preload or recover
+
+With Suspensive's [`lazy`](/docs/react/lazy), you get `.load()` for preloading and automatic retry on chunk failures — the kind of thing you only discover you need in production.

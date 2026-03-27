@@ -1,0 +1,66 @@
+---
+url: /docs/react-query/motivation
+---
+
+# Motivation
+
+TanStack Query is powerful, but using it in real applications reveals friction — hooks force unnecessary component splits, server-side prefetching requires boilerplate, and some APIs are simply missing. @suspensive/react-query removes that friction.
+
+### Hooks force you to split components
+
+To use `useSuspenseQuery`, you must create a separate child component below `<Suspense>`. With Suspensive's [`<SuspenseQuery/>`](/docs/react-query/SuspenseQuery), data fetching lives right in JSX — no wrapper components, no artificial nesting.
+
+The same applies to mutations and prefetching. With Suspensive's [`<Mutation/>`](/docs/react-query/Mutation) and [`<PrefetchQuery/>`](/docs/react-query/PrefetchQuery), you can use them inline, even inside loops and conditionals where hooks can't go.
+
+### Server-side prefetching is too much boilerplate
+
+Creating a `QueryClient`, calling `ensureQueryData` for each query, wrapping with `HydrationBoundary` — it adds up fast. With Suspensive's [`<QueriesHydration/>`](/docs/react-query/QueriesHydration), you declare your queries once and it handles prefetching, dehydration, and hydration automatically.
+
+### Server-side prefetching fails silently
+
+When `ensureQueryData` fails on the server, you have to write try-catch logic, render a fallback, and decide whether to retry on the client — for every query. With Suspensive's [`<QueriesHydration/>`](/docs/react-query/QueriesHydration), `skipSsrOnError` handles all of this: it can skip SSR and retry in the browser, or show a custom fallback while the client takes over. Combined with `timeout`, slow queries gracefully fall back to client-side rendering instead of blocking the entire page.
+
+### QueryClient leaks across requests on the server
+
+A shared `QueryClient` on the server means data from one user's request can leak into another's. With Suspensive's [`createGetQueryClient`](/docs/react-query/createGetQueryClient), you get a new instance per server request and a singleton in the browser — with safe GC defaults built in.
+
+### v5 drops support for older browsers
+
+TanStack Query v5 requires Safari >= 15 due to ES private fields, but many teams still need to support Safari 12–14. By [installing @suspensive/react-query-4](/docs/react-query/installation), you get the v5 interface while keeping older browser compatibility.
+
+<details>
+<summary>Browser compatibility comparison</summary>
+
+<br />
+
+  <thead>
+    
+      TanStack Query Browser Requirements
+      v4
+      v5
+    
+  </thead>
+  <tbody>
+    {[
+      { browser: 'Chrome', version4: '>= 73', version5: '>= 91' },
+      { browser: 'Firefox', version4: '>= 78', version5: '>= 90' },
+      { browser: 'Edge', version4: '>= 79', version5: '>= 91' },
+      { browser: 'Safari', version4: '>= 12.1', version5: '>= 15' },
+      { browser: 'iOS', version4: '>= 12.2', version5: '>= 15' },
+      { browser: 'Opera', version4: '>= 53', version5: '>= 77' },
+    ].map((item) => (
+      
+        {item.browser}
+        {item.version4}
+        {item.version5}
+      
+    ))}
+  </tbody>
+
+</details>
+
+### Official TanStack Query community resource
+
+@suspensive/react-query is registered as an official [TanStack Query community resource](https://tanstack.com/query/v4/docs/framework/react/community/suspensive-react-query). We actively maintain it and provide prompt support for issues.
+
+![TanStack Query Community Resources](/img/react-query_community-resources.png)

@@ -34,10 +34,3 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-_pagefind/
-
-
-# LLMs.txt generated files
-/public/llms.txt
-/public/llms-full.txt
-/public/docs/

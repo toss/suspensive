@@ -1,0 +1,53 @@
+---
+url: /docs/jotai/motivation
+---
+
+# Motivation
+
+Jotai's async atoms work with Suspense, but hooks hide which atoms trigger Suspense and where. @suspensive/jotai makes this visible.
+
+### Hooks hide what triggers Suspense
+
+When a child component uses `useAtom` with an async atom, the parent has no way to tell which children will suspend. Suspense boundaries become guesswork.
+
+```tsx
+const PaymentPage = () => (
+  <Suspense fallback={'pending...'}>
+    {/* Does UserInfo suspend? Which atom? No way to tell from here. */}
+    <UserInfo />
+    <ShoppingCart />
+  </Suspense>
+)
+```
+
+With Suspensive's [`<Atom/>`](/docs/jotai/Atom), [`<AtomValue/>`](/docs/jotai/AtomValue), and [`<SetAtom/>`](/docs/jotai/SetAtom), atom usage is declared right in JSX — you can see exactly what suspends and where.
+
+```tsx
+const PaymentPage = () => (
+  <Suspense fallback={'pending...'}>
+    {/* Clear: userAtom triggers Suspense here. */}
+    <Atom atom={userAtom}>{([data]) => <UserProfile {...data} />}</Atom>
+    <Atom atom={cartAtom}>{([data]) => <ShoppingCart {...data} />}</Atom>
+  </Suspense>
+)
+```
+
+### Works with Jotai's extension ecosystem
+
+Jotai has extensions like [tRPC](https://jotai.org/docs/extensions/trpc), [Query](https://jotai.org/docs/extensions/query), and [Cache](https://jotai.org/docs/extensions/cache). With Suspensive's `<Atom/>`, `<AtomValue/>`, and `<SetAtom/>`, atoms from these extensions work out of the box — no extra wrappers needed.
+
+```tsx
+import { AtomValue } from '@suspensive/jotai'
+import { Suspense, ErrorBoundary } from '@suspensive/react'
+import { userQueryAtom } from '~/queries' // atomWithSuspenseQuery from jotai-tanstack-query
+
+const MyPage = () => (
+  <ErrorBoundary fallback={({ error }) => <>{error.message}</>}>
+    <Suspense fallback={'pending...'}>
+      <AtomValue atom={userQueryAtom}>
+        {({ data: user }) => <UserProfile key={user.id} {...user} />}
+      </AtomValue>
+    </Suspense>
+  </ErrorBoundary>
+)
+```

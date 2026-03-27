@@ -1,0 +1,36 @@
+---
+url: /docs/react-query/usePrefetchInfiniteQuery
+---
+
+# usePrefetchInfiniteQuery
+
+The usePrefetchInfiniteQuery does not return anything, it should be used just to fire a prefetch during render, before a suspense boundary that wraps a component that uses useSuspenseInfiniteQuery.
+
+```jsx /usePrefetchInfiniteQuery/
+import {
+  usePrefetchInfiniteQuery,
+  useSuspenseInfiniteQuery,
+} from '@suspensive/react-query'
+
+const PostsPage = ({ postId }) => {
+  usePrefetchInfiniteQuery({
+    queryKey: ['posts'],
+    queryFn: () => getPosts(),
+  }) // Prefetch query before suspense boundary
+
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <Posts />
+    </Suspense>
+  )
+}
+
+export const Posts = () => {
+  const postsInfiniteQuery = useSuspenseInfiniteQuery({
+    queryKey: ['posts'],
+    queryFn: () => getPosts(),
+  })
+
+  return <>...</>
+}
+```

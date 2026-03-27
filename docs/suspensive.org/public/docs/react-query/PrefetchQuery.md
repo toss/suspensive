@@ -1,0 +1,37 @@
+---
+url: /docs/react-query/PrefetchQuery
+---
+
+# PrefetchQuery
+
+A component that allows you to use usePrefetchQuery in JSX, avoiding the limitations of React hooks.
+
+```jsx /PrefetchQuery/
+import { PrefetchQuery, useSuspenseQuery } from '@suspensive/react-query'
+
+const PostsPage = () => {
+  const { data: posts } = useSuspenseQuery({
+    queryKey: ['posts'],
+    queryFn: () => getPosts(),
+  })
+
+  return posts.map((post) => (
+    <div key={post.id}>
+      {/* 🚫 We can not invoke usePrefetchQuery like below because of React Hook rules
+      // usePrefetchQuery({
+      //   queryKey: ['posts', post.id, 'comments'],
+      //   queryFn: () => getPostComments(post.id),
+      // })
+
+      // ✅ We can invoke usePrefetchQuery for each post comments query before entering Post Comments page */}
+      <PrefetchQuery
+        queryKey={['posts', post.id, 'comments']}
+        queryFn={() => getPostComments(post.id)}
+      />
+      <h2>{post.title}</h2>
+      <p>{post.description}</p>
+      <Link to={`/posts/${post.id}/comments`}>See comments</Link>
+    </div>
+  ))
+}
+```

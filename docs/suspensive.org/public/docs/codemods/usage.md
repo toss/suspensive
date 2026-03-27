@@ -1,0 +1,23 @@
+---
+url: /docs/codemods/usage
+---
+
+# Usage
+
+You can run Suspensive's Codemods with a single command, easily using npx without the need to install it as a dependency.
+
+Navigate to your project folder in the terminal and run the following command.
+
+```bash filename="Terminal"
+npx @suspensive/codemods <transform> <path>
+```
+
+Adjust `<transform>` and `<path>` to match the environment where you want to apply the codemod.
+
+- `<transform>`: name of transform
+- `<path>`: files or directory to transform
+
+You can use the following options.
+
+- `--dry`: Output the transformation result without modifying the file.
+- `--print`: Output the transformation result to the console.

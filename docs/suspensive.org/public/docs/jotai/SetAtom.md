@@ -1,0 +1,57 @@
+---
+url: /docs/jotai/SetAtom
+---
+
+# SetAtom
+
+The SetAtom component provides an interface similar to Jotai's [useSetAtom](https://jotai.org/docs/core/use-atom#usesetatom) hook as props, allowing declarative usage.
+
+### props.atom
+
+You can use Jotai's atom as is.
+
+```tsx /SetAtom/
+import { SetAtom } from '@suspensive/jotai'
+import { atom } from 'jotai'
+
+const switchAtom = atom(false)
+
+const Example = () => (
+  <SetAtom atom={switchAtom}>
+    {(setCount) => (
+      <>
+        <button onClick={() => setCount(true)}>Set True</button>
+        <button onClick={() => setCount(false)}>Set False</button>
+      </>
+    )}
+  </SetAtom>
+)
+```
+
+For Async Atom, it delegates the pending state of the Promise to the parent Suspense until the Promise resolves.
+
+```tsx /SetAtom/
+import { SetAtom } from '@suspensive/jotai'
+import { Suspense } from '@suspensive/react'
+import { atom } from 'jotai'
+
+const request = async () => fetch('https://...').then((res) => res.json())
+const baseAtom = atom(0)
+
+const Example = () => (
+  <Suspense fallback={'pending...'}>
+    <SetAtom atom={baseAtom}>
+      {(setValue) => (
+        <>
+          {/* Suspense will be triggered until the Promise resolves. */}
+          <button onClick={() => setValue(request())}>request</button>
+        </>
+      )}
+    </SetAtom>
+  </Suspense>
+)
+```
+
+### Motivation
+
+Similar to [`<Atom/>`](https://suspensive.org/docs/jotai/Atom), `<SetAtom/>` also does not clearly reveal which atoms are used internally in child components and whether they trigger Suspense.
