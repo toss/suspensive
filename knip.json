@@ -1,10 +1,9 @@
 {
   "$schema": "https://unpkg.com/knip@5/schema.json",
   "ignore": ["**/test-utils/**"],
-  "ignoreDependencies": ["prettier-plugin-sort-re-exports"],
   "workspaces": {
     ".": {
-      "ignore": ["packlint.config.mjs"]
+      "ignore": ["packlint.config.mjs", "oxfmt.config.ts"]
     },
     "docs/suspensive.org": {
       "ignoreDependencies": ["sharp", "postcss", "server-only"],
