@@ -15,7 +15,7 @@ import {
 import type { ReactNode } from 'react'
 import { getDictionary, getDirection } from '../_dictionaries/get-dictionary'
 import './styles.css'
-import { Logo } from './_components/Logo'
+import { NavbarLogo } from './_components/Logo'
 import { Providers } from './Providers'
 import { SandPackCSS } from '@/components/Sandpack/SandPackCSS'
 import { STORAGE_KEYS } from '@/constants'
@@ -79,7 +79,7 @@ export default async function RootLayout({
             search={<Search placeholder={dictionary.search.placeholder} />}
             navbar={
               <Navbar
-                logo={<Logo />}
+                logo={<NavbarLogo />}
                 projectLink="https://github.com/toss/suspensive"
                 chatLink="https://discord.gg/RFcR9WWmCH"
               >
