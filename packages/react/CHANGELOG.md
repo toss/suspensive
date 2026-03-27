@@ -1,5 +1,11 @@
 # @suspensive/react
 
+## 3.20.1
+
+### Patch Changes
+
+- [#1935](https://github.com/toss/suspensive/pull/1935) [`1041865`](https://github.com/toss/suspensive/commit/10418656384cef148da65943cdb919d7b990122c) Thanks [@manudeli](https://github.com/manudeli)! - fix(react-query): update installation instructions for clarity
+
 ## 3.20.0
 
 ## 3.19.6

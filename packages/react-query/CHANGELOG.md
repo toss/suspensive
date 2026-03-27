@@ -1,5 +1,15 @@
 # @suspensive/react-query
 
+## 3.20.1
+
+### Patch Changes
+
+- [#1935](https://github.com/toss/suspensive/pull/1935) [`1041865`](https://github.com/toss/suspensive/commit/10418656384cef148da65943cdb919d7b990122c) Thanks [@manudeli](https://github.com/manudeli)! - fix(react-query): update installation instructions for clarity
+
+- Updated dependencies []:
+  - @suspensive/react-query-4@3.20.1
+  - @suspensive/react-query-5@3.20.1
+
 ## 3.20.0
 
 ### Minor Changes
