@@ -1,4 +1,9 @@
-import { LogoImage, TrustedBy } from '@/components'
+---
+description: "Suspensive fills the gaps in React's Suspense, Error Boundary, and async rendering — with declarative components and hooks for real-world applications."
+---
+
+import Link from 'next/link'
+import { Callout, LogoImage, TrustedBy } from '@/components'
 
 <div className="my-20 px-12 md:my-40 md:px-24">
   <LogoImage size={2.4} />
@@ -135,9 +140,10 @@ style Z color:#1AA3FF,text-decoration:underline
 style Y color:#1AA3FF,text-decoration:underline
 ```
 
-<TrustedBy
-  title="Trusted by"
-  description="Used by teams at these companies"
-  callToActionText="Using Suspensive at your company?"
-  addCompanyButtonText="Add your company"
-/>
+<Callout type="info">
+
+**Ready to get started?** Follow the [Getting Started guide](/docs/react/getting-started) to set up Suspensive in 5 minutes, or see how it compares to [react-error-boundary](/docs/react/comparison).
+
+</Callout>
+
+<TrustedBy text="33k+ weekly downloads" />

@@ -1,4 +1,7 @@
+export { CallToAction } from './CallToAction'
 export { Callout } from './Callout'
+export { ComparisonTable } from './ComparisonTable'
+export { FeatureGrid } from './FeatureGrid'
 export { HomePage } from './HomePage'
 export { Sandpack } from './Sandpack'
 export { BubbleChart } from './BubbleChart'

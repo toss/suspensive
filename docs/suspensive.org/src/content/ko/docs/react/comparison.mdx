@@ -1,0 +1,163 @@
+---
+description: '@suspensive/react ErrorBoundary를 react-error-boundary, @sentry/react, React 클래스 컴포넌트와 비교합니다. 기능 차이, 코드 예제, 마이그레이션 방법을 확인하세요.'
+---
+
+import { Tabs } from 'nextra/components'
+import { Callout } from '@/components'
+
+# Suspensive vs react-error-boundary
+
+React용 에러 바운더리 라이브러리를 선택하고 계신가요? `@suspensive/react`가 `react-error-boundary`, `@sentry/react`, React 내장 클래스 컴포넌트 방식과 어떻게 다른지 비교해 보세요.
+
+## 기능 비교
+
+| Feature                                  | @suspensive/react | react-error-boundary   | @sentry/react          | React Class Component  |
+| ---------------------------------------- | ----------------- | ---------------------- | ---------------------- | ---------------------- |
+| Basic error catching                     | ✅                | ✅                     | ✅                     | ✅                     |
+| Fallback UI with error & reset           | ✅                | ✅                     | ✅                     | ⚠️ (Manual)            |
+| Reset with resetKeys                     | ✅                | ✅                     | ❌                     | ⚠️ (Manual)            |
+| onReset callback                         | ✅                | ✅                     | ✅                     | ⚠️ (Manual)            |
+| onError callback                         | ✅                | ✅                     | ✅                     | ✅ (componentDidCatch) |
+| Conditional error catching (shouldCatch) | ✅                | ❌                     | ❌                     | ⚠️ (Manual)            |
+| Fallback error handling                  | ✅ (To parent)    | ❌ (Recursive)         | ❌ (Recursive)         | ⚠️ (Manual)            |
+| useErrorBoundary hook                    | ✅                | ✅                     | ❌                     | ❌                     |
+| useErrorBoundaryFallbackProps hook       | ✅                | ❌                     | ❌                     | ❌                     |
+| ErrorBoundaryGroup                       | ✅                | ❌                     | ❌                     | ❌                     |
+| HOC support                              | ✅ (with)         | ✅ (withErrorBoundary) | ✅ (withErrorBoundary) | ❌                     |
+| TypeScript error type inference          | ✅ (Advanced)     | ✅ (Basic)             | ✅ (Basic)             | ⚠️ (Manual)            |
+| Declarative API                          | ✅                | ✅                     | ✅                     | ❌                     |
+| Automatic error reporting                | ❌                | ❌                     | ✅ (To Sentry)         | ❌                     |
+
+## Suspensive만의 차별점
+
+### shouldCatch — 원하는 에러만 잡기
+
+다른 어떤 솔루션과 달리, `@suspensive/react`는 ErrorBoundary가 어떤 에러를 잡을지 필터링할 수 있습니다. Error 생성자, 콜백 함수, 또는 boolean 값을 전달하세요:
+
+```tsx
+// 이 바운더리에서는 유효성 검증 에러만 잡기
+<ErrorBoundary shouldCatch={ZodError} fallback={<ValidationErrorUI />}>
+  <Form />
+</ErrorBoundary>
+
+// 네트워크 에러를 제외한 모든 에러 잡기
+<ErrorBoundary
+  shouldCatch={(error) => !(error instanceof NetworkError)}
+  fallback={<GeneralErrorUI />}
+>
+  <App />
+</ErrorBoundary>
+```
+
+이를 통해 부모와 자식 바운더리가 서로 다른 에러 타입을 처리하는 계층화된 에러 처리 전략을 구현할 수 있습니다. 이는 `react-error-boundary`에서는 불가능한 기능입니다.
+
+### ErrorBoundaryGroup — 여러 바운더리를 한 번에 리셋
+
+여러 에러 바운더리를 관리하고 계신가요? `react-error-boundary`에서는 모든 바운더리에 props를 통해 `resetKeys`를 전달해야 합니다. Suspensive에서는 `ErrorBoundaryGroup`으로 감싸기만 하면 됩니다:
+
+```tsx
+<ErrorBoundaryGroup>
+  <ErrorBoundaryGroup.Consumer>
+    {({ reset }) => <button onClick={reset}>Reset All</button>}
+  </ErrorBoundaryGroup.Consumer>
+  <ErrorBoundary fallback={<UserError />}>
+    <UserSection />
+  </ErrorBoundary>
+  <ErrorBoundary fallback={<PostsError />}>
+    <PostsSection />
+  </ErrorBoundary>
+</ErrorBoundaryGroup>
+```
+
+prop drilling이 필요 없습니다. 상태 관리도 필요 없습니다. 모든 바운더리가 함께 리셋됩니다.
+
+### 안전한 Fallback 에러 처리
+
+`react-error-boundary`에서는 fallback 컴포넌트가 에러를 던지면 재귀적 catch 루프가 발생합니다. `@suspensive/react`에서는 fallback 컴포넌트에서 던져진 에러가 **부모** ErrorBoundary로 전달되어, 예측 가능하고 안전한 에러 전파를 제공합니다.
+
+### useErrorBoundaryFallbackProps — Fallback에서 Prop Drilling 없이 사용
+
+fallback 트리 내부 어디서든 props를 전달하지 않고도 `error`와 `reset`에 접근할 수 있습니다:
+
+```tsx
+const DeepFallbackChild = () => {
+  const { error, reset } = useErrorBoundaryFallbackProps()
+  return <button onClick={reset}>{error.message}</button>
+}
+```
+
+이 기능은 콜백 함수를 props로 전달할 수 없는 React Server Component 환경에서 특히 유용합니다.
+
+## 코드 비교
+
+<Tabs items={['@suspensive/react', 'react-error-boundary']}>
+<Tabs.Tab>
+
+```tsx
+import { ErrorBoundary } from '@suspensive/react'
+
+const App = () => (
+  <ErrorBoundary
+    fallback={({ error, reset }) => (
+      <div>
+        <p>{error.message}</p>
+        <button onClick={reset}>Retry</button>
+      </div>
+    )}
+    onError={(error) => logToService(error)}
+  >
+    <MyComponent />
+  </ErrorBoundary>
+)
+```
+
+</Tabs.Tab>
+<Tabs.Tab>
+
+```tsx
+import { ErrorBoundary } from 'react-error-boundary'
+
+const App = () => (
+  <ErrorBoundary
+    fallbackRender={({ error, resetErrorBoundary }) => (
+      <div>
+        <p>{error.message}</p>
+        <button onClick={resetErrorBoundary}>Retry</button>
+      </div>
+    )}
+    onError={(error) => logToService(error)}
+  >
+    <MyComponent />
+  </ErrorBoundary>
+)
+```
+
+</Tabs.Tab>
+</Tabs>
+
+## ErrorBoundary 그 이상
+
+Suspensive는 단순한 ErrorBoundary 라이브러리가 아닙니다. React의 비동기 렌더링을 위한 완전한 툴킷입니다:
+
+- **[`<Suspense/>`](/docs/react/Suspense)** — SSR 지원과 `clientOnly` prop이 포함된 향상된 React Suspense
+- **[`<Delay/>`](/docs/react/Delay)** — 로딩 상태 깜빡임 UX 문제 방지
+- **[`<ClientOnly/>`](/docs/react/ClientOnly)** — 안전한 클라이언트 전용 렌더링
+- **[`<SuspenseQuery/>`](/docs/react-query/SuspenseQuery)** — hook 제약 없는 선언적 데이터 페칭
+- **[`<DefaultPropsProvider/>`](/docs/react/DefaultPropsProvider)** — 모든 Suspense/Delay 컴포넌트를 위한 전역 기본 fallback
+
+## react-error-boundary에서 마이그레이션
+
+마이그레이션은 간단합니다. API가 의도적으로 유사하게 설계되었습니다:
+
+| react-error-boundary                                | @suspensive/react      |
+| --------------------------------------------------- | ---------------------- |
+| `fallbackRender` / `FallbackComponent` / `fallback` | `fallback` (unified)   |
+| `resetErrorBoundary`                                | `reset`                |
+| `withErrorBoundary()`                               | `ErrorBoundary.with()` |
+| `useErrorBoundary()`                                | `useErrorBoundary()`   |
+
+```bash
+npm install @suspensive/react
+```
+
+자세한 문서는 [ErrorBoundary API 레퍼런스](/docs/react/ErrorBoundary)를 참고하세요.

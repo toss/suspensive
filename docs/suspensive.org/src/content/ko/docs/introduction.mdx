@@ -1,4 +1,9 @@
-import { LogoImage, TrustedBy } from '@/components'
+---
+description: 'Suspensive는 React의 Suspense, Error Boundary, 비동기 렌더링의 빈틈을 채워주는 선언적 컴포넌트와 훅 라이브러리입니다.'
+---
+
+import Link from 'next/link'
+import { Callout, LogoImage, TrustedBy } from '@/components'
 
 <div className="my-20 px-12 md:my-40 md:px-24">
   <LogoImage size={2.4} />
@@ -135,9 +140,10 @@ style Z color:#1AA3FF,text-decoration:underline
 style Y color:#1AA3FF,text-decoration:underline
 ```
 
-<TrustedBy
-  title="사용 중인 기업"
-  description="다음 기업에서 Suspensive를 사용하고 있습니다"
-  callToActionText="귀사에서 Suspensive를 사용하고 계신가요?"
-  addCompanyButtonText="회사 정보를 추가해주세요"
-/>
+<Callout type="info">
+
+**시작할 준비가 되셨나요?** [시작하기 가이드](/docs/react/getting-started)를 따라 5분 만에 Suspensive를 설정하거나, [react-error-boundary와의 비교](/docs/react/comparison)를 확인하세요.
+
+</Callout>
+
+<TrustedBy text="주간 다운로드 33k+" />

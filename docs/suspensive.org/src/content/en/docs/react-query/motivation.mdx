@@ -1,5 +1,8 @@
+---
+description: 'Why @suspensive/react-query exists: eliminating unnecessary component splits, simplifying server-side prefetching, and filling TanStack Query gaps.'
+---
+
 import { Table } from 'nextra/components'
-import { Callout } from '@/components'
 
 # Motivation
 
@@ -25,13 +28,7 @@ A shared `QueryClient` on the server means data from one user's request can leak
 
 ### v5 drops support for older browsers
 
-<Callout type='info'>
-
-From version 2.2.0 onwards, @suspensive/react-query supports both TanStack Query v4 and v5. To support older browsers, pair it with v4.
-
-</Callout>
-
-TanStack Query v5 requires Safari >= 15 due to ES private fields, but many teams still need to support Safari 12–14. With Suspensive's [v4 & v5 support](/docs/react-query/tanstack-query-compatibility), you get the v5 interface while keeping older browser compatibility.
+TanStack Query v5 requires Safari >= 15 due to ES private fields, but many teams still need to support Safari 12–14. By [installing @suspensive/react-query-4](/docs/react-query/installation), you get the v5 interface while keeping older browser compatibility.
 
 <details>
 <summary>Browser compatibility comparison</summary>

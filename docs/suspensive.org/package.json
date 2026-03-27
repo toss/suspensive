@@ -14,11 +14,12 @@
   "author": "Jonghyeon Ko <jonghyeon@toss.im>",
   "type": "module",
   "scripts": {
-    "build": "next build --webpack && node scripts/llms-txt/generate-llms-txt.ts && pagefind --site .next/server/app --output-path public/_pagefind",
+    "build": "next build --webpack",
     "ci:eslint": "eslint \"**/*.{ts,tsx,cts,mts,mdx}\"",
     "ci:type": "tsc --noEmit",
     "clean": "rimraf ./.next ./node_modules",
     "dev": "next dev -p 4000 --webpack",
+    "postbuild": "node scripts/llms-txt/generate-llms-txt.ts && pagefind --site .next/server/app --output-path public/_pagefind",
     "start": "next start -p 4000"
   },
   "dependencies": {

@@ -1,5 +1,7 @@
 # @suspensive/react-query-5
 
+## 3.20.1
+
 ## 3.20.0
 
 ### Minor Changes

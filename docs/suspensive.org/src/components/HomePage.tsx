@@ -26,11 +26,15 @@ const formatCodeBlocks = (desc: string) => backtickToCodeBlock(escapeHtml(desc))
 
 export const HomePage = ({
   buttonText,
+  tagline,
+  subtitle,
   items,
   children,
 }: {
   buttonText: string
-  items: { title: string; desc: string }[]
+  tagline?: string
+  subtitle?: string
+  items?: { title: string; desc: string }[]
   children?: ReactNode
 }) => {
   return (
@@ -50,6 +54,16 @@ export const HomePage = ({
             <div className="align-center mx-6 mt-24 -mb-6 flex justify-center pt-18 pb-12">
               <LogoImage size={2.4} />
             </div>
+            {tagline && (
+              <h1 className="mx-4 text-2xl font-bold tracking-tight md:text-4xl">
+                {tagline}
+              </h1>
+            )}
+            {subtitle && (
+              <p className="mx-4 mt-3 max-w-xl text-sm opacity-60 md:text-lg">
+                {subtitle}
+              </p>
+            )}
             <NpmInstallCopyButton />
           </div>
 
@@ -65,7 +79,7 @@ export const HomePage = ({
                 <GlowEffect />
                 <Magnetic intensity={0.3} springOptions={{ bounce: 0.1 }}>
                   <Tilt rotationFactor={10} isReverse>
-                    <Link href={`/docs/introduction`}>
+                    <Link href={`/docs/react/getting-started`}>
                       <motion.button
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
@@ -107,9 +121,9 @@ export const HomePage = ({
           </Delay>
         </div>
 
-        <div className="h-24 md:h-40" />
+        {items && items.length > 0 && <div className="h-24 md:h-40" />}
         <div className="container mx-auto flex flex-col items-start justify-between gap-8 px-4 md:flex-row">
-          {items.map(({ title, desc }, index) => (
+          {items?.map(({ title, desc }, index) => (
             <motion.div
               initial={{ opacity: 0 }}
               animate={{
@@ -129,7 +143,7 @@ export const HomePage = ({
         </div>
       </motion.section>
       <motion.section
-        initial={{ y: 30, opacity: 0 }}
+        initial={{ y: 20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ delay: 0.5, duration: 0.2 }}
         className="homepage-content container"
@@ -140,89 +154,101 @@ export const HomePage = ({
   )
 }
 
-interface Vertex {
-  pos: number[]
-  velocity: number[]
-  distance: number
+interface Star {
+  x: number
+  y: number
   size: number
+  baseAlpha: number
+  twinkleSpeed: number
+  twinkleOffset: number
+  driftX: number
+  driftY: number
+  driftRadius: number
 }
 
-const TILE = 80
-const OFFSET_FACTOR = 0.75
-const RANDOM_Z_FACTOR = 2
-const VELOCITY_CONSTANT = 8
-const RANDOM_DISTANCE_MAX = 900
-const RANDOM_SIZE_FACTOR = 2
+const STAR_DENSITY = 0.00015 // stars per pixel²
 
 const StarCanvasFar = () => {
   const animationFrameIdRef = useRef<number | null>(null)
   const resizeAnimationFrameIdRef = useRef(0)
   const onRenderRef = useRef<VoidFunction | null>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
+  const starsRef = useRef<Star[]>([])
+  const prevSizeRef = useRef({ w: 0, h: 0 })
   const { resolvedTheme } = useTheme()
 
   useEffect(() => {
     const canvas = canvasRef.current
     const parentElement = canvas?.parentElement
     const ctx = canvas?.getContext('2d')
-    const vertexMap: Record<string, Vertex> = {}
     const startTime = Date.now()
 
-    function getVertex(sx: number, sy: number): Vertex {
-      const id = `${sx}x${sy}`
-
-      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-      if (!vertexMap[id]) {
-        const x = TILE * sx + TILE * 1.5 * Math.random() - TILE * OFFSET_FACTOR
-        const y = TILE * sy + TILE * 1.5 * Math.random() - TILE * OFFSET_FACTOR
-        const z = Math.random() * RANDOM_Z_FACTOR
-        const vx = 1 + Math.random() * VELOCITY_CONSTANT
-        const vy = 1 + Math.random() * VELOCITY_CONSTANT
-        const distance = 10 + Math.random() * RANDOM_DISTANCE_MAX
-        const size = 0.1 + Math.random() * RANDOM_SIZE_FACTOR
-
-        vertexMap[id] = {
-          pos: [x, y, z],
-          velocity: [vx, vy],
-          size,
-          distance,
-        }
+    function generateStars(width: number, height: number) {
+      const count = Math.floor(width * height * STAR_DENSITY)
+      const stars: Star[] = []
+      for (let i = 0; i < count; i++) {
+        // Power distribution: many tiny stars, few bright ones
+        const sizePow = Math.pow(Math.random(), 3)
+        stars.push({
+          x: Math.random() * width,
+          y: Math.random() * height,
+          size: 0.3 + sizePow * 2.2,
+          baseAlpha: 0.15 + Math.random() * 0.65,
+          twinkleSpeed: 0.5 + Math.random() * 2.5,
+          twinkleOffset: Math.random() * Math.PI * 2,
+          driftX: Math.random() * Math.PI * 2,
+          driftY: Math.random() * Math.PI * 2,
+          driftRadius: 2 + Math.random() * 8,
+        })
       }
-      return vertexMap[id]
+      return stars
     }
 
     onRenderRef.current = () => {
       const width = canvas?.width ?? 0
       const height = canvas?.height ?? 0
-      const distTime = Date.now() - startTime
+      if (!ctx || width === 0) return
 
-      ctx?.clearRect(0, 0, width, height)
+      const elapsed = (Date.now() - startTime) / 1000
+      ctx.clearRect(0, 0, width, height)
 
-      const maxSX = Math.ceil(width / TILE)
-      const maxSY = Math.ceil(height / TILE)
+      const rgb = resolvedTheme === 'dark' ? '255,255,255' : '0,0,0'
 
-      for (let sx = 0; sx <= maxSX; ++sx) {
-        for (let sy = 0; sy <= maxSY; ++sy) {
-          const { velocity, distance, pos, size } = getVertex(sx, sy)
-          const scalar = Math.sqrt(
-            velocity[0] * velocity[0] + velocity[1] * velocity[1]
+      for (const star of starsRef.current) {
+        // Gentle sine drift instead of linear bounce
+        const x =
+          star.x + Math.sin(elapsed * 0.15 + star.driftX) * star.driftRadius
+        const y =
+          star.y + Math.cos(elapsed * 0.12 + star.driftY) * star.driftRadius
+
+        // Twinkle: smooth alpha oscillation
+        const twinkle =
+          0.5 + 0.5 * Math.sin(elapsed * star.twinkleSpeed + star.twinkleOffset)
+        const alpha = star.baseAlpha * (0.4 + 0.6 * twinkle)
+
+        if (star.size > 1.2) {
+          // Larger stars get a soft glow
+          const gradient = ctx.createRadialGradient(
+            x,
+            y,
+            0,
+            x,
+            y,
+            star.size * 2.5
           )
-          const totalDistance = (distTime * scalar) / 1000
-          const isReverse = Math.floor(totalDistance / distance) % 2 !== 0
-          let nextDistance = totalDistance % distance
-
-          if (isReverse) {
-            nextDistance = distance - nextDistance
-          }
-          const x = pos[0] + (nextDistance / scalar) * velocity[0]
-          const y = pos[1] + (nextDistance / scalar) * velocity[1]
-          const a = 1 - pos[2]
-
-          ctx?.beginPath()
-          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-          ctx!.fillStyle = `rgba(${resolvedTheme === 'dark' ? '255, 255, 255' : '0, 0, 0'}, ${a})`
-          ctx?.arc(x, y, size, 0, 2 * Math.PI)
-          ctx?.fill()
+          gradient.addColorStop(0, `rgba(${rgb},${alpha})`)
+          gradient.addColorStop(0.4, `rgba(${rgb},${alpha * 0.3})`)
+          gradient.addColorStop(1, `rgba(${rgb},0)`)
+          ctx.beginPath()
+          ctx.fillStyle = gradient
+          ctx.arc(x, y, star.size * 2.5, 0, Math.PI * 2)
+          ctx.fill()
+        } else {
+          // Small stars: simple dot
+          ctx.beginPath()
+          ctx.fillStyle = `rgba(${rgb},${alpha})`
+          ctx.arc(x, y, star.size, 0, Math.PI * 2)
+          ctx.fill()
         }
       }
     }
@@ -236,6 +262,14 @@ const StarCanvasFar = () => {
           canvas.width = inlineSize
           canvas.height = blockSize
           canvas.style.cssText += `width: ${inlineSize}px; height: ${blockSize}px;`
+          // Regenerate stars only when size changes significantly
+          if (
+            Math.abs(inlineSize - prevSizeRef.current.w) > 50 ||
+            Math.abs(blockSize - prevSizeRef.current.h) > 50
+          ) {
+            starsRef.current = generateStars(inlineSize, blockSize)
+            prevSizeRef.current = { w: inlineSize, h: blockSize }
+          }
           onRenderRef.current?.()
         }
       })
@@ -275,82 +309,71 @@ const StarCanvasFar = () => {
   )
 }
 
-const TILE_CLOSE = 600
+interface GlowOrb {
+  x: number
+  y: number
+  size: number
+  alpha: number
+  driftX: number
+  driftY: number
+  driftRadius: number
+}
+
+const GLOW_COUNT = 5
 
 const StarCanvasClose = () => {
   const animationFrameIdRef = useRef<number | null>(null)
   const resizeAnimationFrameIdRef = useRef(0)
   const onRenderRef = useRef<VoidFunction | null>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
+  const orbsRef = useRef<GlowOrb[]>([])
   const { resolvedTheme } = useTheme()
 
   useEffect(() => {
     const canvas = canvasRef.current
     const parentElement = canvas?.parentElement
     const ctx = canvas?.getContext('2d')
-    const vertexMap: Record<string, Vertex> = {}
     const startTime = Date.now()
 
-    function getVertex(sx: number, sy: number): Vertex {
-      const id = `${sx}x${sy}`
-
-      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-      if (!vertexMap[id]) {
-        const x =
-          TILE_CLOSE * sx + TILE_CLOSE * 1.5 * Math.random() - TILE_CLOSE * 0.75
-        const y =
-          TILE_CLOSE * sy + TILE_CLOSE * 1.5 * Math.random() - TILE_CLOSE * 0.75
-        const z = Math.random() * 1
-        const vx = 1 + Math.random() * 200
-        const vy = 1 + Math.random() * 200
-        const distance = 3000 + Math.random() * 2000
-        const size = 100 + Math.random() * 100
-
-        vertexMap[id] = {
-          pos: [x, y, z],
-          velocity: [vx, vy],
-          size,
-          distance,
-        }
+    function generateOrbs(width: number, height: number) {
+      const orbs: GlowOrb[] = []
+      for (let i = 0; i < GLOW_COUNT; i++) {
+        orbs.push({
+          x: Math.random() * width,
+          y: Math.random() * height,
+          size: 100 + Math.random() * 150,
+          alpha: 0.3 + Math.random() * 0.7,
+          driftX: Math.random() * Math.PI * 2,
+          driftY: Math.random() * Math.PI * 2,
+          driftRadius: 50 + Math.random() * 150,
+        })
       }
-      return vertexMap[id]
+      return orbs
     }
 
     onRenderRef.current = () => {
       const width = canvas?.width ?? 0
       const height = canvas?.height ?? 0
-      const distTime = Date.now() - startTime
+      if (!ctx || width === 0) return
 
-      ctx?.clearRect(0, 0, width, height)
+      const elapsed = (Date.now() - startTime) / 1000
+      ctx.clearRect(0, 0, width, height)
 
-      const maxSX = Math.ceil(width / TILE_CLOSE)
-      const maxSY = Math.ceil(height / TILE_CLOSE)
+      const rgb = resolvedTheme === 'dark' ? '255,255,255' : '0,0,0'
 
-      for (let sx = 0; sx <= maxSX; ++sx) {
-        for (let sy = 0; sy <= maxSY; ++sy) {
-          const { velocity, distance, pos, size } = getVertex(sx, sy)
-          const scalar = Math.sqrt(
-            velocity[0] * velocity[0] + velocity[1] * velocity[1]
-          )
-          const totalDistance = (distTime * scalar) / 1000
-          const isReverse = Math.floor(totalDistance / distance) % 2 !== 0
-          let nextDistance = totalDistance % distance
+      for (const orb of orbsRef.current) {
+        const x =
+          orb.x + Math.sin(elapsed * 0.08 + orb.driftX) * orb.driftRadius
+        const y =
+          orb.y + Math.cos(elapsed * 0.06 + orb.driftY) * orb.driftRadius
 
-          if (isReverse) {
-            nextDistance = distance - nextDistance
-          }
-          const x = pos[0] + (nextDistance / scalar) * velocity[0]
-          const y = pos[1] + (nextDistance / scalar) * velocity[1]
-          const a = 1 - pos[2]
-
-          ctx?.beginPath()
-          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-          ctx!.fillStyle = `rgba(${resolvedTheme === 'dark' ? '255, 255, 255' : '0, 0, 0'}, ${a})`
-          ctx?.arc(x, y, size, 0, 2 * Math.PI)
-          ctx?.fill()
-        }
+        ctx.beginPath()
+        ctx.fillStyle = `rgba(${rgb},${orb.alpha})`
+        ctx.arc(x, y, orb.size, 0, Math.PI * 2)
+        ctx.fill()
       }
     }
+
     const observer = new ResizeObserver(() => {
       const inlineSize = parentElement?.offsetWidth ?? 0
       const blockSize = parentElement?.offsetHeight ?? 0
@@ -361,6 +384,7 @@ const StarCanvasClose = () => {
           canvas.width = inlineSize
           canvas.height = blockSize
           canvas.style.cssText += `width: ${inlineSize}px; height: ${blockSize}px; filter: blur(100px); opacity: 0.15;`
+          orbsRef.current = generateOrbs(inlineSize, blockSize)
           onRenderRef.current?.()
         }
       })
