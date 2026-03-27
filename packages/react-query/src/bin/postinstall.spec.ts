@@ -1,7 +1,9 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest'
+import { showDeprecationWarning } from './utils/deprecationWarning'
 import { getPackageJson, getTanStackReactQueryPackageJson } from './utils/package'
 import { switchVersion } from './utils/switchVersion'
 
+vi.mock('./utils/deprecationWarning')
 vi.mock('./utils/package')
 vi.mock('./utils/switchVersion')
 
@@ -38,6 +40,7 @@ describe('postinstall', () => {
     expect(mockSwitchVersion).toHaveBeenCalledWith(4)
     expect(mockSwitchVersion).toHaveBeenCalledTimes(1)
     expect(mockConsoleError).not.toHaveBeenCalled()
+    expect(showDeprecationWarning).toHaveBeenCalledTimes(1)
   })
 
   it('should switch to @suspensive/react-query-5 when @tanstack/react-query@^5 is installed', async () => {
@@ -47,6 +50,7 @@ describe('postinstall', () => {
     expect(mockSwitchVersion).toHaveBeenCalledWith(5)
     expect(mockSwitchVersion).toHaveBeenCalledTimes(1)
     expect(mockConsoleError).not.toHaveBeenCalled()
+    expect(showDeprecationWarning).toHaveBeenCalledTimes(1)
   })
 
   it('should show warning when unsupported version is installed', async () => {
@@ -55,5 +59,6 @@ describe('postinstall', () => {
     expect(mockGetTanStackReactQueryPackageJson).toHaveBeenCalledTimes(1)
     expect(mockSwitchVersion).not.toHaveBeenCalled()
     expect(mockConsoleError).toHaveBeenCalledWith('[@suspensive/react-query]', 'version v3.3.4 is not supported.')
+    expect(showDeprecationWarning).toHaveBeenCalledTimes(1)
   })
 })
