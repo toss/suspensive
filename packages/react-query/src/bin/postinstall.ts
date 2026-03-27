@@ -21,6 +21,7 @@ switch (major) {
 
 logger.warn(`
   Installing @suspensive/react-query directly is deprecated.
+  This package will be removed in the next major version. Only @suspensive/react-query-4 and @suspensive/react-query-5 will remain.
   Please use npm aliases to install the version-specific package instead:
 
   npm install @suspensive/react-query@npm:@suspensive/react-query-${major} @tanstack/react-query@${major}
