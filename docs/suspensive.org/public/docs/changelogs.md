@@ -1,5 +1,0 @@
----
-url: /docs/changelogs
----
-
-# Changelogs
