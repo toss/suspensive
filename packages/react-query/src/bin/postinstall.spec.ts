@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest'
-import { getTanStackReactQueryPackageJson } from './utils/package'
+import { getPackageJson, getTanStackReactQueryPackageJson } from './utils/package'
 import { switchVersion } from './utils/switchVersion'
 
 vi.mock('./utils/package')
@@ -8,6 +8,7 @@ vi.mock('./utils/switchVersion')
 describe('postinstall', () => {
   const mockConsoleError = vi.spyOn(console, 'error')
   const mockGetTanStackReactQueryPackageJson = vi.mocked(getTanStackReactQueryPackageJson)
+  const mockGetPackageJson = vi.mocked(getPackageJson)
   const mockSwitchVersion = vi.mocked(switchVersion)
 
   const runPostInstall = async (version: string) => {
@@ -15,6 +16,11 @@ describe('postinstall', () => {
       name: 'tanstack-query',
       version,
       description: `TanStack Query v${version.split('.')[0]}`,
+    })
+    mockGetPackageJson.mockReturnValue({
+      name: '@suspensive/react-query',
+      version: '3.20.0',
+      description: 'Suspensive interfaces for @tanstack/react-query',
     })
 
     await import('./postinstall')
