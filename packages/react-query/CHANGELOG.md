@@ -1,5 +1,65 @@
 # @suspensive/react-query
 
+## 3.20.1
+
+### Patch Changes
+
+- [#1935](https://github.com/toss/suspensive/pull/1935) [`1041865`](https://github.com/toss/suspensive/commit/10418656384cef148da65943cdb919d7b990122c) Thanks [@manudeli](https://github.com/manudeli)! - fix(react-query): update installation instructions for clarity
+
+- Updated dependencies []:
+  - @suspensive/react-query-4@3.20.1
+  - @suspensive/react-query-5@3.20.1
+
+## 3.20.0
+
+### Minor Changes
+
+- [#1927](https://github.com/toss/suspensive/pull/1927) [`34607e4`](https://github.com/toss/suspensive/commit/34607e46788aa26a62da09e8b301cb68a5de615f) Thanks [@manudeli](https://github.com/manudeli)! - feat(react-query): add timeout cancellation support to QueriesHydration
+
+### Patch Changes
+
+- Updated dependencies [[`34607e4`](https://github.com/toss/suspensive/commit/34607e46788aa26a62da09e8b301cb68a5de615f)]:
+  - @suspensive/react-query-4@3.20.0
+  - @suspensive/react-query-5@3.20.0
+
+## 3.19.6
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @suspensive/react-query-4@3.19.6
+  - @suspensive/react-query-5@3.19.6
+
+## 3.19.5
+
+### Patch Changes
+
+- [#1918](https://github.com/toss/suspensive/pull/1918) [`47571c4`](https://github.com/toss/suspensive/commit/47571c47877d3616a3812a8079facf08d0129269) Thanks [@manudeli](https://github.com/manudeli)! - fix(\*): remove banner option from tsdown configurations and add 'use client' directive to multiple React components
+
+- Updated dependencies [[`47571c4`](https://github.com/toss/suspensive/commit/47571c47877d3616a3812a8079facf08d0129269)]:
+  - @suspensive/react-query-4@3.19.5
+  - @suspensive/react-query-5@3.19.5
+
+## 3.19.4
+
+### Patch Changes
+
+- [#1921](https://github.com/toss/suspensive/pull/1921) [`8d82753`](https://github.com/toss/suspensive/commit/8d8275349327f1bfce0659d0944a485bcb21cabb) Thanks [@manudeli](https://github.com/manudeli)! - fix(tsdown): enable unbundling option in configuration
+
+- Updated dependencies [[`8d82753`](https://github.com/toss/suspensive/commit/8d8275349327f1bfce0659d0944a485bcb21cabb)]:
+  - @suspensive/react-query-4@3.19.4
+  - @suspensive/react-query-5@3.19.4
+
+## 3.19.3
+
+### Patch Changes
+
+- [#1913](https://github.com/toss/suspensive/pull/1913) [`0034bd7`](https://github.com/toss/suspensive/commit/0034bd700f16157b89b748cb668cf4a97e97b34f) Thanks [@manudeli](https://github.com/manudeli)! - fix(\*): tsdown 0.18.0 -> 0.21.3
+
+- Updated dependencies [[`0034bd7`](https://github.com/toss/suspensive/commit/0034bd700f16157b89b748cb668cf4a97e97b34f)]:
+  - @suspensive/react-query-4@3.19.3
+  - @suspensive/react-query-5@3.19.3
+
 ## 3.19.2
 
 ### Patch Changes

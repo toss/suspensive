@@ -1,6 +1,43 @@
+---
+description: '로딩 상태의 깜빡임을 방지하는 Delay 컴포넌트. 밀리초 단위로 자식 렌더링을 지연하거나 render props로 시간 기반 가시성 제어.'
+---
+
 import { Callout, Sandpack } from '@/components'
 
 # Delay
+
+## Delay를 사용하는 이유
+
+데이터가 빠르게 로드되면(200ms 이내), 스피너를 보여주는 것은 **로딩 상태의 깜빡임(flash-of-loading-state)** 을 만듭니다 — 반응적으로 느껴지기보다 깨진 것처럼 보이는 짧은 깜빡임입니다. `<Delay/>`는 로딩 UI가 실제로 필요할 때까지 보류하여 이 문제를 해결합니다.
+
+**권장 `ms` 값:**
+
+- **100–300ms** 대부분의 UI — 빠른 네트워크에서는 스피너를 숨기고, 느린 네트워크에서만 표시
+- **500ms+** 지연된 피드백이 허용되는 비핵심 영역
+
+`<Delay/>`는 `<Suspense/>`와 함께 사용하도록 설계되었습니다:
+
+```tsx
+<Suspense
+  fallback={
+    <Delay ms={200}>
+      {({ isDelayed }) => (
+        <Spinner
+          style={{ opacity: isDelayed ? 1 : 0, transition: 'opacity 200ms' }}
+        />
+      )}
+    </Delay>
+  }
+>
+  <Content />
+</Suspense>
+```
+
+render prop 패턴으로 `isDelayed`를 사용하면 갑작스러운 등장 대신 부드러운 fade-in 전환이 가능합니다.
+
+---
+
+## 사용법
 
 이 컴포넌트는 두 가지 방식으로 사용할 수 있습니다.
 

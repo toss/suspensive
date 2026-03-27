@@ -1,11 +1,15 @@
 ---
-title: All in one for Suspense
+title: All-in-one for React Suspense
+description: 'Suspensive — declarative ErrorBoundary, Suspense, Delay, ClientOnly, and TanStack Query integration for production React applications. Drop-in alternative to react-error-boundary with shouldCatch, ErrorBoundaryGroup, and SSR support.'
 ---
 
-import Image from 'next/image'
 import Link from 'next/link'
 import {
+  CallToAction,
+  ComparisonTable,
+  FeatureGrid,
   HomePage,
+  Sandpack,
   Scrollycoding,
   SectionDescription,
   SectionTitle,
@@ -14,33 +18,189 @@ import {
 
 <HomePage
   buttonText="Get Started"
-  items={[
-    {
-      title: 'All Declarative APIs ready',
-      desc: '`<Suspense/>`, `<ErrorBoundary/>`, `<ErrorBoundaryGroup/>`, etc. are provided. Use them easily without any efforts.',
-    },
-    {
-      title: 'Zero peer dependency, Only React',
-      desc: "It is simply extensions of react's concepts. Named friendly with originals like just `<Suspense/>`, `<ErrorBoundary/>`, `<ErrorBoundaryGroup/>`.",
-    },
-    {
-      title: 'Suspense in SSR easily',
-      desc: 'Suspensive provide clientOnly that make developer can adopt React Suspense gradually in Server-side rendering environment.',
-    },
-  ]}
+  tagline=""
+  subtitle=""
+  items={[]}
 >
 
-<SectionTitle>Best practices to use Suspense</SectionTitle>
-<br />
-<SectionDescription>
-  Focus on success case, not on the error, loading case.
-</SectionDescription>
-<br />
+<div className="mx-auto flex max-w-6xl flex-col justify-center gap-2 px-4 text-center lg:flex-row lg:items-baseline lg:gap-4 lg:text-left">
+  <h2 className="shrink-0 text-2xl font-bold tracking-tight md:text-3xl">
+    React Suspense, complete.
+  </h2>
+  <p className="shrink-0 text-base text-gray-700 md:text-xl dark:text-gray-400">
+    ErrorBoundary, Suspense, Delay, and more — so you can focus on the success
+    case.
+  </p>
+</div>
+
+<div className="h-4 md:h-6" />
+
+<FeatureGrid
+  linkText="Learn more"
+  items={[
+    {
+      title: '<ErrorBoundary />',
+      description:
+        'Declarative error handling with fallback, resetKeys, onError, and shouldCatch for selective error catching.',
+      href: '/docs/react/ErrorBoundary',
+      span: 2,
+      code: '<ErrorBoundary\n  shouldCatch={NetworkError}\n  fallback={({ error, reset }) => <ErrorUI error={error} onRetry={reset} />}\n>\n  <App />\n</ErrorBoundary>',
+    },
+    {
+      title: '<ErrorBoundaryGroup />',
+      description:
+        'Reset multiple ErrorBoundaries at once. No prop drilling needed.',
+      href: '/docs/react/ErrorBoundaryGroup',
+    },
+    {
+      title: '<Suspense clientOnly />',
+      description:
+        'SSR-safe Suspense boundary. Avoids hydration mismatches in Next.js without dynamic() or useEffect guards.',
+      href: '/docs/react/Suspense',
+    },
+    {
+      title: '<Delay ms={200} />',
+      description:
+        'Prevent flash-of-loading-state. Show spinners only when loading actually takes time. Supports render props for fade-in.',
+      href: '/docs/react/Delay',
+    },
+    {
+      title: '<DefaultPropsProvider />',
+      description:
+        'Set global default fallbacks for Suspense and Delay. Override per-component when needed.',
+      href: '/docs/react/DefaultPropsProvider',
+    },
+    {
+      title: '<SuspenseQuery />',
+      description:
+        'Declarative data fetching as JSX. No hooks, no wrapper components. Works with TanStack Query.',
+      href: '/docs/react-query/SuspenseQuery',
+      span: 2,
+      code: '<SuspenseQuery {...userQueryOptions()}>\n  {({ data: user }) => <UserProfile user={user} />}\n</SuspenseQuery>',
+    },
+    {
+      title: '<ClientOnly />',
+      description:
+        'Render components only on the client side. Control server/client rendering boundaries.',
+      href: '/docs/react/ClientOnly',
+    },
+  ]}
+/>
+
+<div className="h-12 md:h-20" />
+
+<TrustedBy text="33k+ weekly downloads" />
+
+<div className="h-12 md:h-20" />
+
+<div className="mx-auto max-w-4xl px-4">
+  <div className="mx-auto flex max-w-6xl flex-col justify-center gap-2 text-center lg:flex-row lg:items-baseline lg:gap-4 lg:text-left">
+    <h2 className="shrink-0 text-2xl font-bold tracking-tight md:text-3xl">
+      Already using react-error-boundary?
+    </h2>
+    <p className="shrink-0 text-base text-gray-700 md:text-xl dark:text-gray-400">
+      You're on the right track.
+    </p>
+  </div>
+  <div className="h-4 md:h-6" />
+  <p className="text-sm leading-relaxed text-gray-700 lg:text-base dark:text-gray-400">
+    react-error-boundary is a great library that made declarative error handling
+    practical in React. Suspensive's ErrorBoundary adds a few things we found
+    useful in production —{' '}
+    <strong className="text-black dark:text-white">shouldCatch</strong> for
+    catching only specific errors,{' '}
+    <strong className="text-black dark:text-white">ErrorBoundaryGroup</strong>{' '}
+    for resetting multiple boundaries at once, and safe fallback error
+    propagation. We also needed to solve{' '}
+    <strong className="text-black dark:text-white">loading states</strong>,{' '}
+    <strong className="text-black dark:text-white">SSR hydration</strong>,{' '}
+    <strong className="text-black dark:text-white">flash-of-loading UX</strong>,
+    and <strong className="text-black dark:text-white">data fetching</strong> —
+    so we built those too, all in one package.
+  </p>
+  <div className="h-3 md:h-4" />
+  <ComparisonTable
+    headers={['Suspensive', 'react-error-boundary', 'React Class']}
+    groups={[
+      {
+        label: 'Error Boundary',
+        rows: [
+          {
+            feature: 'Selective error catching (shouldCatch)',
+            values: [true, false, false],
+          },
+          {
+            feature: 'Group reset (ErrorBoundaryGroup)',
+            values: [true, false, false],
+          },
+          {
+            feature: 'useErrorBoundaryFallbackProps',
+            values: [true, false, false],
+          },
+          {
+            feature: 'Safe fallback error propagation',
+            values: [true, false, false],
+          },
+          { feature: 'Declarative ErrorBoundary', values: [true, true, false] },
+          { feature: 'resetKeys', values: [true, true, false] },
+          { feature: 'Basic error catching', values: [true, true, true] },
+        ],
+      },
+      {
+        label: 'Async Rendering',
+        rows: [
+          {
+            feature: 'SSR-safe Suspense (clientOnly)',
+            values: [true, false, false],
+          },
+          {
+            feature: 'Flash-of-loading prevention (Delay)',
+            values: [true, false, false],
+          },
+          {
+            feature: 'Global default fallbacks (DefaultPropsProvider)',
+            values: [true, false, false],
+          },
+          {
+            feature: 'Declarative data fetching (SuspenseQuery)',
+            values: [true, false, false],
+          },
+          {
+            feature: 'Client-only rendering (ClientOnly)',
+            values: [true, false, false],
+          },
+        ],
+      },
+    ]}
+  />
+  <div className="h-2 md:h-3" />
+  <p className="text-sm text-gray-700 dark:text-gray-400">
+    <Link
+      href="/docs/react/comparison"
+      className="underline underline-offset-4 transition-colors hover:text-gray-900 dark:hover:text-gray-100"
+    >
+      See the full comparison →
+    </Link>
+  </p>
+</div>
+
+<div className="h-12 md:h-20" />
+
+<div className="mx-auto flex max-w-6xl flex-col justify-center gap-2 px-4 text-center lg:flex-row lg:items-baseline lg:gap-4 lg:text-left">
+  <h2 className="shrink-0 text-2xl font-bold tracking-tight md:text-3xl">
+    See it in action
+  </h2>
+  <p className="shrink-0 text-base text-gray-700 md:text-xl dark:text-gray-400">
+    How loading, errors, and recovery actually work.
+  </p>
+</div>
+
+<div className="h-4 md:h-6" />
 
 <Scrollycoding>
-# !!steps If you write code without Suspense with TanStack Query, a representative library, you would write it like this.
+# !!steps Without Suspense, a typical TanStack Query page looks like this.
 
-In this case, you can check `isLoading` and `isError` to handle loading and error states, and remove `undefined` from data in TypeScript.
+You check `isLoading` and `isError` to handle loading and error states, and remove `undefined` from data in TypeScript.
 
 ```jsx ! Page.jsx
 import { useQuery } from '@tanstack/react-query'
@@ -79,57 +239,10 @@ const Page = () => {
 }
 ```
 
-# !!steps But let's assume that there are more APIs to query.
+# !!steps Suspense makes it type-safe. But hooks force you to split components.
 
-If there are more APIs to query, the code to handle the loading state and error state becomes more complicated.
-
-```jsx ! Page.jsx
-import { useQuery } from '@tanstack/react-query'
-
-const Page = () => {
-  const userQuery = useQuery(userQueryOptions())
-  const postsQuery = useQuery({
-    ...postsQueryOptions(),
-    select: (posts) => posts.filter(({ isPublic }) => isPublic),
-  })
-  const promotionsQuery = useQuery(promotionsQueryOptions())
-  // The more this part increases, the more complicated the code becomes.
-
-  if (
-    userQuery.isLoading ||
-    postsQuery.isLoading ||
-    promotionsQuery.isLoading // You have to add this every time.
-  ) {
-    return 'loading...'
-  }
-
-  if (
-    userQuery.isError ||
-    postsQuery.isError ||
-    promotionsQuery.isError // You have to add this every time.
-  ) {
-    return 'error'
-  }
-
-  return (
-    <Fragment>
-      <UserProfile {...userQuery.data} />
-      {postsQuery.data.map((post) => (
-        <PostListItem key={post.id} {...post} />
-      ))}
-      {promotionsQuery.data.map((promotion) => (
-        <Promotion key={promotion.id} {...promotion} />
-      ))}
-      {/* You have to add this every time. */}
-    </Fragment>
-  )
-}
-```
-
-# !!steps Suspense makes the code concise in terms of type. However, the depth of the component inevitably increases.
-
-`useSuspenseQuery` can handle loading and error states externally using `Suspense` and `ErrorBoundary`.
-However, since `useSuspenseQuery` is a hook, the component must be separated to place `Suspense` and `ErrorBoundary` in the parent, which causes the depth to increase.
+`useSuspenseQuery` handles loading and error states externally via `Suspense` and `ErrorBoundary`.
+But since it's a hook, you must create separate components — adding unnecessary depth.
 
 ```jsx ! Page.jsx
 import { ErrorBoundary, Suspense } from '@suspensive/react'
@@ -166,11 +279,11 @@ const PromotionList = ({ userId }) => {
 }
 ```
 
-# !!steps Using Suspensive's SuspenseQuery component, you can avoid the constraints of hooks and write code more easily at the same depth.
+# !!steps With Suspensive, everything stays at the same depth.
 
-1. Using `SuspenseQuery`, you can remove depth.
+1. `SuspenseQuery` eliminates the need for wrapper components.
 
-2. You remove the component called UserInfo, leaving only the presentational component like UserProfile, which makes it easier to test.
+2. Only presentational components like UserProfile remain, making them easier to test.
 
 ```jsx ! Page.jsx
 import { ErrorBoundary, Suspense } from '@suspensive/react'
@@ -207,279 +320,266 @@ const Page = () => (
 
 </Scrollycoding>
 
-<SectionTitle>This is why we make Suspensive</SectionTitle>
-<br />
-<SectionDescription>Suspense, ClientOnly, DefaultProps</SectionDescription>
-<br />
+<div className="h-12 md:h-20" />
 
-<Scrollycoding>
-# !!steps When using frameworks like Next.js, it can be difficult to use Suspense on the server.
-
-Or, there are times when you don't want to use `Suspense` on the server.
-
-```jsx ! Page.jsx
-import { Suspense } from '@suspensive/react'
-import { SuspenseQuery } from '@suspensive/react-query'
-
-const Page = () => (
-  <Suspense fallback={<Spinner />}>
-    <SuspenseQuery {...notNeedSEOQueryOptions()}>
-      {({ data }) => <NotNeedSEO {...data} />}
-    </SuspenseQuery>
-  </Suspense>
-)
-```
-
-# !!steps In this case, you can easily solve it by using Suspensive's ClientOnly.
-
-Just wrap `ClientOnly` and it will be solved.
-
-```jsx ! Page.jsx
-import { Suspense, ClientOnly } from '@suspensive/react'
-import { SuspenseQuery } from '@suspensive/react-query'
-
-const Page = () => (
-  <Suspense fallback={<Spinner />}>
-    <ClientOnly fallback={<InsteadOfChildrenOnlyInServer />}>
-      <SuspenseQuery {...notNeedSEOQueryOptions()}>
-        {({ data }) => <NotNeedSEO {...data} />}
-      </SuspenseQuery>
-    </ClientOnly>
-  </Suspense>
-)
-```
-
-# !!steps or Suspense in Suspense can easily handle these cases by using the clientOnly prop.
-
-Easy, right?
-
-```jsx ! Page.jsx
-import { Suspense } from '@suspensive/react'
-import { SuspenseQuery } from '@suspensive/react-query'
-
-const Page = () => (
-  <Suspense fallback={<Spinner />} clientOnly>
-    <SuspenseQuery {...notNeedSEOQueryOptions()}>
-      {({ data }) => <NotNeedSEO {...data} />}
-    </SuspenseQuery>
-  </Suspense>
-)
-```
-
-# !!steps However, when developing, it is sometimes difficult to add fallbacks to Suspense one by one.
-
-Especially when working on a product like Admin, there are cases where designers do not specify each one, so you want to provide default values.
-In that case, try using `DefaultProps`.
-
-```jsx ! Page.jsx
-import { Suspense, DefaultProps, DefaultPropsProvider } from '@suspensive/react'
-import { SuspenseQuery } from '@suspensive/react-query'
-
-const defaultProps = new DefaultProps({
-  Suspense: {
-    fallback: <Spinner />,
-  },
-})
-
-const Page = () => (
-  <DefaultPropsProvider defaultProps={defaultProps}>
-    <Suspense clientOnly>
-      <SuspenseQuery {...notNeedSEOQueryOptions()}>
-        {({ data }) => <NotNeedSEO {...data} />}
-      </SuspenseQuery>
-    </Suspense>
-  </DefaultPropsProvider>
-)
-```
-
-# !!steps Of course, if you want to override the default fallback, just add it.
-
-The designer asked me to support `Skeleton` instead of the default `Spinner` in this part~! Just add it.
-
-```jsx ! Page.jsx
-import { Suspense, DefaultProps, DefaultPropsProvider } from '@suspensive/react'
-import { SuspenseQuery } from '@suspensive/react-query'
-
-const defaultProps = new DefaultProps({
-  Suspense: {
-    fallback: <Spinner />,
-  },
-})
-
-const Page = () => (
-  <DefaultPropsProvider defaultProps={defaultProps}>
-    <Suspense fallback={<Skeleton />} clientOnly>
-      <SuspenseQuery {...notNeedSEOQueryOptions()}>
-        {({ data }) => <NotNeedSEO {...data} />}
-      </SuspenseQuery>
-    </Suspense>
-  </DefaultPropsProvider>
-)
-```
-
-</Scrollycoding>
-
-<SectionDescription>ErrorBoundary, ErrorBoundaryGroup</SectionDescription>
-<br />
-
-<Scrollycoding>
-
-# !!steps You should use resetKeys when you want to reset the ErrorBoundary from outside its fallback.
-
-This has the issue of requiring `resetKey` to be passed down for deeply nested components. Additionally, you need to create a state to pass the `resetKey`.
-
-```jsx ! Page.jsx
-import { ErrorBoundary } from '@suspensive/react'
-
-const Page = () => {
-  const [resetKey, setResetKey] = useState(0)
-
-  return (
-    <Fragment>
-      <button onClick={() => setResetKey((prev) => prev + 1)}>
-        error reset
-      </button>
-      <ErrorBoundary resetKeys={[resetKey]} fallback="error">
-        <ThrowErrorComponent />
-      </ErrorBoundary>
-      <DeepComponent resetKeys={[resetKey]} />
-    </Fragment>
-  )
-}
-
-const DeepComponent = ({ resetKeys }) => (
-  <ErrorBoundary resetKeys={resetKeys} fallback="error">
-    <ThrowErrorComponent />
-    <ErrorBoundary resetKeys={resetKeys} fallback="error">
-      <ThrowErrorComponent />
-    </ErrorBoundary>
-  </ErrorBoundary>
-)
-```
-
-# !!steps By combining the ErrorBoundary and ErrorBoundaryGroup provided by Suspensive, you can solve these issues in a very straightforward way.
-
-Try using `ErrorBoundaryGroup`.
-
-```jsx ! Page.jsx
-import { ErrorBoundary, ErrorBoundaryGroup } from '@suspensive/react'
-
-const Page = () => (
-  <ErrorBoundaryGroup>
-    <ErrorBoundaryGroup.Consumer>
-      {({ reset }) => <button onClick={reset}>error reset</button>}
-    </ErrorBoundaryGroup.Consumer>
-    <ErrorBoundary fallback="error">
-      <ThrowErrorComponent />
-    </ErrorBoundary>
-    <DeepComponent />
-  </ErrorBoundaryGroup>
-)
-
-const DeepComponent = () => (
-  <ErrorBoundary fallback="error">
-    <ThrowErrorComponent />
-    <ErrorBoundary fallback="error">
-      <ThrowErrorComponent />
-    </ErrorBoundary>
-  </ErrorBoundary>
-)
-```
-
-# !!steps However, when using ErrorBoundary, there are times when you may want to handle only specific errors.
-
-In such cases, try using the `shouldCatch` feature provided by Suspensive's `ErrorBoundary`. By passing an Error Constructor to `shouldCatch`, you can handle only the specified errors.
-
-```jsx ! Page.jsx
-import { ErrorBoundary, ErrorBoundaryGroup } from '@suspensive/react'
-
-const Page = () => (
-  <ErrorBoundaryGroup>
-    <ErrorBoundaryGroup.Consumer>
-      {({ reset }) => <button onClick={reset}>error reset</button>}
-    </ErrorBoundaryGroup.Consumer>
-    <ErrorBoundary fallback="error">
-      <ThrowErrorComponent />
-    </ErrorBoundary>
-    <DeepComponent />
-  </ErrorBoundaryGroup>
-)
-
-const DeepComponent = () => (
-  <ErrorBoundary fallback="error">
-    <ThrowErrorComponent />
-    <ErrorBoundary
-      shouldCatch={ZodError}
-      fallback="this will be render on ZodError in children"
-    >
-      <ThrowZodErrorComponent />
-    </ErrorBoundary>
-  </ErrorBoundary>
-)
-```
-
-# !!steps Alternatively, you can exclude that specific error from being handled.
-
-In such cases, you can handle it by passing a callback to `shouldCatch`.
-
-```jsx ! Page.jsx
-import { ErrorBoundary, ErrorBoundaryGroup } from '@suspensive/react'
-
-const Page = () => (
-  <ErrorBoundaryGroup>
-    <ErrorBoundaryGroup.Consumer>
-      {({ reset }) => <button onClick={reset}>error reset</button>}
-    </ErrorBoundaryGroup.Consumer>
-    <ErrorBoundary fallback="error">
-      <ThrowErrorComponent />
-    </ErrorBoundary>
-    <DeepComponent />
-  </ErrorBoundaryGroup>
-)
-
-const DeepComponent = () => (
-  <ErrorBoundary fallback="error">
-    <ThrowErrorComponent />
-    <ErrorBoundary
-      shouldCatch={(e) => !(e instanceof ZodError)}
-      fallback="this will be render on Error except only ZodError in children"
-    >
-      <ThrowZodErrorOrErrorComponent />
-    </ErrorBoundary>
-  </ErrorBoundary>
-)
-```
-
-</Scrollycoding>
-
-<TrustedBy
-  title="Trusted by"
-  description="Used by teams at these companies"
-  callToActionText="Using Suspensive at your company?"
-  addCompanyButtonText="Add your company"
-/>
-
-<SectionTitle>Thank you for contributing to Suspensive</SectionTitle>
-<br />
-<SectionDescription>Driven by the Community</SectionDescription>
-<br />
-
-<div
-  style={{
-    textAlign: 'center',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-  }}
->
-  <div style={{ height: 20 }} />
-  <Link
-    href="https://github.com/toss/suspensive/graphs/contributors"
-    target="_blank"
-    style={{ textAlign: 'center' }}
-  >
-    <img src="https://contrib.rocks/image?repo=toss/suspensive" alt="" />
-  </Link>
+<div className="mx-auto flex max-w-6xl flex-col justify-center gap-2 px-4 text-center lg:flex-row lg:items-baseline lg:gap-4 lg:text-left">
+  <h2 className="shrink-0 text-2xl font-bold tracking-tight md:text-3xl">
+    Playground
+  </h2>
+  <p className="shrink-0 text-base text-gray-700 md:text-xl dark:text-gray-400">
+    Edit, break, and recover — all in the browser.
+  </p>
 </div>
+
+<div className="h-4 md:h-6" />
+
+<div className="mx-auto max-w-6xl">
+<Sandpack>
+
+```tsx Example.tsx active
+import {
+  ErrorBoundary,
+  ErrorBoundaryGroup,
+  Suspense,
+  Delay,
+} from '@suspensive/react'
+import { SuspenseQuery } from '@suspensive/react-query'
+import { QueryErrorResetBoundary, queryOptions } from '@tanstack/react-query'
+
+// Define query options — same pattern as TanStack Query
+const userQueryOptions = () =>
+  queryOptions({
+    queryKey: ['user'],
+    queryFn: async () => {
+      await new Promise((r) => setTimeout(r, 1200))
+      // Randomly fail to demonstrate ErrorBoundary
+      if (Math.random() > 0.4) return { name: 'Alex Chen', role: 'Maintainer' }
+      throw new Error('Network timeout')
+    },
+    retry: false,
+  })
+
+const statsQueryOptions = () =>
+  queryOptions({
+    queryKey: ['stats'],
+    queryFn: async () => {
+      await new Promise((r) => setTimeout(r, 800))
+      if (Math.random() > 0.3) return { downloads: '34,326', stars: '1.5k' }
+      throw new Error('API rate limit')
+    },
+    retry: false,
+  })
+
+export const Example = () => (
+  <div
+    style={{
+      background: '#0a0a0a',
+      color: '#e5e5e5',
+      fontFamily: 'system-ui, sans-serif',
+      padding: 24,
+    }}
+  >
+    {/* QueryErrorResetBoundary ensures queries re-fetch on ErrorBoundary reset */}
+    <QueryErrorResetBoundary>
+      {({ reset: resetQueries }) => (
+        <ErrorBoundaryGroup>
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              marginBottom: 24,
+            }}
+          >
+            <h2 style={{ fontSize: 16, fontWeight: 600, opacity: 0.5 }}>
+              Dashboard
+            </h2>
+            <ErrorBoundaryGroup.Consumer>
+              {({ reset }) => (
+                <button
+                  onClick={() => {
+                    resetQueries()
+                    reset()
+                  }}
+                  style={buttonStyle}
+                >
+                  Retry All
+                </button>
+              )}
+            </ErrorBoundaryGroup.Consumer>
+          </div>
+
+          <div
+            style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}
+          >
+            <ErrorBoundary
+              onReset={resetQueries}
+              fallback={({ error, reset }) => (
+                <Card>
+                  <p
+                    style={{ fontSize: 13, fontWeight: 600, color: '#ef4444' }}
+                  >
+                    Failed to load
+                  </p>
+                  <p style={{ fontSize: 12, opacity: 0.4, marginTop: 4 }}>
+                    {error.message}
+                  </p>
+                  <button
+                    onClick={reset}
+                    style={{ ...smallButtonStyle, marginTop: 8 }}
+                  >
+                    Retry
+                  </button>
+                </Card>
+              )}
+            >
+              <Suspense
+                fallback={
+                  <Card>
+                    <Skeleton />
+                  </Card>
+                }
+              >
+                <SuspenseQuery {...userQueryOptions()}>
+                  {({ data: user }) => (
+                    <Card>
+                      <p style={{ fontSize: 15, fontWeight: 600 }}>
+                        {user.name}
+                      </p>
+                      <p style={{ fontSize: 12, opacity: 0.4, marginTop: 2 }}>
+                        {user.role}
+                      </p>
+                    </Card>
+                  )}
+                </SuspenseQuery>
+              </Suspense>
+            </ErrorBoundary>
+
+            <ErrorBoundary
+              onReset={resetQueries}
+              fallback={({ error, reset }) => (
+                <Card>
+                  <p
+                    style={{ fontSize: 13, fontWeight: 600, color: '#ef4444' }}
+                  >
+                    Failed to load
+                  </p>
+                  <button
+                    onClick={reset}
+                    style={{ ...smallButtonStyle, marginTop: 8 }}
+                  >
+                    Retry
+                  </button>
+                </Card>
+              )}
+            >
+              <Suspense
+                fallback={
+                  <Card>
+                    <Skeleton />
+                  </Card>
+                }
+              >
+                <SuspenseQuery {...statsQueryOptions()}>
+                  {({ data: stats }) => (
+                    <Card>
+                      <p
+                        style={{
+                          fontSize: 22,
+                          fontWeight: 700,
+                          letterSpacing: -1,
+                        }}
+                      >
+                        {stats.downloads}
+                      </p>
+                      <p style={{ fontSize: 12, opacity: 0.4, marginTop: 2 }}>
+                        weekly downloads
+                      </p>
+                    </Card>
+                  )}
+                </SuspenseQuery>
+              </Suspense>
+            </ErrorBoundary>
+          </div>
+        </ErrorBoundaryGroup>
+      )}
+    </QueryErrorResetBoundary>
+  </div>
+)
+
+// --- UI Primitives ---
+const Card = ({ children }: { children: React.ReactNode }) => (
+  <div
+    style={{
+      background: '#111',
+      borderRadius: 10,
+      padding: 16,
+      border: '1px solid rgba(255,255,255,0.06)',
+      minHeight: 100,
+    }}
+  >
+    {children}
+  </div>
+)
+
+// Delay prevents flash-of-loading — skeleton fades in only after 200ms
+const Skeleton = () => (
+  <Delay ms={200}>
+    {({ isDelayed }) => (
+      <div style={{ opacity: isDelayed ? 1 : 0, transition: 'opacity 300ms' }}>
+        <div
+          style={{
+            background: '#1a1a1a',
+            borderRadius: 4,
+            height: 14,
+            width: '60%',
+            marginBottom: 8,
+          }}
+        />
+        <div
+          style={{
+            background: '#1a1a1a',
+            borderRadius: 4,
+            height: 14,
+            width: '40%',
+          }}
+        />
+      </div>
+    )}
+  </Delay>
+)
+
+const buttonStyle = {
+  background: '#111',
+  color: '#e5e5e5',
+  border: '1px solid rgba(255,255,255,0.1)',
+  borderRadius: 6,
+  padding: '6px 14px',
+  fontSize: 13,
+  cursor: 'pointer',
+} as const
+const smallButtonStyle = {
+  background: '#111',
+  color: '#e5e5e5',
+  border: '1px solid rgba(255,255,255,0.1)',
+  borderRadius: 4,
+  padding: '4px 10px',
+  fontSize: 12,
+  cursor: 'pointer',
+} as const
+```
+
+</Sandpack>
+</div>
+
+<div className="h-12 md:h-20" />
+
+<CallToAction
+  title="Focus on the success case — let Suspensive handle loading and errors."
+  primaryText="Get Started"
+  primaryHref="/docs/react/getting-started"
+  secondaryText="See the full comparison"
+  secondaryHref="/docs/react/comparison"
+/>
 
 </HomePage>

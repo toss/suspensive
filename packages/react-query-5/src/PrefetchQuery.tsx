@@ -1,5 +1,4 @@
 'use client'
-
 import { type DefaultError, type QueryKey, type UsePrefetchQueryOptions, usePrefetchQuery } from '@tanstack/react-query'
 
 /**

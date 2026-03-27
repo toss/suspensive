@@ -1,79 +1,163 @@
 'use client'
 
-import { motion } from 'motion/react'
+import { ErrorBoundary, Suspense } from '@suspensive/react'
+import { SuspenseQuery } from '@suspensive/react-query-5'
+import { queryOptions } from '@tanstack/react-query'
+import { motion, useInView } from 'motion/react'
+import { useRef } from 'react'
 
-interface TrustedByProps {
-  title: string
-  description: string
-  callToActionText: string
-  addCompanyButtonText: string
+const FALLBACK_DOWNLOADS = 33000
+
+async function fetchWeeklyDownloads() {
+  const response = await fetch(
+    'https://api.npmjs.org/downloads/point/last-week/@suspensive/react'
+  )
+  if (!response.ok) {
+    throw new Error('Failed to fetch npm weekly downloads')
+  }
+
+  const data = (await response.json()) as { downloads?: number }
+  return data.downloads ?? FALLBACK_DOWNLOADS
 }
 
-export const TrustedBy = ({
-  title,
-  description,
-  callToActionText,
-  addCompanyButtonText,
-}: TrustedByProps) => {
-  // Initial set of companies - this can be expanded as companies add themselves
-  const companies = [
-    {
-      name: 'Toss',
-      logo: 'https://static.toss.im/logos/png/4x/logo-toss-blue.png',
-      website: 'https://toss.im',
-    },
-  ]
+const weeklyDownloadsQueryOptions = () =>
+  queryOptions({
+    queryKey: ['weekly-downloads', '@suspensive/react'],
+    queryFn: fetchWeeklyDownloads,
+    refetchOnWindowFocus: false,
+  })
+
+function SlotNumber({ value }: { value: number }) {
+  const ref = useRef<HTMLSpanElement>(null)
+  const isInView = useInView(ref, { once: true, margin: '-50px' })
+  const digits = value.toLocaleString().split('')
 
   return (
-    <motion.section
-      initial={{ y: 30, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ delay: 0.6, duration: 0.4 }}
-      className="container mx-auto px-4 py-16"
-    >
-      <div className="mb-12 text-center">
-        <h3 className="mb-3 text-2xl font-bold md:text-3xl">{title}</h3>
-        <p className="text-sm opacity-75 md:text-lg">{description}</p>
-      </div>
+    <span ref={ref} className="inline-flex overflow-hidden">
+      {digits.map((char, i) => {
+        if (char === ',') {
+          return (
+            <span key={`sep-${i}`} className="w-[0.3em]">
+              ,
+            </span>
+          )
+        }
 
-      <div className="flex flex-wrap items-center justify-center gap-8 md:gap-12">
-        {companies.map((company, index) => (
-          <motion.a
-            key={company.name}
-            href={company.website}
-            target="_blank"
-            rel="noopener noreferrer"
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{
-              opacity: 1,
-              scale: 1,
-              transition: { delay: 0.8 + index * 0.1, duration: 0.3 },
-            }}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="flex items-center justify-center rounded-lg p-4 transition-all duration-200 hover:bg-gray-50 dark:hover:bg-gray-800"
+        const num = parseInt(char, 10)
+        return (
+          <span
+            key={`d-${i}`}
+            className="relative inline-block h-[1.1em] w-[0.65em] overflow-hidden"
           >
-            <img
-              src={company.logo}
-              alt={`${company.name} logo`}
-              className="h-8 w-auto opacity-60 transition-opacity duration-200 hover:opacity-100 md:h-10"
-              style={{ maxWidth: '120px' }}
-            />
-          </motion.a>
-        ))}
-      </div>
+            <motion.span
+              className="absolute left-0 flex flex-col items-center"
+              initial={{ y: 0 }}
+              animate={isInView ? { y: `${-num * 1.1}em` } : { y: 0 }}
+              transition={{
+                duration: 1,
+                delay: i * 0.08,
+                ease: [0.16, 1, 0.3, 1],
+              }}
+            >
+              {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((n) => (
+                <span
+                  key={n}
+                  className="flex h-[1.1em] items-center justify-center"
+                >
+                  {n}
+                </span>
+              ))}
+            </motion.span>
+          </span>
+        )
+      })}
+    </span>
+  )
+}
 
-      <div className="mt-12 text-center">
-        <p className="mb-4 text-sm opacity-60">{callToActionText}</p>
-        <a
-          href="https://github.com/toss/suspensive/edit/main/docs/suspensive.org/src/components/TrustedBy.tsx"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 rounded-lg border border-blue-600 px-4 py-2 text-sm font-medium text-blue-600 transition-colors hover:bg-blue-50 dark:border-blue-400 dark:text-blue-400 dark:hover:bg-blue-400/10"
+export const TrustedBy = ({ text }: { text: string }) => {
+  return (
+    <ErrorBoundary
+      fallback={<TrustedByLayout downloads={FALLBACK_DOWNLOADS} text={text} />}
+    >
+      <Suspense
+        clientOnly
+        fallback={
+          <TrustedByLayout downloads={FALLBACK_DOWNLOADS} text={text} />
+        }
+      >
+        <SuspenseQuery
+          {...weeklyDownloadsQueryOptions()}
+          staleTime={1000 * 60 * 60}
+          gcTime={1000 * 60 * 60 * 24}
+          refetchOnWindowFocus={false}
         >
-          {addCompanyButtonText}
-        </a>
-      </div>
-    </motion.section>
+          {({ data: downloads }) => (
+            <TrustedByLayout downloads={downloads} text={text} />
+          )}
+        </SuspenseQuery>
+      </Suspense>
+    </ErrorBoundary>
+  )
+}
+
+function TrustedByLayout({
+  downloads,
+  text,
+}: {
+  downloads: number
+  text: string
+}) {
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.8 }}
+      className="flex flex-col items-center gap-6 py-16 md:flex-row md:justify-center md:gap-16"
+    >
+      <a
+        href="https://www.npmjs.com/package/@suspensive/react"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="flex flex-col items-center gap-1 transition-opacity hover:opacity-70"
+      >
+        <span
+          className="inline-flex min-w-[7ch] justify-center text-4xl font-bold tracking-tight tabular-nums md:text-5xl"
+          aria-label={
+            downloads ? `${downloads.toLocaleString()} weekly downloads` : text
+          }
+        >
+          <SlotNumber value={downloads} />
+        </span>
+        <span className="text-sm opacity-40">weekly downloads</span>
+      </a>
+
+      <a
+        href="https://github.com/toss/suspensive"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="flex flex-col items-center gap-1 transition-opacity hover:opacity-70"
+      >
+        <span className="text-4xl font-bold tracking-tight tabular-nums md:text-5xl">
+          1k+
+        </span>
+        <span className="text-sm opacity-40">GitHub stars</span>
+      </a>
+
+      <a
+        href="https://github.com/toss/suspensive/graphs/contributors"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="flex flex-col items-center gap-2 transition-opacity hover:opacity-70"
+      >
+        <img
+          src="https://contrib.rocks/image?repo=toss/suspensive"
+          alt="contributors"
+          className="max-w-[calc(100%-2rem)] md:max-w-[480px]"
+        />
+        <span className="text-sm opacity-40">contributors</span>
+      </a>
+    </motion.div>
   )
 }

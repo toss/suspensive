@@ -1,10 +1,11 @@
+import { showDeprecationWarning } from './utils/deprecationWarning'
 import { logger } from './utils/logger'
 import { getTanStackReactQueryPackageJson } from './utils/package'
 import { switchVersion } from './utils/switchVersion'
 
-const { version } = getTanStackReactQueryPackageJson()
+const tanstackPackageJson = getTanStackReactQueryPackageJson()
 
-const major = version.split('.')[0]
+const major = tanstackPackageJson.version.split('.')[0]
 
 switch (major) {
   case '4':
@@ -14,6 +15,8 @@ switch (major) {
     switchVersion(5)
     break
   default:
-    logger.error(`version v${version} is not supported.`)
+    logger.error(`version v${tanstackPackageJson.version} is not supported.`)
     break
 }
+
+showDeprecationWarning()

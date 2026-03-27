@@ -1,5 +1,33 @@
 # @suspensive/jotai
 
+## 3.20.1
+
+### Patch Changes
+
+- [#1935](https://github.com/toss/suspensive/pull/1935) [`1041865`](https://github.com/toss/suspensive/commit/10418656384cef148da65943cdb919d7b990122c) Thanks [@manudeli](https://github.com/manudeli)! - fix(react-query): update installation instructions for clarity
+
+## 3.20.0
+
+## 3.19.6
+
+## 3.19.5
+
+### Patch Changes
+
+- [#1918](https://github.com/toss/suspensive/pull/1918) [`47571c4`](https://github.com/toss/suspensive/commit/47571c47877d3616a3812a8079facf08d0129269) Thanks [@manudeli](https://github.com/manudeli)! - fix(\*): remove banner option from tsdown configurations and add 'use client' directive to multiple React components
+
+## 3.19.4
+
+### Patch Changes
+
+- [#1921](https://github.com/toss/suspensive/pull/1921) [`8d82753`](https://github.com/toss/suspensive/commit/8d8275349327f1bfce0659d0944a485bcb21cabb) Thanks [@manudeli](https://github.com/manudeli)! - fix(tsdown): enable unbundling option in configuration
+
+## 3.19.3
+
+### Patch Changes
+
+- [#1913](https://github.com/toss/suspensive/pull/1913) [`0034bd7`](https://github.com/toss/suspensive/commit/0034bd700f16157b89b748cb668cf4a97e97b34f) Thanks [@manudeli](https://github.com/manudeli)! - fix(\*): tsdown 0.18.0 -> 0.21.3
+
 ## 3.19.2
 
 ## 3.19.1

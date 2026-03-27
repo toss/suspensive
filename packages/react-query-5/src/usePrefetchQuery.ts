@@ -1,5 +1,4 @@
 'use client'
-
 import { usePrefetchQuery as original_usePrefetchQuery } from '@tanstack/react-query'
 
 /**

@@ -17,14 +17,14 @@
     "@suspensive/react-query-5": "workspace:*",
     "@tanstack/react-query": "catalog:react-query5",
     "@tanstack/react-query-devtools": "catalog:react-query5",
-    "axios": "^1.8.4",
+    "axios": "^1.13.6",
     "clsx": "catalog:",
     "next": "catalog:",
     "react": "catalog:react19",
     "react-dom": "catalog:react19",
-    "react-error-boundary": "^6.0.0",
+    "react-error-boundary": "catalog:",
     "usehooks-ts": "^3.1.1",
-    "zod": "^4.1.12"
+    "zod": "catalog:"
   },
   "devDependencies": {
     "@suspensive/eslint-config": "workspace:*",

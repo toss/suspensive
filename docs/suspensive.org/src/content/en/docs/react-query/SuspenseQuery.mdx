@@ -1,3 +1,7 @@
+---
+description: 'Declarative data fetching with SuspenseQuery — render TanStack Query results as JSX without hooks or wrapper components.'
+---
+
 import { Sandpack } from '@/components'
 
 # SuspenseQuery
@@ -248,19 +252,19 @@ import { PostListItem } from '~/components'
 
 // From the perspective of using this component, it is impossible to predict whether a suspense will occur internally based on the name PostList alone.
 const PostList = ({ userId }) => {
-   // We need to create this component just for data-fetching.
-   const { data: posts } = useSuspenseQuery({
-     ...postsQueryOptions(userId);
-     select: (posts) => posts.filter(({ isPublic }) => isPublic),
-   })
+  // We need to create this component just for data-fetching.
+  const { data: posts } = useSuspenseQuery({
+    ...postsQueryOptions(userId),
+    select: (posts) => posts.filter(({ isPublic }) => isPublic),
+  })
 
-   return (
-     <>
-       {posts.map((post) => (
-         <PostListItem {...post} />
-       ))}
-     </>
-   )
+  return (
+    <>
+      {posts.map((post) => (
+        <PostListItem {...post} />
+      ))}
+    </>
+  )
 }
 ```
 

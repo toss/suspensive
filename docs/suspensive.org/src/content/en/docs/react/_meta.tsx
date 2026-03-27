@@ -1,9 +1,10 @@
 import type { MetaRecord } from 'nextra'
 
 export default {
-  motivation: { title: 'Why need to use?' },
+  motivation: { title: 'Motivation' },
   installation: { title: 'Installation' },
-  migration: { title: 'Migration guide' },
+  'getting-started': { title: 'Getting Started' },
+  comparison: { title: 'Suspensive vs react-error-boundary' },
   '--- API Reference': {
     type: 'separator',
     title: 'API Reference',
@@ -16,4 +17,9 @@ export default {
   DefaultPropsProvider: { title: '<DefaultPropsProvider/>' },
   lazy: { title: 'lazy' },
   useIsClient: { title: 'useIsClient' },
+  '--- More': {
+    type: 'separator',
+    title: 'More',
+  },
+  migration: { title: 'Migration Guide' },
 } satisfies MetaRecord

@@ -1,3 +1,8 @@
+---
+robots: noindex
+description: 'Deprecated — useSuspenseInfiniteQuery is now available in TanStack Query v4.40.0+. Use the official TanStack Query version instead.'
+---
+
 import { Callout, Sandpack } from '@/components'
 
 # useSuspenseInfiniteQuery
@@ -17,7 +22,7 @@ For more details, see [TanStack Query PR #9334](https://github.com/TanStack/quer
 
 </Callout>
 
-Return type of this hook have no isLoading, isError property. because `<Suspense/>` and `<ErrorBoundary/>` will guarantee this hook's data. In addition, this hook's options have default suspense: true. and you can provide new options to this hook like [useInfiniteQuery](https://tanstack.com/query/v4/docs/react/reference/useInfiniteQuery) of @tanstack/react-query.
+Return type of this hook has no isLoading, isError property. because `<Suspense/>` and `<ErrorBoundary/>` guarantee the data from this hook. In addition, this hook's options have default suspense: true, and you can provide new options to this hook like [useInfiniteQuery](https://tanstack.com/query/v4/docs/react/reference/useInfiniteQuery) of @tanstack/react-query.
 
 ```tsx /useSuspenseInfiniteQuery/
 import { useSuspenseInfiniteQuery } from '@suspensive/react-query'
@@ -168,15 +173,15 @@ const Example = () => {
 }
 ```
 
-but useInfiniteQuery's return type:query.data will be always fulfilled because of `<Suspense/>` as parent of this component.
+but useInfiniteQuery's return type query.data will always be fulfilled because of `<Suspense/>` as parent of this component.
 
 This is why @suspensive/react-query provide **useSuspenseInfiniteQuery**.
 
 <Callout>
 
-Concentrate on only Success.
+Focus on successful cases.
 
-Now, we can concentrate component as any fetching will be always success.
+Now we can focus on the component, as data fetching will always succeed.
 
 </Callout>
 

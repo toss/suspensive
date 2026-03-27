@@ -1,0 +1,5510 @@
+# Suspensive - Full Documentation
+
+---
+
+## introduction
+
+URL: /docs/introduction
+
+<div className="my-20 px-12 md:my-40 md:px-24">
+  
+</div>
+
+React gives you Suspense, lazy, and an interface to build Error Boundaries. But if you've tried to use them in a real application, you know the gaps — Suspense breaks in SSR, implementing Error Boundaries from scratch requires boilerplate, and there's no way to coordinate any of it. Beyond React itself, data-fetching libraries and state managers have their own gaps too.
+
+**Suspensive fills those gaps.** It provides declarative components and hooks that make async rendering, error handling, and data fetching work the way they should — with less code and fewer workarounds.
+
+```mermaid
+graph LR;
+subgraph GAP1 ["React"]
+direction TB
+subgraph GAP1_S ["Suspense"]
+direction TB
+A["Suspense breaks in SSR"]
+D["Loading spinners flash on fast responses"]
+E["Hydration mismatches on client-only content"]
+F["Same fallback prop repeated across components"]
+end
+subgraph GAP1_E ["Error Boundary"]
+direction TB
+B1["No built-in ErrorBoundary component"]
+B2["Complex class component boilerplate"]
+B3["Fallback errors cause infinite recursion"]
+B4["No way to catch only specific error types"]
+B5["No hook to access error and reset in fallback"]
+C["Resetting multiple ErrorBoundaries requires manual wiring"]
+end
+subgraph GAP1_L ["Lazy & Code Splitting"]
+direction TB
+G["No way to preload lazy components before render"]
+G2["Chunk load failures crash the app"]
+end
+end
+subgraph GAP2 ["TanStack Query"]
+direction TB
+H["Hooks force component splits for Suspense"]
+I["SSR prefetching requires repetitive boilerplate"]
+J["Server prefetching failures are swallowed silently"]
+K["QueryClient leaks data across SSR requests"]
+end
+subgraph GAP3 ["Jotai"]
+direction TB
+L["Hooks hide which atoms trigger Suspense"]
+M["Extension atoms behavior not visible in JSX"]
+end
+subgraph JOTAI ["@suspensive/jotai"]
+direction TB
+Z["Atom, AtomValue, SetAtom"]
+Y["tRPC, Query, Cache compatible"]
+end
+subgraph RQ ["@suspensive/react-query"]
+direction TB
+W["SuspenseQuery, Mutation, PrefetchQuery"]
+V["QueriesHydration"]
+U["skipSsrOnError + timeout"]
+T["createGetQueryClient"]
+end
+subgraph REACT ["@suspensive/react"]
+direction TB
+subgraph REACT_L ["Lazy"]
+direction TB
+LL["lazy — .load()"]
+LL2["reloadOnError"]
+end
+subgraph REACT_E ["ErrorBoundary"]
+direction TB
+R["ErrorBoundary — fallback"]
+R2["shouldCatch"]
+R3["fallback error propagation"]
+R4["useErrorBoundaryFallbackProps"]
+Q["ErrorBoundaryGroup"]
+end
+subgraph REACT_S ["Suspense"]
+direction TB
+S["Suspense — clientOnly"]
+P["Delay — ms"]
+O["ClientOnly"]
+N["DefaultPropsProvider"]
+end
+end
+A --> S
+D --> P
+E --> O
+F --> N
+B1 --> R
+B2 --> R
+B3 --> R3
+B4 --> R2
+B5 --> R4
+C --> Q
+G --> LL
+G2 --> LL2
+H --> W
+I --> V
+J --> U
+K --> T
+L --> Z
+M --> Y
+click S "/docs/react/Suspense"
+click P "/docs/react/Delay"
+click O "/docs/react/ClientOnly"
+click N "/docs/react/DefaultPropsProvider"
+click R "/docs/react/ErrorBoundary"
+click R2 "/docs/react/ErrorBoundary"
+click R3 "/docs/react/ErrorBoundary"
+click R4 "/docs/react/ErrorBoundary"
+click Q "/docs/react/ErrorBoundaryGroup"
+click LL "/docs/react/lazy"
+click LL2 "/docs/react/lazy"
+click W "/docs/react-query/SuspenseQuery"
+click V "/docs/react-query/QueriesHydration"
+click U "/docs/react-query/QueriesHydration"
+click T "/docs/react-query/createGetQueryClient"
+click Z "/docs/jotai/Atom"
+click Y "/docs/jotai/Atom"
+style S color:#1AA3FF,text-decoration:underline
+style P color:#1AA3FF,text-decoration:underline
+style O color:#1AA3FF,text-decoration:underline
+style N color:#1AA3FF,text-decoration:underline
+style R color:#1AA3FF,text-decoration:underline
+style R2 color:#1AA3FF,text-decoration:underline
+style R3 color:#1AA3FF,text-decoration:underline
+style R4 color:#1AA3FF,text-decoration:underline
+style Q color:#1AA3FF,text-decoration:underline
+style LL color:#1AA3FF,text-decoration:underline
+style LL2 color:#1AA3FF,text-decoration:underline
+style W color:#1AA3FF,text-decoration:underline
+style V color:#1AA3FF,text-decoration:underline
+style U color:#1AA3FF,text-decoration:underline
+style T color:#1AA3FF,text-decoration:underline
+style Z color:#1AA3FF,text-decoration:underline
+style Y color:#1AA3FF,text-decoration:underline
+```
+
+> **Info:** **Ready to get started?** Follow the [Getting Started guide](/docs/react/getting-started) to set up Suspensive in 5 minutes, or see how it compares to [react-error-boundary](/docs/react/comparison).
+
+---
+
+## Motivation
+
+URL: /docs/react/motivation
+
+# Motivation
+
+React already has great primitives — Suspense, ErrorBoundary, lazy. But using them in real applications quickly exposes gaps. @suspensive/react fills those gaps.
+
+### Suspense breaks in SSR
+
+Use `<Suspense>` in Next.js and you'll hit this error:
+
+![Example banner](/img/suspense-in-ssr-error.png)
+
+With Suspensive's [`<Suspense/>`](/docs/react/Suspense), a single `clientOnly` prop skips SSR cleanly — no workarounds needed.
+
+### ErrorBoundary is too complicated
+
+`react-error-boundary` offers three different fallback interfaces. With Suspensive's [`<ErrorBoundary/>`](/docs/react/ErrorBoundary), you get one `fallback` prop, plus `shouldCatch` to filter which errors to handle.
+
+### Resetting ErrorBoundaries is painful
+
+Managing `resetKeys` across multiple `<ErrorBoundary/>`s is tedious. With Suspensive's [`<ErrorBoundaryGroup/>`](/docs/react/ErrorBoundaryGroup), a single call resets all of them.
+
+### Loading spinners flash
+
+A spinner that appears for 50ms is worse than no spinner. With Suspensive's [`<Delay/>`](/docs/react/Delay), brief loading states are hidden so users only see spinners when they actually need to wait.
+
+### Client-only code causes hydration mismatches
+
+With Suspensive's [`<ClientOnly/>`](/docs/react/ClientOnly) and [`useIsClient`](/docs/react/useIsClient), you get safe client-side rendering — no more `typeof window !== 'undefined'` scattered across your code.
+
+### Same props, everywhere
+
+Stop passing the same `fallback` to every `<Suspense/>`. With Suspensive's [`<DefaultPropsProvider/>`](/docs/react/DefaultPropsProvider), you set defaults once for all Suspensive components.
+
+### `React.lazy` can't preload or recover
+
+With Suspensive's [`lazy`](/docs/react/lazy), you get `.load()` for preloading and automatic retry on chunk failures — the kind of thing you only discover you need in production.
+
+---
+
+## Installation
+
+URL: /docs/react/installation
+
+# Installation
+
+### Check supported browsers
+
+Suspensive Libraries are optimized for modern browsers. It is compatible with the following browsers config.
+
+<br />
+
+  <tbody>
+    {[
+      { browser: 'Chrome', version: '>= 51' },
+      { browser: 'Firefox', version: '>= 53' },
+      { browser: 'Edge', version: '>= 18' },
+      { browser: 'Safari', version: '>= 11' },
+      { browser: 'iOS', version: '>= 11' },
+      { browser: 'Opera', version: '>= 38' },
+    ].map((item) => (
+      
+        {item.browser}
+        {item.version}
+      
+    ))}
+  </tbody>
+
+> Depending on your environment, you might need to add polyfills. If you want to support older browsers, you need to transpile the library from node_modules yourselves.
+
+### Check supported react version
+
+<br />
+
+  <tbody>
+    {[{ library: 'react', version: '^18 || ^19' }].map((item) => (
+      
+        {item.library}
+        {item.version}
+      
+    ))}
+  </tbody>
+
+### Add as Dependencies
+
+@suspensive/react lives in npm. To install the latest stable version, run the following command.
+
+```shell npm2yarn
+npm install @suspensive/react
+```
+
+---
+
+## Getting Started
+
+URL: /docs/react/getting-started
+
+# Getting Started
+
+Build your first async-safe React page with Suspensive in 5 minutes.
+
+### Install packages
+
+```shell npm2yarn
+npm install @suspensive/react @suspensive/react-query @tanstack/react-query
+```
+
+### Wrap your app with ErrorBoundary and Suspense
+
+Replace manual loading/error state checks with declarative boundaries:
+
+```tsx
+import { ErrorBoundary, Suspense } from '@suspensive/react'
+
+function App() {
+  return (
+    <ErrorBoundary
+      fallback={({ error, reset }) => (
+        <div>
+          <p>Something went wrong: {error.message}</p>
+          <button onClick={reset}>Try again</button>
+        </div>
+      )}
+    >
+      <Suspense fallback={<div>Loading...</div>}>
+        <UserProfile />
+      </Suspense>
+    </ErrorBoundary>
+  )
+}
+```
+
+### Fetch data with SuspenseQuery
+
+Use `<SuspenseQuery/>` to render async data as JSX — no hooks, no wrapper components:
+
+```tsx
+import { SuspenseQuery } from '@suspensive/react-query'
+
+function UserProfile() {
+  return (
+    <SuspenseQuery queryKey={['user']} queryFn={fetchUser}>
+      {({ data: user }) => (
+        <div>
+          <h2>{user.name}</h2>
+          <p>{user.email}</p>
+        </div>
+      )}
+    </SuspenseQuery>
+  )
+}
+```
+
+### Add SSR safety with clientOnly
+
+If you're using Next.js or another SSR framework, prevent hydration issues:
+
+```tsx
+import { Suspense } from '@suspensive/react'
+
+function Page() {
+  return (
+    <Suspense fallback={<Skeleton />} clientOnly>
+      <UserProfile />
+    </Suspense>
+  )
+}
+```
+
+### Group error boundaries for coordinated resets
+
+Reset multiple error boundaries at once without prop drilling:
+
+```tsx
+import { ErrorBoundary, ErrorBoundaryGroup } from '@suspensive/react'
+
+function Dashboard() {
+  return (
+    <ErrorBoundaryGroup>
+      <ErrorBoundaryGroup.Consumer>
+        {({ reset }) => <button onClick={reset}>Reset All</button>}
+      </ErrorBoundaryGroup.Consumer>
+      <ErrorBoundary fallback={<UserError />}>
+        <UserSection />
+      </ErrorBoundary>
+      <ErrorBoundary fallback={<StatsError />}>
+        <StatsSection />
+      </ErrorBoundary>
+    </ErrorBoundaryGroup>
+  )
+}
+```
+
+## Next Steps
+
+- **[`<Suspense/>`](/docs/react/Suspense)** — SSR-safe Suspense with clientOnly and DefaultProps support
+- **[`<ErrorBoundary/>`](/docs/react/ErrorBoundary)** — Advanced error handling with shouldCatch filtering
+- **[`<SuspenseQuery/>`](/docs/react-query/SuspenseQuery)** — Declarative data fetching at the same depth
+- **[Suspensive vs react-error-boundary](/docs/react/comparison)** — Detailed feature comparison
+
+---
+
+## Suspensive vs react-error-boundary
+
+URL: /docs/react/comparison
+
+# Suspensive vs react-error-boundary
+
+Choosing an error boundary library for React? Here's how `@suspensive/react` compares to `react-error-boundary`, `@sentry/react`, and React's built-in class component approach.
+
+## Feature Comparison
+
+| Feature                                  | @suspensive/react | react-error-boundary   | @sentry/react          | React Class Component  |
+| ---------------------------------------- | ----------------- | ---------------------- | ---------------------- | ---------------------- |
+| Basic error catching                     | ✅                | ✅                     | ✅                     | ✅                     |
+| Fallback UI with error & reset           | ✅                | ✅                     | ✅                     | ⚠️ (Manual)            |
+| Reset with resetKeys                     | ✅                | ✅                     | ❌                     | ⚠️ (Manual)            |
+| onReset callback                         | ✅                | ✅                     | ✅                     | ⚠️ (Manual)            |
+| onError callback                         | ✅                | ✅                     | ✅                     | ✅ (componentDidCatch) |
+| Conditional error catching (shouldCatch) | ✅                | ❌                     | ❌                     | ⚠️ (Manual)            |
+| Fallback error handling                  | ✅ (To parent)    | ❌ (Recursive)         | ❌ (Recursive)         | ⚠️ (Manual)            |
+| useErrorBoundary hook                    | ✅                | ✅                     | ❌                     | ❌                     |
+| useErrorBoundaryFallbackProps hook       | ✅                | ❌                     | ❌                     | ❌                     |
+| ErrorBoundaryGroup                       | ✅                | ❌                     | ❌                     | ❌                     |
+| HOC support                              | ✅ (with)         | ✅ (withErrorBoundary) | ✅ (withErrorBoundary) | ❌                     |
+| TypeScript error type inference          | ✅ (Advanced)     | ✅ (Basic)             | ✅ (Basic)             | ⚠️ (Manual)            |
+| Declarative API                          | ✅                | ✅                     | ✅                     | ❌                     |
+| Automatic error reporting                | ❌                | ❌                     | ✅ (To Sentry)         | ❌                     |
+
+## What Makes Suspensive Different
+
+### shouldCatch — Catch Only the Errors You Want
+
+Unlike any other solution, `@suspensive/react` lets you filter which errors an ErrorBoundary catches. Pass an Error constructor, a callback, or a boolean:
+
+```tsx
+// Only catch validation errors in this boundary
+<ErrorBoundary shouldCatch={ZodError} fallback={<ValidationErrorUI />}>
+  <Form />
+</ErrorBoundary>
+
+// Catch everything except network errors
+<ErrorBoundary
+  shouldCatch={(error) => !(error instanceof NetworkError)}
+  fallback={<GeneralErrorUI />}
+>
+  <App />
+</ErrorBoundary>
+```
+
+This enables layered error handling strategies where parent and child boundaries handle different error types — something impossible with `react-error-boundary`.
+
+### ErrorBoundaryGroup — Reset Multiple Boundaries at Once
+
+Managing multiple error boundaries? With `react-error-boundary`, you need to pass `resetKeys` through props to every boundary. With Suspensive, just wrap them in an `ErrorBoundaryGroup`:
+
+```tsx
+<ErrorBoundaryGroup>
+  <ErrorBoundaryGroup.Consumer>
+    {({ reset }) => <button onClick={reset}>Reset All</button>}
+  </ErrorBoundaryGroup.Consumer>
+  <ErrorBoundary fallback={<UserError />}>
+    <UserSection />
+  </ErrorBoundary>
+  <ErrorBoundary fallback={<PostsError />}>
+    <PostsSection />
+  </ErrorBoundary>
+</ErrorBoundaryGroup>
+```
+
+No prop drilling. No state management. All boundaries reset together.
+
+### Safe Fallback Error Handling
+
+In `react-error-boundary`, if your fallback component throws an error, it causes a recursive catch loop. In `@suspensive/react`, errors thrown in fallback components are passed to the **parent** ErrorBoundary — providing predictable, safe error propagation.
+
+### useErrorBoundaryFallbackProps — No Prop Drilling in Fallbacks
+
+Access `error` and `reset` anywhere inside a fallback tree without passing props:
+
+```tsx
+const DeepFallbackChild = () => {
+  const { error, reset } = useErrorBoundaryFallbackProps()
+  return <button onClick={reset}>{error.message}</button>
+}
+```
+
+This is especially useful in React Server Component environments where you can't pass callback functions as props.
+
+## Code Comparison
+
+#### @suspensive/react
+
+```tsx
+import { ErrorBoundary } from '@suspensive/react'
+
+const App = () => (
+  <ErrorBoundary
+    fallback={({ error, reset }) => (
+      <div>
+        <p>{error.message}</p>
+        <button onClick={reset}>Retry</button>
+      </div>
+    )}
+    onError={(error) => logToService(error)}
+  >
+    <MyComponent />
+  </ErrorBoundary>
+)
+```
+
+#### react-error-boundary
+
+```tsx
+import { ErrorBoundary } from 'react-error-boundary'
+
+const App = () => (
+  <ErrorBoundary
+    fallbackRender={({ error, resetErrorBoundary }) => (
+      <div>
+        <p>{error.message}</p>
+        <button onClick={resetErrorBoundary}>Retry</button>
+      </div>
+    )}
+    onError={(error) => logToService(error)}
+  >
+    <MyComponent />
+  </ErrorBoundary>
+)
+```
+
+## Beyond ErrorBoundary
+
+Suspensive isn't just an ErrorBoundary library. It's a complete toolkit for React's async rendering:
+
+- **[`<Suspense/>`](/docs/react/Suspense)** — Enhanced React Suspense with SSR support and `clientOnly` prop
+- **[`<Delay/>`](/docs/react/Delay)** — Prevent flash-of-loading-state UX issues
+- **[`<ClientOnly/>`](/docs/react/ClientOnly)** — Safe client-side only rendering
+- **[`<SuspenseQuery/>`](/docs/react-query/SuspenseQuery)** — Declarative data fetching without hook constraints
+- **[`<DefaultPropsProvider/>`](/docs/react/DefaultPropsProvider)** — Global default fallbacks for all Suspense/Delay components
+
+## Migration from react-error-boundary
+
+Migrating is straightforward — the API is similar by design:
+
+| react-error-boundary                                | @suspensive/react      |
+| --------------------------------------------------- | ---------------------- |
+| `fallbackRender` / `FallbackComponent` / `fallback` | `fallback` (unified)   |
+| `resetErrorBoundary`                                | `reset`                |
+| `withErrorBoundary()`                               | `ErrorBoundary.with()` |
+| `useErrorBoundary()`                                | `useErrorBoundary()`   |
+
+```bash
+npm install @suspensive/react
+```
+
+See the full [ErrorBoundary API reference](/docs/react/ErrorBoundary) for detailed documentation.
+
+---
+
+## Suspense
+
+URL: /docs/react/Suspense
+
+# Suspense
+
+@suspensive/react's `<Suspense/>` is a drop-in replacement for [React's Suspense](https://react.dev/reference/react/Suspense) — with additional features that solve real-world problems.
+
+## When to use this instead of React.Suspense
+
+|                                                    | React.Suspense | @suspensive/react Suspense |
+| -------------------------------------------------- | -------------- | -------------------------- |
+| Basic suspense boundary                            | ✅             | ✅                         |
+| SSR-safe rendering (`clientOnly`)                  | ❌             | ✅                         |
+| Global default fallback via `DefaultPropsProvider` | ❌             | ✅                         |
+| HOC pattern (`Suspense.with`)                      | ❌             | ✅                         |
+
+If you're using Next.js or any SSR framework, React's `<Suspense>` can cause hydration mismatches. Suspensive's `clientOnly` prop solves this in one line — no need for `dynamic(() => import(...), { ssr: false })` or manual `useEffect` guards.
+
+---
+
+### props.fallback
+
+fallback works the same as the fallback of React's original Suspense.
+
+```tsx /Suspense/
+import { Suspense } from '@suspensive/react'
+
+const Example = () => (
+  <Suspense fallback={<Loading />}>
+    <Children />
+  </Suspense>
+)
+```
+
+> **Note:** Default fallback
+> 
+> `<Suspense/>` are more powerful when used with `<DefaultPropsProvider/>`.
+> Control multiple `<Suspense/>`s default fallback with `<DefaultPropsProvider/>`. Details are introduced in [`<DefaultPropsProvider/>` page](/docs/react/DefaultPropsProvider).
+
+### Avoid Server side rendering (clientOnly)
+
+If you use the clientOnly prop, `<Suspense/>` will return fallback in server and return children in client.
+
+```tsx /clientOnly/
+import { Suspense } from '@suspensive/react'
+
+const Example = () => (
+  <Suspense clientOnly fallback={<Loading />}>
+    <Children />
+  </Suspense>
+)
+```
+
+When using the clientOnly prop, the useIsClient hook is used internally, and useIsClient uses getSnapshot and getServerSnapshot of useSyncExternalStore to ensure that it is a client.
+
+```tsx /useIsClient/
+const useIsClient = () =>
+  useSyncExternalStore(emptySubscribe, getSnapshot, getServerSnapshot)
+
+const emptySubscribe = () => noop
+const getSnapshot = () => true
+const getServerSnapshot = () => false
+```
+
+https://x.com/TkDodo/status/1741068994981826947?t=XmG17etMUL2m0JFim03vqw&s=19
+
+> **Info:** Migration support SSR gradually (`<Suspense clientOnly/>` -> `<Suspense/>`)
+> 
+> If you want to use Suspense working in both SSR/CSR, you can change `<Suspense clientOnly/>` to `<Suspense/>` gradually.
+
+## Suspense.with
+
+`Suspense.with` is a higher-order component (HOC) that allows you to wrap a component with a Suspense boundary.
+`Suspense.with` makes it easy to wrap a component.
+
+```tsx /Suspense.with/
+import { Suspense } from '@suspensive/react'
+
+const Example = Suspense.with({ fallback: <Spinner /> }, () => {
+  // code that triggers suspense
+
+  return <>...</>
+})
+```
+
+---
+
+## ErrorBoundary
+
+URL: /docs/react/ErrorBoundary
+
+# ErrorBoundary
+
+This component can handle any errors in children.
+
+## Comparison
+
+`@suspensive/react`'s `<ErrorBoundary/>` provides a declarative, feature-rich alternative to React's class-based error boundaries and popular error boundary libraries like `react-error-boundary` and `@sentry/react`.
+
+| Feature                                  | @suspensive/react | react-error-boundary   | @sentry/react          | React Class Component  |
+| ---------------------------------------- | ----------------- | ---------------------- | ---------------------- | ---------------------- |
+| Basic error catching                     | ✅                | ✅                     | ✅                     | ✅                     |
+| Fallback UI with error & reset           | ✅                | ✅                     | ✅                     | ⚠️ (Manual)            |
+| Reset with resetKeys                     | ✅                | ✅                     | ❌                     | ⚠️ (Manual)            |
+| onReset callback                         | ✅                | ✅                     | ✅                     | ⚠️ (Manual)            |
+| onError callback                         | ✅                | ✅                     | ✅                     | ✅ (componentDidCatch) |
+| Conditional error catching (shouldCatch) | ✅                | ❌                     | ❌                     | ⚠️ (Manual)            |
+| Fallback error handling                  | ✅ (To parent)    | ❌ (Recursive)         | ❌ (Recursive)         | ⚠️ (Manual)            |
+| useErrorBoundary hook                    | ✅                | ✅                     | ❌                     | ❌                     |
+| useErrorBoundaryFallbackProps hook       | ✅                | ❌                     | ❌                     | ❌                     |
+| ErrorBoundaryGroup                       | ✅                | ❌                     | ❌                     | ❌                     |
+| HOC support                              | ✅ (with)         | ✅ (withErrorBoundary) | ✅ (withErrorBoundary) | ❌                     |
+| TypeScript error type inference          | ✅ (Advanced)     | ✅ (Basic)             | ✅ (Basic)             | ⚠️ (Manual)            |
+| Declarative API                          | ✅                | ✅                     | ✅                     | ❌                     |
+| Automatic error reporting                | ❌                | ❌                     | ✅ (To Sentry)         | ❌                     |
+
+#### @suspensive/react
+
+```tsx
+import { ErrorBoundary } from '@suspensive/react'
+
+const SuspensiveExample = () => (
+  <ErrorBoundary
+    fallback={({ error, reset }) => (
+      <div>
+        <button onClick={reset}>Reset</button>
+        {error.message}
+      </div>
+    )}
+  >
+    <YourComponent />
+  </ErrorBoundary>
+)
+```
+
+#### react-error-boundary
+
+```tsx
+import { ErrorBoundary } from 'react-error-boundary'
+
+const ReactErrorBoundaryExample = () => (
+  <ErrorBoundary
+    fallbackRender={({ error, resetErrorBoundary }) => (
+      <div>
+        <button onClick={resetErrorBoundary}>Reset</button>
+        {error.message}
+      </div>
+    )}
+  >
+    <YourComponent />
+  </ErrorBoundary>
+)
+```
+
+#### @sentry/react
+
+```tsx
+import { ErrorBoundary } from '@sentry/react'
+
+const SentryExample = () => (
+  <ErrorBoundary
+    fallback={({ error, resetError }) => (
+      <div>
+        <button onClick={resetError}>Reset</button>
+        {error.message}
+      </div>
+    )}
+  >
+    <YourComponent />
+  </ErrorBoundary>
+)
+```
+
+#### React Class
+
+```tsx
+import { Component, ReactNode } from 'react'
+
+class ErrorBoundary extends Component<
+  { children: ReactNode; fallback: (error: Error) => ReactNode },
+  { hasError: boolean; error: Error | null }
+> {
+  constructor(props) {
+    super(props)
+    this.state = { hasError: false, error: null }
+  }
+
+  static getDerivedStateFromError(error: Error) {
+    return { hasError: true, error }
+  }
+
+  componentDidCatch(error: Error, errorInfo: ErrorInfo) {
+    console.error('Error caught:', error, errorInfo)
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return this.props.fallback(this.state.error!)
+    }
+    return this.props.children
+  }
+}
+
+// Usage
+const ReactClassExample = () => (
+  <ErrorBoundary
+    fallback={(error) => (
+      <div>
+        <button onClick={() => window.location.reload()}>Reset</button>
+        {error.message}
+      </div>
+    )}
+  >
+    <YourComponent />
+  </ErrorBoundary>
+)
+```
+
+### Key Advantages of @suspensive/react
+
+1. **Advanced Error Filtering with shouldCatch**: Unlike other solutions, `@suspensive/react` allows you to conditionally catch specific errors using boolean, ErrorConstructor, or callback matchers. This enables sophisticated error handling strategies where parent and child ErrorBoundaries can handle different error types.
+
+2. **Proper Fallback Error Handling**: Unlike `react-error-boundary`, errors thrown in fallback components are passed to the parent ErrorBoundary instead of being caught recursively by the same boundary. This prevents infinite fallback loops and provides more predictable error handling behavior. [Learn more](/docs/react/migration/migrate-to-v3#now-thrown-error-in-errorboundary-fallback-will-be-passed-to-parent-1409)
+
+3. **useErrorBoundaryFallbackProps**: Eliminates prop drilling in fallback components by providing direct access to `error` and `reset` through a hook, making deeply nested fallback UIs much cleaner.
+
+4. **ErrorBoundaryGroup**: Manage and reset multiple ErrorBoundaries together, perfect for complex UIs with multiple error boundaries that need coordinated reset behavior.
+
+5. **Better TypeScript Support**: Advanced type inference for error types based on shouldCatch configuration, providing better autocomplete and type safety.
+
+6. **No Class Components Required**: Unlike native React error boundaries, you can use a fully declarative, function component-based approach without writing class components.
+
+### Migration Guide
+
+#### From react-error-boundary
+
+If you're using react-error-boundary, migrating to `@suspensive/react` is straightforward:
+
+```tsx
+// react-error-boundary
+import { ErrorBoundary } from 'react-error-boundary'
+
+const ReactErrorBoundaryExample = () => (
+  <ErrorBoundary
+    fallbackRender={({ error, resetErrorBoundary }) => (
+      <div>
+        <button onClick={resetErrorBoundary}>Reset</button>
+        {error.message}
+      </div>
+    )}
+    onReset={() => console.log('reset')}
+  >
+    <YourComponent />
+  </ErrorBoundary>
+)
+
+// @suspensive/react - same functionality
+import { ErrorBoundary } from '@suspensive/react'
+
+const SuspensiveExample = () => (
+  <ErrorBoundary
+    fallback={({ error, reset }) => (
+      <div>
+        <button onClick={reset}>Reset</button>
+        {error.message}
+      </div>
+    )}
+    onReset={() => console.log('reset')}
+  >
+    <YourComponent />
+  </ErrorBoundary>
+)
+```
+
+Main API differences:
+
+- `fallback`, `fallbackRender`, `FallbackComponent` → `fallback`
+- `resetErrorBoundary` → `reset` (in fallback props)
+
+#### @sentry/react
+
+If you're using `@sentry/react`, migrating to `@suspensive/react` is straightforward:
+
+```tsx
+// @sentry/react
+import * as Sentry from '@sentry/react'
+
+const SentryExample = () => (
+  <Sentry.ErrorBoundary
+    fallback={({ error, resetError }) => (
+      <div>
+        <button onClick={resetError}>Reset</button>
+        {error.message}
+      </div>
+    )}
+    onError={(error, componentStack, eventId) => {
+      // Error automatically sent to Sentry
+      console.log('Error caught:', eventId)
+    }}
+  >
+    <YourComponent />
+  </Sentry.ErrorBoundary>
+)
+
+// @suspensive/react - with manual Sentry integration
+import { ErrorBoundary } from '@suspensive/react'
+import * as Sentry from '@sentry/react'
+
+const SuspensiveExample = () => (
+  <ErrorBoundary
+    fallback={({ error, reset }) => (
+      <div>
+        <button onClick={reset}>Reset</button>
+        {error.message}
+      </div>
+    )}
+    onError={(error, errorInfo) => {
+      const eventId = Sentry.captureReactException(error, errorInfo)
+      console.log('Error caught:', eventId)
+    }}
+  >
+    <YourComponent />
+  </ErrorBoundary>
+)
+```
+
+Main differences:
+
+- `@sentry/react` automatically reports errors to Sentry
+- `@suspensive/react` provides more flexible error handling with `shouldCatch`
+- `resetError` → `reset` (in fallback props)
+- Manual Sentry integration gives you more control over what gets reported
+
+#### From React Class Component
+
+If you're using React class components for error boundaries, `@suspensive/react` provides a much simpler declarative API:
+
+```tsx
+// React Class Component
+class ErrorBoundary extends Component {
+  state = { hasError: false, error: null }
+
+  static getDerivedStateFromError(error) {
+    return { hasError: true, error }
+  }
+
+  componentDidCatch(error, errorInfo) {
+    logErrorToService(error, errorInfo)
+  }
+
+  reset = () => {
+    this.setState({ hasError: false, error: null })
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return <FallbackComponent error={this.state.error} reset={this.reset} />
+    }
+    return this.props.children
+  }
+}
+
+// @suspensive/react - much simpler!
+import { ErrorBoundary } from '@suspensive/react'
+
+const SuspensiveExample = () => (
+  <ErrorBoundary
+    fallback={({ error, reset }) => (
+      <FallbackComponent error={error} reset={reset} />
+    )}
+    onError={(error, errorInfo) => logErrorToService(error, errorInfo)}
+  >
+    <YourComponent />
+  </ErrorBoundary>
+)
+```
+
+---
+
+### props.fallback
+
+If there is any thrown error in children of `<ErrorBoundary/>`, Error will be caught and then fallback will be rendered.
+
+```tsx /fallback/
+import { ErrorBoundary } from '@suspensive/react'
+import { useState, useEffect } from 'react'
+
+const Example = () => (
+  <ErrorBoundary
+    fallback={(props) => (
+      <>
+        <button onClick={props.reset}>Try again</button>
+        {props.error.message}
+      </>
+    )}
+  >
+    <ErrorAfter2s />
+  </ErrorBoundary>
+)
+```
+
+> **Info:** Define component as `<ErrorBoundary/>`'s fallback
+> 
+> #### ErrorBoundaryFallbackProps
+> 
+> If you want to deliver a declared component as `<ErrorBoundary/>`'s fallback, you can use the `ErrorBoundaryFallbackProps` type to declare the component easily.
+> 
+> ```tsx /ErrorBoundaryFallbackProps/
+import type { ErrorBoundaryFallbackProps } from '@suspensive/react'
+
+const ErrorBoundaryFallback = ({
+  reset,
+  error,
+}: ErrorBoundaryFallbackProps) => (
+  <>
+    <button onClick={reset}>reset</button>
+    {error.message}
+  </>
+)
+
+const Example = () => (
+  <ErrorBoundary fallback={ErrorBoundaryFallback}>
+    <ErrorAfter2s />
+  </ErrorBoundary>
+)
+```
+
+### props.resetKeys
+
+If you want to reset `<ErrorBoundary/>` by a component that is outside of `<ErrorBoundary/>`'s fallback. Pass any resetKey into resetKeys. resetKeys work only when at least one element of array is changed. you don't need to worry about providing a new array as resetKeys like how useEffect's dependency array work.
+
+```tsx /resetKeys/
+import { ErrorBoundary } from '@suspensive/react'
+import { useState } from 'react'
+
+const Example = () => {
+  const [resetKey, setResetKey] = useState(0)
+
+  return (
+    <>
+      <button onClick={() => setResetKey((prev) => prev + 1)}>Try again</button>
+      <ErrorBoundary resetKeys={[resetKey]}>
+        <ErrorAfter2s />
+      </ErrorBoundary>
+    </>
+  )
+}
+```
+
+### props.onReset
+
+This is a callback that is called first when `<ErrorBoundary/>` reset. It can be used with @tanstack/react-query as follows.
+
+```tsx /onReset/
+import { ErrorBoundary } from '@suspensive/react'
+import { QueryErrorResetBoundary } from '@tanstack/react-query'
+
+const Example = () => (
+  <QueryErrorResetBoundary>
+    {({ reset }) => (
+      <ErrorBoundary
+        onReset={reset}
+        fallback={(props) => (
+          <>
+            <button onClick={props.reset}>Try again</button>
+            {props.error.message}
+          </>
+        )}
+      >
+        <Page />
+      </ErrorBoundary>
+    )}
+  </QueryErrorResetBoundary>
+)
+```
+
+### props.onError
+
+This is a callback called when `<ErrorBoundary/>` catches an error.
+
+```tsx /onError/
+import { ErrorBoundary } from '@suspensive/react'
+
+const logError = (error: Error, info: ErrorInfo) => {
+  // ...
+}
+
+const Example = (
+  <ErrorBoundary fallback={ErrorBoundaryFallback} onError={logError}>
+    <ErrorAfter2s />
+  </ErrorBoundary>
+)
+```
+
+### props.shouldCatch — Unique to Suspensive
+
+> **Info:** **Not available in react-error-boundary or @sentry/react.** `shouldCatch` is a feature unique to `@suspensive/react` that enables layered error handling — parent and child ErrorBoundaries can handle different error types. See the [full comparison](/docs/react/comparison).
+
+shouldCatch determines whether `<ErrorBoundary/>` should catch errors based on conditions.
+
+It accepts three criteria: Boolean, ErrorConstructor, and Callback, and defaults to true.
+
+#### ErrorConstructor
+
+```tsx /shouldCatch/
+import { ErrorBoundary } from '@suspensive/react'
+import { useState, useEffect, createElement } from 'react'
+
+export const Example = () => {
+  return (
+    <ErrorBoundary
+      fallback={({ error }) => (
+        <>Parent ErrorBoundary fallback: {error.message}</>
+      )}
+    >
+      <ErrorBoundary
+        shouldCatch={CustomError}
+        fallback={({ error }) => (
+          <>Child ErrorBoundary fallback: {error.message}</>
+        )}
+      >
+        <CustomErrorAfter2s />
+      </ErrorBoundary>
+    </ErrorBoundary>
+  )
+}
+```
+
+#### Callback
+
+```tsx /shouldCatch/
+import { ErrorBoundary } from '@suspensive/react'
+import { useState, useEffect, createElement } from 'react'
+
+export const Example = () => {
+  return (
+    <ErrorBoundary
+      fallback={({ error }) => (
+        <>Parent ErrorBoundary fallback: {error.message}</>
+      )}
+    >
+      <ErrorBoundary
+        shouldCatch={(error) => error instanceof CustomError}
+        fallback={({ error }) => (
+          <>Child ErrorBoundary fallback: {error.message}</>
+        )}
+      >
+        <CustomErrorAfter2s />
+      </ErrorBoundary>
+    </ErrorBoundary>
+  )
+}
+```
+
+#### Boolean
+
+```tsx /shouldCatch/
+import { ErrorBoundary } from '@suspensive/react'
+import { useState, useEffect, createElement } from 'react'
+
+export const Example = () => {
+  return (
+    <ErrorBoundary
+      fallback={({ error }) => (
+        <>Parent ErrorBoundary fallback: {error.message}</>
+      )}
+    >
+      <ErrorBoundary
+        shouldCatch={false}
+        fallback={({ error }) => (
+          <>Child ErrorBoundary fallback: {error.message}</>
+        )}
+      >
+        <CustomErrorAfter2s />
+      </ErrorBoundary>
+    </ErrorBoundary>
+  )
+}
+```
+
+You can also apply multiple criteria through an array.
+
+```tsx /shouldCatch/
+import { ErrorBoundary } from '@suspensive/react'
+import { useState, useEffect, createElement } from 'react'
+
+const Example = () => {
+  return (
+    <ErrorBoundary
+      fallback={({ error }) => (
+        <>Parent ErrorBoundary fallback: {error.message}</>
+      )}
+    >
+      <ErrorBoundary
+        shouldCatch={[
+          false,
+          CustomError,
+          (error) => error instanceof CustomError,
+        ]}
+        fallback={({ error }) => (
+          <>Child ErrorBoundary fallback: {error.message}</>
+        )}
+      >
+        <CustomErrorAfter2s />
+      </ErrorBoundary>
+    </ErrorBoundary>
+  )
+}
+```
+
+<br />
+
+## ErrorBoundary.with
+
+`ErrorBoundary.with` is a higher-order component that wraps the component with `<ErrorBoundary/>`.
+`ErrorBoundary.with` makes it easy to wrap a component.
+
+```tsx /ErrorBoundary.with/
+import { ErrorBoundary } from '@suspensive/react'
+
+const Example = ErrorBoundary.with({ fallback: ErrorBoundaryFallback }, () => {
+  const errorBoundary = useErrorBoundary()
+
+  return <>...</>
+})
+```
+
+## useErrorBoundary
+
+### useErrorBoundary().setError
+
+In children of `<ErrorBoundary/>`, we can use useErrorBoundary().setError to make `<ErrorBoundary/>` aware of the Error without throwing.
+
+```tsx /useErrorBoundary/
+import { ErrorBoundary, useErrorBoundary } from '@suspensive/react'
+import { useEffect } from 'react'
+
+const Example = () => (
+  <ErrorBoundary fallback={ErrorBoundaryFallback}>
+    <SetErrorAfterFetch />
+  </ErrorBoundary>
+)
+
+const SetErrorAfterFetch = () => {
+  const errorBoundary = useErrorBoundary()
+
+  useEffect(() => {
+    fetchSomething().then(
+      (response) => {},
+      (error) => errorBoundary.setError(error) // instead of throw inside
+    )
+  }, [])
+
+  return <>No error</>
+}
+```
+
+## useErrorBoundaryFallbackProps
+
+A hook that allows you to access the `error` object and `reset` method without prop drilling inside `<ErrorBoundary/>`'s fallback.
+
+In Next.js React Server Component environments, callback functions cannot be passed as props from server components to client components. This makes it impossible to pass a function component as `<ErrorBoundary/>`'s `fallback` to receive `error` and `reset`. `useErrorBoundaryFallbackProps` allows you to access `error` and `reset` inside the fallback without this limitation.
+
+It also eliminates the prop drilling problem when fallback components are deeply nested, removing the need to pass `error` and `reset` through multiple layers.
+
+```tsx /useErrorBoundaryFallbackProps/
+import { ErrorBoundary, useErrorBoundaryFallbackProps } from '@suspensive/react'
+
+const ErrorBoundaryFallback = () => {
+  const { reset, error } = useErrorBoundaryFallbackProps()
+
+  return (
+    <>
+      <button onClick={reset}>Try again</button>
+      {error.message}
+    </>
+  )
+}
+
+// In RSC, you need to pass JSX directly to fallback instead of a callback
+const Example = () => (
+  <ErrorBoundary fallback={<ErrorBoundaryFallback />}>
+    <ErrorAfter2s />
+  </ErrorBoundary>
+)
+```
+
+> **Warning:** `useErrorBoundaryFallbackProps` must be called inside `<ErrorBoundary/>`'s `fallback`. Calling it in `<ErrorBoundary/>`'s `children` or outside of `<ErrorBoundary/>` will throw an error.
+
+---
+
+## ErrorBoundaryGroup
+
+URL: /docs/react/ErrorBoundaryGroup
+
+# ErrorBoundaryGroup
+
+This is a component for managing multiple `<ErrorBoundary/>`s easily.
+
+`<ErrorBoundary/>`s as children of nested `<ErrorBoundaryGroup/>` will also be reset by parent `<ErrorBoundaryGroup.Consumer/>`.
+
+```jsx /ErrorBoundaryGroup/
+import { ErrorBoundaryGroup, ErrorBoundary } from '@suspensive/react'
+
+const Example = () => (
+  <ErrorBoundaryGroup>
+    {/* Resets all ErrorBoundaries that are children of ErrorBoundaryGroup. All ErrorBoundaries within nested ErrorBoundaryGroups are also reset. */}
+    <ErrorBoundaryGroup.Consumer>
+      {(group) => <button onClick={group.reset}>Try again</button>}
+    </ErrorBoundaryGroup.Consumer>
+    <ErrorBoundary fallback={(props) => <>{props.error.message}</>}>
+      <ErrorAfter2s />
+    </ErrorBoundary>
+    <ErrorBoundaryGroup>
+      <ErrorBoundaryGroup.Consumer>
+        {(group) => <button onClick={group.reset}>Try again</button>}
+      </ErrorBoundaryGroup.Consumer>
+      <ErrorBoundary fallback={(props) => <>{props.error.message}</>}>
+        <ErrorAfter2s />
+      </ErrorBoundary>
+    </ErrorBoundaryGroup>
+  </ErrorBoundaryGroup>
+)
+```
+
+### props.blockOutside
+
+If you want to block resetting nested `<ErrorBoundaryGroup/>` by parent `<ErrorBoundaryGroup/>`, use blockOutside.
+
+```jsx /blockOutside/
+import { ErrorBoundaryGroup, ErrorBoundary } from '@suspensive/react'
+
+const Example = () => (
+  <ErrorBoundaryGroup>
+    <ErrorBoundaryGroup.Consumer>
+      {(group) => <button onClick={group.reset}>Try again</button>}
+    </ErrorBoundaryGroup.Consumer>
+    <ErrorBoundary fallback={(props) => <>{props.error.message}</>}>
+      <ErrorAfter2s />
+    </ErrorBoundary>
+
+    {/* blockOutside prop prevents reset by the parent ErrorBoundaryGroup. */}
+    <ErrorBoundaryGroup blockOutside>
+      <ErrorBoundaryGroup.Consumer>
+        {(group) => <button onClick={group.reset}>Try again</button>}
+      </ErrorBoundaryGroup.Consumer>
+      <ErrorBoundary fallback={(props) => <>{props.error.message}</>}>
+        <ErrorAfter2s />
+      </ErrorBoundary>
+    </ErrorBoundaryGroup>
+  </ErrorBoundaryGroup>
+)
+```
+
+## ErrorBoundaryGroup.with
+
+`ErrorBoundaryGroup.with` is a higher-order component that wraps the component with `<ErrorBoundaryGroup/>`.
+`ErrorBoundaryGroup.with` makes it easy to wrap a component.
+
+```tsx /ErrorBoundaryGroup.with/
+import { ErrorBoundaryGroup } from '@suspensive/react'
+
+const Example = ErrorBoundaryGroup.with({}, () => {
+  return <>...</>
+})
+```
+
+## ErrorBoundaryGroup.Consumer
+
+`ErrorBoundaryGroup.Consumer` is a consumer of `<ErrorBoundaryGroup/>`. You can use `ErrorBoundaryGroup.Consumer` to use reset of `<ErrorBoundaryGroup/>`.
+
+```tsx /ErrorBoundaryGroup.Consumer/
+import { ErrorBoundaryGroup } from '@suspensive/react'
+
+const Example = () => (
+  <ErrorBoundaryGroup>
+    <ErrorBoundaryGroup.Consumer>
+      {(group) => <button onClick={group.reset}>Try again</button>}
+    </ErrorBoundaryGroup.Consumer>
+    <ErrorBoundary>
+      <ErrorAfter2s />
+    </ErrorBoundary>
+  </ErrorBoundaryGroup>
+)
+```
+
+## useErrorBoundaryGroup
+
+If you use useErrorBoundaryGroup, you can get a function to reset `<ErrorBoundary/>`s in `<ErrorBoundaryGroup/>`.
+
+```tsx /useErrorBoundaryGroup/
+import { useErrorBoundaryGroup } from '@suspensive/react'
+
+const Example = () => {
+  const group = useErrorBoundaryGroup()
+
+  return <button onClick={group.reset}>Try again</button>
+}
+```
+
+---
+
+## Delay
+
+URL: /docs/react/Delay
+
+# Delay
+
+## Why Delay?
+
+When data loads fast (under 200ms), showing a spinner creates a **flash-of-loading-state** — a brief flicker that feels broken rather than responsive. `<Delay/>` solves this by holding back the loading UI until it's actually needed.
+
+**Recommended `ms` values:**
+
+- **100–300ms** for most UI — hides spinners on fast networks, shows them on slow ones
+- **500ms+** for non-critical sections where delayed feedback is acceptable
+
+`<Delay/>` is designed to work with `<Suspense/>`:
+
+```tsx
+<Suspense
+  fallback={
+    <Delay ms={200}>
+      {({ isDelayed }) => (
+        <Spinner
+          style={{ opacity: isDelayed ? 1 : 0, transition: 'opacity 200ms' }}
+        />
+      )}
+    </Delay>
+  }
+>
+  <Content />
+</Suspense>
+```
+
+Using the render prop pattern with `isDelayed` enables smooth fade-in transitions instead of abrupt appearances.
+
+---
+
+## Usage
+
+This component can be used in two ways:
+
+1. Delay the exposure of children.
+2. If children is a render prop, it passes a flag at the delayed time.
+
+### props.ms
+
+#### 1. Delay the exposure of children
+
+This component delays the exposure of children by ms. In the code below, exposure of children is delayed by 200ms.
+
+```tsx /ms/
+import { Delay } from '@suspensive/react'
+
+const Example = () => (
+  <Delay ms={200}>
+    <Delayed />
+  </Delay>
+)
+```
+
+#### 2. Pass a delayed flag to children
+
+If children is a render prop, it passes a flag instead of controlling the exposure. In the code below, `isDelayed` is passed as true after 200ms.
+
+```tsx /ms/
+import { Delay } from '@suspensive/react'
+
+export const Example = () => {
+  return (
+    <Delay ms={200}>
+      {({ isDelayed }) => (
+        <div
+          style={{
+            opacity: isDelayed ? 1 : 0,
+            transition: 'opacity 1500ms',
+          }}
+        ></div>
+      )}
+    </Delay>
+  )
+}
+```
+
+> **Info:** Delayed loading UI sometimes provides better usability
+> 
+> ```tsx /Delay/
+import { Delay, Suspense } from '@suspensive/react'
+
+const Example = () => (
+  <Suspense
+    fallback={
+      <Delay ms={200}>
+        <Skeleton />
+      </Delay>
+    }
+  >
+    ...
+  </Suspense>
+)
+```
+
+> **Note:** Default ms
+> 
+> `<Delay/>` are more powerful when used with `<DefaultPropsProvider/>`. Control multiple `<Delay/>`s default ms with `<DefaultPropsProvider/>`. Details are introduced in [`<DefaultPropsProvider/>` page](/docs/react/DefaultPropsProvider).
+
+### props.fallback
+
+fallback will be shown before the delayed exposure of children.
+
+```jsx /fallback/
+import { Delay } from '@suspensive/react'
+
+const Example = () => (
+  <Delay ms={200} fallback={<>Fallback Text</>}>
+    200ms delayed Text
+  </Delay>
+)
+```
+
+## Delay.with
+
+`Delay.with` is a higher-order component (HOC) that wraps a component using `Delay`.
+`Delay.with` makes it easy to wrap a component.
+
+```tsx /Delay.with/
+import { Delay } from '@suspensive/react'
+
+const Example = Delay.with({ ms: 2000 }, () => {
+  return <>...</>
+})
+```
+
+---
+
+## ClientOnly
+
+URL: /docs/react/ClientOnly
+
+# ClientOnly
+
+This component renders children only in the client environment and renders the fallback on the server. You can set an appropriate fallback to enhance the user experience as needed.
+
+`ClientOnly` is implemented using the [`useIsClient`](/docs/react/useIsClient) hook internally to detect the execution environment.
+
+```tsx /ClientOnly/
+import { ClientOnly } from '@suspensive/react'
+
+const Example = () => (
+  <ClientOnly fallback={<>Loading...</>}>
+    <div>This will only be rendered on the client side.</div>
+  </ClientOnly>
+)
+```
+
+## ClientOnly.with
+
+`ClientOnly.with` is a higher-order component (HOC) that wraps a component using `ClientOnly`.
+`ClientOnly.with` makes it easy to wrap a component.
+
+```tsx /ClientOnly.with/
+import { ClientOnly } from '@suspensive/react'
+
+const Example = ClientOnly.with({ fallback: <>server</> }, () => {
+  return <>client</>
+})
+```
+
+---
+
+## DefaultPropsProvider
+
+URL: /docs/react/DefaultPropsProvider
+
+# DefaultPropsProvider
+
+This component controls the settings of the components provided by Suspensive (Suspense, Delay, etc.) at once.
+
+```jsx /DefaultPropsProvider/ /DefaultProps/
+import { DefaultProps, DefaultPropsProvider } from '@suspensive/react'
+
+const defaultProps = new DefaultProps({
+  Delay: {
+    ms: 1200,
+  },
+  Suspense: {
+    fallback: <Spinner />,
+    clientOnly: false,
+  },
+})
+
+function App() {
+  return (
+    <DefaultPropsProvider defaultProps={defaultProps}>...</DefaultPropsProvider>
+  )
+}
+```
+
+---
+
+## lazy
+
+URL: /docs/react/lazy
+
+# lazy
+
+> **Experimental:** `lazy` is an experimental feature, so this interface may change.
+
+The `lazy` function is a wrapper around React's `lazy` function that provides callbacks for component loading success and failure. It allows you to execute custom logic when a component loads successfully or fails, providing better user experience and debugging capabilities.
+
+### Preloading Components
+
+By default, `lazy` works the same as React's `lazy` but provides an additional `load` method.
+
+```tsx /Component.load/
+import { lazy, Suspense } from '@suspensive/react'
+
+const Component = lazy(() => import('./Component'))
+
+function PreloadExample() {
+  return (
+    <div>
+      <button onClick={() => Component.load()}>Preload Component</button>
+      <Suspense fallback={<div>Loading...</div>}>
+        <Component />
+      </Suspense>
+    </div>
+  )
+}
+```
+
+### Success/Error Callbacks
+
+```tsx /onSuccess/ /onError/
+import { lazy, Suspense, ErrorBoundary } from '@suspensive/react'
+
+const UserProfile = lazy(() => import('./UserProfile'), {
+  onSuccess: () => console.log('Component loaded successfully'),
+  onError: ({ error }) => console.error('Loading failed:', error),
+})
+
+function App() {
+  return (
+    <ErrorBoundary fallback={<div>Something went wrong</div>}>
+      <Suspense fallback={<div>Loading...</div>}>
+        <UserProfile />
+      </Suspense>
+    </ErrorBoundary>
+  )
+}
+```
+
+## createLazy
+
+Creates a lazy function with custom default options.
+
+```tsx /createLazy/
+import { createLazy } from '@suspensive/react'
+
+const lazy = createLazy({
+  onSuccess: () => console.log('Component loaded successfully'),
+  onError: ({ error }) => console.error('Component loading failed:', error),
+})
+
+const Component = lazy(() => import('./Component'))
+```
+
+### Callback Execution Order
+
+- **onSuccess**: Individual callback → Default callback
+- **onError**: Individual callback → Default callback
+
+```tsx /onSuccess/ /onError/
+import { createLazy } from '@suspensive/react'
+
+const lazy = createLazy({
+  onSuccess: () => console.log('2. Default onSuccess'),
+  onError: ({ error }) => console.log('2. Default onError:', error),
+})
+
+const Component = lazy(() => import('./Component'), {
+  onSuccess: () => console.log('1. Individual onSuccess'),
+  onError: ({ error }) => console.log('1. Individual onError:', error),
+})
+
+// Execution order when component loads successfully:
+// 1. Individual onSuccess
+// 2. Default onSuccess
+
+// Execution order when component fails to load:
+// 1. Individual onError
+// 2. Default onError
+```
+
+## reloadOnError
+
+The `reloadOnError` function provides a convenient way to automatically reload the page when component loading fails. This is particularly useful for handling version skew issues in production environments.
+
+**Background:** While the best approach to solve version skew problems is to handle them at the infrastructure level (e.g., proper deployment strategies, CDN cache invalidation), there are cases where this is not possible or practical. `reloadOnError` serves as a client-side fallback solution for such scenarios.
+
+### Version Skew Problem Resolution
+
+```tsx /reloadOnError/
+import { lazy, reloadOnError } from '@suspensive/react'
+
+const MAX_RELOADS = 3
+
+const VersionSkewSafeComponent = lazy(
+  () => import('./VersionSkewSafeComponent'),
+  reloadOnError({
+    retry: MAX_RELOADS,
+    retryDelay: 1000,
+  })
+)
+```
+
+> **Info:** **If implemented without reloadOnError:**
+> 
+> ```diff
++ import { lazy, reloadOnError } from '@suspensive/react'
+- import { createLazy } from '@suspensive/react'
+
++ const Component = lazy(() => import('./Component'), reloadOnError({
++   retry: 3,
++   retryDelay: 1000,
++ }))
+- const Component = lazy(() => import('./Component'), {
+-   onError: ({ error, load }) => {
+-     const reloadKey = 'component_reload_count'
+-     const currentCount = parseInt(sessionStorage.getItem(reloadKey) || '0')
+-     const maxRetries = 3
+-
+-     if (currentCount < maxRetries && error.message?.includes('Loading chunk')) {
+-       const newCount = currentCount + 1
+-       sessionStorage.setItem(reloadKey, newCount.toString())
+-
+-       setTimeout(() => {
+-         window.location.reload()
+-       }, 1000)
+-     }
+-   },
+-   onSuccess: ({ load }) => {
+-     // Clear reload count on success
+-     sessionStorage.removeItem('component_reload_count')
+-   },
+- })
+
+const Component = lazy(() => import('./Component'))
+```
+
+### Custom Storage and Reload Function
+
+```tsx /storage:/ /reload:/
+import { createLazy, reloadOnError } from '@suspensive/react'
+
+const customStorage = {
+  getItem: (key) => localStorage.getItem(key),
+  setItem: (key, value) => localStorage.setItem(key, value),
+  removeItem: (key) => localStorage.removeItem(key),
+}
+
+const customReload = () => {
+  // Custom reload logic
+  window.location.href = window.location.href
+}
+
+const lazy = createLazy(
+  reloadOnError({
+    retry: 5,
+    retryDelay: 2000,
+    storage: customStorage,
+    reload: customReload,
+  })
+)
+
+const Component = lazy(() => import('./Component'))
+```
+
+---
+
+## useIsClient
+
+URL: /docs/react/useIsClient
+
+# useIsClient
+
+A hook that returns `true` when running on the client side and `false` when running on the server side. This hook is useful for detecting the execution environment and handling client-only logic.
+
+This hook is used internally by the [`ClientOnly`](/docs/react/ClientOnly) component to determine when to render its children.
+
+```tsx /useIsClient/
+import { useIsClient } from '@suspensive/react'
+
+const Example = () => {
+  const isClient = useIsClient()
+
+  return <div>{isClient ? 'Client Side' : 'Server Side'}</div>
+}
+```
+
+## Use Cases
+
+### Conditional Rendering Based on Environment
+
+You can use `useIsClient` to conditionally render components or content based on whether the code is running on the client or server.
+
+```tsx /conditional-rendering/
+import { useIsClient } from '@suspensive/react'
+
+const Example = () => {
+  const isClient = useIsClient()
+
+  return <div>{isClient ? <ClientOnlyComponent /> : <ServerFallback />}</div>
+}
+```
+
+### Client-Only Logic
+
+Use `useIsClient` to safely execute client-only code without causing hydration mismatches.
+
+```tsx /client-only-logic/
+import { useIsClient } from '@suspensive/react'
+import { useEffect, useState } from 'react'
+
+const Example = () => {
+  const isClient = useIsClient()
+  const [windowWidth, setWindowWidth] = useState(0)
+
+  useEffect(() => {
+    if (isClient) {
+      const handleResize = () => setWindowWidth(window.innerWidth)
+      window.addEventListener('resize', handleResize)
+      handleResize() // Set initial value
+
+      return () => window.removeEventListener('resize', handleResize)
+    }
+  }, [isClient])
+
+  return <div>{isClient ? `Window width: ${windowWidth}px` : 'Loading...'}</div>
+}
+```
+
+### Safe Browser API Access
+
+Safely access browser APIs that are only available on the client side.
+
+```tsx /browser-api/
+import { useIsClient } from '@suspensive/react'
+
+const Example = () => {
+  const isClient = useIsClient()
+
+  const handleClick = () => {
+    if (isClient) {
+      // Safe to use browser APIs
+      localStorage.setItem('clicked', 'true')
+      console.log('Clicked!')
+    }
+  }
+
+  return <button onClick={handleClick}>Click me (client only)</button>
+}
+```
+
+## Implementation Details
+
+`useIsClient` is implemented using React's `useSyncExternalStore` hook, which ensures:
+
+- **Consistent behavior**: Returns `false` during server-side rendering and `true` on the client
+- **No hydration mismatches**: The hook properly handles the transition from server to client
+- **Performance**: Minimal overhead with no unnecessary re-renders
+
+The hook internally uses:
+
+- `getSnapshot`: Returns `true` (client environment)
+- `getServerSnapshot`: Returns `false` (server environment)
+- `emptySubscribe`: No-op subscription function since the environment doesn't change during component lifecycle
+
+---
+
+## Migrating to v2
+
+URL: /docs/react/migration/migrate-to-v2
+
+# Migrating to v2
+
+## What's new
+
+### New [`wrap`](https://v2.suspensive.org/docs/react/wrap) builder [#270](https://github.com/toss/suspensive/pull/270)
+
+A new feature that wraps a component in `<Suspense/>`, `<ErrorBoundary/>`, and `<ErrorBoundaryGroup/>` all at once.
+
+For `<Suspense/>`, `<ErrorBoundary/>`, `<ErrorBoundaryGroup/>`, etc. many people use HOC to wrap these around a component. This is because these components require some processing on their children. So, in order to not unnecessarily divide components and create depth, we use the HOCs for each interface, withErrorBoundary, withErrorBoundaryGroup, and withSuspense, but as we often use each HOC in combination, we also need to improve readability. To improve this, we decided to provide wrap.
+
+```jsx
+import { wrap } from '@suspensive/react'
+import { useSuspenseQuery } from '@suspensive/react-query'
+
+const Example = wrap
+  .ErrorBoundaryGroup({ blockOutside: false })
+  .ErrorBoundary({
+    fallback: ({ error }) => <>{error.message}</>,
+    onError: logger.log,
+  })
+  .Suspense({ fallback: <>loading...</>, clientOnly: true })
+  .on(() => {
+    const query = useSuspenseQuery({
+      queryKey: ['key'],
+      queryFn: () => api.text(),
+    })
+    return <>{query.data.text}</>
+  })
+```
+
+### New `shouldCatch` prop of `<ErrorBoundary/>` [#569](https://github.com/toss/suspensive/pull/569)
+
+Suspensive's `<ErrorBoundary/>` can catch all thrown errors that occur in children. However, because it catches all thrown errors, when using `<ErrorBoundary/>`, I thought about placing `<ErrorBoundary/>` in a narrower position.
+For this reason, we added a new prop called shouldCatch to ErrorBoundary, which allows you to set which Error should be caught.
+
+![ErrorBoundary shouldCatch example](/img/errorBoundary-shouldcatch-prop.png)
+
+1. `shouldCatch`: ErrorConstructor
+
+```jsx
+import { ErrorBoundary } from '@suspensive/react'
+
+class CustomError extends Error {}
+
+const Example = () => {
+  return (
+    <ErrorBoundary fallback={({ error }) => <>RestError: {error.message}</>}>
+      <ErrorBoundary
+        shouldCatch={CustomError}
+        onError={logOnCustomError}
+        fallback={({ error }) => <>CustomError: {error.message}</>}
+      >
+        <ThrowErrorComponent />
+      </ErrorBoundary>
+    </ErrorBoundary>
+  )
+}
+```
+
+2. `shouldCatch`: callback
+
+```jsx
+import { ErrorBoundary } from '@suspensive/react'
+
+class CustomError extends Error {}
+
+const Example = () => {
+  return (
+    <ErrorBoundary fallback={({ error }) => <>RestError: {error.message}</>}>
+      <ErrorBoundary
+        shouldCatch={(error) => error instanceof CustomError}
+        onError={logOnCustomError}
+        fallback={({ error }) => <>CustomError: {error.message}</>}
+      >
+        <ThrowErrorComponent />
+      </ErrorBoundary>
+    </ErrorBoundary>
+  )
+}
+```
+
+3. `shouldCatch`: boolean
+
+```jsx
+import { ErrorBoundary } from '@suspensive/react'
+
+class CustomError extends Error {}
+
+const Example = () => {
+  return (
+    <ErrorBoundary fallback={({ error }) => <>RestError: {error.message}</>}>
+      <ErrorBoundary
+        shouldCatch={new Date().toISOString() > '2024-01-01T00:00:00.000Z'}
+        onError={logOnErrorAfter2024}
+        fallback={({ error }) => <>ErrorAfter2024: {error.message}</>}
+      >
+        <ThrowErrorComponent />
+      </ErrorBoundary>
+    </ErrorBoundary>
+  )
+}
+```
+
+### New [`<ErrorBoundary.Consumer/>`](/docs/react/ErrorBoundary), [`<ErrorBoundaryGroup.Consumer/>`](/docs/react/ErrorBoundaryGroup) [#610](https://github.com/toss/suspensive/pull/610)
+
+These components can be used to use `useErrorBoundary`, `useErrorBoundaryGroup` in jsx inlinely.
+
+```jsx
+import { ErrorBoundary, ErrorBoundaryGroup } from '@suspensive/react'
+
+const Example = () => {
+  return (
+    <ErrorBoundaryGroup>
+      <ErrorBoundaryGroup.Consumer>
+        {({ reset }) => <button onClick={reset}>reset all</button>}
+      </ErrorBoundaryGroup.Consumer>
+      <ErrorBoundary fallback={({ error }) => <>{error.message}</>}>
+        <ErrorBoundary.Consumer>
+          {({ setError }) => (
+            <button onClick={() => setError(new Error('error message'))}>
+              setError
+            </button>
+          )}
+        </ErrorBoundary.Consumer>
+      </ErrorBoundary>
+    </ErrorBoundaryGroup>
+  )
+}
+```
+
+## Handling BREAKING CHANGES
+
+### Removed `<AsyncBoundary/>`
+
+We removed `<AsyncBoundary/>` in v2. [#295](https://github.com/toss/suspensive/issues/295)
+
+Because `<AsyncBoundary/>` uses `<ErrorBoundary/>` internally, it can be used with `useErrorBoundary` and is affected by `<ErrorBoundaryGroup/>`. We decided to remove this component from v2, believing that it would be better for maintainability and interface unification for library users.
+
+`<AsyncBoundary/>`'s feature is just wrap two component(`<Suspense/>`, `<ErrorBoundary/>`) by one.
+So, you can split by two like this.
+
+```diff
++ import { Suspense, ErrorBoundary } from '@suspensive/react'
+- import { AsyncBoundary } from '@suspensive/react'
+
++ <ErrorBoundary fallback={<Error />} onError={onError} onReset={onReset}>
++   <Suspense fallback={<Loading />}>
++     <Children />
++   </Suspense>
++ </ErrorBoundary>
+- <AsyncBoundary pendingFallback={<Loading />} rejectedFallback={<Error />} onError={onError} onReset={onReset}>
+-   <Children />
+- </AsyncBoundary>
+```
+
+### Removed `withSuspense`, `withDelay`, `withErrorBoundary`, `withErrorBoundaryGroup`
+
+These all HOCs can be replaced beautifully by new HOC builder [`wrap`](https://v2.suspensive.org/docs/react/wrap) in v2.
+
+```diff
++ import { wrap } from '@suspensive/react'
+- import { withSuspense, withErrorBoundary, withErrorBoundaryGroup } from '@suspensive/react'
+
++ const Example = wrap
++   .ErrorBoundaryGroup({ blockOutside: false })
++   .ErrorBoundary({ fallback: ({ error }) => <>{error.message}</>, onError: logger.log })
++   .Suspense({ fallback: <>loading...</>, clientOnly: true })
++   .on(() => {
++     const query = useSuspenseQuery({
++       queryKey: ['key'],
++       queryFn: () => api.text(),
++     })
++     return <>{query.data.text}</>
++   })
+- const Example = withErrorBoundaryGroup(
+-   withErrorBoundary(
+-     withSuspense(
+-       () => {
+-         const query = useSuspenseQuery({
+-           queryKey: ['key'],
+-           queryFn: () => api.text(),
+-         })
+-         return <>{query.data.text}</>
+-       },
+-       { fallback: <>loading...</>, clientOnly: true }
+-     ),
+-     { fallback: ({ error }) => <>{error.message}</>, onError: logger.log }
+-   ),
+-   { blockOutside: false }
+- )
+```
+
+```diff
++ import { wrap } from '@suspensive/react'
+- import { withSuspense } from '@suspensive/react'
+
++ const Example = wrap
++   .Suspense({
++     fallback: <>loading...</>,
++     clientOnly: true,
++   })
++   .on(() => {
++     const query = useSuspenseQuery({
++       queryKey: ['key'],
++       queryFn: () => api.text(),
++     })
++     return <>{query.data.text}</>
++   })
+- const Example = withSuspense(
+-   () => {
+-     const query = useSuspenseQuery({
+-       queryKey: ['key'],
+-       queryFn: () => api.text(),
+-     })
+-     return <>{query.data.text}</>
+-   },
+-   {
+-     fallback: <>loading...</>,
+-     clientOnly: true,
+-   }
+- )
+```
+
+### Removed `<ErrorBoundaryGroup.Reset/>`
+
+`<ErrorBoundaryGroup.Reset/>` just use `useErrorBoundaryGroup` internally. so We thought that changing it to something like Context.Consumer would make the component's behavior easier to understand for React developers. We changed the name to `<ErrorBoundaryGroup.Consumer/>` and kept the interface the same.
+
+```diff
+import { ErrorBoundaryGroup } from '@suspensive/react'
+
+const Example = () => {
+  return (
+    <ErrorBoundaryGroup>
+-     <ErrorBoundaryGroup.Reset trigger={(group) => <button onClick={group.reset}>reset all</button>} />
++     <ErrorBoundaryGroup.Consumer>
++       {(group) => <button onClick={group.reset}>reset all</button>}
++     </ErrorBoundaryGroup.Consumer>
+    </ErrorBoundaryGroup>
+  )
+}
+```
+
+### Rename `defaultOptions` → `defaultProps` of `Suspensive`
+
+```diff
+import { ErrorBoundaryGroup } from '@suspensive/react'
+
+const suspensive = new Suspensive({
+- defaultOptions: {
++ defaultProps: {
+    suspense: {
+      fallback: 'default loading...',
+    },
+  },
+})
+```
+
+### Rename `<Suspense.CSROnly/>` → `<Suspense clientOnly/>` as prop
+
+```diff
+import { Suspense } from '@suspensive/react'
+
+const Example = () => {
+  return (
+-   <Suspense.CSROnly fallback={<>loading...</>}>
++   <Suspense clientOnly fallback={<>loading...</>}>
+      <>children</>
+    </Suspense>
+  )
+}
+```
+
+---
+
+## Migrating to v3
+
+URL: /docs/react/migration/migrate-to-v3
+
+# Migrating to v3
+
+## What's new
+
+### Now thrown error in `ErrorBoundary` fallback will be passed to parent [#1409](https://github.com/toss/suspensive/pull/1409)
+
+It is not the developer's intention to expose fallbacks recursively due to fallback errors, in v3, errors thrown from fallbacks are caught by the parent ErrorBoundary.
+So this is a new mental model and a BREAKING CHANGE, please understand and use the new behavior.
+
+> **Note:** Errors thrown from the fallback of AS-IS v2 ErrorBoundary cannot be handled by the parent ErrorBoundary, so they are caught by themselves and fallbacks are exposed recursively.
+> 
+> > This is also the case in [react-error-boundary](https://github.com/bvaughn/react-error-boundary) where fallbacks are exposed recursively as follows.
+> 
+> 1. children is exposed
+> 2. fallback is exposed
+> 3. fallback is exposed
+> 4. fallback is exposed
+> 5. ... recursively exposed fallback is exposed
+
+Now, errors thrown from the fallback of ErrorBoundary are caught by the parent ErrorBoundary. Therefore, the behavior is as follows.
+
+1. children are exposed
+2. fallback is exposed
+3. This is expected
+
+```tsx /This is expected/ /fallback is exposed/ /children is exposed/
+const Example = () => (
+  <ErrorBoundary fallback={() => <>This is expected</>}>
+    <ErrorBoundary
+      fallback={() => (
+        <Throw.Error message={ERROR_MESSAGE} after={100}>
+          fallback is exposed
+        </Throw.Error>
+      )}
+    >
+      <Throw.Error message={ERROR_MESSAGE} after={100}>
+        children is exposed
+      </Throw.Error>
+    </ErrorBoundary>
+  </ErrorBoundary>
+)
+
+const Throw = {
+  Error: ({
+    message,
+    after = 0,
+    children,
+  }: PropsWithChildren<{ message: string; after?: number }>) => {
+    const [isNeedThrow, setIsNeedThrow] = useState(after === 0)
+    if (isNeedThrow) {
+      throw new Error(message)
+    }
+    useTimeout(() => setIsNeedThrow(true), after)
+    return <>{children}</>
+  },
+}
+```
+
+### Now `Delay`'s children render prop can use the isDelayed flag. [#1312](https://github.com/toss/suspensive/pull/1312)
+
+The `Delay` component now allows you to use the `isDelayed` flag in the render prop of its children. This flag can be used to check if the delay has ended.
+When we use Skeleton UI for Suspense's fallback, it is better to give a delay of about 200ms and make the skeleton fade-in rather than showing it right away.
+At this time we can use the `isDelayed` flag to control the opacity of the skeleton. This allows us to reduce layout shifts while improving user experience.
+
+```tsx
+import { Delay } from '@suspensive/react'
+
+const Example = () => (
+  <Suspense
+    fallback={
+      <Delay ms={200}>
+        {({ isDelayed }) => (
+          <Skeleton
+            style={{
+              opacity: isDelayed ? 1 : 0,
+              transition: 'opacity 0.2s ease-in-out',
+            }}
+          />
+        )}
+      </Delay>
+    }
+  >
+    <SuspendingComponent />
+  </Suspense>
+)
+```
+
+## Handling BREAKING CHANGES
+
+### Remove `wrap` & Add `with` [#1452](https://github.com/toss/suspensive/pull/1452)
+
+`wrap` has been removed in v3. We added a `with` method to each component that can replace the functionality of wrap.
+
+1. You don't need to understand the builder pattern used in wrap.
+2. Since wrap includes all components internally, the build size increases. In v3, you can import and use only the components you need.
+
+```diff
++ import { ErrorBoundaryGroup, ErrorBoundary, Suspense } from '@suspensive/react'
+- import { wrap } from '@suspensive/react'
+  import { useSuspenseQuery } from '@suspensive/react-query'
+
++ const Example = ErrorBoundaryGroup.with(
++   { blockOutside: false },
++   ErrorBoundary.with(
++     { fallback: ({ error }) => <>{error.message}</>, onError: logger.log },
++     Suspense.with({ fallback: <>loading...</>, clientOnly: true }, () => {
++       const query = useSuspenseQuery({
++         queryKey: ['key'],
++         queryFn: () => api.text(),
++       })
++       return <>{query.data.text}</>
++     })
++   )
++ )
+- const Example = wrap
+-   .ErrorBoundaryGroup({ blockOutside: false })
+-   .ErrorBoundary({
+-     fallback: ({ error }) => <>{error.message}</>,
+-     onError: logger.log,
+-   })
+-   .Suspense({ fallback: <>loading...</>, clientOnly: true })
+-   .on(() => {
+-     const query = useSuspenseQuery({
+-       queryKey: ['key'],
+-       queryFn: () => api.text(),
+-     })
+-     return <>{query.data.text}</>
+-   })
+```
+
+---
+
+## Motivation
+
+URL: /docs/react-query/motivation
+
+# Motivation
+
+TanStack Query is powerful, but using it in real applications reveals friction — hooks force unnecessary component splits, server-side prefetching requires boilerplate, and some APIs are simply missing. @suspensive/react-query removes that friction.
+
+### Hooks force you to split components
+
+To use `useSuspenseQuery`, you must create a separate child component below `<Suspense>`. With Suspensive's [`<SuspenseQuery/>`](/docs/react-query/SuspenseQuery), data fetching lives right in JSX — no wrapper components, no artificial nesting.
+
+The same applies to mutations and prefetching. With Suspensive's [`<Mutation/>`](/docs/react-query/Mutation) and [`<PrefetchQuery/>`](/docs/react-query/PrefetchQuery), you can use them inline, even inside loops and conditionals where hooks can't go.
+
+### Server-side prefetching is too much boilerplate
+
+Creating a `QueryClient`, calling `ensureQueryData` for each query, wrapping with `HydrationBoundary` — it adds up fast. With Suspensive's [`<QueriesHydration/>`](/docs/react-query/QueriesHydration), you declare your queries once and it handles prefetching, dehydration, and hydration automatically.
+
+### Server-side prefetching fails silently
+
+When `ensureQueryData` fails on the server, you have to write try-catch logic, render a fallback, and decide whether to retry on the client — for every query. With Suspensive's [`<QueriesHydration/>`](/docs/react-query/QueriesHydration), `skipSsrOnError` handles all of this: it can skip SSR and retry in the browser, or show a custom fallback while the client takes over. Combined with `timeout`, slow queries gracefully fall back to client-side rendering instead of blocking the entire page.
+
+### QueryClient leaks across requests on the server
+
+A shared `QueryClient` on the server means data from one user's request can leak into another's. With Suspensive's [`createGetQueryClient`](/docs/react-query/createGetQueryClient), you get a new instance per server request and a singleton in the browser — with safe GC defaults built in.
+
+### v5 drops support for older browsers
+
+TanStack Query v5 requires Safari >= 15 due to ES private fields, but many teams still need to support Safari 12–14. By [installing @suspensive/react-query-4](/docs/react-query/installation), you get the v5 interface while keeping older browser compatibility.
+
+<details>
+<summary>Browser compatibility comparison</summary>
+
+<br />
+
+  <thead>
+    
+      TanStack Query Browser Requirements
+      v4
+      v5
+    
+  </thead>
+  <tbody>
+    {[
+      { browser: 'Chrome', version4: '>= 73', version5: '>= 91' },
+      { browser: 'Firefox', version4: '>= 78', version5: '>= 90' },
+      { browser: 'Edge', version4: '>= 79', version5: '>= 91' },
+      { browser: 'Safari', version4: '>= 12.1', version5: '>= 15' },
+      { browser: 'iOS', version4: '>= 12.2', version5: '>= 15' },
+      { browser: 'Opera', version4: '>= 53', version5: '>= 77' },
+    ].map((item) => (
+      
+        {item.browser}
+        {item.version4}
+        {item.version5}
+      
+    ))}
+  </tbody>
+
+</details>
+
+### Official TanStack Query community resource
+
+@suspensive/react-query is registered as an official [TanStack Query community resource](https://tanstack.com/query/v4/docs/framework/react/community/suspensive-react-query). We actively maintain it and provide prompt support for issues.
+
+![TanStack Query Community Resources](/img/react-query_community-resources.png)
+
+---
+
+## Installation
+
+URL: /docs/react-query/installation
+
+# Installation
+
+### Check supported browsers
+
+Suspensive Libraries are optimized for modern browsers. It is compatible with the following browsers config.
+
+<br />
+
+  <tbody>
+    {[
+      { browser: 'Chrome', version: '>= 51' },
+      { browser: 'Firefox', version: '>= 53' },
+      { browser: 'Edge', version: '>= 18' },
+      { browser: 'Safari', version: '>= 11' },
+      { browser: 'iOS', version: '>= 11' },
+      { browser: 'Opera', version: '>= 38' },
+    ].map((item) => (
+      
+        {item.browser}
+        {item.version}
+      
+    ))}
+  </tbody>
+
+> Depending on your environment, you might need to add polyfills. If you want to support older browsers, you need to transpile the library from node_modules yourselves.
+
+### Check supported react, @tanstack/react-query version
+
+<br />
+
+  <tbody>
+    {[
+      { library: 'react', version: '^18 || ^19' },
+      { library: '@tanstack/react-query', version: '^4 || ^5' },
+    ].map((item) => (
+      
+        {item.library}
+        {item.version}
+      
+    ))}
+  </tbody>
+
+### Add as Dependencies
+
+Install the package that matches your @tanstack/react-query version.
+
+#### @tanstack/react-query v5
+
+```shell npm2yarn
+npm install @suspensive/react-query@npm:@suspensive/react-query-5 @tanstack/react-query@5
+```
+
+#### @tanstack/react-query v4
+
+@tanstack/react-query v4 supports [lower version browsers](/docs/react-query/motivation#v5-drops-support-for-older-browsers) compared to v5.
+
+```shell npm2yarn
+npm install @suspensive/react-query@npm:@suspensive/react-query-4 @tanstack/react-query@4
+```
+
+> **Info:** By using npm aliases, the import path remains `@suspensive/react-query` across your codebase. When upgrading your @tanstack/react-query version, you only need to change the alias in package.json — no code changes required.
+
+---
+
+## SuspenseQuery
+
+URL: /docs/react-query/SuspenseQuery
+
+# SuspenseQuery
+
+We provide these components to clearly express what causes suspense at the same depth.
+
+1. Prop-drilling resulting from removing depth such as UserInfo and PostList for data-fetching only is also removed.
+2. Changing the range of Suspense and ErrorBoundary becomes simple. Parallel processing of queries is also easier.
+3. Because it manages all data-fetching within the Page component, the internal components are presentational, so it is easy to separate the components.
+
+```jsx /SuspenseQuery/
+import { SuspenseQuery } from '@suspensive/react-query'
+import { Suspense, ErrorBoundary } from '@suspensive/react'
+import { PostListItem, UserProfile } from '~/components'
+
+const PostsPage = ({ userId }) => (
+  <ErrorBoundary fallback={({ error }) => <>{error.message}</>}>
+    <Suspense fallback={'loading...'}>
+      <SuspenseQuery {...userQueryOptions(userId)}>
+        {({ data: user }) => <UserProfile key={user.id} {...user} />}
+      </SuspenseQuery>
+      <SuspenseQuery
+        {...postsQueryOptions(userId)}
+        select={(posts) => posts.filter(({ isPublic }) => isPublic)}
+      >
+        {({ data: posts }) =>
+          posts.map((post) => <PostListItem key={post.id} {...post} />)
+        }
+      </SuspenseQuery>
+    </Suspense>
+  </ErrorBoundary>
+)
+```
+
+## Motivation: useSuspenseQuery is not obvious
+
+Because the existing useSuspenseQuery is a hook, it creates components with names such as UserInfo and PostList to place Suspense and ErrorBoundary on the parent.
+This makes it difficult to predict what suspense and errors will be thrown inside UserInfo and PostList.
+
+```jsx
+// posts/page.tsx
+import { Suspense, ErrorBoundary } from '@suspensive/react'
+import { UserInfo } from './components/UserInfo'
+import { PostList } from './components/PostList'
+
+const PostsPage = ({ userId }) => (
+  <ErrorBoundary fallback={({ error }) => <>{error.message}</>}>
+    <Suspense fallback={'loading...'}>
+      <UserInfo userId={userId} />
+      {/* It is difficult to predict whether a suspension will occur internally. */}
+      <PostList userId={userId} />
+      {/* It is difficult to predict whether a suspension will occur internally. */}
+    </Suspense>
+  </ErrorBoundary>
+)
+```
+
+```jsx /useSuspenseQuery/
+// posts/components/UserInfo.tsx
+import { useSuspenseQuery } from '@suspensive/react-query'
+import { UserProfile } from '~/components'
+
+// From the perspective of using this component, it is impossible to predict whether Suspense will occur internally just by the name UserInfo.
+const UserInfo = ({ userId }) => {
+  // We need to create this component just for data-fetching.
+  const { data: user } = useSuspenseQuery(userQueryOptions(userId))
+
+  return <UserProfile {...user} />
+}
+```
+
+```jsx /useSuspenseQuery/
+// posts/components/PostList.tsx
+import { useSuspenseQuery } from '@suspensive/react-query'
+import { PostListItem } from '~/components'
+
+// From the perspective of using this component, it is impossible to predict whether a suspense will occur internally based on the name PostList alone.
+const PostList = ({ userId }) => {
+  // We need to create this component just for data-fetching.
+  const { data: posts } = useSuspenseQuery({
+    ...postsQueryOptions(userId),
+    select: (posts) => posts.filter(({ isPublic }) => isPublic),
+  })
+
+  return (
+    <>
+      {posts.map((post) => (
+        <PostListItem {...post} />
+      ))}
+    </>
+  )
+}
+```
+
+### Version History
+
+| Version  | Changes                                                                                                                                   |
+| -------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| `v3.0.0` | `networkMode` has been fixed to `'always'`. For more details, please refer to the [Migration to v3 guide](./migration/migrate-to-v3.mdx). |
+
+---
+
+## SuspenseQueries
+
+URL: /docs/react-query/SuspenseQueries
+
+# SuspenseQueries
+
+Just as [`<SuspenseQuery/>`](/docs/react-query/SuspenseQuery) makes useSuspenseQuery easier to use in jsx, `<SuspenseQueries/>` serves to make useSuspenseQueries easier to use in jsx.
+
+```jsx /SuspenseQueries/
+import { SuspenseQueries } from '@suspensive/react-query'
+import { Suspense, ErrorBoundary } from '@suspensive/react'
+import { PostListItem, UserProfile } from '~/components'
+
+const PostsPage = ({ userId }) => (
+  <ErrorBoundary fallback={({ error }) => <>{error.message}</>}>
+    <Suspense fallback="loading...">
+      <SuspenseQueries
+        queries={[userQueryOptions(userId), postsQueryOptions(userId)]}
+      >
+        {([{ data: user }, { data: posts }]) => (
+          <>
+            {<UserProfile {...user} />}
+            {posts.map((post) => (
+              <PostListItem key={post.id} {...post} />
+            ))}
+          </>
+        )}
+      </SuspenseQueries>
+    </Suspense>
+  </ErrorBoundary>
+)
+```
+
+### Version History
+
+| Version  | Changes                                                                                                                                   |
+| -------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| `v3.0.0` | `networkMode` has been fixed to `'always'`. For more details, please refer to the [Migration to v3 guide](./migration/migrate-to-v3.mdx). |
+
+---
+
+## SuspenseInfiniteQuery
+
+URL: /docs/react-query/SuspenseInfiniteQuery
+
+# SuspenseInfiniteQuery
+
+Just as [`<SuspenseQuery/>`](/docs/react-query/SuspenseQuery) makes useSuspenseQuery easier to use in jsx, `<SuspenseInfiniteQuery/>` serves to make useSuspenseInfiniteQuery easier to use in jsx.
+
+```jsx /SuspenseInfiniteQuery/
+import { SuspenseInfiniteQuery } from '@suspensive/react-query'
+import { Suspense, ErrorBoundary } from '@suspensive/react'
+import { PostListItem } from '~/components'
+
+const InfinitePostsPage = ({ userId }) => (
+  <ErrorBoundary fallback={({ error }) => <>{error.message}</>}>
+    <Suspense fallback="loading...">
+      <SuspenseInfiniteQuery {...postsInfiniteQueryOptions(userId)}>
+        {({ data, fetchNextPage }) => (
+          <>
+            {data.pages.map((post) => (
+              <PostListItem {...post} />
+            ))}
+            <button
+              type="button"
+              onClick={() => {
+                fetchNextPage()
+              }}
+            >
+              Load More
+            </button>
+          </>
+        )}
+      </SuspenseInfiniteQuery>
+    </Suspense>
+  </ErrorBoundary>
+)
+```
+
+### Version History
+
+| Version  | Changes                                                                                                                                   |
+| -------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| `v3.0.0` | `networkMode` has been fixed to `'always'`. For more details, please refer to the [Migration to v3 guide](./migration/migrate-to-v3.mdx). |
+
+---
+
+## Mutation
+
+URL: /docs/react-query/Mutation
+
+# Mutation
+
+Similar to how [`<SuspenseQuery/>`](/docs/react-query/SuspenseQuery) allows `useSuspenseQuery` to be used at the same depth, `<Mutation/>` facilitates the use of `useMutation` at the same depth.
+
+```jsx /Mutation/
+import { Mutation } from '@suspensive/react-query'
+import { useSuspenseQuery } from '@tanstack/react-query'
+
+const PostsPage = () => {
+  const { data: posts } = useSuspenseQuery({
+    queryKey: ['posts'],
+    queryFn: () => getPosts(),
+  });
+
+  return posts.map(post => (
+    <Mutation
+      key={post.id}
+      mutationFn={({ content }: { content: string }) => api.editPost({ postId: post.id, content })}
+    >
+      {postMutation => (
+        <>
+          <div>{post.content}</div>
+          {post.comments.map(comment => (
+            <Mutation
+              key={comment.id}
+              mutationFn={({ content }: { content: string }) => api.editComment({ postId: post.id, commentId: comment.id, content })}
+            >
+              {commentMutation => (
+                <div>
+                  {postMutation.isPending ? <Spinner/> : null}
+                  {comment.content}
+                  <textarea onChange={e => commentMutation.mutateAsync({ content: e.target.value })} />
+                </div>
+              )}
+            </Mutation>
+          ))}
+        </>
+      )}
+    </Mutation>
+  ));
+}
+```
+
+### Motivation: useMutation Creates Unnecessary Depth
+
+The existing useMutation is a hook, which leads to the creation of components like PostToUseMutation and CommentToUseMutation. This creates unnecessary depth and results in awkward component names, making the structure less flexible and harder to manage due to coupling with parent components.
+
+```jsx /useMutation/
+import { useMutation } from '@tanstack/react-query'
+
+const PostsPage = () => {
+  const posts = usePosts();
+
+  return posts.map(post => <PostToUseMutation key={post.id} post={post} />);
+};
+
+// PostToUseMutation (unnecessary name, needs to be refactored to use only useMutation)
+const PostToUseMutation = ({ post }: { post: Post }) => { // Props need to be passed to useMutation.
+  const postMutation = useMutation({
+    mutationFn: ({ content }: { content: string }) => api.editPost({ postId: post.id, content }),
+  });
+
+  if (postMutation.isPending) {
+    return <Spinner />;
+  }
+
+  return (
+    <>
+      <div>{post.content}</div>
+      <textarea onChange={e => postMutation.mutateAsync({ content: e.target.value })} />
+      {post.comments.map(comment => (
+        <CommentToUseMutation key={comment.id} post={post} comment={comment} />
+      ))}
+    </>
+  );
+};
+
+// CommentToUseMutation (unnecessary name, needs to be refactored to use only useMutation)
+const CommentToUseMutation = ({ post, comment }: { post: Post, comment: Comment }) => { // Props need to be passed to useMutation.
+  const commentMutation = useMutation({
+    mutationFn: ({ content }: { content: string }) => api.editComment({ postId: post.id, commentId: comment.id, content }),
+  });
+
+  return (
+    <div>
+      {comment.content}
+      <textarea onChange={e => commentMutation.mutateAsync({ content: e.target.value })} />
+    </div>
+  );
+};
+```
+
+---
+
+## PrefetchQuery
+
+URL: /docs/react-query/PrefetchQuery
+
+# PrefetchQuery
+
+A component that allows you to use usePrefetchQuery in JSX, avoiding the limitations of React hooks.
+
+```jsx /PrefetchQuery/
+import { PrefetchQuery, useSuspenseQuery } from '@suspensive/react-query'
+
+const PostsPage = () => {
+  const { data: posts } = useSuspenseQuery({
+    queryKey: ['posts'],
+    queryFn: () => getPosts(),
+  })
+
+  return posts.map((post) => (
+    <div key={post.id}>
+      {/* 🚫 We can not invoke usePrefetchQuery like below because of React Hook rules
+      // usePrefetchQuery({
+      //   queryKey: ['posts', post.id, 'comments'],
+      //   queryFn: () => getPostComments(post.id),
+      // })
+
+      // ✅ We can invoke usePrefetchQuery for each post comments query before entering Post Comments page */}
+      <PrefetchQuery
+        queryKey={['posts', post.id, 'comments']}
+        queryFn={() => getPostComments(post.id)}
+      />
+      <h2>{post.title}</h2>
+      <p>{post.description}</p>
+      <Link to={`/posts/${post.id}/comments`}>See comments</Link>
+    </div>
+  ))
+}
+```
+
+---
+
+## PrefetchInfiniteQuery
+
+URL: /docs/react-query/PrefetchInfiniteQuery
+
+# PrefetchInfiniteQuery
+
+A component that allows you to use usePrefetchInfiniteQuery in JSX, avoiding the limitations of React hooks.
+
+```jsx /PrefetchInfiniteQuery/
+import {
+  PrefetchInfiniteQuery,
+  useSuspenseQuery,
+} from '@suspensive/react-query'
+
+const PostsPage = () => {
+  const { data: posts } = useSuspenseQuery({
+    queryKey: ['posts'],
+    queryFn: () => getPosts(),
+  })
+
+  return posts.map((post) => (
+    <div key={post.id}>
+      {/* 🚫 We can not invoke usePrefetchInfiniteQuery like below because of React Hook rules
+      // usePrefetchInfiniteQuery({
+      //   queryKey: ['posts', post.id, 'comments'],
+      //   queryFn: () => getPostComments(post.id),
+      // })
+
+      // ✅ We can invoke usePrefetchInfiniteQuery for each post comments query before entering Post Comments page */}
+      <PrefetchInfiniteQuery
+        queryKey={['posts', post.id, 'comments']}
+        queryFn={() => getPostComments(post.id)}
+      />
+      <h2>{post.title}</h2>
+      <p>{post.description}</p>
+      <Link to={`/posts/${post.id}/comments`}>See comments</Link>
+    </div>
+  ))
+}
+```
+
+---
+
+## QueriesHydration
+
+URL: /docs/react-query/QueriesHydration
+
+# QueriesHydration
+
+> **Experimental:** `<QueriesHydration/>` is an experimental feature, so this interface may change.
+
+A component that prefetches multiple queries on the server and automatically hydrates them to client components.
+
+This is useful when you want to prefetch data on the server side and pass it to the client in React Server Components environments.
+
+> 💡 **Recommended reading**: Before using this component, we recommend reading the [TanStack Query Advanced Server Rendering guide](https://tanstack.com/query/latest/docs/framework/react/guides/advanced-ssr), which covers Server Components, streaming, and the Next.js App Router. Understanding these concepts will help you use `QueriesHydration` more effectively.
+
+## Basic Usage
+
+Use `queryOptions` with `QueriesHydration` to prefetch data on the server. For better HTML Streaming, wrap each component with its own `Suspense` and `QueriesHydration`:
+
+#### page.tsx (RSC)
+
+```tsx /QueriesHydration/
+import { QueriesHydration } from '@suspensive/react-query'
+import { Suspense } from '@suspensive/react'
+import { userQueryOptions, postsQueryOptions } from './queries'
+import { UserProfile, PostList } from './_components'
+
+// Server Component
+const PostsPage = ({ userId }: { userId: number }) => {
+  return (
+    <>
+      <Suspense fallback={<div>Loading user...</div>}>
+        <QueriesHydration queries={[userQueryOptions(userId)]}>
+          <UserProfile userId={userId} />
+        </QueriesHydration>
+      </Suspense>
+      <Suspense fallback={<div>Loading posts...</div>}>
+        <QueriesHydration queries={[postsQueryOptions(userId)]}>
+          <PostList userId={userId} />
+        </QueriesHydration>
+      </Suspense>
+    </>
+  )
+}
+```
+
+#### UserProfile.tsx (RCC)
+
+```tsx
+'use client'
+
+import { useSuspenseQuery } from '@suspensive/react-query'
+import { userQueryOptions } from './queries'
+
+export const UserProfile = ({ userId }: { userId: number }) => {
+  // Data prefetched on the server is automatically hydrated
+  const { data: user } = useSuspenseQuery(userQueryOptions(userId))
+
+  return (
+    <div>
+      <h1>{user.name}</h1>
+      <p>{user.email}</p>
+    </div>
+  )
+}
+```
+
+#### PostList.tsx (RCC)
+
+```tsx
+'use client'
+
+import { useSuspenseQuery } from '@suspensive/react-query'
+import { postsQueryOptions } from './queries'
+
+export const PostList = ({ userId }: { userId: number }) => {
+  // Data prefetched on the server is automatically hydrated
+  const { data: posts } = useSuspenseQuery(postsQueryOptions(userId))
+
+  return (
+    <ul>
+      {posts.map((post) => (
+        <li key={post.id}>{post.title}</li>
+      ))}
+    </ul>
+  )
+}
+```
+
+### Using Infinite Queries
+
+You can also use `infiniteQueryOptions` with `QueriesHydration`. You can mix regular queries and infinite queries in the same array. For better HTML Streaming, wrap each component with its own `Suspense` and `QueriesHydration`:
+
+```tsx /QueriesHydration/
+import { QueriesHydration } from '@suspensive/react-query'
+import { Suspense } from '@suspensive/react'
+import { queryOptions, infiniteQueryOptions } from '@tanstack/react-query'
+import { UserProfile, InfinitePostList } from './_components'
+
+const userQueryOptions = (userId: string) =>
+  queryOptions({
+    queryKey: ['user', userId],
+    queryFn: () => fetchUser(userId),
+  })
+
+const postsInfiniteQueryOptions = (userId: string) =>
+  infiniteQueryOptions({
+    queryKey: ['posts', userId],
+    queryFn: ({ pageParam = 0 }) => fetchPosts(userId, pageParam),
+    getNextPageParam: (lastPage, allPages) => lastPage.nextCursor,
+    initialPageParam: 0,
+  })
+
+// Server Component
+const PostsPage = ({ userId }: { userId: string }) => {
+  return (
+    <>
+      <Suspense fallback={<div>Loading user...</div>}>
+        <QueriesHydration queries={[userQueryOptions(userId)]}>
+          <UserProfile userId={userId} />
+        </QueriesHydration>
+      </Suspense>
+      <Suspense fallback={<div>Loading posts...</div>}>
+        <QueriesHydration queries={[postsInfiniteQueryOptions(userId)]}>
+          <InfinitePostList userId={userId} />
+        </QueriesHydration>
+      </Suspense>
+    </>
+  )
+}
+```
+
+## Props
+
+### queries
+
+An array of queries or infinite queries to be prefetched on the server. Each query must have a `queryKey`. You can mix regular queries and infinite queries in the same array.
+
+```tsx
+type QueriesHydrationProps = {
+  queries: (
+    | WithRequired<QueryOptions<any, any, any, any>, 'queryKey'>
+    | WithRequired<UseInfiniteQueryOptions<any, any, any, any, any>, 'queryKey'>
+  )[]
+  children: ReactNode
+  queryClient?: QueryClient // Optional (default: new QueryClient())
+  skipSsrOnError?: boolean | { fallback: ReactNode } // Optional (default: true)
+  timeout?: number // Optional (unit: ms)
+}
+```
+
+### queryClient
+
+Optionally, you can pass a QueryClient instance to use. If not provided, a new QueryClient instance will be created.
+
+```tsx /QueriesHydration/
+import { QueryClient } from '@tanstack/react-query'
+import { QueriesHydration } from '@suspensive/react-query'
+
+const queryClient = new QueryClient()
+
+const Page = async () => {
+  return (
+    <QueriesHydration queryClient={queryClient} queries={[]}>
+      {/* ... */}
+    </QueriesHydration>
+  )
+}
+```
+
+### skipSsrOnError
+
+Controls the behavior when an error occurs while fetching queries on the server. This option becomes clearer when you understand the 3 stages where data fetching occurs:
+
+1. **RSC (React Server Component)**: Query execution in `QueriesHydration`
+2. **RCC (React Client Component) - Server**: Query execution in `useSuspenseQuery` if no cached data exists
+3. **RCC (React Client Component) - Browser**: Query execution in `useSuspenseQuery` if no cached or fresh data exists
+
+If stage 1 fails, stage 2 is likely to fail for the same reason. However, stage 3 (browser) might succeed (e.g., authentication-related issues, etc.). Since the browser can retry and potentially succeed, it's better to use `skipSsrOnError` to skip RCC(server) and fetch directly from RCC(browser) when RSC fails.
+
+**Important**: When stage 1 succeeds (no error), the data is already hydrated to the client. In this case, you can verify in the browser's Network tab that no additional fetch requests are made in stages 2 and 3, as the data is served from the cache. This demonstrates the efficiency of server-side prefetching with `QueriesHydration`.
+
+- `true` (default): If stage 1 fails, skip SSR and retry in stage 3 (browser)
+- `false`: Even if stage 1 fails, proceed to stage 2 without hydration (retry fetching on server)
+- `{ fallback: ReactNode }`: If stage 1 fails, skip SSR and display a custom fallback UI while moving to stage 3
+
+```tsx /QueriesHydration/
+import { QueriesHydration } from '@suspensive/react-query'
+import { Suspense } from '@suspensive/react'
+import {
+  userQueryOptions,
+  postsQueryOptions,
+  commentsQueryOptions,
+} from './queries'
+import { UserProfile, PostList, CommentList } from './_components'
+
+const Page = async ({ userId }: { userId: number }) => {
+  return (
+    <>
+      {/* Skip SSR and retry in browser if stage 1 fails (default behavior) */}
+      <Suspense fallback={<div>Loading...</div>}>
+        <QueriesHydration queries={[userQueryOptions(userId)]}>
+          <UserProfile />
+        </QueriesHydration>
+      </Suspense>
+
+      {/* Skip SSR and retry in browser with custom fallback if stage 1 fails */}
+      <Suspense fallback={<div>Loading...</div>}>
+        <QueriesHydration
+          queries={[postsQueryOptions()]}
+          skipSsrOnError={{
+            fallback: <div>Unable to fetch data from server...</div>,
+          }}
+        >
+          <PostList />
+        </QueriesHydration>
+      </Suspense>
+
+      {/* Retry in stage 2 (RCC server) even if stage 1 fails */}
+      <Suspense fallback={<div>Loading...</div>}>
+        <QueriesHydration
+          queries={[commentsQueryOptions()]}
+          skipSsrOnError={false}
+        >
+          <CommentList />
+        </QueriesHydration>
+      </Suspense>
+    </>
+  )
+}
+```
+
+### timeout
+
+Limits the time allowed for fetching queries on the server. An error is thrown if query fetching exceeds this limit. When not set, no timeout is applied.
+
+When `skipSsrOnError` is true or passed as `{ fallback: ReactNode }`, exceeding the timeout causes the server to give up rendering and the browser will attempt to render instead.
+
+```tsx /QueriesHydration/
+import { QueriesHydration } from '@suspensive/react-query'
+import { Suspense } from '@suspensive/react'
+import { userQueryOptions, postsQueryOptions } from './queries'
+import { UserProfile, PostList } from './_components'
+
+const Page = async ({ userId }: { userId: number }) => {
+  return (
+    <>
+      <Suspense fallback={<div>Loading...</div>}>
+        {/* An error is thrown if the query takes longer than 1000ms to fetch */}
+        <QueriesHydration queries={[userQueryOptions(userId)]} timeout={1000}>
+          <UserProfile />
+        </QueriesHydration>
+      </Suspense>
+    </>
+  )
+}
+```
+
+## Motivation: Simplify prefetching multiple queries in Server Components
+
+In React Server Components environments, you can prefetch data on the server to eliminate initial loading states. However, manually prefetching and dehydrating multiple queries is cumbersome.
+
+### Traditional approach: Manual prefetch and dehydrate
+
+#### page.tsx (RSC)
+
+```tsx
+import {
+  QueryClient,
+  dehydrate,
+  HydrationBoundary,
+} from '@tanstack/react-query'
+import { Suspense } from '@suspensive/react'
+import { userQueryOptions, postsQueryOptions } from './queries'
+import { UserProfile, PostList } from './_components'
+
+// Server Component
+const PostsPage = ({ userId }: { userId: number }) => {
+  return (
+    <>
+      <Suspense fallback={<div>Loading user...</div>}>
+        <UserProfileWithData userId={userId} />
+      </Suspense>
+      <Suspense fallback={<div>Loading posts...</div>}>
+        <PostListWithData userId={userId} />
+      </Suspense>
+    </>
+  )
+}
+
+// Need to separate each server component for HTML Streaming
+const UserProfileWithData = async ({ userId }: { userId: number }) => {
+  const queryClient = new QueryClient()
+  try {
+    await queryClient.ensureQueryData(userQueryOptions(userId))
+  } catch (error) {
+    return (
+      // If queryClient.ensureQueryData fails, use ClientOnly to prevent SSR and render on the browser directly
+      <ClientOnly fallback={<div>Loading user...</div>}>
+        <UserProfile userId={userId} />
+      </ClientOnly>
+    )
+  }
+  return (
+    <HydrationBoundary state={dehydrate(queryClient)}>
+      <UserProfile userId={userId} />
+    </HydrationBoundary>
+  )
+}
+
+const PostListWithData = async ({ userId }: { userId: number }) => {
+  const queryClient = new QueryClient()
+  try {
+    await queryClient.ensureQueryData(postsQueryOptions(userId))
+  } catch (error) {
+    return (
+      // If queryClient.ensureQueryData fails, use ClientOnly to prevent SSR and render on the browser directly
+      <ClientOnly fallback={<div>Loading posts...</div>}>
+        <PostList userId={userId} />
+      </ClientOnly>
+    )
+  }
+  return (
+    <HydrationBoundary state={dehydrate(queryClient)}>
+      <PostList userId={userId} />
+    </HydrationBoundary>
+  )
+}
+```
+
+#### UserProfile.tsx (RCC)
+
+```tsx
+'use client'
+
+import { useSuspenseQuery } from '@suspensive/react-query'
+import { userQueryOptions } from './queries'
+
+export const UserProfile = ({ userId }: { userId: number }) => {
+  const { data: user } = useSuspenseQuery(userQueryOptions(userId))
+
+  return (
+    <div>
+      <h1>{user.name}</h1>
+      <p>{user.email}</p>
+    </div>
+  )
+}
+```
+
+#### PostList.tsx (RCC)
+
+```tsx
+'use client'
+
+import { useSuspenseQuery } from '@suspensive/react-query'
+import { postsQueryOptions } from './queries'
+
+export const PostList = ({ userId }: { userId: number }) => {
+  const { data: posts } = useSuspenseQuery(postsQueryOptions(userId))
+
+  return (
+    <ul>
+      {posts.map((post) => (
+        <li key={post.id}>{post.title}</li>
+      ))}
+    </ul>
+  )
+}
+```
+
+### Using QueriesHydration
+
+With `<QueriesHydration/>`, all of this is handled automatically:
+
+#### page.tsx (RSC)
+
+```tsx /QueriesHydration/
+import { QueriesHydration } from '@suspensive/react-query'
+import { Suspense } from '@suspensive/react'
+import { userQueryOptions, postsQueryOptions } from './queries'
+import { UserProfile, PostList } from './_components'
+
+// Server Component
+const PostsPage = ({ userId }: { userId: number }) => {
+  return (
+    <>
+      <Suspense fallback={<div>Loading user...</div>}>
+        <QueriesHydration queries={[userQueryOptions(userId)]}>
+          <UserProfile userId={userId} />
+        </QueriesHydration>
+      </Suspense>
+      <Suspense fallback={<div>Loading posts...</div>}>
+        <QueriesHydration queries={[postsQueryOptions(userId)]}>
+          <PostList userId={userId} />
+        </QueriesHydration>
+      </Suspense>
+    </>
+  )
+}
+```
+
+#### UserProfile.tsx (RCC)
+
+```tsx
+'use client'
+
+import { useSuspenseQuery } from '@suspensive/react-query'
+import { userQueryOptions } from './queries'
+
+export const UserProfile = ({ userId }: { userId: number }) => {
+  // Data prefetched on the server is automatically hydrated
+  const { data: user } = useSuspenseQuery(userQueryOptions(userId))
+
+  return (
+    <div>
+      <h1>{user.name}</h1>
+      <p>{user.email}</p>
+    </div>
+  )
+}
+```
+
+#### PostList.tsx (RCC)
+
+```tsx
+'use client'
+
+import { useSuspenseQuery } from '@suspensive/react-query'
+import { postsQueryOptions } from './queries'
+
+export const PostList = ({ userId }: { userId: number }) => {
+  // Data prefetched on the server is automatically hydrated
+  const { data: posts } = useSuspenseQuery(postsQueryOptions(userId))
+
+  return (
+    <ul>
+      {posts.map((post) => (
+        <li key={post.id}>{post.title}</li>
+      ))}
+    </ul>
+  )
+}
+```
+
+Key benefits:
+
+1. **Concise code**: Automates QueryClient creation, prefetch, and dehydrate processes
+2. **Parallel data fetching**: Uses `Promise.all` to process all queries in parallel
+3. **Type safety**: Requires queryKey to prevent mistakes
+4. **Consistent pattern**: Handles multiple queries consistently
+
+## Dependent Queries and Streaming
+
+When handling dependent queries, wrapping each component with a separate `QueriesHydration` maximizes streaming benefits by creating independent Suspense boundaries. By sharing the same `queryClient`, you can use the result of the first query in subsequent queries.
+
+#### page.tsx (RSC)
+
+```tsx /QueriesHydration/
+import { QueryClient } from '@tanstack/react-query'
+import { QueriesHydration } from '@suspensive/react-query'
+import { Suspense } from '@suspensive/react'
+import {
+  productQueryOptions,
+  productReviewsQueryOptions,
+  relatedProductsQueryOptions,
+} from './queries'
+import { ProductInfo, ProductReviews, RelatedProducts } from './_components'
+
+const ProductPage = async ({ productId }: { productId: string }) => {
+  const queryClient = new QueryClient()
+
+  // 1. First, fetch product information
+  const product = await queryClient.ensureQueryData(
+    productQueryOptions(productId)
+  )
+
+  return (
+    <>
+      {/* Product information */}
+      <Suspense fallback={<div>Loading product...</div>}>
+        <QueriesHydration
+          queryClient={queryClient}
+          queries={[productQueryOptions(productId)]}
+        >
+          <ProductInfo productId={productId} />
+        </QueriesHydration>
+      </Suspense>
+
+      {/* Product reviews: depends on product information (e.g., filtered by product category) */}
+      <Suspense fallback={<div>Loading reviews...</div>}>
+        <QueriesHydration
+          queryClient={queryClient}
+          queries={[productReviewsQueryOptions(productId)]}
+        >
+          <ProductReviews productId={productId} />
+        </QueriesHydration>
+      </Suspense>
+
+      {/* Related products: depends on product information (same category) */}
+      <Suspense fallback={<div>Loading related products...</div>}>
+        <QueriesHydration
+          queryClient={queryClient}
+          queries={[relatedProductsQueryOptions(product.categoryId)]}
+        >
+          <RelatedProducts categoryId={product.categoryId} />
+        </QueriesHydration>
+      </Suspense>
+    </>
+  )
+}
+```
+
+#### ProductInfo.tsx (RCC)
+
+```tsx
+'use client'
+
+import { useSuspenseQuery } from '@suspensive/react-query'
+import { productQueryOptions } from './queries'
+
+export const ProductInfo = ({ productId }: { productId: string }) => {
+  // Data prefetched on the server is automatically hydrated
+  const { data: product } = useSuspenseQuery(productQueryOptions(productId))
+
+  return (
+    <div>
+      <h1>{product.name}</h1>
+      <p>{product.description}</p>
+      <p>Price: {product.price}</p>
+    </div>
+  )
+}
+```
+
+#### ProductReviews.tsx (RCC)
+
+```tsx
+'use client'
+
+import { useSuspenseQuery } from '@suspensive/react-query'
+import { productReviewsQueryOptions } from './queries'
+
+export const ProductReviews = ({ productId }: { productId: string }) => {
+  // Data prefetched on the server is automatically hydrated
+  const { data: reviews } = useSuspenseQuery(
+    productReviewsQueryOptions(productId)
+  )
+
+  return (
+    <div>
+      <h2>Reviews</h2>
+      <ul>
+        {reviews.map((review) => (
+          <li key={review.id}>
+            <p>{review.comment}</p>
+            <p>Rating: {review.rating}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  )
+}
+```
+
+#### RelatedProducts.tsx (RCC)
+
+```tsx
+'use client'
+
+import { useSuspenseQuery } from '@suspensive/react-query'
+import { relatedProductsQueryOptions } from './queries'
+
+export const RelatedProducts = ({ categoryId }: { categoryId: string }) => {
+  // Data prefetched on the server is automatically hydrated
+  const { data: relatedProducts } = useSuspenseQuery(
+    relatedProductsQueryOptions(categoryId)
+  )
+
+  return (
+    <div>
+      <h2>Related Products</h2>
+      <ul>
+        {relatedProducts.map((product) => (
+          <li key={product.id}>{product.name}</li>
+        ))}
+      </ul>
+    </div>
+  )
+}
+```
+
+Benefits of this pattern:
+
+1. **Independent Suspense boundaries**: Each component streams independently, so `ProductInfo` renders first when ready
+2. **Shared queryClient**: Cache is shared, allowing reuse of `product` data
+3. **Dependent queries support**: You can pass `product.categoryId` to `relatedProductsQueryOptions`
+4. **Progressive rendering**: Components stream sequentially as they become ready
+
+## Example
+
+Here's a live example demonstrating `QueriesHydration` with Next.js streaming:
+
+![Next.js Streaming React Query Example](/img/next-streaming-react-query-example.gif)
+
+- **[Live Demo](https://next-streaming-react-query.suspensive.org)**: See it in action
+- **[Source Code](https://github.com/toss/suspensive/tree/main/examples/next-streaming-react-query)**: View the full implementation
+
+**Tip**: In the live demo, check the "4. no error (Best Practice)" case and open the browser's Developer Tools Network tab. You'll notice that no fetch requests are made because the data was successfully prefetched on the server and hydrated to the client, demonstrating the efficiency of `QueriesHydration`.
+
+## Disabling SSR
+
+If you want to skip server-side rendering for a specific component, simply add the `clientOnly` prop to `<Suspense/>`. In this case, since you don't need to prefetch data on the server, you don't need `QueriesHydration` either:
+
+```tsx /QueriesHydration/
+import { QueriesHydration } from '@suspensive/react-query'
+import { Suspense } from '@suspensive/react'
+import { userQueryOptions, postsQueryOptions } from './queries'
+import { UserProfile, PostList } from './_components'
+
+const PostsPage = ({ userId }: { userId: number }) => {
+  return (
+    <>
+      {/* UserProfile skips SSR and only renders on the client */}
+      <Suspense clientOnly fallback={<div>Loading user...</div>}>
+        <UserProfile userId={userId} />
+      </Suspense>
+      {/* PostList is prefetched and rendered on the server */}
+      <Suspense fallback={<div>Loading posts...</div>}>
+        <QueriesHydration queries={[postsQueryOptions(userId)]}>
+          <PostList userId={userId} />
+        </QueriesHydration>
+      </Suspense>
+    </>
+  )
+}
+```
+
+When using the `clientOnly` prop:
+
+- Components within that Suspense boundary will not be rendered on the server
+- Data will only be fetched and rendered on the client
+- You don't need `QueriesHydration` since server-side prefetch is not needed
+
+## Version Differences
+
+### @tanstack/react-query v5
+
+In `@tanstack/react-query` v5, it uses the `HydrationBoundary` component.
+
+```tsx
+import { HydrationBoundary } from '@tanstack/react-query'
+import { QueriesHydration } from '@suspensive/react-query'
+
+// QueriesHydration internally uses HydrationBoundary
+```
+
+### @tanstack/react-query v4
+
+In `@tanstack/react-query` v4, it uses the `Hydrate` component.
+
+```tsx
+import { Hydrate } from '@tanstack/react-query'
+import { QueriesHydration } from '@suspensive/react-query'
+
+// QueriesHydration internally uses Hydrate
+```
+
+## Important Notes
+
+- This component is an **async server component**.
+- It can only be used in frameworks that support React Server Components (Next.js 13+ App Router, etc.).
+- All queries must include a `queryKey`.
+
+### Version History
+
+| Version | Changes                                                          |
+| ------- | ---------------------------------------------------------------- |
+| v3.14.0 | `<QueriesHydration/>` has been added as an experimental feature. |
+
+---
+
+## QueryClientConsumer
+
+URL: /docs/react-query/QueryClientConsumer
+
+# QueryClientConsumer
+
+> **Experimental:** `<QueryClientConsumer/>` is an experimental feature, so this interface may change.
+
+This component allows the use of `useQueryClient` within JSX to bypass the constraints of React hooks.
+
+The props interface varies depending on the version of `@tanstack/react-query` installed in the user environment. If version 4 is installed, you need to use `props.context`. For version 5, you must use `props.queryClient`.  
+If the QueryClient is not passed through props, the component will use the nearest available QueryClient.
+
+```tsx /QueryClientConsumer/
+import { useSuspenseQuery } from '@tanstack/react-query'
+import { QueryClientConsumer } from '@suspensive/react-query'
+
+const PostsPage = () => {
+  const { data: posts } = useSuspenseQuery({
+    queryKey: ['posts'],
+    queryFn: () => getPosts(),
+  })
+
+  return (
+    <>
+      <QueryClientConsumer>
+        {(queryClient) => (
+          <button
+            onClick={() =>
+              queryClient.invalidateQueries({
+                queryKey: ['posts'],
+              })
+            }
+          >
+            Posts refresh
+          </button>
+        )}
+      </QueryClientConsumer>
+      {posts.map((post) => (
+        <Post key={post.id} {...post} />
+      ))}
+    </>
+  )
+}
+```
+
+### props.queryClient (@tanstack/react-query v5)
+
+If you are using `@tanstack/react-query` version 5, you can access the desired QueryClient through `props.queryClient`.
+
+```tsx /QueryClientConsumer/
+import { QueryClient } from '@tanstack/react-query'
+import { QueryClientConsumer } from '@suspensive/react-query'
+
+const queryClient = new QueryClient()
+
+const Example = () => {
+  return (
+      {/* 5️⃣ Use props.queryClient if you are working with @tanstack/react-query v5 */}
+      <QueryClientConsumer queryClient={queryClient}>
+        {(queryClient) => (<>{/* Use the QueryClient passed via props.queryClient */}</>)}
+      </QueryClientConsumer>
+  )
+}
+```
+
+### props.context (@tanstack/react-query v4)
+
+If you are using `@tanstack/react-query` version 4, use `props.context` to access the desired QueryClient.
+
+```tsx /QueryClientConsumer/
+import { createContext } from 'react'
+import { QueryClient } from '@tanstack/react-query'
+import { QueryClientConsumer } from '@suspensive/react-query'
+
+const queryClient = new QueryClient()
+const queryClientContext = createContext<QueryClient>(queryClient)
+
+const Example = () => {
+  return (
+      {/* 4️⃣ Use props.context if you are working with @tanstack/react-query v4 */}
+      <QueryClientConsumer context={queryClientContext}>
+        {(queryClient) => (<>{/* Use the QueryClient passed via props.context */}</>)}
+      </QueryClientConsumer>
+  )
+}
+```
+
+### Motivation: React hooks can only be used in functional components
+
+React's hook (useQueryClient) can only be used within functional components. However, there are cases when you need features like invalidateQueries even within legacy class components. In such cases, `<QueryClientConsumer/>` helps you overcome these limitations.
+
+```tsx /QueryClientConsumer/
+import React from 'react'
+import { QueryClientConsumer } from '@suspensive/react-query'
+
+class PostsRefreshButton extends React.Component {
+  render() {
+    return (
+      {/* ✅ Access the queryClient to invalidate queries within a legacy class component */}
+      <QueryClientConsumer>
+        {(queryClient) => (
+          <button
+            onClick={() =>
+              queryClient.invalidateQueries({
+                queryKey: ['posts'],
+              })
+            }
+          >
+            Posts refresh
+          </button>
+        )}
+      </QueryClientConsumer>
+    )
+  }
+}
+
+export default PostsRefreshButton
+```
+
+---
+
+## IsFetching
+
+URL: /docs/react-query/IsFetching
+
+# IsFetching
+
+> **Experimental:** `<IsFetching/>` is an experimental feature, so this interface may change.
+
+Render-prop component that exposes the number of queries currently fetching (from TanStack Query's `useIsFetching`). Useful for showing global loading indicators without adding hooks in every component.
+
+```tsx /IsFetching basic/
+import { IsFetching } from '@suspensive/react-query'
+
+const GlobalFetchingIndicator = () => (
+  <IsFetching>{(isFetching) => (isFetching ? <Spinner /> : null)}</IsFetching>
+)
+```
+
+### Filters (QueryFilters)
+
+You can scope the indicator with the same filters accepted by TanStack Query's `useIsFetching` (e.g., `queryKey`, `predicate`).
+
+```tsx /IsFetching with filters/
+import { IsFetching } from '@suspensive/react-query'
+
+const PostsFetchingIndicator = () => (
+  <IsFetching queryKey={['posts']}>
+    {(isFetching) => (isFetching ? <Spinner /> : null)}
+  </IsFetching>
+)
+```
+
+### Props
+
+- **children**: `(isFetching: number) => ReactNode`
+- **...QueryFilters**: Same shape as TanStack Query's `QueryFilters` for `useIsFetching`.
+
+---
+
+## createGetQueryClient
+
+URL: /docs/react-query/createGetQueryClient
+
+# createGetQueryClient
+
+> **Experimental:** `createGetQueryClient` is an experimental feature, so this interface may change.
+
+A utility function to manage QueryClient instances in a server-safe manner.
+
+- **On the server**: Always creates a new QueryClient instance for each request
+- **In the browser**: Returns a singleton QueryClient instance, creating one if it doesn't exist
+
+This pattern is essential for proper React Query usage with SSR frameworks like Next.js, as it prevents sharing QueryClient state between requests on the server while maintaining a single instance in the browser to preserve cache across re-renders.
+
+> **Important:** Sharing a QueryClient between requests on the server can lead to **serious security vulnerabilities**. `getQueryClient` creates a new QueryClient instance for each request to prevent data leakage between users and exposure of sensitive information. See the [Server-Side Behavior](#server-side-behavior) section below for details.
+
+## Basic Usage
+
+First, create a `get-query-client.ts` file in your project:
+
+```tsx
+// get-query-client.ts
+import { createGetQueryClient } from '@suspensive/react-query'
+
+export const { getQueryClient } = createGetQueryClient()
+```
+
+Then, import and use it in your code:
+
+```tsx
+// app/providers.tsx
+'use client'
+
+import { QueryClientProvider } from '@tanstack/react-query'
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import { getQueryClient } from '@/app/get-query-client'
+import type * as React from 'react'
+
+export default function Providers({ children }: { children: React.ReactNode }) {
+  const queryClient = getQueryClient()
+
+  return (
+    <QueryClientProvider client={queryClient}>
+      {children}
+      <ReactQueryDevtools />
+    </QueryClientProvider>
+  )
+}
+```
+
+## Configuration
+
+You can pass a `QueryClientConfig` to `createGetQueryClient` to customize the QueryClient instance:
+
+```tsx
+// get-query-client.ts
+import { createGetQueryClient } from '@suspensive/react-query'
+
+export const { getQueryClient } = createGetQueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 5000,
+      retry: 3,
+    },
+  },
+})
+```
+
+```tsx
+// app/providers.tsx
+'use client'
+
+import { QueryClientProvider } from '@tanstack/react-query'
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import { getQueryClient } from '@/app/get-query-client'
+import type * as React from 'react'
+
+export default function Providers({ children }: { children: React.ReactNode }) {
+  const queryClient = getQueryClient()
+
+  return (
+    <QueryClientProvider client={queryClient}>
+      {children}
+      <ReactQueryDevtools />
+    </QueryClientProvider>
+  )
+}
+```
+
+> **Warning:** **Browser Environment Behavior**
+> 
+> In the browser environment, the config provided when calling `createGetQueryClient` is used to create the QueryClient instance. The `getQueryClient` function does not accept any arguments and will always return the same singleton instance. This is intentional to maintain a stable singleton across re-renders.
+
+## Server-Side Behavior
+
+### Preventing Security Issues (Highest Priority)
+
+Sharing a QueryClient between requests on the server can lead to serious security vulnerabilities:
+
+- **Data leakage between users**: One user's data may be exposed to another user
+- **Sensitive information exposure**: Authentication tokens, personal information, etc. may be included in another user's request
+- **Incorrect cache state**: Cached data from a previous request may be incorrectly returned to the next request
+
+`getQueryClient` creates a new QueryClient instance for each request to completely prevent these security issues.
+
+> 💡 **Related documentation**: For more information about why QueryClient should not be shared between requests on the server, see the [TanStack Query SSR Guide - Initial Setup](https://tanstack.com/query/latest/docs/framework/react/guides/ssr#initial-setup) section.
+
+### Setting Cache Removal Time to Prevent OOM
+
+On the server, `getQueryClient` sets the cache removal time to `Infinity` to prevent memory leaks and OOM (Out of Memory) errors. This is an additional safety measure to address memory issues that can occur when servers handle many concurrent requests.
+
+`gcTime` (v5) or `cacheTime` (v4) represents the time until TanStack Query removes query data from the QueryClient's cache. By setting this to `Infinity` on the server:
+
+- Data is not automatically removed from the cache, keeping it available until the request completes
+- The [`isValidTimeout`](https://github.com/TanStack/query/blob/main/packages/query-core/src/utils.ts) check in TanStack Query prevents `setTimeout` scheduling in [`scheduleGc`](https://github.com/TanStack/query/blob/main/packages/query-core/src/removable.ts#L13-L21), completely eliminating the performance cost that would occur with many concurrent requests
+
+This behavior is **automatic and cannot be overridden** - even if you provide a different cache removal time value in your config, it will be set to `Infinity` on the server. (In v4, the `cacheTime` option is used; in v5, the `gcTime` option is used. See the Version Differences section below for details.)
+
+> 💡 **Related documentation**: For more information about high memory consumption on server and why `gcTime` defaults to `Infinity` on the server, see the [TanStack Query SSR Guide - High memory consumption on server](https://tanstack.com/query/latest/docs/framework/react/guides/ssr#high-memory-consumption-on-server) section.
+
+```tsx
+// get-query-client.ts
+import { createGetQueryClient } from '@suspensive/react-query'
+
+// Config is passed to createGetQueryClient, not getQueryClient
+export const { getQueryClient } = createGetQueryClient({
+  defaultOptions: {
+    queries: {
+      // On server, cache removal time is set to Infinity
+      // to keep cache alive until the request completes and prevent setTimeout scheduling
+      gcTime: 5000, // v5: This will be overridden to Infinity on server
+      // In v4, cacheTime is used and also overridden to Infinity
+    },
+  },
+})
+
+// On server: Cache removal time is always Infinity (OOM prevention)
+// On browser: Uses the provided value (or default)
+```
+
+### New Instance Per Request
+
+On the server, `getQueryClient` creates a new QueryClient instance for each call. This ensures that:
+
+- Each request has isolated cache state
+- No data leaks between different user requests
+- Proper cleanup when the request completes
+
+```tsx
+// get-query-client.ts
+import { createGetQueryClient } from '@suspensive/react-query'
+
+export const { getQueryClient } = createGetQueryClient()
+```
+
+```tsx
+// Server environment
+const queryClient1 = getQueryClient()
+const queryClient2 = getQueryClient()
+
+// queryClient1 !== queryClient2 (different instances)
+```
+
+## Browser-Side Behavior
+
+### Singleton Pattern
+
+In the browser, `getQueryClient` returns the same QueryClient instance across multiple calls. This ensures:
+
+- Cache is preserved across re-renders
+- Consistent state management
+- Optimal performance
+
+```tsx
+// get-query-client.ts
+import { createGetQueryClient } from '@suspensive/react-query'
+
+export const { getQueryClient } = createGetQueryClient()
+```
+
+```tsx
+// Browser environment
+const queryClient1 = getQueryClient()
+const queryClient2 = getQueryClient()
+
+// queryClient1 === queryClient2 (same instance)
+```
+
+## Use Cases
+
+### Next.js App Router
+
+```tsx
+// get-query-client.ts
+import { createGetQueryClient } from '@suspensive/react-query'
+
+export const { getQueryClient } = createGetQueryClient()
+```
+
+```tsx
+// app/providers.tsx
+'use client'
+
+import { QueryClientProvider } from '@tanstack/react-query'
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import { getQueryClient } from '@/app/get-query-client'
+import type * as React from 'react'
+
+export default function Providers({ children }: { children: React.ReactNode }) {
+  const queryClient = getQueryClient()
+
+  return (
+    <QueryClientProvider client={queryClient}>
+      {children}
+      <ReactQueryDevtools />
+    </QueryClientProvider>
+  )
+}
+```
+
+```tsx
+// app/layout.tsx
+import { Providers } from './providers'
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
+  return (
+    <html lang="en">
+      <body>
+        <Providers>{children}</Providers>
+      </body>
+    </html>
+  )
+}
+```
+
+### With Custom Configuration
+
+```tsx
+// get-query-client.ts
+import { createGetQueryClient } from '@suspensive/react-query'
+
+export const { getQueryClient } = createGetQueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 1000 * 60 * 5, // 5 minutes
+      gcTime: 1000 * 60 * 10, // 10 minutes (v5)
+      // cacheTime: 1000 * 60 * 10, // 10 minutes (v4)
+      retry: 2,
+      refetchOnWindowFocus: false,
+    },
+    mutations: {
+      retry: 1,
+    },
+  },
+})
+```
+
+```tsx
+// app/providers.tsx
+'use client'
+
+import { QueryClientProvider } from '@tanstack/react-query'
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import { getQueryClient } from '@/app/get-query-client'
+import type * as React from 'react'
+
+export default function Providers({ children }: { children: React.ReactNode }) {
+  const queryClient = getQueryClient()
+
+  return (
+    <QueryClientProvider client={queryClient}>
+      {children}
+      <ReactQueryDevtools />
+    </QueryClientProvider>
+  )
+}
+```
+
+## Version Differences
+
+### @tanstack/react-query v4
+
+In v4, use the `createGetQueryClient` function, and the cache time option is called `cacheTime`:
+
+```tsx
+// get-query-client.ts
+import { createGetQueryClient } from '@suspensive/react-query'
+
+export const { getQueryClient } = createGetQueryClient()
+```
+
+```tsx
+// get-query-client.ts
+import { createGetQueryClient } from '@suspensive/react-query'
+
+// Server: cacheTime is automatically set to Infinity
+export const { getQueryClient } = createGetQueryClient({
+  defaultOptions: {
+    queries: {
+      cacheTime: 5000, // Overridden to Infinity on server
+    },
+  },
+})
+```
+
+```tsx
+// app/providers.tsx
+'use client'
+
+import { QueryClientProvider } from '@tanstack/react-query'
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import { getQueryClient } from '@/app/get-query-client'
+import type * as React from 'react'
+
+export default function Providers({ children }: { children: React.ReactNode }) {
+  const queryClient = getQueryClient()
+
+  return (
+    <QueryClientProvider client={queryClient}>
+      {children}
+      <ReactQueryDevtools />
+    </QueryClientProvider>
+  )
+}
+```
+
+### @tanstack/react-query v5
+
+In v5, use the `createGetQueryClient` function, and the cache time option is called `gcTime` (garbage collection time):
+
+```tsx
+// get-query-client.ts
+import { createGetQueryClient } from '@suspensive/react-query'
+
+export const { getQueryClient } = createGetQueryClient()
+```
+
+```tsx
+// get-query-client.ts
+import { createGetQueryClient } from '@suspensive/react-query'
+
+// Server: gcTime is automatically set to Infinity
+export const { getQueryClient } = createGetQueryClient({
+  defaultOptions: {
+    queries: {
+      gcTime: 5000, // Overridden to Infinity on server
+    },
+  },
+})
+```
+
+```tsx
+// app/providers.tsx
+'use client'
+
+import { QueryClientProvider } from '@tanstack/react-query'
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import { getQueryClient } from '@/app/get-query-client'
+import type * as React from 'react'
+
+export default function Providers({ children }: { children: React.ReactNode }) {
+  const queryClient = getQueryClient()
+
+  return (
+    <QueryClientProvider client={queryClient}>
+      {children}
+      <ReactQueryDevtools />
+    </QueryClientProvider>
+  )
+}
+```
+
+## Important Notes
+
+- **Server safety**: Always use `getQueryClient` instead of creating `new QueryClient()` directly in SSR environments to ensure proper request isolation and OOM prevention.
+
+> **Error:** **Never use QueryClient as a global variable**
+> 
+> Even if you use `getQueryClient`, storing it in a global variable like `export const queryClient = getQueryClient()` in App Router and importing it elsewhere will cause the same security risks. The QueryClient instance will be shared between requests on the server, leading to data leakage between users. Always call `getQueryClient()` directly where you need it, rather than storing it in a global variable.
+
+- **Browser singleton**: The browser instance is a singleton. Configure your QueryClient when calling `createGetQueryClient`, as `getQueryClient` does not accept any arguments.
+
+- **Automatic OOM prevention**: The cache removal time override to `Infinity` on the server is automatic and cannot be disabled. This is a safety feature to prevent memory issues. (In v4, the `cacheTime` option is used; in v5, the `gcTime` option is used.)
+
+---
+
+## mutationOptions
+
+URL: /docs/react-query/mutationOptions
+
+# mutationOptions
+
+`mutationOptions` helps you easily reuse and consistently manage option objects for Mutations. This provides similar benefits to the ones offered by [`queryOptions`](/docs/react-query/queryOptions).
+
+```jsx /mutationOptions/
+import { mutationOptions, useMutation, Mutation } from '@suspensive/react-query'
+
+const editPostMutationOptions = (postId: number) =>
+  mutationOptions({
+    mutationFn: (content: string) => fetch(`https://example.com/posts/${postId}`, {
+      method: 'PATCH',
+      body: JSON.stringify({ content }),
+    }).then(res => res.json()),
+  })
+
+// You can directly use mutationOptions without creating custom mutation hooks.
+const editPostMutation = useMutation(editPostMutationOptions(1))
+
+// Directly use mutationOptions with <Mutation />.
+const Example = () => (
+  <Mutation {...editPostMutationOptions(1)}>
+    {({ mutate, isLoading }) => (
+      <div>
+        <p>{isLoading ? 'Updating...' : 'Latest updated'}</p>
+        <textarea onBlur={(e) => mutate(e.target.value)} disabled={isLoading} />
+      </div>
+    )}
+  </Mutation>
+)
+```
+
+---
+
+## usePrefetchQuery
+
+URL: /docs/react-query/usePrefetchQuery
+
+# usePrefetchQuery
+
+The usePrefetchQuery does not return anything, it should be used just to fire a prefetch during render, before a suspense boundary that wraps a component that uses useSuspenseQuery.
+
+```jsx /usePrefetchQuery/
+import { usePrefetchQuery, useSuspenseQuery } from '@suspensive/react-query'
+
+const PostPage = ({ postId }) => {
+  usePrefetchQuery({
+    queryKey: ['posts', postId],
+    queryFn: () => getPost(postId),
+  }) // Prefetch query before suspense boundary
+
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <Post postId={postId} />
+    </Suspense>
+  )
+}
+
+export const Post = ({ postId }) => {
+  const { data } = useSuspenseQuery({
+    queryKey: ['posts', postId],
+    queryFn: () => getPost(postId),
+  })
+
+  return <>...</>
+}
+```
+
+---
+
+## usePrefetchInfiniteQuery
+
+URL: /docs/react-query/usePrefetchInfiniteQuery
+
+# usePrefetchInfiniteQuery
+
+The usePrefetchInfiniteQuery does not return anything, it should be used just to fire a prefetch during render, before a suspense boundary that wraps a component that uses useSuspenseInfiniteQuery.
+
+```jsx /usePrefetchInfiniteQuery/
+import {
+  usePrefetchInfiniteQuery,
+  useSuspenseInfiniteQuery,
+} from '@suspensive/react-query'
+
+const PostsPage = ({ postId }) => {
+  usePrefetchInfiniteQuery({
+    queryKey: ['posts'],
+    queryFn: () => getPosts(),
+  }) // Prefetch query before suspense boundary
+
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <Posts />
+    </Suspense>
+  )
+}
+
+export const Posts = () => {
+  const postsInfiniteQuery = useSuspenseInfiniteQuery({
+    queryKey: ['posts'],
+    queryFn: () => getPosts(),
+  })
+
+  return <>...</>
+}
+```
+
+---
+
+## queryOptions
+
+URL: /docs/react-query/queryOptions
+
+# queryOptions
+
+> **Warning:** **Deprecated in @suspensive/react-query**
+> 
+> This interface is now officially supported in TanStack Query v4.40.0+. Since TanStack Query has backported this interface, we are deprecating the backported version from @suspensive/react-query. Please migrate to the official TanStack Query interface:
+> 
+> ```diff
+- import { queryOptions } from '@suspensive/react-query'
++ import { queryOptions } from '@tanstack/react-query'
+```
+> 
+> For more details, see [TanStack Query PR #9140](https://github.com/TanStack/query/pull/9140).
+
+Tkdodo, The maintainer of TanStack Query explains well why this interface is needed in [video explaining queryOptions in TanStack Query v5](https://youtu.be/bhE3wuB_TuA?feature=shared&t=1697).
+You can also use queryOptions in TanStack Query v4.
+
+1. QueryKey management becomes easier by processing queryKey and queryFn together.
+2. You can remove unnecessary custom query hooks. This is because they can all be used directly in `useQuery`, `useQueries` of TanStack Query v4, and `useSuspenseQuery`, `useSuspenseQueries`, and `SuspenseQuery` of Suspensive React Query.
+3. TanStack Query v5 already supports queryOptions. This Suspensive React Query's `queryOptions` will make migration from TanStack Query v4 to TanStack Query v5 easier.
+
+```jsx /queryOptions/
+import { queryOptions, useSuspenseQuery, useSuspenseQueries, SuspenseQuery } from '@suspensive/react-query'
+import { useQuery, useQueries, useQueryClient } from '@tanstack/react-query'
+
+const postQueryOptions = (postId) =>
+   queryOptions({
+     queryKey: ['posts', postId] as const,
+     queryFn: ({
+       queryKey: [, postId], // You can use queryKey.
+     }) => fetch(`https://example.com/posts/${postId}`),
+   })
+
+// No need to create custom query hooks.
+// You can use queryOptions directly in useQuery, useQueries, useSuspenseQuery, useSuspenseQueries, SuspenseQuery.
+const post1Query = useQuery(postQueryOptions(1))
+const { data: post1 } = useSuspenseQuery({
+   ...postQueryOptions(1);
+   refetchInterval: 2000, // Extensibility is clearly expressed in usage.
+})
+const [post1Query, post2Query] = useQueries({
+   queries: [postQueryOptions(1), { ...postQueryOptions(2), refetchInterval: 2000 }],
+})
+const [{ data: post1 }, { data: post2 }] = useSuspenseQueries({
+   queries: [postQueryOptions(1), { ...postQueryOptions(2), refetchInterval: 2000 }],
+})
+const Example = () => <SuspenseQuery {...postQueryOptions(1)}>{({ data: post1 }) => <>{post1.text}</>}</SuspenseQuery>
+
+// You can easily use queryKey and queryFn in queryClient's methods.
+const queryClient = useQueryClient()
+queryClient.refetchQueries(postQueryOptions(1))
+queryClient.prefetchQuery(postQueryOptions(1))
+queryClient.invalidateQueries(postQueryOptions(1))
+queryClient.fetchQuery(postQueryOptions(1))
+queryClient.resetQueries(postQueryOptions(1))
+queryClient.cancelQueries(postQueryOptions(1))
+
+```
+
+### Version History
+
+| Version  | Changes                                                                                                                       |
+| -------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| `v3.0.0` | `networkMode` has been removed. For more details, please refer to the [Migration to v3 guide](./migration/migrate-to-v3.mdx). |
+
+---
+
+## infiniteQueryOptions
+
+URL: /docs/react-query/infiniteQueryOptions
+
+# infiniteQueryOptions
+
+> **Warning:** **Deprecated in @suspensive/react-query**
+> 
+> This interface is now officially supported in TanStack Query v4.41.0+. Since TanStack Query has backported this interface, we are deprecating the backported version from @suspensive/react-query. Please migrate to the official TanStack Query interface:
+> 
+> ```diff
+- import { infiniteQueryOptions } from '@suspensive/react-query'
++ import { infiniteQueryOptions } from '@tanstack/react-query'
+```
+> 
+> For more details, see [TanStack Query PR #9334](https://github.com/TanStack/query/pull/9334).
+
+`infiniteQueryOptions` helps utilize queryOptions in Infinite Query. This provides similar benefits to the ones offered by [`queryOptions`](https://suspensive.org/docs/react-query/queryOptions).
+
+```jsx /infiniteQueryOptions/
+import { infiniteQueryOptions, useSuspenseInfiniteQuery, SuspenseInfiniteQuery } from '@suspensive/react-query'
+import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query'
+
+const postsInfiniteQueryOptions = (page) =>
+  infiniteQueryOptions({
+    queryKey: ['posts', page] as const,
+    queryFn: ({
+      queryKey: [, page], // You can use queryKey.
+    }) => fetch(`https://example.com/posts?page=${page}`).then(res => res.json()),
+    getNextPageParam: (lastPage) => lastPage.nextPage ?? false,
+  })
+
+// No need to create a custom query hook.
+// You can directly utilize infiniteQueryOptions in useInfiniteQuery, useSuspenseInfiniteQuery, and SuspenseInfiniteQuery.
+const postsQuery = useInfiniteQuery(postsInfiniteQueryOptions(1))
+const { data: posts, fetchNextPage, hasNextPage } = useSuspenseInfiniteQuery({
+  ...postsInfiniteQueryOptions(1),
+  refetchInterval: 2000, // Extensibility is clearly expressed in usage.
+})
+const Example = () => (
+  <SuspenseInfiniteQuery {...postsInfiniteQueryOptions(1)}>
+    {({ data, fetchNextPage, hasNextPage }) => (
+      <div>
+        {data.pages.map((page, index) => (
+          <div key={index}>
+            {page.posts.map(post => (
+              <div key={post.id}>{post.title}</div>
+            ))}
+          </div>
+        ))}
+        <button onClick={() => fetchNextPage()} disabled={!hasNextPage}>
+          Load More
+        </button>
+      </div>
+    )}
+  </SuspenseInfiniteQuery>
+)
+
+// You can easily use queryKey and queryFn in queryClient's methods.
+const queryClient = useQueryClient()
+queryClient.refetchQueries(postsInfiniteQueryOptions(1))
+queryClient.prefetchQuery(postsInfiniteQueryOptions(1))
+queryClient.invalidateQueries(postsInfiniteQueryOptions(1))
+queryClient.fetchQuery(postsInfiniteQueryOptions(1))
+queryClient.resetQueries(postsInfiniteQueryOptions(1))
+queryClient.cancelQueries(postsInfiniteQueryOptions(1))
+```
+
+### Version History
+
+| Version  | Changes                                                                                                                       |
+| -------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| `v3.0.0` | `networkMode` has been removed. For more details, please refer to the [Migration to v3 guide](./migration/migrate-to-v3.mdx). |
+
+---
+
+## useSuspenseQuery
+
+URL: /docs/react-query/useSuspenseQuery
+
+# useSuspenseQuery
+
+> **Warning:** **Deprecated in @suspensive/react-query**
+> 
+> This hook is now officially supported in TanStack Query v4.40.0+. Since TanStack Query has backported this interface, we are deprecating the backported version from @suspensive/react-query. Please migrate to the official TanStack Query interface:
+> 
+> ```diff
+- import { useSuspenseQuery } from '@suspensive/react-query'
++ import { useSuspenseQuery } from '@tanstack/react-query'
+```
+> 
+> For more details, see [TanStack Query PR #9140](https://github.com/TanStack/query/pull/9140).
+
+There is no isLoading or isError in the return type of this hook. This is because `<Suspense/>` and `<ErrorBoundary/>` guarantee the data of this hook. Also, in the options of this hook, suspense is set to true by default. Any new options you need can be used like @tanstack/react-query's [useQuery](https://tanstack.com/query/v4/docs/react/reference/useQuery).
+
+```tsx /useSuspenseQuery/
+import { useSuspenseQuery } from '@suspensive/react-query'
+
+const Example = () => {
+  const query = useSuspenseQuery({
+    queryKey,
+    queryFn,
+  }) // suspense: true is the default.
+
+  // No type narrowing required with isSuccess.
+  query.data // TData
+}
+```
+
+### Motivation
+
+You can use [useQuery](https://tanstack.com/query/v4/docs/react/reference/useQuery) with `<Suspense/>` and `<ErrorBoundary/>` by using the suspense option in @tanstack/react-query.
+
+```tsx /useQuery/
+import { useQuery } from '@tanstack/react-query'
+
+const Example = () => {
+  const query = useQuery({
+    queryKey,
+    queryFn,
+    suspense: true,
+  })
+
+  query.data // TData | undefined
+
+  if (query.isSuccess) {
+    query.data // TData
+  }
+}
+```
+
+The return type of useQuery (query.data) will always be a success case thanks to this component's parents, `<Suspense/>` and `<ErrorBoundary/>`.
+But @tanstack/react-query doesn't express this in its TypeScript types.
+
+That's why @suspensive/react-query provides **useSuspenseQuery**.
+
+> **Note:** Focus on successful cases.
+> 
+> Now we can focus only on successful cases as fetching always succeeds inside our component.
+
+### Version History
+
+| Version  | Changes                                                                                                                                   |
+| -------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| `v3.0.0` | `networkMode` has been fixed to `'always'`. For more details, please refer to the [Migration to v3 guide](./migration/migrate-to-v3.mdx). |
+
+---
+
+## useSuspenseQueries
+
+URL: /docs/react-query/useSuspenseQueries
+
+# useSuspenseQueries
+
+> **Warning:** **Deprecated in @suspensive/react-query**
+> 
+> This hook is now officially supported in TanStack Query v4.40.0+. Since TanStack Query has backported this interface, we are deprecating the backported version from @suspensive/react-query. Please migrate to the official TanStack Query interface:
+> 
+> ```diff
+- import { useSuspenseQueries } from '@suspensive/react-query'
++ import { useSuspenseQueries } from '@tanstack/react-query'
+```
+> 
+> For more details, see [TanStack Query PR #9140](https://github.com/TanStack/query/pull/9140).
+
+There is no isLoading or isError in the return type of this hook. This is because `<Suspense/>` and `<ErrorBoundary/>` guarantee the data of this hook. Also, in the options of this hook, suspense is set to true by default. You can use @tanstack/react-query's [useQueries](https://tanstack.com/query/v4/docs/react/reference/useQueries) for the new options you need.
+
+```tsx /useSuspenseQueries/
+import { useSuspenseQueries } from '@suspensive/react-query'
+
+const Example = () => {
+  const [query1, query2] = useSuspenseQueries({
+    queries: [
+      { queryKey: [1], queryFn },
+      { queryKey: [2], queryFn },
+    ],
+  }) // suspense: true is the default.
+
+  // No type narrowing required with isSuccess.
+  query1.data // TData
+  query2.data // TData
+}
+```
+
+### Motivation
+
+You can use [useQueries](https://tanstack.com/query/v4/docs/react/reference/useQueries) with `<Suspense/>` and `<ErrorBoundary/>` by using the suspense option of @tanstack/react-query useQueries.
+
+```tsx /useQueries/
+import { useQueries } from '@tanstack/react-query'
+
+const Example = () => {
+  const [query1, query2] = useQueries({
+    queries: [
+      { queryKey: [1], queryFn, suspense: true },
+      { queryKey: [2], queryFn, suspense: true },
+    ],
+  })
+
+  query1.data // TData | undefined
+  query2.data // TData | undefined
+
+  if (query1.isSuccess) {
+    query1.data // TData
+  }
+  if (query2.isSuccess) {
+    query2.data // TData
+  }
+}
+```
+
+The return type of useQueries (query1.data, query2.data) will always be a success case thanks to this component's parents, `<Suspense/>` and `<ErrorBoundary/>`.
+But @tanstack/react-query doesn't express this in its TypeScript types.
+
+That's why @suspensive/react-query provides **useSuspenseQueries**.
+
+> **Note:** Focus on successful cases.
+> 
+> Now we can focus only on successful cases as fetching always succeeds inside our component.
+
+### Version History
+
+| Version  | Changes                                                                                                                                   |
+| -------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| `v3.0.0` | `networkMode` has been fixed to `'always'`. For more details, please refer to the [Migration to v3 guide](./migration/migrate-to-v3.mdx). |
+
+---
+
+## useSuspenseInfiniteQuery
+
+URL: /docs/react-query/useSuspenseInfiniteQuery
+
+# useSuspenseInfiniteQuery
+
+> **Warning:** **Deprecated in @suspensive/react-query**
+> 
+> This hook is now officially supported in TanStack Query v4.40.0+. Since TanStack Query has backported this interface, we are deprecating the backported version from @suspensive/react-query. Please migrate to the official TanStack Query interface:
+> 
+> ```diff
+- import { useSuspenseInfiniteQuery } from '@suspensive/react-query'
++ import { useSuspenseInfiniteQuery } from '@tanstack/react-query'
+```
+> 
+> For more details, see [TanStack Query PR #9334](https://github.com/TanStack/query/pull/9334).
+
+Return type of this hook has no isLoading, isError property. because `<Suspense/>` and `<ErrorBoundary/>` guarantee the data from this hook. In addition, this hook's options have default suspense: true, and you can provide new options to this hook like [useInfiniteQuery](https://tanstack.com/query/v4/docs/react/reference/useInfiniteQuery) of @tanstack/react-query.
+
+```tsx /useSuspenseInfiniteQuery/
+import { useSuspenseInfiniteQuery } from '@suspensive/react-query'
+
+const Example = () => {
+  const query = useSuspenseInfiniteQuery({
+    queryKey,
+    queryFn,
+  }) // suspense:true is default.
+
+  // No need to do type narrowing by isSuccess.
+  query.data // InfiniteData<TData>
+}
+```
+
+### Motivation
+
+If you turn suspense on in @tanstack/react-query, You can use [useInfiniteQuery](https://tanstack.com/query/v4/docs/react/reference/useInfiniteQuery) with `<Suspense/>` and `<ErrorBoundary/>`.
+
+```tsx /useInfiniteQuery/
+import { useInfiniteQuery } from '@tanstack/react-query'
+
+const Example = () => {
+  const query = useInfiniteQuery({
+    queryKey,
+    queryFn,
+    suspense: true,
+  })
+
+  query.data // InfiniteData<TData> | undefined
+
+  if (query.isSuccess) {
+    query.data // InfiniteData<TData>
+  }
+}
+```
+
+but useInfiniteQuery's return type query.data will always be fulfilled because of `<Suspense/>` as parent of this component.
+
+This is why @suspensive/react-query provide **useSuspenseInfiniteQuery**.
+
+> **Note:** Focus on successful cases.
+> 
+> Now we can focus on the component, as data fetching will always succeed.
+
+### Version History
+
+| Version  | Changes                                                                                                                                   |
+| -------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| `v3.0.0` | `networkMode` has been fixed to `'always'`. For more details, please refer to the [Migration to v3 guide](./migration/migrate-to-v3.mdx). |
+
+---
+
+## Migrating to v2
+
+URL: /docs/react-query/migration/migrate-to-v2
+
+# Migrating to v2
+
+@suspensive/react-query v1 was originally [added as one of TanStack Query's community resources](https://tanstack.com/query/v4/docs/framework/react/community/suspensive-react-query) and was a library that provided `useSuspenseQuery`, `useSuspenseQueries` and `useSuspenseInfiniteQuery` to users of @tanstack/react-query v4.
+Afterwards, [as `useSuspenseQuery`, `useSuspenseQueries`, and `useSuspenseInfiniteQuery` were officially added to @tanstack/react-query v5](https://github.com/TanStack/query/pull/5739) with changes interfaces such as enabled disappeared and queryOptions were received as one.
+Therefore **we made the interface of @suspensive/react-query v2 as similar to the official interface as possible to make it easier for existing users of @suspensive/react-query v1 to migrate to @tanstack/react-query v5**.
+
+However, because of [the higher browser specifications (class private fields) required by @tanstack/react-query v5](https://tanstack.com/query/v5/docs/framework/react/installation#requirements), @tanstack/react-query v4 is still useful to many teams.
+Therefore, we will maintain support for @tanstack/react-query v4.
+
+## What's new
+
+### New `<SuspenseQuery/>`, `<SuspenseInfiniteQuery/>` [#775](https://github.com/toss/suspensive/pull/775)
+
+Because the existing useSuspenseQuery is a hook, it creates components with names such as AuthorInfo and PostList to place Suspense and ErrorBoundary on the parent.
+This makes it difficult to predict what suspense and errors will be thrown inside AuthorInfo and PostList.
+
+#### Motivation: Want to expose that suspense occurs in child components.
+
+```jsx
+// posts/page.tsx
+import { Suspense, ErrorBoundary } from '@suspensive/react'
+import { AuthorInfo } from './components/AuthorInfo'
+import { PostList } from './components/PostList'
+
+const PostsPage = ({ userId }) => (
+  <ErrorBoundary fallback={({ error }) => <>{error.message}</>}>
+    <Suspense fallback={'loading...'}>
+      <AuthorInfo userId={userId} />
+      {/* It is difficult to predict whether a suspension will occur internally. */}
+      <PostList userId={userId} />
+      {/* It is difficult to predict whether a suspension will occur internally. */}
+    </Suspense>
+  </ErrorBoundary>
+)
+```
+
+```jsx
+// posts/components/AuthorInfo.tsx
+import { useSuspenseQuery } from '@suspensive/react-query'
+import { AuthorProfile } from '~/components'
+
+// From the perspective of using this component, it is impossible to predict whether Suspense will occur internally just by the name AuthorInfo.
+const AuthorInfo = ({ userId }) => {
+  // We need to create this component just for data-fetching.
+  const { data: author } = useSuspenseQuery(userQueryOptions(userId))
+
+  return <AuthorProfile {...author} />
+}
+```
+
+```jsx
+// posts/components/PostList.tsx
+import { useSuspenseQuery } from '@suspensive/react-query'
+import { PostListItem } from '~/components'
+
+// From the perspective of using this component, it is impossible to predict whether a suspense will occur internally based on the name PostList alone.
+const PostList = ({ userId }) => {
+  // We need to create this component just for data-fetching.
+  const { data: posts } = useSuspenseQuery({
+    ...postsQueryOptions(userId),
+    select: (posts) => posts.filter(({ isShow }) => isShow),
+  })
+
+  return (
+    <>
+      {posts.map((post) => (
+        <PostListItem {...post} />
+      ))}
+    </>
+  )
+}
+```
+
+#### Solution: Let's reveal that suspense occurs with `<SuspenseQuery/>`
+
+Therefore, we provide these components to clearly express what causes suspension at the same depth.
+
+1. Prop-drilling resulting from removing depth such as AuthorInfo and PostList for data-fetching only is also removed.
+2. Changing the range of Suspense and ErrorBoundary becomes simple. Parallel processing of queries is also easier.
+3. Because it manages all data-fetching within the Page component, the internal components are presentational, so it is easy to separate the components.
+
+```jsx
+import { SuspenseQuery } from '@suspensive/react-query'
+import { Suspense, ErrorBoundary } from '@suspensive/react'
+import { PostListItem, AuthorProfile } from '~/components'
+
+const PostsPage = ({ authorId }) => (
+  <ErrorBoundary fallback={({ error }) => <>{error.message}</>}>
+    <Suspense fallback={'loading...'}>
+      <SuspenseQuery {...userQueryOptions(authorId)}>
+        {({ data: author }) => <AuthorProfile {...author} />}
+      </SuspenseQuery>
+      <SuspenseQuery
+        {...postsQueryOptions(authorId)}
+        select={(posts) => posts.filter(({ isShow }) => isShow)}
+      >
+        {({ data: posts }) => posts.map((post) => <PostListItem {...post} />)}
+      </SuspenseQuery>
+    </Suspense>
+  </ErrorBoundary>
+)
+```
+
+### New `queryOptions` [#828](https://github.com/toss/suspensive/pull/828)
+
+Tkdodo, The maintainer of TanStack Query explains well why this interface is needed in [video explaining queryOptions in TanStack Query v5](https://youtu.be/bhE3wuB_TuA?feature=shared&t=1697).
+You can also use queryOptions in TanStack Query v4.
+
+1. QueryKey management becomes easier by processing queryKey and queryFn together.
+2. You can remove unnecessary custom query hooks. This is because they can all be used directly in `useQuery`, `useQueries` of TanStack Query v4, and `useSuspenseQuery`, `useSuspenseQueries`, and `SuspenseQuery` of Suspensive React Query.
+3. TanStack Query v5 already supports queryOptions. This Suspensive React Query's `queryOptions` will make migration from TanStack Query v4 to TanStack Query v5 easier.
+
+```jsx /queryOptions/
+import { queryOptions, useSuspenseQuery, useSuspenseQueries, SuspenseQuery } from '@suspensive/react-query'
+import { useQuery, useQueries, useQueryClient } from '@tanstack/react-query'
+
+const postQueryOptions = (postId) =>
+   queryOptions({
+     queryKey: ['posts', postId] as const,
+     queryFn: ({
+       queryKey: [, postId], // You can use queryKey.
+     }) => fetch(`https://example.com/posts/${postId}`),
+   })
+
+// No need to create custom query hooks.
+// You can use queryOptions directly in useQuery, useQueries, useSuspenseQuery, useSuspenseQueries, SuspenseQuery.
+const post1Query = useQuery(postQueryOptions(1))
+const { data: post1 } = useSuspenseQuery({
+   ...postQueryOptions(1),
+   refetchInterval: 2000, // Extensibility is clearly expressed in usage.
+})
+const [post1Query, post2Query] = useQueries({
+   queries: [postQueryOptions(1), { ...postQueryOptions(2), refetchInterval: 2000 }],
+})
+const [{ data: post1 }, { data: post2 }] = useSuspenseQueries({
+   queries: [postQueryOptions(1), { ...postQueryOptions(2), refetchInterval: 2000 }],
+})
+const Example = () => (
+  <SuspenseQuery {...postQueryOptions(1)}>
+    {({ data: post1 }) => <>{post1.text}</>}
+  </SuspenseQuery>
+);
+
+// You can easily use queryKey and queryFn in queryClient's methods.
+const queryClient = useQueryClient()
+queryClient.refetchQueries(postQueryOptions(1))
+queryClient.prefetchQuery(postQueryOptions(1))
+queryClient.invalidateQueries(postQueryOptions(1))
+queryClient.fetchQuery(postQueryOptions(1))
+queryClient.resetQueries(postQueryOptions(1))
+queryClient.cancelQueries(postQueryOptions(1))
+
+```
+
+## Handling BREAKING CHANGES
+
+### Removed `enabled`, `placeholderData` option of `useSuspenseQuery`
+
+```diff
+import { useSuspenseQuery } from '@suspensive/react-query'
+
+const Example = () => {
+  const query = useSuspenseQuery({
+    queryKey: ['key'],
+    queryFn: () => api.text()
+-   enabled: Math.random() > 0.5,
+-   placeholderData: 'placeholder'
+  })
+}
+```
+
+### Removed `enabled`, `placeholderData` option of `useSuspenseInfiniteQuery`
+
+```diff
+import { useSuspenseInfiniteQuery } from '@suspensive/react-query'
+
+const Example = () => {
+  const infiniteQuery = useSuspenseInfiniteQuery({
+    queryKey: ['key'],
+    queryFn: () => api.text()
+-   enabled: Math.random() > 0.5,
+-   placeholderData: 'placeholder'
+  })
+}
+```
+
+### Unified interface naming for options and return type of `useSuspenseQuery` same with @tanstack/react-query v5's useSuspenseQuery
+
+```diff filename="index.ts of @suspensive/react-query"
+export { useSuspenseQuery } from './useSuspenseQuery'
+export type {
+- BaseUseSuspenseQueryResult,
+  UseSuspenseQueryOptions,
+- UseSuspenseQueryResultOnLoading,
+- UseSuspenseQueryResultOnSuccess,
++ UseSuspenseQueryResult
+} from './useSuspenseQuery'
+export { useSuspenseQueries } from './useSuspenseQueries'
++ export type { SuspenseQueriesOptions, SuspenseQueriesResults } from './useSuspenseQueries'
+export { useSuspenseInfiniteQuery } from './useSuspenseInfiniteQuery'
+export type {
+- BaseUseSuspenseInfiniteQueryResult,
+  UseSuspenseInfiniteQueryOptions,
+- UseSuspenseInfiniteQueryResultOnLoading,
+- UseSuspenseInfiniteQueryResultOnSuccess,
++ UseSuspenseInfiniteQueryResult
+} from './useSuspenseInfiniteQuery'
+- export { QueryAsyncBoundary } from './QueryAsyncBoundary'
+export { QueryErrorBoundary } from './QueryErrorBoundary'
+```
+
+---
+
+## Migrating to v3
+
+URL: /docs/react-query/migration/migrate-to-v3
+
+# Migrating to v3
+
+## What's new
+
+### New `mutationOptions` [#1490](https://github.com/toss/suspensive/pull/1490)
+
+`mutationOptions` helps you easily reuse and consistently manage option objects for Mutations. This provides similar benefits to the ones offered by [`queryOptions`](/docs/react-query/queryOptions).
+
+```jsx /mutationOptions/
+import { mutationOptions, useMutation, Mutation } from '@suspensive/react-query'
+
+const editPostMutationOptions = (postId: number) =>
+  mutationOptions({
+    mutationFn: (content: string) => fetch(`https://example.com/posts/${postId}`, {
+      method: 'PATCH',
+      body: JSON.stringify({ content }),
+    }).then(res => res.json()),
+  })
+
+// You can directly use mutationOptions without creating custom mutation hooks.
+const editPostMutation = useMutation(editPostMutationOptions(1))
+
+// Directly use mutationOptions with <Mutation />.
+const Example = () => (
+  <Mutation {...editPostMutationOptions(1)}>
+    {({ mutate, isLoading }) => (
+      <div>
+        <p>{isLoading ? 'Updating...' : 'Latest updated'}</p>
+        <textarea onBlur={(e) => mutate(e.target.value)} disabled={isLoading} />
+      </div>
+    )}
+  </Mutation>
+)
+```
+
+## Handling BREAKING CHANGES
+
+### `networkMode` is now fixed to `'always'` in `useSuspenseQuery`, `useSuspenseQueries`, `useSuspenseInfiniteQuery` of `@suspensive/react-query` [#1458](https://github.com/toss/suspensive/pull/1458)
+
+> **Info:** This breaking change affects users who use both `@tanstack/react-query` v4 and `@suspensive/react-query`.
+
+Previously, online status was determined using the `navigator.onLine` API. However, Chromium-based browsers have a known issue where this API may return incorrect values, falsely reporting the device as offline even when it is connected.  
+To ensure consistent behavior across all environments, `@suspensive/react-query` now sets the default `networkMode` to `'always'` when using Suspense hooks.
+
+This change aligns with the default behavior in React Query v5 and prevents Suspense hooks from starting with `fetchStatus: 'paused'` during runtime.
+
+- Reference: [Default networkMode configuration and fetchStatus = "paused"](https://github.com/TanStack/query/discussions/4753), [navigator.onLine returning false value even network is available](https://issues.chromium.org/issues/338514113)
+
+```diff
+import { queryOptions, useSuspenseQuery } from '@suspensive/react-query'
+
+// Applies the same to queryOptions and infiniteQueryOptions as well.
+const QueryOptionsExample = () => {
+  const options = queryOptions({
+    queryKey: ['key'],
+    queryFn: () => api()
+-   networkMode: 'always'
+  })
+}
+
+// Applies the same to useSuspenseQuery, useSuspenseInfiniteQuery, SuspenseQuery, and SuspenseInfiniteQuery.
+const SuspenseQueryExample = () => {
+  const query = useSuspenseQuery({
+    queryKey: ['key'],
+    queryFn: () => api()
+-   networkMode: 'always'
+  })
+}
+```
+
+### `<QueryErrorBoundary/>` is removed [#1424](https://github.com/toss/suspensive/pull/1424)
+
+In `@suspensive/react-query` v2, `QueryErrorBoundary` was provided as a peer dependency of `@suspensive/react`.
+However, this approach complicated user dependencies for the sake of a simple implementation.
+Therefore, it has been removed to simplify the library.
+
+You can implement your own `QueryErrorBoundary` as shown below.
+
+```diff
+- import { QueryErrorBoundary } from '@suspensive/react-query'
++ import { ErrorBoundary } from '@suspensive/react'
++ import { useQueryErrorResetBoundary } from '@tanstack/react-query'
++ import {
++   type ComponentPropsWithoutRef,
++   type ComponentRef,
++   forwardRef,
++ } from 'react'
+
++ const QueryErrorBoundary = forwardRef<
++   ComponentRef<typeof ErrorBoundary>,
++   ComponentPropsWithoutRef<typeof ErrorBoundary>
++ >(({ onReset, ...props }, resetRef) => {
++   const { reset } = useQueryErrorResetBoundary()
++   return (
++     <ErrorBoundary
++       {...props}
++       onReset={() => {
++         onReset?.()
++         reset()
++       }}
++       ref={resetRef}
++     />
++   )
++ })
+
+const Example = () => (
+  <QueryErrorBoundary>
+    <SuspenseQuery />
+  </QueryErrorBoundary>
+)
+```
+
+---
+
+## Motivation
+
+URL: /docs/jotai/motivation
+
+# Motivation
+
+Jotai's async atoms work with Suspense, but hooks hide which atoms trigger Suspense and where. @suspensive/jotai makes this visible.
+
+### Hooks hide what triggers Suspense
+
+When a child component uses `useAtom` with an async atom, the parent has no way to tell which children will suspend. Suspense boundaries become guesswork.
+
+```tsx
+const PaymentPage = () => (
+  <Suspense fallback={'pending...'}>
+    {/* Does UserInfo suspend? Which atom? No way to tell from here. */}
+    <UserInfo />
+    <ShoppingCart />
+  </Suspense>
+)
+```
+
+With Suspensive's [`<Atom/>`](/docs/jotai/Atom), [`<AtomValue/>`](/docs/jotai/AtomValue), and [`<SetAtom/>`](/docs/jotai/SetAtom), atom usage is declared right in JSX — you can see exactly what suspends and where.
+
+```tsx
+const PaymentPage = () => (
+  <Suspense fallback={'pending...'}>
+    {/* Clear: userAtom triggers Suspense here. */}
+    <Atom atom={userAtom}>{([data]) => <UserProfile {...data} />}</Atom>
+    <Atom atom={cartAtom}>{([data]) => <ShoppingCart {...data} />}</Atom>
+  </Suspense>
+)
+```
+
+### Works with Jotai's extension ecosystem
+
+Jotai has extensions like [tRPC](https://jotai.org/docs/extensions/trpc), [Query](https://jotai.org/docs/extensions/query), and [Cache](https://jotai.org/docs/extensions/cache). With Suspensive's `<Atom/>`, `<AtomValue/>`, and `<SetAtom/>`, atoms from these extensions work out of the box — no extra wrappers needed.
+
+```tsx
+import { AtomValue } from '@suspensive/jotai'
+import { Suspense, ErrorBoundary } from '@suspensive/react'
+import { userQueryAtom } from '~/queries' // atomWithSuspenseQuery from jotai-tanstack-query
+
+const MyPage = () => (
+  <ErrorBoundary fallback={({ error }) => <>{error.message}</>}>
+    <Suspense fallback={'pending...'}>
+      <AtomValue atom={userQueryAtom}>
+        {({ data: user }) => <UserProfile key={user.id} {...user} />}
+      </AtomValue>
+    </Suspense>
+  </ErrorBoundary>
+)
+```
+
+---
+
+## Installation
+
+URL: /docs/jotai/installation
+
+# Installation
+
+### Check supported browsers
+
+Suspensive Libraries are optimized for modern browsers. It is compatible with the following browsers config.
+
+<br />
+
+  <tbody>
+    {[
+      { browser: 'Chrome', version: '>= 51' },
+      { browser: 'Firefox', version: '>= 53' },
+      { browser: 'Edge', version: '>= 18' },
+      { browser: 'Safari', version: '>= 11' },
+      { browser: 'iOS', version: '>= 11' },
+      { browser: 'Opera', version: '>= 38' },
+    ].map((item) => (
+      
+        {item.browser}
+        {item.version}
+      
+    ))}
+  </tbody>
+
+> Depending on your environment, you might need to add polyfills. If you want to support older browsers, you need to transpile the library from node_modules yourselves.
+
+### Check supported react, jotai version
+
+<br />
+
+  <tbody>
+    {[
+      { library: 'react', version: '^18 || ^19' },
+      { library: 'jotai', version: '^2' },
+    ].map((item) => (
+      
+        {item.library}
+        {item.version}
+      
+    ))}
+  </tbody>
+
+### Add as Dependencies
+
+@suspensive/jotai lives in npm. To install the latest stable version, run the following command.
+
+```shell npm2yarn
+npm install @suspensive/jotai
+```
+
+---
+
+## Atom
+
+URL: /docs/jotai/Atom
+
+# Atom
+
+The Atom component provides an interface similar to Jotai's [useAtom](https://jotai.org/docs/core/use-atom#useatom) hook as props, allowing declarative usage.
+
+### props.atom
+
+You can use Jotai's atom as is.
+
+```tsx /Atom/
+import { Atom } from '@suspensive/jotai'
+import { atom } from 'jotai'
+
+const countAtom = atom(1)
+
+const Example = () => (
+  <Atom atom={countAtom}>
+    {([count, setCount]) => (
+      <>
+        <div>count: {count}</div>
+        <button onClick={() => setCount(count + 1)}>+1</button>
+      </>
+    )}
+  </Atom>
+)
+```
+
+For Async Atom, it delegates the pending state of the Promise to the parent Suspense until the Promise resolves.
+
+```tsx /Atom/
+import { Atom } from '@suspensive/jotai'
+import { Suspense } from '@suspensive/react'
+import { atom } from 'jotai'
+
+const countAtom = atom(1)
+const asyncDoubleCountAtom = atom(async (get) => {
+  await delay(2000)
+  return get(countAtom) * 2
+})
+
+const Example = () => (
+  <Suspense fallback={'pending...'}>
+    <Atom atom={asyncDoubleCountAtom}>{([count]) => <>count: {count}</>}</Atom>
+  </Suspense>
+)
+```
+
+### Motivation
+
+It's not immediately clear from the parent component which atoms are used internally in the child components and whether they trigger Suspense.
+
+```tsx
+// payment/page.tsx
+import { Suspense } from '@suspensive/react'
+import { UserInfo, ShoppingCart } from '~/components'
+
+const PaymentPage = () => (
+  <Suspense fallback={'pending...'}>
+    {/* It's not clear whether UserInfo internally triggers Suspense with an Async Atom. */}
+    <UserInfo />
+    {/* It's not clear whether ShoppingCart internally triggers Suspense with an Async Atom. */}
+    <ShoppingCart />
+  </Suspense>
+)
+```
+
+```tsx
+// payment/components/UserInfo.tsx
+import { useAtomValue } from '@suspensive/jotai'
+import { UserAddress } from '~/components'
+import { userAsyncAtom } from '~/atoms'
+
+// It's not clear from the usage of this component what Atom UserInfo uses internally and whether it triggers Suspense.
+const UserInfo = () => {
+  const data = useAtomValue(userAsyncAtom)
+
+  return <UserAddress {...data} />
+}
+```
+
+```tsx
+// payment/components/ShoppingCart.tsx
+import { useAtom } from 'jotai'
+import { ShoppingItem } from '~/components'
+import { shoppingCartAtom } from '~/atoms'
+
+// It's not clear from the usage of this component what Atom ShoppingCart uses internally and whether it triggers Suspense.
+const ShoppingCart = () => {
+  const [data] = useAtom(shoppingCartAtom)
+
+  return (
+    <>
+      {data.map((item) => (
+        <ShoppingItem key={item.id} {...item} />
+      ))}
+    </>
+  )
+}
+```
+
+---
+
+## AtomValue
+
+URL: /docs/jotai/AtomValue
+
+# AtomValue
+
+The AtomValue component provides an interface similar to Jotai's [useAtomValue](https://jotai.org/docs/core/use-atom#useatomvalue) hook as props, allowing declarative usage.
+
+### props.atom
+
+You can use Jotai's atom as is.
+
+```tsx /AtomValue/
+import { AtomValue } from '@suspensive/jotai'
+import { atom } from 'jotai'
+
+const countAtom = atom(1)
+
+const Example = () => {
+  return (
+    <AtomValue atom={countAtom}>{(count) => <>count: {count}</>}</AtomValue>
+  )
+}
+```
+
+For Async Atom, it delegates the pending state of the Promise to the parent Suspense until the Promise resolves.
+
+```tsx /AtomValue/
+import { AtomValue } from '@suspensive/jotai'
+import { Suspense } from '@suspensive/react'
+import { atom } from 'jotai'
+
+const countAtom = atom(1)
+const asyncDoubleCountAtom = atom(async (get) => {
+  await delay(2000)
+  return get(countAtom) * 2
+})
+
+const Example = () => (
+  <Suspense fallback={'pending...'}>
+    <AtomValue atom={asyncDoubleCountAtom}>
+      {(count) => <>count: {count}</>}
+    </AtomValue>
+  </Suspense>
+)
+```
+
+### Motivation
+
+Similar to [`<Atom/>`](https://suspensive.org/docs/jotai/Atom), `<AtomValue/>` also does not clearly reveal which atoms are used internally in child components and whether they trigger Suspense.
+
+---
+
+## SetAtom
+
+URL: /docs/jotai/SetAtom
+
+# SetAtom
+
+The SetAtom component provides an interface similar to Jotai's [useSetAtom](https://jotai.org/docs/core/use-atom#usesetatom) hook as props, allowing declarative usage.
+
+### props.atom
+
+You can use Jotai's atom as is.
+
+```tsx /SetAtom/
+import { SetAtom } from '@suspensive/jotai'
+import { atom } from 'jotai'
+
+const switchAtom = atom(false)
+
+const Example = () => (
+  <SetAtom atom={switchAtom}>
+    {(setCount) => (
+      <>
+        <button onClick={() => setCount(true)}>Set True</button>
+        <button onClick={() => setCount(false)}>Set False</button>
+      </>
+    )}
+  </SetAtom>
+)
+```
+
+For Async Atom, it delegates the pending state of the Promise to the parent Suspense until the Promise resolves.
+
+```tsx /SetAtom/
+import { SetAtom } from '@suspensive/jotai'
+import { Suspense } from '@suspensive/react'
+import { atom } from 'jotai'
+
+const request = async () => fetch('https://...').then((res) => res.json())
+const baseAtom = atom(0)
+
+const Example = () => (
+  <Suspense fallback={'pending...'}>
+    <SetAtom atom={baseAtom}>
+      {(setValue) => (
+        <>
+          {/* Suspense will be triggered until the Promise resolves. */}
+          <button onClick={() => setValue(request())}>request</button>
+        </>
+      )}
+    </SetAtom>
+  </Suspense>
+)
+```
+
+### Motivation
+
+Similar to [`<Atom/>`](https://suspensive.org/docs/jotai/Atom), `<SetAtom/>` also does not clearly reveal which atoms are used internally in child components and whether they trigger Suspense.
+
+---
+
+## Motivation
+
+URL: /docs/codemods/motivation
+
+# Motivation
+
+Codemods are powerful tools that automate repetitive and large-scale tasks within a codebase, making code updates more efficient. They allow for fast and safe updates without the need to manually review numerous changes.
+
+Suspensive provides codemods to help manage API updates and deprecated APIs seamlessly.
+
+### Handle Large-Scale API Changes Quickly and Easily
+
+Projects using Suspensive packages often have these packages utilized globally across the codebase. Manually locating and modifying all usages is not only time-consuming but also prone to errors.
+
+```bash filename="Terminal"
+npx @suspensive/codemods
+✔ Which transform would you like to apply? > tanstack-query-import
+✔ On which files or directory should the codemods be applied? … .
+Processing 130 files...
+Spawning 10 workers...
+Sending 13 files to free worker...
+Sending 13 files to free worker...
+...
+All done.
+Results:
+0 errors
+31 unmodified
+0 skipped
+99 ok
+Time elapsed: 2.980 seconds
+```
+
+The log above shows the result of running the [`tanstack-query-import`](/docs/codemods/tanstackQueryImport) codemod to automatically migrate the deprecated `@suspensive/react-query` API to `@tanstack/react-query` v5 in a `@suspensive/react-query` & `@tanstack/react-query` environment. Out of 130 files, 99 were transformed in just 2.980 seconds.
+
+## Update Suspensive Packages Easily and Safely
+
+Major updates to packages often introduce breaking changes that complicate code migration. Suspensive plans to thoroughly support these breaking changes through codemod, making management simpler. By using codemods, you can upgrade to new versions and features quickly and securely.
+
+---
+
+## Usage
+
+URL: /docs/codemods/usage
+
+# Usage
+
+You can run Suspensive's Codemods with a single command, easily using npx without the need to install it as a dependency.
+
+Navigate to your project folder in the terminal and run the following command.
+
+```bash filename="Terminal"
+npx @suspensive/codemods <transform> <path>
+```
+
+Adjust `<transform>` and `<path>` to match the environment where you want to apply the codemod.
+
+- `<transform>`: name of transform
+- `<path>`: files or directory to transform
+
+You can use the following options.
+
+- `--dry`: Output the transformation result without modifying the file.
+- `--print`: Output the transformation result to the console.
+
+---
+
+## Migrate TanStack Query imports
+
+URL: /docs/codemods/tanstackQueryImport
+
+# Migrate TanStack Query imports
+
+> **Info:** - We recommend upgrading to `@tanstack/react-query@5` when using `@suspensive/react-query` with `@tanstack/react-query@4`.
+> - Starting from `@suspensive/react-query-4@3.3.0`, `queryOptions`, `infiniteQueryOption`, `useSuspenseQuery`, and `useSuspenseQueries` have been deprecated. (`@tanstack/react-query@4.40.0` officially supports `useSuspenseQuery` and `queryOptions`.)
+
+Any API in `@suspensive/react-query` that is officially provided by `@tanstack/react-query` will be marked as `deprecated`.  
+This is because `@suspensive/react-query` offers the same APIs such as Suspense Hooks and `queryOptions`/`infiniteQueryOption`, and we want to encourage developers to use the official `@tanstack/react-query` APIs first.
+
+```bash filename="Terminal"
+npx @suspensive/codemods tanstack-query-import .
+```
+
+This codemod automatically transforms import paths from `@suspensive/react-query` to `@tanstack/react-query`.
+
+For example:
+
+```tsx /@suspensive/
+import { queryOptions } from '@suspensive/react-query'
+import { useSuspenseQuery } from '@suspensive/react-query-5' // The versioned package is also transformed!
+```
+
+Transforms into:
+
+```tsx /@tanstack/
+import { queryOptions } from '@tanstack/react-query'
+import { useSuspenseQuery } from '@tanstack/react-query'
+```
+
+---
+
+## Migrate `<QueryClientConsumer/>` Props
+
+URL: /docs/codemods/migrateQueryClientConsumerProps
+
+# Migrate `<QueryClientConsumer/>` Props
+
+> **Info:** This codemod is recommended for updating `@suspensive/react-query` & `@tanstack/react-query@4` to `@tanstack/react-query@5`.
+
+In the `@suspensive/react-query` & `@tanstack/react-query@5` environment, the `context` prop of the `<QueryClientConsumer/>` component provided by `@suspensive/react-query` has been changed to `queryClient`.
+
+```bash filename="Terminal"
+npx @suspensive/codemods migrate-query-client-consumer-props .
+```
+
+Using this codemod, you can automatically transform the `context` prop into `queryClient`.
+
+For example:
+
+```tsx /context/
+const PostRefreshButton = () => {
+  return (
+    <QueryClientConsumer context={queryClientContext}>
+      {(queryClient) => (
+        <button
+          onClick={() =>
+            queryClient.invalidateQueries({
+              queryKey: ['posts'],
+            })
+          }
+        >
+          Posts refresh
+        </button>
+      )}
+    </QueryClientConsumer>
+  )
+}
+```
+
+Transforms into:
+
+```tsx /queryClient/
+const PostRefreshButton = () => {
+  return (
+    {/** The 'context' prop is now transformed into 'queryClient'! */}
+    <QueryClientConsumer queryClient={queryClient}>
+      {(queryClient) => (
+        <button
+          onClick={() =>
+            queryClient.invalidateQueries({
+              queryKey: ['posts'],
+            })
+          }
+        >
+          Posts refresh
+        </button>
+      )}
+    </QueryClientConsumer>
+  )
+}
+```
+
+---
+
+## Migrate `with` API
+
+URL: /docs/codemods/migrateWithAPI
+
+# Migrate `with` API
+
+> **Info:** This codemod is recommended when upgrading `@suspensive/react` from v2 to v3.
+
+In `@suspensive/react` v3, the `wrap` API has been removed and replaced with the new `with` API, which is provided on each component such as `<ErrorBoundaryGroup/>`, `<ErrorBoundary/>`, and `<Suspense/>`.
+
+For full details on the breaking changes that this codemod helps with, refer to [Migrating to v3](/docs/react/migration/migrate-to-v3).
+
+```bash filename="Terminal"
+npx @suspensive/codemods migrate-with-api .
+```
+
+This codemod automatically transforms the `wrap` builder pattern into the new `with` API on each component.
+
+For example:
+
+```tsx /wrap/
+import { wrap } from '@suspensive/react'
+
+const Example = wrap
+  .ErrorBoundaryGroup({ blockOutside: false })
+  .ErrorBoundary({
+    fallback: ({ error }) => <>{error.message}</>,
+    onError: logger.log,
+  })
+  .Suspense({ fallback: <>loading...</>, clientOnly: true })
+  .on(() => {
+    return <>Example</>
+  })
+```
+
+Transforms into:
+
+```tsx /with/
+import { ErrorBoundaryGroup, ErrorBoundary, Suspense } from '@suspensive/react'
+import { useSuspenseQuery } from '@suspensive/react-query'
+
+const Example = ErrorBoundaryGroup.with(
+  { blockOutside: false },
+  ErrorBoundary.with(
+    {
+      fallback: ({ error }) => <>{error.message}</>,
+      onError: logger.log,
+    },
+    Suspense.with({ fallback: <>loading...</>, clientOnly: true }, () => {
+      return <>Example</>
+    })
+  )
+)
+```
+
+---
+
+## Remove `networkMode`
+
+URL: /docs/codemods/removeNetworkmode
+
+# Remove `networkMode`
+
+> **Info:** We recommend running this when upgrading from `@suspensive/react-query` v2 & `@tanstack/react-query@4` to `@suspensive/react-query` v3.
+
+In `@suspensive/react-query` v3, the Suspense API has `networkMode` hardcoded as `'always'` and it can no longer be modified.
+
+For full details on the breaking changes that this codemod helps with, refer to [Migrating to v3](/docs/react-query/migration/migrate-to-v3).
+
+```bash filename="Terminal"
+npx @suspensive/codemods remove-networkmode .
+```
+
+This codemod safely and easily removes unnecessary `networkMode` properties from Suspense API usage.
+
+For example:
+
+```tsx /networkMode/
+import { queryOptions } from '@tanstack/react-query'
+
+const options = queryOptions({
+  queryKey: ['key'],
+  queryFn: () => Promise.resolve('data'),
+  networkMode: 'always',
+})
+```
+
+Transforms into:
+
+```tsx /networkMode/
+import { queryOptions } from '@tanstack/react-query'
+
+const options = queryOptions({
+  queryKey: ['key'],
+  queryFn: () => Promise.resolve('data'),
+})
+```
+
+---
+
+## Migrating to Suspensive v3
+
+URL: /docs/migration/migrate-to-v3
+
+# Migrating to Suspensive v3
+
+Suspensive v3 introduces several important changes to improve stability and add new features.
+
+### Stabilized experimental Suspensive packages
+
+- [@suspensive/jotai](../jotai/motivation)
+- [@suspensive/codemods](../codemods/motivation) - [#1461](https://github.com/toss/suspensive/pull/1461)
+
+### Prevent infinite loop when an error occurs in the ErrorBoundary fallback
+
+The way errors are handled in the `fallback` of `ErrorBoundary` in @suspensive/react has changed. [#1409](https://github.com/toss/suspensive/pull/1409)
+
+### Removed peerDependency of @suspensive/react-query
+
+We no longer depend on @suspensive/react as a peerDependency. It was only used to provide `QueryErrorBoundary`.
+This simplifies the usage of @suspensive/react-query, ensuring that users do not need to use any additional libraries other than @tanstack/react-query. [#1434](https://github.com/toss/suspensive/pull/1434)
+
+### Migration guide
+
+  
+  
+
+## Thanks to all Suspensive contributors
+
+We were able to release v3 because of Suspensive's contributors. Thank you to everyone who worked together to make it a better library, and we look forward to your continued support.
+
+[![contributors](https://contrib.rocks/image?repo=toss/suspensive)](https://github.com/toss/suspensive/graphs/contributors)
+
+---
+
+## Migrating to Suspensive v2
+
+URL: /docs/migration/migrate-to-v2
+
+# Migrating to Suspensive v2
+
+Suspensive v2, **we focused on increasing compatibility and improving DX**.
+To accomplish this, we had to introduce some dramatic changes. As a result, we removed some previously deprecated features and added some new interfaces.
+
+### The minimum required React version is now 18.0
+
+**Suspensive v2 requires React 18.0 or later.** This is because we are using the new useSyncExternalStore hook, which is only available in React 18.0 and later. Previously, we have been using the shim provided by React(use-sync-external-store).
+In addition, in React 18, [Suspense-related features were added](https://legacy.reactjs.org/blog/2022/03/29/react-v18.html), We decided that the direction of the Suspensive libraries needed to focus on React 18 or higher in the future rather than responding to Legacy React.
+
+### Key Features
+
+- **React 18+ support**: [#629](https://github.com/toss/suspensive/pull/629) - Updated to use React 18 native APIs
+- **New queryOptions**: [#828](https://github.com/toss/suspensive/pull/828) - Added queryOptions for better type safety and query management
+- **Suspense clientOnly prop**: [#521](https://github.com/toss/suspensive/pull/521) - Added clientOnly prop to replace Suspense.CSROnly
+- **DevMode for development**: [#470](https://github.com/toss/suspensive/pull/470) - Added DevMode for better debugging experience
+- **Improved browser support**: [#455](https://github.com/toss/suspensive/pull/455) - Added support for wider range of browsers
+- **Naming convention updates**: [#401](https://github.com/toss/suspensive/pull/401) - Aligned naming with TanStack Query v5 conventions
+- **AsyncBoundary deprecation**: [#345](https://github.com/toss/suspensive/pull/345) - Deprecated AsyncBoundary for cleaner API design
+
+### Migration guide
+
+  
+  
+
+## Thanks to all Suspensive contributors
+
+We were able to release v2 because of Suspensive's contributors. Thank you to everyone who worked together to make it a better library, and we look forward to your continued support.
+
+[![contributors](https://contrib.rocks/image?repo=toss/suspensive)](https://github.com/toss/suspensive/graphs/contributors)
+
+---
+
+## Changelogs
+
+URL: /docs/changelogs
+
+# Changelogs
+
+---
+
+## Contributors
+
+URL: /docs/contributors
+
+# Contributors
+
+Thank you to everyone who contributed to Suspensive and we look forward to your continued support.
+
+## Maintainers
+
+  
+    }
+    title="@manudeli (Jonghyeon Ko)"
+    href="https://github.com/manudeli"
+  />
+  
+    }
+    title="@gwansikk (Gwansik Kim)"
+    href="https://github.com/gwansikk"
+  />
+  
+    }
+    title="@kangju2000 (Juhyeok Kang)"
+    href="https://github.com/kangju2000"
+  />
+  
+    }
+    title="@marshallku (Marshall Ku)"
+    href="https://github.com/marshallku"
+  />
+  
+    }
+    title="Who's next?"
+    href="https://github.com/toss/suspensive"
+  />
+
+### Former maintainers
+
+  
+    }
+    title="@okinawaa (Chanhyuk Park)"
+    href="https://github.com/okinawaa"
+  />
+  
+    }
+    title="@minsoo-web (Minsoo Kim)"
+    href="https://github.com/minsoo-web"
+  />
+  
+    }
+    title="@bigsaigon333 (Donghee Kim)"
+    href="https://github.com/bigsaigon333"
+  />
+  
+    }
+    title="@SEOKKAMONI (Seokjin Kim)"
+    href="https://github.com/SEOKKAMONI"
+  />
+
+---
+
+## Related Links
+
+URL: /docs/links
+
+# Related Links
+
+- [React 18 keynote](https://youtu.be/FZ0cG47msEk?t=408)
+- [[Umbrella] Releasing Suspense in facebook/react](https://github.com/facebook/react/issues/13206)
+- [Suspense for Data Fetching (Experimental) in react docs for version 17](https://17.reactjs.org/docs/concurrent-mode-suspense.html)
+- [Pull Request to add `<ErrorBoundaryGroup/>` in @toss/error-boundary](https://github.com/toss/slash/pull/157)
+- [Pull Request to fix useSuspendedQuery in @toss/react-query wrapping react-query v3](https://github.com/toss/slash/pull/73)
+- [Pull Request to remove error-boundary's difficulty because of type of reset's args](https://github.com/toss/slash/pull/178)
+- [Dan Abramov: Beyond React 16 | JSConf Iceland](https://youtu.be/nLF0n9SACd4)
