@@ -2,7 +2,6 @@
 
 @suspensive/react-query provides components and hooks to use @tanstack/react-query's suspense option easily.
 
-
 ## Installation
 
 Install the package that matches your @tanstack/react-query version. By using npm aliases, the import path remains `@suspensive/react-query` across your codebase. When upgrading your @tanstack/react-query version, you only need to change the alias in package.json — no code changes required.
