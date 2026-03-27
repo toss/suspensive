@@ -1,4 +1,4 @@
-import { Steps, Table } from 'nextra/components'
+import { Steps, Table, Tabs } from 'nextra/components'
 import { Callout } from '@/components'
 
 # Installation
@@ -51,27 +51,30 @@ Suspensive Libraries are optimized for modern browsers. It is compatible with th
 
 ### Add as Dependencies
 
-[![npm version](https://img.shields.io/npm/v/@suspensive/react-query?color=000&labelColor=000&logo=npm&label=)](https://www.npmjs.com/package/@suspensive/react-query)
+Install the package that matches your @tanstack/react-query version.
 
-@suspensive/react-query is available on npm.
-From version 2.2.0 onwards, it supports both v4 and v5 of @tanstack/react-query. Depending on the version of @tanstack/react-query specified in your package.json dependencies, the appropriate version of @suspensive/react-query will be used automatically.
-
-To use the latest stable version, run the following command.
+<Tabs items={['@tanstack/react-query v5', '@tanstack/react-query v4']}>
+<Tabs.Tab>
 
 ```shell npm2yarn
-npm install @suspensive/react-query @suspensive/react @tanstack/react-query
+npm install @suspensive/react-query@npm:@suspensive/react-query-5 @tanstack/react-query@5
 ```
 
-To use @tanstack/react-query v4, run the following command.
-@tanstack/react-query v4 supports [lower version browsers](/docs/react-query/motivation#solution-for-the-issue-of-tanstackreact-query-v5-not-being-able-to-support-lower-version-browsers-due-to-es-private-field) compared to v5.
+</Tabs.Tab>
+<Tabs.Tab>
+
+@tanstack/react-query v4 supports [lower version browsers](/docs/react-query/motivation#v5-drops-support-for-older-browsers) compared to v5.
 
 ```shell npm2yarn
-npm install @suspensive/react-query @suspensive/react @tanstack/react-query@4
+npm install @suspensive/react-query@npm:@suspensive/react-query-4 @tanstack/react-query@4
 ```
+
+</Tabs.Tab>
+</Tabs>
 
 <Callout type='info'>
 
-@suspensive/react-query internally uses @tanstack/react-query v4 or v5 as peerDependencies. Therefore, ensure that the correct version of @tanstack/react-query is installed in your package.json dependencies. The reasons are explained in [Why Use This?](/docs/react-query/motivation).
+By using npm aliases, the import path remains `@suspensive/react-query` across your codebase. When upgrading your @tanstack/react-query version, you only need to change the alias in package.json — no code changes required.
 
 </Callout>
 
