@@ -2,6 +2,24 @@
 
 import { useIsClient } from '@suspensive/react'
 import { motion } from 'motion/react'
+import { usePathname } from 'next/navigation'
+import { LogoImage } from '@/components/Logo'
+
+export const NavbarLogo = () => {
+  const pathname = usePathname()
+  const isHome = pathname === '/en' || pathname === '/ko' || pathname === '/'
+  if (isHome) return null
+  return (
+    <>
+      <span className="md:hidden">
+        <Logo />
+      </span>
+      <span className="hidden md:inline-flex">
+        <LogoImage size={0.5} />
+      </span>
+    </>
+  )
+}
 
 export const Logo = () => {
   const isClient = useIsClient()
@@ -22,8 +40,6 @@ export const Logo = () => {
             fill="#ffffff"
           />
         </svg>
-
-        <span className="absolute -top-1 -right-3 text-[8px]">v3</span>
       </div>
     </motion.div>
   ) : null

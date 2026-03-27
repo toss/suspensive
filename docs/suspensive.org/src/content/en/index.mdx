@@ -4,6 +4,7 @@ description: 'Suspensive — declarative ErrorBoundary, Suspense, Delay, ClientO
 ---
 
 import Link from 'next/link'
+import { Logo } from '@/app/[lang]/_components/Logo'
 import {
   CallToAction,
   ComparisonTable,
@@ -24,7 +25,10 @@ import {
 >
 
 <div className="mx-auto flex max-w-6xl flex-col justify-center gap-2 px-4 text-center lg:flex-row lg:items-baseline lg:gap-4 lg:text-left">
-  <h2 className="shrink-0 text-2xl font-bold tracking-tight md:text-3xl">
+  <h2 className="flex shrink-0 items-baseline gap-2 text-2xl font-bold tracking-tight md:text-3xl">
+    <span className="inline-flex translate-y-0.5 [&_div]:!flex [&_svg]:h-6 [&_svg]:w-6 md:[&_svg]:h-7 md:[&_svg]:w-7">
+      <Logo />
+    </span>
     React Suspense, complete.
   </h2>
   <p className="shrink-0 text-base text-gray-700 md:text-xl dark:text-gray-400">

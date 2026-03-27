@@ -51,7 +51,7 @@ export const HomePage = ({
       >
         <div className="flex flex-col items-center justify-center gap-8 text-center">
           <div className="flex flex-col items-center">
-            <div className="align-center mx-6 mt-24 -mb-6 flex justify-center pt-18 pb-12">
+            <div className="align-center mx-6 mt-12 -mb-6 flex justify-center pt-8 pb-8 md:mt-24 md:pt-18 md:pb-12">
               <LogoImage size={2.4} />
             </div>
             {tagline && (
