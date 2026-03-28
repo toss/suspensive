@@ -49,8 +49,6 @@ export default async function RootLayout({
         <ClientOnly>
           <SandPackCSS />
         </ClientOnly>
-      </Head>
-      <body>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -73,6 +71,8 @@ export default async function RootLayout({
             }),
           }}
         />
+      </Head>
+      <body>
         <Providers>
           <Layout
             darkMode={false}

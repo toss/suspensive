@@ -176,8 +176,8 @@ function FeatureCard({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.1 }}
       transition={{
-        delay: 0.3 + index * 0.1,
-        duration: 0.5,
+        delay: 0.1 + index * 0.06,
+        duration: 0.4,
         ease: [0.16, 1, 0.3, 1],
       }}
       className={`group relative overflow-hidden rounded-[inherit] bg-[#0a0a0a] p-8 ${
