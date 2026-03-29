@@ -10,6 +10,7 @@ import {
   ComparisonTable,
   FeatureGrid,
   HomePage,
+  NpmInstallCopyButton,
   Sandpack,
   Scrollycoding,
   SectionDescription,
@@ -25,16 +26,16 @@ import {
 >
 
 <div className="mx-auto flex max-w-6xl flex-col justify-center gap-2 px-4 text-center lg:flex-row lg:items-baseline lg:gap-4 lg:text-left">
-  <h2 className="flex shrink-0 items-baseline gap-2 text-2xl font-bold tracking-tight md:text-3xl">
+  <h2 className="flex shrink-0 items-baseline justify-center gap-2 text-2xl font-bold tracking-tight md:text-3xl lg:justify-start">
     <span className="inline-flex translate-y-0.5 [&_div]:!flex [&_svg]:h-6 [&_svg]:w-6 md:[&_svg]:h-7 md:[&_svg]:w-7">
       <Logo />
     </span>
     React Suspense, complete.
   </h2>
-  <p className="shrink-0 text-base text-gray-700 md:text-xl dark:text-gray-400">
+  <span className="shrink-0 text-base text-gray-700 md:text-xl dark:text-gray-400">
     ErrorBoundary, Suspense, Delay, and more — so you can focus on the success
     case.
-  </p>
+  </span>
 </div>
 
 <div className="h-4 md:h-6" />
@@ -91,102 +92,11 @@ import {
   ]}
 />
 
-<div className="h-12 md:h-20" />
+<div className="mx-auto max-w-2xl text-center text-sm leading-relaxed opacity-30">
+  Suspense + ive — everything around React Suspense, in one place.
+</div>
 
 <TrustedBy text="33k+ weekly downloads" />
-
-<div className="h-12 md:h-20" />
-
-<div className="mx-auto max-w-4xl px-4">
-  <div className="mx-auto flex max-w-6xl flex-col justify-center gap-2 text-center lg:flex-row lg:items-baseline lg:gap-4 lg:text-left">
-    <h2 className="shrink-0 text-2xl font-bold tracking-tight md:text-3xl">
-      Already using react-error-boundary?
-    </h2>
-    <p className="shrink-0 text-base text-gray-700 md:text-xl dark:text-gray-400">
-      You're on the right track.
-    </p>
-  </div>
-  <div className="h-4 md:h-6" />
-  <p className="text-sm leading-relaxed text-gray-700 lg:text-base dark:text-gray-400">
-    react-error-boundary is a great library that made declarative error handling
-    practical in React. Suspensive's ErrorBoundary adds a few things we found
-    useful in production —{' '}
-    <strong className="text-black dark:text-white">shouldCatch</strong> for
-    catching only specific errors,{' '}
-    <strong className="text-black dark:text-white">ErrorBoundaryGroup</strong>{' '}
-    for resetting multiple boundaries at once, and safe fallback error
-    propagation. We also needed to solve{' '}
-    <strong className="text-black dark:text-white">loading states</strong>,{' '}
-    <strong className="text-black dark:text-white">SSR hydration</strong>,{' '}
-    <strong className="text-black dark:text-white">flash-of-loading UX</strong>,
-    and <strong className="text-black dark:text-white">data fetching</strong> —
-    so we built those too, all in one package.
-  </p>
-  <div className="h-3 md:h-4" />
-  <ComparisonTable
-    headers={['Suspensive', 'react-error-boundary', 'React Class']}
-    groups={[
-      {
-        label: 'Error Boundary',
-        rows: [
-          {
-            feature: 'Selective error catching (shouldCatch)',
-            values: [true, false, false],
-          },
-          {
-            feature: 'Group reset (ErrorBoundaryGroup)',
-            values: [true, false, false],
-          },
-          {
-            feature: 'useErrorBoundaryFallbackProps',
-            values: [true, false, false],
-          },
-          {
-            feature: 'Safe fallback error propagation',
-            values: [true, false, false],
-          },
-          { feature: 'Declarative ErrorBoundary', values: [true, true, false] },
-          { feature: 'resetKeys', values: [true, true, false] },
-          { feature: 'Basic error catching', values: [true, true, true] },
-        ],
-      },
-      {
-        label: 'Async Rendering',
-        rows: [
-          {
-            feature: 'SSR-safe Suspense (clientOnly)',
-            values: [true, false, false],
-          },
-          {
-            feature: 'Flash-of-loading prevention (Delay)',
-            values: [true, false, false],
-          },
-          {
-            feature: 'Global default fallbacks (DefaultPropsProvider)',
-            values: [true, false, false],
-          },
-          {
-            feature: 'Declarative data fetching (SuspenseQuery)',
-            values: [true, false, false],
-          },
-          {
-            feature: 'Client-only rendering (ClientOnly)',
-            values: [true, false, false],
-          },
-        ],
-      },
-    ]}
-  />
-  <div className="h-2 md:h-3" />
-  <p className="text-sm text-gray-700 dark:text-gray-400">
-    <Link
-      href="/docs/react/comparison"
-      className="underline underline-offset-4 transition-colors hover:text-gray-900 dark:hover:text-gray-100"
-    >
-      See the full comparison →
-    </Link>
-  </p>
-</div>
 
 <div className="h-12 md:h-20" />
 
@@ -194,9 +104,9 @@ import {
   <h2 className="shrink-0 text-2xl font-bold tracking-tight md:text-3xl">
     See it in action
   </h2>
-  <p className="shrink-0 text-base text-gray-700 md:text-xl dark:text-gray-400">
+  <span className="shrink-0 text-base text-gray-700 md:text-xl dark:text-gray-400">
     How loading, errors, and recovery actually work.
-  </p>
+  </span>
 </div>
 
 <div className="h-4 md:h-6" />
@@ -326,13 +236,130 @@ const Page = () => (
 
 <div className="h-12 md:h-20" />
 
+<div className="mx-auto max-w-6xl px-4">
+  <div className="mx-auto flex max-w-6xl flex-col justify-center gap-2 text-center lg:flex-row lg:items-baseline lg:gap-4 lg:text-left">
+    <h2 className="shrink-0 text-2xl font-bold tracking-tight md:text-3xl">
+      Already using react-error-boundary?
+    </h2>
+    <span className="shrink-0 text-base text-gray-700 md:text-xl dark:text-gray-400">
+      You're on the right track.
+    </span>
+  </div>
+  <div className="h-4 md:h-6" />
+  <div className="text-sm leading-relaxed text-gray-700 lg:text-base dark:text-gray-400">
+    react-error-boundary is a great library that made declarative error handling
+    practical in React. Suspensive's ErrorBoundary adds a few things we found
+    useful in production —{' '}
+    <strong className="text-black dark:text-white">shouldCatch</strong> for
+    catching only specific errors,{' '}
+    <strong className="text-black dark:text-white">ErrorBoundaryGroup</strong>{' '}
+    for resetting multiple boundaries at once, and safe fallback error
+    propagation. We also needed to solve{' '}
+    <strong className="text-black dark:text-white">loading states</strong>,{' '}
+    <strong className="text-black dark:text-white">SSR hydration</strong>,{' '}
+    <strong className="text-black dark:text-white">flash-of-loading UX</strong>,
+    and <strong className="text-black dark:text-white">data fetching</strong> —
+    so we built those too, all in one package.
+  </div>
+  <div className="h-3 md:h-4" />
+  <ComparisonTable
+    headers={[
+      'Suspensive',
+      'react-error-boundary',
+      '@sentry/react',
+      'DIY (Class Component)',
+    ]}
+    groups={[
+      {
+        label: 'Error Boundary',
+        rows: [
+          { feature: 'shouldCatch', values: [true, false, false, false] },
+          {
+            feature: 'ErrorBoundaryGroup',
+            values: [true, false, false, false],
+          },
+          {
+            feature: 'useErrorBoundaryFallbackProps',
+            values: [true, false, false, false],
+          },
+          {
+            feature: 'Safe fallback error propagation',
+            values: ['✓ To parent', '✗ Recursive', '✗ Recursive', false],
+          },
+          {
+            feature: 'TypeScript error type inference',
+            values: ['✓ Via shouldCatch', false, false, false],
+          },
+          {
+            feature: 'useErrorBoundary hook',
+            values: [true, true, false, false],
+          },
+          {
+            feature: 'Fallback UI with error & reset',
+            values: [true, true, true, false],
+          },
+          { feature: 'resetKeys', values: [true, true, false, false] },
+          { feature: 'onReset callback', values: [true, true, true, false] },
+          { feature: 'onError callback', values: [true, true, true, false] },
+          {
+            feature: 'HOC support',
+            values: [
+              '✓ ErrorBoundary.with',
+              '✓ withErrorBoundary',
+              '✓ withErrorBoundary',
+              false,
+            ],
+          },
+          { feature: 'Declarative API', values: [true, true, true, false] },
+        ],
+      },
+      {
+        label: 'Async Rendering',
+        rows: [
+          {
+            feature: 'SSR-safe Suspense (clientOnly)',
+            values: [true, false, false, false],
+          },
+          {
+            feature: 'Flash-of-loading prevention (Delay)',
+            values: [true, false, false, false],
+          },
+          {
+            feature: 'Global default fallbacks (DefaultPropsProvider)',
+            values: [true, false, false, false],
+          },
+          {
+            feature: 'Declarative data fetching (SuspenseQuery)',
+            values: [true, false, false, false],
+          },
+          {
+            feature: 'Client-only rendering (ClientOnly)',
+            values: [true, false, false, false],
+          },
+        ],
+      },
+    ]}
+  />
+  <div className="h-2 md:h-3" />
+  <div className="text-sm text-gray-700 dark:text-gray-400">
+    <Link
+      href="/docs/react/comparison"
+      className="underline underline-offset-4 transition-colors hover:text-gray-900 dark:hover:text-gray-100"
+    >
+      See the full comparison →
+    </Link>
+  </div>
+</div>
+
+<div className="h-12 md:h-20" />
+
 <div className="mx-auto flex max-w-6xl flex-col justify-center gap-2 px-4 text-center lg:flex-row lg:items-baseline lg:gap-4 lg:text-left">
   <h2 className="shrink-0 text-2xl font-bold tracking-tight md:text-3xl">
     Playground
   </h2>
-  <p className="shrink-0 text-base text-gray-700 md:text-xl dark:text-gray-400">
-    Edit, break, and recover — all in the browser.
-  </p>
+  <span className="shrink-0 text-base text-gray-700 md:text-xl dark:text-gray-400">
+    Edit the code and see Suspensive in action.
+  </span>
 </div>
 
 <div className="h-4 md:h-6" />
@@ -357,7 +384,7 @@ const userQueryOptions = () =>
     queryFn: async () => {
       await new Promise((r) => setTimeout(r, 1200))
       // Randomly fail to demonstrate ErrorBoundary
-      if (Math.random() > 0.4) return { name: 'Alex Chen', role: 'Maintainer' }
+      if (Math.random() > 0.2) return { name: 'Alex Chen', role: 'Maintainer' }
       throw new Error('Network timeout')
     },
     retry: false,
@@ -368,7 +395,7 @@ const statsQueryOptions = () =>
     queryKey: ['stats'],
     queryFn: async () => {
       await new Promise((r) => setTimeout(r, 800))
-      if (Math.random() > 0.3) return { downloads: '34,326', stars: '1.5k' }
+      if (Math.random() > 0.15) return { downloads: '34,326', stars: '1.5k' }
       throw new Error('API rate limit')
     },
     retry: false,
@@ -576,7 +603,18 @@ const smallButtonStyle = {
 </Sandpack>
 </div>
 
+<div className="mx-auto max-w-2xl text-center text-sm leading-relaxed opacity-30">
+  Errors are intentional — try Retry to see how ErrorBoundary recovers.
+</div>
+
 <div className="h-12 md:h-20" />
+
+<div className="flex flex-col items-center gap-3 overflow-visible">
+  <NpmInstallCopyButton />
+  <span className="text-sm opacity-50">
+    zero config, incremental adoption, works with Next.js and any React app.
+  </span>
+</div>
 
 <CallToAction
   title="Focus on the success case — let Suspensive handle loading and errors."

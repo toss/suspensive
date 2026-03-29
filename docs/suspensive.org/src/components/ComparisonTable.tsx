@@ -3,9 +3,11 @@
 import { motion, useInView } from 'motion/react'
 import { useRef } from 'react'
 
+type CellValue = boolean | string
+
 interface Row {
   feature: string
-  values: boolean[]
+  values: CellValue[]
 }
 
 interface Group {
@@ -27,7 +29,7 @@ export const ComparisonTable = ({
 
   return (
     <div className="overflow-x-auto">
-      <table ref={ref} className="w-full text-left text-sm">
+      <table ref={ref} className="mt-4 w-full text-left text-sm">
         <thead>
           <tr className="border-b border-gray-200 dark:border-gray-800">
             <th className="pr-4 pb-3" />
@@ -77,13 +79,24 @@ export const ComparisonTable = ({
                   <td className="py-2.5 pr-8 pl-4">{row.feature}</td>
                   {row.values.map((val, colIdx) => (
                     <td key={colIdx} className="py-2.5 pr-6">
-                      {val ? (
+                      {val === true ? (
                         <Check
                           isInView={isInView}
                           delay={currentGlobalIdx * 0.08 + colIdx * 0.03}
                         />
+                      ) : val === false ? (
+                        <span className="opacity-30">✗</span>
+                      ) : val === 'manual' ? (
+                        <Manual
+                          isInView={isInView}
+                          delay={currentGlobalIdx * 0.08 + colIdx * 0.03}
+                        />
                       ) : (
-                        <span className="opacity-20">—</span>
+                        <Annotation
+                          isInView={isInView}
+                          delay={currentGlobalIdx * 0.08 + colIdx * 0.03}
+                          text={val}
+                        />
                       )}
                     </td>
                   ))}
@@ -96,6 +109,50 @@ export const ComparisonTable = ({
         </tbody>
       </table>
     </div>
+  )
+}
+
+function Annotation({
+  isInView,
+  delay,
+  text,
+}: {
+  isInView: boolean
+  delay: number
+  text: string
+}) {
+  const isPositive = text.startsWith('✓')
+  const isNegative = text.startsWith('✗')
+  return (
+    <motion.span
+      initial={{ opacity: 0, y: -4 }}
+      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: -4 }}
+      transition={{ delay, duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+      className={`inline-block text-xs ${isPositive ? 'text-emerald-500' : isNegative ? 'opacity-40' : 'opacity-60'}`}
+    >
+      {text}
+    </motion.span>
+  )
+}
+
+function Manual({ isInView, delay }: { isInView: boolean; delay: number }) {
+  return (
+    <motion.span
+      initial={{ opacity: 0, scale: 0, y: -8 }}
+      animate={
+        isInView
+          ? { opacity: 1, scale: 1, y: 0 }
+          : { opacity: 0, scale: 0, y: -8 }
+      }
+      transition={{
+        delay,
+        duration: 0.3,
+        ease: [0.16, 1, 0.3, 1],
+      }}
+      className="inline-block text-yellow-500"
+    >
+      ⚠️ <span className="text-xs opacity-60">(Manual)</span>
+    </motion.span>
   )
 }
 

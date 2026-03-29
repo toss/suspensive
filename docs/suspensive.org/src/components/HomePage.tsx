@@ -47,11 +47,11 @@ export const HomePage = ({
       <motion.section
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        className="-mx-4 -mt-4 bg-[url('/img/homepage_background.svg')] bg-cover bg-center bg-no-repeat pb-20 transition-colors duration-300 md:-mx-12"
+        className="-mx-4 -mt-4 bg-[url('/img/homepage_background.svg')] bg-cover bg-center bg-no-repeat pb-8 transition-colors duration-300 md:-mx-12 md:pb-12"
       >
         <div className="flex flex-col items-center justify-center gap-8 text-center">
           <div className="flex flex-col items-center">
-            <div className="align-center mx-6 mt-12 -mb-6 flex justify-center pt-8 pb-8 md:mt-24 md:pt-18 md:pb-12">
+            <div className="align-center mx-6 mt-10 -mb-6 flex justify-center pt-6 pb-6 md:mt-16 md:pt-12 md:pb-8">
               <LogoImage size={2.4} />
             </div>
             {tagline && (

@@ -72,7 +72,7 @@ export default async function RootLayout({
           }}
         />
       </Head>
-      <body>
+      <body suppressHydrationWarning>
         <Providers>
           <Layout
             darkMode={false}

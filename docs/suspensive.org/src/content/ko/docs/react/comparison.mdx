@@ -3,30 +3,89 @@ description: '@suspensive/react ErrorBoundary를 react-error-boundary, @sentry/r
 ---
 
 import { Tabs } from 'nextra/components'
-import { Callout } from '@/components'
+import { Callout, ComparisonTable } from '@/components'
 
-# Suspensive vs react-error-boundary
+# Suspensive vs 다른 Error Boundary 라이브러리
 
-React용 에러 바운더리 라이브러리를 선택하고 계신가요? `@suspensive/react`가 `react-error-boundary`, `@sentry/react`, React 내장 클래스 컴포넌트 방식과 어떻게 다른지 비교해 보세요.
+`@suspensive/react`가 `react-error-boundary`, `@sentry/react`, DIY 클래스 컴포넌트와 어떻게 다른지 — 그리고 Suspensive가 ErrorBoundary 이상으로 무엇을 제공하는지 비교합니다.
 
 ## 기능 비교
 
-| Feature                                  | @suspensive/react | react-error-boundary   | @sentry/react          | React Class Component  |
-| ---------------------------------------- | ----------------- | ---------------------- | ---------------------- | ---------------------- |
-| Basic error catching                     | ✅                | ✅                     | ✅                     | ✅                     |
-| Fallback UI with error & reset           | ✅                | ✅                     | ✅                     | ⚠️ (Manual)            |
-| Reset with resetKeys                     | ✅                | ✅                     | ❌                     | ⚠️ (Manual)            |
-| onReset callback                         | ✅                | ✅                     | ✅                     | ⚠️ (Manual)            |
-| onError callback                         | ✅                | ✅                     | ✅                     | ✅ (componentDidCatch) |
-| Conditional error catching (shouldCatch) | ✅                | ❌                     | ❌                     | ⚠️ (Manual)            |
-| Fallback error handling                  | ✅ (To parent)    | ❌ (Recursive)         | ❌ (Recursive)         | ⚠️ (Manual)            |
-| useErrorBoundary hook                    | ✅                | ✅                     | ❌                     | ❌                     |
-| useErrorBoundaryFallbackProps hook       | ✅                | ❌                     | ❌                     | ❌                     |
-| ErrorBoundaryGroup                       | ✅                | ❌                     | ❌                     | ❌                     |
-| HOC support                              | ✅ (with)         | ✅ (withErrorBoundary) | ✅ (withErrorBoundary) | ❌                     |
-| TypeScript error type inference          | ✅ (Advanced)     | ✅ (Basic)             | ✅ (Basic)             | ⚠️ (Manual)            |
-| Declarative API                          | ✅                | ✅                     | ✅                     | ❌                     |
-| Automatic error reporting                | ❌                | ❌                     | ✅ (To Sentry)         | ❌                     |
+<ComparisonTable
+  headers={[
+    '@suspensive/react',
+    'react-error-boundary',
+    '@sentry/react',
+    'DIY (Class Component)',
+  ]}
+  groups={[
+    {
+      label: 'Error Boundary',
+      rows: [
+        { feature: 'shouldCatch', values: [true, false, false, false] },
+        { feature: 'ErrorBoundaryGroup', values: [true, false, false, false] },
+        {
+          feature: 'useErrorBoundaryFallbackProps',
+          values: [true, false, false, false],
+        },
+        {
+          feature: 'Safe fallback error propagation',
+          values: ['✓ To parent', '✗ Recursive', '✗ Recursive', false],
+        },
+        {
+          feature: 'TypeScript error type inference',
+          values: ['✓ Via shouldCatch', false, false, false],
+        },
+        {
+          feature: 'useErrorBoundary hook',
+          values: [true, true, false, false],
+        },
+        {
+          feature: 'Fallback UI with error & reset',
+          values: [true, true, true, false],
+        },
+        { feature: 'resetKeys', values: [true, true, false, false] },
+        { feature: 'onReset callback', values: [true, true, true, false] },
+        { feature: 'onError callback', values: [true, true, true, false] },
+        {
+          feature: 'HOC support',
+          values: [
+            '✓ ErrorBoundary.with',
+            '✓ withErrorBoundary',
+            '✓ withErrorBoundary',
+            false,
+          ],
+        },
+        { feature: 'Declarative API', values: [true, true, true, false] },
+      ],
+    },
+    {
+      label: 'Async Rendering',
+      rows: [
+        {
+          feature: 'SSR-safe Suspense (clientOnly)',
+          values: [true, false, false, false],
+        },
+        {
+          feature: 'Flash-of-loading prevention (Delay)',
+          values: [true, false, false, false],
+        },
+        {
+          feature: 'Global default fallbacks (DefaultPropsProvider)',
+          values: [true, false, false, false],
+        },
+        {
+          feature: 'Declarative data fetching (SuspenseQuery)',
+          values: [true, false, false, false],
+        },
+        {
+          feature: 'Client-only rendering (ClientOnly)',
+          values: [true, false, false, false],
+        },
+      ],
+    },
+  ]}
+/>
 
 ## Suspensive만의 차별점
 
@@ -88,6 +147,73 @@ const DeepFallbackChild = () => {
 
 이 기능은 콜백 함수를 props로 전달할 수 없는 React Server Component 환경에서 특히 유용합니다.
 
+## ErrorBoundary 그 이상
+
+Suspensive는 더 나은 ErrorBoundary만이 아닙니다. 프로덕션에서는 에러 처리 외에도 로딩 상태, SSR 하이드레이션, 데이터 페칭까지 관리해야 합니다. 이 문제들은 서로 연결되어 있고, Suspensive는 하나의 패키지에서 모두 해결합니다.
+
+### clientOnly가 포함된 Suspense — SSR 문제 해결
+
+React의 `<Suspense>`는 Next.js 같은 SSR 환경에서 깨집니다. Suspensive의 `clientOnly` prop으로 한 줄로 해결:
+
+```tsx
+<Suspense fallback={<Skeleton />} clientOnly>
+  <DataComponent />
+</Suspense>
+```
+
+`dynamic(() => import(...), { ssr: false })`도, `useEffect` 가드도 필요 없습니다.
+
+### Delay — 로딩 깜빡임 방지
+
+빠른 응답에 스피너를 보여줄 필요 없습니다. `<Delay>`는 로딩 UI가 실제로 필요할 때만 보여줍니다:
+
+```tsx
+<Suspense
+  fallback={
+    <Delay ms={200}>
+      {({ isDelayed }) => (
+        <Spinner
+          style={{ opacity: isDelayed ? 1 : 0, transition: 'opacity 200ms' }}
+        />
+      )}
+    </Delay>
+  }
+>
+  <Content />
+</Suspense>
+```
+
+### DefaultPropsProvider — 전역 기본값
+
+앱 전체의 `<Suspense>`와 `<Delay>`에 기본 fallback을 설정합니다:
+
+```tsx
+const defaultProps = new DefaultProps({
+  Suspense: { fallback: <Spinner /> },
+  Delay: { ms: 200 },
+})
+
+<DefaultPropsProvider defaultProps={defaultProps}>
+  <App />
+</DefaultPropsProvider>
+```
+
+### SuspenseQuery — 선언적 데이터 페칭
+
+`@suspensive/react-query`와 함께 훅이나 래퍼 컴포넌트 없이 JSX로 데이터를 페칭합니다:
+
+```tsx
+<ErrorBoundary fallback={<ErrorUI />}>
+  <Suspense fallback={<Skeleton />}>
+    <SuspenseQuery {...userQueryOptions()}>
+      {({ data: user }) => <UserProfile user={user} />}
+    </SuspenseQuery>
+  </Suspense>
+</ErrorBoundary>
+```
+
+`useSuspenseQuery` 훅 제약 없이, 컴포넌트 분리 없이, 모든 것이 같은 depth에서.
+
 ## 코드 비교
 
 <Tabs items={['@suspensive/react', 'react-error-boundary']}>
@@ -134,16 +260,6 @@ const App = () => (
 
 </Tabs.Tab>
 </Tabs>
-
-## ErrorBoundary 그 이상
-
-Suspensive는 단순한 ErrorBoundary 라이브러리가 아닙니다. React의 비동기 렌더링을 위한 완전한 툴킷입니다:
-
-- **[`<Suspense/>`](/docs/react/Suspense)** — SSR 지원과 `clientOnly` prop이 포함된 향상된 React Suspense
-- **[`<Delay/>`](/docs/react/Delay)** — 로딩 상태 깜빡임 UX 문제 방지
-- **[`<ClientOnly/>`](/docs/react/ClientOnly)** — 안전한 클라이언트 전용 렌더링
-- **[`<SuspenseQuery/>`](/docs/react-query/SuspenseQuery)** — hook 제약 없는 선언적 데이터 페칭
-- **[`<DefaultPropsProvider/>`](/docs/react/DefaultPropsProvider)** — 모든 Suspense/Delay 컴포넌트를 위한 전역 기본 fallback
 
 ## react-error-boundary에서 마이그레이션
 

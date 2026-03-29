@@ -3,7 +3,7 @@ description: 'shouldCatch 필터링, resetKeys, onError 콜백, ErrorBoundaryGro
 ---
 
 import { Tabs } from 'nextra/components'
-import { Callout, Sandpack } from '@/components'
+import { Callout, ComparisonTable, Sandpack } from '@/components'
 
 # ErrorBoundary
 
@@ -13,22 +13,81 @@ import { Callout, Sandpack } from '@/components'
 
 `@suspensive/react`의 `<ErrorBoundary/>`는 React의 클래스 기반 에러 경계와 인기 있는 `react-error-boundary` 및 `@sentry/react`와 같은 에러 경계 라이브러리에 대한 선언적이고 기능이 풍부한 대안을 제공합니다.
 
-| 기능                                 | @suspensive/react | react-error-boundary   | @sentry/react          | React 클래스 컴포넌트  |
-| ------------------------------------ | ----------------- | ---------------------- | ---------------------- | ---------------------- |
-| 기본 에러 캐칭                       | ✅                | ✅                     | ✅                     | ✅                     |
-| 에러 및 리셋 기능이 있는 Fallback UI | ✅                | ✅                     | ✅                     | ⚠️ (수동)              |
-| resetKeys로 리셋                     | ✅                | ✅                     | ❌                     | ⚠️ (수동)              |
-| onReset 콜백                         | ✅                | ✅                     | ✅                     | ⚠️ (수동)              |
-| onError 콜백                         | ✅                | ✅                     | ✅                     | ✅ (componentDidCatch) |
-| 조건부 에러 캐칭 (shouldCatch)       | ✅                | ❌                     | ❌                     | ⚠️ (수동)              |
-| Fallback 에러 처리                   | ✅ (부모로 전달)  | ❌ (재귀적)            | ❌ (재귀적)            | ⚠️ (수동)              |
-| useErrorBoundary 훅                  | ✅                | ✅                     | ❌                     | ❌                     |
-| useErrorBoundaryFallbackProps 훅     | ✅                | ❌                     | ❌                     | ❌                     |
-| ErrorBoundaryGroup                   | ✅                | ❌                     | ❌                     | ❌                     |
-| HOC 지원                             | ✅ (with)         | ✅ (withErrorBoundary) | ✅ (withErrorBoundary) | ❌                     |
-| TypeScript 에러 타입 추론            | ✅ (고급)         | ✅ (기본)              | ✅ (기본)              | ⚠️ (수동)              |
-| 선언적 API                           | ✅                | ✅                     | ✅                     | ❌                     |
-| 자동 에러 보고                       | ❌                | ❌                     | ✅ (Sentry로)          | ❌                     |
+<ComparisonTable
+  headers={[
+    '@suspensive/react',
+    'react-error-boundary',
+    '@sentry/react',
+    'DIY (Class Component)',
+  ]}
+  groups={[
+    {
+      label: 'Error Boundary',
+      rows: [
+        { feature: 'shouldCatch', values: [true, false, false, false] },
+        { feature: 'ErrorBoundaryGroup', values: [true, false, false, false] },
+        {
+          feature: 'useErrorBoundaryFallbackProps',
+          values: [true, false, false, false],
+        },
+        {
+          feature: 'Safe fallback error propagation',
+          values: ['✓ To parent', '✗ Recursive', '✗ Recursive', false],
+        },
+        {
+          feature: 'TypeScript error type inference',
+          values: ['✓ Via shouldCatch', false, false, false],
+        },
+        {
+          feature: 'useErrorBoundary hook',
+          values: [true, true, false, false],
+        },
+        {
+          feature: 'Fallback UI with error & reset',
+          values: [true, true, true, false],
+        },
+        { feature: 'resetKeys', values: [true, true, false, false] },
+        { feature: 'onReset callback', values: [true, true, true, false] },
+        { feature: 'onError callback', values: [true, true, true, false] },
+        {
+          feature: 'HOC support',
+          values: [
+            '✓ ErrorBoundary.with',
+            '✓ withErrorBoundary',
+            '✓ withErrorBoundary',
+            false,
+          ],
+        },
+        { feature: 'Declarative API', values: [true, true, true, false] },
+      ],
+    },
+    {
+      label: 'Async Rendering',
+      rows: [
+        {
+          feature: 'SSR-safe Suspense (clientOnly)',
+          values: [true, false, false, false],
+        },
+        {
+          feature: 'Flash-of-loading prevention (Delay)',
+          values: [true, false, false, false],
+        },
+        {
+          feature: 'Global default fallbacks (DefaultPropsProvider)',
+          values: [true, false, false, false],
+        },
+        {
+          feature: 'Declarative data fetching (SuspenseQuery)',
+          values: [true, false, false, false],
+        },
+        {
+          feature: 'Client-only rendering (ClientOnly)',
+          values: [true, false, false, false],
+        },
+      ],
+    },
+  ]}
+/>
 
 <Tabs items={['@suspensive/react', 'react-error-boundary', '@sentry/react', 'React 클래스']}>
   <Tabs.Tab>

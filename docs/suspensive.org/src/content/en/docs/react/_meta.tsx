@@ -4,7 +4,7 @@ export default {
   motivation: { title: 'Motivation' },
   installation: { title: 'Installation' },
   'getting-started': { title: 'Getting Started' },
-  comparison: { title: 'Suspensive vs react-error-boundary' },
+  comparison: { title: 'Suspensive vs Other Error Boundary Libraries' },
   '--- API Reference': {
     type: 'separator',
     title: 'API Reference',

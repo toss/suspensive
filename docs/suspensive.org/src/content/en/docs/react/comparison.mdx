@@ -1,32 +1,91 @@
 ---
-description: 'Compare @suspensive/react ErrorBoundary with react-error-boundary, @sentry/react, and React class components. See feature differences, code examples, and migration paths.'
+description: 'Compare @suspensive/react with react-error-boundary, @sentry/react, and React class components. See feature differences, code examples, and migration paths.'
 ---
 
 import { Tabs } from 'nextra/components'
-import { Callout } from '@/components'
+import { Callout, ComparisonTable } from '@/components'
 
-# Suspensive vs react-error-boundary
+# Suspensive vs Other Error Boundary Libraries
 
-Choosing an error boundary library for React? Here's how `@suspensive/react` compares to `react-error-boundary`, `@sentry/react`, and React's built-in class component approach.
+How `@suspensive/react` compares to `react-error-boundary`, `@sentry/react`, and DIY class components — and what Suspensive offers beyond ErrorBoundary.
 
 ## Feature Comparison
 
-| Feature                                  | @suspensive/react | react-error-boundary   | @sentry/react          | React Class Component  |
-| ---------------------------------------- | ----------------- | ---------------------- | ---------------------- | ---------------------- |
-| Basic error catching                     | ✅                | ✅                     | ✅                     | ✅                     |
-| Fallback UI with error & reset           | ✅                | ✅                     | ✅                     | ⚠️ (Manual)            |
-| Reset with resetKeys                     | ✅                | ✅                     | ❌                     | ⚠️ (Manual)            |
-| onReset callback                         | ✅                | ✅                     | ✅                     | ⚠️ (Manual)            |
-| onError callback                         | ✅                | ✅                     | ✅                     | ✅ (componentDidCatch) |
-| Conditional error catching (shouldCatch) | ✅                | ❌                     | ❌                     | ⚠️ (Manual)            |
-| Fallback error handling                  | ✅ (To parent)    | ❌ (Recursive)         | ❌ (Recursive)         | ⚠️ (Manual)            |
-| useErrorBoundary hook                    | ✅                | ✅                     | ❌                     | ❌                     |
-| useErrorBoundaryFallbackProps hook       | ✅                | ❌                     | ❌                     | ❌                     |
-| ErrorBoundaryGroup                       | ✅                | ❌                     | ❌                     | ❌                     |
-| HOC support                              | ✅ (with)         | ✅ (withErrorBoundary) | ✅ (withErrorBoundary) | ❌                     |
-| TypeScript error type inference          | ✅ (Advanced)     | ✅ (Basic)             | ✅ (Basic)             | ⚠️ (Manual)            |
-| Declarative API                          | ✅                | ✅                     | ✅                     | ❌                     |
-| Automatic error reporting                | ❌                | ❌                     | ✅ (To Sentry)         | ❌                     |
+<ComparisonTable
+  headers={[
+    '@suspensive/react',
+    'react-error-boundary',
+    '@sentry/react',
+    'DIY (Class Component)',
+  ]}
+  groups={[
+    {
+      label: 'Error Boundary',
+      rows: [
+        { feature: 'shouldCatch', values: [true, false, false, false] },
+        { feature: 'ErrorBoundaryGroup', values: [true, false, false, false] },
+        {
+          feature: 'useErrorBoundaryFallbackProps',
+          values: [true, false, false, false],
+        },
+        {
+          feature: 'Safe fallback error propagation',
+          values: ['✓ To parent', '✗ Recursive', '✗ Recursive', false],
+        },
+        {
+          feature: 'TypeScript error type inference',
+          values: ['✓ Via shouldCatch', false, false, false],
+        },
+        {
+          feature: 'useErrorBoundary hook',
+          values: [true, true, false, false],
+        },
+        {
+          feature: 'Fallback UI with error & reset',
+          values: [true, true, true, false],
+        },
+        { feature: 'resetKeys', values: [true, true, false, false] },
+        { feature: 'onReset callback', values: [true, true, true, false] },
+        { feature: 'onError callback', values: [true, true, true, false] },
+        {
+          feature: 'HOC support',
+          values: [
+            '✓ ErrorBoundary.with',
+            '✓ withErrorBoundary',
+            '✓ withErrorBoundary',
+            false,
+          ],
+        },
+        { feature: 'Declarative API', values: [true, true, true, false] },
+      ],
+    },
+    {
+      label: 'Async Rendering',
+      rows: [
+        {
+          feature: 'SSR-safe Suspense (clientOnly)',
+          values: [true, false, false, false],
+        },
+        {
+          feature: 'Flash-of-loading prevention (Delay)',
+          values: [true, false, false, false],
+        },
+        {
+          feature: 'Global default fallbacks (DefaultPropsProvider)',
+          values: [true, false, false, false],
+        },
+        {
+          feature: 'Declarative data fetching (SuspenseQuery)',
+          values: [true, false, false, false],
+        },
+        {
+          feature: 'Client-only rendering (ClientOnly)',
+          values: [true, false, false, false],
+        },
+      ],
+    },
+  ]}
+/>
 
 ## What Makes Suspensive Different
 
@@ -88,6 +147,73 @@ const DeepFallbackChild = () => {
 
 This is especially useful in React Server Component environments where you can't pass callback functions as props.
 
+## Beyond ErrorBoundary
+
+Suspensive isn't just a better ErrorBoundary. In production, error handling is only one piece — you also need to manage loading states, SSR hydration, and data fetching. These concerns are interconnected, and Suspensive handles them all in one package.
+
+### Suspense with clientOnly — SSR Without the Pain
+
+React's `<Suspense>` breaks in SSR environments like Next.js. Suspensive's `clientOnly` prop solves this in one line:
+
+```tsx
+<Suspense fallback={<Skeleton />} clientOnly>
+  <DataComponent />
+</Suspense>
+```
+
+No `dynamic(() => import(...), { ssr: false })`. No `useEffect` guards.
+
+### Delay — Prevent Flash-of-Loading
+
+Fast responses shouldn't show a spinner. `<Delay>` holds back the loading UI until it's actually needed:
+
+```tsx
+<Suspense
+  fallback={
+    <Delay ms={200}>
+      {({ isDelayed }) => (
+        <Spinner
+          style={{ opacity: isDelayed ? 1 : 0, transition: 'opacity 200ms' }}
+        />
+      )}
+    </Delay>
+  }
+>
+  <Content />
+</Suspense>
+```
+
+### DefaultPropsProvider — Global Defaults
+
+Set default fallbacks for every `<Suspense>` and `<Delay>` in your app:
+
+```tsx
+const defaultProps = new DefaultProps({
+  Suspense: { fallback: <Spinner /> },
+  Delay: { ms: 200 },
+})
+
+<DefaultPropsProvider defaultProps={defaultProps}>
+  <App />
+</DefaultPropsProvider>
+```
+
+### SuspenseQuery — Declarative Data Fetching
+
+With `@suspensive/react-query`, fetch data as JSX without hooks or wrapper components:
+
+```tsx
+<ErrorBoundary fallback={<ErrorUI />}>
+  <Suspense fallback={<Skeleton />}>
+    <SuspenseQuery {...userQueryOptions()}>
+      {({ data: user }) => <UserProfile user={user} />}
+    </SuspenseQuery>
+  </Suspense>
+</ErrorBoundary>
+```
+
+No `useSuspenseQuery` hook constraints. No component splitting. Everything at the same depth.
+
 ## Code Comparison
 
 <Tabs items={['@suspensive/react', 'react-error-boundary']}>
@@ -134,16 +260,6 @@ const App = () => (
 
 </Tabs.Tab>
 </Tabs>
-
-## Beyond ErrorBoundary
-
-Suspensive isn't just an ErrorBoundary library. It's a complete toolkit for React's async rendering:
-
-- **[`<Suspense/>`](/docs/react/Suspense)** — Enhanced React Suspense with SSR support and `clientOnly` prop
-- **[`<Delay/>`](/docs/react/Delay)** — Prevent flash-of-loading-state UX issues
-- **[`<ClientOnly/>`](/docs/react/ClientOnly)** — Safe client-side only rendering
-- **[`<SuspenseQuery/>`](/docs/react-query/SuspenseQuery)** — Declarative data fetching without hook constraints
-- **[`<DefaultPropsProvider/>`](/docs/react/DefaultPropsProvider)** — Global default fallbacks for all Suspense/Delay components
 
 ## Migration from react-error-boundary
 

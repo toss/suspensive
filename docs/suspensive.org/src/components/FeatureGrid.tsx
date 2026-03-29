@@ -1,7 +1,8 @@
 'use client'
 
-import { motion } from 'motion/react'
+import { motion, useInView } from 'motion/react'
 import Link from 'next/link'
+import { useEffect, useRef } from 'react'
 import { BorderTrail } from './BorderTrail'
 
 interface Feature {
@@ -170,13 +171,28 @@ function FeatureCard({
   index: number
   linkText: string
 }) {
+  const ref = useRef<HTMLDivElement>(null)
+  const isInView = useInView(ref, { once: true, amount: 0.05 })
+  const wasInViewOnMount = useRef(false)
+
+  useEffect(() => {
+    if (ref.current) {
+      const rect = ref.current.getBoundingClientRect()
+      wasInViewOnMount.current = rect.top < window.innerHeight
+    }
+  }, [])
+
+  // First screen: longer stagger for sequential reveal
+  // Scrolled into view: minimal delay for snappy feel
+  const delay = wasInViewOnMount.current ? 0.5 + index * 0.1 : index * 0.04
+
   return (
     <motion.div
+      ref={ref}
       initial={{ opacity: 0, y: 24 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.1 }}
+      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
       transition={{
-        delay: 0.1 + index * 0.06,
+        delay,
         duration: 0.4,
         ease: [0.16, 1, 0.3, 1],
       }}
@@ -245,7 +261,7 @@ export const FeatureGrid = ({
   linkText?: string
 }) => {
   return (
-    <div className="mx-auto grid max-w-6xl grid-cols-1 gap-px rounded-2xl border border-white/5 bg-white/[0.06] md:grid-cols-2 lg:grid-cols-3">
+    <div className="mx-auto grid max-w-6xl grid-cols-1 gap-3 rounded-2xl md:grid-cols-2 md:gap-px md:border md:border-white/5 md:bg-white/[0.06] lg:grid-cols-3">
       {items.map((item, index) => (
         <FeatureCard
           key={item.title}

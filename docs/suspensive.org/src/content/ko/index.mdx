@@ -10,6 +10,7 @@ import {
   ComparisonTable,
   FeatureGrid,
   HomePage,
+  NpmInstallCopyButton,
   Sandpack,
   Scrollycoding,
   SectionDescription,
@@ -25,15 +26,15 @@ import {
 >
 
 <div className="mx-auto flex max-w-6xl flex-col justify-center gap-2 px-4 text-center lg:flex-row lg:items-baseline lg:gap-4 lg:text-left">
-  <h2 className="flex shrink-0 items-baseline gap-2 text-2xl font-bold tracking-tight md:text-3xl">
+  <h2 className="flex shrink-0 items-baseline justify-center gap-2 text-2xl font-bold tracking-tight md:text-3xl lg:justify-start">
     <span className="inline-flex translate-y-0.5 [&_div]:!flex [&_svg]:h-6 [&_svg]:w-6 md:[&_svg]:h-7 md:[&_svg]:w-7">
       <Logo />
     </span>
     React Suspense, complete.
   </h2>
-  <p className="shrink-0 text-base text-gray-700 md:text-xl dark:text-gray-400">
+  <span className="shrink-0 text-base text-gray-700 md:text-xl dark:text-gray-400">
     ErrorBoundary, Suspense, Delay 등 — 성공한 케이스에만 집중하세요.
-  </p>
+  </span>
 </div>
 
 <div className="h-4 md:h-6" />
@@ -89,99 +90,11 @@ import {
   ]}
 />
 
-<div className="h-12 md:h-20" />
+<div className="mx-auto max-w-2xl text-center text-sm leading-relaxed opacity-30">
+  Suspense + ive — React Suspense를 둘러싼 모든 것, 하나의 패키지로.
+</div>
 
 <TrustedBy text="주간 다운로드 33k+" />
-
-<div className="h-12 md:h-20" />
-
-<div className="mx-auto max-w-4xl px-4">
-  <div className="mx-auto flex max-w-6xl flex-col justify-center gap-2 text-center lg:flex-row lg:items-baseline lg:gap-4 lg:text-left">
-    <h2 className="shrink-0 text-2xl font-bold tracking-tight md:text-3xl">
-      이미 react-error-boundary를 사용 중이신가요?
-    </h2>
-    <p className="shrink-0 text-base text-gray-700 md:text-xl dark:text-gray-400">
-      좋은 선택입니다.
-    </p>
-  </div>
-  <div className="h-4 md:h-6" />
-  <p className="text-sm leading-relaxed text-gray-700 lg:text-base dark:text-gray-400">
-    react-error-boundary는 React에서 선언적 에러 처리를 실용적으로 만든 훌륭한
-    라이브러리입니다. Suspensive의 ErrorBoundary는 프로덕션에서 필요했던 것들을
-    몇 가지 더했습니다 —{' '}
-    <strong className="text-black dark:text-white">shouldCatch</strong>로 특정
-    에러만 캐치하고,{' '}
-    <strong className="text-black dark:text-white">ErrorBoundaryGroup</strong>
-    으로 여러 바운더리를 한번에 리셋하고, fallback 에러를 안전하게 부모로
-    전파합니다.{' '}
-    <strong className="text-black dark:text-white">로딩 상태</strong>,{' '}
-    <strong className="text-black dark:text-white">SSR 하이드레이션</strong>,{' '}
-    <strong className="text-black dark:text-white">로딩 깜빡임 UX</strong>,{' '}
-    <strong className="text-black dark:text-white">데이터 페칭</strong>도 함께
-    해결해야 했기에 — 이것들도 하나의 패키지에 담았습니다.
-  </p>
-  <div className="h-3 md:h-4" />
-  <ComparisonTable
-    headers={['Suspensive', 'react-error-boundary', 'React Class']}
-    groups={[
-      {
-        label: 'Error Boundary',
-        rows: [
-          {
-            feature: '선택적 에러 캐치 (shouldCatch)',
-            values: [true, false, false],
-          },
-          {
-            feature: '일괄 리셋 (ErrorBoundaryGroup)',
-            values: [true, false, false],
-          },
-          {
-            feature: 'useErrorBoundaryFallbackProps',
-            values: [true, false, false],
-          },
-          {
-            feature: '안전한 fallback 에러 전파',
-            values: [true, false, false],
-          },
-          { feature: '선언적 ErrorBoundary', values: [true, true, false] },
-          { feature: 'resetKeys', values: [true, true, false] },
-          { feature: '기본 에러 캐칭', values: [true, true, true] },
-        ],
-      },
-      {
-        label: 'Async Rendering',
-        rows: [
-          {
-            feature: 'SSR 안전 Suspense (clientOnly)',
-            values: [true, false, false],
-          },
-          { feature: '로딩 깜빡임 방지 (Delay)', values: [true, false, false] },
-          {
-            feature: '전역 기본 fallback (DefaultPropsProvider)',
-            values: [true, false, false],
-          },
-          {
-            feature: '선언적 데이터 페칭 (SuspenseQuery)',
-            values: [true, false, false],
-          },
-          {
-            feature: '클라이언트 전용 렌더링 (ClientOnly)',
-            values: [true, false, false],
-          },
-        ],
-      },
-    ]}
-  />
-  <div className="h-2 md:h-3" />
-  <p className="text-sm text-gray-700 dark:text-gray-400">
-    <Link
-      href="/docs/react/comparison"
-      className="underline underline-offset-4 transition-colors hover:text-gray-900 dark:hover:text-gray-100"
-    >
-      전체 비교 보기 →
-    </Link>
-  </p>
-</div>
 
 <div className="h-12 md:h-20" />
 
@@ -189,9 +102,9 @@ import {
   <h2 className="shrink-0 text-2xl font-bold tracking-tight md:text-3xl">
     코드로 확인하세요
   </h2>
-  <p className="shrink-0 text-base text-gray-700 md:text-xl dark:text-gray-400">
+  <span className="shrink-0 text-base text-gray-700 md:text-xl dark:text-gray-400">
     로딩, 에러, 복구가 어떻게 동작하는지.
-  </p>
+  </span>
 </div>
 
 <div className="h-4 md:h-6" />
@@ -322,13 +235,130 @@ const Page = () => (
 
 <div className="h-12 md:h-20" />
 
+<div className="mx-auto max-w-6xl px-4">
+  <div className="mx-auto flex max-w-6xl flex-col justify-center gap-2 text-center lg:flex-row lg:items-baseline lg:gap-4 lg:text-left">
+    <h2 className="shrink-0 text-2xl font-bold tracking-tight md:text-3xl">
+      이미 react-error-boundary를 사용 중이신가요?
+    </h2>
+    <span className="shrink-0 text-base text-gray-700 md:text-xl dark:text-gray-400">
+      좋은 선택입니다.
+    </span>
+  </div>
+  <div className="h-4 md:h-6" />
+  <div className="text-sm leading-relaxed text-gray-700 lg:text-base dark:text-gray-400">
+    react-error-boundary는 React에서 선언적 에러 처리를 실용적으로 만든 훌륭한
+    라이브러리입니다. Suspensive의 ErrorBoundary는 프로덕션에서 필요했던 것들을
+    몇 가지 더했습니다 —{' '}
+    <strong className="text-black dark:text-white">shouldCatch</strong>로 특정
+    에러만 캐치하고,{' '}
+    <strong className="text-black dark:text-white">ErrorBoundaryGroup</strong>
+    으로 여러 바운더리를 한번에 리셋하고, fallback 에러를 안전하게 부모로
+    전파합니다.{' '}
+    <strong className="text-black dark:text-white">로딩 상태</strong>,{' '}
+    <strong className="text-black dark:text-white">SSR 하이드레이션</strong>,{' '}
+    <strong className="text-black dark:text-white">로딩 깜빡임 UX</strong>,{' '}
+    <strong className="text-black dark:text-white">데이터 페칭</strong>도 함께
+    해결해야 했기에 — 이것들도 하나의 패키지에 담았습니다.
+  </div>
+  <div className="h-3 md:h-4" />
+  <ComparisonTable
+    headers={[
+      'Suspensive',
+      'react-error-boundary',
+      '@sentry/react',
+      'DIY (Class Component)',
+    ]}
+    groups={[
+      {
+        label: 'Error Boundary',
+        rows: [
+          { feature: 'shouldCatch', values: [true, false, false, false] },
+          {
+            feature: 'ErrorBoundaryGroup',
+            values: [true, false, false, false],
+          },
+          {
+            feature: 'useErrorBoundaryFallbackProps',
+            values: [true, false, false, false],
+          },
+          {
+            feature: 'Safe fallback error propagation',
+            values: ['✓ To parent', '✗ Recursive', '✗ Recursive', false],
+          },
+          {
+            feature: 'TypeScript error type inference',
+            values: ['✓ Via shouldCatch', false, false, false],
+          },
+          {
+            feature: 'useErrorBoundary hook',
+            values: [true, true, false, false],
+          },
+          {
+            feature: 'Fallback UI with error & reset',
+            values: [true, true, true, false],
+          },
+          { feature: 'resetKeys', values: [true, true, false, false] },
+          { feature: 'onReset callback', values: [true, true, true, false] },
+          { feature: 'onError callback', values: [true, true, true, false] },
+          {
+            feature: 'HOC support',
+            values: [
+              '✓ ErrorBoundary.with',
+              '✓ withErrorBoundary',
+              '✓ withErrorBoundary',
+              false,
+            ],
+          },
+          { feature: 'Declarative API', values: [true, true, true, false] },
+        ],
+      },
+      {
+        label: 'Async Rendering',
+        rows: [
+          {
+            feature: 'SSR-safe Suspense (clientOnly)',
+            values: [true, false, false, false],
+          },
+          {
+            feature: 'Flash-of-loading prevention (Delay)',
+            values: [true, false, false, false],
+          },
+          {
+            feature: 'Global default fallbacks (DefaultPropsProvider)',
+            values: [true, false, false, false],
+          },
+          {
+            feature: 'Declarative data fetching (SuspenseQuery)',
+            values: [true, false, false, false],
+          },
+          {
+            feature: 'Client-only rendering (ClientOnly)',
+            values: [true, false, false, false],
+          },
+        ],
+      },
+    ]}
+  />
+  <div className="h-2 md:h-3" />
+  <div className="text-sm text-gray-700 dark:text-gray-400">
+    <Link
+      href="/docs/react/comparison"
+      className="underline underline-offset-4 transition-colors hover:text-gray-900 dark:hover:text-gray-100"
+    >
+      전체 비교 보기 →
+    </Link>
+  </div>
+</div>
+
+<div className="h-12 md:h-20" />
+
 <div className="mx-auto flex max-w-6xl flex-col justify-center gap-2 px-4 text-center lg:flex-row lg:items-baseline lg:gap-4 lg:text-left">
   <h2 className="shrink-0 text-2xl font-bold tracking-tight md:text-3xl">
     Playground
   </h2>
-  <p className="shrink-0 text-base text-gray-700 md:text-xl dark:text-gray-400">
-    코드를 수정하고, 에러를 만들고, 복구해보세요.
-  </p>
+  <span className="shrink-0 text-base text-gray-700 md:text-xl dark:text-gray-400">
+    코드를 수정하고 Suspensive를 직접 체험해보세요.
+  </span>
 </div>
 
 <div className="h-4 md:h-6" />
@@ -353,7 +383,7 @@ const userQueryOptions = () =>
     queryFn: async () => {
       await new Promise((r) => setTimeout(r, 1200))
       // Randomly fail to demonstrate ErrorBoundary
-      if (Math.random() > 0.4) return { name: 'Alex Chen', role: 'Maintainer' }
+      if (Math.random() > 0.2) return { name: 'Alex Chen', role: 'Maintainer' }
       throw new Error('Network timeout')
     },
     retry: false,
@@ -364,7 +394,7 @@ const statsQueryOptions = () =>
     queryKey: ['stats'],
     queryFn: async () => {
       await new Promise((r) => setTimeout(r, 800))
-      if (Math.random() > 0.3) return { downloads: '34,326', stars: '1.5k' }
+      if (Math.random() > 0.15) return { downloads: '34,326', stars: '1.5k' }
       throw new Error('API rate limit')
     },
     retry: false,
@@ -572,7 +602,18 @@ const smallButtonStyle = {
 </Sandpack>
 </div>
 
+<div className="mx-auto max-w-2xl text-center text-sm leading-relaxed opacity-30">
+  에러는 의도된 것입니다 — Retry를 눌러 ErrorBoundary의 복구를 체험해보세요.
+</div>
+
 <div className="h-12 md:h-20" />
+
+<div className="flex flex-col items-center gap-3 overflow-visible">
+  <NpmInstallCopyButton />
+  <span className="text-sm opacity-50">
+    설정 없이 바로 시작, 점진적 도입 가능, Next.js 등 모든 React 앱에서 동작.
+  </span>
+</div>
 
 <CallToAction
   title="로딩과 에러는 Suspensive에 맡기고, 성공한 케이스에 집중하세요."

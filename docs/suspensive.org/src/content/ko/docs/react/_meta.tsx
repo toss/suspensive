@@ -5,7 +5,7 @@ export default {
   motivation: { title: '동기' },
   installation: { title: '설치하기' },
   'getting-started': { title: '시작하기' },
-  comparison: { title: 'Suspensive vs react-error-boundary' },
+  comparison: { title: 'Suspensive vs 다른 Error Boundary 라이브러리' },
   '--- API Reference': {
     type: 'separator',
     title: 'API 문서',

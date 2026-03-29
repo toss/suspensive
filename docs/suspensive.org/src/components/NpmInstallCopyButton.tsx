@@ -1,17 +1,15 @@
+'use client'
+
 import { AnimatePresence, motion } from 'motion/react'
 import Image from 'next/image'
-import { useTheme } from 'nextra-theme-docs'
 import { useState } from 'react'
 import checkSVG from '../../public/img/icons/check.svg'
-import checkBlackSVG from '../../public/img/icons/check_black.svg'
 import content_copySVG from '../../public/img/icons/content_copy.svg'
-import content_copyBlackSVG from '../../public/img/icons/content_copy_black.svg'
 
 const npmInstallScript = 'npm i @suspensive/react'
 export const NpmInstallCopyButton = () => {
   const [isHovered, setIsHovered] = useState(false)
   const [isClicked, setIsClicked] = useState(false)
-  const { resolvedTheme } = useTheme()
 
   return (
     <motion.button
@@ -40,15 +38,7 @@ export const NpmInstallCopyButton = () => {
               exit={{ opacity: 0 }}
             >
               <Image
-                src={
-                  resolvedTheme === 'dark'
-                    ? isClicked
-                      ? checkSVG
-                      : content_copySVG
-                    : isClicked
-                      ? checkBlackSVG
-                      : content_copyBlackSVG
-                }
+                src={isClicked ? checkSVG : content_copySVG}
                 alt="svg"
                 className="object-contain"
               />
