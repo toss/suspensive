@@ -5,7 +5,7 @@
     "build": {
       "dependsOn": ["^build"],
       "outputs": ["dist/**", ".next/**", "public/**"],
-      "cache": true
+      "cache": false
     },
     "ci:eslint": {
       "dependsOn": ["build"]
