@@ -34,12 +34,8 @@ const withNextra = nextra({
 export default withNextra({
   reactStrictMode: true,
   outputFileTracingIncludes: {
-    '/api/pagefind/\\[\\[\\.\\.\\.path\\]\\]': ['./public/_pagefind/**'],
-    '/api/llms/\\[\\[\\.\\.\\.path\\]\\]': [
-      './public/llms.txt',
-      './public/llms-full.txt',
-      './public/docs/**',
-    ],
+    '/api/pagefind/*': ['./public/_pagefind/**'],
+    '/api/llms/*': ['./public/llms.txt', './public/llms-full.txt', './public/docs/**'],
   },
   i18n: {
     locales: ['en', 'ko'],

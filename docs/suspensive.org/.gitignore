@@ -41,3 +41,5 @@ _pagefind/
 /public/llms.txt
 /public/llms-full.txt
 /public/docs/
+
+.claude/settings.local.json
