@@ -11,6 +11,7 @@ import {
   type ReactNode,
   createContext,
   forwardRef,
+  useCallback,
   useContext,
   useImperativeHandle,
   useMemo,
@@ -238,16 +239,25 @@ export const ErrorBoundary = Object.assign(
   ) {
     const { fallback, children, onError, onReset, resetKeys, shouldCatch } = props
     const group = useContext(ErrorBoundaryGroupContext) ?? { resetKey: 0 }
+    const errorObserver = useContext(ErrorObserverContext)
     const baseErrorBoundaryRef = useRef<BaseErrorBoundary<TShouldCatch>>(null)
     useImperativeHandle(ref, () => ({
       reset: () => baseErrorBoundaryRef.current?.reset(),
     }))
 
+    const handleOnError = useCallback(
+      (error: InferError<TShouldCatch>, info: ErrorInfo) => {
+        onError?.(error, info)
+        errorObserver?.(error, info)
+      },
+      [errorObserver, onError]
+    )
+
     return (
       <BaseErrorBoundary<TShouldCatch>
         shouldCatch={shouldCatch}
         fallback={fallback}
-        onError={onError}
+        onError={handleOnError}
         onReset={onReset}
         resetKeys={[group.resetKey, ...(resetKeys || [])]}
         ref={baseErrorBoundaryRef}
@@ -280,8 +290,45 @@ export const ErrorBoundary = Object.assign(
     Consumer: ({ children }: { children: (errorBoundary: ReturnType<typeof useErrorBoundary>) => ReactNode }) => (
       <>{children(useErrorBoundary())}</>
     ),
+    /**
+     * A component that captures errors from all nested ErrorBoundary components.
+     * Both Observer's onError and each ErrorBoundary's own onError will be called when an error is caught.
+     *
+     * @example
+     * ```tsx
+     * import * as Sentry from '@sentry/react'
+     *
+     * function App() {
+     *   return (
+     *     <ErrorBoundary.Observer onError={Sentry.captureReactException}>
+     *       <ErrorBoundary fallback={<FallbackUI />}>
+     *         <YourApp />
+     *       </ErrorBoundary>
+     *     </ErrorBoundary.Observer>
+     *   )
+     * }
+     * ```
+     *
+     * @experimental This is experimental feature.
+     * @see {@link https://suspensive.org/docs/react/ErrorBoundary Suspensive Docs}
+     */
+    Observer: ({ onError, children }: PropsWithChildren<{ onError: (error: Error, info: ErrorInfo) => void }>) => {
+      const parent = useContext(ErrorObserverContext)
+      const handleError = useCallback(
+        (error: Error, info: ErrorInfo) => {
+          onError(error, info)
+          parent?.(error, info)
+        },
+        [parent, onError]
+      )
+      return <ErrorObserverContext.Provider value={handleError}>{children}</ErrorObserverContext.Provider>
+    },
   }
 )
+
+const ErrorObserverContext = Object.assign(createContext<((error: Error, info: ErrorInfo) => void) | null>(null), {
+  displayName: 'ErrorBoundary.ErrorObserverContext',
+})
 
 const ErrorBoundaryContext = Object.assign(createContext<(ErrorBoundaryHandle & ErrorBoundaryState) | null>(null), {
   displayName: 'ErrorBoundaryContext',

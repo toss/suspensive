@@ -13,22 +13,22 @@ This component can handle any errors in children.
 
 `@suspensive/react`'s `<ErrorBoundary/>` provides a declarative, feature-rich alternative to React's class-based error boundaries and popular error boundary libraries like `react-error-boundary` and `@sentry/react`.
 
-| Feature                                  | @suspensive/react | react-error-boundary   | @sentry/react          | React Class Component  |
-| ---------------------------------------- | ----------------- | ---------------------- | ---------------------- | ---------------------- |
-| Basic error catching                     | ✅                | ✅                     | ✅                     | ✅                     |
-| Fallback UI with error & reset           | ✅                | ✅                     | ✅                     | ⚠️ (Manual)            |
-| Reset with resetKeys                     | ✅                | ✅                     | ❌                     | ⚠️ (Manual)            |
-| onReset callback                         | ✅                | ✅                     | ✅                     | ⚠️ (Manual)            |
-| onError callback                         | ✅                | ✅                     | ✅                     | ✅ (componentDidCatch) |
-| Conditional error catching (shouldCatch) | ✅                | ❌                     | ❌                     | ⚠️ (Manual)            |
-| Fallback error handling                  | ✅ (To parent)    | ❌ (Recursive)         | ❌ (Recursive)         | ⚠️ (Manual)            |
-| useErrorBoundary hook                    | ✅                | ✅                     | ❌                     | ❌                     |
-| useErrorBoundaryFallbackProps hook       | ✅                | ❌                     | ❌                     | ❌                     |
-| ErrorBoundaryGroup                       | ✅                | ❌                     | ❌                     | ❌                     |
-| HOC support                              | ✅ (with)         | ✅ (withErrorBoundary) | ✅ (withErrorBoundary) | ❌                     |
-| TypeScript error type inference          | ✅ (Advanced)     | ✅ (Basic)             | ✅ (Basic)             | ⚠️ (Manual)            |
-| Declarative API                          | ✅                | ✅                     | ✅                     | ❌                     |
-| Automatic error reporting                | ❌                | ❌                     | ✅ (To Sentry)         | ❌                     |
+| Feature                                  | @suspensive/react                    | react-error-boundary   | @sentry/react          | React Class Component  |
+| ---------------------------------------- | ------------------------------------ | ---------------------- | ---------------------- | ---------------------- |
+| Basic error catching                     | ✅                                   | ✅                     | ✅                     | ✅                     |
+| Fallback UI with error & reset           | ✅                                   | ✅                     | ✅                     | ⚠️ (Manual)            |
+| Reset with resetKeys                     | ✅                                   | ✅                     | ❌                     | ⚠️ (Manual)            |
+| onReset callback                         | ✅                                   | ✅                     | ✅                     | ⚠️ (Manual)            |
+| onError callback                         | ✅                                   | ✅                     | ✅                     | ✅ (componentDidCatch) |
+| Conditional error catching (shouldCatch) | ✅                                   | ❌                     | ❌                     | ⚠️ (Manual)            |
+| Fallback error handling                  | ✅ (To parent)                       | ❌ (Recursive)         | ❌ (Recursive)         | ⚠️ (Manual)            |
+| useErrorBoundary hook                    | ✅                                   | ✅                     | ❌                     | ❌                     |
+| useErrorBoundaryFallbackProps hook       | ✅                                   | ❌                     | ❌                     | ❌                     |
+| ErrorBoundaryGroup                       | ✅                                   | ❌                     | ❌                     | ❌                     |
+| HOC support                              | ✅ (ErrorBoundary.with)              | ✅ (withErrorBoundary) | ✅ (withErrorBoundary) | ❌                     |
+| TypeScript error type inference          | ✅ (Advanced)                        | ✅ (Basic)             | ✅ (Basic)             | ⚠️ (Manual)            |
+| Declarative API                          | ✅                                   | ✅                     | ✅                     | ❌                     |
+| Automatic error reporting                | ✅ (ErrorBoundary.Observer + Sentry) | ❌                     | ✅ (To Sentry)         | ❌                     |
 
 <Tabs items={['@suspensive/react', 'react-error-boundary', '@sentry/react', 'React Class']}>
 <Tabs.Tab>
@@ -227,11 +227,27 @@ const SentryExample = () => (
   </Sentry.ErrorBoundary>
 )
 
-// @suspensive/react - with manual Sentry integration
+// @suspensive/react - with ErrorBoundary.Observer
 import { ErrorBoundary } from '@suspensive/react'
 import * as Sentry from '@sentry/react'
 
 const SuspensiveExample = () => (
+  <ErrorBoundary.Observer onError={Sentry.captureReactException}>
+    <ErrorBoundary
+      fallback={({ error, reset }) => (
+        <div>
+          <button onClick={reset}>Reset</button>
+          {error.message}
+        </div>
+      )}
+    >
+      <YourComponent />
+    </ErrorBoundary>
+  </ErrorBoundary.Observer>
+)
+
+// or with onError prop directly
+const SuspensiveWithOnErrorExample = () => (
   <ErrorBoundary
     fallback={({ error, reset }) => (
       <div>
@@ -240,8 +256,7 @@ const SuspensiveExample = () => (
       </div>
     )}
     onError={(error, errorInfo) => {
-      const eventId = Sentry.captureReactException(error, errorInfo)
-      console.log('Error caught:', eventId)
+      Sentry.captureReactException(error, errorInfo)
     }}
   >
     <YourComponent />
@@ -252,9 +267,9 @@ const SuspensiveExample = () => (
 Main differences:
 
 - `@sentry/react` automatically reports errors to Sentry
+- `@suspensive/react` provides `ErrorBoundary.Observer` to observe errors from all nested `<ErrorBoundary/>` components at once, or `onError` prop for individual error handling
 - `@suspensive/react` provides more flexible error handling with `shouldCatch`
 - `resetError` → `reset` (in fallback props)
-- Manual Sentry integration gives you more control over what gets reported
 
 </Tabs.Tab>
 <Tabs.Tab>
@@ -892,6 +907,82 @@ const Example = ErrorBoundary.with({ fallback: ErrorBoundaryFallback }, () => {
 
   return <>...</>
 })
+```
+
+## ErrorBoundary.Observer
+
+<Callout type='warning'>
+
+This is an experimental feature.
+
+</Callout>
+
+`ErrorBoundary.Observer` is a component that observes errors from all nested `<ErrorBoundary/>` components. It does not catch or handle errors — it simply observes them, making it ideal for integrating with error reporting tools like Sentry.
+
+Previously, you had to attach `onError` prop individually to each `<ErrorBoundary/>`. To observe errors across the entire app, you had to repeatedly pass the same handler to every ErrorBoundary.
+
+```tsx
+import { ErrorBoundary } from '@suspensive/react'
+import * as Sentry from '@sentry/react'
+
+// Before: repeated onError on every ErrorBoundary
+function App() {
+  return (
+    <ErrorBoundary
+      fallback={<FallbackA />}
+      onError={Sentry.captureReactException} // repeated every time
+    >
+      <ErrorBoundary
+        fallback={<FallbackB />}
+        onError={Sentry.captureReactException} // repeated every time
+      >
+        <YourComponent />
+      </ErrorBoundary>
+    </ErrorBoundary>
+  )
+}
+```
+
+With `ErrorBoundary.Observer`, you can observe errors from all nested `<ErrorBoundary/>` components at once. Both `ErrorBoundary.Observer`'s `onError` and each `<ErrorBoundary/>`'s own `onError` will be called when an error is caught.
+
+```tsx /ErrorBoundary.Observer/
+import { ErrorBoundary } from '@suspensive/react'
+import * as Sentry from '@sentry/react'
+
+// After: single Observer wraps all ErrorBoundaries
+function App() {
+  return (
+    <ErrorBoundary.Observer onError={Sentry.captureReactException}>
+      <ErrorBoundary fallback={<FallbackA />}>
+        <ErrorBoundary fallback={<FallbackB />}>
+          <YourComponent />
+        </ErrorBoundary>
+      </ErrorBoundary>
+    </ErrorBoundary.Observer>
+  )
+}
+```
+
+### Nested ErrorBoundary.Observer
+
+Multiple `ErrorBoundary.Observer` components can be nested, and all `ErrorBoundary.Observer`'s `onError` will be called in bubble order (from inner to outer) when an error occurs.
+
+```tsx /ErrorBoundary.Observer/
+import { ErrorBoundary } from '@suspensive/react'
+
+const Example = () => (
+  <ErrorBoundary.Observer onError={(error) => console.log('outer', error)}>
+    <ErrorBoundary.Observer onError={(error) => console.log('inner', error)}>
+      <ErrorBoundary fallback={({ error }) => <>{error.message}</>}>
+        <YourComponent />
+      </ErrorBoundary>
+    </ErrorBoundary.Observer>
+  </ErrorBoundary.Observer>
+)
+// When an error occurs, the order is:
+// 1. ErrorBoundary's onError (local)
+// 2. inner ErrorBoundary.Observer's onError
+// 3. outer ErrorBoundary.Observer's onError
 ```
 
 ## useErrorBoundary
