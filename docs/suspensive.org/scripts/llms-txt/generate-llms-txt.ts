@@ -22,6 +22,7 @@ async function main() {
   const files = await Array.fromAsync(glob(`${DOCS_DIR}/**/*.mdx`))
   const docs = files.map(processDocument)
 
+  fs.mkdirSync(OUTPUT_DIR, { recursive: true })
   fs.writeFileSync(path.join(OUTPUT_DIR, 'llms.txt'), buildLLMsTxt(docs))
   fs.writeFileSync(
     path.join(OUTPUT_DIR, 'llms-full.txt'),
