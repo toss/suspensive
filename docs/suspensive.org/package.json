@@ -14,7 +14,7 @@
   "author": "Jonghyeon Ko <jonghyeon@toss.im>",
   "type": "module",
   "scripts": {
-    "build": "next build --webpack && pagefind --site .next/server/app --output-path .next/static/pagefind && node scripts/llms-txt/generate-llms-txt.ts",
+    "build": "next build --webpack && pagefind --site .next/server/app --output-path .next/output/static/_pagefind && node scripts/llms-txt/generate-llms-txt.ts",
     "ci:eslint": "eslint \"**/*.{ts,tsx,cts,mts,mdx}\"",
     "ci:type": "tsc --noEmit",
     "clean": "rimraf ./.next ./node_modules",
