@@ -1,5 +1,11 @@
 # @suspensive/react-query-5
 
+## 3.20.2
+
+### Patch Changes
+
+- [#1941](https://github.com/toss/suspensive/pull/1941) [`c58b5f6`](https://github.com/toss/suspensive/commit/c58b5f6c16f72dbaac6ecd984226a0cc4fc3d8be) Thanks [@xxxxxxjun](https://github.com/xxxxxxjun)! - fix(react-query-5): fix outdated cacheTime references in JSDoc
+
 ## 3.20.1
 
 ## 3.20.0
@@ -107,6 +113,7 @@
   This adds OIDC (OpenID Connect) authentication support for npm publishing in GitHub Actions. The implementation enables secure, tokenless publishing to npm using GitHub's OIDC tokens with provenance support.
 
   Key features:
+
   - **OIDC Authentication**: Uses GitHub Actions `id-token: write` permission for secure publishing
   - **Provenance Support**: Enables npm package provenance through `NPM_CONFIG_PROVENANCE=true`
   - **Backward Compatibility**: Maintains NPM_TOKEN as fallback for existing workflows
