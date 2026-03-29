@@ -1,8 +1,25 @@
-import { Callout } from '@/components'
+---
+description: 'SSR 지원, clientOnly prop, DefaultPropsProvider 통합을 제공하는 향상된 React Suspense 컴포넌트. React.Suspense의 드롭인 대체.'
+---
+
+import { Callout, Sandpack } from '@/components'
 
 # Suspense
 
-@suspensive/react의 `<Suspense/>`는 [React의 Suspense](https://react.dev/reference/react/Suspense)가 됩니다.
+@suspensive/react의 `<Suspense/>`는 [React의 Suspense](https://react.dev/reference/react/Suspense)를 완전히 대체하며, 실제 프로젝트에서 필요한 추가 기능을 제공합니다.
+
+## React.Suspense 대신 사용해야 하는 이유
+
+|                                             | React.Suspense | @suspensive/react Suspense |
+| ------------------------------------------- | -------------- | -------------------------- |
+| 기본 Suspense 바운더리                      | ✅             | ✅                         |
+| SSR 안전 렌더링 (`clientOnly`)              | ❌             | ✅                         |
+| `DefaultPropsProvider`로 전역 기본 fallback | ❌             | ✅                         |
+| HOC 패턴 (`Suspense.with`)                  | ❌             | ✅                         |
+
+Next.js 등 SSR 프레임워크에서 React의 `<Suspense>`는 하이드레이션 불일치를 일으킬 수 있습니다. Suspensive의 `clientOnly` prop은 이를 한 줄로 해결합니다 — `dynamic(() => import(...), { ssr: false })`나 수동 `useEffect` 가드가 필요 없습니다.
+
+---
 
 ### props.fallback
 
@@ -17,6 +34,37 @@ const Example = () => (
   </Suspense>
 )
 ```
+
+<Sandpack>
+
+```tsx Example.tsx active
+import { Suspense } from '@suspensive/react'
+import { use } from 'react'
+
+export const Example = () => (
+  <Suspense fallback={<div style={{ padding: 20 }}>Loading...</div>}>
+    <ResolveAfter2s />
+  </Suspense>
+)
+
+const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
+let promise: Promise<string> | null = null
+const fetchData = () => {
+  if (!promise) {
+    promise = sleep(2000).then(() => 'Data loaded!')
+  }
+  return promise
+}
+
+const ResolveAfter2s = () => {
+  const data = use(fetchData())
+  return (
+    <div style={{ padding: 20, backgroundColor: 'lightgreen' }}>{data}</div>
+  )
+}
+```
+
+</Sandpack>
 
 <Callout>
 

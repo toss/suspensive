@@ -4,7 +4,8 @@ import type MetaEn from '../../../en/docs/react/_meta'
 export default {
   motivation: { title: '동기' },
   installation: { title: '설치하기' },
-  migration: { title: '마이그레이션 가이드' },
+  'getting-started': { title: '시작하기' },
+  comparison: { title: 'Suspensive vs 다른 Error Boundary 라이브러리' },
   '--- API Reference': {
     type: 'separator',
     title: 'API 문서',
@@ -17,4 +18,9 @@ export default {
   DefaultPropsProvider: { title: '<DefaultPropsProvider/>' },
   lazy: { title: 'lazy' },
   useIsClient: { title: 'useIsClient' },
+  '--- More': {
+    type: 'separator',
+    title: '더보기',
+  },
+  migration: { title: '마이그레이션 가이드' },
 } satisfies typeof MetaEn satisfies MetaRecord

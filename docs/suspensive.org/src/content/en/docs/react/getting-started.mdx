@@ -1,0 +1,91 @@
+---
+description: 'Get started with Suspensive in 3 minutes. Build your first Suspense boundary with ErrorBoundary and Suspense.'
+---
+
+import { Steps } from 'nextra/components'
+import { Callout } from '@/components'
+
+# Getting Started
+
+Build your first async-safe React page with Suspensive in 3 minutes.
+
+<Steps>
+
+### Install packages
+
+```shell npm2yarn
+npm install @suspensive/react
+```
+
+### Wrap your app with ErrorBoundary and Suspense
+
+Replace manual loading/error state checks with declarative boundaries:
+
+```tsx
+import { ErrorBoundary, Suspense } from '@suspensive/react'
+
+function App() {
+  return (
+    <ErrorBoundary
+      fallback={({ error, reset }) => (
+        <div>
+          <p>Something went wrong: {error.message}</p>
+          <button onClick={reset}>Try again</button>
+        </div>
+      )}
+    >
+      <Suspense fallback={<div>Loading...</div>}>
+        <UserProfile />
+      </Suspense>
+    </ErrorBoundary>
+  )
+}
+```
+
+### Add SSR safety with clientOnly
+
+If you're using Next.js or another SSR framework, prevent hydration issues:
+
+```tsx
+import { Suspense } from '@suspensive/react'
+
+function Page() {
+  return (
+    <Suspense fallback={<Skeleton />} clientOnly>
+      <UserProfile />
+    </Suspense>
+  )
+}
+```
+
+### Group error boundaries for coordinated resets
+
+Reset multiple error boundaries at once without prop drilling:
+
+```tsx
+import { ErrorBoundary, ErrorBoundaryGroup } from '@suspensive/react'
+
+function Dashboard() {
+  return (
+    <ErrorBoundaryGroup>
+      <ErrorBoundaryGroup.Consumer>
+        {({ reset }) => <button onClick={reset}>Reset All</button>}
+      </ErrorBoundaryGroup.Consumer>
+      <ErrorBoundary fallback={<UserError />}>
+        <UserSection />
+      </ErrorBoundary>
+      <ErrorBoundary fallback={<StatsError />}>
+        <StatsSection />
+      </ErrorBoundary>
+    </ErrorBoundaryGroup>
+  )
+}
+```
+
+</Steps>
+
+## Next Steps
+
+- **[`<Suspense/>`](/docs/react/Suspense)** — SSR-safe Suspense with clientOnly and DefaultProps support
+- **[`<ErrorBoundary/>`](/docs/react/ErrorBoundary)** — Advanced error handling with shouldCatch filtering
+- **[Suspensive vs react-error-boundary](/docs/react/comparison)** — Detailed feature comparison

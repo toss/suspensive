@@ -1,5 +1,9 @@
+---
+description: 'shouldCatch 필터링, resetKeys, onError 콜백, ErrorBoundaryGroup 통합을 제공하는 선언적 ErrorBoundary 컴포넌트.'
+---
+
 import { Tabs } from 'nextra/components'
-import { Callout, Sandpack } from '@/components'
+import { Callout, ComparisonTable, Sandpack } from '@/components'
 
 # ErrorBoundary
 
@@ -9,22 +13,81 @@ import { Callout, Sandpack } from '@/components'
 
 `@suspensive/react`의 `<ErrorBoundary/>`는 React의 클래스 기반 에러 경계와 인기 있는 `react-error-boundary` 및 `@sentry/react`와 같은 에러 경계 라이브러리에 대한 선언적이고 기능이 풍부한 대안을 제공합니다.
 
-| 기능                                 | @suspensive/react | react-error-boundary   | @sentry/react          | React 클래스 컴포넌트  |
-| ------------------------------------ | ----------------- | ---------------------- | ---------------------- | ---------------------- |
-| 기본 에러 캐칭                       | ✅                | ✅                     | ✅                     | ✅                     |
-| 에러 및 리셋 기능이 있는 Fallback UI | ✅                | ✅                     | ✅                     | ⚠️ (수동)              |
-| resetKeys로 리셋                     | ✅                | ✅                     | ❌                     | ⚠️ (수동)              |
-| onReset 콜백                         | ✅                | ✅                     | ✅                     | ⚠️ (수동)              |
-| onError 콜백                         | ✅                | ✅                     | ✅                     | ✅ (componentDidCatch) |
-| 조건부 에러 캐칭 (shouldCatch)       | ✅                | ❌                     | ❌                     | ⚠️ (수동)              |
-| Fallback 에러 처리                   | ✅ (부모로 전달)  | ❌ (재귀적)            | ❌ (재귀적)            | ⚠️ (수동)              |
-| useErrorBoundary 훅                  | ✅                | ✅                     | ❌                     | ❌                     |
-| useErrorBoundaryFallbackProps 훅     | ✅                | ❌                     | ❌                     | ❌                     |
-| ErrorBoundaryGroup                   | ✅                | ❌                     | ❌                     | ❌                     |
-| HOC 지원                             | ✅ (with)         | ✅ (withErrorBoundary) | ✅ (withErrorBoundary) | ❌                     |
-| TypeScript 에러 타입 추론            | ✅ (고급)         | ✅ (기본)              | ✅ (기본)              | ⚠️ (수동)              |
-| 선언적 API                           | ✅                | ✅                     | ✅                     | ❌                     |
-| 자동 에러 보고                       | ❌                | ❌                     | ✅ (Sentry로)          | ❌                     |
+<ComparisonTable
+  headers={[
+    '@suspensive/react',
+    'react-error-boundary',
+    '@sentry/react',
+    'DIY (Class Component)',
+  ]}
+  groups={[
+    {
+      label: 'Error Boundary',
+      rows: [
+        { feature: 'shouldCatch', values: [true, false, false, false] },
+        { feature: 'ErrorBoundaryGroup', values: [true, false, false, false] },
+        {
+          feature: 'useErrorBoundaryFallbackProps',
+          values: [true, false, false, false],
+        },
+        {
+          feature: 'Safe fallback error propagation',
+          values: ['✓ To parent', '✗ Recursive', '✗ Recursive', false],
+        },
+        {
+          feature: 'TypeScript error type inference',
+          values: ['✓ Via shouldCatch', false, false, false],
+        },
+        {
+          feature: 'useErrorBoundary hook',
+          values: [true, true, false, false],
+        },
+        {
+          feature: 'Fallback UI with error & reset',
+          values: [true, true, true, false],
+        },
+        { feature: 'resetKeys', values: [true, true, false, false] },
+        { feature: 'onReset callback', values: [true, true, true, false] },
+        { feature: 'onError callback', values: [true, true, true, false] },
+        {
+          feature: 'HOC support',
+          values: [
+            '✓ ErrorBoundary.with',
+            '✓ withErrorBoundary',
+            '✓ withErrorBoundary',
+            false,
+          ],
+        },
+        { feature: 'Declarative API', values: [true, true, true, false] },
+      ],
+    },
+    {
+      label: 'Async Rendering',
+      rows: [
+        {
+          feature: 'SSR-safe Suspense (clientOnly)',
+          values: [true, false, false, false],
+        },
+        {
+          feature: 'Flash-of-loading prevention (Delay)',
+          values: [true, false, false, false],
+        },
+        {
+          feature: 'Global default fallbacks (DefaultPropsProvider)',
+          values: [true, false, false, false],
+        },
+        {
+          feature: 'Declarative data fetching (SuspenseQuery)',
+          values: [true, false, false, false],
+        },
+        {
+          feature: 'Client-only rendering (ClientOnly)',
+          values: [true, false, false, false],
+        },
+      ],
+    },
+  ]}
+/>
 
 <Tabs items={['@suspensive/react', 'react-error-boundary', '@sentry/react', 'React 클래스']}>
   <Tabs.Tab>
@@ -635,7 +698,13 @@ export const ErrorAfter2s = () => {
 
 </Sandpack>
 
-### props.shouldCatch
+### props.shouldCatch — Suspensive 고유 기능
+
+<Callout type='info'>
+
+**react-error-boundary나 @sentry/react에는 없는 기능입니다.** `shouldCatch`는 `@suspensive/react`만의 고유 기능으로, 계층화된 에러 처리를 가능하게 합니다 — 부모와 자식 ErrorBoundary가 서로 다른 에러 타입을 처리할 수 있습니다. [전체 비교](/docs/react/comparison)를 확인하세요.
+
+</Callout>
 
 shouldCatch는 조건에 따라 `<ErrorBoundary/>`가 에러를 잡을지 결정합니다.
 

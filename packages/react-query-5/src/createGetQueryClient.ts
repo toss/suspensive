@@ -3,12 +3,12 @@ import { QueryClient, type QueryClientConfig, isServer } from '@tanstack/react-q
 /**
  * Creates a function that returns a QueryClient instance, with different behavior for server and client environments.
  *
- * On the server, it always creates a new QueryClient instance with `cacheTime: Infinity` to prevent data from being garbage collected.
+ * On the server, it always creates a new QueryClient instance with `gcTime: Infinity` to prevent data from being garbage collected.
  * On the client, it reuses the same QueryClient instance to avoid recreating it during React's initial render suspension.
  *
  * @experimental This component is experimental and may be changed or removed in the future.
  *
- * @param config - Optional QueryClient configuration. On the server, `cacheTime` will be automatically set to `Infinity`.
+ * @param config - Optional QueryClient configuration. On the server, `gcTime` will be automatically set to `Infinity`.
  * @returns An object containing a `getQueryClient` function that returns a QueryClient instance.
  *
  * @example

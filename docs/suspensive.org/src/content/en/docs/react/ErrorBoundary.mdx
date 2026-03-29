@@ -1,5 +1,9 @@
+---
+description: 'Declarative ErrorBoundary component with shouldCatch filtering, resetKeys, onError callbacks, and ErrorBoundaryGroup integration. Alternative to react-error-boundary.'
+---
+
 import { Tabs } from 'nextra/components'
-import { Callout, Sandpack } from '@/components'
+import { Callout, ComparisonTable, Sandpack } from '@/components'
 
 # ErrorBoundary
 
@@ -9,22 +13,81 @@ This component can handle any errors in children.
 
 `@suspensive/react`'s `<ErrorBoundary/>` provides a declarative, feature-rich alternative to React's class-based error boundaries and popular error boundary libraries like `react-error-boundary` and `@sentry/react`.
 
-| Feature                                  | @suspensive/react | react-error-boundary   | @sentry/react          | React Class Component  |
-| ---------------------------------------- | ----------------- | ---------------------- | ---------------------- | ---------------------- |
-| Basic error catching                     | ✅                | ✅                     | ✅                     | ✅                     |
-| Fallback UI with error & reset           | ✅                | ✅                     | ✅                     | ⚠️ (Manual)            |
-| Reset with resetKeys                     | ✅                | ✅                     | ❌                     | ⚠️ (Manual)            |
-| onReset callback                         | ✅                | ✅                     | ✅                     | ⚠️ (Manual)            |
-| onError callback                         | ✅                | ✅                     | ✅                     | ✅ (componentDidCatch) |
-| Conditional error catching (shouldCatch) | ✅                | ❌                     | ❌                     | ⚠️ (Manual)            |
-| Fallback error handling                  | ✅ (To parent)    | ❌ (Recursive)         | ❌ (Recursive)         | ⚠️ (Manual)            |
-| useErrorBoundary hook                    | ✅                | ✅                     | ❌                     | ❌                     |
-| useErrorBoundaryFallbackProps hook       | ✅                | ❌                     | ❌                     | ❌                     |
-| ErrorBoundaryGroup                       | ✅                | ❌                     | ❌                     | ❌                     |
-| HOC support                              | ✅ (with)         | ✅ (withErrorBoundary) | ✅ (withErrorBoundary) | ❌                     |
-| TypeScript error type inference          | ✅ (Advanced)     | ✅ (Basic)             | ✅ (Basic)             | ⚠️ (Manual)            |
-| Declarative API                          | ✅                | ✅                     | ✅                     | ❌                     |
-| Automatic error reporting                | ❌                | ❌                     | ✅ (To Sentry)         | ❌                     |
+<ComparisonTable
+  headers={[
+    '@suspensive/react',
+    'react-error-boundary',
+    '@sentry/react',
+    'DIY (Class Component)',
+  ]}
+  groups={[
+    {
+      label: 'Error Boundary',
+      rows: [
+        { feature: 'shouldCatch', values: [true, false, false, false] },
+        { feature: 'ErrorBoundaryGroup', values: [true, false, false, false] },
+        {
+          feature: 'useErrorBoundaryFallbackProps',
+          values: [true, false, false, false],
+        },
+        {
+          feature: 'Safe fallback error propagation',
+          values: ['✓ To parent', '✗ Recursive', '✗ Recursive', false],
+        },
+        {
+          feature: 'TypeScript error type inference',
+          values: ['✓ Via shouldCatch', false, false, false],
+        },
+        {
+          feature: 'useErrorBoundary hook',
+          values: [true, true, false, false],
+        },
+        {
+          feature: 'Fallback UI with error & reset',
+          values: [true, true, true, false],
+        },
+        { feature: 'resetKeys', values: [true, true, false, false] },
+        { feature: 'onReset callback', values: [true, true, true, false] },
+        { feature: 'onError callback', values: [true, true, true, false] },
+        {
+          feature: 'HOC support',
+          values: [
+            '✓ ErrorBoundary.with',
+            '✓ withErrorBoundary',
+            '✓ withErrorBoundary',
+            false,
+          ],
+        },
+        { feature: 'Declarative API', values: [true, true, true, false] },
+      ],
+    },
+    {
+      label: 'Async Rendering',
+      rows: [
+        {
+          feature: 'SSR-safe Suspense (clientOnly)',
+          values: [true, false, false, false],
+        },
+        {
+          feature: 'Flash-of-loading prevention (Delay)',
+          values: [true, false, false, false],
+        },
+        {
+          feature: 'Global default fallbacks (DefaultPropsProvider)',
+          values: [true, false, false, false],
+        },
+        {
+          feature: 'Declarative data fetching (SuspenseQuery)',
+          values: [true, false, false, false],
+        },
+        {
+          feature: 'Client-only rendering (ClientOnly)',
+          values: [true, false, false, false],
+        },
+      ],
+    },
+  ]}
+/>
 
 <Tabs items={['@suspensive/react', 'react-error-boundary', '@sentry/react', 'React Class']}>
 <Tabs.Tab>
@@ -632,7 +695,13 @@ export const ErrorAfter2s = () => {
 
 </Sandpack>
 
-### props.shouldCatch
+### props.shouldCatch — Unique to Suspensive
+
+<Callout type='info'>
+
+**Not available in react-error-boundary or @sentry/react.** `shouldCatch` is a feature unique to `@suspensive/react` that enables layered error handling — parent and child ErrorBoundaries can handle different error types. See the [full comparison](/docs/react/comparison).
+
+</Callout>
 
 shouldCatch determines whether `<ErrorBoundary/>` should catch errors based on conditions.
 
