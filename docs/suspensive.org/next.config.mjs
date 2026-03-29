@@ -35,7 +35,11 @@ export default withNextra({
   reactStrictMode: true,
   outputFileTracingIncludes: {
     '/api/pagefind/*': ['./public/_pagefind/**'],
-    '/api/llms/*': ['./public/llms.txt', './public/llms-full.txt', './public/docs/**'],
+    '/api/llms/*': [
+      './public/llms.txt',
+      './public/llms-full.txt',
+      './public/docs/**',
+    ],
   },
   i18n: {
     locales: ['en', 'ko'],
