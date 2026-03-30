@@ -103,18 +103,30 @@ describe('useErrorBoundaryGroup', () => {
       )
     ).toThrow(Message_useErrorBoundaryGroup_this_hook_should_be_called_in_ErrorBoundary_props_children)
 
-    try {
+    expect(() => {
       render(
         createElement(() => {
           useErrorBoundaryGroup()
           return <></>
         })
       )
-    } catch (error) {
-      expect(error).toBeInstanceOf(SuspensiveError)
-      expect(error).toBeInstanceOf(Error)
-      expect(error).not.toBeInstanceOf(CustomError)
-    }
+    }).toThrowError(SuspensiveError)
+    expect(() => {
+      render(
+        createElement(() => {
+          useErrorBoundaryGroup()
+          return <></>
+        })
+      )
+    }).toThrowError(Error)
+    expect(() => {
+      render(
+        createElement(() => {
+          useErrorBoundaryGroup()
+          return <></>
+        })
+      )
+    }).not.toThrowError(CustomError)
   })
 })
 
@@ -132,10 +144,10 @@ describe('ErrorBoundaryGroup.with', () => {
     expect(rendered.queryByText(TEXT)).toBeInTheDocument()
   })
 
-  it('should use default errorBoundaryGroupProps when undefined is provided', () => {
+  it('should use default errorBoundaryGroupProps when {} is provided', () => {
     const rendered = render(
       createElement(
-        ErrorBoundaryGroup.with(undefined, () => {
+        ErrorBoundaryGroup.with({}, () => {
           useErrorBoundaryGroup()
           return <>{TEXT}</>
         })

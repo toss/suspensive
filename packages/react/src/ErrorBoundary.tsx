@@ -1,3 +1,4 @@
+'use client'
 import {
   Component,
   type ComponentProps,
@@ -69,14 +70,28 @@ const matchError = (errorMatcher: ErrorMatcher, error: Error): error is InferErr
     return errorMatcher
   }
   if (typeof errorMatcher === 'function') {
+    // 1. Native Error constructor: prototype chain is intact
     try {
       if (errorMatcher === Error || errorMatcher.prototype instanceof Error) {
         return error instanceof errorMatcher
       }
     } catch {
-      // If accessing prototype throws, it's not a constructor. This can happen with proxy objects or in restricted environments.
+      // If accessing prototype throws, it's not a constructor
     }
-    return (errorMatcher as ErrorValidator | ErrorTypeGuard<InferError<typeof errorMatcher>>)(error)
+    // 2. Transpiled Error constructor: prototype chain is broken but instanceof still works
+    try {
+      if (error instanceof errorMatcher) {
+        return true
+      }
+    } catch {
+      // instanceof can throw if prototype is not an object (e.g., arrow functions)
+    }
+    // 3. Validator / type-guard function
+    try {
+      return (errorMatcher as ErrorValidator | ErrorTypeGuard<InferError<typeof errorMatcher>>)(error)
+    } catch {
+      return false
+    }
   }
   return false
 }
@@ -132,7 +147,20 @@ const initialErrorBoundaryState: ErrorBoundaryState = {
 // they can also be invoked with non-error objects. This is why we need to convert them to Error instances.
 // See: https://github.com/getsentry/sentry-javascript/issues/6167
 const convertToError = (error: unknown): Error => {
-  return error instanceof Error ? error : new Error(String(error))
+  if (error instanceof Error) {
+    return error
+  }
+  // Check for error-like objects using Object.prototype.toString to also handle
+  // transpiled Error subclasses with broken prototype chains (e.g., ZodError in Zod v4)
+  const toStringResult = Object.prototype.toString.call(error)
+  if (
+    toStringResult === '[object Error]' ||
+    toStringResult === '[object Exception]' ||
+    toStringResult === '[object DOMException]'
+  ) {
+    return error as Error
+  }
+  return new Error(String(error))
 }
 
 class BaseErrorBoundary<TShouldCatch extends ShouldCatch> extends Component<
@@ -260,7 +288,7 @@ export const ErrorBoundary = Object.assign(
       TProps extends ComponentProps<ComponentType> = Record<string, never>,
       TShouldCatch extends ShouldCatch = ShouldCatch,
     >(
-      errorBoundaryProps: PropsWithoutChildren<ErrorBoundaryProps<TShouldCatch>> = { fallback: undefined },
+      errorBoundaryProps: PropsWithoutChildren<ErrorBoundaryProps<TShouldCatch>>,
       Component: ComponentType<TProps>
     ) =>
       Object.assign(
@@ -269,7 +297,7 @@ export const ErrorBoundary = Object.assign(
             <Component {...props} />
           </ErrorBoundary>
         ),
-        { displayName: `ErrorBoundary.with(${Component.displayName || Component.name || 'Component'})` }
+        { displayName: `${ErrorBoundary.displayName}.with(${Component.displayName || Component.name || 'Component'})` }
       ),
     Consumer: ({ children }: { children: (errorBoundary: ReturnType<typeof useErrorBoundary>) => ReactNode }) => (
       <>{children(useErrorBoundary())}</>

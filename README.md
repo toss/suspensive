@@ -1,22 +1,79 @@
 <div align="center">
   <a href="https://suspensive.org" title="Suspensive - All in one for React Suspense">
-    <img src="https://github.com/toss/suspensive/blob/main/assets/readme_main.svg?raw=true" alt="Suspensive - All in one for React Suspense" height="400" />
+    <img src="https://github.com/toss/suspensive/blob/main/docs/suspensive.org/public/img/banner.png?raw=true" alt="Suspensive — All-in-one for React Suspense" height="400" />
   </a>
-  <br/>
-  <br/>
+  <p>
+    <a href="https://www.npmjs.com/package/@suspensive/react"><img src="https://img.shields.io/npm/v/@suspensive/react.svg?style=flat-square&colorA=000&colorB=000" alt="npm version" /></a>
+    <a href="https://www.npmjs.com/package/@suspensive/react"><img src="https://img.shields.io/npm/dw/@suspensive/react.svg?style=flat-square&colorA=000&colorB=000" alt="npm downloads" /></a>
+    <a href="https://github.com/toss/suspensive"><img src="https://img.shields.io/github/stars/toss/suspensive?style=flat-square&colorA=000&colorB=000" alt="GitHub stars" /></a>
+    <a href="https://github.com/toss/suspensive/blob/main/LICENSE"><img src="https://img.shields.io/github/license/toss/suspensive?style=flat-square&colorA=000&colorB=000" alt="MIT License" /></a>
+  </p>
 </div>
 
-<div align="center">
+## What is Suspensive?
 
-[![MIT License](https://img.shields.io/badge/license-MIT-blue.svg?color=green&labelColor=#5D5D5D)](https://github.com/toss/suspensive/blob/main/LICENSE) [![Coauthors friendly](https://img.shields.io/badge/coauthors-friendly-blue.svg?logo=data:image/svg%2bxml;base64,PHN2ZyB3aWR0aD0iMTU2IiBoZWlnaHQ9IjEzNCIgdmlld0JveD0iMCAwIDE1NiAxMzQiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGQ9Ik0xMjAuNDEzIDc1LjU2MjVWNTcuMkgxMDIuMDVWMzkuOTc1SDEyMC40MTNWMjEuNzc1SDEzNy42MzhWMzkuOTc1SDE1NS44MzhWNTcuMkgxMzcuNjM4Vjc1LjU2MjVIMTIwLjQxM1pNNTkuNTAwOCA2NS40ODc1QzUwLjI3NTMgNjUuNDg3NSA0Mi40OTM4IDYyLjI5MTcgMzYuMTU2MyA1NS45QzI5LjgxODggNDkuNTA4MyAyNi42NSA0MS43MzU0IDI2LjY1IDMyLjU4MTNDMjYuNjUgMjMuNDI3MSAyOS44MTAxIDE1LjcwODMgMzYuMTMwNCA5LjQyNUM0Mi40NTA2IDMuMTQxNjcgNTAuMjIzNSAwIDU5LjQ0OTIgMEM2OC42NzQ3IDAgNzYuNDU2MyAzLjEzNTYgODIuNzkzOCA5LjQwNjhDODkuMTMxMyAxNS42Nzc5IDkyLjMgMjMuNDI5OCA5Mi4zIDMyLjY2MjVDOTIuMyA0MS43NjI1IDg5LjEzOTkgNDkuNTA4MyA4Mi44MTk2IDU1LjlDNzYuNDk5NCA2Mi4yOTE3IDY4LjcyNjUgNjUuNDg3NSA1OS41MDA4IDY1LjQ4NzVaTTAgMTMzLjA4OFYxMDcuMjVDMCAxMDIuMTgzIDEuMjg4NjMgOTcuNjA3NSAzLjg2NTg4IDkzLjUyNDFDNi40NDI4IDg5LjQ0MDYgOS44NjY2OCA4Ni4zMjQyIDE0LjEzNzUgODQuMTc1QzIxLjI4NzUgODAuNDkxNyAyOC42NjM2IDc3LjcyOTIgMzYuMjY1OCA3NS44ODc1QzQzLjg2OCA3NC4wNDU4IDUxLjU4ODkgNzMuMTI1IDU5LjQyODcgNzMuMTI1QzY3LjQ3NjIgNzMuMTI1IDc1LjI5MTcgNzQuMDQ1OCA4Mi44NzUgNzUuODg3NUM5MC40NTgzIDc3LjcyOTIgOTcuNzcwOCA4MC40Mzc1IDEwNC44MTMgODQuMDEyNUMxMDkuMDgzIDg2LjE0NTkgMTEyLjUwNyA4OS4yMzk0IDExNS4wODQgOTMuMjkzQzExNy42NjEgOTcuMzQ2NSAxMTguOTUgMTAxLjk5NiAxMTguOTUgMTA3LjI0MVYxMzMuMDg4SDBaIiBmaWxsPSJ3aGl0ZSIvPgo8L3N2Zz4K)](https://coauthors.me) [![codecov](https://codecov.io/gh/toss/suspensive/branch/main/graph/badge.svg?token=5PopssACmx)](https://codecov.io/gh/toss/suspensive) [![CodSpeed Badge](https://img.shields.io/endpoint?url=https://codspeed.io/badge.json)](https://codspeed.io/toss/suspensive) ![GitHub stars](https://img.shields.io/github/stars/toss/suspensive?style=social) [![Discord Badge](https://discord.com/api/guilds/1281071127052943361/widget.png?style=shield)](https://discord.gg/RFcR9WWmCH)
+React gives you Suspense, lazy, and an interface to build Error Boundaries — but using them in real applications reveals gaps. **Suspensive fills those gaps** with declarative components and hooks.
 
-</div>
+```tsx
+import { Delay, ErrorBoundary, ErrorBoundaryGroup, Suspense } from '@suspensive/react'
 
-## Visit [suspensive.org](https://suspensive.org) for docs, guides, API and more!
+const Page = () => (
+  <ErrorBoundaryGroup>
+    <ErrorBoundaryGroup.Consumer>
+      {({ reset }) => <button onClick={reset}>Reset All</button>}
+    </ErrorBoundaryGroup.Consumer>
+    <ErrorBoundary
+      shouldCatch={NetworkError}
+      fallback={({ error, reset }) => <ErrorUI error={error} onRetry={reset} />}
+    >
+      <Suspense
+        clientOnly
+        fallback={
+          <Delay ms={200}>
+            {({ isDelayed }) => <Spinner style={{ opacity: isDelayed ? 1 : 0, transition: 'opacity 200ms' }} />}
+          </Delay>
+        }
+      >
+        <Content />
+      </Suspense>
+    </ErrorBoundary>
+  </ErrorBoundaryGroup>
+)
+```
+
+- **`shouldCatch`** — catch only specific error types, let others propagate
+- **`ErrorBoundaryGroup`** — reset multiple error boundaries at once, no prop drilling
+- **`clientOnly`** — SSR-safe Suspense that avoids hydration mismatches in Next.js
+- **`Delay`** — prevent flash-of-loading-state with render props for smooth fade-in
+- **`reset`** — built into the fallback props, no external state needed
+
+## Packages
+
+| Package                                                                       | Description                                                    | Version                                                                                                                                                       |
+| ----------------------------------------------------------------------------- | -------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [@suspensive/react](https://suspensive.org/docs/react/motivation)             | Suspense, ErrorBoundary, ErrorBoundaryGroup, Delay, ClientOnly | [![npm](https://img.shields.io/npm/v/@suspensive/react?style=flat-square&colorA=000&colorB=000)](https://www.npmjs.com/package/@suspensive/react)             |
+| [@suspensive/react-query](https://suspensive.org/docs/react-query/motivation) | SuspenseQuery, SuspenseInfiniteQuery, Mutation, PrefetchQuery  | [![npm](https://img.shields.io/npm/v/@suspensive/react-query?style=flat-square&colorA=000&colorB=000)](https://www.npmjs.com/package/@suspensive/react-query) |
+| [@suspensive/jotai](https://suspensive.org/docs/jotai/motivation)             | Atom, AtomValue, SetAtom for Jotai integration                 | [![npm](https://img.shields.io/npm/v/@suspensive/jotai?style=flat-square&colorA=000&colorB=000)](https://www.npmjs.com/package/@suspensive/jotai)             |
+| [@suspensive/codemods](https://suspensive.org/docs/codemods/motivation)       | Automated migration codemods                                   | [![npm](https://img.shields.io/npm/v/@suspensive/codemods?style=flat-square&colorA=000&colorB=000)](https://www.npmjs.com/package/@suspensive/codemods)       |
+
+## Key Features
+
+- **`<ErrorBoundary/>`** with `shouldCatch` — catch only the errors you want ([comparison with react-error-boundary](https://suspensive.org/docs/react/comparison))
+- **`<ErrorBoundaryGroup/>`** — reset multiple error boundaries at once, no prop drilling
+- **`<Suspense/>`** with `clientOnly` — SSR-safe Suspense that just works in Next.js
+- **`<SuspenseQuery/>`** — declarative data fetching as JSX, no hook constraints
+- **`<Delay/>`** — prevent flash-of-loading-state UX issues
+- **`<DefaultPropsProvider/>`** — set global default fallbacks for all components
+
+## Getting Started
+
+```bash
+npm install @suspensive/react
+```
+
+Visit **[suspensive.org](https://suspensive.org)** for full documentation.
 
 [English](https://suspensive.org/en) | [한국어](https://suspensive.org/ko)
-
-<br/>
 
 ## Contributors
 
@@ -26,7 +83,6 @@ Read our [Contributing Guide](./CONTRIBUTING.md) to familiarize yourself with Su
   <img src="https://contrib.rocks/image?repo=toss/suspensive" />
 </a>
 
-<br/>
 <br/>
 <br/>
 

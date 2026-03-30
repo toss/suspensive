@@ -5,27 +5,10 @@
   "author": "Jonghyeon Ko <jonghyeon@toss.im>",
   "sideEffects": false,
   "type": "module",
-  "exports": {
-    ".": {
-      "import": {
-        "types": "./dist/index.d.ts",
-        "default": "./dist/index.js"
-      },
-      "require": {
-        "types": "./dist/index.d.cts",
-        "default": "./dist/index.cjs"
-      }
-    },
-    "./package.json": "./package.json"
-  },
-  "main": "dist/index.cjs",
-  "module": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "src/index.ts",
   "scripts": {
-    "build": "tsdown",
     "ci:eslint": "eslint \"**/*.{ts,tsx,cts,mts}\"",
-    "ci:type": "tsc --noEmit",
-    "clean": "rimraf ./dist ./coverage ./node_modules"
+    "ci:type": "tsc --noEmit"
   },
   "devDependencies": {
     "@suspensive/eslint-config": "workspace:*",

@@ -2,7 +2,7 @@ name: Changesets PR or Publish
 
 on:
   push:
-    branches: [main, beta, next]
+    branches: [v2, v3, v4, main, beta, next]
 env:
   TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
   TURBO_TEAM: ${{ vars.TURBO_TEAM }}
@@ -14,22 +14,19 @@ jobs:
     permissions:
       id-token: write
       contents: write
+      pull-requests: write
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - uses: ./.github/actions/pnpm-setup-node
       - run: pnpm install
-      - run: |
-          git config --global user.name "Jonghyeon Ko"
-          git config --global user.email "jonghyeon@toss.im"
       - name: Create Changesets Pull Request or Publish to NPM
         id: changesets
-        uses: changesets/action@v1
+        uses: changesets/action@c48e67d110a68bc90ccf1098e9646092baacaa87 # v1.6.0
         with:
           title: 'chore: version packages'
           commit: 'chore: version packages'
           version: pnpm run changeset:version
           publish: pnpm run changeset:publish
-          setupGitUser: false
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_CONFIG_PROVENANCE: true

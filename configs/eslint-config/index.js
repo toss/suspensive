@@ -4,14 +4,14 @@ import importPlugin from 'eslint-plugin-import'
 import jsdoc from 'eslint-plugin-jsdoc'
 import reactHooks from 'eslint-plugin-react-hooks'
 import tseslint from 'typescript-eslint'
-import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended'
 import next from '@next/eslint-plugin-next'
 import cspellConfigs from '@cspell/eslint-plugin/configs'
 import vitest from '@vitest/eslint-plugin'
 import jestDom from 'eslint-plugin-jest-dom'
 import * as mdx from 'eslint-plugin-mdx'
+import stylistic from '@stylistic/eslint-plugin'
 
-const ignores = ['**/.next/**', '**/build/**', '**/coverage/**', '**/dist/**']
+const ignores = ['**/.next/**', '**/build/**', '**/coverage/**', '**/dist/**', 'next-env.d.ts']
 
 export const suspensiveTypeScriptConfig = defineConfig([
   {
@@ -36,6 +36,7 @@ export const suspensiveTypeScriptConfig = defineConfig([
     plugins: {
       jsdoc: jsdoc,
       '@typescript-eslint': tseslint.plugin,
+      '@stylistic': stylistic,
     },
     rules: {
       '@cspell/spellchecker': [
@@ -78,7 +79,7 @@ export const suspensiveTypeScriptConfig = defineConfig([
       '@typescript-eslint/restrict-template-expressions': 'off',
       '@typescript-eslint/no-deprecated': 'warn',
       '@typescript-eslint/no-empty-function': 'warn',
-      '@typescript-eslint/no-extra-semi': 'warn',
+      '@stylistic/no-extra-semi': 'warn',
       '@typescript-eslint/no-empty-interface': 'warn',
       '@typescript-eslint/ban-ts-comment': ['error', { minimumDescriptionLength: 3 }],
       '@typescript-eslint/triple-slash-reference': 'warn',
@@ -109,7 +110,6 @@ export const suspensiveTypeScriptConfig = defineConfig([
       ],
     },
   },
-  eslintPluginPrettierRecommended,
 ])
 
 export const suspensiveReactTypeScriptConfig = defineConfig([

@@ -14,23 +14,20 @@
   },
   "dependencies": {
     "@suspensive/react": "workspace:*",
-    "@suspensive/react-dom": "workspace:*",
     "@suspensive/react-query-5": "workspace:*",
     "@tanstack/react-query": "catalog:react-query5",
     "@tanstack/react-query-devtools": "catalog:react-query5",
-    "axios": "^1.8.4",
+    "axios": "^1.13.6",
     "clsx": "catalog:",
     "next": "catalog:",
     "react": "catalog:react19",
     "react-dom": "catalog:react19",
-    "react-error-boundary": "^6.0.0",
-    "sharp": "catalog:",
+    "react-error-boundary": "catalog:",
     "usehooks-ts": "^3.1.1",
-    "zod": "^3.25.47"
+    "zod": "catalog:"
   },
   "devDependencies": {
     "@suspensive/eslint-config": "workspace:*",
-    "@suspensive/tsconfig": "workspace:*",
     "@tailwindcss/postcss": "catalog:",
     "@types/react": "catalog:react19",
     "@types/react-dom": "catalog:react19",

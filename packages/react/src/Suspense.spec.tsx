@@ -120,9 +120,9 @@ describe('Suspense.with', () => {
     expect(screen.queryByText(FALLBACK)).not.toBeInTheDocument()
   })
 
-  it('should use default suspenseProps when undefined is provided', () => {
+  it('should use default suspenseProps when {} is provided', () => {
     const Component = () => <div>{TEXT}</div>
-    const Wrapped = Suspense.with(undefined, Component)
+    const Wrapped = Suspense.with({}, Component)
 
     render(<Wrapped />)
 

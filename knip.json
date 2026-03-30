@@ -1,30 +1,36 @@
 {
   "$schema": "https://unpkg.com/knip@5/schema.json",
-  "ignoreWorkspaces": ["examples/**"],
   "ignore": ["**/test-utils/**"],
-  "ignoreDependencies": ["prettier-plugin-sort-re-exports"],
   "workspaces": {
     ".": {
-      "ignore": ["packlint.config.mjs"],
-      "ignoreDependencies": ["vite"]
+      "ignore": ["packlint.config.mjs", "oxfmt.config.ts"]
     },
     "docs/suspensive.org": {
-      "ignoreDependencies": ["sharp", "postcss", "server-only", "tailwindcss"],
+      "ignoreDependencies": ["sharp", "postcss", "server-only"],
       "entry": ["src/**/*.{ts,tsx,mdx}"]
-    },
-    "packages/react-native": {
-      "ignoreDependencies": ["ts-node"],
-      "ignore": ["babel.config.cjs"]
     },
     "packages/react-dom": {
       "ignoreDependencies": ["react-dom", "@types/react-dom"],
       "ignore": ["**/utils/observe.ts"]
     },
-    "packages/react-query": {
-      "ignore": ["**/bin/utils/package.ts"]
-    },
     "packages/codemods": {
-      "ignore": ["**/testfixtures/**", "**/getTestfixtures.ts"]
+      "entry": ["src/bin/codemods.ts", "src/transforms/*.ts"],
+      "ignore": ["**/testfixtures/**"]
+    },
+    "packages/next": {
+      "entry": ["src/index.ts", "src/react-server.ts"]
+    },
+    "packages/react-query": {
+      "entry": ["src/index.ts", "src/bin/cli.ts", "src/v4.ts", "src/v5.ts"]
+    },
+    "examples/vite-react-18-suspense-prerender-siblings-problem": {
+      "ignoreDependencies": ["globals"]
+    },
+    "examples/next-streaming-react-query": {
+      "ignoreDependencies": ["postcss"]
+    },
+    "examples/visualization": {
+      "ignoreDependencies": ["postcss"]
     }
   }
 }

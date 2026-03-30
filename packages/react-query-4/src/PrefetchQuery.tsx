@@ -1,3 +1,4 @@
+'use client'
 import { type FetchQueryOptions, type QueryKey } from '@tanstack/react-query'
 import { usePrefetchQuery } from './usePrefetchQuery'
 

@@ -13,7 +13,11 @@ import {
 import { switchVersion } from './switchVersion'
 import { getStatusTable } from './table'
 
-vi.mock('node:fs')
+vi.mock('node:fs', () => ({
+  default: {
+    readFileSync: vi.fn(),
+  },
+}))
 vi.mock('node:path')
 vi.mock('./package')
 vi.mock('./switchVersion')

@@ -1,7 +1,7 @@
 'use client'
 
 import { ErrorBoundary, Suspense } from '@suspensive/react'
-import { SuspenseQuery } from '@suspensive/react-query-4'
+import { SuspenseQuery } from '@suspensive/react-query-5'
 import {
   QueryClient,
   QueryClientProvider,

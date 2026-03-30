@@ -5,13 +5,24 @@ export default {
     type: 'page',
     display: 'hidden',
     theme: {
+      copyPage: false,
       layout: 'full',
       toc: false,
     },
   },
   docs: {
     type: 'page',
-    title: 'Documentation',
+    title: 'Docs',
+  },
+  'getting-started': {
+    type: 'page',
+    title: 'Getting Started',
+    href: '/docs/react/getting-started',
+  },
+  compare: {
+    type: 'page',
+    title: 'Compare',
+    href: '/docs/react/comparison',
   },
   versions: {
     type: 'menu',

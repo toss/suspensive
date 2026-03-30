@@ -4,7 +4,8 @@
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
-      "outputs": ["dist/**", ".next/**"]
+      "outputs": ["dist/**", ".next/**", "public/**"],
+      "cache": false
     },
     "ci:eslint": {
       "dependsOn": ["build"]
@@ -20,7 +21,7 @@
       "cache": false
     },
     "dev": {
-      "dependsOn": ["build"],
+      "dependsOn": ["^build"],
       "outputs": ["dist/**", "coverage/**"],
       "cache": false,
       "persistent": true

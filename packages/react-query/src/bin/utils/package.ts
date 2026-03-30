@@ -39,7 +39,7 @@ export function getIndexFileContent(...paths: string[]): string {
   const basePath = path.resolve(...paths, 'dist').replace(/src/, '')
 
   try {
-    return fs.readFileSync(path.join(basePath, 'index.js'), 'utf-8')
+    return fs.readFileSync(path.join(basePath, 'index.mjs'), 'utf-8')
   } catch {
     throw new Error(`no such file or directory, open '${paths}'`)
   }
@@ -47,14 +47,14 @@ export function getIndexFileContent(...paths: string[]): string {
 
 export function getTargetSuspensiveReactQueryVersion(): string | undefined {
   const indexFileContent = getIndexFileContent(__dirname, '../../')
-  const version = RegExp(/@suspensive\/react-query-(\d+)/).exec(indexFileContent)?.[1]
+  const version = new RegExp(/@suspensive\/react-query-(\d+)/).exec(indexFileContent)?.[1]
 
   return version
 }
 
 export function getTargetSuspensiveReactQueryAPIs(): string[] {
   const indexFileContent = getIndexFileContent(__dirname, '../../')
-  const modules = indexFileContent.matchAll(/export \* from ['"](@suspensive\/react-query-\d+)['"]/g)
+  const modules = indexFileContent.matchAll(/from ['"](@suspensive\/react-query-\d+)['"]/g)
   const results: string[] = []
 
   for (const [, moduleName] of modules) {

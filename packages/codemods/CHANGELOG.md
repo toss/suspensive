@@ -1,5 +1,65 @@
 # @suspensive/codemods
 
+## 3.20.2
+
+## 3.20.1
+
+## 3.20.0
+
+## 3.19.6
+
+## 3.19.5
+
+## 3.19.4
+
+### Patch Changes
+
+- [#1921](https://github.com/toss/suspensive/pull/1921) [`8d82753`](https://github.com/toss/suspensive/commit/8d8275349327f1bfce0659d0944a485bcb21cabb) Thanks [@manudeli](https://github.com/manudeli)! - fix(tsdown): enable unbundling option in configuration
+
+## 3.19.3
+
+### Patch Changes
+
+- [#1913](https://github.com/toss/suspensive/pull/1913) [`0034bd7`](https://github.com/toss/suspensive/commit/0034bd700f16157b89b748cb668cf4a97e97b34f) Thanks [@manudeli](https://github.com/manudeli)! - fix(\*): tsdown 0.18.0 -> 0.21.3
+
+## 3.19.2
+
+## 3.19.1
+
+### Patch Changes
+
+- [#1906](https://github.com/toss/suspensive/pull/1906) [`d95a2ee`](https://github.com/toss/suspensive/commit/d95a2ee6cb3696f53a5988af410037be9f8772fa) Thanks [@saengmotmi](https://github.com/saengmotmi)! - fix(codemods): correct transform output and import mapping typos
+
+## 3.19.0
+
+## 3.18.0
+
+## 3.17.3
+
+### Patch Changes
+
+- [#1868](https://github.com/toss/suspensive/pull/1868) [`1d43e8d`](https://github.com/toss/suspensive/commit/1d43e8de9541b1f3d20d621744ecd1e8934a3a8a) Thanks [@manudeli](https://github.com/manudeli)! - chore: to resolve latest tag problem
+
+## 3.17.2
+
+## 3.17.1
+
+### Patch Changes
+
+- [#1860](https://github.com/toss/suspensive/pull/1860) [`9b0aa6a`](https://github.com/toss/suspensive/commit/9b0aa6a424b857635220017fe8b853c878814b24) Thanks [@manudeli](https://github.com/manudeli)! - fix: update package dependencies and configurations
+
+## 3.17.0
+
+## 3.16.0
+
+## 3.15.1
+
+## 3.15.0
+
+## 3.14.0
+
+## 3.13.0
+
 ## 3.12.0
 
 ## 3.11.0

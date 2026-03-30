@@ -1,3 +1,4 @@
+'use client'
 import { type ComponentProps, type ComponentType, type SuspenseProps as ReactSuspenseProps, useContext } from 'react'
 import { SuspenseDefaultPropsContext } from './contexts/DefaultPropsContexts'
 import type { PropsWithoutChildren } from './utility-types/PropsWithoutChildren'
@@ -31,7 +32,7 @@ export const Suspense = Object.assign(
   {
     displayName: 'Suspense',
     with: <TProps extends ComponentProps<ComponentType> = Record<string, never>>(
-      suspenseProps: PropsWithoutChildren<SuspenseProps> = {},
+      suspenseProps: PropsWithoutChildren<SuspenseProps>,
       Component: ComponentType<TProps>
     ) =>
       Object.assign(
@@ -40,7 +41,7 @@ export const Suspense = Object.assign(
             <Component {...props} />
           </Suspense>
         ),
-        { displayName: `Suspense.with(${Component.displayName || Component.name || 'Component'})` }
+        { displayName: `${Suspense.displayName}.with(${Component.displayName || Component.name || 'Component'})` }
       ),
   }
 )

@@ -1,3 +1,4 @@
+'use client'
 import {
   type DefaultError,
   type InfiniteData,

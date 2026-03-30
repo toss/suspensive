@@ -1,190 +1,149 @@
-import Image from 'next/image'
-import { Table } from 'nextra/components'
-import { LogoImage, TrustedBy } from '@/components'
+---
+description: 'Suspensive는 React의 Suspense, Error Boundary, 비동기 렌더링의 빈틈을 채워주는 선언적 컴포넌트와 훅 라이브러리입니다.'
+---
+
+import Link from 'next/link'
+import { Callout, LogoImage, TrustedBy } from '@/components'
 
 <div className="my-20 px-12 md:my-40 md:px-24">
   <LogoImage size={2.4} />
 </div>
 
-Suspensive는 React Suspense 사용을 간소화하고 향상시키도록 설계된 포괄적인 라이브러리 모음입니다. Suspensive에는 Suspense 기반 기능 구현, 오류 처리 및 인기 있는 데이터 가져오기 라이브러리와의 통합을 간소화하는 컴포넌트, 후크 및 유틸리티를 제공하는 여러 패키지가 포함되어 있습니다.
+React에는 Suspense와 lazy가 있고, Error Boundary를 구현할 수 있는 인터페이스를 제공합니다. 하지만 실제 애플리케이션에서 사용해 보면 빈틈이 드러납니다 — Suspense는 SSR에서 깨지고, Error Boundary는 직접 구현하려면 보일러플레이트가 많고, 이 모든 것을 조율할 방법이 없습니다. React뿐 아니라, 데이터 페칭 라이브러리와 상태 관리 라이브러리에도 각각의 빈틈이 있습니다.
 
-## 목적
-
-Suspensive는 다음과 같은 공통적인 도전을 해결하기 위해 설계되었습니다:
-
-- 로딩 상태와 타이밍 관리
-- 강력한 오류 경계 구현
-- 비동기 상태 통합을 위한 오류 관리
-- 여러 오류 경계의 조정
-- 뷰포트 인식 구성 요소 만들기
-
-Suspensive는 이러한 문제에 대한 통합적이고 선언적인 API를 제공함으로써 개발자가 훨씬 적은 보일러플레이트 코드로 보다 탄력적이고 구조화된 React 애플리케이션을 만들 수 있도록 돕습니다.
-
-## 핵심 패키지
+**Suspensive는 그 빈틈을 채웁니다.** 비동기 렌더링, 에러 처리, 데이터 페칭이 더 적은 코드와 더 적은 우회로 제대로 동작하도록 선언적 컴포넌트와 훅을 제공합니다.
 
 ```mermaid
-graph TD;
-    subgraph DD ["Migration Packages"]
-        E["@suspensive/codemods"]
-    end
-    subgraph AA ["Core Packages"]
-        A["@suspensive/react"]
-    end
-    subgraph BB ["Adapter Packages"]
-        B["@suspensive/react-dom"]
-        C["@suspensive/react-query"]
-        D["@suspensive/jotai"]
-    end
-    subgraph CC ["Version-Specific Packages"]
-        F["@suspensive/react-query-4"]
-        G["@suspensive/react-query-5"]
-    end
-
-    A --> B
-    A --> C
-    A --> D
-    C --> F
-    C --> G
+graph LR;
+subgraph GAP1 ["React"]
+direction TB
+subgraph GAP1_S ["Suspense"]
+direction TB
+A["Suspense가 SSR에서 깨짐"]
+D["빠른 응답에도 로딩 스피너가 깜빡임"]
+E["클라이언트 전용 콘텐츠에서 hydration 불일치"]
+F["같은 fallback prop을 컴포넌트마다 반복"]
+end
+subgraph GAP1_E ["Error Boundary"]
+direction TB
+B1["내장 ErrorBoundary 컴포넌트가 없음"]
+B2["복잡한 class 컴포넌트 보일러플레이트"]
+B3["fallback 에러가 무한 재귀를 발생"]
+B4["특정 에러 타입만 잡을 방법이 없음"]
+B5["fallback에서 에러와 reset에 접근할 훅이 없음"]
+C["여러 ErrorBoundary 초기화에 수동 연결 필요"]
+end
+subgraph GAP1_L ["Lazy & 코드 분할"]
+direction TB
+G["렌더 전에 lazy 컴포넌트를 사전 로딩할 방법이 없음"]
+G2["청크 로드 실패 시 앱이 크래시"]
+end
+end
+subgraph GAP2 ["TanStack Query"]
+direction TB
+H["Suspense를 위해 훅이 컴포넌트 분리를 강제"]
+I["SSR 프리페칭에 반복적인 보일러플레이트 필요"]
+J["서버 프리페칭 실패가 조용히 무시됨"]
+K["SSR 요청 간 QueryClient 데이터 누출"]
+end
+subgraph GAP3 ["Jotai"]
+direction TB
+L["훅이 어떤 atom이 Suspense를 발생시키는지 숨김"]
+M["확장 atom의 동작이 JSX에서 보이지 않음"]
+end
+subgraph JOTAI ["@suspensive/jotai"]
+direction TB
+Z["Atom, AtomValue, SetAtom"]
+Y["tRPC, Query, Cache compatible"]
+end
+subgraph RQ ["@suspensive/react-query"]
+direction TB
+W["SuspenseQuery, Mutation, PrefetchQuery"]
+V["QueriesHydration"]
+U["skipSsrOnError + timeout"]
+T["createGetQueryClient"]
+end
+subgraph REACT ["@suspensive/react"]
+direction TB
+subgraph REACT_L ["Lazy"]
+direction TB
+LL["lazy — .load()"]
+LL2["reloadOnError"]
+end
+subgraph REACT_E ["ErrorBoundary"]
+direction TB
+R["ErrorBoundary — fallback"]
+R2["shouldCatch"]
+R3["fallback error propagation"]
+R4["useErrorBoundaryFallbackProps"]
+Q["ErrorBoundaryGroup"]
+end
+subgraph REACT_S ["Suspense"]
+direction TB
+S["Suspense — clientOnly"]
+P["Delay — ms"]
+O["ClientOnly"]
+N["DefaultPropsProvider"]
+end
+end
+A --> S
+D --> P
+E --> O
+F --> N
+B1 --> R
+B2 --> R
+B3 --> R3
+B4 --> R2
+B5 --> R4
+C --> Q
+G --> LL
+G2 --> LL2
+H --> W
+I --> V
+J --> U
+K --> T
+L --> Z
+M --> Y
+click S "/docs/react/Suspense"
+click P "/docs/react/Delay"
+click O "/docs/react/ClientOnly"
+click N "/docs/react/DefaultPropsProvider"
+click R "/docs/react/ErrorBoundary"
+click R2 "/docs/react/ErrorBoundary"
+click R3 "/docs/react/ErrorBoundary"
+click R4 "/docs/react/ErrorBoundary"
+click Q "/docs/react/ErrorBoundaryGroup"
+click LL "/docs/react/lazy"
+click LL2 "/docs/react/lazy"
+click W "/docs/react-query/SuspenseQuery"
+click V "/docs/react-query/QueriesHydration"
+click U "/docs/react-query/QueriesHydration"
+click T "/docs/react-query/createGetQueryClient"
+click Z "/docs/jotai/Atom"
+click Y "/docs/jotai/Atom"
+style S color:#1AA3FF,text-decoration:underline
+style P color:#1AA3FF,text-decoration:underline
+style O color:#1AA3FF,text-decoration:underline
+style N color:#1AA3FF,text-decoration:underline
+style R color:#1AA3FF,text-decoration:underline
+style R2 color:#1AA3FF,text-decoration:underline
+style R3 color:#1AA3FF,text-decoration:underline
+style R4 color:#1AA3FF,text-decoration:underline
+style Q color:#1AA3FF,text-decoration:underline
+style LL color:#1AA3FF,text-decoration:underline
+style LL2 color:#1AA3FF,text-decoration:underline
+style W color:#1AA3FF,text-decoration:underline
+style V color:#1AA3FF,text-decoration:underline
+style U color:#1AA3FF,text-decoration:underline
+style T color:#1AA3FF,text-decoration:underline
+style Z color:#1AA3FF,text-decoration:underline
+style Y color:#1AA3FF,text-decoration:underline
 ```
 
-### 패키지 책임
+<Callout type="info">
 
-<br />
+**시작할 준비가 되셨나요?** [시작하기 가이드](/docs/react/getting-started)를 따라 5분 만에 Suspensive를 설정하거나, [react-error-boundary와의 비교](/docs/react/comparison)를 확인하세요.
 
-<Table>
-  <thead>
-    <Table.Tr>
-      <Table.Th>Package</Table.Th>
-      <Table.Th>Description</Table.Th>
-      <Table.Th>Key Features</Table.Th>
-    </Table.Tr>
-  </thead>
-  <tbody>
-    <Table.Tr>
-      <Table.Td>@suspensive/react</Table.Td>
-      <Table.Td>Core suspense components</Table.Td>
-      <Table.Td>ErrorBoundary, Suspense, Delay, ErrorBoundaryGroup</Table.Td>
-    </Table.Tr>
-    <Table.Tr>
-      <Table.Td>@suspensive/react-dom</Table.Td>
-      <Table.Td>DOM-specific components</Table.Td>
-      <Table.Td>InView</Table.Td>
-    </Table.Tr>
-    <Table.Tr>
-      <Table.Td>@suspensive/react-query</Table.Td>
-      <Table.Td>TanStack Query integration</Table.Td>
-      <Table.Td>
-        SuspenseQuery, SuspenseInfiniteQuery, Version detection
-      </Table.Td>
-    </Table.Tr>
-    <Table.Tr>
-      <Table.Td>@suspensive/jotai</Table.Td>
-      <Table.Td>Jotai integration</Table.Td>
-      <Table.Td>useAtomValue, useAtom, useSetAtom</Table.Td>
-    </Table.Tr>
-    <Table.Tr>
-      <Table.Td>@suspensive/codemods</Table.Td>
-      <Table.Td>Migration utilities</Table.Td>
-      <Table.Td>Automated code transformations</Table.Td>
-    </Table.Tr>
-  </tbody>
-</Table>
+</Callout>
 
-## 아키텍처 및 구성 요소 관계
-
-Suspensive 생태계는 @suspensive/react에서 기본 구성 요소를 기반으로 구축되어 있으며, 이 구성 요소는 다른 패키지에서 확장 및 특화됩니다:
-
-```mermaid
-graph TD;
-subgraph AA [Data Fetching @suspensive/react-query]
-A[queryOptions];
-B[infiniteQueryOptions];
-C[useSuspenseQuery, SuspenseQuery];
-D[useSuspenseInfiniteQuery, SuspenseInfiniteQuery];
-E[useSuspenseQueries, SuspenseQueries];
-end
-subgraph BB [State Management @suspensive/jotai]
-F[Atom];
-G[AtomValue];
-end
-subgraph CC [Core Components @suspensive/react]
-H[Suspense];
-I[ErrorBoundary];
-J[Delay];
-K[ErrorBoundaryGroup];
-end
-subgraph DD [Dom Components @suspensive/react-dom]
-L[InView];
-end
-
-C --> H;
-D --> H;
-E --> H;
-F --> H;
-G --> H;
-
-A --> C;
-A --> E;
-B --> D;
-```
-
-## 버전 지원 및 호환성
-
-Suspensive는 다음과 같은 버전의 종속성을 지원합니다:
-
-- React 18 및 React 19
-- TanStack Query v4 및 v5
-- Jotai v2
-
-이 라이브러리는 이러한 종속성의 자동 어댑트를 통해 설치된 특정 버전에 맞게 자동으로 적용됩니다.
-
-## 데이터 흐름 패턴
-
-Suspensive에서는 React Suspense를 통한 비동기 상태 처리를 중심으로 하는 패턴을 따릅니다. 다음은 SuspenseQuery 같은 구성 요소를 사용할 때 데이터가 흐르는 방식을 보여주는 시퀀스 다이어그램입니다:
-
-```mermaid
-sequenceDiagram
-    participant App as Application Component
-    participant SQ as SuspenseQuery
-    participant S as Suspense
-    participant EB as ErrorBoundary
-    participant TQ as TanStack Query
-    participant API as External Data Source
-
-    App ->> SQ: Render with query config
-    SQ ->> TQ: Configure with suspense:true
-    TQ ->> API: Fetch data
-
-    alt [Loading]
-        API -->> TQ: Still loading
-        TQ -->> SQ: Throw promise
-        SQ -->> S: Promise caught
-        S ->> App: Render fallback UI
-    end
-
-    alt [Error]
-        API -->> TQ: Error response
-        TQ -->> SQ: Throw error
-        SQ -->> EB: Error caught
-        EB ->> App: Render error UI
-    end
-
-    alt [Success]
-        API -->> TQ: Data response
-        TQ -->> SQ: Return data
-        SQ -->> App: Render with data
-    end
-```
-
-## 주요 이점
-
-- **선언적 오류 처리**: try/catch 블록 대신 구성 요소 기반 오류 경계
-- **간소화된 데이터 가져오기**: TanStack Query 사용 시 비동기 상태 통합
-- **조정된 오류 관리**: 여러 오류 경계 조정
-- **제어된 로딩 상태**: 타이밍 컨트롤을 통한 로딩 인디케이터 세밀 조정
-- **뷰포트 인식 구성 요소**: 뷰포트 인식 구성 요소 만들기
-
-<TrustedBy
-  title="사용 중인 기업"
-  description="다음 기업에서 Suspensive를 사용하고 있습니다"
-/>
+<TrustedBy text="월간 다운로드 130k+" />

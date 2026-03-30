@@ -77,13 +77,9 @@ describe('<Delay/>', () => {
       Message_Delay_ms_prop_should_be_greater_than_or_equal_to_0
     )
 
-    try {
-      render(<Delay ms={-1}>{TEXT}</Delay>)
-    } catch (error) {
-      expect(error).toBeInstanceOf(SuspensiveError)
-      expect(error).toBeInstanceOf(Error)
-      expect(error).not.toBeInstanceOf(CustomError)
-    }
+    expect(() => render(<Delay ms={-1}>{TEXT}</Delay>)).toThrowError(SuspensiveError)
+    expect(() => render(<Delay ms={-1}>{TEXT}</Delay>)).toThrowError(Error)
+    expect(() => render(<Delay ms={-1}>{TEXT}</Delay>)).not.toThrowError(CustomError)
   })
 
   it('should use `defaultProps.fallback` if no fallback prop is passed', () => {
@@ -112,9 +108,9 @@ describe('Delay.with', () => {
     expect(screen.queryByText(TEXT)).toBeInTheDocument()
   })
 
-  it('should use default delayProps when undefined is provided', () => {
+  it('should use default delayProps when {} is provided', () => {
     const Component = () => <>{TEXT}</>
-    const Wrapped = Delay.with(undefined, Component)
+    const Wrapped = Delay.with({}, Component)
 
     render(<Wrapped />)
 

@@ -373,6 +373,52 @@ describe('lazy', () => {
       expect(individualOnSuccess).toHaveBeenCalledTimes(1)
       expect(callOrder).toEqual(['individual', 'factory'])
     })
+
+    it('should call default onSuccess when individual options are not provided', async () => {
+      const mockImport = importCache.createImport({ failureCount: 0, failureDelay: 50, successDelay: 100 })
+      const defaultOnSuccess = vi.fn()
+      const lazy = createLazy({ onSuccess: defaultOnSuccess })
+
+      const Component = lazy(() => mockImport('/test-component'))
+
+      render(<Component />)
+
+      await act(() => vi.advanceTimersByTimeAsync(100))
+      expect(screen.getByText('Component from /test-component')).toBeInTheDocument()
+
+      expect(defaultOnSuccess).toHaveBeenCalledTimes(1)
+    })
+
+    it('should call default onError when individual options are not provided', async () => {
+      const mockImport = importCache.createImport({ failureCount: 10, failureDelay: 100, successDelay: 50 })
+      const defaultOnError = vi.fn()
+      const lazy = createLazy({ onError: defaultOnError })
+
+      const Component = lazy(() => mockImport('/failing-component'))
+
+      render(
+        <ErrorBoundary fallback={<div>error</div>}>
+          <Component />
+        </ErrorBoundary>
+      )
+
+      await act(() => vi.advanceTimersByTimeAsync(100))
+      expect(screen.getByText('error')).toBeInTheDocument()
+
+      expect(defaultOnError).toHaveBeenCalledTimes(1)
+    })
+
+    it('should not throw when both default and individual options are undefined', async () => {
+      const mockImport = importCache.createImport({ failureCount: 0, failureDelay: 50, successDelay: 100 })
+      const lazy = createLazy({})
+
+      const Component = lazy(() => mockImport('/test-component'))
+
+      expect(() => render(<Component />)).not.toThrow()
+
+      await act(() => vi.advanceTimersByTimeAsync(100))
+      expect(screen.getByText('Component from /test-component')).toBeInTheDocument()
+    })
   })
 
   describe('reloadOnError option', () => {
@@ -514,6 +560,104 @@ describe('lazy', () => {
 
       await act(() => vi.advanceTimersByTimeAsync(50))
       expect(mockReload).toHaveBeenCalledTimes(1)
+    })
+
+    it('should use retryDelay as a function', async () => {
+      const retryDelayFn = vi.fn((retryCount: number) => retryCount * 100 + 50)
+      const lazy = createLazy(reloadOnError({ storage, retryDelay: retryDelayFn, reload: mockReload }))
+      const mockImport = importCache.createImport({ failureCount: 1, failureDelay: 100, successDelay: 50 })
+      const Component = lazy(() => mockImport('/test-component'))
+
+      render(
+        <ErrorBoundary fallback={<div>error</div>}>
+          <Component />
+        </ErrorBoundary>
+      )
+
+      expect(mockImport).toHaveBeenCalledTimes(1)
+
+      await act(() => vi.advanceTimersByTimeAsync(100))
+      expect(screen.getByText('error')).toBeInTheDocument()
+
+      expect(retryDelayFn).toHaveBeenCalledWith(0)
+      await act(() => vi.advanceTimersByTimeAsync(50))
+      expect(mockReload).toHaveBeenCalledTimes(1)
+    })
+
+    it('should handle NaN in stored retry count', async () => {
+      const lazy = createLazy(reloadOnError({ storage, reload: mockReload }))
+      const mockImport = importCache.createImport({ failureCount: 1, failureDelay: 100, successDelay: 50 })
+      const Component = lazy(() => mockImport('/test-component'))
+
+      // Get the load function and set invalid value in storage
+      const loadFunction = Component.load
+      storage.setItem(loadFunction.toString(), 'invalid-number')
+
+      render(
+        <ErrorBoundary fallback={<div>error</div>}>
+          <Component />
+        </ErrorBoundary>
+      )
+
+      expect(mockImport).toHaveBeenCalledTimes(1)
+
+      await act(() => vi.advanceTimersByTimeAsync(100))
+      expect(screen.getByText('error')).toBeInTheDocument()
+
+      // Should remove invalid value, but currentRetryCount becomes NaN, so it won't retry
+      // This is the actual behavior - when NaN is found, it's removed but currentRetryCount is still NaN
+      expect(storage.getItem(loadFunction.toString())).toBeNull()
+      await act(() => vi.advanceTimersByTimeAsync(1))
+      expect(mockReload).toHaveBeenCalledTimes(0)
+    })
+
+    it('should not reload when retry count exceeds limit', async () => {
+      const lazy = createLazy(reloadOnError({ storage, reload: mockReload, retry: 1 }))
+      const mockImport = importCache.createImport({ failureCount: 10, failureDelay: 100, successDelay: 50 })
+      const Component = lazy(() => mockImport('/test-component'))
+
+      // Get the load function and set storage to the limit
+      const loadFunction = Component.load
+      storage.setItem(loadFunction.toString(), '1')
+
+      render(
+        <ErrorBoundary fallback={<div>error</div>}>
+          <Component />
+        </ErrorBoundary>
+      )
+
+      expect(mockImport).toHaveBeenCalledTimes(1)
+
+      await act(() => vi.advanceTimersByTimeAsync(100))
+      expect(screen.getByText('error')).toBeInTheDocument()
+
+      // Should not reload because retry count (1) >= retry limit (1)
+      await act(() => vi.advanceTimersByTimeAsync(1))
+      expect(mockReload).toHaveBeenCalledTimes(0)
+    })
+
+    it('should throw error when storage is not provided and window.sessionStorage does not exist', () => {
+      const originalWindow = global.window
+      // @ts-expect-error - intentionally removing window
+      delete global.window
+
+      expect(() => {
+        reloadOnError({ retry: 1 })
+      }).toThrow('[@suspensive/react] No storage provided and no sessionStorage in window')
+
+      global.window = originalWindow
+    })
+
+    it('should throw error when reload is not provided and window.location does not exist', () => {
+      const originalWindow = global.window
+      // @ts-expect-error - intentionally removing window
+      delete global.window
+
+      expect(() => {
+        reloadOnError({ storage, retry: 1 })
+      }).toThrow('[@suspensive/react] No reload function provided and no location in window')
+
+      global.window = originalWindow
     })
 
     describe('reloadOnError with additional callbacks', () => {

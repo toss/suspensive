@@ -2,6 +2,7 @@
 
 # dependencies
 node_modules
+package-lock.json
 
 # testing
 coverage
@@ -39,16 +40,8 @@ esm
 # graph
 graph/
 
-# react-native
-expo-env.d.ts
-.expo/
-*.jks
-*.p8
-*.p12
-*.key
-*.mobileprovision
-*.orig.*
-web-build/
-
 # macOS
 .DS_Store
+*.tsbuildinfo
+
+.claude/settings.local.json
