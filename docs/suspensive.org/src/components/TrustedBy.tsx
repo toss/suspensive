@@ -6,23 +6,23 @@ import { queryOptions } from '@tanstack/react-query'
 import { motion, useInView } from 'motion/react'
 import { useRef } from 'react'
 
-const FALLBACK_DOWNLOADS = 33000
+const FALLBACK_DOWNLOADS = 130000
 
 async function fetchWeeklyDownloads() {
   const response = await fetch(
-    'https://api.npmjs.org/downloads/point/last-week/@suspensive/react'
+    'https://api.npmjs.org/downloads/point/last-month/@suspensive/react'
   )
   if (!response.ok) {
-    throw new Error('Failed to fetch npm weekly downloads')
+    throw new Error('Failed to fetch npm monthly downloads')
   }
 
   const data = (await response.json()) as { downloads?: number }
   return data.downloads ?? FALLBACK_DOWNLOADS
 }
 
-const weeklyDownloadsQueryOptions = () =>
+const monthlyDownloadsQueryOptions = () =>
   queryOptions({
-    queryKey: ['weekly-downloads', '@suspensive/react'],
+    queryKey: ['monthly-downloads', '@suspensive/react'],
     queryFn: fetchWeeklyDownloads,
     refetchOnWindowFocus: false,
   })
@@ -87,7 +87,7 @@ export const TrustedBy = ({ text }: { text: string }) => {
         }
       >
         <SuspenseQuery
-          {...weeklyDownloadsQueryOptions()}
+          {...monthlyDownloadsQueryOptions()}
           staleTime={1000 * 60 * 60}
           gcTime={1000 * 60 * 60 * 24}
           refetchOnWindowFocus={false}
@@ -125,12 +125,12 @@ function TrustedByLayout({
         <span
           className="inline-flex min-w-[7ch] justify-center text-4xl font-bold tracking-tight tabular-nums md:text-5xl"
           aria-label={
-            downloads ? `${downloads.toLocaleString()} weekly downloads` : text
+            downloads ? `${downloads.toLocaleString()} monthly downloads` : text
           }
         >
           <SlotNumber value={downloads} />
         </span>
-        <span className="text-sm opacity-40">weekly downloads</span>
+        <span className="text-sm opacity-40">monthly downloads</span>
       </a>
 
       <a
