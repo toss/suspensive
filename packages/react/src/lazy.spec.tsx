@@ -3,7 +3,7 @@ import { act, render, screen } from '@testing-library/react'
 import { type ComponentType, Suspense, useState } from 'react'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import { ErrorBoundary } from './ErrorBoundary'
-import { createLazy, lazy, reloadOnError, reloadOnErrorStorageKeyAccessKeySymbol } from './lazy'
+import { createLazy, lazy, reloadOnError, reloadOnErrorStorageKeySymbol } from './lazy'
 import { sleep } from './test-utils'
 
 type PathData = {
@@ -319,7 +319,7 @@ describe('lazy', () => {
       expect(onError).toHaveBeenCalledTimes(1)
       expect(onError).toHaveBeenCalledWith({
         error: expect.any(Error),
-        [reloadOnErrorStorageKeyAccessKeySymbol]: expect.any(String),
+        [reloadOnErrorStorageKeySymbol]: expect.any(String),
       })
     })
 
@@ -722,7 +722,7 @@ describe('lazy', () => {
         expect(individualOnError).toHaveBeenCalledTimes(1)
         expect(individualOnError).toHaveBeenCalledWith({
           error: expect.any(Error),
-          [reloadOnErrorStorageKeyAccessKeySymbol]: expect.any(String),
+          [reloadOnErrorStorageKeySymbol]: expect.any(String),
         })
         await act(() => vi.advanceTimersByTimeAsync(1))
         expect(mockReload).toHaveBeenCalledTimes(1)
@@ -757,7 +757,7 @@ describe('lazy', () => {
         expect(individualOnError).toHaveBeenCalledTimes(1)
         expect(individualOnError).toHaveBeenCalledWith({
           error: expect.any(Error),
-          [reloadOnErrorStorageKeyAccessKeySymbol]: expect.any(String),
+          [reloadOnErrorStorageKeySymbol]: expect.any(String),
         })
         await act(() => vi.advanceTimersByTimeAsync(1))
         // reloadOnError should work
@@ -799,12 +799,12 @@ describe('lazy', () => {
         expect(defaultOnError).toHaveBeenCalledTimes(1)
         expect(defaultOnError).toHaveBeenCalledWith({
           error: expect.any(Error),
-          [reloadOnErrorStorageKeyAccessKeySymbol]: expect.any(String),
+          [reloadOnErrorStorageKeySymbol]: expect.any(String),
         })
         expect(individualOnError).toHaveBeenCalledTimes(1)
         expect(individualOnError).toHaveBeenCalledWith({
           error: expect.any(Error),
-          [reloadOnErrorStorageKeyAccessKeySymbol]: expect.any(String),
+          [reloadOnErrorStorageKeySymbol]: expect.any(String),
         })
         expect(defaultOnSuccess).toHaveBeenCalledTimes(0)
         expect(individualOnSuccess).toHaveBeenCalledTimes(0)
@@ -830,9 +830,9 @@ describe('lazy', () => {
 
         expect(defaultOnError).toHaveBeenCalledTimes(1)
         expect(individualOnError).toHaveBeenCalledTimes(1)
-        expect(defaultOnSuccess).toHaveBeenCalledWith({ [reloadOnErrorStorageKeyAccessKeySymbol]: expect.any(String) })
+        expect(defaultOnSuccess).toHaveBeenCalledWith({ [reloadOnErrorStorageKeySymbol]: expect.any(String) })
         expect(individualOnSuccess).toHaveBeenCalledWith({
-          [reloadOnErrorStorageKeyAccessKeySymbol]: expect.any(String),
+          [reloadOnErrorStorageKeySymbol]: expect.any(String),
         })
         expect(mockReload).toHaveBeenCalledTimes(1)
       })
