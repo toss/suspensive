@@ -1,4 +1,10 @@
-import { QueryClient, QueryClientProvider, dehydrate, infiniteQueryOptions } from '@tanstack/react-query'
+import {
+  QueryClient,
+  QueryClientProvider,
+  defaultShouldDehydrateQuery,
+  dehydrate,
+  infiniteQueryOptions,
+} from '@tanstack/react-query'
 import { render, screen } from '@testing-library/react'
 import type { ComponentProps, ReactNode } from 'react'
 import { describe, expect, it, vi } from 'vitest'
@@ -542,5 +548,208 @@ describe('<QueriesHydration/>', () => {
     expect(cancelQueriesSpy).toHaveBeenCalledWith(queries[0])
     // skipSsrOnError is false, so it should render HydrationBoundary, not ClientOnly
     expect(result.type).not.toEqual(expect.objectContaining({ name: 'ClientOnly' }))
+  })
+
+  describe('shouldDehydratePromise', () => {
+    it('should start queries without awaiting and include pending queries in dehydrated state', async () => {
+      const queryClient = new QueryClient()
+      let resolveQuery!: (value: unknown) => void
+      const mockQueryFn = vi.fn().mockImplementation(
+        () =>
+          new Promise((resolve) => {
+            resolveQuery = resolve
+          })
+      )
+
+      const queries = [
+        {
+          queryKey: ['pending-query'],
+          queryFn: mockQueryFn,
+        },
+      ]
+
+      const result = await QueriesHydration({
+        queries,
+        queryClient,
+        shouldDehydratePromise: true,
+        children: <div>Test Children</div>,
+      })
+
+      expect(mockQueryFn).toHaveBeenCalledTimes(1)
+      expect(result).toBeDefined()
+
+      // Query is still pending - dehydrated state should include the pending query
+      const dehydratedState = dehydrate(queryClient, {
+        shouldDehydrateQuery: (query) => query.state.status === 'pending',
+      })
+      expect(dehydratedState.queries).toHaveLength(1)
+      expect(dehydratedState.queries[0].queryKey).toEqual(['pending-query'])
+
+      // Cleanup - resolve the promise to avoid dangling promise
+      resolveQuery({ data: 'resolved' })
+    })
+
+    it('should return HydrationBoundary without waiting for queries to resolve', async () => {
+      const queryClient = new QueryClient()
+      const queryDelayMs = 200
+      const mockQueryFn = vi
+        .fn()
+        .mockImplementation(
+          () => new Promise((resolve) => setTimeout(() => resolve({ data: 'delayed' }), queryDelayMs))
+        )
+
+      const queries = [
+        {
+          queryKey: ['delayed-query'],
+          queryFn: mockQueryFn,
+        },
+      ]
+
+      const startTime = Date.now()
+      const result = await QueriesHydration({
+        queries,
+        queryClient,
+        shouldDehydratePromise: true,
+        children: <div>Test Children</div>,
+      })
+      const elapsed = Date.now() - startTime
+
+      // Should return immediately without waiting for the query
+      expect(elapsed).toBeLessThan(queryDelayMs)
+      expect(result).toBeDefined()
+      expect(mockQueryFn).toHaveBeenCalledTimes(1)
+    })
+
+    it('should include successfully resolved queries in dehydrated state when shouldDehydratePromise is true', async () => {
+      const queryClient = new QueryClient()
+      const mockData = { data: 'resolved-data' }
+      const mockQueryFn = vi.fn().mockResolvedValue(mockData)
+
+      const queries = [
+        {
+          queryKey: ['resolved-query'],
+          queryFn: mockQueryFn,
+        },
+      ]
+
+      await QueriesHydration({
+        queries,
+        queryClient,
+        shouldDehydratePromise: true,
+        children: <div>Test Children</div>,
+      })
+
+      // Wait for the microtasks to settle so the query has time to resolve
+      await Promise.resolve()
+
+      const dehydratedState = dehydrate(queryClient)
+      expect(dehydratedState.queries).toHaveLength(1)
+      expect(dehydratedState.queries[0].queryKey).toEqual(['resolved-query'])
+    })
+
+    it('should not cancel queries when shouldDehydratePromise is true', async () => {
+      const queryClient = new QueryClient()
+      const cancelQueriesSpy = vi.spyOn(queryClient, 'cancelQueries')
+      let resolveQuery!: (value: unknown) => void
+      const mockQueryFn = vi.fn().mockImplementation(
+        () =>
+          new Promise((resolve) => {
+            resolveQuery = resolve
+          })
+      )
+
+      const queries = [
+        {
+          queryKey: ['pending-query'],
+          queryFn: mockQueryFn,
+        },
+      ]
+
+      await QueriesHydration({
+        queries,
+        queryClient,
+        shouldDehydratePromise: true,
+        children: <div>Test Children</div>,
+      })
+
+      expect(cancelQueriesSpy).not.toHaveBeenCalled()
+
+      // Cleanup
+      resolveQuery({ data: 'resolved' })
+    })
+
+    it('should handle infiniteQueryOptions with shouldDehydratePromise', async () => {
+      const queryClient = new QueryClient()
+      let resolveQuery!: (value: unknown) => void
+      const mockInfiniteQueryFn = vi.fn().mockImplementation(
+        () =>
+          new Promise((resolve) => {
+            resolveQuery = resolve
+          })
+      )
+
+      const infiniteOptions = infiniteQueryOptions({
+        queryKey: ['pending-infinite-query'],
+        queryFn: mockInfiniteQueryFn,
+        initialPageParam: 0,
+        getNextPageParam: () => null,
+      })
+
+      const result = await QueriesHydration({
+        queries: [infiniteOptions],
+        queryClient,
+        shouldDehydratePromise: true,
+        children: <div>Test Children</div>,
+      })
+
+      expect(mockInfiniteQueryFn).toHaveBeenCalledTimes(1)
+      expect(result).toBeDefined()
+
+      // Cleanup
+      resolveQuery({ data: 'page-1' })
+    })
+
+    it('should include both resolved and pending queries in dehydrated state', async () => {
+      const queryClient = new QueryClient()
+      const resolvedData = { data: 'resolved' }
+      let resolvePending!: (value: unknown) => void
+
+      const queries = [
+        {
+          queryKey: ['resolved-query'],
+          queryFn: vi.fn().mockResolvedValue(resolvedData),
+        },
+        {
+          queryKey: ['pending-query'],
+          queryFn: vi.fn().mockImplementation(
+            () =>
+              new Promise((resolve) => {
+                resolvePending = resolve
+              })
+          ),
+        },
+      ]
+
+      await QueriesHydration({
+        queries,
+        queryClient,
+        shouldDehydratePromise: true,
+        children: <div>Test Children</div>,
+      })
+
+      // Allow microtasks to settle so the resolved query updates its state
+      await Promise.resolve()
+
+      const dehydratedState = dehydrate(queryClient, {
+        shouldDehydrateQuery: (query) => defaultShouldDehydrateQuery(query) || query.state.status === 'pending',
+      })
+      expect(dehydratedState.queries).toHaveLength(2)
+      const keys = dehydratedState.queries.map((q) => q.queryKey[0])
+      expect(keys).toContain('resolved-query')
+      expect(keys).toContain('pending-query')
+
+      // Cleanup
+      resolvePending({ data: 'done' })
+    })
   })
 })

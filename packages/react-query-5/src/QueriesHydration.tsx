@@ -6,6 +6,7 @@ import {
   type QueryOptions,
   type UseInfiniteQueryOptions,
   type WithRequired,
+  defaultShouldDehydrateQuery,
   dehydrate,
 } from '@tanstack/react-query'
 import type { ReactNode } from 'react'
@@ -81,6 +82,7 @@ export async function QueriesHydration({
   queryClient = new QueryClient(),
   skipSsrOnError = true,
   timeout,
+  shouldDehydratePromise = false,
   ...props
 }: {
   /**
@@ -108,7 +110,34 @@ export async function QueriesHydration({
    * When not set, no timeout is applied.
    */
   timeout?: number
+  /**
+   * When `true`, pending promises are included in the dehydrated state so the client can
+   * subscribe to them for streaming SSR. Queries are started immediately without being awaited,
+   * allowing the component to return while fetches are still in-flight.
+   * The `skipSsrOnError` and `timeout` props are ignored when this is enabled.
+   * @default false
+   */
+  shouldDehydratePromise?: boolean
 } & OmitKeyof<HydrationBoundaryProps, 'state'>) {
+  if (shouldDehydratePromise) {
+    queries.forEach((query) => {
+      const promise =
+        'getNextPageParam' in query ? queryClient.fetchInfiniteQuery(query) : queryClient.fetchQuery(query)
+      // Suppress unhandled rejection – errors are tracked inside the QueryClient cache
+      promise.catch(() => {})
+    })
+    return (
+      <HydrationBoundary
+        {...props}
+        state={dehydrate(queryClient, {
+          shouldDehydrateQuery: (query) => defaultShouldDehydrateQuery(query) || query.state.status === 'pending',
+        })}
+      >
+        {children}
+      </HydrationBoundary>
+    )
+  }
+
   const timeoutController = timeout != null && timeout >= 0 ? createTimeoutController(timeout) : undefined
   try {
     const queriesPromise = Promise.all(
