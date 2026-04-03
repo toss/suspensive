@@ -1,5 +1,4 @@
 'use client'
-
 import { useSyncExternalStore } from 'react'
 
 const useIsClient = () => useSyncExternalStore(emptySubscribe, getSnapshot, getServerSnapshot)

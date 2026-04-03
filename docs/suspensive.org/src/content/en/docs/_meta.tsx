@@ -15,7 +15,7 @@ export default {
     title: 'More',
   },
   migration: {
-    title: 'Migration guide',
+    title: 'Migration Guide',
   },
   changelogs: {
     title: 'Changelogs',

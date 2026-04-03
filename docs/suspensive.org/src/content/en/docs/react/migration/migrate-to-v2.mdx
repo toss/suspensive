@@ -2,7 +2,7 @@
 
 ## What's new
 
-### New [`wrap`](/docs/react/wrap) builder [#270](https://github.com/toss/suspensive/pull/270)
+### New [`wrap`](https://v2.suspensive.org/docs/react/wrap) builder [#270](https://github.com/toss/suspensive/pull/270)
 
 A new feature that wraps a component in `<Suspense/>`, `<ErrorBoundary/>`, and `<ErrorBoundaryGroup/>` all at once.
 
@@ -155,7 +155,7 @@ So, you can split by two like this.
 
 ### Removed `withSuspense`, `withDelay`, `withErrorBoundary`, `withErrorBoundaryGroup`
 
-These all HOCs can be replaced beautifully by new HOC builder [`wrap`](/docs/react/wrap) in v2.
+These all HOCs can be replaced beautifully by new HOC builder [`wrap`](https://v2.suspensive.org/docs/react/wrap) in v2.
 
 ```diff
 + import { wrap } from '@suspensive/react'

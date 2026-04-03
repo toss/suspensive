@@ -1,3 +1,8 @@
+---
+robots: noindex
+description: 'Deprecated — useSuspenseQuery is now available in TanStack Query v4.40.0+. Use the official TanStack Query version instead.'
+---
+
 import { Callout, Sandpack } from '@/components'
 
 # useSuspenseQuery
@@ -109,7 +114,7 @@ export const getPost = async (id: number): Promise<Post> => {
 
 </Sandpack>
 
-### motivation
+### Motivation
 
 You can use [useQuery](https://tanstack.com/query/v4/docs/react/reference/useQuery) with `<Suspense/>` and `<ErrorBoundary/>` by using the suspense option in @tanstack/react-query.
 
@@ -132,7 +137,7 @@ const Example = () => {
 ```
 
 The return type of useQuery (query.data) will always be a success case thanks to this component's parents, `<Suspense/>` and `<ErrorBoundary/>`.
-But @tanstack/react-query doesn't express this typescript typely.
+But @tanstack/react-query doesn't express this in its TypeScript types.
 
 That's why @suspensive/react-query provides **useSuspenseQuery**.
 

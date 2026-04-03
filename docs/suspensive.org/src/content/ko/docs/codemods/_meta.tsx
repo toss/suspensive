@@ -1,7 +1,7 @@
 import type { MetaRecord } from 'nextra'
 
 export default {
-  motivation: { title: '어떤 이유로 사용하나요?' },
+  motivation: { title: '동기' },
   usage: { title: '사용하기' },
   '--- Codemods': {
     type: 'separator',

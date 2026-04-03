@@ -1,3 +1,9 @@
+---
+description: 'ClientOnly로 클라이언트 사이드에서만 컴포넌트 렌더링. SSR 하이드레이션 불일치를 방지하고 서버/클라이언트 렌더링 경계를 제어.'
+---
+
+import { Sandpack } from '@/components'
+
 # ClientOnly
 
 이 컴포넌트는 클라이언트 환경에서만 children을 렌더링하며, 서버에서는 fallback을 렌더링합니다. 필요에 따라 적절한 fallback을 설정하여 사용자 경험을 향상할 수 있습니다.
@@ -13,6 +19,33 @@ const Example = () => (
   </ClientOnly>
 )
 ```
+
+<Sandpack>
+
+```tsx Example.tsx active
+import { ClientOnly } from '@suspensive/react'
+
+export const Example = () => (
+  <div style={{ padding: 20 }}>
+    <h3>ClientOnly Example</h3>
+    <ClientOnly
+      fallback={
+        <div style={{ color: 'gray' }}>
+          Server fallback — waiting for client...
+        </div>
+      }
+    >
+      <div style={{ color: 'green' }}>
+        This is rendered on the client only!
+        <br />
+        Window width: {window.innerWidth}px
+      </div>
+    </ClientOnly>
+  </div>
+)
+```
+
+</Sandpack>
 
 ## ClientOnly.with
 

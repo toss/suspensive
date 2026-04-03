@@ -15,7 +15,8 @@ import {
 import type { ReactNode } from 'react'
 import { getDictionary, getDirection } from '../_dictionaries/get-dictionary'
 import './styles.css'
-import { Logo } from './_components/Logo'
+import { NavbarLogo } from './_components/Logo'
+import { Providers } from './Providers'
 import { SandPackCSS } from '@/components/Sandpack/SandPackCSS'
 import { STORAGE_KEYS } from '@/constants'
 
@@ -48,50 +49,75 @@ export default async function RootLayout({
         <ClientOnly>
           <SandPackCSS />
         </ClientOnly>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'SoftwareSourceCode',
+              name: 'Suspensive',
+              description:
+                'All-in-one library for React Suspense — declarative ErrorBoundary, Suspense, Delay, ClientOnly, and TanStack Query integration.',
+              url: 'https://suspensive.org',
+              codeRepository: 'https://github.com/toss/suspensive',
+              programmingLanguage: 'TypeScript',
+              runtimePlatform: 'React',
+              license: 'https://opensource.org/licenses/MIT',
+              author: {
+                '@type': 'Organization',
+                name: 'Viva Republica (Toss)',
+                url: 'https://toss.im',
+              },
+            }),
+          }}
+        />
       </Head>
-      <body>
-        <Layout
-          darkMode
-          search={<Search placeholder={dictionary.search.placeholder} />}
-          navbar={
-            <Navbar
-              logo={<Logo />}
-              projectLink="https://github.com/toss/suspensive"
-              chatLink="https://discord.gg/RFcR9WWmCH"
-            >
-              <LocaleSwitch />
-            </Navbar>
-          }
-          footer={
-            <Footer>
-              MIT {new Date().getFullYear()} © Viva Republica, Inc.
-            </Footer>
-          }
-          docsRepositoryBase="https://github.com/toss/suspensive/tree/main/docs/suspensive.org"
-          i18n={[
-            { locale: 'en', name: 'English' },
-            { locale: 'ko', name: '한국어' },
-          ]}
-          sidebar={{
-            defaultMenuCollapseLevel: 2,
-            autoCollapse: true,
-            toggleButton: true,
-          }}
-          toc={{
-            ...dictionary.toc,
-            float: true,
-          }}
-          editLink={dictionary.editPage}
-          pageMap={pageMap}
-          nextThemes={{
-            defaultTheme: 'system',
-            storageKey: STORAGE_KEYS.THEME,
-          }}
-          feedback={{ content: '' }}
-          lastUpdated={<LastUpdated>{dictionary.lastUpdated}</LastUpdated>}
-        >
-          {children}
-        </Layout>
+      <body suppressHydrationWarning>
+        <Providers>
+          <Layout
+            darkMode={false}
+            search={<Search placeholder={dictionary.search.placeholder} />}
+            navbar={
+              <Navbar
+                logo={<NavbarLogo />}
+                projectLink="https://github.com/toss/suspensive"
+                chatLink="https://discord.gg/RFcR9WWmCH"
+              >
+                <LocaleSwitch />
+              </Navbar>
+            }
+            footer={
+              <Footer>
+                MIT {new Date().getFullYear()} © Viva Republica, Inc.
+              </Footer>
+            }
+            docsRepositoryBase="https://github.com/toss/suspensive/tree/main/docs/suspensive.org"
+            i18n={[
+              { locale: 'en', name: 'English' },
+              { locale: 'ko', name: '한국어' },
+            ]}
+            sidebar={{
+              defaultMenuCollapseLevel: 2,
+              autoCollapse: true,
+              toggleButton: true,
+            }}
+            toc={{
+              ...dictionary.toc,
+              float: true,
+            }}
+            editLink={dictionary.editPage}
+            pageMap={pageMap}
+            nextThemes={{
+              forcedTheme: 'dark',
+              defaultTheme: 'dark',
+              storageKey: STORAGE_KEYS.THEME,
+            }}
+            feedback={{ content: '' }}
+            lastUpdated={<LastUpdated>{dictionary.lastUpdated}</LastUpdated>}
+          >
+            {children}
+          </Layout>
+        </Providers>
         <GoogleTagManager gtmId="G-NYQZGKRL0Y" />
         <GoogleAnalytics gaId="G-NYQZGKRL0Y" />
         <ClientOnly>
