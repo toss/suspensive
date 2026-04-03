@@ -127,7 +127,7 @@ const VersionSkewSafeComponent = lazy(
 +   retryDelay: 1000,
 + }))
 - const Component = lazy(() => import('./Component'), {
--   onError: ({ error, load }) => {
+-   onError: ({ error }) => {
 -     const reloadKey = 'component_reload_count'
 -     const currentCount = parseInt(sessionStorage.getItem(reloadKey) || '0')
 -     const maxRetries = 3
@@ -141,7 +141,7 @@ const VersionSkewSafeComponent = lazy(
 -       }, 1000)
 -     }
 -   },
--   onSuccess: ({ load }) => {
+-   onSuccess: () => {
 -     // 성공 시 재시도 횟수 초기화
 -     sessionStorage.removeItem('component_reload_count')
 -   },

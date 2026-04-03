@@ -317,7 +317,7 @@ describe('lazy', () => {
       expect(screen.getByText('error')).toBeInTheDocument()
 
       expect(onError).toHaveBeenCalledTimes(1)
-      expect(onError).toHaveBeenCalledWith({ error: expect.any(Error), load: expect.any(Function) })
+      expect(onError).toHaveBeenCalledWith(expect.objectContaining({ error: expect.any(Error) }))
     })
 
     it('should execute component onError first, then default onError', async () => {
@@ -615,7 +615,7 @@ describe('lazy', () => {
       const mockImport = importCache.createImport({ failureCount: 10, failureDelay: 100, successDelay: 50 })
       const Component = lazy(() => mockImport('/test-component'))
 
-      // Get the load function and set storage to the limit
+      // Set storage to the limit using the original load's toString (which is the storage key)
       const loadFunction = Component.load
       storage.setItem(loadFunction.toString(), '1')
 
@@ -717,7 +717,7 @@ describe('lazy', () => {
 
         // Component's onError should also be called
         expect(individualOnError).toHaveBeenCalledTimes(1)
-        expect(individualOnError).toHaveBeenCalledWith({ error: expect.any(Error), load: expect.any(Function) })
+        expect(individualOnError).toHaveBeenCalledWith(expect.objectContaining({ error: expect.any(Error) }))
         await act(() => vi.advanceTimersByTimeAsync(1))
         expect(mockReload).toHaveBeenCalledTimes(1)
       })
@@ -749,7 +749,7 @@ describe('lazy', () => {
 
         // Component's onError should also be called
         expect(individualOnError).toHaveBeenCalledTimes(1)
-        expect(individualOnError).toHaveBeenCalledWith({ error: expect.any(Error), load: expect.any(Function) })
+        expect(individualOnError).toHaveBeenCalledWith(expect.objectContaining({ error: expect.any(Error) }))
         await act(() => vi.advanceTimersByTimeAsync(1))
         // reloadOnError should work
         expect(mockReload).toHaveBeenCalledTimes(1)
@@ -788,9 +788,9 @@ describe('lazy', () => {
 
         // Factory's onError should also be called
         expect(defaultOnError).toHaveBeenCalledTimes(1)
-        expect(defaultOnError).toHaveBeenCalledWith({ error: expect.any(Error), load: expect.any(Function) })
+        expect(defaultOnError).toHaveBeenCalledWith(expect.objectContaining({ error: expect.any(Error) }))
         expect(individualOnError).toHaveBeenCalledTimes(1)
-        expect(individualOnError).toHaveBeenCalledWith({ error: expect.any(Error), load: expect.any(Function) })
+        expect(individualOnError).toHaveBeenCalledWith(expect.objectContaining({ error: expect.any(Error) }))
         expect(defaultOnSuccess).toHaveBeenCalledTimes(0)
         expect(individualOnSuccess).toHaveBeenCalledTimes(0)
         await act(() => vi.advanceTimersByTimeAsync(1))
@@ -815,8 +815,8 @@ describe('lazy', () => {
 
         expect(defaultOnError).toHaveBeenCalledTimes(1)
         expect(individualOnError).toHaveBeenCalledTimes(1)
-        expect(defaultOnSuccess).toHaveBeenCalledWith({ load: expect.any(Function) })
-        expect(individualOnSuccess).toHaveBeenCalledWith({ load: expect.any(Function) })
+        expect(defaultOnSuccess).toHaveBeenCalledTimes(1)
+        expect(individualOnSuccess).toHaveBeenCalledTimes(1)
         expect(mockReload).toHaveBeenCalledTimes(1)
       })
     })

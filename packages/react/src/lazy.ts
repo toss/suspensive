@@ -1,9 +1,11 @@
 'use client'
 import { type ComponentType, type LazyExoticComponent, lazy as originalLazy } from 'react'
 
+const reloadOnErrorStorageKeySymbol = Symbol('reloadOnErrorStorageKey')
+
 interface LazyOptions {
-  onSuccess?: ({ load }: { load: () => Promise<{ default: ComponentType<any> }> }) => void
-  onError?: ({ error, load }: { error: unknown; load: () => Promise<{ default: ComponentType<any> }> }) => void
+  onSuccess?: () => void
+  onError?: (options: { error: unknown }) => void
 }
 
 /**
@@ -47,14 +49,29 @@ export const createLazy =
   ): LazyExoticComponent<T> & {
     load: () => Promise<{ default: T }>
   } => {
+    const storageKey = load.toString()
+
     const composedOnSuccess = () => {
-      options?.onSuccess?.({ load })
-      defaultOptions.onSuccess?.({ load })
+      ;(options?.onSuccess as undefined | ((arg: { [reloadOnErrorStorageKeySymbol]: string }) => void))?.({
+        [reloadOnErrorStorageKeySymbol]: storageKey,
+      })
+      ;(defaultOptions.onSuccess as undefined | ((arg: { [reloadOnErrorStorageKeySymbol]: string }) => void))?.({
+        [reloadOnErrorStorageKeySymbol]: storageKey,
+      })
     }
 
     const composedOnError = (error: unknown) => {
-      options?.onError?.({ error, load })
-      defaultOptions.onError?.({ error, load })
+      ;(options?.onError as undefined | ((arg: { error: unknown; [reloadOnErrorStorageKeySymbol]: string }) => void))?.(
+        {
+          error,
+          [reloadOnErrorStorageKeySymbol]: storageKey,
+        }
+      )
+      ;(
+        defaultOptions.onError as
+          | undefined
+          | ((arg: { error: unknown; [reloadOnErrorStorageKeySymbol]: string }) => void)
+      )?.({ error, [reloadOnErrorStorageKeySymbol]: storageKey })
     }
 
     return Object.assign(
@@ -188,14 +205,14 @@ export const reloadOnError = ({
 
   return {
     ...options,
-    onSuccess: ({ load }) => {
-      options.onSuccess?.({ load })
-      reloadStorage.removeItem(load.toString())
-    },
-    onError: ({ error, load }) => {
-      options.onError?.({ error, load })
-
-      const storageKey = load.toString()
+    onSuccess: ((arg: any) => {
+      ;(options.onSuccess as any)?.(arg)
+      const storageKey = arg?.[reloadOnErrorStorageKeySymbol] as string
+      reloadStorage.removeItem(storageKey)
+    }) as LazyOptions['onSuccess'],
+    onError: (errorOptions: { error: unknown }) => {
+      options.onError?.(errorOptions)
+      const storageKey = (errorOptions as any)[reloadOnErrorStorageKeySymbol] as string
       let currentRetryCount = 0
 
       if (typeof retry === 'number') {
