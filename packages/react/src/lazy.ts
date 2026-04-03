@@ -1,7 +1,7 @@
 'use client'
 import { type ComponentType, type LazyExoticComponent, lazy as originalLazy } from 'react'
 
-export const reloadOnErrorStorageKeySymbol = Symbol('reloadOnErrorStorageKey')
+const reloadOnErrorStorageKeySymbol = Symbol('reloadOnErrorStorageKey')
 
 interface LazyOptions {
   onSuccess?: () => void
