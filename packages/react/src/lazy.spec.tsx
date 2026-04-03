@@ -3,7 +3,7 @@ import { act, render, screen } from '@testing-library/react'
 import { type ComponentType, Suspense, useState } from 'react'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import { ErrorBoundary } from './ErrorBoundary'
-import { createLazy, lazy, reloadOnError } from './lazy'
+import { createLazy, lazy, reloadOnError, reloadOnErrorStorageKeyAccessKeySymbol } from './lazy'
 import { sleep } from './test-utils'
 
 type PathData = {
@@ -317,7 +317,10 @@ describe('lazy', () => {
       expect(screen.getByText('error')).toBeInTheDocument()
 
       expect(onError).toHaveBeenCalledTimes(1)
-      expect(onError).toHaveBeenCalledWith({ error: expect.any(Error), load: expect.any(Function) })
+      expect(onError).toHaveBeenCalledWith({
+        error: expect.any(Error),
+        [reloadOnErrorStorageKeyAccessKeySymbol]: expect.any(String),
+      })
     })
 
     it('should execute component onError first, then default onError', async () => {
@@ -615,7 +618,7 @@ describe('lazy', () => {
       const mockImport = importCache.createImport({ failureCount: 10, failureDelay: 100, successDelay: 50 })
       const Component = lazy(() => mockImport('/test-component'))
 
-      // Get the load function and set storage to the limit
+      // Set storage to the limit using the original load's toString (which is the storage key)
       const loadFunction = Component.load
       storage.setItem(loadFunction.toString(), '1')
 
@@ -717,7 +720,10 @@ describe('lazy', () => {
 
         // Component's onError should also be called
         expect(individualOnError).toHaveBeenCalledTimes(1)
-        expect(individualOnError).toHaveBeenCalledWith({ error: expect.any(Error), load: expect.any(Function) })
+        expect(individualOnError).toHaveBeenCalledWith({
+          error: expect.any(Error),
+          [reloadOnErrorStorageKeyAccessKeySymbol]: expect.any(String),
+        })
         await act(() => vi.advanceTimersByTimeAsync(1))
         expect(mockReload).toHaveBeenCalledTimes(1)
       })
@@ -749,7 +755,10 @@ describe('lazy', () => {
 
         // Component's onError should also be called
         expect(individualOnError).toHaveBeenCalledTimes(1)
-        expect(individualOnError).toHaveBeenCalledWith({ error: expect.any(Error), load: expect.any(Function) })
+        expect(individualOnError).toHaveBeenCalledWith({
+          error: expect.any(Error),
+          [reloadOnErrorStorageKeyAccessKeySymbol]: expect.any(String),
+        })
         await act(() => vi.advanceTimersByTimeAsync(1))
         // reloadOnError should work
         expect(mockReload).toHaveBeenCalledTimes(1)
@@ -788,9 +797,15 @@ describe('lazy', () => {
 
         // Factory's onError should also be called
         expect(defaultOnError).toHaveBeenCalledTimes(1)
-        expect(defaultOnError).toHaveBeenCalledWith({ error: expect.any(Error), load: expect.any(Function) })
+        expect(defaultOnError).toHaveBeenCalledWith({
+          error: expect.any(Error),
+          [reloadOnErrorStorageKeyAccessKeySymbol]: expect.any(String),
+        })
         expect(individualOnError).toHaveBeenCalledTimes(1)
-        expect(individualOnError).toHaveBeenCalledWith({ error: expect.any(Error), load: expect.any(Function) })
+        expect(individualOnError).toHaveBeenCalledWith({
+          error: expect.any(Error),
+          [reloadOnErrorStorageKeyAccessKeySymbol]: expect.any(String),
+        })
         expect(defaultOnSuccess).toHaveBeenCalledTimes(0)
         expect(individualOnSuccess).toHaveBeenCalledTimes(0)
         await act(() => vi.advanceTimersByTimeAsync(1))
@@ -815,8 +830,10 @@ describe('lazy', () => {
 
         expect(defaultOnError).toHaveBeenCalledTimes(1)
         expect(individualOnError).toHaveBeenCalledTimes(1)
-        expect(defaultOnSuccess).toHaveBeenCalledWith({ load: expect.any(Function) })
-        expect(individualOnSuccess).toHaveBeenCalledWith({ load: expect.any(Function) })
+        expect(defaultOnSuccess).toHaveBeenCalledWith({ [reloadOnErrorStorageKeyAccessKeySymbol]: expect.any(String) })
+        expect(individualOnSuccess).toHaveBeenCalledWith({
+          [reloadOnErrorStorageKeyAccessKeySymbol]: expect.any(String),
+        })
         expect(mockReload).toHaveBeenCalledTimes(1)
       })
     })
