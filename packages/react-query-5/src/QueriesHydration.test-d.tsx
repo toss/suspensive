@@ -87,5 +87,29 @@ describe('<QueriesHydration/>', () => {
         children: <></>,
       })
     ).toEqualTypeOf<Promise<React.JSX.Element>>()
+
+    // Should accept shouldDehydratePromise: true without skipSsrOnError or timeout
+    void (async () =>
+      await QueriesHydration({
+        queries: [options1],
+        shouldDehydratePromise: true,
+        children: <></>,
+      }))()
+
+    // @ts-expect-error skipSsrOnError is not allowed when shouldDehydratePromise is true
+    void QueriesHydration({
+      queries: [options1],
+      shouldDehydratePromise: true,
+      skipSsrOnError: true,
+      children: <></>,
+    })
+
+    // @ts-expect-error timeout is not allowed when shouldDehydratePromise is true
+    void QueriesHydration({
+      queries: [options1],
+      shouldDehydratePromise: true,
+      timeout: 5000,
+      children: <></>,
+    })
   })
 })

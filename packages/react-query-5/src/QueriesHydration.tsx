@@ -9,8 +9,25 @@ import {
   defaultShouldDehydrateQuery,
   dehydrate,
 } from '@tanstack/react-query'
-import type { ReactNode } from 'react'
+import type { JSX, ReactNode } from 'react'
 import { ClientOnly } from './components/ClientOnly'
+
+type QueriesHydrationQueries = (
+  | WithRequired<QueryOptions<any, any, any, any>, 'queryKey'>
+  | WithRequired<UseInfiniteQueryOptions<any, any, any, any, any>, 'queryKey'>
+)[]
+
+type QueriesHydrationBaseProps = {
+  /**
+   * An array of query options or infinite query options to be fetched on the server. Each query must include a `queryKey`.
+   * You can mix regular queries and infinite queries in the same array.
+   */
+  queries: QueriesHydrationQueries
+  /**
+   * The QueryClient instance to use for fetching queries.
+   */
+  queryClient?: QueryClient
+} & OmitKeyof<HydrationBoundaryProps, 'state'>
 
 /**
  * A server component that fetches multiple queries on the server and hydrates them to the client.
@@ -74,8 +91,53 @@ import { ClientOnly } from './components/ClientOnly'
  * </Suspense>
  * ```
  *
+ * @example
+ * ```tsx
+ * // With streaming SSR — pending promises are passed to the client
+ * <Suspense fallback={<div>Loading...</div>}>
+ *   <QueriesHydration
+ *     queries={[userQueryOptions(userId)]}
+ *     shouldDehydratePromise
+ *   >
+ *     <UserProfile />
+ *   </QueriesHydration>
+ * </Suspense>
+ * ```
+ *
  * @see {@link https://suspensive.org/docs/react-query/QueriesHydration Documentation}
  */
+export async function QueriesHydration(
+  props: QueriesHydrationBaseProps & {
+    /**
+     * When `true`, pending promises are included in the dehydrated state so the client can
+     * subscribe to them for streaming SSR. Queries are started immediately without being awaited,
+     * allowing the component to return while fetches are still in-flight.
+     */
+    shouldDehydratePromise: true
+  }
+): Promise<JSX.Element>
+export async function QueriesHydration(
+  props: QueriesHydrationBaseProps & {
+    shouldDehydratePromise?: false
+    /**
+     * Controls error handling behavior:
+     * - `true` (default): Skips SSR and falls back to client-side rendering when server fetch fails
+     * - `false`: Proceeds with SSR without hydration (retry fetching on client component server rendering)
+     * - `{ fallback: ReactNode }`: Skips SSR with custom fallback UI during client-side rendering
+     */
+    skipSsrOnError?:
+      | boolean
+      | {
+          fallback: ReactNode
+        }
+    /**
+     * The timeout in milliseconds for the query.
+     * If the query takes longer than the timeout, it will be considered as an error.
+     * When not set, no timeout is applied.
+     */
+    timeout?: number
+  }
+): Promise<JSX.Element>
 export async function QueriesHydration({
   queries,
   children,
@@ -84,41 +146,11 @@ export async function QueriesHydration({
   timeout,
   shouldDehydratePromise = false,
   ...props
-}: {
-  /**
-   * An array of query options or infinite query options to be fetched on the server. Each query must include a `queryKey`.
-   * You can mix regular queries and infinite queries in the same array.
-   */
-  queries: (
-    | WithRequired<QueryOptions<any, any, any, any>, 'queryKey'>
-    | WithRequired<UseInfiniteQueryOptions<any, any, any, any, any>, 'queryKey'>
-  )[]
-  /**
-   * Controls error handling behavior:
-   * - `true` (default): Skips SSR and falls back to client-side rendering when server fetch fails
-   * - `false`: Proceeds with SSR without hydration (retry fetching on client component server rendering)
-   * - `{ fallback: ReactNode }`: Skips SSR with custom fallback UI during client-side rendering
-   */
-  skipSsrOnError?:
-    | boolean
-    | {
-        fallback: ReactNode
-      }
-  /**
-   * The timeout in milliseconds for the query.
-   * If the query takes longer than the timeout, it will be considered as an error.
-   * When not set, no timeout is applied.
-   */
-  timeout?: number
-  /**
-   * When `true`, pending promises are included in the dehydrated state so the client can
-   * subscribe to them for streaming SSR. Queries are started immediately without being awaited,
-   * allowing the component to return while fetches are still in-flight.
-   * The `skipSsrOnError` and `timeout` props are ignored when this is enabled.
-   * @default false
-   */
+}: QueriesHydrationBaseProps & {
   shouldDehydratePromise?: boolean
-} & OmitKeyof<HydrationBoundaryProps, 'state'>) {
+  skipSsrOnError?: boolean | { fallback: ReactNode }
+  timeout?: number
+}): Promise<JSX.Element> {
   if (shouldDehydratePromise) {
     queries.forEach((query) => {
       const promise =
