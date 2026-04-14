@@ -7,9 +7,9 @@ import { Callout, Sandpack } from '@/components'
 
 # QueriesHydration
 
-<Callout type='experimental'>
+<Callout type='deprecated'>
 
-`<QueriesHydration/>` is an experimental feature, so this interface may change.
+`<QueriesHydration/>` is deprecated. Use [`<HydrationBoundary/>`](/docs/react-query/HydrationBoundary) (for `@tanstack/react-query` v5) or [`<Hydrate/>`](/docs/react-query/Hydrate) (for `@tanstack/react-query` v4) instead.
 
 </Callout>
 
@@ -705,6 +705,7 @@ import { QueriesHydration } from '@suspensive/react-query'
 
 ### Version History
 
-| Version | Changes                                                          |
-| ------- | ---------------------------------------------------------------- |
-| v3.14.0 | `<QueriesHydration/>` has been added as an experimental feature. |
+| Version  | Changes                                                                                                                   |
+| -------- | ------------------------------------------------------------------------------------------------------------------------- |
+| `v3.21.0` | `<QueriesHydration/>` has been deprecated. Use `<HydrationBoundary/>` (v5) or `<Hydrate/>` (v4) instead. |
+| `v3.14.0` | `<QueriesHydration/>` has been added as an experimental feature.                                                          |

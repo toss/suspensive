@@ -7,9 +7,9 @@ import { Callout, Sandpack } from '@/components'
 
 # QueriesHydration
 
-<Callout type='experimental'>
+<Callout type='deprecated'>
 
-`<QueriesHydration/>`는 실험 기능이므로 이 인터페이스는 변경될 수 있습니다.
+`<QueriesHydration/>`는 deprecated되었습니다. [`<HydrationBoundary/>`](/docs/react-query/HydrationBoundary) (`@tanstack/react-query` v5) 또는 [`<Hydrate/>`](/docs/react-query/Hydrate) (`@tanstack/react-query` v4)를 대신 사용해주세요.
 
 </Callout>
 
@@ -705,6 +705,7 @@ import { QueriesHydration } from '@suspensive/react-query'
 
 ### 버전 기록
 
-| Version | Changes                                               |
-| ------- | ----------------------------------------------------- |
-| v3.14.0 | `<QueriesHydration/>`가 실험 기능으로 추가되었습니다. |
+| Version   | Changes                                                                                                              |
+| --------- | -------------------------------------------------------------------------------------------------------------------- |
+| `v3.21.0` | `<QueriesHydration/>`가 deprecated되었습니다. `<HydrationBoundary/>` (v5) 또는 `<Hydrate/>` (v4)를 대신 사용해주세요. |
+| `v3.14.0` | `<QueriesHydration/>`가 실험 기능으로 추가되었습니다.                                                                 |
