@@ -25,18 +25,22 @@ export const CustomPreset = (
     'layoutOptions' | 'editorOptions' | 'previewOptions'
   >
 ) => {
+  const {
+    layout,
+    showConsole: showConsoleProp,
+    showConsoleButton: showConsoleButtonProp,
+    ...restPreviewOptions
+  } = props.previewOptions ?? {}
+  const mode = layout ?? 'preview'
+  const showConsole = showConsoleProp ?? false
+  const showConsoleButton = showConsoleButtonProp ?? false
+
   const dragEventTargetRef = useRef<(EventTarget & HTMLDivElement) | null>(null)
 
   const [horizontalSize, setHorizontalSize] = useState(50)
   const [verticalSize, setVerticalSize] = useState(60)
-  const [consoleVisibility, setConsoleVisibility] = useState(
-    props.previewOptions?.showConsole ?? false
-  )
+  const [consoleVisibility, setConsoleVisibility] = useState(showConsole)
   const [counter, setCounter] = useState(0)
-
-  const mode = props.previewOptions?.layout ?? 'preview'
-  const showConsole = props.previewOptions?.showConsole ?? false
-  const showConsoleButton = props.previewOptions?.showConsoleButton ?? false
 
   const hasRightColumn = showConsole || showConsoleButton
   const RightColumn = hasRightColumn ? SandpackStack : Fragment
@@ -152,7 +156,7 @@ export const CustomPreset = (
             showSandpackErrorOverlay={false}
             actionsChildren={actionsChildren}
             style={topRowStyle}
-            {...props.previewOptions}
+            {...restPreviewOptions}
           >
             <ErrorOverlay />
           </SandpackPreview>
