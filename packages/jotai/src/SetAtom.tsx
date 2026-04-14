@@ -33,11 +33,13 @@ type UseSetAtomProps<TAtom> = {
  * ```
  */
 export function SetAtom<TValue, TArgs extends unknown[], TResult>({
+  children,
   atom,
   options,
 }: UseSetAtomProps<WritableAtom<TValue, TArgs, TResult>> & ChildrenRenderProps<TSetAtom<TArgs, TResult>>): ReactNode
 
 export function SetAtom<TAtom extends WritableAtom<unknown, never[], unknown>>({
+  children,
   atom,
   options,
 }: UseSetAtomProps<TAtom> & ChildrenRenderProps<TSetAtom<ExtractAtomArgs<TAtom>, ExtractAtomResult<TAtom>>>): ReactNode
