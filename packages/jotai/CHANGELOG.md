@@ -1,5 +1,11 @@
 # @suspensive/jotai
 
+## 3.20.3
+
+### Patch Changes
+
+- [#1949](https://github.com/toss/suspensive/pull/1949) [`b7778d1`](https://github.com/toss/suspensive/commit/b7778d1eb4cbb102fa039622a10beef4971a9f9a) Thanks [@JeongHwan-dev](https://github.com/JeongHwan-dev)! - fix(jotai): add children to SetAtom overload signatures
+
 ## 3.20.2
 
 ## 3.20.1
