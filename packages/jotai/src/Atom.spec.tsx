@@ -1,5 +1,5 @@
 import { act, fireEvent, render, screen } from '@testing-library/react'
-import { atom } from 'jotai'
+import { atom, createStore } from 'jotai'
 import { Suspense } from 'react'
 import { Atom } from './Atom'
 import { sleep } from './test-utils'
@@ -98,6 +98,57 @@ describe('<Atom />', () => {
 
     expect(children).toHaveBeenCalled()
     expect(screen.getByText('Test')).toBeInTheDocument()
+  })
+
+  it('should read and write value from the specified store via options', () => {
+    const countAtom = atom(0)
+    const myStore = createStore()
+    myStore.set(countAtom, 5)
+
+    render(
+      <Atom atom={countAtom} options={{ store: myStore }}>
+        {([count, setCount]) => (
+          <>
+            <div>count: {count}</div>
+            <button type="button" onClick={() => setCount(99)}>
+              Set 99
+            </button>
+          </>
+        )}
+      </Atom>
+    )
+
+    expect(screen.getByText('count: 5')).toBeInTheDocument()
+    fireEvent.click(screen.getByText('Set 99'))
+    expect(screen.getByText('count: 99')).toBeInTheDocument()
+  })
+
+  it('should isolate state between different stores via options', () => {
+    const countAtom = atom(0)
+    const storeA = createStore()
+    const storeB = createStore()
+
+    render(
+      <>
+        <Atom atom={countAtom} options={{ store: storeA }}>
+          {([count, setCount]) => (
+            <>
+              <div>storeA: {count}</div>
+              <button type="button" onClick={() => setCount(99)}>
+                Set A
+              </button>
+            </>
+          )}
+        </Atom>
+        <Atom atom={countAtom} options={{ store: storeB }}>
+          {([count]) => <div>storeB: {count}</div>}
+        </Atom>
+      </>
+    )
+
+    fireEvent.click(screen.getByText('Set A'))
+    expect(screen.getByText('storeA: 99')).toBeInTheDocument()
+    expect(screen.getByText('storeB: 0')).toBeInTheDocument()
   })
 
   it('should read an async atom using Suspense with proper loading state', async () => {
