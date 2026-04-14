@@ -1,8 +1,13 @@
+import { Hydrate } from './Hydrate'
+
 export { createGetQueryClient } from './createGetQueryClient'
-export { Hydrate } from './Hydrate'
+export { Hydrate }
 export { infiniteQueryOptions } from './infiniteQueryOptions'
 export type { SelectedInfiniteOptions, UnSelectedInfiniteOptions } from './infiniteQueryOptions'
-export { QueriesHydration } from './QueriesHydration'
+/**
+ * @deprecated Use {@link Hydrate} instead.
+ */
+export const QueriesHydration = Hydrate
 export { queryOptions } from './queryOptions'
 export type { SelectedQueryOptions, UnSelectedQueryOptions } from './queryOptions'
 export { usePrefetchInfiniteQuery } from './usePrefetchInfiniteQuery'

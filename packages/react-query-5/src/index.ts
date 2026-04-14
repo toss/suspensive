@@ -1,7 +1,12 @@
+import { HydrationBoundary } from './HydrationBoundary'
+
 export { createGetQueryClient } from './createGetQueryClient'
-export { HydrationBoundary } from './HydrationBoundary'
+export { HydrationBoundary }
 export { infiniteQueryOptions } from './infiniteQueryOptions'
-export { QueriesHydration } from './QueriesHydration'
+/**
+ * @deprecated Use {@link HydrationBoundary} instead.
+ */
+export const QueriesHydration = HydrationBoundary
 export { queryOptions } from './queryOptions'
 export { usePrefetchInfiniteQuery } from './usePrefetchInfiniteQuery'
 export { usePrefetchQuery } from './usePrefetchQuery'
