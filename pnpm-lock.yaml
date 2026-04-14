@@ -512,10 +512,10 @@ importers:
         specifier: ^13.0.0
         version: 13.1.0(commander@13.1.0)
       '@suspensive/react-query-4':
-        specifier: workspace:^3.20.2
+        specifier: workspace:^3.20.3
         version: link:../react-query-4
       '@suspensive/react-query-5':
-        specifier: workspace:^3.20.2
+        specifier: workspace:^3.20.3
         version: link:../react-query-5
       '@tanstack/react-query':
         specifier: ^4.42.0 || ^5.82.0
@@ -3899,6 +3899,7 @@ packages:
   '@xmldom/xmldom@0.9.8':
     resolution: {integrity: sha512-p96FSY54r+WJ50FIOsCOjyj/wavs8921hG5+kVMmZgKcvIKxMXHTrjNJvRgWa/zuX3B6t2lijLNFaOyuxUH+2A==}
     engines: {node: '>=14.6'}
+    deprecated: this version has critical issues, please update to the latest version
 
   abbrev@1.1.1:
     resolution: {integrity: sha512-nne9/IiQ/hzIhY6pdDnbBtz7DjPTKrY00P/zvPSm5pOFkl6xuGrGnXn/VtTNNfNtAfZ9/1RtehkszU9qcTii0Q==}
