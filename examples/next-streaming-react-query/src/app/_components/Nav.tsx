@@ -13,6 +13,11 @@ export const Nav = () => {
       <Link href="/test">
         <li style={{ listStyle: 'none', fontWeight: pathname === '/test' ? 'bold' : 'normal' }}>test</li>
       </Link>
+      <Link href="/fire-and-forget">
+        <li style={{ listStyle: 'none', fontWeight: pathname === '/fire-and-forget' ? 'bold' : 'normal' }}>
+          fire-and-forget
+        </li>
+      </Link>
     </ul>
   )
 }
