@@ -17,7 +17,5 @@
     "@suspensive/react-query-4": "3.18.0",
     "@suspensive/react-query-5": "3.18.0"
   },
-  "changesets": [
-    "weak-steaks-reflect"
-  ]
+  "changesets": ["weak-steaks-reflect"]
 }
