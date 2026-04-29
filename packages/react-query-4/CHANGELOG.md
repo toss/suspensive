@@ -1,5 +1,11 @@
 # @suspensive/react-query-4
 
+## 3.20.4
+
+### Patch Changes
+
+- [#1952](https://github.com/toss/suspensive/pull/1952) [`a019687`](https://github.com/toss/suspensive/commit/a019687dd0ed222d8cc4c3d4de44f889103cbca4) Thanks [@JeongHwan-dev](https://github.com/JeongHwan-dev)! - fix(react-query-4): add void operator to floating promises
+
 ## 3.20.3
 
 ## 3.20.2
