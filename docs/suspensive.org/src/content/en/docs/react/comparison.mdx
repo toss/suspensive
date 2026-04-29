@@ -1,0 +1,279 @@
+---
+description: 'Compare @suspensive/react with react-error-boundary, @sentry/react, and React class components. See feature differences, code examples, and migration paths.'
+---
+
+import { Tabs } from 'nextra/components'
+import { Callout, ComparisonTable } from '@/components'
+
+# Suspensive vs Other Error Boundary Libraries
+
+How `@suspensive/react` compares to `react-error-boundary`, `@sentry/react`, and DIY class components — and what Suspensive offers beyond ErrorBoundary.
+
+## Feature Comparison
+
+<ComparisonTable
+  headers={[
+    '@suspensive/react',
+    'react-error-boundary',
+    '@sentry/react',
+    'DIY (Class Component)',
+  ]}
+  groups={[
+    {
+      label: 'Error Boundary',
+      rows: [
+        { feature: 'shouldCatch', values: [true, false, false, false] },
+        { feature: 'ErrorBoundaryGroup', values: [true, false, false, false] },
+        {
+          feature: 'useErrorBoundaryFallbackProps',
+          values: [true, false, false, false],
+        },
+        {
+          feature: 'Safe fallback error propagation',
+          values: ['✓ To parent', '✗ Recursive', '✗ Recursive', false],
+        },
+        {
+          feature: 'TypeScript error type inference',
+          values: ['✓ Via shouldCatch', false, false, false],
+        },
+        {
+          feature: 'useErrorBoundary hook',
+          values: [true, true, false, false],
+        },
+        {
+          feature: 'Fallback UI with error & reset',
+          values: [true, true, true, false],
+        },
+        { feature: 'resetKeys', values: [true, true, false, false] },
+        { feature: 'onReset callback', values: [true, true, true, false] },
+        { feature: 'onError callback', values: [true, true, true, false] },
+        {
+          feature: 'HOC support',
+          values: [
+            '✓ ErrorBoundary.with',
+            '✓ withErrorBoundary',
+            '✓ withErrorBoundary',
+            false,
+          ],
+        },
+        { feature: 'Declarative API', values: [true, true, true, false] },
+      ],
+    },
+    {
+      label: 'Async Rendering',
+      rows: [
+        {
+          feature: 'SSR-safe Suspense (clientOnly)',
+          values: [true, false, false, false],
+        },
+        {
+          feature: 'Flash-of-loading prevention (Delay)',
+          values: [true, false, false, false],
+        },
+        {
+          feature: 'Global default fallbacks (DefaultPropsProvider)',
+          values: [true, false, false, false],
+        },
+        {
+          feature: 'Declarative data fetching (SuspenseQuery)',
+          values: [true, false, false, false],
+        },
+        {
+          feature: 'Client-only rendering (ClientOnly)',
+          values: [true, false, false, false],
+        },
+      ],
+    },
+  ]}
+/>
+
+## What Makes Suspensive Different
+
+### shouldCatch — Catch Only the Errors You Want
+
+Unlike any other solution, `@suspensive/react` lets you filter which errors an ErrorBoundary catches. Pass an Error constructor, a callback, or a boolean:
+
+```tsx
+// Only catch validation errors in this boundary
+<ErrorBoundary shouldCatch={ZodError} fallback={<ValidationErrorUI />}>
+  <Form />
+</ErrorBoundary>
+
+// Catch everything except network errors
+<ErrorBoundary
+  shouldCatch={(error) => !(error instanceof NetworkError)}
+  fallback={<GeneralErrorUI />}
+>
+  <App />
+</ErrorBoundary>
+```
+
+This enables layered error handling strategies where parent and child boundaries handle different error types — something impossible with `react-error-boundary`.
+
+### ErrorBoundaryGroup — Reset Multiple Boundaries at Once
+
+Managing multiple error boundaries? With `react-error-boundary`, you need to pass `resetKeys` through props to every boundary. With Suspensive, just wrap them in an `ErrorBoundaryGroup`:
+
+```tsx
+<ErrorBoundaryGroup>
+  <ErrorBoundaryGroup.Consumer>
+    {({ reset }) => <button onClick={reset}>Reset All</button>}
+  </ErrorBoundaryGroup.Consumer>
+  <ErrorBoundary fallback={<UserError />}>
+    <UserSection />
+  </ErrorBoundary>
+  <ErrorBoundary fallback={<PostsError />}>
+    <PostsSection />
+  </ErrorBoundary>
+</ErrorBoundaryGroup>
+```
+
+No prop drilling. No state management. All boundaries reset together.
+
+### Safe Fallback Error Handling
+
+In `react-error-boundary`, if your fallback component throws an error, it causes a recursive catch loop. In `@suspensive/react`, errors thrown in fallback components are passed to the **parent** ErrorBoundary — providing predictable, safe error propagation.
+
+### useErrorBoundaryFallbackProps — No Prop Drilling in Fallbacks
+
+Access `error` and `reset` anywhere inside a fallback tree without passing props:
+
+```tsx
+const DeepFallbackChild = () => {
+  const { error, reset } = useErrorBoundaryFallbackProps()
+  return <button onClick={reset}>{error.message}</button>
+}
+```
+
+This is especially useful in React Server Component environments where you can't pass callback functions as props.
+
+## Beyond ErrorBoundary
+
+Suspensive isn't just a better ErrorBoundary. In production, error handling is only one piece — you also need to manage loading states, SSR hydration, and data fetching. These concerns are interconnected, and Suspensive handles them all in one package.
+
+### Suspense with clientOnly — SSR Without the Pain
+
+React's `<Suspense>` breaks in SSR environments like Next.js. Suspensive's `clientOnly` prop solves this in one line:
+
+```tsx
+<Suspense fallback={<Skeleton />} clientOnly>
+  <DataComponent />
+</Suspense>
+```
+
+No `dynamic(() => import(...), { ssr: false })`. No `useEffect` guards.
+
+### Delay — Prevent Flash-of-Loading
+
+Fast responses shouldn't show a spinner. `<Delay>` holds back the loading UI until it's actually needed:
+
+```tsx
+<Suspense
+  fallback={
+    <Delay ms={200}>
+      {({ isDelayed }) => (
+        <Spinner
+          style={{ opacity: isDelayed ? 1 : 0, transition: 'opacity 200ms' }}
+        />
+      )}
+    </Delay>
+  }
+>
+  <Content />
+</Suspense>
+```
+
+### DefaultPropsProvider — Global Defaults
+
+Set default fallbacks for every `<Suspense>` and `<Delay>` in your app:
+
+```tsx
+const defaultProps = new DefaultProps({
+  Suspense: { fallback: <Spinner /> },
+  Delay: { ms: 200 },
+})
+
+<DefaultPropsProvider defaultProps={defaultProps}>
+  <App />
+</DefaultPropsProvider>
+```
+
+### SuspenseQuery — Declarative Data Fetching
+
+With `@suspensive/react-query`, fetch data as JSX without hooks or wrapper components:
+
+```tsx
+<ErrorBoundary fallback={<ErrorUI />}>
+  <Suspense fallback={<Skeleton />}>
+    <SuspenseQuery {...userQueryOptions()}>
+      {({ data: user }) => <UserProfile user={user} />}
+    </SuspenseQuery>
+  </Suspense>
+</ErrorBoundary>
+```
+
+No `useSuspenseQuery` hook constraints. No component splitting. Everything at the same depth.
+
+## Code Comparison
+
+<Tabs items={['@suspensive/react', 'react-error-boundary']}>
+<Tabs.Tab>
+
+```tsx
+import { ErrorBoundary } from '@suspensive/react'
+
+const App = () => (
+  <ErrorBoundary
+    fallback={({ error, reset }) => (
+      <div>
+        <p>{error.message}</p>
+        <button onClick={reset}>Retry</button>
+      </div>
+    )}
+    onError={(error) => logToService(error)}
+  >
+    <MyComponent />
+  </ErrorBoundary>
+)
+```
+
+</Tabs.Tab>
+<Tabs.Tab>
+
+```tsx
+import { ErrorBoundary } from 'react-error-boundary'
+
+const App = () => (
+  <ErrorBoundary
+    fallbackRender={({ error, resetErrorBoundary }) => (
+      <div>
+        <p>{error.message}</p>
+        <button onClick={resetErrorBoundary}>Retry</button>
+      </div>
+    )}
+    onError={(error) => logToService(error)}
+  >
+    <MyComponent />
+  </ErrorBoundary>
+)
+```
+
+</Tabs.Tab>
+</Tabs>
+
+## Migration from react-error-boundary
+
+Migrating is straightforward — the API is similar by design:
+
+| react-error-boundary                                | @suspensive/react      |
+| --------------------------------------------------- | ---------------------- |
+| `fallbackRender` / `FallbackComponent` / `fallback` | `fallback` (unified)   |
+| `resetErrorBoundary`                                | `reset`                |
+| `withErrorBoundary()`                               | `ErrorBoundary.with()` |
+| `useErrorBoundary()`                                | `useErrorBoundary()`   |
+
+```bash
+npm install @suspensive/react
+```
+
+See the full [ErrorBoundary API reference](/docs/react/ErrorBoundary) for detailed documentation.

@@ -1,7 +1,7 @@
 import type { MetaRecord } from 'nextra'
 
 export default {
-  motivation: { title: 'Why need to use?' },
+  motivation: { title: 'Motivation' },
   installation: { title: 'Installation' },
   migration: { title: 'Migration guide' },
   '--- API Reference': {
@@ -9,7 +9,6 @@ export default {
     title: 'API Reference',
   },
   createGetQueryClient: { title: 'createGetQueryClient' },
-  mutationOptions: { title: 'mutationOptions' },
   SuspenseQuery: { title: '<SuspenseQuery/>' },
   SuspenseQueries: { title: '<SuspenseQueries/>' },
   SuspenseInfiniteQuery: { title: '<SuspenseInfiniteQuery/>' },

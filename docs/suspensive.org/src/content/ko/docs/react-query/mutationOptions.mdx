@@ -1,6 +1,23 @@
+---
+robots: noindex
+---
+
 import { Callout, Sandpack } from '@/components'
 
 # mutationOptions
+
+<Callout type='warning'>
+
+**@suspensive/react-query에서 Deprecated**
+
+이 인터페이스는 이제 TanStack Query v4.44.0+에서 공식적으로 지원됩니다. TanStack Query에서 백포팅했으므로, @suspensive/react-query의 백포팅된 버전을 deprecated 처리합니다. 공식 TanStack Query 인터페이스로 마이그레이션하세요:
+
+```diff
+- import { mutationOptions } from '@suspensive/react-query'
++ import { mutationOptions } from '@tanstack/react-query'
+```
+
+</Callout>
 
 `mutationOptions`는 Mutation에서 옵션 객체를 쉽게 재사용하고 일관성 있게 관리할 수 있도록 도와줍니다. 이는 [`queryOptions`](/docs/react-query/queryOptions)가 사용되는 이유와 유사한 장점을 제공합니다.
 

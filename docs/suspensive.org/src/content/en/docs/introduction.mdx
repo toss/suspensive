@@ -1,25 +1,17 @@
-import { Table } from 'nextra/components'
-import { LogoImage, TrustedBy } from '@/components'
+---
+description: "Suspensive fills the gaps in React's Suspense, Error Boundary, and async rendering — with declarative components and hooks for real-world applications."
+---
+
+import Link from 'next/link'
+import { Callout, LogoImage, TrustedBy } from '@/components'
 
 <div className="my-20 px-12 md:my-40 md:px-24">
   <LogoImage size={2.4} />
 </div>
 
-Suspensive is a comprehensive collection of libraries designed to simplify and enhance the use of React Suspense. Suspensive contains several packages that provide components, hooks, and utilities to streamline the implementation of suspense-based features, error handling, and integrations with popular data fetching libraries.
+React gives you Suspense, lazy, and an interface to build Error Boundaries. But if you've tried to use them in a real application, you know the gaps — Suspense breaks in SSR, implementing Error Boundaries from scratch requires boilerplate, and there's no way to coordinate any of it. Beyond React itself, data-fetching libraries and state managers have their own gaps too.
 
-## Purpose
-
-The Suspensive libraries address common challenges developers face when working with React Suspense, such as:
-
-- Managing loading states and timing
-- Implementing robust error boundaries
-- Integrating suspense with data fetching libraries
-- Coordinating multiple suspense and error boundaries
-- Creating viewport-aware components with suspense capabilities
-
-By providing a unified, declarative API for these concerns, Suspensive helps developers create more resilient and better-structured React applications with significantly less boilerplate code.
-
-## Core Packages
+**Suspensive fills those gaps.** It provides declarative components and hooks that make async rendering, error handling, and data fetching work the way they should — with less code and fewer workarounds.
 
 ```mermaid
 graph TD;
@@ -38,9 +30,9 @@ graph TD;
     A --> D
 ```
 
-### Package Responsibilities
+<Callout type="info">
 
-<br />
+**Ready to get started?** Follow the [Getting Started guide](/docs/react/getting-started) to set up Suspensive in 5 minutes, or see how it compares to [react-error-boundary](/docs/react/comparison).
 
 <Table>
   <thead>

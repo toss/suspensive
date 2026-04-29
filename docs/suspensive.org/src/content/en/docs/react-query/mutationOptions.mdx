@@ -1,6 +1,24 @@
+---
+robots: noindex
+description: 'Deprecated — mutationOptions is now available in TanStack Query v4.44.0+. Use the official TanStack Query version instead.'
+---
+
 import { Callout, Sandpack } from '@/components'
 
 # mutationOptions
+
+<Callout type='warning'>
+
+**Deprecated in @suspensive/react-query**
+
+This interface is now officially supported in TanStack Query v4.44.0+. Since TanStack Query has backported this interface, we are deprecating the backported version from @suspensive/react-query. Please migrate to the official TanStack Query interface:
+
+```diff
+- import { mutationOptions } from '@suspensive/react-query'
++ import { mutationOptions } from '@tanstack/react-query'
+```
+
+</Callout>
 
 `mutationOptions` helps you easily reuse and consistently manage option objects for Mutations. This provides similar benefits to the ones offered by [`queryOptions`](/docs/react-query/queryOptions).
 

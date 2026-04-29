@@ -75,14 +75,14 @@ export function Scrollycoding(props: unknown) {
   return (
     <>
       {/* only in desktop */}
-      <SelectionProvider className="my-4 mb-24 hidden gap-4 md:flex">
+      <SelectionProvider className="mx-auto my-4 mb-24 hidden max-w-6xl gap-4 md:flex">
         <div className="mb-[40vh]" style={{ flex: 1 }}>
           {steps.map((step, i) => (
             <Selectable
               key={i}
               index={i}
               selectOn={['click', 'scroll']}
-              className="mb-56 cursor-pointer px-5 py-2 opacity-30 blur-lg transition data-[selected=true]:opacity-100 data-[selected=true]:blur-none"
+              className="mb-24 min-h-[40vh] cursor-pointer px-5 py-2 opacity-30 blur-sm transition data-[selected=true]:opacity-100 data-[selected=true]:blur-none"
             >
               <h2 className="2xl mt-4 mb-4 text-lg font-bold">{step.title}</h2>
               <div className="opacity-75">{step.children}</div>
@@ -91,7 +91,7 @@ export function Scrollycoding(props: unknown) {
         </div>
 
         <div
-          className="rounded-xl border-2 border-[#ffffff08] bg-[#ffffff04]"
+          className="rounded-xl border-2 border-black/[0.06] bg-black/[0.02] dark:border-white/5 dark:bg-white/[0.02]"
           style={{ flex: 2 }}
         >
           <div className="scrollbar-none sticky top-16 overflow-auto">
@@ -107,35 +107,17 @@ export function Scrollycoding(props: unknown) {
           </div>
         </div>
       </SelectionProvider>
-      {/* only in mobile */}
-      <SelectionProvider className="my-4 mb-24 flex gap-2 md:hidden">
-        <div className="mb-[40vh]" style={{ flex: 1 }}>
-          {steps.map((step, i) => (
-            <Selectable
-              key={i}
-              index={i}
-              selectOn={['click', 'scroll']}
-              className="mb-20 cursor-pointer py-2 opacity-30 blur-lg transition data-[selected=true]:opacity-100 data-[selected=true]:blur-none"
-            >
-              <h2 className="mb-2 text-sm font-bold">{step.title}</h2>
-              <div className="text-sm opacity-75">{step.children}</div>
-            </Selectable>
-          ))}
-        </div>
-        <div className="rounded-xl md:-mr-6" style={{ flex: 2 }}>
-          <div className="scrollbar-none sticky top-28 overflow-auto">
-            <Selection
-              from={steps.map((step) => (
-                <CodeMobile
-                  // eslint-disable-next-line @eslint-react/no-duplicate-key
-                  key="this key should be same mobile"
-                  codeblock={step.code}
-                />
-              ))}
-            />
+      {/* only in mobile — static code blocks with titles */}
+      <div className="my-4 mb-12 flex flex-col gap-8 md:hidden">
+        {steps.map((step, i) => (
+          <div key={i}>
+            <h2 className="mb-3 text-sm font-bold opacity-80">{step.title}</h2>
+            <div className="overflow-auto rounded-xl border-2 border-black/[0.06] bg-black/[0.02] dark:border-white/5 dark:bg-white/[0.02]">
+              <CodeMobile codeblock={step.code} />
+            </div>
           </div>
-        </div>
-      </SelectionProvider>
+        ))}
+      </div>
     </>
   )
 }
@@ -185,7 +167,8 @@ const wordWrapMobile: AnnotationHandler = {
     <InnerLine
       merge={props}
       style={{
-        fontSize: '0.5rem',
+        fontSize: '0.75rem',
+        lineHeight: 1.5,
         textIndent: `${-props.indentation}ch`,
         marginLeft: `${props.indentation}ch`,
       }}
@@ -198,7 +181,7 @@ function CodeMobile({ codeblock }: { codeblock: HighlightedCode }) {
     <Pre
       code={codeblock}
       handlers={[tokenTransitionsMobile, wordWrapMobile]}
-      className="min-h-[40rem] p-2"
+      className="p-3"
     />
   )
 }

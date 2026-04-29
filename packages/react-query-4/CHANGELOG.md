@@ -6,6 +6,58 @@
 
 - [#1890](https://github.com/toss/suspensive/pull/1890) [`e5dcb2a`](https://github.com/toss/suspensive/commit/e5dcb2a91b1dfb1eedce7b2766b967288726a149) Thanks [@manudeli](https://github.com/manudeli)! - feat(react-query): remove @suspensive/react-query & remove unnecessary apis of @suspensive/react-query-\*
 
+## 3.21.0
+
+### Minor Changes
+
+- [#1943](https://github.com/toss/suspensive/pull/1943) [`32821ed`](https://github.com/toss/suspensive/commit/32821edc0058f4844b4c2a61ec0762cc72494cd5) Thanks [@manudeli](https://github.com/manudeli)! - chore: update @tanstack/react-query version and deprecate mutationOptions
+
+## 3.20.4
+
+### Patch Changes
+
+- [#1952](https://github.com/toss/suspensive/pull/1952) [`a019687`](https://github.com/toss/suspensive/commit/a019687dd0ed222d8cc4c3d4de44f889103cbca4) Thanks [@JeongHwan-dev](https://github.com/JeongHwan-dev)! - fix(react-query-4): add void operator to floating promises
+
+## 3.20.3
+
+## 3.20.2
+
+## 3.20.1
+
+## 3.20.0
+
+### Minor Changes
+
+- [#1927](https://github.com/toss/suspensive/pull/1927) [`34607e4`](https://github.com/toss/suspensive/commit/34607e46788aa26a62da09e8b301cb68a5de615f) Thanks [@manudeli](https://github.com/manudeli)! - feat(react-query): add timeout cancellation support to QueriesHydration
+
+## 3.19.6
+
+## 3.19.5
+
+### Patch Changes
+
+- [#1918](https://github.com/toss/suspensive/pull/1918) [`47571c4`](https://github.com/toss/suspensive/commit/47571c47877d3616a3812a8079facf08d0129269) Thanks [@manudeli](https://github.com/manudeli)! - fix(\*): remove banner option from tsdown configurations and add 'use client' directive to multiple React components
+
+## 3.19.4
+
+### Patch Changes
+
+- [#1921](https://github.com/toss/suspensive/pull/1921) [`8d82753`](https://github.com/toss/suspensive/commit/8d8275349327f1bfce0659d0944a485bcb21cabb) Thanks [@manudeli](https://github.com/manudeli)! - fix(tsdown): enable unbundling option in configuration
+
+## 3.19.3
+
+### Patch Changes
+
+- [#1913](https://github.com/toss/suspensive/pull/1913) [`0034bd7`](https://github.com/toss/suspensive/commit/0034bd700f16157b89b748cb668cf4a97e97b34f) Thanks [@manudeli](https://github.com/manudeli)! - fix(\*): tsdown 0.18.0 -> 0.21.3
+
+## 3.19.2
+
+### Patch Changes
+
+- [#1905](https://github.com/toss/suspensive/pull/1905) [`e7a1b88`](https://github.com/toss/suspensive/commit/e7a1b8837799ccb72cbc904f121d460aba749dbe) Thanks [@saengmotmi](https://github.com/saengmotmi)! - fix(react-query-4): forward filters in IsFetching
+
+## 3.19.1
+
 ## 3.19.0
 
 ### Minor Changes
@@ -83,6 +135,7 @@
   This adds OIDC (OpenID Connect) authentication support for npm publishing in GitHub Actions. The implementation enables secure, tokenless publishing to npm using GitHub's OIDC tokens with provenance support.
 
   Key features:
+
   - **OIDC Authentication**: Uses GitHub Actions `id-token: write` permission for secure publishing
   - **Provenance Support**: Enables npm package provenance through `NPM_CONFIG_PROVENANCE=true`
   - **Backward Compatibility**: Maintains NPM_TOKEN as fallback for existing workflows

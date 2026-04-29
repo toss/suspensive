@@ -1,5 +1,5 @@
 import { act, fireEvent, render, screen } from '@testing-library/react'
-import { atom } from 'jotai'
+import { atom, createStore } from 'jotai'
 import { Suspense } from 'react'
 import { AtomValue } from './AtomValue'
 import { SetAtom } from './SetAtom'
@@ -78,6 +78,58 @@ describe('<SetAtom />', () => {
 
     expect(children).toHaveBeenCalled()
     expect(screen.getByText('Test')).toBeInTheDocument()
+  })
+
+  it('should write to the specified store via options', () => {
+    const countAtom = atom(0)
+    const myStore = createStore()
+
+    render(
+      <>
+        <AtomValue atom={countAtom} options={{ store: myStore }}>
+          {(count) => <div>count: {count}</div>}
+        </AtomValue>
+        <SetAtom atom={countAtom} options={{ store: myStore }}>
+          {(setCount) => (
+            <button type="button" onClick={() => setCount(10)}>
+              Set 10
+            </button>
+          )}
+        </SetAtom>
+      </>
+    )
+
+    expect(screen.getByText('count: 0')).toBeInTheDocument()
+    fireEvent.click(screen.getByText('Set 10'))
+    expect(screen.getByText('count: 10')).toBeInTheDocument()
+  })
+
+  it('should isolate state between different stores via options', () => {
+    const countAtom = atom(0)
+    const storeA = createStore()
+    const storeB = createStore()
+
+    render(
+      <>
+        <AtomValue atom={countAtom} options={{ store: storeA }}>
+          {(count) => <div>storeA: {count}</div>}
+        </AtomValue>
+        <AtomValue atom={countAtom} options={{ store: storeB }}>
+          {(count) => <div>storeB: {count}</div>}
+        </AtomValue>
+        <SetAtom atom={countAtom} options={{ store: storeA }}>
+          {(setCount) => (
+            <button type="button" onClick={() => setCount(10)}>
+              Set A
+            </button>
+          )}
+        </SetAtom>
+      </>
+    )
+
+    fireEvent.click(screen.getByText('Set A'))
+    expect(screen.getByText('storeA: 10')).toBeInTheDocument()
+    expect(screen.getByText('storeB: 0')).toBeInTheDocument()
   })
 
   it('should read and update an async atom using Suspense with proper loading state', async () => {

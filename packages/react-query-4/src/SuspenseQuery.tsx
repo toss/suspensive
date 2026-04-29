@@ -1,5 +1,4 @@
 'use client'
-
 import {
   type QueryKey,
   type UseSuspenseQueryOptions,

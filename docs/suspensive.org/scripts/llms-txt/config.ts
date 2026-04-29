@@ -1,3 +1,3 @@
 export const DOCS_DIR = 'src/content/en/docs'
-export const PUBLIC_DIR = 'public'
+export const OUTPUT_DIR = '.next/output/static'
 export const ROOT_CATEGORY = 'root'

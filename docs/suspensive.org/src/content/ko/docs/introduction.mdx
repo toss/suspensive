@@ -1,26 +1,17 @@
-import Image from 'next/image'
-import { Table } from 'nextra/components'
-import { LogoImage, TrustedBy } from '@/components'
+---
+description: 'Suspensive는 React의 Suspense, Error Boundary, 비동기 렌더링의 빈틈을 채워주는 선언적 컴포넌트와 훅 라이브러리입니다.'
+---
+
+import Link from 'next/link'
+import { Callout, LogoImage, TrustedBy } from '@/components'
 
 <div className="my-20 px-12 md:my-40 md:px-24">
   <LogoImage size={2.4} />
 </div>
 
-Suspensive는 React Suspense 사용을 간소화하고 향상시키도록 설계된 포괄적인 라이브러리 모음입니다. Suspensive에는 Suspense 기반 기능 구현, 오류 처리 및 인기 있는 데이터 가져오기 라이브러리와의 통합을 간소화하는 컴포넌트, 후크 및 유틸리티를 제공하는 여러 패키지가 포함되어 있습니다.
+React에는 Suspense와 lazy가 있고, Error Boundary를 구현할 수 있는 인터페이스를 제공합니다. 하지만 실제 애플리케이션에서 사용해 보면 빈틈이 드러납니다 — Suspense는 SSR에서 깨지고, Error Boundary는 직접 구현하려면 보일러플레이트가 많고, 이 모든 것을 조율할 방법이 없습니다. React뿐 아니라, 데이터 페칭 라이브러리와 상태 관리 라이브러리에도 각각의 빈틈이 있습니다.
 
-## 목적
-
-Suspensive는 다음과 같은 공통적인 도전을 해결하기 위해 설계되었습니다:
-
-- 로딩 상태와 타이밍 관리
-- 강력한 오류 경계 구현
-- 비동기 상태 통합을 위한 오류 관리
-- 여러 오류 경계의 조정
-- 뷰포트 인식 구성 요소 만들기
-
-Suspensive는 이러한 문제에 대한 통합적이고 선언적인 API를 제공함으로써 개발자가 훨씬 적은 보일러플레이트 코드로 보다 탄력적이고 구조화된 React 애플리케이션을 만들 수 있도록 돕습니다.
-
-## 핵심 패키지
+**Suspensive는 그 빈틈을 채웁니다.** 비동기 렌더링, 에러 처리, 데이터 페칭이 더 적은 코드와 더 적은 우회로 제대로 동작하도록 선언적 컴포넌트와 훅을 제공합니다.
 
 ```mermaid
 graph TD;
@@ -39,9 +30,9 @@ graph TD;
     A --> D
 ```
 
-### 패키지 책임
+<Callout type="info">
 
-<br />
+**시작할 준비가 되셨나요?** [시작하기 가이드](/docs/react/getting-started)를 따라 5분 만에 Suspensive를 설정하거나, [react-error-boundary와의 비교](/docs/react/comparison)를 확인하세요.
 
 <Table>
   <thead>

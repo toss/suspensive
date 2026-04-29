@@ -12,7 +12,17 @@ export default {
   },
   docs: {
     type: 'page',
-    title: 'Documentation',
+    title: 'Docs',
+  },
+  'getting-started': {
+    type: 'page',
+    title: 'Getting Started',
+    href: '/docs/react/getting-started',
+  },
+  compare: {
+    type: 'page',
+    title: 'Compare',
+    href: '/docs/react/comparison',
   },
   versions: {
     type: 'menu',

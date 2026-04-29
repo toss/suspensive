@@ -5,12 +5,15 @@ packages:
   - packages/*
 
 catalog:
-  next: ^16.0.10
-  '@next/eslint-plugin-next': ^16.0.10
+  next: ^16.2.1
+  '@next/eslint-plugin-next': ^16.2.1
+  '@next/third-parties': ^16.2.1
   sharp: ^0.34.5
-  '@tailwindcss/postcss': ^4.1.17
-  tailwindcss: ^4.1.17
+  '@tailwindcss/postcss': ^4.2.2
+  tailwindcss: ^4.2.2
   clsx: ^2.1.1
+  zod: ^4.3.6
+  react-error-boundary: ^6.1.1
 
 catalogs:
   react18:
@@ -19,15 +22,15 @@ catalogs:
     react-dom: 18.3.1
     '@types/react-dom': 18.3.1
   react19:
-    react: ^19.2.3
-    '@types/react': ^19.2.7
-    react-dom: ^19.2.3
+    react: ^19.2.4
+    '@types/react': ^19.2.14
+    react-dom: ^19.2.4
     '@types/react-dom': ^19.2.3
   react-query4:
-    '@tanstack/react-query': 4.43.0
+    '@tanstack/react-query': 4.44.0
   react-query5:
-    '@tanstack/react-query': ^5.90.9
-    '@tanstack/react-query-devtools': ^5.90.2
+    '@tanstack/react-query': ^5.95.0
+    '@tanstack/react-query-devtools': ^5.95.0
 
 onlyBuiltDependencies:
   - '@tailwindcss/oxide'
