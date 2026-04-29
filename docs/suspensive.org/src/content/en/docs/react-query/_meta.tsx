@@ -17,7 +17,6 @@ export default {
   QueryClientConsumer: { title: '<QueryClientConsumer/>' },
   IsFetching: { title: '<IsFetching/>' },
   createGetQueryClient: { title: 'createGetQueryClient' },
-  mutationOptions: { title: 'mutationOptions' },
   usePrefetchQuery: { title: 'usePrefetchQuery' },
   usePrefetchInfiniteQuery: { title: 'usePrefetchInfiniteQuery' },
   '--- Deprecated': {
@@ -25,6 +24,7 @@ export default {
     title: 'Deprecated',
   },
   queryOptions: { title: 'queryOptions' },
+  mutationOptions: { title: 'mutationOptions' },
   infiniteQueryOptions: { title: 'infiniteQueryOptions' },
   useSuspenseQuery: { title: 'useSuspenseQuery' },
   useSuspenseQueries: { title: 'useSuspenseQueries' },
