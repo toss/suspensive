@@ -120,6 +120,25 @@ describe('Suspense.with', () => {
     expect(screen.queryByText(FALLBACK)).not.toBeInTheDocument()
   })
 
+  it('should render fallback callback with wrapped component props', async () => {
+    const Wrapped = Suspense.with(
+      {
+        fallback: ({ label }: { label: string }) => <>{label} is loading</>,
+      },
+      ({ label }: { label: string }) => <Suspend during={100} toShow={label} />
+    )
+
+    render(<Wrapped label={TEXT} />)
+
+    expect(screen.queryByText(`${TEXT} is loading`)).toBeInTheDocument()
+    expect(screen.queryByText(TEXT)).not.toBeInTheDocument()
+
+    await act(() => vi.advanceTimersByTime(100))
+
+    expect(screen.queryByText(`${TEXT} is loading`)).not.toBeInTheDocument()
+    expect(screen.queryByText(TEXT)).toBeInTheDocument()
+  })
+
   it('should use default suspenseProps when {} is provided', () => {
     const Component = () => <div>{TEXT}</div>
     const Wrapped = Suspense.with({}, Component)
