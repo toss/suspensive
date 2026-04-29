@@ -14,136 +14,114 @@ React gives you Suspense, lazy, and an interface to build Error Boundaries. But 
 **Suspensive fills those gaps.** It provides declarative components and hooks that make async rendering, error handling, and data fetching work the way they should — with less code and fewer workarounds.
 
 ```mermaid
-graph LR;
-subgraph GAP1 ["React"]
-direction TB
-subgraph GAP1_S ["Suspense"]
-direction TB
-A["Suspense breaks in SSR"]
-D["Loading spinners flash on fast responses"]
-E["Hydration mismatches on client-only content"]
-F["Same fallback prop repeated across components"]
-end
-subgraph GAP1_E ["Error Boundary"]
-direction TB
-B1["No built-in ErrorBoundary component"]
-B2["Complex class component boilerplate"]
-B3["Fallback errors cause infinite recursion"]
-B4["No way to catch only specific error types"]
-B5["No hook to access error and reset in fallback"]
-C["Resetting multiple ErrorBoundaries requires manual wiring"]
-end
-subgraph GAP1_L ["Lazy & Code Splitting"]
-direction TB
-G["No way to preload lazy components before render"]
-G2["Chunk load failures crash the app"]
-end
-end
-subgraph GAP2 ["TanStack Query"]
-direction TB
-H["Hooks force component splits for Suspense"]
-I["SSR prefetching requires repetitive boilerplate"]
-J["Server prefetching failures are swallowed silently"]
-K["QueryClient leaks data across SSR requests"]
-end
-subgraph GAP3 ["Jotai"]
-direction TB
-L["Hooks hide which atoms trigger Suspense"]
-M["Extension atoms behavior not visible in JSX"]
-end
-subgraph JOTAI ["@suspensive/jotai"]
-direction TB
-Z["Atom, AtomValue, SetAtom"]
-Y["tRPC, Query, Cache compatible"]
-end
-subgraph RQ ["@suspensive/react-query"]
-direction TB
-W["SuspenseQuery, Mutation, PrefetchQuery"]
-V["QueriesHydration"]
-U["skipSsrOnError + timeout"]
-T["createGetQueryClient"]
-end
-subgraph REACT ["@suspensive/react"]
-direction TB
-subgraph REACT_L ["Lazy"]
-direction TB
-LL["lazy — .load()"]
-LL2["reloadOnError"]
-end
-subgraph REACT_E ["ErrorBoundary"]
-direction TB
-R["ErrorBoundary — fallback"]
-R2["shouldCatch"]
-R3["fallback error propagation"]
-R4["useErrorBoundaryFallbackProps"]
-Q["ErrorBoundaryGroup"]
-end
-subgraph REACT_S ["Suspense"]
-direction TB
-S["Suspense — clientOnly"]
-P["Delay — ms"]
-O["ClientOnly"]
-N["DefaultPropsProvider"]
-end
-end
-A --> S
-D --> P
-E --> O
-F --> N
-B1 --> R
-B2 --> R
-B3 --> R3
-B4 --> R2
-B5 --> R4
-C --> Q
-G --> LL
-G2 --> LL2
-H --> W
-I --> V
-J --> U
-K --> T
-L --> Z
-M --> Y
-click S "/docs/react/Suspense"
-click P "/docs/react/Delay"
-click O "/docs/react/ClientOnly"
-click N "/docs/react/DefaultPropsProvider"
-click R "/docs/react/ErrorBoundary"
-click R2 "/docs/react/ErrorBoundary"
-click R3 "/docs/react/ErrorBoundary"
-click R4 "/docs/react/ErrorBoundary"
-click Q "/docs/react/ErrorBoundaryGroup"
-click LL "/docs/react/lazy"
-click LL2 "/docs/react/lazy"
-click W "/docs/react-query/SuspenseQuery"
-click V "/docs/react-query/QueriesHydration"
-click U "/docs/react-query/QueriesHydration"
-click T "/docs/react-query/createGetQueryClient"
-click Z "/docs/jotai/Atom"
-click Y "/docs/jotai/Atom"
-style S color:#1AA3FF,text-decoration:underline
-style P color:#1AA3FF,text-decoration:underline
-style O color:#1AA3FF,text-decoration:underline
-style N color:#1AA3FF,text-decoration:underline
-style R color:#1AA3FF,text-decoration:underline
-style R2 color:#1AA3FF,text-decoration:underline
-style R3 color:#1AA3FF,text-decoration:underline
-style R4 color:#1AA3FF,text-decoration:underline
-style Q color:#1AA3FF,text-decoration:underline
-style LL color:#1AA3FF,text-decoration:underline
-style LL2 color:#1AA3FF,text-decoration:underline
-style W color:#1AA3FF,text-decoration:underline
-style V color:#1AA3FF,text-decoration:underline
-style U color:#1AA3FF,text-decoration:underline
-style T color:#1AA3FF,text-decoration:underline
-style Z color:#1AA3FF,text-decoration:underline
-style Y color:#1AA3FF,text-decoration:underline
+graph TD;
+    subgraph DD ["Migration Packages"]
+        E["@suspensive/codemods"]
+    end
+    subgraph AA ["Core Packages"]
+        A["@suspensive/react"]
+    end
+    subgraph BB ["Adapter Packages"]
+        C["@suspensive/react-query-4,5"]
+        D["@suspensive/jotai"]
+    end
+
+    A --> C
+    A --> D
 ```
 
 <Callout type="info">
 
 **Ready to get started?** Follow the [Getting Started guide](/docs/react/getting-started) to set up Suspensive in 5 minutes, or see how it compares to [react-error-boundary](/docs/react/comparison).
 
-</Callout>
+<Table>
+  <thead>
+    <Table.Tr>
+      <Table.Th>Package</Table.Th>
+      <Table.Th>Description</Table.Th>
+      <Table.Th>Key Features</Table.Th>
+    </Table.Tr>
+  </thead>
+  <tbody>
+    <Table.Tr>
+      <Table.Td>@suspensive/react</Table.Td>
+      <Table.Td>Core suspense components</Table.Td>
+      <Table.Td>ErrorBoundary, Suspense, Delay, ErrorBoundaryGroup</Table.Td>
+    </Table.Tr>
+    <Table.Tr>
+      <Table.Td>@suspensive/react-query-4,5</Table.Td>
+      <Table.Td>TanStack Query integration</Table.Td>
+      <Table.Td>
+        SuspenseQuery, SuspenseInfiniteQuery, QueriesHydration
+      </Table.Td>
+    </Table.Tr>
+    <Table.Tr>
+      <Table.Td>@suspensive/jotai</Table.Td>
+      <Table.Td>Jotai integration</Table.Td>
+      <Table.Td>useAtomValue, useAtom, useSetAtom</Table.Td>
+    </Table.Tr>
+    <Table.Tr>
+      <Table.Td>@suspensive/codemods</Table.Td>
+      <Table.Td>Migration utilities</Table.Td>
+      <Table.Td>Automated code transformations</Table.Td>
+    </Table.Tr>
+  </tbody>
+</Table>
 
-<TrustedBy text="130k+ monthly downloads" />
+## Architecture and Component Relationships
+
+The Suspensive ecosystem is built on a foundation of core components from @suspensive/react, which are then extended and specialized by other packages:
+
+```mermaid
+graph TD;
+subgraph AA [Data Fetching @suspensive/react-query]
+A[queryOptions];
+B[infiniteQueryOptions];
+C[SuspenseQuery];
+D[useSuspenseInfiniteQuery, SuspenseInfiniteQuery];
+E[useSuspenseQueries, SuspenseQueries];
+end
+subgraph BB [State Management @suspensive/jotai]
+F[Atom];
+G[AtomValue];
+end
+subgraph CC [Core Components @suspensive/react]
+H[Suspense];
+I[ErrorBoundary];
+J[Delay];
+K[ErrorBoundaryGroup];
+end
+
+C --> H;
+D --> H;
+E --> H;
+F --> H;
+G --> H;
+
+A --> C;
+A --> E;
+B --> D;
+```
+
+## Version Support and Compatibility
+
+Suspensive is designed to work with:
+
+- React 18 and React 19
+- TanStack Query v4 and v5
+- Jotai v2
+
+## Key Benefits
+
+- **Declarative Error Handling**: Replace try/catch blocks with component-based error boundaries
+- **Simplified Data Fetching**: Integrate seamlessly with TanStack Query using suspense
+- **Coordinated Error Management**: Group and reset multiple error boundaries together
+- **Controlled Loading States**: Fine-tune loading indicators with timing controls
+- **Viewport Awareness**: Trigger loading or animations based on viewport visibility
+
+<TrustedBy
+  title="Trusted by"
+  description="Used by teams at these companies"
+  callToActionText="Using Suspensive at your company?"
+  addCompanyButtonText="Add your company"
+/>
