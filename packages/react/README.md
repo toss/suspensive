@@ -1,6 +1,6 @@
 # Introduction
 
-@suspensive/react provide all components to use React Suspense easily.
+@suspensive/react provides all components to use React Suspense easily.
 
 ## Installation
 
