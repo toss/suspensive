@@ -1,5 +1,17 @@
 # @suspensive/react-query
 
+## 3.21.0
+
+### Minor Changes
+
+- [#1943](https://github.com/toss/suspensive/pull/1943) [`32821ed`](https://github.com/toss/suspensive/commit/32821edc0058f4844b4c2a61ec0762cc72494cd5) Thanks [@manudeli](https://github.com/manudeli)! - chore: update @tanstack/react-query version and deprecate mutationOptions
+
+### Patch Changes
+
+- Updated dependencies [[`32821ed`](https://github.com/toss/suspensive/commit/32821edc0058f4844b4c2a61ec0762cc72494cd5)]:
+  - @suspensive/react-query-4@3.21.0
+  - @suspensive/react-query-5@3.21.0
+
 ## 3.20.4
 
 ### Patch Changes
