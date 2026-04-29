@@ -113,7 +113,7 @@ import {
 
 # !!steps 대표적인 라이브러리인 TanStack Query로 Suspense 없이 코드를 작성한다면 이렇게 작성합니다.
 
-이 경우 `isLoading`과 `isError`를 체크하여 로딩과 에러 상태를 처리하고 타입스크립트적으로 data에서 `undefined`를 제거할 수 있습니다.
+각 섹션마다 `isLoading`과 `isError`를 체크해서 로딩과 에러 상태를 처리합니다. 모든 쿼리가 한 컴포넌트 안에 있기 때문에 어느 쿼리 하나라도 상태가 바뀌면 전체 컴포넌트가 다시 렌더링됩니다.
 
 ```jsx ! Page.jsx
 import { useQuery } from '@tanstack/react-query'
@@ -126,35 +126,37 @@ const Page = () => {
   })
   const promotionsQuery = useQuery(promotionsQueryOptions())
 
-  if (
-    userQuery.isLoading ||
-    postsQuery.isLoading ||
-    promotionsQuery.isLoading
-  ) {
-    return 'loading...'
-  }
-
-  if (userQuery.isError || postsQuery.isError || promotionsQuery.isError) {
-    return 'error'
-  }
-
   return (
     <Fragment>
-      <UserProfile {...userQuery.data} />
-      {postsQuery.data.map((post) => (
-        <PostListItem key={post.id} {...post} />
-      ))}
-      {promotionsQuery.data.map((promotion) => (
-        <Promotion key={promotion.id} {...promotion} />
-      ))}
+      {userQuery.isLoading ? (
+        'loading...'
+      ) : userQuery.isError ? (
+        'error'
+      ) : (
+        <UserProfile {...userQuery.data} />
+      )}
+      {postsQuery.isLoading
+        ? 'loading...'
+        : postsQuery.isError
+          ? 'error'
+          : postsQuery.data.map((post) => (
+              <PostListItem key={post.id} {...post} />
+            ))}
+      {promotionsQuery.isLoading
+        ? 'loading...'
+        : promotionsQuery.isError
+          ? 'error'
+          : promotionsQuery.data.map((promotion) => (
+              <Promotion key={promotion.id} {...promotion} />
+            ))}
     </Fragment>
   )
 }
 ```
 
-# !!steps Suspense를 사용하면 타입적으로 간결해지지만 컴포넌트의 깊이는 깊어집니다.
+# !!steps Suspense를 사용하면 타입적으로 간결해지고 리렌더 범위도 좁힐 수 있지만, 컴포넌트의 깊이는 깊어집니다.
 
-`useSuspenseQuery`는 `Suspense`와 `ErrorBoundary`를 사용하여 외부에서 로딩과 에러 상태를 처리할 수 있습니다.
+`useSuspenseQuery`는 `Suspense`와 `ErrorBoundary`로 외부에서 로딩과 에러 상태를 처리합니다. 섹션마다 `Suspense`를 두면 리렌더 범위가 그 섹션으로 좁혀집니다.
 하지만 hook이기 때문에 컴포넌트가 분리되어야만 하고, 불필요한 뎁스가 생깁니다.
 
 ```jsx ! Page.jsx
@@ -165,7 +167,11 @@ const Page = () => (
   <ErrorBoundary fallback="error">
     <Suspense fallback="loading...">
       <UserInfo userId={userId} />
+    </Suspense>
+    <Suspense fallback="loading...">
       <PostList userId={userId} />
+    </Suspense>
+    <Suspense fallback="loading...">
       <PromotionList userId={userId} />
     </Suspense>
   </ErrorBoundary>
@@ -194,7 +200,7 @@ const PromotionList = ({ userId }) => {
 
 # !!steps Suspensive를 사용하면 모든 것이 같은 뎁스에 유지됩니다.
 
-1. `SuspenseQuery`를 사용하면 래퍼 컴포넌트가 필요 없습니다.
+1. `SuspenseQuery`를 사용하면 래퍼 컴포넌트 없이도 같은 뎁스에서 섹션별 `Suspense`로 리렌더 범위를 좁힐 수 있습니다.
 
 2. UserProfile과 같은 Presentational 컴포넌트만 남으므로 테스트하기 쉬워집니다.
 
@@ -208,6 +214,8 @@ const Page = () => (
       <SuspenseQuery {...userQueryOptions()}>
         {({ data: user }) => <UserProfile {...user} />}
       </SuspenseQuery>
+    </Suspense>
+    <Suspense fallback="loading...">
       <SuspenseQuery
         {...postsQueryOptions()}
         select={(posts) => posts.filter(({ isPublic }) => isPublic)}
@@ -216,6 +224,8 @@ const Page = () => (
           posts.map((post) => <PostListItem key={post.id} {...post} />)
         }
       </SuspenseQuery>
+    </Suspense>
+    <Suspense fallback="loading...">
       <SuspenseQuery
         {...promotionsQueryOptions()}
         select={(promotions) => promotions.filter(({ isPublic }) => isPublic)}

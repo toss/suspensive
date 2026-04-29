@@ -114,7 +114,7 @@ import {
 <Scrollycoding>
 # !!steps Without Suspense, a typical TanStack Query page looks like this.
 
-You check `isLoading` and `isError` to handle loading and error states, and remove `undefined` from data in TypeScript.
+You check `isLoading` and `isError` per section to handle loading and error states. Since all queries live in one component, any query state change re-renders the entire page.
 
 ```jsx ! Page.jsx
 import { useQuery } from '@tanstack/react-query'
@@ -127,35 +127,37 @@ const Page = () => {
   })
   const promotionsQuery = useQuery(promotionsQueryOptions())
 
-  if (
-    userQuery.isLoading ||
-    postsQuery.isLoading ||
-    promotionsQuery.isLoading
-  ) {
-    return 'loading...'
-  }
-
-  if (userQuery.isError || postsQuery.isError || promotionsQuery.isError) {
-    return 'error'
-  }
-
   return (
     <Fragment>
-      <UserProfile {...userQuery.data} />
-      {postsQuery.data.map((post) => (
-        <PostListItem key={post.id} {...post} />
-      ))}
-      {promotionsQuery.data.map((promotion) => (
-        <Promotion key={promotion.id} {...promotion} />
-      ))}
+      {userQuery.isLoading ? (
+        'loading...'
+      ) : userQuery.isError ? (
+        'error'
+      ) : (
+        <UserProfile {...userQuery.data} />
+      )}
+      {postsQuery.isLoading
+        ? 'loading...'
+        : postsQuery.isError
+          ? 'error'
+          : postsQuery.data.map((post) => (
+              <PostListItem key={post.id} {...post} />
+            ))}
+      {promotionsQuery.isLoading
+        ? 'loading...'
+        : promotionsQuery.isError
+          ? 'error'
+          : promotionsQuery.data.map((promotion) => (
+              <Promotion key={promotion.id} {...promotion} />
+            ))}
     </Fragment>
   )
 }
 ```
 
-# !!steps Suspense makes it type-safe. But hooks force you to split components.
+# !!steps Suspense makes it type-safe and narrows the re-render scope. But hooks force you to split components.
 
-`useSuspenseQuery` handles loading and error states externally via `Suspense` and `ErrorBoundary`.
+`useSuspenseQuery` handles loading and error states externally via `Suspense` and `ErrorBoundary`. A `Suspense` per section narrows the re-render scope to that section.
 But since it's a hook, you must create separate components — adding unnecessary depth.
 
 ```jsx ! Page.jsx
@@ -166,7 +168,11 @@ const Page = () => (
   <ErrorBoundary fallback="error">
     <Suspense fallback="loading...">
       <UserInfo userId={userId} />
+    </Suspense>
+    <Suspense fallback="loading...">
       <PostList userId={userId} />
+    </Suspense>
+    <Suspense fallback="loading...">
       <PromotionList userId={userId} />
     </Suspense>
   </ErrorBoundary>
@@ -195,7 +201,7 @@ const PromotionList = ({ userId }) => {
 
 # !!steps With Suspensive, everything stays at the same depth.
 
-1. `SuspenseQuery` eliminates the need for wrapper components.
+1. `SuspenseQuery` lets you scope re-renders per section with `Suspense` — at the same depth, with no wrapper components.
 
 2. Only presentational components like UserProfile remain, making them easier to test.
 
@@ -209,6 +215,8 @@ const Page = () => (
       <SuspenseQuery {...userQueryOptions()}>
         {({ data: user }) => <UserProfile {...user} />}
       </SuspenseQuery>
+    </Suspense>
+    <Suspense fallback="loading...">
       <SuspenseQuery
         {...postsQueryOptions()}
         select={(posts) => posts.filter(({ isPublic }) => isPublic)}
@@ -217,6 +225,8 @@ const Page = () => (
           posts.map((post) => <PostListItem key={post.id} {...post} />)
         }
       </SuspenseQuery>
+    </Suspense>
+    <Suspense fallback="loading...">
       <SuspenseQuery
         {...promotionsQueryOptions()}
         select={(promotions) => promotions.filter(({ isPublic }) => isPublic)}
