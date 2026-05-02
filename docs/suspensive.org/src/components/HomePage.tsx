@@ -46,7 +46,6 @@ export const HomePage = ({
   useEffect(() => {
     const el = heroLogoRef.current
     if (!el) return
-    setIsHeroLogoInViewRef.current(true)
     const observer = new IntersectionObserver(
       ([entry]) => {
         setIsHeroLogoInViewRef.current(entry.isIntersecting)
@@ -54,10 +53,7 @@ export const HomePage = ({
       { threshold: 0 }
     )
     observer.observe(el)
-    return () => {
-      observer.disconnect()
-      setIsHeroLogoInViewRef.current(true)
-    }
+    return () => observer.disconnect()
   }, [])
 
   return (
