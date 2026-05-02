@@ -3,12 +3,14 @@
 import { useIsClient } from '@suspensive/react'
 import { motion } from 'motion/react'
 import { usePathname } from 'next/navigation'
+import { useHeroLogoInView } from '@/contexts/HeroLogoInViewContext'
 import { LogoImage } from '@/components/Logo'
 
 export const NavbarLogo = () => {
   const pathname = usePathname()
   const isHome = pathname === '/en' || pathname === '/ko' || pathname === '/'
-  if (isHome) return null
+  const { isHeroLogoInView } = useHeroLogoInView()
+  if (isHome && isHeroLogoInView) return null
   return (
     <>
       <span className="md:hidden">
