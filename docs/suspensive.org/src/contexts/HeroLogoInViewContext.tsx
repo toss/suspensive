@@ -7,10 +7,11 @@ interface HeroLogoInViewContextValue {
   setIsHeroLogoInView: (inView: boolean) => void
 }
 
-const HeroLogoInViewContext = createContext<HeroLogoInViewContextValue>({
-  isHeroLogoInView: true,
-  setIsHeroLogoInView: () => {},
-})
+const HeroLogoInViewContext = createContext<HeroLogoInViewContextValue | null>(
+  null
+)
+
+HeroLogoInViewContext.displayName = 'HeroLogoInViewContext'
 
 export const HeroLogoInViewProvider = ({
   children,
@@ -28,4 +29,12 @@ export const HeroLogoInViewProvider = ({
   )
 }
 
-export const useHeroLogoInView = () => useContext(HeroLogoInViewContext)
+export const useHeroLogoInView = () => {
+  const context = useContext(HeroLogoInViewContext)
+  if (!context) {
+    throw new Error(
+      'useHeroLogoInView must be used within a HeroLogoInViewProvider'
+    )
+  }
+  return context
+}
