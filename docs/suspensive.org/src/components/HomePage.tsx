@@ -40,21 +40,19 @@ export const HomePage = ({
 }) => {
   const heroLogoRef = useRef<HTMLDivElement>(null)
   const { setIsHeroLogoInView } = useHeroLogoInView()
-  const setIsHeroLogoInViewRef = useRef(setIsHeroLogoInView)
-  setIsHeroLogoInViewRef.current = setIsHeroLogoInView
 
   useEffect(() => {
     const el = heroLogoRef.current
     if (!el) return
     const observer = new IntersectionObserver(
       ([entry]) => {
-        setIsHeroLogoInViewRef.current(entry.isIntersecting)
+        setIsHeroLogoInView(entry.isIntersecting)
       },
       { threshold: 0 }
     )
     observer.observe(el)
     return () => observer.disconnect()
-  }, [])
+  }, [setIsHeroLogoInView])
 
   return (
     <>
