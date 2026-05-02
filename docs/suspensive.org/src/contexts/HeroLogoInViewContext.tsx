@@ -20,9 +20,11 @@ export const HeroLogoInViewProvider = ({
   const [isHeroLogoInView, setIsHeroLogoInView] = useState(true)
 
   return (
-    <HeroLogoInViewContext value={{ isHeroLogoInView, setIsHeroLogoInView }}>
+    <HeroLogoInViewContext.Provider
+      value={{ isHeroLogoInView, setIsHeroLogoInView }}
+    >
       {children}
-    </HeroLogoInViewContext>
+    </HeroLogoInViewContext.Provider>
   )
 }
 
