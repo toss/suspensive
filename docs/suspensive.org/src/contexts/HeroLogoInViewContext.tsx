@@ -1,6 +1,6 @@
 'use client'
 
-import { createContext, type ReactNode, useContext, useState } from 'react'
+import { type ReactNode, createContext, useContext, useState } from 'react'
 
 interface HeroLogoInViewContextValue {
   isHeroLogoInView: boolean
