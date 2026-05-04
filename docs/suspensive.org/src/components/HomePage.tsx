@@ -13,6 +13,7 @@ import { Magnetic } from './Magnetic'
 import { NpmInstallCopyButton } from './NpmInstallCopyButton'
 import { Spotlight } from './Spotlight'
 import { Tilt } from './Tilt'
+import { useHeroLogoInView } from '@/contexts/HeroLogoInViewContext'
 
 const CodeBlockClassName = 'nextra-code'
 
@@ -37,6 +38,22 @@ export const HomePage = ({
   items?: { title: string; desc: string }[]
   children?: ReactNode
 }) => {
+  const heroLogoRef = useRef<HTMLDivElement>(null)
+  const { setIsHeroLogoInView } = useHeroLogoInView()
+
+  useEffect(() => {
+    const el = heroLogoRef.current
+    if (!el) return
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsHeroLogoInView(entry.isIntersecting)
+      },
+      { threshold: 0 }
+    )
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [setIsHeroLogoInView])
+
   return (
     <>
       <ClientOnly>
@@ -51,7 +68,10 @@ export const HomePage = ({
       >
         <div className="flex flex-col items-center justify-center gap-8 text-center">
           <div className="flex flex-col items-center">
-            <div className="align-center mx-6 mt-10 -mb-6 flex justify-center pt-6 pb-6 md:mt-16 md:pt-12 md:pb-8">
+            <div
+              ref={heroLogoRef}
+              className="align-center mx-6 mt-10 -mb-6 flex justify-center pt-6 pb-6 md:mt-16 md:pt-12 md:pb-8"
+            >
               <LogoImage size={2.4} />
             </div>
             {tagline && (

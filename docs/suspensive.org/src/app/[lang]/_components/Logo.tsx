@@ -1,23 +1,36 @@
 'use client'
 
 import { useIsClient } from '@suspensive/react'
-import { motion } from 'motion/react'
+import { AnimatePresence, motion } from 'motion/react'
 import { usePathname } from 'next/navigation'
 import { LogoImage } from '@/components/Logo'
+import { useHeroLogoInView } from '@/contexts/HeroLogoInViewContext'
 
 export const NavbarLogo = () => {
   const pathname = usePathname()
   const isHome = pathname === '/en' || pathname === '/ko' || pathname === '/'
-  if (isHome) return null
+  const { isHeroLogoInView } = useHeroLogoInView()
+  const visible = !isHome || !isHeroLogoInView
+
   return (
-    <>
-      <span className="md:hidden">
-        <Logo />
-      </span>
-      <span className="hidden md:inline-flex">
-        <LogoImage size={0.5} />
-      </span>
-    </>
+    <AnimatePresence>
+      {visible && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.2 }}
+          className="flex items-center"
+        >
+          <span className="md:hidden">
+            <Logo />
+          </span>
+          <span className="hidden md:inline-flex">
+            <LogoImage size={0.5} />
+          </span>
+        </motion.div>
+      )}
+    </AnimatePresence>
   )
 }
 
