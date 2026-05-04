@@ -3,8 +3,8 @@
 import { useIsClient } from '@suspensive/react'
 import { AnimatePresence, motion } from 'motion/react'
 import { usePathname } from 'next/navigation'
-import { useHeroLogoInView } from '@/contexts/HeroLogoInViewContext'
 import { LogoImage } from '@/components/Logo'
+import { useHeroLogoInView } from '@/contexts/HeroLogoInViewContext'
 
 export const NavbarLogo = () => {
   const pathname = usePathname()
