@@ -1,6 +1,9 @@
 @import 'tailwindcss';
 @import 'nextra-theme-docs/style.css';
 
+/* tailWind가 OS의 테마 설정이 아닌, HTML 내의 dark 클래스를 참조하도록 설정 */
+@custom-variant dark (&:where(.dark, .dark *));
+
 .scrollbar-none {
   -ms-overflow-style: none;
   scrollbar-width: none;
