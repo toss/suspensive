@@ -1,7 +1,6 @@
 export { createGetQueryClient } from './createGetQueryClient'
 export { IsFetching } from './IsFetching'
 export { Mutation } from './Mutation'
-export { mutationOptions } from './mutationOptions'
 export { PrefetchInfiniteQuery } from './PrefetchInfiniteQuery'
 export { PrefetchQuery } from './PrefetchQuery'
 export { QueriesHydration } from './QueriesHydration'
