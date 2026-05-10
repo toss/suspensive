@@ -5,7 +5,7 @@ import prompts from 'prompts'
 const TRANSFORMER_INQUIRER_CHOICES = [
   {
     title: 'tanstack-query-import',
-    description: 'Migrate imports to @tanstack/react-query in @suspensive/react-query',
+    description: 'Move backported APIs from @suspensive/react-query{,-4,-5} to @tanstack/react-query',
   },
   {
     title: 'migrate-query-client-consumer-props',
@@ -18,6 +18,10 @@ const TRANSFORMER_INQUIRER_CHOICES = [
   {
     title: 'remove-networkmode',
     description: 'Remove networkMode from Suspense API',
+  },
+  {
+    title: 'migrate-suspensive-react-query-package',
+    description: 'Migrate @suspensive/react-query imports to the version-specific @suspensive/react-query-{4,5}',
   },
 ]
 

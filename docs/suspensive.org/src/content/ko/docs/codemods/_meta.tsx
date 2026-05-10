@@ -13,4 +13,7 @@ export default {
   },
   migrateWithAPI: { title: 'with API로 변환' },
   removeNetworkmode: { title: 'networkMode 제거' },
+  migrateSuspensiveReactQueryPackage: {
+    title: '@suspensive/react-query 패키지 마이그레이션',
+  },
 } satisfies MetaRecord
