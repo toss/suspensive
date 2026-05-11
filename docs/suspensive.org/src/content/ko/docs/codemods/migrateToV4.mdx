@@ -9,7 +9,6 @@ import { Callout } from '@/components'
 <Callout type='info'>
 
 - `@suspensive/react-query` v3 환경에서 v4로 업데이트할 때 추천합니다.
-- 내부적으로 [`migrate-suspensive-react-query-package`](/docs/codemods/migrateSuspensiveReactQueryPackage) 를 먼저 실행한 뒤 [`tanstack-query-import`](/docs/codemods/tanstackQueryImport)를 이어서 실행합니다.
 - `package.json` 파일을 수정하지 않습니다. 실행 후 의존성에서 `@suspensive/react-query`를 제거하고 `@suspensive/react-query-4` 또는 `@suspensive/react-query-5`가 설치되어 있는지 확인하세요.
 
 </Callout>
@@ -17,9 +16,9 @@ import { Callout } from '@/components'
 `@suspensive/react-query` v4의 코드 레벨 브레이킹 체인지는 두 가지입니다.
 
 1. 통합 패키지 `@suspensive/react-query`가 제거됩니다. 모든 import는 버전별 패키지 `@suspensive/react-query-4` 또는 `@suspensive/react-query-5`를 가리켜야 합니다.
-2. `@tanstack/react-query`에서 제공되는 API(`queryOptions`, `mutationOptions` 등)는 `@suspensive/react-query-{4,5}`에서 제거됩니다.
+2. `@tanstack/react-query`에서 제공되는 API(`queryOptions`, `mutationOptions` 등)는 `@suspensive/react-query-4, 5`에서 제거됩니다.
 
-본 코드모드는 두 가지 브레이킹 체인지를 해결합니다.
+내부적으로 [`migrate-suspensive-react-query-package`](/docs/codemods/migrateSuspensiveReactQueryPackage) 를 먼저 실행한 뒤 [`tanstack-query-import`](/docs/codemods/tanstackQueryImport)를 이어서 실행합니다.
 
 ```bash filename="Terminal"
 npx @suspensive/codemods migrate-to-v4 .

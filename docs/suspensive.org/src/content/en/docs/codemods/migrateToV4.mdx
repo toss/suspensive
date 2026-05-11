@@ -9,7 +9,6 @@ import { Callout } from '@/components'
 <Callout type='info'>
 
 - Recommended when upgrading `@suspensive/react-query` from v3 to v4 — runs every code-level migration in a single command.
-- Internally chains [`migrate-suspensive-react-query-package`](./migrateSuspensiveReactQueryPackage) followed by [`tanstack-query-import`](./tanstackQueryImport).
 - Updating your `package.json` dependencies is still a manual step.
 
 </Callout>
@@ -19,7 +18,7 @@ import { Callout } from '@/components'
 1. The unified `@suspensive/react-query` package is removed. Imports must point at the version-specific `@suspensive/react-query-4` or `@suspensive/react-query-5`.
 2. APIs backported into `@tanstack/react-query` (`useSuspenseQuery`, `queryOptions`, `mutationOptions`, `usePrefetchInfiniteQuery`, and so on) are removed from `@suspensive/react-query-{4,5}`. They must be imported directly from `@tanstack/react-query`.
 
-This codemod resolves both in a single pass:
+Internally chains [`migrate-suspensive-react-query-package`](./migrateSuspensiveReactQueryPackage) followed by [`tanstack-query-import`](./tanstackQueryImport).
 
 ```bash filename="Terminal"
 npx @suspensive/codemods migrate-to-v4 .

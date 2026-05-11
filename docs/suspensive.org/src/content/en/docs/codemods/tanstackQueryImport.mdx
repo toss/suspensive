@@ -1,5 +1,5 @@
 ---
-description: 'A codemod that changes import paths to the APIs provided by @tanstack/react-query.'
+description: 'Codemod to update @suspensive/react-query imports to match TanStack Query v5 conventions.'
 ---
 
 import { Callout } from '@/components'
@@ -23,7 +23,7 @@ npx @suspensive/codemods tanstack-query-import .
 
 You can automatically convert import paths from `@suspensive/react-query` to `@tanstack/react-query`.
 
-Example:
+For example:
 
 ```tsx /@suspensive/
 import {
@@ -34,7 +34,7 @@ import {
 import { useSuspenseQuery } from '@suspensive/react-query'
 ```
 
-After conversion:
+Transforms into:
 
 ```tsx /@tanstack/
 import { queryOptions, mutationOptions } from '@tanstack/react-query'

@@ -21,7 +21,7 @@ npx @suspensive/codemods migrate-suspensive-react-query-package .
 
 It automatically converts the source paths of all `import`/`export` declarations that reference `@suspensive/react-query`.
 
-Example:
+For example:
 
 ```tsx /react-query/
 import { useSuspenseQuery, SuspenseQuery } from '@suspensive/react-query'
@@ -29,7 +29,7 @@ import * as RQ from '@suspensive/react-query'
 export { queryOptions } from '@suspensive/react-query'
 ```
 
-After conversion:
+Transforms into:
 
 ```tsx /react-query-5/
 import { useSuspenseQuery, SuspenseQuery } from '@suspensive/react-query-5'
