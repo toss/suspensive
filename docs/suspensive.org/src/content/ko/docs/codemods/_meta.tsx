@@ -7,6 +7,7 @@ export default {
     type: 'separator',
     title: 'Codemods',
   },
+  migrateToV4: { title: 'v4로 마이그레이션' },
   tanstackQueryImport: { title: 'TanStack Query로 import 경로 변경' },
   migrateQueryClientConsumerProps: {
     title: '<QueryClientConsumer/> Props 변환',

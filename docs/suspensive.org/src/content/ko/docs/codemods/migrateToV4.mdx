@@ -1,0 +1,61 @@
+---
+description: '@suspensive/react-query v4의 코드 레벨 브레이킹 체인지를 한 번에 처리하는 코드모드.'
+---
+
+import { Callout } from '@/components'
+
+# v4로 마이그레이션
+
+<Callout type='info'>
+
+- `@suspensive/react-query` v3 환경에서 v4로 업데이트할 때 추천합니다 — 코드 레벨의 모든 마이그레이션을 한 번의 명령으로 처리합니다.
+- 내부적으로 [`migrate-suspensive-react-query-package`](./migrateSuspensiveReactQueryPackage)를 먼저 실행한 뒤 [`tanstack-query-import`](./tanstackQueryImport)를 이어서 실행합니다.
+- `package.json` 의존성 갱신은 여전히 수동 작업입니다.
+
+</Callout>
+
+`@suspensive/react-query` v4의 코드 레벨 브레이킹 체인지는 두 가지입니다.
+
+1. 통합 패키지 `@suspensive/react-query`가 제거됩니다. 모든 import는 버전별 패키지 `@suspensive/react-query-4` 또는 `@suspensive/react-query-5`를 가리켜야 합니다.
+2. `@tanstack/react-query`에 백포트된 API(`useSuspenseQuery`, `queryOptions`, `mutationOptions`, `usePrefetchInfiniteQuery` 등)는 `@suspensive/react-query-{4,5}`에서 제거됩니다. 이들은 `@tanstack/react-query`에서 직접 import 해야 합니다.
+
+본 코드모드는 두 가지를 한 번에 해결합니다.
+
+```bash filename="Terminal"
+npx @suspensive/codemods migrate-to-v4 .
+```
+
+예:
+
+```tsx /@suspensive/react-query/
+import {
+  useSuspenseQuery,
+  SuspenseQuery,
+  queryOptions,
+  IsFetching,
+} from '@suspensive/react-query'
+import { mutationOptions } from '@suspensive/react-query-5'
+```
+
+변환 후:
+
+```tsx /@tanstack/react-query/ /@suspensive/react-query-5/
+import { useSuspenseQuery, queryOptions } from '@tanstack/react-query'
+import { SuspenseQuery, IsFetching } from '@suspensive/react-query-5'
+import { mutationOptions } from '@tanstack/react-query'
+```
+
+## 버전 감지
+
+현재 작업 디렉토리에서 위로 올라가며 가장 가까운 `package.json`을 확인해 `@tanstack/react-query`의 v4와 v5 중 어느 버전에 의존하는지 판단합니다. 감지된 메이저 버전에 따라 대상 패키지(`@suspensive/react-query-4` vs `@suspensive/react-query-5`)가 결정됩니다.
+
+감지에 실패한 경우 **v5**로 fallback 하며 경고를 출력합니다. 명시적으로 대상을 지정하려면 실행 전 `SUSPENSIVE_RQ_TARGET` 환경 변수를 `4` 또는 `5`로 설정합니다.
+
+```bash filename="Terminal"
+SUSPENSIVE_RQ_TARGET=4 npx @suspensive/codemods migrate-to-v4 .
+```
+
+## 주의사항
+
+- 본 코드모드는 `package.json`을 수정하지 않습니다. 실행 후 의존성에서 `@suspensive/react-query`를 제거하고 `@suspensive/react-query-4` 또는 `@suspensive/react-query-5`가 설치되어 있는지 확인하세요.
+- TanStack Query v4 → v5에서의 `<QueryClientConsumer>` prop 변경은 [`migrate-query-client-consumer-props`](./migrateQueryClientConsumerProps) 코드모드를 따로 실행해주세요.

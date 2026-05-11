@@ -1,7 +1,7 @@
 import { existsSync, readFileSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 
-export type TanStackMajor = 4 | 5
+type TanStackMajor = 4 | 5
 
 const DEFAULT_VERSION: TanStackMajor = 5
 

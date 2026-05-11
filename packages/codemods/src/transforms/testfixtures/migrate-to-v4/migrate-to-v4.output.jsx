@@ -1,0 +1,10 @@
+import { useSuspenseQuery, queryOptions } from "@tanstack/react-query";
+import { SuspenseQuery, IsFetching } from "@suspensive/react-query-5";
+import { mutationOptions, usePrefetchInfiniteQuery } from "@tanstack/react-query";
+import type { UseSuspenseInfiniteQueryOptions, SuspenseQueriesOptions } from "@tanstack/react-query";
+import { PrefetchQuery } from "@suspensive/react-query-4";
+import { useSuspenseQuery as useSQ } from "@tanstack/react-query";
+import * as RQ from "@suspensive/react-query-5";
+import { useQuery } from "@tanstack/react-query";
+export { queryOptions } from "@tanstack/react-query";
+export { QueryClientConsumer } from "@suspensive/react-query-5";

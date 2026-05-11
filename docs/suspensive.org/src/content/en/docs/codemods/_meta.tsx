@@ -7,6 +7,7 @@ export default {
     type: 'separator',
     title: 'Codemods',
   },
+  migrateToV4: { title: 'Migrate to v4' },
   tanstackQueryImport: { title: 'Migrate TanStack Query imports' },
   migrateQueryClientConsumerProps: {
     title: 'Migrate <QueryClientConsumer/> Props',

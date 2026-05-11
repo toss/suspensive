@@ -1,0 +1,48 @@
+import { Callout } from '@/components'
+
+# v4로 마이그레이션하기
+
+## 브레이킹 체인지 대응
+
+### `@suspensive/react-query` 패키지 제거
+
+<Callout type='info'>
+
+v3에서 v4로 업그레이드하는 모든 사용자에게 영향을 줍니다.
+
+</Callout>
+
+통합 패키지 `@suspensive/react-query`가 제거되었습니다. 사용 중인 `@tanstack/react-query`의 메이저 버전에 맞춰 버전별 패키지로 변경해야 합니다.
+
+- `@tanstack/react-query` v4 → `@suspensive/react-query-4`
+- `@tanstack/react-query` v5 → `@suspensive/react-query-5`
+
+### `@suspensive/react-query-{4,5}`에서 백포팅된 API 제거
+
+`@tanstack/react-query`에 백포팅된 API(`useSuspenseQuery`, `queryOptions`, `mutationOptions`, `usePrefetchInfiniteQuery` 및 관련 option/result 타입 등)는 `@suspensive/react-query-{4,5}`에서 더 이상 re-export 되지 않습니다. 해당 API는 `@tanstack/react-query`에서 직접 import 해야 합니다.
+
+```diff
+- import { useSuspenseQuery, SuspenseQuery, queryOptions } from '@suspensive/react-query'
++ import { useSuspenseQuery, queryOptions } from '@tanstack/react-query'
++ import { SuspenseQuery } from '@suspensive/react-query-5'
+```
+
+## 권장 마이그레이션 경로
+
+[`migrate-to-v4`](/docs/codemods/migrateToV4) 코드모드를 한 번 실행하면 두 가지 코드 레벨 브레이킹 체인지가 모두 해결됩니다.
+
+```bash filename="Terminal"
+npx @suspensive/codemods migrate-to-v4 .
+```
+
+이후 `package.json` 의존성을 수동으로 업데이트하세요.
+
+```diff
+{
+  "dependencies": {
+-   "@suspensive/react-query": "^3.0.0",
++   "@suspensive/react-query-5": "^4.0.0",
+    "@tanstack/react-query": "^5.0.0"
+  }
+}
+```
