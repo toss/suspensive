@@ -5,8 +5,7 @@ import prompts from 'prompts'
 const TRANSFORMER_INQUIRER_CHOICES = [
   {
     title: 'migrate-to-v4',
-    description:
-      'One-shot Suspensive v3 → v4 migration (runs migrate-suspensive-react-query-package + tanstack-query-import)',
+    description: 'Migrates Suspensive v3 APIs to v4',
   },
   {
     title: 'tanstack-query-import',

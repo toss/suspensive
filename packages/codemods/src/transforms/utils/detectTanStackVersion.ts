@@ -1,20 +1,19 @@
 import { existsSync, readFileSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 
-type TanStackMajor = 4 | 5
+const DEFAULT_VERSION = 5
 
-const DEFAULT_VERSION: TanStackMajor = 5
-
-let cachedVersion: TanStackMajor | undefined
+let cachedVersion: number | undefined
 
 export function resetTanStackVersionCache(): void {
   cachedVersion = undefined
 }
 
-export function detectTanStackVersion(startDir: string = process.cwd()): TanStackMajor {
-  const override = process.env.SUSPENSIVE_RQ_TARGET
-  if (override === '4' || override === '5') {
-    return Number(override) as TanStackMajor
+export function detectTanStackVersion(startDir: string = process.cwd()): number {
+  const override = Number(process.env.SUSPENSIVE_RQ_TARGET)
+
+  if (!isNaN(override)) {
+    return override
   }
 
   if (cachedVersion !== undefined) {
@@ -23,9 +22,7 @@ export function detectTanStackVersion(startDir: string = process.cwd()): TanStac
 
   const range = findTanStackRange(startDir)
   if (range === undefined) {
-    console.warn(
-      `[migrate-suspensive-react-query-package] Could not detect @tanstack/react-query version from package.json. Defaulting to v${DEFAULT_VERSION}.`
-    )
+    console.warn(`Could not detect @tanstack/react-query version from package.json. Defaulting to v${DEFAULT_VERSION}.`)
     cachedVersion = DEFAULT_VERSION
     return cachedVersion
   }
@@ -33,7 +30,7 @@ export function detectTanStackVersion(startDir: string = process.cwd()): TanStac
   const major = parseMajor(range)
   if (major === undefined) {
     console.warn(
-      `[migrate-suspensive-react-query-package] Could not parse major version from @tanstack/react-query range "${range}". Defaulting to v${DEFAULT_VERSION}.`
+      `Could not parse major version from @tanstack/react-query range "${range}". Defaulting to v${DEFAULT_VERSION}.`
     )
     cachedVersion = DEFAULT_VERSION
     return cachedVersion
@@ -46,6 +43,7 @@ export function detectTanStackVersion(startDir: string = process.cwd()): TanStac
 function findTanStackRange(startDir: string): string | undefined {
   let current = startDir
   let parent = dirname(current)
+
   while (parent !== current) {
     const pkgPath = join(current, 'package.json')
     if (existsSync(pkgPath)) {
@@ -64,7 +62,7 @@ function findTanStackRange(startDir: string): string | undefined {
           return range
         }
       } catch {
-        // ignore and continue walking up
+        // ignore
       }
     }
 
@@ -74,14 +72,14 @@ function findTanStackRange(startDir: string): string | undefined {
   return undefined
 }
 
-function parseMajor(range: string): TanStackMajor | undefined {
+function parseMajor(range: string): number | undefined {
   const match = /(\d+)/.exec(range)
-  if (!match) {
-    return undefined
-  }
+  if (!match) return
+
   const n = Number(match[1])
-  if (n === 4 || n === 5) {
+  if (Number.isInteger(n)) {
     return n
   }
+
   return undefined
 }
