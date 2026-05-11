@@ -54,7 +54,6 @@ If detection fails, the codemod falls back to **v5** with a warning. To force a 
 SUSPENSIVE_RQ_TARGET=4 npx @suspensive/codemods migrate-to-v4 .
 ```
 
-## Caveats
+## Notes
 
 - The codemod does **not** update your `package.json`. After running it, remove `@suspensive/react-query` from your dependencies and ensure `@suspensive/react-query-4` or `@suspensive/react-query-5` is installed.
-- For the TanStack Query v4 → v5 `<QueryClientConsumer>` prop change, run [`migrate-query-client-consumer-props`](./migrateQueryClientConsumerProps) separately.
