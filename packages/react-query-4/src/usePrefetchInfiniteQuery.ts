@@ -14,6 +14,6 @@ export function usePrefetchInfiniteQuery<
   const queryClient = useQueryClient()
 
   if (typeof options.queryKey !== 'undefined' && !queryClient.getQueryState(options.queryKey)) {
-    queryClient.prefetchInfiniteQuery(options)
+    void queryClient.prefetchInfiniteQuery(options)
   }
 }

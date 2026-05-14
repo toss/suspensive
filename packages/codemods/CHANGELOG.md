@@ -1,5 +1,15 @@
 # @suspensive/codemods
 
+## 3.21.1
+
+### Patch Changes
+
+- [#1961](https://github.com/toss/suspensive/pull/1961) [`f314dc0`](https://github.com/toss/suspensive/commit/f314dc0dcd4b4594693844aeab9032bdeab5ff22) Thanks [@manudeli](https://github.com/manudeli)! - chore: update package dependencies to latest versions
+
+## 3.21.0
+
+## 3.20.4
+
 ## 3.20.3
 
 ## 3.20.2

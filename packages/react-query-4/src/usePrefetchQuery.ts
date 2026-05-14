@@ -14,6 +14,6 @@ export function usePrefetchQuery<
   const queryClient = useQueryClient()
 
   if (typeof options.queryKey !== 'undefined' && !queryClient.getQueryState(options.queryKey)) {
-    queryClient.prefetchQuery(options)
+    void queryClient.prefetchQuery(options)
   }
 }

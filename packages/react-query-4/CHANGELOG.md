@@ -1,5 +1,23 @@
 # @suspensive/react-query-4
 
+## 3.21.1
+
+### Patch Changes
+
+- [#1961](https://github.com/toss/suspensive/pull/1961) [`f314dc0`](https://github.com/toss/suspensive/commit/f314dc0dcd4b4594693844aeab9032bdeab5ff22) Thanks [@manudeli](https://github.com/manudeli)! - chore: update package dependencies to latest versions
+
+## 3.21.0
+
+### Minor Changes
+
+- [#1943](https://github.com/toss/suspensive/pull/1943) [`32821ed`](https://github.com/toss/suspensive/commit/32821edc0058f4844b4c2a61ec0762cc72494cd5) Thanks [@manudeli](https://github.com/manudeli)! - chore: update @tanstack/react-query version and deprecate mutationOptions
+
+## 3.20.4
+
+### Patch Changes
+
+- [#1952](https://github.com/toss/suspensive/pull/1952) [`a019687`](https://github.com/toss/suspensive/commit/a019687dd0ed222d8cc4c3d4de44f889103cbca4) Thanks [@JeongHwan-dev](https://github.com/JeongHwan-dev)! - fix(react-query-4): add void operator to floating promises
+
 ## 3.20.3
 
 ## 3.20.2

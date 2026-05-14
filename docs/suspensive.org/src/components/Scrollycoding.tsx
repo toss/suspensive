@@ -94,7 +94,7 @@ export function Scrollycoding(props: unknown) {
           className="rounded-xl border-2 border-black/[0.06] bg-black/[0.02] dark:border-white/5 dark:bg-white/[0.02]"
           style={{ flex: 2 }}
         >
-          <div className="scrollbar-none sticky top-16 overflow-auto">
+          <div className="sticky top-16 scrollbar-none overflow-auto">
             <Selection
               from={steps.map((step) => (
                 <Code
