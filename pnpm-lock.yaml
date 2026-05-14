@@ -206,8 +206,8 @@ importers:
       '@suspensive/react':
         specifier: workspace:*
         version: link:../../packages/react
-      '@suspensive/react-query-5':
-        specifier: workspace:*
+      '@suspensive/react-query':
+        specifier: workspace:@suspensive/react-query-5@*
         version: link:../../packages/react-query-5
       '@tanstack/react-query':
         specifier: catalog:react-query5
@@ -285,8 +285,8 @@ importers:
       '@suspensive/react':
         specifier: workspace:*
         version: link:../../packages/react
-      '@suspensive/react-query-5':
-        specifier: workspace:*
+      '@suspensive/react-query':
+        specifier: workspace:@suspensive/react-query-5@*
         version: link:../../packages/react-query-5
       '@tanstack/react-query':
         specifier: catalog:react-query5
@@ -331,8 +331,8 @@ importers:
       '@suspensive/react':
         specifier: workspace:*
         version: link:../../packages/react
-      '@suspensive/react-query-5':
-        specifier: workspace:*
+      '@suspensive/react-query':
+        specifier: workspace:@suspensive/react-query-5@*
         version: link:../../packages/react-query-5
       '@tanstack/react-query':
         specifier: catalog:react-query5

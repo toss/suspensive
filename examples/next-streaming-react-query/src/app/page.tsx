@@ -1,5 +1,5 @@
 import { ErrorBoundary, Suspense } from '@suspensive/react'
-import { QueriesHydration } from '@suspensive/react-query-5'
+import { QueriesHydration } from '@suspensive/react-query'
 import Image from 'next/image'
 import { EmptyBox, ErrorFallbackBox, LoadingBox, SkipSSROnErrorFallbackBox } from './_components/Boxes'
 import { Buttons } from './_components/Buttons'

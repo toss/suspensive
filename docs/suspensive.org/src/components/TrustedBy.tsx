@@ -1,7 +1,7 @@
 'use client'
 
 import { ErrorBoundary, Suspense } from '@suspensive/react'
-import { SuspenseQuery } from '@suspensive/react-query-5'
+import { SuspenseQuery } from '@suspensive/react-query'
 import { queryOptions } from '@tanstack/react-query'
 import { motion, useInView } from 'motion/react'
 import { useRef } from 'react'
@@ -114,7 +114,7 @@ function TrustedByLayout({
       whileInView={{ opacity: 1 }}
       viewport={{ once: true }}
       transition={{ duration: 0.8 }}
-      className="flex flex-col items-center gap-6 py-16 md:flex-row md:justify-center md:gap-16"
+      className="flex flex-col items-center gap-6 py-16 xl:flex-row xl:justify-center xl:gap-16"
     >
       <a
         href="https://www.npmjs.com/package/@suspensive/react"

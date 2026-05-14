@@ -1,4 +1,4 @@
-import { createGetQueryClient } from '@suspensive/react-query-5'
+import { createGetQueryClient } from '@suspensive/react-query'
 import { defaultShouldDehydrateQuery } from '@tanstack/react-query'
 
 export const { getQueryClient } = createGetQueryClient({

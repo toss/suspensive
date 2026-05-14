@@ -1,7 +1,7 @@
 'use client'
 
 import { ErrorBoundary, Suspense } from '@suspensive/react'
-import { SuspenseInfiniteQuery } from '@suspensive/react-query-5'
+import { SuspenseInfiniteQuery } from '@suspensive/react-query'
 import axios from 'axios'
 import { Spinner } from '~/components/uis'
 
