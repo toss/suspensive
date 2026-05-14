@@ -16,7 +16,7 @@ import { Callout } from '@/components'
 There are two code-level breaking changes in `@suspensive/react-query` v4:
 
 1. The unified package `@suspensive/react-query` has been removed. All imports must point to the version-specific package `@suspensive/react-query-4` or `@suspensive/react-query-5`.
-2. APIs provided by `@tanstack/react-query` (such as `queryOptions`, `mutationOptions`, etc.) are also removed from `@suspensive/react-query-{4,5}`. These must be imported directly from `@tanstack/react-query`.
+2. APIs provided by `@tanstack/react-query` (such as `queryOptions`, `mutationOptions`, etc.) are also removed from `@suspensive/react-query-4, 5`. These must be imported directly from `@tanstack/react-query`.
 
 ```bash filename="Terminal"
 npx @suspensive/codemods migrate-to-v4 .

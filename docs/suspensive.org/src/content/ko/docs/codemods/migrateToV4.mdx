@@ -16,7 +16,7 @@ import { Callout } from '@/components'
 `@suspensive/react-query` v4의 코드 레벨 브레이킹 체인지는 두 가지입니다.
 
 1. 통합 패키지 `@suspensive/react-query`가 제거됩니다. 모든 import는 버전별 패키지 `@suspensive/react-query-4` 또는 `@suspensive/react-query-5`를 가리켜야 합니다.
-2. `@tanstack/react-query`에서 제공되는 API(`queryOptions`, `mutationOptions` 등)는 `@suspensive/react-query-{4,5}`에서도 제거됩니다. 이들은 `@tanstack/react-query`에서 직접 import 해야 합니다.
+2. `@tanstack/react-query`에서 제공되는 API(`queryOptions`, `mutationOptions` 등)는 `@suspensive/react-query-4, 5`에서도 제거됩니다. 이들은 `@tanstack/react-query`에서 직접 import 해야 합니다.
 
 ```bash filename="Terminal"
 npx @suspensive/codemods migrate-to-v4 .
