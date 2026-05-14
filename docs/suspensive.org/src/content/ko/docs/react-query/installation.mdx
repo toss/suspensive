@@ -80,6 +80,35 @@ npm install @suspensive/react-query-4 @tanstack/react-query@4
 
 npm alias를 사용하면 코드베이스 전체에서 import 경로를 `@suspensive/react-query`로 유지할 수 있습니다. @tanstack/react-query 버전을 변경할 때 package.json의 alias만 수정하면 되며, 코드 변경이 필요하지 않습니다.
 
+`package.json` 예시는 다음과 같습니다.
+
+<Tabs items={['@tanstack/react-query v5', '@tanstack/react-query v4']}>
+<Tabs.Tab>
+
+```json
+{
+  "dependencies": {
+    "@suspensive/react-query": "npm:@suspensive/react-query-5@latest",
+    "@tanstack/react-query": "^5"
+  }
+}
+```
+
+</Tabs.Tab>
+<Tabs.Tab>
+
+```json
+{
+  "dependencies": {
+    "@suspensive/react-query": "npm:@suspensive/react-query-4@latest",
+    "@tanstack/react-query": "^4"
+  }
+}
+```
+
+</Tabs.Tab>
+</Tabs>
+
 </Callout>
 
 </Steps>
