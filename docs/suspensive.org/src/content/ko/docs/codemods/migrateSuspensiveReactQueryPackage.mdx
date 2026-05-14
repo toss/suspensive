@@ -19,35 +19,39 @@ v4에서 통합 패키지인 `@suspensive/react-query`가 제거되었습니다.
 npx @suspensive/codemods migrate-suspensive-react-query-package .
 ```
 
-`@suspensive/react-query`를 가리키는 모든 `import`/`export` 선언의 source 경로를 자동으로 변환합니다.
-
 예:
 
-```tsx /react-query/
-import { useSuspenseQuery, SuspenseQuery } from '@suspensive/react-query'
+```tsx /@suspensive/react-query/
+import {
+  useSuspenseQuery,
+  SuspenseQuery,
+  queryOptions,
+  IsFetching,
+} from '@suspensive/react-query'
 import * as RQ from '@suspensive/react-query'
-export { queryOptions } from '@suspensive/react-query'
+export { queryOptions, QueryClientConsumer } from '@suspensive/react-query'
 ```
 
 변환 후:
 
-```tsx /react-query-5/
-import { useSuspenseQuery, SuspenseQuery } from '@suspensive/react-query-5'
+```tsx /@tanstack/react-query/ /@suspensive/react-query-5/
+import { useSuspenseQuery, queryOptions } from '@tanstack/react-query'
+import { SuspenseQuery, IsFetching } from '@suspensive/react-query-5'
 import * as RQ from '@suspensive/react-query-5'
-export { queryOptions } from '@suspensive/react-query-5'
+export { queryOptions } from '@tanstack/react-query'
+export { QueryClientConsumer } from '@suspensive/react-query-5'
 ```
 
 ## 버전 감지
 
 현재 작업 디렉토리에서 위로 올라가며 가장 가까운 `package.json`을 확인해 `@tanstack/react-query`의 v4와 v5 중 어느 버전에 의존하는지 판단합니다. 감지된 메이저 버전에 따라 대상 패키지(`@suspensive/react-query-4` vs `@suspensive/react-query-5`)가 결정됩니다.
 
-감지에 실패한 경우 v5로 fallback 하며 경고를 출력합니다. 명시적으로 대상을 지정하려면 실행 전 `SUSPENSIVE_RQ_TARGET` 환경 변수를 `4` 또는 `5`로 설정합니다:
+감지에 실패한 경우 v5로 fallback 하며 경고를 출력합니다. 명시적으로 대상을 지정하려면 실행 전 `SUSPENSIVE_RQ_TARGET` 환경 변수를 `4` 또는 `5`로 설정합니다.
 
 ```bash filename="Terminal"
-SUSPENSIVE_RQ_TARGET=5 npx @suspensive/codemods migrate-suspensive-react-query-package .
+SUSPENSIVE_RQ_TARGET=4 npx @suspensive/codemods migrate-suspensive-react-query-package .
 ```
 
 ## 주의사항
 
 - `package.json`을 수정하지 않습니다. 실행 후 의존성에서 `@suspensive/react-query`를 제거하고 `@suspensive/react-query-4` 또는 `@suspensive/react-query-5`가 설치되어 있는지 확인하세요.
-- Suspensive React Query에서 Deprecated 된 API를 TanStack Query에서 제공하는 API까지 변환하려면 [`tanstack-query-import`](./tanstackQueryImport) Codemod를 이용해주세요.

@@ -10,5 +10,7 @@ import { unknownThing } from "@suspensive/react-query";
 import * as RQ from "@suspensive/react-query";
 import "@suspensive/react-query";
 import { SuspenseQuery as KeepSuspense } from "@suspensive/react-query-5";
+import { PrefetchInfiniteQuery, queryOptions as keepQueryOptions } from "@suspensive/react-query-4";
+export { Mutation } from "@suspensive/react-query-4";
 export { queryOptions, QueryClientConsumer } from "@suspensive/react-query";
 export * from "@suspensive/react-query";

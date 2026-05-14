@@ -1,7 +1,7 @@
 import type { FileInfo, ImportDeclaration, ImportSpecifier } from 'jscodeshift'
 import { createParserFromPath } from './utils/createParserFromPath'
 
-const IMPORT_TO_CHANGE = [
+const TANSTACK_APIS = [
   'useSuspenseQuery',
   'UseSuspenseQueryResult',
   'UseSuspenseQueryOptions',
@@ -55,7 +55,7 @@ export default function transform(file: FileInfo): string {
           continue
         }
         const name = getClassificationName(specifier)
-        if (IMPORT_TO_CHANGE.includes(name)) {
+        if (TANSTACK_APIS.includes(name)) {
           importNamesToChange.push(specifier)
         } else if (!REMOVE_DEPRECATED_IMPORTS.includes(name)) {
           importsNamesRemained.push(specifier)
@@ -91,11 +91,11 @@ export default function transform(file: FileInfo): string {
     const originalSource = path.node.source
 
     const exportNamesToChange = exportSpecifiers.filter((specifier) =>
-      IMPORT_TO_CHANGE.includes(specifier.local?.name ?? '')
+      TANSTACK_APIS.includes(specifier.local?.name ?? '')
     )
     const exportNamesRemained = exportSpecifiers.filter(
       (specifier) =>
-        !IMPORT_TO_CHANGE.includes(specifier.local?.name ?? '') &&
+        !TANSTACK_APIS.includes(specifier.local?.name ?? '') &&
         !REMOVE_DEPRECATED_IMPORTS.includes(specifier.local?.name ?? '')
     )
 

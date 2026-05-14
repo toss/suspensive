@@ -19,22 +19,27 @@ In v4, the unified `@suspensive/react-query` package has been removed. You need 
 npx @suspensive/codemods migrate-suspensive-react-query-package .
 ```
 
-It automatically converts the source paths of all `import`/`export` declarations that reference `@suspensive/react-query`.
-
 For example:
 
-```tsx /react-query/
-import { useSuspenseQuery, SuspenseQuery } from '@suspensive/react-query'
+```tsx /@suspensive/react-query/
+import {
+  useSuspenseQuery,
+  SuspenseQuery,
+  queryOptions,
+  IsFetching,
+} from '@suspensive/react-query'
 import * as RQ from '@suspensive/react-query'
-export { queryOptions } from '@suspensive/react-query'
+export { queryOptions, QueryClientConsumer } from '@suspensive/react-query'
 ```
 
 Transforms into:
 
-```tsx /react-query-5/
-import { useSuspenseQuery, SuspenseQuery } from '@suspensive/react-query-5'
+```tsx /@tanstack/react-query/ /@suspensive/react-query-5/
+import { useSuspenseQuery, queryOptions } from '@tanstack/react-query'
+import { SuspenseQuery, IsFetching } from '@suspensive/react-query-5'
 import * as RQ from '@suspensive/react-query-5'
-export { queryOptions } from '@suspensive/react-query-5'
+export { queryOptions } from '@tanstack/react-query'
+export { QueryClientConsumer } from '@suspensive/react-query-5'
 ```
 
 ## Version detection
