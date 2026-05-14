@@ -1,5 +1,7 @@
 # @suspensive/react
 
+## 4.0.0-next.1
+
 ## 4.0.0-next.0
 
 ## 3.21.1

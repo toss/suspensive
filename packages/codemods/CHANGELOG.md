@@ -1,5 +1,11 @@
 # @suspensive/codemods
 
+## 4.0.0-next.1
+
+### Minor Changes
+
+- [#1963](https://github.com/toss/suspensive/pull/1963) [`5860be2`](https://github.com/toss/suspensive/commit/5860be217a3fdb56956d510fca67e84722b87e63) Thanks [@gwansikk](https://github.com/gwansikk)! - feat(codemods): add migrate to v4 codemods
+
 ## 4.0.0-next.0
 
 ## 3.21.1
