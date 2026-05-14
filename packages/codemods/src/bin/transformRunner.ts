@@ -23,10 +23,6 @@ const TRANSFORMER_INQUIRER_CHOICES = [
     title: 'remove-networkmode',
     description: 'Remove networkMode from Suspense API',
   },
-  {
-    title: 'migrate-suspensive-react-query-package',
-    description: 'Migrate @suspensive/react-query imports to the version-specific @suspensive/react-query-{4,5}',
-  },
 ]
 
 function onCancel() {

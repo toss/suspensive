@@ -14,7 +14,4 @@ export default {
   },
   migrateWithAPI: { title: 'Migrate with API' },
   removeNetworkmode: { title: 'Remove NetworkMode' },
-  migrateSuspensiveReactQueryPackage: {
-    title: 'Migrate @suspensive/react-query Package',
-  },
 } satisfies MetaRecord

@@ -2,6 +2,12 @@ import { useSuspenseQuery, SuspenseQuery, queryOptions, IsFetching } from "@susp
 import { mutationOptions, usePrefetchInfiniteQuery } from "@suspensive/react-query-5";
 import type { UseSuspenseInfiniteQueryOptions, SuspenseQueriesOptions } from "@suspensive/react-query";
 import { useSuspenseQuery as useSQ, PrefetchQuery } from "@suspensive/react-query-4";
+import { queryOptions as keepQueryOptions, PrefetchInfiniteQuery } from "@suspensive/react-query-4";
+import { SuspenseQuery as KeepSuspense } from "@suspensive/react-query-5";
+import { unknownThing, SelectedQueryOptions } from "@suspensive/react-query";
 import * as RQ from "@suspensive/react-query";
+import "@suspensive/react-query";
 import { useQuery } from "@tanstack/react-query";
 export { queryOptions, QueryClientConsumer } from "@suspensive/react-query";
+export { Mutation } from "@suspensive/react-query-4";
+export * from "@suspensive/react-query";
