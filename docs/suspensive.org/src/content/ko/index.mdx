@@ -58,7 +58,7 @@ import {
     {
       title: '<Suspense clientOnly />',
       description:
-        'SSR 안전한 Suspense 바운더리. Next.js에서 dynamic()이나 useEffect 가드 없이 하이드레이션 불일치 방지.',
+        'Suspense 바운더리에서 SSR을 건너뜀. 서버에서는 fallback, 클라이언트에서는 children — dynamic()이나 useEffect 가드 없이.',
       href: '/docs/react/Suspense',
     },
     {
@@ -326,7 +326,7 @@ const Page = () => (
         label: 'Async Rendering',
         rows: [
           {
-            feature: 'SSR-safe Suspense (clientOnly)',
+            feature: '바운더리에서 SSR 건너뛰기 (clientOnly)',
             values: [true, false, false, false],
           },
           {

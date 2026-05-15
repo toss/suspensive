@@ -63,7 +63,7 @@ How `@suspensive/react` compares to `react-error-boundary`, `@sentry/react`, and
       label: 'Async Rendering',
       rows: [
         {
-          feature: 'SSR-safe Suspense (clientOnly)',
+          feature: 'Skip SSR for a boundary (clientOnly)',
           values: [true, false, false, false],
         },
         {
@@ -151,9 +151,9 @@ This is especially useful in React Server Component environments where you can't
 
 Suspensive isn't just a better ErrorBoundary. In production, error handling is only one piece — you also need to manage loading states, SSR hydration, and data fetching. These concerns are interconnected, and Suspensive handles them all in one package.
 
-### Suspense with clientOnly — SSR Without the Pain
+### clientOnly — skip SSR for a Suspense boundary
 
-React's `<Suspense>` breaks in SSR environments like Next.js. Suspensive's `clientOnly` prop solves this in one line:
+React's `<Suspense>` works with SSR. When you want a boundary to render only on the client, Suspensive's `clientOnly` prop shows `fallback` on the server and `children` on the client — in one line:
 
 ```tsx
 <Suspense fallback={<Skeleton />} clientOnly>

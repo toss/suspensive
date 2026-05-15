@@ -1,5 +1,5 @@
 ---
-description: 'Enhanced React Suspense component with SSR support, clientOnly prop, and DefaultPropsProvider integration. Drop-in replacement for React.Suspense.'
+description: 'Enhanced React Suspense with clientOnly to skip SSR for a boundary, DefaultPropsProvider, and more. Drop-in replacement for React.Suspense.'
 ---
 
 import { Callout, Sandpack } from '@/components'
@@ -13,11 +13,11 @@ import { Callout, Sandpack } from '@/components'
 |                                                    | React.Suspense | @suspensive/react Suspense |
 | -------------------------------------------------- | -------------- | -------------------------- |
 | Basic suspense boundary                            | ✅             | ✅                         |
-| SSR-safe rendering (`clientOnly`)                  | ❌             | ✅                         |
+| Skip SSR for a boundary (`clientOnly`)             | ❌             | ✅                         |
 | Global default fallback via `DefaultPropsProvider` | ❌             | ✅                         |
 | HOC pattern (`Suspense.with`)                      | ❌             | ✅                         |
 
-If you're using Next.js or any SSR framework, React's `<Suspense>` can cause hydration mismatches. Suspensive's `clientOnly` prop solves this in one line — no need for `dynamic(() => import(...), { ssr: false })` or manual `useEffect` guards.
+React's `<Suspense>` works with SSR. When you want a boundary to **skip server rendering** — show `fallback` on the server and render `children` only on the client — Suspensive's `clientOnly` prop declares that in one line. No `dynamic(() => import(...), { ssr: false })` or manual `useEffect` guards.
 
 ---
 
@@ -77,7 +77,7 @@ Control multiple `<Suspense/>`s default fallback with `<DefaultPropsProvider/>`.
 
 ### Avoid Server side rendering (clientOnly)
 
-If you use the clientOnly prop, `<Suspense/>` will return fallback in server and return children in client.
+If you use the clientOnly prop, `<Suspense/>` returns the fallback on the server and children on the client. It does not rely on `useEffect` or mount timing — instead, it distinguishes server and client via `getServerSnapshot` and `getSnapshot` from `useSyncExternalStore`, so children are not server-side rendered.
 
 ```tsx /clientOnly/
 import { Suspense } from '@suspensive/react'

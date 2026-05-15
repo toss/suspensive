@@ -1,18 +1,16 @@
 ---
-description: '@suspensive/react가 존재하는 이유: Suspense SSR 문제 해결, ErrorBoundary 보일러플레이트 제거, 누락된 React 프리미티브 제공.'
+description: '@suspensive/react가 존재하는 이유: client-only Suspense 바운더리, ErrorBoundary 보일러플레이트 제거, 누락된 React 프리미티브 제공.'
 ---
 
 # 동기
 
 React에는 이미 훌륭한 기본 요소들이 있습니다 — Suspense, ErrorBoundary, lazy. 하지만 실제 애플리케이션에서 사용하면 빈틈이 드러납니다. @suspensive/react는 그 빈틈을 채웁니다.
 
-### Suspense는 SSR에서 깨집니다
+### Suspense 바운더리에서 SSR을 건너뛰고 싶을 때
 
-Next.js에서 `<Suspense>`를 사용하면 이런 에러를 만나게 됩니다:
+React의 `<Suspense>`는 SSR과 스트리밍과 함께 동작합니다. 그래도 바운더리를 **클라이언트에서만** 렌더링하고 싶을 때가 있습니다 — 서버에서는 `fallback`만 보여 주고, 하이드레이션 이후에 `children`을 마운트하는 경우(클라이언트 전용 API·위젯, 점진적 마이그레이션 등). React에는 이를 위한 내장 prop이 없어 `dynamic(..., { ssr: false })`나 수동 가드를 쓰는 경우가 많습니다.
 
-![Example banner](/img/suspense-in-ssr-error.png)
-
-Suspensive의 [`<Suspense/>`](/docs/react/Suspense)를 활용하면 `clientOnly` prop 하나로 SSR 문제를 깔끔하게 해결할 수 있습니다 — 별도의 우회가 필요 없습니다.
+Suspensive의 [`<Suspense clientOnly/>`](/docs/react/Suspense)는 `clientOnly` prop 하나로 그 의도를 선언할 수 있습니다 — 별도 래퍼가 필요 없습니다.
 
 ### ErrorBoundary가 너무 복잡합니다
 

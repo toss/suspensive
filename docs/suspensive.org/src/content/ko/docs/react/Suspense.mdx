@@ -1,5 +1,5 @@
 ---
-description: 'SSR 지원, clientOnly prop, DefaultPropsProvider 통합을 제공하는 향상된 React Suspense 컴포넌트. React.Suspense의 드롭인 대체.'
+description: 'clientOnly로 바운더리에서 SSR을 건너뛰고, DefaultPropsProvider 등을 제공하는 향상된 React Suspense. React.Suspense의 드롭인 대체.'
 ---
 
 import { Callout, Sandpack } from '@/components'
@@ -13,11 +13,11 @@ import { Callout, Sandpack } from '@/components'
 |                                             | React.Suspense | @suspensive/react Suspense |
 | ------------------------------------------- | -------------- | -------------------------- |
 | 기본 Suspense 바운더리                      | ✅             | ✅                         |
-| SSR 안전 렌더링 (`clientOnly`)              | ❌             | ✅                         |
+| 바운더리에서 SSR 건너뛰기 (`clientOnly`)    | ❌             | ✅                         |
 | `DefaultPropsProvider`로 전역 기본 fallback | ❌             | ✅                         |
 | HOC 패턴 (`Suspense.with`)                  | ❌             | ✅                         |
 
-Next.js 등 SSR 프레임워크에서 React의 `<Suspense>`는 하이드레이션 불일치를 일으킬 수 있습니다. Suspensive의 `clientOnly` prop은 이를 한 줄로 해결합니다 — `dynamic(() => import(...), { ssr: false })`나 수동 `useEffect` 가드가 필요 없습니다.
+React의 `<Suspense>`는 SSR과 함께 동작합니다. 바운더리에서 **서버 렌더링을 건너뛰고** 서버에서는 `fallback`만, 클라이언트에서만 `children`을 렌더링하고 싶을 때 Suspensive의 `clientOnly` prop으로 한 줄에 선언할 수 있습니다. `dynamic(() => import(...), { ssr: false })`나 수동 `useEffect` 가드가 필요 없습니다.
 
 ---
 
@@ -76,7 +76,7 @@ Default fallback
 
 ### 서버사이드 렌더링을 피하기 (clientOnly)
 
-clientOnly prop을 사용하면 `<Suspense/>`는 서버에서는 fallback을 반환합니다. mount 후(클라이언트에서는) children을 반환합니다. mount는 클라이언트에서만 일어나기 때문에 서버사이드 렌더링을 피할 수 있습니다.
+clientOnly prop을 사용하면 `<Suspense/>`는 서버에서는 fallback을 반환하고, 클라이언트에서는 children을 반환합니다. `useEffect`나 mount 시점에 의존하지 않고, `useSyncExternalStore`의 `getServerSnapshot`과 `getSnapshot`으로 서버/클라이언트를 구분해 서버 사이드 렌더링을 피할 수 있습니다.
 
 ```tsx /clientOnly/
 import { Suspense } from '@suspensive/react'
