@@ -1,18 +1,16 @@
 ---
-description: 'Why @suspensive/react exists: fixing Suspense SSR issues, reducing ErrorBoundary boilerplate, and providing missing React primitives.'
+description: 'Why @suspensive/react exists: client-only Suspense boundaries, less ErrorBoundary boilerplate, and missing React primitives.'
 ---
 
 # Motivation
 
 React already has great primitives — Suspense, ErrorBoundary, lazy. But using them in real applications quickly exposes gaps. @suspensive/react fills those gaps.
 
-### Suspense breaks in SSR
+### Skip SSR for a Suspense boundary when you need to
 
-Use `<Suspense>` in Next.js and you'll hit this error:
+React's `<Suspense>` works with SSR and streaming. Sometimes you still want a boundary to render **only on the client** — show `fallback` on the server and mount `children` after hydration (client-only APIs, widgets, or gradual migration). React does not ship a built-in flag for that; teams often reach for `dynamic(..., { ssr: false })` or manual guards.
 
-![Example banner](/img/suspense-in-ssr-error.png)
-
-With Suspensive's [`<Suspense/>`](/docs/react/Suspense), a single `clientOnly` prop skips SSR cleanly — no workarounds needed.
+With Suspensive's [`<Suspense clientOnly/>`](/docs/react/Suspense), one prop declares that intent — no extra wrappers.
 
 ### ErrorBoundary is too complicated
 

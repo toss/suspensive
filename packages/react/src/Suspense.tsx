@@ -6,7 +6,7 @@ import { defineSuspense } from './utils/defineSuspense'
 
 export interface SuspenseProps extends ReactSuspenseProps {
   /**
-   * With clientOnly prop, `<Suspense/>` will return fallback in server but after mount return children in client. Since mount only happens on the client, `<Suspense/>` can be avoid server-side rendering.
+   * With clientOnly prop, `<Suspense/>` will return fallback on the server and children on the client. It uses `useSyncExternalStore` (not `useEffect`) to distinguish server and client via `getServerSnapshot` and `getSnapshot`.
    * @see https://suspensive.org/docs/react/Suspense#avoid-server-side-rendering-clientonly
    */
   clientOnly?: boolean
