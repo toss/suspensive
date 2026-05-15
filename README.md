@@ -4,7 +4,7 @@
   </a>
   <p>
     <a href="https://www.npmjs.com/package/@suspensive/react"><img src="https://img.shields.io/npm/v/@suspensive/react.svg?style=flat-square&colorA=000&colorB=000" alt="npm version" /></a>
-    <a href="https://www.npmjs.com/package/@suspensive/react"><img src="https://img.shields.io/npm/dw/@suspensive/react.svg?style=flat-square&colorA=000&colorB=000" alt="npm downloads" /></a>
+    <a href="https://www.npmjs.com/package/@suspensive/react"><img src="https://img.shields.io/npm/dm/@suspensive/react.svg?style=flat-square&colorA=000&colorB=000" alt="npm downloads" /></a>
     <a href="https://github.com/toss/suspensive"><img src="https://img.shields.io/github/stars/toss/suspensive?style=flat-square&colorA=000&colorB=000" alt="GitHub stars" /></a>
     <a href="https://github.com/toss/suspensive/blob/main/LICENSE"><img src="https://img.shields.io/github/license/toss/suspensive?style=flat-square&colorA=000&colorB=000" alt="MIT License" /></a>
   </p>
