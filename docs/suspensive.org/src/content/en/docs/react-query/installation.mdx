@@ -61,7 +61,7 @@ Install the package that matches your @tanstack/react-query version.
 <Tabs.Tab>
 
 ```shell npm2yarn
-npm install @suspensive/react-query@npm:@suspensive/react-query-5 @tanstack/react-query@5
+npm install @suspensive/react-query-5 @tanstack/react-query@5
 ```
 
 </Tabs.Tab>
@@ -70,7 +70,7 @@ npm install @suspensive/react-query@npm:@suspensive/react-query-5 @tanstack/reac
 @tanstack/react-query v4 supports [lower version browsers](/docs/react-query/motivation#v5-drops-support-for-older-browsers) compared to v5.
 
 ```shell npm2yarn
-npm install @suspensive/react-query@npm:@suspensive/react-query-4 @tanstack/react-query@4
+npm install @suspensive/react-query-4 @tanstack/react-query@4
 ```
 
 </Tabs.Tab>
@@ -79,6 +79,35 @@ npm install @suspensive/react-query@npm:@suspensive/react-query-4 @tanstack/reac
 <Callout type='info'>
 
 By using npm aliases, the import path remains `@suspensive/react-query` across your codebase. When upgrading your @tanstack/react-query version, you only need to change the alias in package.json — no code changes required.
+
+Here's an example `package.json` configuration:
+
+<Tabs items={['@tanstack/react-query v5', '@tanstack/react-query v4']}>
+<Tabs.Tab>
+
+```json
+{
+  "dependencies": {
+    "@suspensive/react-query": "npm:@suspensive/react-query-5@latest",
+    "@tanstack/react-query": "^5"
+  }
+}
+```
+
+</Tabs.Tab>
+<Tabs.Tab>
+
+```json
+{
+  "dependencies": {
+    "@suspensive/react-query": "npm:@suspensive/react-query-4@latest",
+    "@tanstack/react-query": "^4"
+  }
+}
+```
+
+</Tabs.Tab>
+</Tabs>
 
 </Callout>
 

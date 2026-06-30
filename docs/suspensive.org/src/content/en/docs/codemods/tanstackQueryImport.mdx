@@ -4,34 +4,40 @@ description: 'Codemod to update @suspensive/react-query imports to match TanStac
 
 import { Callout } from '@/components'
 
-# Migrate TanStack Query imports
+# Change import paths to TanStack Query
 
 <Callout type='info'>
 
-- We recommend upgrading to `@tanstack/react-query@5` when using `@suspensive/react-query` with `@tanstack/react-query@4`.
-- Starting from `@suspensive/react-query-4@3.3.0`, `queryOptions`, `infiniteQueryOption`, `useSuspenseQuery`, and `useSuspenseQueries` have been deprecated. (`@tanstack/react-query@4.40.0` officially supports `useSuspenseQuery` and `queryOptions`.)
+- Recommended when you want to switch from `@suspensive/react-query`, `@suspensive/react-query-4`, or `@suspensive/react-query-5` to the `@tanstack/react-query` API.
+- In v4, APIs provided by `@tanstack/react-query` will be removed from `@suspensive/react-query-4,5`. Recommended when you want to switch to `@tanstack/react-query`.
 
 </Callout>
 
-Any API in `@suspensive/react-query` that is officially provided by `@tanstack/react-query` will be marked as `deprecated`.  
-This is because `@suspensive/react-query` offers the same APIs such as Suspense Hooks and `queryOptions`/`infiniteQueryOption`, and we want to encourage developers to use the official `@tanstack/react-query` APIs first.
+Among the APIs in `@suspensive/react-query`, those officially provided by `@tanstack/react-query` are marked as `deprecated`.
+
+This is because `@suspensive/react-query` provides the same APIs as `@tanstack/react-query`, such as Suspense Hooks, `queryOptions`, and `infiniteQueryOption`, and the goal is to encourage developers to use the `@tanstack/react-query` APIs first.
 
 ```bash filename="Terminal"
 npx @suspensive/codemods tanstack-query-import .
 ```
 
-This codemod automatically transforms import paths from `@suspensive/react-query` to `@tanstack/react-query`.
+You can automatically convert import paths from `@suspensive/react-query` to `@tanstack/react-query`.
 
 For example:
 
 ```tsx /@suspensive/
-import { queryOptions } from '@suspensive/react-query'
-import { useSuspenseQuery } from '@suspensive/react-query-5' // The versioned package is also transformed!
+import {
+  queryOptions,
+  mutationOptions,
+  SuspenseQuery,
+} from '@suspensive/react-query-5'
+import { useSuspenseQuery } from '@suspensive/react-query'
 ```
 
 Transforms into:
 
 ```tsx /@tanstack/
-import { queryOptions } from '@tanstack/react-query'
+import { queryOptions, mutationOptions } from '@tanstack/react-query'
+import { SuspenseQuery } from '@suspensive/react-query-5'
 import { useSuspenseQuery } from '@tanstack/react-query'
 ```

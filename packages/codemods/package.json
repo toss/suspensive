@@ -1,6 +1,6 @@
 {
   "name": "@suspensive/codemods",
-  "version": "3.21.2",
+  "version": "4.0.0-next.1",
   "description": "Codemods for @suspensive.",
   "keywords": [
     "suspensive",

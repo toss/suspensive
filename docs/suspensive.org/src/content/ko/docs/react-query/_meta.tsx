@@ -4,10 +4,12 @@ import type MetaEn from '../../../en/docs/react-query/_meta'
 export default {
   motivation: { title: '동기' },
   installation: { title: '설치하기' },
+  migration: { title: '마이그레이션 가이드' },
   '--- API Reference': {
     type: 'separator',
     title: 'API 문서',
   },
+  createGetQueryClient: { title: 'createGetQueryClient' },
   SuspenseQuery: { title: '<SuspenseQuery/>' },
   SuspenseQueries: { title: '<SuspenseQueries/>' },
   SuspenseInfiniteQuery: { title: '<SuspenseInfiniteQuery/>' },
@@ -17,22 +19,4 @@ export default {
   QueriesHydration: { title: '<QueriesHydration/>' },
   QueryClientConsumer: { title: '<QueryClientConsumer/>' },
   IsFetching: { title: '<IsFetching/>' },
-  createGetQueryClient: { title: 'createGetQueryClient' },
-  usePrefetchQuery: { title: 'usePrefetchQuery' },
-  usePrefetchInfiniteQuery: { title: 'usePrefetchInfiniteQuery' },
-  '--- Deprecated': {
-    type: 'separator',
-    title: 'Deprecated',
-  },
-  queryOptions: { title: 'queryOptions' },
-  mutationOptions: { title: 'mutationOptions' },
-  infiniteQueryOptions: { title: 'infiniteQueryOptions' },
-  useSuspenseQuery: { title: 'useSuspenseQuery' },
-  useSuspenseQueries: { title: 'useSuspenseQueries' },
-  useSuspenseInfiniteQuery: { title: 'useSuspenseInfiniteQuery' },
-  '--- More': {
-    type: 'separator',
-    title: '더보기',
-  },
-  migration: { title: '마이그레이션 가이드' },
 } satisfies typeof MetaEn satisfies MetaRecord
