@@ -5,7 +5,8 @@
   "keywords": [
     "suspensive",
     "react",
-    "jotai"
+    "jotai",
+    "tanstack-intent"
   ],
   "homepage": "https://suspensive.org",
   "bugs": "https://github.com/toss/suspensive/issues",
@@ -36,7 +37,8 @@
   "types": "dist/index.d.mts",
   "files": [
     "dist",
-    "src"
+    "src",
+    "skills"
   ],
   "scripts": {
     "build": "tsdown",
