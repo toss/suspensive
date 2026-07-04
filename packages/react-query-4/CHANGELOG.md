@@ -1,5 +1,11 @@
 # @suspensive/react-query-4
 
+## 3.21.3
+
+### Patch Changes
+
+- [#1979](https://github.com/toss/suspensive/pull/1979) [`b7b1de8`](https://github.com/toss/suspensive/commit/b7b1de84df2464f62a8fa1ffe128624b973767a2) Thanks [@manudeli](https://github.com/manudeli)! - Add @tanstack/intent AI agent skills (SKILL.md) and artifacts
+
 ## 3.21.2
 
 ## 3.21.1
