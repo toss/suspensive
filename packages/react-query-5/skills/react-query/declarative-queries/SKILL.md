@@ -49,13 +49,8 @@ export const PostsPage = ({ userId }: { userId: number }) => (
       <SuspenseQuery {...userQueryOptions(userId)}>
         {({ data: user }) => <UserProfile key={user.id} {...user} />}
       </SuspenseQuery>
-      <SuspenseQuery
-        {...postsQueryOptions(userId)}
-        select={(posts) => posts.filter(({ isPublic }) => isPublic)}
-      >
-        {({ data: posts }) =>
-          posts.map((post) => <PostListItem key={post.id} {...post} />)
-        }
+      <SuspenseQuery {...postsQueryOptions(userId)} select={(posts) => posts.filter(({ isPublic }) => isPublic)}>
+        {({ data: posts }) => posts.map((post) => <PostListItem key={post.id} {...post} />)}
       </SuspenseQuery>
     </Suspense>
   </ErrorBoundary>
@@ -119,9 +114,7 @@ export const InfinitePostsPage = ({ userId }: { userId: number }) => (
       <SuspenseInfiniteQuery {...postsInfiniteQueryOptions(userId)}>
         {({ data, fetchNextPage, hasNextPage }) => (
           <>
-            {data.pages.flatMap((page) =>
-              page.posts.map((post) => <PostListItem key={post.id} {...post} />)
-            )}
+            {data.pages.flatMap((page) => page.posts.map((post) => <PostListItem key={post.id} {...post} />))}
             <button type="button" disabled={!hasNextPage} onClick={() => fetchNextPage()}>
               Load More
             </button>
@@ -136,42 +129,48 @@ export const InfinitePostsPage = ({ userId }: { userId: number }) => (
 ## Common Mistakes
 
 ### [MEDIUM] Wrapper components created only to call useSuspenseQuery
+
 Wrong:
+
 ```tsx
 const UserInfo = ({ userId }: { userId: number }) => {
   const { data } = useSuspenseQuery(userQueryOptions(userId))
   return <UserProfile {...data} />
 }
 ```
+
 Correct:
+
 ```tsx
-<SuspenseQuery {...userQueryOptions(userId)}>
-  {({ data }) => <UserProfile {...data} />}
-</SuspenseQuery>
+<SuspenseQuery {...userQueryOptions(userId)}>{({ data }) => <UserProfile {...data} />}</SuspenseQuery>
 ```
+
 Hooks force an extra child component under Suspense whose name hides that it suspends; SuspenseQuery keeps fetching visible in JSX so only presentational components remain.
 Source: docs/suspensive.org/src/content/en/docs/react-query/motivation.mdx
 
 ### [HIGH] SuspenseQuery without an ancestor Suspense
+
 Wrong:
+
 ```tsx
-<SuspenseQuery {...postQueryOptions(id)}>
-  {({ data }) => <Post data={data} />}
-</SuspenseQuery>
+<SuspenseQuery {...postQueryOptions(id)}>{({ data }) => <Post data={data} />}</SuspenseQuery>
 ```
+
 Correct:
+
 ```tsx
 <Suspense fallback={<PostSkeleton />}>
-  <SuspenseQuery {...postQueryOptions(id)}>
-    {({ data }) => <Post data={data} />}
-  </SuspenseQuery>
+  <SuspenseQuery {...postQueryOptions(id)}>{({ data }) => <Post data={data} />}</SuspenseQuery>
 </Suspense>
 ```
+
 The component suspends; with no boundary above it, suspension bubbles to the nearest ancestor Suspense or the app root, blanking unrelated UI.
 Source: https://github.com/toss/suspensive/issues/1654
 
 ### [HIGH] Rendering SuspenseQuery in a React Server Component
+
 Wrong:
+
 ```tsx
 // app/page.tsx — Server Component
 import { SuspenseQuery } from '@suspensive/react-query-5'
@@ -184,7 +183,9 @@ export default function Page() {
   )
 }
 ```
+
 Correct:
+
 ```tsx
 'use client'
 
@@ -196,40 +197,51 @@ export const Posts = () => (
   </SuspenseQuery>
 )
 ```
+
 Render-prop children are functions and cannot cross the RSC serialization boundary; keep these components inside 'use client' modules.
 Source: https://github.com/toss/suspensive/issues/1563
 
 ### [HIGH] Passing enabled or placeholderData to suspense queries
+
 Wrong:
+
 ```tsx
 <SuspenseQuery queryKey={['user', userId]} queryFn={getUser} enabled={!!userId}>
   {({ data }) => <UserProfile {...data} />}
 </SuspenseQuery>
 ```
+
 Correct:
+
 ```tsx
-{userId ? (
-  <SuspenseQuery queryKey={['user', userId]} queryFn={() => getUser(userId)}>
-    {({ data }) => <UserProfile {...data} />}
-  </SuspenseQuery>
-) : null}
+{
+  userId ? (
+    <SuspenseQuery queryKey={['user', userId]} queryFn={() => getUser(userId)}>
+      {({ data }) => <UserProfile {...data} />}
+    </SuspenseQuery>
+  ) : null
+}
 ```
+
 Suspense queries must guarantee data, so enabled/placeholderData are excluded from their option types — express conditionality with JSX instead.
 Source: docs/suspensive.org/src/content/en/docs/react-query/migration (v2 breaking changes)
 
 ### [MEDIUM] Checking isLoading/isError on suspense query results
+
 Wrong:
+
 ```tsx
 <SuspenseQuery {...postsQueryOptions()}>
   {({ data, isLoading }) => (isLoading ? <Spinner /> : <List data={data} />)}
 </SuspenseQuery>
 ```
+
 Correct:
+
 ```tsx
-<SuspenseQuery {...postsQueryOptions()}>
-  {({ data }) => <List data={data} />}
-</SuspenseQuery>
+<SuspenseQuery {...postsQueryOptions()}>{({ data }) => <List data={data} />}</SuspenseQuery>
 ```
+
 Suspense query result types have no loading/error branches — `data` is always the success type because Suspense and ErrorBoundary guarantee it, so guards are dead code.
 Source: docs/suspensive.org/src/content/en/docs/react-query/motivation.mdx
 

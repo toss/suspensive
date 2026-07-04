@@ -25,13 +25,13 @@ metadata:
 
 ## Sub-Skills
 
-| Skill | Load when |
-| --- | --- |
-| [declarative-queries](./declarative-queries/SKILL.md) | Fetching with SuspenseQuery/SuspenseQueries/SuspenseInfiniteQuery in JSX, parallel queries at one depth, select, queryOptions integration |
-| [mutations](./mutations/SKILL.md) | Mutation component and mutationOptions; mutations inside list rows and conditionals where hooks cannot go |
-| [prefetching](./prefetching/SKILL.md) | usePrefetchQuery/usePrefetchInfiniteQuery hooks and PrefetchQuery/PrefetchInfiniteQuery components; avoiding request waterfalls |
-| [ssr-hydration](./ssr-hydration/SKILL.md) | Next.js App Router setup: createGetQueryClient per-request QueryClient, QueriesHydration RSC prefetch + hydrate, skipSsrOnError, timeout, streaming |
-| [suspensive-react](../compositions/suspensive-react/SKILL.md) | Composing with @suspensive/react: ErrorBoundary + useQueryErrorResetBoundary (QueryErrorBoundary replacement), shouldCatch, Delay in fallbacks |
+| Skill                                                         | Load when                                                                                                                                           |
+| ------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [declarative-queries](./declarative-queries/SKILL.md)         | Fetching with SuspenseQuery/SuspenseQueries/SuspenseInfiniteQuery in JSX, parallel queries at one depth, select, queryOptions integration           |
+| [mutations](./mutations/SKILL.md)                             | Mutation component and mutationOptions; mutations inside list rows and conditionals where hooks cannot go                                           |
+| [prefetching](./prefetching/SKILL.md)                         | usePrefetchQuery/usePrefetchInfiniteQuery hooks and PrefetchQuery/PrefetchInfiniteQuery components; avoiding request waterfalls                     |
+| [ssr-hydration](./ssr-hydration/SKILL.md)                     | Next.js App Router setup: createGetQueryClient per-request QueryClient, QueriesHydration RSC prefetch + hydrate, skipSsrOnError, timeout, streaming |
+| [suspensive-react](../compositions/suspensive-react/SKILL.md) | Composing with @suspensive/react: ErrorBoundary + useQueryErrorResetBoundary (QueryErrorBoundary replacement), shouldCatch, Delay in fallbacks      |
 
 ## Quick Decision Tree
 
@@ -64,12 +64,14 @@ const postQueryOptions = (postId: number) =>
   })
 
 export const PostPage = ({ postId }: { postId: number }) => (
-  <ErrorBoundary fallback={({ error, reset }) => (
-    <div>
-      <p>{error.message}</p>
-      <button onClick={reset}>retry</button>
-    </div>
-  )}>
+  <ErrorBoundary
+    fallback={({ error, reset }) => (
+      <div>
+        <p>{error.message}</p>
+        <button onClick={reset}>retry</button>
+      </div>
+    )}
+  >
     <Suspense fallback={<div>Loading post...</div>}>
       <SuspenseQuery {...postQueryOptions(postId)}>
         {({ data: post }) => (
@@ -87,44 +89,61 @@ export const PostPage = ({ postId }: { postId: number }) => (
 ## Common Mistakes
 
 ### [HIGH] Importing backported hooks from Suspensive package
+
 Wrong:
+
 ```tsx
 import { useSuspenseQuery, queryOptions } from '@suspensive/react-query-5'
 ```
+
 Correct:
+
 ```tsx
 import { useSuspenseQuery, queryOptions } from '@tanstack/react-query'
 import { SuspenseQuery, Mutation, QueriesHydration } from '@suspensive/react-query-5'
 ```
+
 useSuspenseQuery/useSuspenseQueries/useSuspenseInfiniteQuery/queryOptions/infiniteQueryOptions/mutationOptions are official in TSQ v5 and the Suspensive re-exports are deprecated — import only the components TSQ lacks from Suspensive.
 Source: docs/suspensive.org/src/content/en/docs/react-query/useSuspenseQuery.mdx
 
 ### [HIGH] Installing the @suspensive/react-query facade package
+
 Wrong:
+
 ```bash
 npm install @suspensive/react-query
 ```
+
 Correct:
+
 ```bash
 npm install @suspensive/react-query-5 @tanstack/react-query@5
 ```
+
 The facade's postinstall version switch is blocked by pnpm 10+ and Yarn Berry, so its exports default to v4 and break v5 builds; it is being phased out — install the versioned package matching your @tanstack/react-query major.
 Source: https://github.com/toss/suspensive/issues/1851, https://github.com/toss/suspensive/issues/1493
 
 ### [MEDIUM] Setting networkMode on suspense queries
+
 Wrong:
+
 ```tsx
 useSuspenseQuery({ queryKey: ['posts'], queryFn: getPosts, networkMode: 'online' })
 ```
+
 Correct:
+
 ```tsx
 useSuspenseQuery({ queryKey: ['posts'], queryFn: getPosts })
 ```
+
 Since v3, networkMode is fixed to 'always' for suspense hooks and components (Chromium's navigator.onLine is unreliable and a paused fetchStatus deadlocks Suspense), so a user-supplied networkMode is ignored — remove it (codemod: `npx @suspensive/codemods remove-networkmode .`).
 Source: docs/suspensive.org/src/content/en/docs/react-query/migration/migrate-to-v3.mdx
 
 ### [HIGH] Rendering Suspensive components in a Server Component
+
 Wrong:
+
 ```tsx
 // app/page.tsx — Server Component
 import { SuspenseQuery } from '@suspensive/react-query-5'
@@ -137,7 +156,9 @@ export default function Page() {
   )
 }
 ```
+
 Correct:
+
 ```tsx
 'use client'
 
@@ -149,6 +170,7 @@ export const Posts = () => (
   </SuspenseQuery>
 )
 ```
+
 Render-prop children are functions, which cannot cross the RSC serialization boundary, so using these components in a Server Component fails the build.
 Source: https://github.com/toss/suspensive/issues/1563
 

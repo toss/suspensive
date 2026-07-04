@@ -49,9 +49,7 @@ export const PostsPage = () => {
   return posts.map((post) => (
     <Mutation
       key={post.id}
-      mutationFn={({ content }: { content: string }) =>
-        api.editPost({ postId: post.id, content })
-      }
+      mutationFn={({ content }: { content: string }) => api.editPost({ postId: post.id, content })}
     >
       {(postMutation) => (
         <div>
@@ -131,11 +129,13 @@ export const DeletePostButton = ({ postId }: { postId: number }) => {
 ## Common Mistakes
 
 ### [MEDIUM] Wrapper component per row just for useMutation
+
 Wrong:
+
 ```tsx
-{posts.map((post) => (
-  <PostItemWithMutation key={post.id} post={post} />
-))}
+{
+  posts.map((post) => <PostItemWithMutation key={post.id} post={post} />)
+}
 
 const PostItemWithMutation = ({ post }: { post: Post }) => {
   const deleteMutation = useMutation({ mutationFn: () => api.deletePost(post.id) })
@@ -146,50 +146,69 @@ const PostItemWithMutation = ({ post }: { post: Post }) => {
   )
 }
 ```
+
 Correct:
+
 ```tsx
-{posts.map((post) => (
-  <Mutation key={post.id} mutationFn={() => api.deletePost(post.id)}>
-    {({ mutate, isLoading }) => (
-      <button disabled={isLoading} onClick={() => mutate()}>
-        delete
-      </button>
-    )}
-  </Mutation>
-))}
+{
+  posts.map((post) => (
+    <Mutation key={post.id} mutationFn={() => api.deletePost(post.id)}>
+      {({ mutate, isLoading }) => (
+        <button disabled={isLoading} onClick={() => mutate()}>
+          delete
+        </button>
+      )}
+    </Mutation>
+  ))
+}
 ```
+
 Hooks cannot be called in loops, so agents invent awkwardly named wrapper components; `<Mutation>` works inline per row with no extra depth.
 Source: docs/suspensive.org/src/content/en/docs/react-query/Mutation.mdx
 
 ### [MEDIUM] Using v5 isPending on v4 mutation results
+
 Wrong:
+
 ```tsx
 <Mutation mutationFn={() => api.deletePost(postId)}>
   {({ mutate, isPending }) => (
-    <button disabled={isPending} onClick={() => mutate()}>delete</button>
+    <button disabled={isPending} onClick={() => mutate()}>
+      delete
+    </button>
   )}
 </Mutation>
 ```
+
 Correct:
+
 ```tsx
 <Mutation mutationFn={() => api.deletePost(postId)}>
   {({ mutate, isLoading }) => (
-    <button disabled={isLoading} onClick={() => mutate()}>delete</button>
+    <button disabled={isLoading} onClick={() => mutate()}>
+      delete
+    </button>
   )}
 </Mutation>
 ```
+
 The render prop receives TSQ v4's UseMutationResult, where the in-flight flag is `isLoading`; `isPending` only exists in TSQ v5 (and @suspensive/react-query-5).
 Source: docs/suspensive.org/src/content/en/docs/react-query/Mutation.mdx
 
 ### [MEDIUM] Importing mutationOptions from Suspensive
+
 Wrong:
+
 ```tsx
 import { mutationOptions } from '@suspensive/react-query-4'
 ```
+
 Correct:
+
 ```tsx
 import { mutationOptions } from '@tanstack/react-query'
 ```
+
 mutationOptions is official in TanStack Query since v4.44 (the package's peer range requires ^4.44.0); the Suspensive re-export exists only for compatibility and is deprecated.
 Source: docs/suspensive.org/src/content/en/docs/react-query/mutationOptions.mdx
 

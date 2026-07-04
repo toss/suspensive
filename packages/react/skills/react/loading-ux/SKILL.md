@@ -63,11 +63,7 @@ export const Example = () => (
   <Suspense
     fallback={
       <Delay ms={200}>
-        {({ isDelayed }) => (
-          <Skeleton
-            style={{ opacity: isDelayed ? 1 : 0, transition: 'opacity 200ms' }}
-          />
-        )}
+        {({ isDelayed }) => <Skeleton style={{ opacity: isDelayed ? 1 : 0, transition: 'opacity 200ms' }} />}
       </Delay>
     }
   >
@@ -164,9 +160,7 @@ Wrong:
 import { DefaultPropsProvider } from '@suspensive/react'
 
 const App = ({ children }) => (
-  <DefaultPropsProvider defaultProps={{ Suspense: { fallback: <Spinner /> } }}>
-    {children}
-  </DefaultPropsProvider>
+  <DefaultPropsProvider defaultProps={{ Suspense: { fallback: <Spinner /> } }}>{children}</DefaultPropsProvider>
 )
 ```
 
@@ -177,11 +171,7 @@ import { DefaultProps, DefaultPropsProvider } from '@suspensive/react'
 
 const defaultProps = new DefaultProps({ Suspense: { fallback: <Spinner /> } })
 
-const App = ({ children }) => (
-  <DefaultPropsProvider defaultProps={defaultProps}>
-    {children}
-  </DefaultPropsProvider>
-)
+const App = ({ children }) => <DefaultPropsProvider defaultProps={defaultProps}>{children}</DefaultPropsProvider>
 ```
 
 `defaultProps` must be an instance of the `DefaultProps` class; a plain object literal is not accepted.
@@ -212,11 +202,7 @@ import { Delay } from '@suspensive/react'
 
 const Fallback = () => (
   <Delay ms={200}>
-    {({ isDelayed }) => (
-      <Spinner
-        style={{ opacity: isDelayed ? 1 : 0, transition: 'opacity 200ms' }}
-      />
-    )}
+    {({ isDelayed }) => <Spinner style={{ opacity: isDelayed ? 1 : 0, transition: 'opacity 200ms' }} />}
   </Delay>
 )
 ```

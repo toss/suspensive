@@ -84,10 +84,7 @@ export const PostsPage = () => {
   return posts.map((post) => (
     <div key={post.id}>
       {/* usePrefetchQuery cannot be called in a loop; the component form can */}
-      <PrefetchQuery
-        queryKey={['posts', post.id, 'comments']}
-        queryFn={() => getPostComments(post.id)}
-      />
+      <PrefetchQuery queryKey={['posts', post.id, 'comments']} queryFn={() => getPostComments(post.id)} />
       <h2>{post.title}</h2>
       <a href={`/posts/${post.id}/comments`}>See comments</a>
     </div>
@@ -114,9 +111,7 @@ export const FeedPage = ({ userId }: { userId: number }) => {
       <SuspenseInfiniteQuery {...postsInfiniteQueryOptions(userId)}>
         {({ data, fetchNextPage, hasNextPage }) => (
           <>
-            {data.pages.flatMap((page) =>
-              page.posts.map((post) => <div key={post.id}>{post.title}</div>)
-            )}
+            {data.pages.flatMap((page) => page.posts.map((post) => <div key={post.id}>{post.title}</div>))}
             <button disabled={!hasNextPage} onClick={() => fetchNextPage()}>
               Load More
             </button>
@@ -131,28 +126,37 @@ export const FeedPage = ({ userId }: { userId: number }) => {
 ## Common Mistakes
 
 ### [MEDIUM] Prefetching in useEffect after mount
+
 Wrong:
+
 ```tsx
 const queryClient = useQueryClient()
 useEffect(() => {
   queryClient.prefetchQuery(postQueryOptions(id))
 }, [id])
 ```
+
 Correct:
+
 ```tsx
 usePrefetchQuery(postQueryOptions(id))
 ```
+
 Effects run after paint — after the child has already suspended — losing the waterfall win; usePrefetchQuery fires during render before the boundary is reached.
 Source: docs/suspensive.org/src/content/en/docs/react-query/usePrefetchQuery.mdx
 
 ### [MEDIUM] Expecting data or suspension from prefetch APIs
+
 Wrong:
+
 ```tsx
 <PrefetchQuery queryKey={['posts', id]} queryFn={() => getPost(id)}>
   {({ data }) => <Post data={data} />}
 </PrefetchQuery>
 ```
+
 Correct:
+
 ```tsx
 <PrefetchQuery queryKey={['posts', id]} queryFn={() => getPost(id)} />
 <Suspense fallback={<Skeleton />}>
@@ -161,6 +165,7 @@ Correct:
   </SuspenseQuery>
 </Suspense>
 ```
+
 Prefetch hooks and components return nothing and never suspend or throw — they only warm the cache; read the data with a suspense query.
 Source: docs/suspensive.org/src/content/en/docs/react-query/PrefetchQuery.mdx
 

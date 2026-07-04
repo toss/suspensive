@@ -63,9 +63,7 @@ export const Example = () => (
   <ErrorBoundary fallback={({ error }) => <p>Unexpected: {error.message}</p>}>
     <ErrorBoundary
       shouldCatch={NetworkError}
-      fallback={({ error, reset }) => (
-        <button onClick={reset}>Network failed, retry: {error.message}</button>
-      )}
+      fallback={({ error, reset }) => <button onClick={reset}>Network failed, retry: {error.message}</button>}
     >
       <Feed />
     </ErrorBoundary>
@@ -164,10 +162,7 @@ Wrong:
 import { ErrorBoundary } from '@suspensive/react'
 
 const Example = () => (
-  <ErrorBoundary
-    FallbackComponent={ErrorFallback}
-    onResetKeysChange={handleChange}
-  >
+  <ErrorBoundary FallbackComponent={ErrorFallback} onResetKeysChange={handleChange}>
     <Feed />
   </ErrorBoundary>
 )
@@ -179,11 +174,7 @@ Correct:
 import { ErrorBoundary } from '@suspensive/react'
 
 const Example = () => (
-  <ErrorBoundary
-    fallback={({ error, reset }) => (
-      <ErrorFallback error={error} onRetry={reset} />
-    )}
-  >
+  <ErrorBoundary fallback={({ error, reset }) => <ErrorFallback error={error} onRetry={reset} />}>
     <Feed />
   </ErrorBoundary>
 )
@@ -201,9 +192,7 @@ Wrong:
 import { ErrorBoundary } from '@suspensive/react'
 
 // assuming this boundary catches its own fallback's errors forever
-const Example = ({ children }) => (
-  <ErrorBoundary fallback={<BrokenFallback />}>{children}</ErrorBoundary>
-)
+const Example = ({ children }) => <ErrorBoundary fallback={<BrokenFallback />}>{children}</ErrorBoundary>
 ```
 
 Correct:
@@ -252,9 +241,7 @@ const Fallback = () => {
   return <button onClick={reset}>{error.message}</button>
 }
 
-const Example = ({ children }) => (
-  <ErrorBoundary fallback={<Fallback />}>{children}</ErrorBoundary>
-)
+const Example = ({ children }) => <ErrorBoundary fallback={<Fallback />}>{children}</ErrorBoundary>
 ```
 
 The hook throws a runtime error when called in `children` or outside an `ErrorBoundary`; it is only valid inside the `fallback` element.
@@ -317,9 +304,7 @@ Wrong:
 import { ErrorBoundary } from '@suspensive/react'
 
 // navigating away and back, expecting the boundary to be clean
-const Example = ({ children }) => (
-  <ErrorBoundary fallback={<ErrorUI />}>{children}</ErrorBoundary>
-)
+const Example = ({ children }) => <ErrorBoundary fallback={<ErrorUI />}>{children}</ErrorBoundary>
 ```
 
 Correct:
@@ -331,10 +316,7 @@ import { useLocation } from 'react-router-dom'
 const Example = ({ children }) => {
   const location = useLocation()
   return (
-    <ErrorBoundary
-      resetKeys={[location.key]}
-      fallback={({ reset }) => <button onClick={reset}>retry</button>}
-    >
+    <ErrorBoundary resetKeys={[location.key]} fallback={({ reset }) => <button onClick={reset}>retry</button>}>
       {children}
     </ErrorBoundary>
   )
@@ -390,9 +372,7 @@ Wrong:
 import { ErrorBoundary } from '@suspensive/react'
 
 const Example = ({ children }) => (
-  <ErrorBoundary fallback={({ error }) => <p>{error.message}</p>}>
-    {children}
-  </ErrorBoundary>
+  <ErrorBoundary fallback={({ error }) => <p>{error.message}</p>}>{children}</ErrorBoundary>
 )
 ```
 
@@ -402,11 +382,7 @@ Correct:
 import { ErrorBoundary } from '@suspensive/react'
 
 const Example = ({ children }) => (
-  <ErrorBoundary
-    fallback={({ error }) => (
-      <p>{error instanceof Error ? error.message : String(error)}</p>
-    )}
-  >
+  <ErrorBoundary fallback={({ error }) => <p>{error instanceof Error ? error.message : String(error)}</p>}>
     {children}
   </ErrorBoundary>
 )

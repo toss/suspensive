@@ -28,17 +28,17 @@ Applies both v1→v2 and v2→v3 breaking changes. Agents trained on pre-v3 code
 
 ## Old → new API
 
-| Removed API (version removed)                                  | Replacement                                                        |
-| -------------------------------------------------------------- | ------------------------------------------------------------------ |
-| `wrap.ErrorBoundary(...).Suspense(...).on(Component)` (v3)      | `ErrorBoundary.with(props, Suspense.with(props, Component))`        |
-| `AsyncBoundary` (v2)                                            | `<ErrorBoundary>` + `<Suspense>` composed                           |
-| `withSuspense(Component, props)` (v2)                           | `Suspense.with(props, Component)`                                   |
-| `withDelay(Component, props)` (v2)                              | `Delay.with(props, Component)`                                      |
-| `withErrorBoundary(Component, props)` (v2)                      | `ErrorBoundary.with(props, Component)`                              |
-| `withErrorBoundaryGroup(Component, props)` (v2)                 | `ErrorBoundaryGroup.with(props, Component)`                         |
-| `<ErrorBoundaryGroup.Reset trigger={...}/>` (v2)                | `<ErrorBoundaryGroup.Consumer>{(group) => ...}</ErrorBoundaryGroup.Consumer>` |
-| `<Suspense.CSROnly/>` (v2)                                      | `<Suspense clientOnly/>`                                            |
-| `new Suspensive({ defaultOptions })` (v2)                       | `new DefaultProps({...})` + `<DefaultPropsProvider/>`               |
+| Removed API (version removed)                              | Replacement                                                                   |
+| ---------------------------------------------------------- | ----------------------------------------------------------------------------- |
+| `wrap.ErrorBoundary(...).Suspense(...).on(Component)` (v3) | `ErrorBoundary.with(props, Suspense.with(props, Component))`                  |
+| `AsyncBoundary` (v2)                                       | `<ErrorBoundary>` + `<Suspense>` composed                                     |
+| `withSuspense(Component, props)` (v2)                      | `Suspense.with(props, Component)`                                             |
+| `withDelay(Component, props)` (v2)                         | `Delay.with(props, Component)`                                                |
+| `withErrorBoundary(Component, props)` (v2)                 | `ErrorBoundary.with(props, Component)`                                        |
+| `withErrorBoundaryGroup(Component, props)` (v2)            | `ErrorBoundaryGroup.with(props, Component)`                                   |
+| `<ErrorBoundaryGroup.Reset trigger={...}/>` (v2)           | `<ErrorBoundaryGroup.Consumer>{(group) => ...}</ErrorBoundaryGroup.Consumer>` |
+| `<Suspense.CSROnly/>` (v2)                                 | `<Suspense clientOnly/>`                                                      |
+| `new Suspensive({ defaultOptions })` (v2)                  | `new DefaultProps({...})` + `<DefaultPropsProvider/>`                         |
 
 Behavior changes (no code removal, new semantics):
 
@@ -86,7 +86,7 @@ const Page = ErrorBoundary.with(
 
 Source: docs/suspensive.org/src/content/en/docs/react/migration/migrate-to-v3.mdx (#1452)
 
-### HIGH Generating removed AsyncBoundary or with* HOCs
+### HIGH Generating removed AsyncBoundary or with\* HOCs
 
 Wrong:
 
@@ -125,9 +125,7 @@ import { ErrorBoundaryGroup } from '@suspensive/react'
 
 const Example = () => (
   <ErrorBoundaryGroup>
-    <ErrorBoundaryGroup.Reset
-      trigger={(group) => <button onClick={group.reset}>reset all</button>}
-    />
+    <ErrorBoundaryGroup.Reset trigger={(group) => <button onClick={group.reset}>reset all</button>} />
   </ErrorBoundaryGroup>
 )
 ```

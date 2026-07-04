@@ -139,9 +139,7 @@ Wrong:
 ```tsx
 import { Suspense } from '@suspensive/react'
 
-const Example = ({ children }) => (
-  <Suspense.CSROnly fallback={<Spinner />}>{children}</Suspense.CSROnly>
-)
+const Example = ({ children }) => <Suspense.CSROnly fallback={<Spinner />}>{children}</Suspense.CSROnly>
 ```
 
 Correct:

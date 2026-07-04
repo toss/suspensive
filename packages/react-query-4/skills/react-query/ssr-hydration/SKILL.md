@@ -192,10 +192,7 @@ export default async function ProductPage({ productId }: { productId: string }) 
         </QueriesHydration>
       </Suspense>
       <Suspense fallback={<div>Loading related...</div>}>
-        <QueriesHydration
-          queryClient={queryClient}
-          queries={[relatedProductsQueryOptions(product.categoryId)]}
-        >
+        <QueriesHydration queryClient={queryClient} queries={[relatedProductsQueryOptions(product.categoryId)]}>
           <RelatedProducts categoryId={product.categoryId} />
         </QueriesHydration>
       </Suspense>
@@ -216,9 +213,7 @@ import { QueryClientConsumer } from '@suspensive/react-query-4'
 export const RefreshButton = () => (
   <QueryClientConsumer>
     {(queryClient) => (
-      <button onClick={() => queryClient.invalidateQueries({ queryKey: ['posts'] })}>
-        refresh posts
-      </button>
+      <button onClick={() => queryClient.invalidateQueries({ queryKey: ['posts'] })}>refresh posts</button>
     )}
   </QueryClientConsumer>
 )
@@ -227,14 +222,18 @@ export const RefreshButton = () => (
 ## Common Mistakes
 
 ### [CRITICAL] Module-level global QueryClient on the server
+
 Wrong:
+
 ```tsx
 // query-client.ts
 import { QueryClient } from '@tanstack/react-query'
 
 export const queryClient = new QueryClient() // shared across all requests
 ```
+
 Correct:
+
 ```tsx
 // get-query-client.ts
 import { createGetQueryClient } from '@suspensive/react-query-4'
@@ -242,17 +241,22 @@ import { createGetQueryClient } from '@suspensive/react-query-4'
 export const { getQueryClient } = createGetQueryClient()
 // call getQueryClient() where needed; never store the result in a global
 ```
+
 A module-level QueryClient is shared across server requests, leaking one user's cached data (auth tokens, personal data) into another user's response — createGetQueryClient returns a new instance per server request and a singleton only in the browser.
 Source: docs/suspensive.org/src/content/en/docs/react-query/createGetQueryClient.mdx
 
 ### [CRITICAL] Storing getQueryClient() result in a module global
+
 Wrong:
+
 ```tsx
 import { getQueryClient } from './get-query-client'
 
 export const queryClient = getQueryClient() // reintroduces cross-request sharing
 ```
+
 Correct:
+
 ```tsx
 import { getQueryClient } from './get-query-client'
 
@@ -261,43 +265,56 @@ const Component = () => {
   return null
 }
 ```
+
 Exporting the call result freezes one instance at module-evaluation time and shares it across requests — exactly the leak the factory exists to prevent; call getQueryClient() at each use site.
 Source: docs/suspensive.org/src/content/en/docs/react-query/createGetQueryClient.mdx
 
 ### [HIGH] Passing config to getQueryClient instead of createGetQueryClient
+
 Wrong:
+
 ```tsx
 const queryClient = getQueryClient({
   defaultOptions: { queries: { staleTime: 60_000 } },
 })
 ```
+
 Correct:
+
 ```tsx
 export const { getQueryClient } = createGetQueryClient({
   defaultOptions: { queries: { staleTime: 60_000 } },
 })
 ```
+
 getQueryClient takes no arguments — the browser singleton must be config-stable across calls — so defaults belong on createGetQueryClient(config).
 Source: docs/suspensive.org/src/content/en/docs/react-query/createGetQueryClient.mdx
 
 ### [HIGH] Using v5 gcTime instead of v4 cacheTime
+
 Wrong:
+
 ```tsx
 export const { getQueryClient } = createGetQueryClient({
   defaultOptions: { queries: { gcTime: 5 * 60 * 1000 } },
 })
 ```
+
 Correct:
+
 ```tsx
 export const { getQueryClient } = createGetQueryClient({
   defaultOptions: { queries: { cacheTime: 5 * 60 * 1000 } },
 })
 ```
+
 TSQ v4 names the cache removal time `cacheTime`; `gcTime` is the v5 rename and does not exist in v4 option types. On the server, createGetQueryClient overrides it to Infinity regardless of what you pass.
 Source: packages/react-query-4/src/createGetQueryClient.ts
 
 ### [HIGH] Using QueriesHydration outside an async RSC
+
 Wrong:
+
 ```tsx
 'use client'
 
@@ -309,7 +326,9 @@ export const Posts = ({ userId }: { userId: number }) => (
   </QueriesHydration>
 )
 ```
+
 Correct:
+
 ```tsx
 // app/posts/page.tsx — Server Component
 import { QueriesHydration } from '@suspensive/react-query-4'
@@ -322,50 +341,59 @@ export default function PostsPage({ userId }: { userId: number }) {
   )
 }
 ```
+
 QueriesHydration is an async Server Component; it only works in RSC frameworks (Next.js 13+ App Router) and cannot render in client components or the pages router.
 Source: docs/suspensive.org/src/content/en/docs/react-query/QueriesHydration.mdx
 
 ### [MEDIUM] Manual prefetch/dehydrate boilerplate in every RSC
+
 Wrong:
+
 ```tsx
 const queryClient = new QueryClient()
 await queryClient.prefetchQuery(postQueryOptions(id))
 await queryClient.prefetchQuery(commentsQueryOptions(id))
-return (
-  <Hydrate state={dehydrate(queryClient)}>{children}</Hydrate>
-)
+return <Hydrate state={dehydrate(queryClient)}>{children}</Hydrate>
 ```
+
 Correct:
+
 ```tsx
-<QueriesHydration queries={[postQueryOptions(id), commentsQueryOptions(id)]}>
-  {children}
-</QueriesHydration>
+<QueriesHydration queries={[postQueryOptions(id), commentsQueryOptions(id)]}>{children}</QueriesHydration>
 ```
+
 QueriesHydration automates client creation, parallel prefetch, dehydrate, and hydration (v4's Hydrate internally) in one component, mixes regular and infinite queries, and adds skipSsrOnError/timeout for free.
 Source: docs/suspensive.org/src/content/en/docs/react-query/QueriesHydration.mdx
 
 ### [MEDIUM] Passing queryClient prop to QueryClientConsumer on v4
+
 Wrong:
+
 ```tsx
 <QueryClientConsumer queryClient={queryClient}>
   {(client) => <button onClick={() => client.invalidateQueries({ queryKey: ['posts'] })}>refresh</button>}
 </QueryClientConsumer>
 ```
+
 Correct:
+
 ```tsx
 <QueryClientConsumer context={queryClientContext}>
   {(client) => <button onClick={() => client.invalidateQueries({ queryKey: ['posts'] })}>refresh</button>}
 </QueryClientConsumer>
 ```
+
 On @suspensive/react-query-4 the component mirrors TSQ v4's useQueryClient({ context }) and takes an optional `context` prop; the `queryClient` prop only exists on @suspensive/react-query-5. The codemod `npx @suspensive/codemods migrate-query-client-consumer-props .` renames context → queryClient when upgrading to v5.
 Source: packages/react-query-4/src/QueryClientConsumer.tsx
 
 ## Tensions
 
 ### HIGH Tension: getting-started simplicity vs server security
+
 A module-level `new QueryClient()` is the simplest setup and perfectly correct in a pure SPA — but copied into an SSR app it becomes a cross-request data leak. When code moves from CSR to Next.js App Router, converting the global client to `createGetQueryClient` is mandatory, not optional cleanup. Never silence this by "it works in dev" — the leak only manifests under concurrent production requests.
 
 ### HIGH Tension: clientOnly simplicity vs SSR value
+
 Skipping SSR with `<Suspense clientOnly>` (see @suspensive/react's skills/react/ssr-client-only skill) is the easiest fix for hydration problems, but it discards streaming SSR and server prefetch that QueriesHydration exists to provide. Conversely, do not build a QueriesHydration pipeline for a widget that should simply be client-only: a clientOnly boundary removes the need for QueriesHydration under it, because no server prefetch happens there.
 
 ```tsx

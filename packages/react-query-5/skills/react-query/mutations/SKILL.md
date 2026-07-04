@@ -49,9 +49,7 @@ export const PostsPage = () => {
   return posts.map((post) => (
     <Mutation
       key={post.id}
-      mutationFn={({ content }: { content: string }) =>
-        api.editPost({ postId: post.id, content })
-      }
+      mutationFn={({ content }: { content: string }) => api.editPost({ postId: post.id, content })}
     >
       {(postMutation) => (
         <div>
@@ -131,11 +129,13 @@ export const DeletePostButton = ({ postId }: { postId: number }) => {
 ## Common Mistakes
 
 ### [MEDIUM] Wrapper component per row just for useMutation
+
 Wrong:
+
 ```tsx
-{posts.map((post) => (
-  <PostItemWithMutation key={post.id} post={post} />
-))}
+{
+  posts.map((post) => <PostItemWithMutation key={post.id} post={post} />)
+}
 
 const PostItemWithMutation = ({ post }: { post: Post }) => {
   const deleteMutation = useMutation({ mutationFn: () => api.deletePost(post.id) })
@@ -146,30 +146,40 @@ const PostItemWithMutation = ({ post }: { post: Post }) => {
   )
 }
 ```
+
 Correct:
+
 ```tsx
-{posts.map((post) => (
-  <Mutation key={post.id} mutationFn={() => api.deletePost(post.id)}>
-    {({ mutate, isPending }) => (
-      <button disabled={isPending} onClick={() => mutate()}>
-        delete
-      </button>
-    )}
-  </Mutation>
-))}
+{
+  posts.map((post) => (
+    <Mutation key={post.id} mutationFn={() => api.deletePost(post.id)}>
+      {({ mutate, isPending }) => (
+        <button disabled={isPending} onClick={() => mutate()}>
+          delete
+        </button>
+      )}
+    </Mutation>
+  ))
+}
 ```
+
 Hooks cannot be called in loops, so agents invent awkwardly named wrapper components; `<Mutation>` works inline per row with no extra depth.
 Source: docs/suspensive.org/src/content/en/docs/react-query/Mutation.mdx
 
 ### [MEDIUM] Importing mutationOptions from Suspensive
+
 Wrong:
+
 ```tsx
 import { mutationOptions } from '@suspensive/react-query-5'
 ```
+
 Correct:
+
 ```tsx
 import { mutationOptions } from '@tanstack/react-query'
 ```
+
 mutationOptions is official in TanStack Query (v5, backported to v4.44+); the Suspensive re-export exists only for compatibility and is deprecated.
 Source: docs/suspensive.org/src/content/en/docs/react-query/mutationOptions.mdx
 
