@@ -35,7 +35,7 @@ skills:
     path: 'skills/react/error-handling/SKILL.md'
     package: 'packages/react'
     description: 'ErrorBoundary with shouldCatch error filtering, resetKeys/onReset, ErrorBoundaryGroup bulk reset, useErrorBoundary().setError, useErrorBoundaryFallbackProps for RSC-safe fallbacks.'
-    requires: [ 'react' ]
+    requires: ['react']
     sources:
       - toss/suspensive:docs/suspensive.org/src/content/en/docs/react/ErrorBoundary.mdx
       - toss/suspensive:docs/suspensive.org/src/content/en/docs/react/ErrorBoundaryGroup.mdx
@@ -48,7 +48,7 @@ skills:
     path: 'skills/react/loading-ux/SKILL.md'
     package: 'packages/react'
     description: 'Suspense fallbacks, Delay ms/isDelayed render prop to prevent flash-of-loading and fade skeletons in, DefaultPropsProvider + new DefaultProps for app-wide fallback defaults.'
-    requires: [ 'react' ]
+    requires: ['react']
     sources:
       - toss/suspensive:docs/suspensive.org/src/content/en/docs/react/Suspense.mdx
       - toss/suspensive:docs/suspensive.org/src/content/en/docs/react/Delay.mdx
@@ -62,7 +62,7 @@ skills:
     path: 'skills/react/ssr-client-only/SKILL.md'
     package: 'packages/react'
     description: 'Suspense clientOnly prop to skip SSR per boundary, ClientOnly component, useIsClient — all useSyncExternalStore-based, hydration-mismatch-safe; when to prefer these over next/dynamic ssr:false.'
-    requires: [ 'react' ]
+    requires: ['react']
     sources:
       - toss/suspensive:docs/suspensive.org/src/content/en/docs/react/Suspense.mdx
       - toss/suspensive:docs/suspensive.org/src/content/en/docs/react/ClientOnly.mdx
@@ -75,7 +75,7 @@ skills:
     path: 'skills/react/code-splitting/SKILL.md'
     package: 'packages/react'
     description: 'lazy (experimental) with .load() preloading and onError, createLazy defaults, reloadOnError to recover from chunk-load failures caused by deploy version skew.'
-    requires: [ 'react' ]
+    requires: ['react']
     sources:
       - toss/suspensive:docs/suspensive.org/src/content/en/docs/react/lazy.mdx
       - toss/suspensive:packages/react/src/lazy.ts
@@ -87,7 +87,7 @@ skills:
     path: 'skills/lifecycle/migrate-to-v3/SKILL.md'
     package: 'packages/react'
     description: 'v1→v2→v3 breaking changes: wrap builder → .with(), AsyncBoundary and with* HOC removal, Suspense.CSROnly → clientOnly, ErrorBoundaryGroup.Reset → Consumer, fallback error propagation change, @suspensive/codemods usage.'
-    requires: [ 'react' ]
+    requires: ['react']
     sources:
       - toss/suspensive:docs/suspensive.org/src/content/en/docs/react/migration/migrate-to-v3.mdx
       - toss/suspensive:docs/suspensive.org/src/content/en/docs/react/migration/migrate-to-v2.mdx
@@ -113,7 +113,7 @@ skills:
     path: 'skills/react-query/declarative-queries/SKILL.md'
     package: 'packages/react-query-5'
     description: 'SuspenseQuery, SuspenseQueries, SuspenseInfiniteQuery render-prop components; select; parent Suspense requirement; no enabled/placeholderData; IsFetching (experimental).'
-    requires: [ 'react-query' ]
+    requires: ['react-query']
     sources:
       - toss/suspensive:docs/suspensive.org/src/content/en/docs/react-query/SuspenseQuery.mdx
       - toss/suspensive:docs/suspensive.org/src/content/en/docs/react-query/SuspenseQueries.mdx
@@ -127,7 +127,7 @@ skills:
     path: 'skills/react-query/mutations/SKILL.md'
     package: 'packages/react-query-5'
     description: 'Mutation render-prop component for mutations inside list rows and conditionals; mutationOptions and where to import it from.'
-    requires: [ 'react-query' ]
+    requires: ['react-query']
     sources:
       - toss/suspensive:docs/suspensive.org/src/content/en/docs/react-query/Mutation.mdx
       - toss/suspensive:docs/suspensive.org/src/content/en/docs/react-query/mutationOptions.mdx
@@ -140,7 +140,7 @@ skills:
     path: 'skills/react-query/prefetching/SKILL.md'
     package: 'packages/react-query-5'
     description: 'usePrefetchQuery/usePrefetchInfiniteQuery firing during render (not useEffect) to kill request waterfalls; PrefetchQuery/PrefetchInfiniteQuery components for JSX placement.'
-    requires: [ 'react-query' ]
+    requires: ['react-query']
     sources:
       - toss/suspensive:docs/suspensive.org/src/content/en/docs/react-query/usePrefetchQuery.mdx
       - toss/suspensive:docs/suspensive.org/src/content/en/docs/react-query/PrefetchQuery.mdx
@@ -153,7 +153,7 @@ skills:
     path: 'skills/react-query/ssr-hydration/SKILL.md'
     package: 'packages/react-query-5'
     description: 'createGetQueryClient request-scoped QueryClient (server security, gcTime Infinity), QueriesHydration async RSC prefetch+dehydrate+hydrate, skipSsrOnError, timeout, streaming per boundary. Next.js App Router.'
-    requires: [ 'react-query' ]
+    requires: ['react-query']
     sources:
       - toss/suspensive:docs/suspensive.org/src/content/en/docs/react-query/createGetQueryClient.mdx
       - toss/suspensive:docs/suspensive.org/src/content/en/docs/react-query/QueriesHydration.mdx
@@ -165,7 +165,7 @@ skills:
     path: 'skills/compositions/suspensive-react/SKILL.md'
     package: 'packages/react-query-5'
     description: 'ErrorBoundary + Suspense + SuspenseQuery composition; replacing removed QueryErrorBoundary with ErrorBoundary + useQueryErrorResetBoundary; shouldCatch for API error types; query error reset wiring.'
-    requires: [ 'react-query' ]
+    requires: ['react-query']
     sources:
       - toss/suspensive:docs/suspensive.org/src/content/en/docs/react-query/migration/migrate-to-v3.mdx
       - toss/suspensive:docs/suspensive.org/src/content/en/docs/react/ErrorBoundary.mdx
@@ -191,7 +191,7 @@ skills:
     path: 'skills/react-query/declarative-queries/SKILL.md'
     package: 'packages/react-query-4'
     description: 'Same as v5 sub-skill with v4 deltas: TSQ 4.40+ ships useSuspenseQuery/queryOptions officially; select-type history on the v4 compat layer.'
-    requires: [ 'react-query' ]
+    requires: ['react-query']
     sources:
       - toss/suspensive:docs/suspensive.org/src/content/en/docs/react-query/SuspenseQuery.mdx
       - toss/suspensive:docs/suspensive.org/src/content/en/docs/react-query/SuspenseQueries.mdx
@@ -205,7 +205,7 @@ skills:
     path: 'skills/react-query/mutations/SKILL.md'
     package: 'packages/react-query-4'
     description: 'Mutation render-prop component; mutationOptions official at TSQ 4.44+.'
-    requires: [ 'react-query' ]
+    requires: ['react-query']
     sources:
       - toss/suspensive:docs/suspensive.org/src/content/en/docs/react-query/Mutation.mdx
       - toss/suspensive:docs/suspensive.org/src/content/en/docs/react-query/mutationOptions.mdx
@@ -218,7 +218,7 @@ skills:
     path: 'skills/react-query/prefetching/SKILL.md'
     package: 'packages/react-query-4'
     description: 'usePrefetchQuery/PrefetchQuery for render-time prefetch on TSQ v4.'
-    requires: [ 'react-query' ]
+    requires: ['react-query']
     sources:
       - toss/suspensive:docs/suspensive.org/src/content/en/docs/react-query/usePrefetchQuery.mdx
       - toss/suspensive:docs/suspensive.org/src/content/en/docs/react-query/PrefetchQuery.mdx
@@ -231,7 +231,7 @@ skills:
     path: 'skills/react-query/ssr-hydration/SKILL.md'
     package: 'packages/react-query-4'
     description: 'createGetQueryClient (cacheTime Infinity on server), QueriesHydration using Hydrate (v4), QueryClientConsumer context prop (v4 delta vs queryClient in v5).'
-    requires: [ 'react-query' ]
+    requires: ['react-query']
     sources:
       - toss/suspensive:docs/suspensive.org/src/content/en/docs/react-query/createGetQueryClient.mdx
       - toss/suspensive:docs/suspensive.org/src/content/en/docs/react-query/QueriesHydration.mdx
@@ -243,7 +243,7 @@ skills:
     path: 'skills/compositions/suspensive-react/SKILL.md'
     package: 'packages/react-query-4'
     description: 'Same composition as v5: QueryErrorBoundary replacement, query error reset wiring on TSQ v4.'
-    requires: [ 'react-query' ]
+    requires: ['react-query']
     sources:
       - toss/suspensive:docs/suspensive.org/src/content/en/docs/react-query/migration/migrate-to-v3.mdx
       - toss/suspensive:docs/suspensive.org/src/content/en/docs/react/ErrorBoundary.mdx
