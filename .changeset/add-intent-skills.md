@@ -5,4 +5,4 @@
 '@suspensive/jotai': patch
 ---
 
-Add @tanstack/intent AI agent skills and CLI entry points
+Add @tanstack/intent AI agent skills (SKILL.md) and artifacts
