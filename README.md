@@ -73,14 +73,6 @@ npm install @suspensive/react
 
 Visit **[suspensive.org](https://suspensive.org)** for full documentation.
 
-### AI agents
-
-Suspensive packages ship with [@tanstack/intent](https://tanstack.com/intent) skills — task-focused guides for AI coding agents. If you use an AI agent, run:
-
-```bash
-npx @tanstack/intent@latest install
-```
-
 [English](https://suspensive.org/en) | [한국어](https://suspensive.org/ko)
 
 ## Contributors
