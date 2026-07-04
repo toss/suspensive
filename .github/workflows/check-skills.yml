@@ -4,15 +4,19 @@
 # updates one review PR when existing skills, artifact coverage, or workspace
 # package coverage need review.
 #
-# Triggers: pull requests touching skills/artifacts, new release published, or
-# manual workflow_dispatch.
+# Triggers: pull requests touching skills/artifacts, pushes to main affecting
+# docs/source paths, new release published, or manual workflow_dispatch.
 #
-# intent-workflow-version: 3
+# intent-workflow-version: 4
 #
 # Template variables (replaced by `intent setup`):
 #   suspensive — e.g. @tanstack/query or my-workspace workspace
 
 name: Check Skills
+
+concurrency:
+  group: check-skills-${{ github.ref }}
+  cancel-in-progress: true
 
 on:
   pull_request:
@@ -21,21 +25,28 @@ on:
       - '**/skills/**'
       - '_artifacts/**'
       - '**/_artifacts/**'
+  push:
+    branches: [main]
+    paths:
+      - 'docs/**'
+      - 'packages/*/src/**'
   release:
     types: [published]
   workflow_dispatch: {}
 
-permissions:
-  contents: write
-  pull-requests: write
+permissions: {}
 
 jobs:
   validate:
     name: Validate intent skills
     if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
       - uses: ./.github/actions/pnpm-setup-node
       - run: npm install -g @tanstack/intent
       - run: intent validate --github-summary
@@ -44,10 +55,14 @@ jobs:
     name: Check intent skill coverage
     if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           fetch-depth: 0
+          persist-credentials: true # review job pushes a generated branch
       - uses: ./.github/actions/pnpm-setup-node
 
       - run: npm install -g @tanstack/intent
@@ -60,16 +75,16 @@ jobs:
       - name: Open or update review PR
         if: steps.stale.outputs.has_review == 'true'
         env:
+          BASE_BRANCH: ${{ github.event.repository.default_branch }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VERSION: ${{ github.event.release.tag_name || 'manual' }}
         run: |
-          VERSION="${{ github.event.release.tag_name || 'manual' }}"
           BRANCH="skills/review-${VERSION}"
-          BASE_BRANCH="${{ github.event.repository.default_branch }}"
 
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-          git fetch origin "$BRANCH" || true
+          git fetch origin "$BRANCH:refs/remotes/origin/$BRANCH" || true
           if git show-ref --verify --quiet "refs/remotes/origin/$BRANCH"; then
             git checkout -B "$BRANCH" "origin/$BRANCH"
           else
