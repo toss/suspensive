@@ -693,3 +693,12 @@ cross_references:
     reason: 'v3 changed fallback error propagation semantics'
 
 gaps: []
+
+coverage:
+  ignored_packages:
+    - name: '@suspensive/react-query'
+      reason: 'facade package being phased out; skills ship in @suspensive/react-query-4 and @suspensive/react-query-5'
+    - name: '@suspensive/next'
+      reason: 'experimental v0.0.x package; excluded until stabilized'
+    - name: '@suspensive/codemods'
+      reason: 'covered inside the migrate-to-v3 lifecycle skill, not a standalone skill'

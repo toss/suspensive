@@ -14,6 +14,10 @@ metadata:
   library: '@suspensive/react-query-4'
   library_version: 3.21.2
   framework: react
+sources:
+  - 'toss/suspensive:docs/suspensive.org/src/content/en/docs/react-query/motivation.mdx'
+  - 'toss/suspensive:docs/suspensive.org/src/content/en/docs/react-query/installation.mdx'
+  - 'toss/suspensive:packages/react-query-4/src/index.ts'
 ---
 
 @suspensive/react-query-4 provides render-prop components on top of @tanstack/react-query v4 so that data fetching, mutations, and prefetching can be expressed directly in JSX at the same depth as the Suspense and ErrorBoundary that handle them. Result types focus on the success case: `data` is always the resolved type, and loading/error states are delegated to boundaries. This package exists for apps that must support older browsers: TanStack Query v5 requires ES2020 class private fields (Safari 15+), so @suspensive/react-query-4 delivers the same v5-style interface on top of TSQ v4. If you can run TSQ v5, use @suspensive/react-query-5 instead.

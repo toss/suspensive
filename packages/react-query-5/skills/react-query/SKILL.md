@@ -13,6 +13,10 @@ metadata:
   library: '@suspensive/react-query-5'
   library_version: 3.21.2
   framework: react
+sources:
+  - 'toss/suspensive:docs/suspensive.org/src/content/en/docs/react-query/motivation.mdx'
+  - 'toss/suspensive:docs/suspensive.org/src/content/en/docs/react-query/installation.mdx'
+  - 'toss/suspensive:packages/react-query-5/src/index.ts'
 ---
 
 @suspensive/react-query-5 provides render-prop components on top of @tanstack/react-query v5 so that data fetching, mutations, and prefetching can be expressed directly in JSX at the same depth as the Suspense and ErrorBoundary that handle them. Result types focus on the success case: `data` is always the resolved type, and loading/error states are delegated to boundaries. Use @suspensive/react-query-4 instead only when you must stay on @tanstack/react-query v4 (for example Safari < 15 support).
