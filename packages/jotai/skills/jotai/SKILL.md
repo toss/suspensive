@@ -125,11 +125,7 @@ const baseAtom = atom(0)
 
 const Example = () => (
   <Suspense fallback={'pending...'}>
-    <SetAtom atom={baseAtom}>
-      {(setValue) => (
-        <button onClick={() => setValue(request())}>request</button>
-      )}
-    </SetAtom>
+    <SetAtom atom={baseAtom}>{(setValue) => <button onClick={() => setValue(request())}>request</button>}</SetAtom>
   </Suspense>
 )
 ```
@@ -156,9 +152,7 @@ const userQueryAtom = atomWithSuspenseQuery(() => ({
 const MyPage = () => (
   <ErrorBoundary fallback={({ error }) => <>{error.message}</>}>
     <Suspense fallback={'pending...'}>
-      <AtomValue atom={userQueryAtom}>
-        {({ data: user }) => <div key={user.id}>{user.name}</div>}
-      </AtomValue>
+      <AtomValue atom={userQueryAtom}>{({ data: user }) => <div key={user.id}>{user.name}</div>}</AtomValue>
     </Suspense>
   </ErrorBoundary>
 )
@@ -174,9 +168,7 @@ Wrong:
 import { AtomValue } from '@suspensive/jotai'
 import { asyncUserAtom } from '~/atoms'
 
-const Example = () => (
-  <AtomValue atom={asyncUserAtom}>{(user) => <Profile {...user} />}</AtomValue>
-)
+const Example = () => <AtomValue atom={asyncUserAtom}>{(user) => <Profile {...user} />}</AtomValue>
 ```
 
 Correct:
@@ -255,9 +247,7 @@ const request = async () => fetch('https://api.example.com/count').then((res) =>
 const baseAtom = atom(0)
 
 const Example = () => (
-  <SetAtom atom={baseAtom}>
-    {(setValue) => <button onClick={() => setValue(request())}>request</button>}
-  </SetAtom>
+  <SetAtom atom={baseAtom}>{(setValue) => <button onClick={() => setValue(request())}>request</button>}</SetAtom>
 )
 ```
 
@@ -273,9 +263,7 @@ const baseAtom = atom(0)
 
 const Example = () => (
   <Suspense fallback={'pending...'}>
-    <SetAtom atom={baseAtom}>
-      {(setValue) => <button onClick={() => setValue(request())}>request</button>}
-    </SetAtom>
+    <SetAtom atom={baseAtom}>{(setValue) => <button onClick={() => setValue(request())}>request</button>}</SetAtom>
   </Suspense>
 )
 ```

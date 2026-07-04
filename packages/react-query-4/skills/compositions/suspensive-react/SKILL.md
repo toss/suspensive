@@ -40,11 +40,7 @@ Resetting the boundary alone is not enough: the query error is still cached, so 
 
 import { ErrorBoundary } from '@suspensive/react'
 import { useQueryErrorResetBoundary } from '@tanstack/react-query'
-import {
-  type ComponentPropsWithoutRef,
-  type ComponentRef,
-  forwardRef,
-} from 'react'
+import { type ComponentPropsWithoutRef, type ComponentRef, forwardRef } from 'react'
 
 export const QueryErrorBoundary = forwardRef<
   ComponentRef<typeof ErrorBoundary>,
@@ -103,7 +99,10 @@ import { useQueryErrorResetBoundary } from '@tanstack/react-query'
 import { userQueryOptions } from '~/queries'
 
 class ApiError extends Error {
-  constructor(public status: number, message: string) {
+  constructor(
+    public status: number,
+    message: string
+  ) {
     super(message)
   }
 }
@@ -123,9 +122,7 @@ export const UserSection = ({ userId }: { userId: number }) => {
       )}
     >
       <Suspense fallback={<div>Loading user...</div>}>
-        <SuspenseQuery {...userQueryOptions(userId)}>
-          {({ data: user }) => <h1>{user.name}</h1>}
-        </SuspenseQuery>
+        <SuspenseQuery {...userQueryOptions(userId)}>{({ data: user }) => <h1>{user.name}</h1>}</SuspenseQuery>
       </Suspense>
     </ErrorBoundary>
   )
@@ -163,7 +160,9 @@ Fast cache hits (under 200ms) show nothing instead of a spinner flash. Delay nev
 ## Common Mistakes
 
 ### [HIGH] Importing removed QueryErrorBoundary from Suspensive
+
 Wrong:
+
 ```tsx
 import { QueryErrorBoundary } from '@suspensive/react-query-4'
 
@@ -173,7 +172,9 @@ const Example = () => (
   </QueryErrorBoundary>
 )
 ```
+
 Correct:
+
 ```tsx
 import { ErrorBoundary } from '@suspensive/react'
 import { useQueryErrorResetBoundary } from '@tanstack/react-query'
@@ -183,34 +184,31 @@ const Example = () => {
   return (
     <ErrorBoundary
       onReset={reset}
-      fallback={({ error, reset: retry }) => (
-        <button onClick={retry}>{error.message} — retry</button>
-      )}
+      fallback={({ error, reset: retry }) => <button onClick={retry}>{error.message} — retry</button>}
     >
       <PostsSection />
     </ErrorBoundary>
   )
 }
 ```
+
 QueryErrorBoundary forced a peerDependency on @suspensive/react for a trivial implementation, so v3 removed it in favor of composing ErrorBoundary with useQueryErrorResetBoundary. Removed in v3, but agents trained on older code still generate this.
 Source: docs/suspensive.org/src/content/en/docs/react-query/migration/migrate-to-v3.mdx (#1424)
 
 ### [HIGH] Retry button resets boundary but not query error
+
 Wrong:
+
 ```tsx
-<ErrorBoundary
-  fallback={({ error, reset }) => (
-    <button onClick={reset}>{error.message} — retry</button>
-  )}
->
+<ErrorBoundary fallback={({ error, reset }) => <button onClick={reset}>{error.message} — retry</button>}>
   <Suspense fallback={<Spinner />}>
-    <SuspenseQuery {...postsQueryOptions()}>
-      {({ data }) => <List data={data} />}
-    </SuspenseQuery>
+    <SuspenseQuery {...postsQueryOptions()}>{({ data }) => <List data={data} />}</SuspenseQuery>
   </Suspense>
 </ErrorBoundary>
 ```
+
 Correct:
+
 ```tsx
 const { reset } = useQueryErrorResetBoundary()
 
@@ -227,6 +225,7 @@ const { reset } = useQueryErrorResetBoundary()
   </Suspense>
 </ErrorBoundary>
 ```
+
 Boundary reset only remounts the children; the query error is still in TanStack Query's cache, so the remounted suspense query rethrows it instantly and never refetches — resetting both is required.
 Source: https://github.com/toss/suspensive/issues/91
 

@@ -555,7 +555,7 @@ skills:
       - 'let the browser take over when server fetch fails (auth)'
     failure_modes:
       - mistake: 'Module-level global QueryClient on the server'
-        mechanism: 'A shared QueryClient leaks one user''s cached data into another user''s request — a security vulnerability; createGetQueryClient returns a new instance per server request and a singleton only in the browser'
+        mechanism: "A shared QueryClient leaks one user's cached data into another user's request — a security vulnerability; createGetQueryClient returns a new instance per server request and a singleton only in the browser"
         wrong_pattern: |
           export const queryClient = new QueryClient() // shared across requests
         correct_pattern: |

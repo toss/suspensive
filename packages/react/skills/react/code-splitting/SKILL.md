@@ -79,10 +79,7 @@ export const Example = () => {
 'use client'
 import { lazy, reloadOnError } from '@suspensive/react'
 
-const CheckoutPage = lazy(
-  () => import('./CheckoutPage'),
-  reloadOnError({ retry: 3, retryDelay: 1000 })
-)
+const CheckoutPage = lazy(() => import('./CheckoutPage'), reloadOnError({ retry: 3, retryDelay: 1000 }))
 ```
 
 `reloadOnError` returns a `LazyOptions` object whose `onError` reloads the page (default `window.location.reload`) up to `retry` times with `retryDelay` ms between attempts, tracking the count in storage (default `window.sessionStorage`) to avoid infinite reload loops; `onSuccess` clears the count.

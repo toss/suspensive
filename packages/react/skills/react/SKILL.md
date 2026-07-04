@@ -32,13 +32,13 @@ Every component (`Suspense`, `ErrorBoundary`, `ErrorBoundaryGroup`, `Delay`, `Cl
 
 ## Sub-Skills
 
-| Task                                                                          | Skill                                                  |
-| ----------------------------------------------------------------------------- | ------------------------------------------------------ |
-| Catch specific error types, reset one or many boundaries, fallback props      | [error-handling](./error-handling/SKILL.md)            |
-| Suspense fallbacks, prevent flash-of-loading with Delay, app-wide defaults    | [loading-ux](./loading-ux/SKILL.md)                    |
-| Skip SSR per boundary, hydration-safe client detection                        | [ssr-client-only](./ssr-client-only/SKILL.md)          |
-| Preload lazy components, recover from chunk-load failures after deploys       | [code-splitting](./code-splitting/SKILL.md)            |
-| Upgrade from v1/v2 (`wrap`, `AsyncBoundary`, `with*` HOCs, codemods)          | [migrate-to-v3](../lifecycle/migrate-to-v3/SKILL.md)   |
+| Task                                                                       | Skill                                                |
+| -------------------------------------------------------------------------- | ---------------------------------------------------- |
+| Catch specific error types, reset one or many boundaries, fallback props   | [error-handling](./error-handling/SKILL.md)          |
+| Suspense fallbacks, prevent flash-of-loading with Delay, app-wide defaults | [loading-ux](./loading-ux/SKILL.md)                  |
+| Skip SSR per boundary, hydration-safe client detection                     | [ssr-client-only](./ssr-client-only/SKILL.md)        |
+| Preload lazy components, recover from chunk-load failures after deploys    | [code-splitting](./code-splitting/SKILL.md)          |
+| Upgrade from v1/v2 (`wrap`, `AsyncBoundary`, `with*` HOCs, codemods)       | [migrate-to-v3](../lifecycle/migrate-to-v3/SKILL.md) |
 
 ## Quick Decision Tree
 
@@ -162,10 +162,7 @@ Correct:
 ```tsx
 import { Suspense } from '@suspensive/react'
 
-export default Object.assign(
-  Suspense.with({ fallback: <div>Loading...</div> }, PageComponent),
-  { loader }
-)
+export default Object.assign(Suspense.with({ fallback: <div>Loading...</div> }, PageComponent), { loader })
 ```
 
 The component type returned by `.with()` rejects extra static properties, so router loaders and similar statics must be merged with `Object.assign`.
