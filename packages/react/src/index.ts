@@ -1,7 +1,7 @@
 export { ClientOnly } from './ClientOnly'
 export { DefaultPropsProvider, DefaultProps } from './DefaultProps'
 export { Delay } from './Delay'
-export { ErrorBoundary, useErrorBoundary, useErrorBoundaryFallbackProps } from './ErrorBoundary'
+export { ErrorBoundary, useErrorBoundary, useErrorBoundaryFallbackProps, errorBoundaryProps } from './ErrorBoundary'
 export { ErrorBoundaryGroup, useErrorBoundaryGroup } from './ErrorBoundaryGroup'
 export { lazy, reloadOnError, createLazy } from './lazy'
 export { Suspense } from './Suspense'
