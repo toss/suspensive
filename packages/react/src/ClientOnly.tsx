@@ -17,7 +17,7 @@ export const ClientOnly = Object.assign(
   ({ children, fallback }: ClientOnlyProps) => <>{useIsClient() ? children : fallback}</>,
   {
     displayName: 'ClientOnly',
-    with: <TProps extends ComponentProps<ComponentType> = Record<string, never>>(
+    with: <TProps extends ComponentProps<ComponentType> = Record<never, never>>(
       clientOnlyProps: PropsWithoutChildren<ClientOnlyProps>,
       Component: ComponentType<TProps>
     ) =>
