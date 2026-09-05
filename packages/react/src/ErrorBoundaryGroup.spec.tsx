@@ -3,7 +3,7 @@ import { createElement } from 'react'
 import { ErrorBoundary } from './ErrorBoundary'
 import { ErrorBoundaryGroup, useErrorBoundaryGroup } from './ErrorBoundaryGroup'
 import {
-  Message_useErrorBoundaryGroup_this_hook_should_be_called_in_ErrorBoundary_props_children,
+  Message_useErrorBoundaryGroup_this_hook_should_be_called_in_ErrorBoundaryGroup_props_children,
   SuspensiveError,
 } from './models/SuspensiveError'
 import { CustomError, ERROR_MESSAGE, TEXT, Throw } from './test-utils'
@@ -101,7 +101,7 @@ describe('useErrorBoundaryGroup', () => {
           return <></>
         })
       )
-    ).toThrow(Message_useErrorBoundaryGroup_this_hook_should_be_called_in_ErrorBoundary_props_children)
+    ).toThrow(Message_useErrorBoundaryGroup_this_hook_should_be_called_in_ErrorBoundaryGroup_props_children)
 
     expect(() => {
       render(
@@ -127,6 +127,17 @@ describe('useErrorBoundaryGroup', () => {
         })
       )
     }).not.toThrowError(CustomError)
+  })
+
+  it('should throw an error mentioning ErrorBoundaryGroup when useErrorBoundaryGroup is called outside of ErrorBoundaryGroup', () => {
+    expect(() =>
+      render(
+        createElement(() => {
+          useErrorBoundaryGroup()
+          return <></>
+        })
+      )
+    ).toThrow('useErrorBoundaryGroup: this hook should be called in ErrorBoundaryGroup.props.children')
   })
 })
 

@@ -515,10 +515,10 @@ importers:
         specifier: ^13.0.0
         version: 13.1.0(commander@13.1.0)
       '@suspensive/react-query-4':
-        specifier: workspace:^3.21.3
+        specifier: workspace:^3.21.4
         version: link:../react-query-4
       '@suspensive/react-query-5':
-        specifier: workspace:^3.21.3
+        specifier: workspace:^3.21.4
         version: link:../react-query-5
       '@tanstack/react-query':
         specifier: ^4.44.0 || ^5.82.0
@@ -5752,6 +5752,7 @@ packages:
   eslint@9.39.2:
     resolution: {integrity: sha512-LEyamqS7W5HB3ujJyvi0HQK/dtVINZvd5mAAp9eT5S/ujByGjiZLCzPcHVzuXbpJDJF/cxwHlfceVUDZ2lnSTw==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
+    deprecated: This version is no longer supported. Please see https://eslint.org/version-support for other options.
     hasBin: true
     peerDependencies:
       jiti: '*'
