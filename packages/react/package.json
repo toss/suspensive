@@ -1,10 +1,11 @@
 {
   "name": "@suspensive/react",
-  "version": "3.21.1",
+  "version": "3.21.4",
   "description": "Suspensive interfaces for react",
   "keywords": [
     "suspensive",
-    "react"
+    "react",
+    "tanstack-intent"
   ],
   "homepage": "https://suspensive.org",
   "bugs": "https://github.com/toss/suspensive/issues",
@@ -35,7 +36,8 @@
   "types": "dist/index.d.mts",
   "files": [
     "dist",
-    "src"
+    "src",
+    "skills"
   ],
   "scripts": {
     "build": "tsdown",

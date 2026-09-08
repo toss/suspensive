@@ -214,7 +214,11 @@ function FeatureCard({
           ease: 'linear',
         }}
       />
-      <Link href={item.href} className="absolute inset-0 z-10" />
+      <Link
+        href={item.href}
+        aria-label={item.title}
+        className="absolute inset-0 z-10"
+      />
       <h3 className="mb-2 font-mono text-sm font-semibold tracking-tight">
         {item.title}
       </h3>

@@ -42,9 +42,9 @@ function App() {
 }
 ```
 
-### Add SSR safety with clientOnly
+### Skip SSR with clientOnly
 
-If you're using Next.js or another SSR framework, prevent hydration issues:
+When a subtree should not be server-rendered, use `clientOnly` on `<Suspense/>`:
 
 ```tsx
 import { Suspense } from '@suspensive/react'
@@ -86,6 +86,6 @@ function Dashboard() {
 
 ## Next Steps
 
-- **[`<Suspense/>`](/docs/react/Suspense)** — SSR-safe Suspense with clientOnly and DefaultProps support
+- **[`<Suspense/>`](/docs/react/Suspense)** — Suspense with `clientOnly` to skip SSR for a boundary, plus DefaultProps support
 - **[`<ErrorBoundary/>`](/docs/react/ErrorBoundary)** — Advanced error handling with shouldCatch filtering
 - **[Suspensive vs react-error-boundary](/docs/react/comparison)** — Detailed feature comparison

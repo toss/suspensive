@@ -63,7 +63,7 @@ import { Callout, ComparisonTable } from '@/components'
       label: 'Async Rendering',
       rows: [
         {
-          feature: 'SSR-safe Suspense (clientOnly)',
+          feature: '바운더리에서 SSR 건너뛰기 (clientOnly)',
           values: [true, false, false, false],
         },
         {
@@ -151,9 +151,9 @@ const DeepFallbackChild = () => {
 
 Suspensive는 더 나은 ErrorBoundary만이 아닙니다. 프로덕션에서는 에러 처리 외에도 로딩 상태, SSR 하이드레이션, 데이터 페칭까지 관리해야 합니다. 이 문제들은 서로 연결되어 있고, Suspensive는 하나의 패키지에서 모두 해결합니다.
 
-### clientOnly가 포함된 Suspense — SSR 문제 해결
+### clientOnly — Suspense 바운더리에서 SSR 건너뛰기
 
-React의 `<Suspense>`는 Next.js 같은 SSR 환경에서 깨집니다. Suspensive의 `clientOnly` prop으로 한 줄로 해결:
+React의 `<Suspense>`는 SSR과 함께 동작합니다. 바운더리를 클라이언트에서만 렌더링하고 싶을 때 Suspensive의 `clientOnly` prop은 서버에서는 `fallback`, 클라이언트에서는 `children`을 한 줄로 선언합니다:
 
 ```tsx
 <Suspense fallback={<Skeleton />} clientOnly>

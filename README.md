@@ -4,7 +4,7 @@
   </a>
   <p>
     <a href="https://www.npmjs.com/package/@suspensive/react"><img src="https://img.shields.io/npm/v/@suspensive/react.svg?style=flat-square&colorA=000&colorB=000" alt="npm version" /></a>
-    <a href="https://www.npmjs.com/package/@suspensive/react"><img src="https://img.shields.io/npm/dw/@suspensive/react.svg?style=flat-square&colorA=000&colorB=000" alt="npm downloads" /></a>
+    <a href="https://www.npmjs.com/package/@suspensive/react"><img src="https://img.shields.io/npm/dm/@suspensive/react.svg?style=flat-square&colorA=000&colorB=000" alt="npm downloads" /></a>
     <a href="https://github.com/toss/suspensive"><img src="https://img.shields.io/github/stars/toss/suspensive?style=flat-square&colorA=000&colorB=000" alt="GitHub stars" /></a>
     <a href="https://github.com/toss/suspensive/blob/main/LICENSE"><img src="https://img.shields.io/github/license/toss/suspensive?style=flat-square&colorA=000&colorB=000" alt="MIT License" /></a>
   </p>
@@ -43,7 +43,7 @@ const Page = () => (
 
 - **`shouldCatch`** — catch only specific error types, let others propagate
 - **`ErrorBoundaryGroup`** — reset multiple error boundaries at once, no prop drilling
-- **`clientOnly`** — SSR-safe Suspense that avoids hydration mismatches in Next.js
+- **`clientOnly`** — skip SSR for a Suspense boundary (fallback on server, children on client)
 - **`Delay`** — prevent flash-of-loading-state with render props for smooth fade-in
 - **`reset`** — built into the fallback props, no external state needed
 
@@ -60,7 +60,7 @@ const Page = () => (
 
 - **`<ErrorBoundary/>`** with `shouldCatch` — catch only the errors you want ([comparison with react-error-boundary](https://suspensive.org/docs/react/comparison))
 - **`<ErrorBoundaryGroup/>`** — reset multiple error boundaries at once, no prop drilling
-- **`<Suspense/>`** with `clientOnly` — SSR-safe Suspense that just works in Next.js
+- **`<Suspense/>`** with `clientOnly` — declaratively skip SSR for a boundary when you need client-only rendering
 - **`<SuspenseQuery/>`** — declarative data fetching as JSX, no hook constraints
 - **`<Delay/>`** — prevent flash-of-loading-state UX issues
 - **`<DefaultPropsProvider/>`** — set global default fallbacks for all components

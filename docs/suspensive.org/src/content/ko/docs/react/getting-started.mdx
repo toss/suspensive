@@ -42,9 +42,9 @@ function App() {
 }
 ```
 
-### clientOnly로 SSR 안전성 확보
+### clientOnly로 SSR 건너뛰기
 
-Next.js 또는 다른 SSR 프레임워크를 사용하고 있다면, 하이드레이션 문제를 방지하세요:
+서버에서 렌더링하지 않을 서브트리는 `<Suspense/>`에 `clientOnly`를 사용하세요:
 
 ```tsx
 import { Suspense } from '@suspensive/react'
@@ -86,6 +86,6 @@ function Dashboard() {
 
 ## 다음 단계
 
-- **[`<Suspense/>`](/docs/react/Suspense)** — clientOnly와 DefaultProps를 지원하는 SSR 안전한 Suspense
+- **[`<Suspense/>`](/docs/react/Suspense)** — `clientOnly`로 바운더리에서 SSR을 건너뛰고, DefaultProps 지원
 - **[`<ErrorBoundary/>`](/docs/react/ErrorBoundary)** — shouldCatch 필터링을 지원하는 고급 에러 처리
 - **[Suspensive vs react-error-boundary](/docs/react/comparison)** — 상세한 기능 비교

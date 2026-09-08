@@ -1,5 +1,6 @@
 'use client'
 
+import * as Sentry from '@sentry/nextjs'
 import { ErrorBoundary, Suspense } from '@suspensive/react'
 import { SuspenseQuery } from '@suspensive/react-query-5'
 import { queryOptions } from '@tanstack/react-query'
@@ -78,6 +79,7 @@ function SlotNumber({ value }: { value: number }) {
 export const TrustedBy = ({ text }: { text: string }) => {
   return (
     <ErrorBoundary
+      onError={Sentry.captureReactException}
       fallback={<TrustedByLayout downloads={FALLBACK_DOWNLOADS} text={text} />}
     >
       <Suspense

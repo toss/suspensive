@@ -43,7 +43,17 @@ export const suspensiveTypeScriptConfig = defineConfig([
         'warn',
         {
           cspell: {
-            words: ['packlint', 'codecov', 'tsdown', 'nextra', 'Sandpack', 'codemod', 'codemods', 'jscodeshift'],
+            words: [
+              'packlint',
+              'codecov',
+              'tsdown',
+              'nextra',
+              'Sandpack',
+              'codemod',
+              'codemods',
+              'jscodeshift',
+              'unstub',
+            ],
           },
         },
       ],

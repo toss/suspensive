@@ -9,7 +9,7 @@ import { Callout, LogoImage, TrustedBy } from '@/components'
   <LogoImage size={2.4} />
 </div>
 
-React gives you Suspense, lazy, and an interface to build Error Boundaries. But if you've tried to use them in a real application, you know the gaps — Suspense breaks in SSR, implementing Error Boundaries from scratch requires boilerplate, and there's no way to coordinate any of it. Beyond React itself, data-fetching libraries and state managers have their own gaps too.
+React gives you Suspense, lazy, and an interface to build Error Boundaries. But if you've tried to use them in a real application, you know the gaps — no built-in way to skip SSR for a Suspense boundary, implementing Error Boundaries from scratch requires boilerplate, and there's no way to coordinate any of it. Beyond React itself, data-fetching libraries and state managers have their own gaps too.
 
 **Suspensive fills those gaps.** It provides declarative components and hooks that make async rendering, error handling, and data fetching work the way they should — with less code and fewer workarounds.
 
@@ -19,7 +19,7 @@ subgraph GAP1 ["React"]
 direction TB
 subgraph GAP1_S ["Suspense"]
 direction TB
-A["Suspense breaks in SSR"]
+A["No built-in way to skip SSR in Suspense"]
 D["Loading spinners flash on fast responses"]
 E["Hydration mismatches on client-only content"]
 F["Same fallback prop repeated across components"]

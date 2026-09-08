@@ -1,11 +1,12 @@
 {
   "name": "@suspensive/react-query-5",
-  "version": "3.21.1",
+  "version": "3.21.4",
   "description": "Suspensive interfaces for @tanstack/react-query@5",
   "keywords": [
     "suspensive",
     "react",
-    "react-query"
+    "react-query",
+    "tanstack-intent"
   ],
   "homepage": "https://suspensive.org",
   "bugs": "https://github.com/toss/suspensive/issues",
@@ -36,7 +37,8 @@
   "types": "dist/index.d.mts",
   "files": [
     "dist",
-    "src"
+    "src",
+    "skills"
   ],
   "scripts": {
     "build": "tsdown",
