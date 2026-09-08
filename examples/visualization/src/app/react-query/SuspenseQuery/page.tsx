@@ -62,8 +62,13 @@ export default function Page() {
 
 const ExpensiveSpinner = ({ ms }: { ms: number }) => {
   if (typeof window !== 'undefined') {
+    // eslint-disable-next-line react-hooks/purity
     const start = Date.now()
-    while (Date.now() - start < ms) {}
+    while (
+      // eslint-disable-next-line react-hooks/purity
+      Date.now() - start <
+      ms
+    ) {}
   }
   return <Spinner />
 }

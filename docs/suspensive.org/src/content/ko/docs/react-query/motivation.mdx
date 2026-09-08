@@ -1,36 +1,37 @@
-import { Steps, Table } from 'nextra/components'
-import { Callout } from '@/components'
+---
+description: '@suspensive/react-query가 존재하는 이유: 불필요한 컴포넌트 분리 제거, 서버 사이드 프리페칭 간소화, TanStack Query 빈틈 채우기.'
+---
 
-# 어떤 이유로 사용하나요?
+import { Table } from 'nextra/components'
 
-@suspensive/react-query는 아래와 같은 동기로 사용됩니다.
+# 동기
 
-<Steps>
+TanStack Query는 강력하지만, 실제 애플리케이션에서 사용하면 마찰이 생깁니다 — 훅 때문에 불필요한 컴포넌트 분리가 필요하고, 서버 사이드 프리페칭에는 보일러플레이트가 많고, 일부 API는 아예 없습니다. @suspensive/react-query는 그 마찰을 제거합니다.
 
-### Hooks for Suspense를 @tanstack/react-query v4에서도 사용할 수 있습니다. (@tanstack/react-query v5에서 뿐 아니라)
+### 훅 때문에 컴포넌트를 쪼개야 합니다
 
-@tanstack/react-query v4에서 원래 없던 [useSuspenseQuery](/docs/react-query/useSuspenseQuery), [useSuspenseQueries](/docs/react-query/useSuspenseQueries), [useSuspenseInfiniteQuery](/docs/react-query/useSuspenseInfiniteQuery)를 사용할 수 있게 됩니다. 현재 이 훅은 @tanstack/react-query v5에서는 공식적으로 제공하기 때문에 @tanstack/react-query v4에서 v5로 마이그레이션하기 위한 좋은 대안이 됩니다.
+`useSuspenseQuery`를 사용하려면 `<Suspense>` 아래에 별도의 자식 컴포넌트를 만들어야 합니다. Suspensive의 [`<SuspenseQuery/>`](/docs/react-query/SuspenseQuery)를 활용하면 데이터 페칭을 JSX 안에서 바로 선언할 수 있습니다 — 래퍼 컴포넌트도, 인위적인 중첩도 필요 없습니다.
 
-### @tanstack/react-query v5의 [es private field로 인해 저버전의 브라우저를 지원하지 못하는 문제](https://github.com/TanStack/query/issues/6371#issuecomment-1810246027)를 해결합니다.
+뮤테이션과 프리페칭도 마찬가지입니다. Suspensive의 [`<Mutation/>`](/docs/react-query/Mutation)과 [`<PrefetchQuery/>`](/docs/react-query/PrefetchQuery)를 활용하면 훅이 사용 불가능한 반복문이나 조건문 안에서도 인라인으로 사용할 수 있습니다.
 
-<Callout type='info'>
+### 서버 사이드 프리페칭 보일러플레이트가 너무 많습니다
 
-2.2.0 버전 이후로는 @tanstack/react-query v4와 v5을 모두 지원합니다. 더 낮은 버전의 브라우저를 지원하려면 @suspensive/react-query를 @tanstack/react-query v4와 함께 사용하세요.
+`QueryClient` 생성, 쿼리마다 `ensureQueryData` 호출, `HydrationBoundary`로 감싸기 — 금방 코드가 불어납니다. Suspensive의 [`<QueriesHydration/>`](/docs/react-query/QueriesHydration)을 활용하면 쿼리를 한 번 선언하는 것만으로 프리페칭, 디하이드레이션, 하이드레이션을 자동 처리할 수 있습니다.
 
-</Callout>
+### 서버 사이드 프리페칭이 실패하면 대응이 어렵습니다
 
-여전히 많은 곳에서 성능과 별개로 safari 12.1,13,14와 같은 낮은 버전의 브라우저 환경도 지원할 필요가 있습니다. 하지만 @tanstack/react-query v5의 브라우저 호환성은 safari>=15와 같은 높은 브라우저 환경을 타겟팅하고 있기 때문에 사용에 제한이 있을 수 있습니다.
+서버에서 `ensureQueryData`가 실패하면 쿼리마다 try-catch를 작성하고, fallback을 렌더링하고, 클라이언트에서 재시도할지 결정해야 합니다. Suspensive의 [`<QueriesHydration/>`](/docs/react-query/QueriesHydration)을 활용하면 `skipSsrOnError`가 이 모든 것을 처리합니다 — SSR을 건너뛰고 브라우저에서 재시도하거나, 커스텀 fallback을 보여주면서 클라이언트가 이어받게 할 수 있습니다. `timeout`과 함께 사용하면 느린 쿼리도 전체 페이지를 블로킹하지 않고 클라이언트 사이드 렌더링으로 자연스럽게 전환됩니다.
 
-![ES Private fields error](/img/react-query_private-class-fields-error.png)
+### 서버에서 QueryClient가 요청 간 데이터를 공유합니다
 
-- [@tanstack/react-query v5 브라우저 호환성이 높은 버전만을 지원하는 이유(es private field)](https://github.com/TanStack/query/issues/6371#issuecomment-1810246027)를 확인하세요.
+서버에서 `QueryClient`를 공유하면 한 사용자의 요청 데이터가 다른 사용자에게 노출될 수 있습니다. Suspensive의 [`createGetQueryClient`](/docs/react-query/createGetQueryClient)를 활용하면 서버에서는 요청마다 새 인스턴스를, 브라우저에서는 싱글턴을 사용하며 — 안전한 GC 설정이 기본으로 내장되어 있습니다.
 
-  ![ES Private fields issue tkdodo comment](/img/react-query_private-class-fields-tkdodo-comment.png)
+### v5는 구형 브라우저를 지원하지 않습니다
 
-이 경우 @suspensive/react-query는 @tanstack/react-query v4와 함께 사용해 @tanstack/react-query v5의 인터페이스를 사용할 수 있게 도와주는 좋은 대안이 됩니다.
-(@suspensive/react-query는 내부적으로 @tanstack/react-query v4를 사용하기 때문에 낮은 버전 브라우저 지원을 유지하면서도 Suspense와 관련 훅을 지원할 수 있습니다.)
+TanStack Query v5는 ES private fields 때문에 Safari >= 15를 요구하지만, 많은 팀이 여전히 Safari 12–14를 지원해야 합니다. [@suspensive/react-query-4를 설치](/docs/react-query/installation)하면 v5 인터페이스를 사용하면서도 구형 브라우저 호환성을 유지할 수 있습니다.
 
-#### [@tanstack/react-query v4](https://tanstack.com/query/v4/docs/framework/react/installation#requirements)과 [@tanstack/react-query v5](https://tanstack.com/query/v5/docs/framework/react/installation#requirements) 브라우저 호환성
+<details>
+<summary>브라우저 호환성 비교</summary>
 
 <br />
 
@@ -60,13 +61,10 @@ import { Callout } from '@/components'
   </tbody>
 </Table>
 
-### 이 라이브러리는 현재 [TanStack Query의 커뮤니티 리소스](https://tanstack.com/query/v4/docs/framework/react/community/suspensive-react-query)입니다.
+</details>
 
-TanStack 공식문서에 등록된 커뮤니티 리소스인 만큼 저희 Suspensive 메인테이너들은 지원을 아끼지 않고 있습니다.
+### 공식 TanStack Query 커뮤니티 리소스입니다
+
+@suspensive/react-query는 [TanStack Query 공식 커뮤니티 리소스](https://tanstack.com/query/v4/docs/framework/react/community/suspensive-react-query)로 등록되어 있습니다. 적극적으로 유지보수하고 있으며, 이슈에 신속하게 대응합니다.
 
 ![TanStack Query Community Resources](/img/react-query_community-resources.png)
-
-당신의 팀원들이 이해하기 쉬운 공식문서를 제공하고 있고 이슈가 있을 경우 신속하게 지원합니다.
-따라서 @tanstack/react-query v4와 함께 프로덕션 레벨에서 팀 동료들과 사용할 수 있습니다.
-
-</Steps>

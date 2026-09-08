@@ -1,5 +1,151 @@
 # @suspensive/react
 
+## 3.21.4
+
+### Patch Changes
+
+- [#1982](https://github.com/toss/suspensive/pull/1982) [`6f01757`](https://github.com/toss/suspensive/commit/6f01757c8d9e83c8c2da19450d2b755dd31f20a7) Thanks [@hovelopin](https://github.com/hovelopin)! - fix(react): name ErrorBoundaryGroup in useErrorBoundaryGroup error message
+
+## 3.21.3
+
+### Patch Changes
+
+- [#1979](https://github.com/toss/suspensive/pull/1979) [`b7b1de8`](https://github.com/toss/suspensive/commit/b7b1de84df2464f62a8fa1ffe128624b973767a2) Thanks [@manudeli](https://github.com/manudeli)! - Add @tanstack/intent AI agent skills (SKILL.md) and artifacts
+
+## 3.21.2
+
+### Patch Changes
+
+- [#1970](https://github.com/toss/suspensive/pull/1970) [`9ee63b4`](https://github.com/toss/suspensive/commit/9ee63b40f84c7ca32e27a9a9f64f2c2c42b76d40) Thanks [@manudeli](https://github.com/manudeli)! - docs: clarify `clientOnly` prop functionality in Suspense
+
+## 3.21.1
+
+### Patch Changes
+
+- [#1961](https://github.com/toss/suspensive/pull/1961) [`f314dc0`](https://github.com/toss/suspensive/commit/f314dc0dcd4b4594693844aeab9032bdeab5ff22) Thanks [@manudeli](https://github.com/manudeli)! - chore: update package dependencies to latest versions
+
+## 3.21.0
+
+## 3.20.4
+
+## 3.20.3
+
+## 3.20.2
+
+## 3.20.1
+
+### Patch Changes
+
+- [#1935](https://github.com/toss/suspensive/pull/1935) [`1041865`](https://github.com/toss/suspensive/commit/10418656384cef148da65943cdb919d7b990122c) Thanks [@manudeli](https://github.com/manudeli)! - fix(react-query): update installation instructions for clarity
+
+## 3.20.0
+
+## 3.19.6
+
+### Patch Changes
+
+- [#1919](https://github.com/toss/suspensive/pull/1919) [`c7fe4e3`](https://github.com/toss/suspensive/commit/c7fe4e3d1e08c80c9042c49bff8213a22e1d78a8) Thanks [@manudeli](https://github.com/manudeli)! - fix(react): handle transpiled Error subclasses in shouldCatch prop
+
+## 3.19.5
+
+### Patch Changes
+
+- [#1918](https://github.com/toss/suspensive/pull/1918) [`47571c4`](https://github.com/toss/suspensive/commit/47571c47877d3616a3812a8079facf08d0129269) Thanks [@manudeli](https://github.com/manudeli)! - fix(\*): remove banner option from tsdown configurations and add 'use client' directive to multiple React components
+
+## 3.19.4
+
+### Patch Changes
+
+- [#1921](https://github.com/toss/suspensive/pull/1921) [`8d82753`](https://github.com/toss/suspensive/commit/8d8275349327f1bfce0659d0944a485bcb21cabb) Thanks [@manudeli](https://github.com/manudeli)! - fix(tsdown): enable unbundling option in configuration
+
+## 3.19.3
+
+### Patch Changes
+
+- [#1913](https://github.com/toss/suspensive/pull/1913) [`0034bd7`](https://github.com/toss/suspensive/commit/0034bd700f16157b89b748cb668cf4a97e97b34f) Thanks [@manudeli](https://github.com/manudeli)! - fix(\*): tsdown 0.18.0 -> 0.21.3
+
+## 3.19.2
+
+## 3.19.1
+
+## 3.19.0
+
+## 3.18.0
+
+## 3.17.3
+
+### Patch Changes
+
+- [#1868](https://github.com/toss/suspensive/pull/1868) [`1d43e8d`](https://github.com/toss/suspensive/commit/1d43e8de9541b1f3d20d621744ecd1e8934a3a8a) Thanks [@manudeli](https://github.com/manudeli)! - chore: to resolve latest tag problem
+
+## 3.17.2
+
+### Patch Changes
+
+- [#1857](https://github.com/toss/suspensive/pull/1857) [`372b93e`](https://github.com/toss/suspensive/commit/372b93e3050cece8802a183dc0849a0247a556cd) Thanks [@sukvvon](https://github.com/sukvvon)! - refactor(react): use 'displayName' variable reference in '.with()' method
+
+## 3.17.1
+
+### Patch Changes
+
+- [#1860](https://github.com/toss/suspensive/pull/1860) [`9b0aa6a`](https://github.com/toss/suspensive/commit/9b0aa6a424b857635220017fe8b853c878814b24) Thanks [@manudeli](https://github.com/manudeli)! - fix: update package dependencies and configurations
+
+## 3.17.0
+
+## 3.16.0
+
+## 3.15.1
+
+### Patch Changes
+
+- [#1826](https://github.com/toss/suspensive/pull/1826) [`39d4343`](https://github.com/toss/suspensive/commit/39d434384afa2597fc717038dc267079b3ee6712) Thanks [@manudeli](https://github.com/manudeli)! - fix(\*): update tsdown
+
+## 3.15.0
+
+## 3.14.0
+
+## 3.13.0
+
+## 3.12.0
+
+### Minor Changes
+
+- [#1760](https://github.com/toss/suspensive/pull/1760) [`8335208`](https://github.com/toss/suspensive/commit/8335208b4fcdd8a6316c728d59c750eceb209506) Thanks [@manudeli](https://github.com/manudeli)! - feat(react): infer ErrorBoundary error type from `shouldCatch`
+
+## 3.11.0
+
+### Patch Changes
+
+- [#1770](https://github.com/toss/suspensive/pull/1770) [`14a1771`](https://github.com/toss/suspensive/commit/14a17719fc0eb057b80595a25cf975511a128575) Thanks [@manudeli](https://github.com/manudeli)! - fix(react): ErrorBoundaryState shouldn't be generic
+
+## 3.10.1
+
+### Patch Changes
+
+- [#1756](https://github.com/toss/suspensive/pull/1756) [`46c7db1`](https://github.com/toss/suspensive/commit/46c7db14b4f9f8ccb0e1146524db91e719265ead) Thanks [@manudeli](https://github.com/manudeli)! - chore: update tsdown version
+
+## 3.10.0
+
+### Minor Changes
+
+- [#1734](https://github.com/toss/suspensive/pull/1734) [`956f31f`](https://github.com/toss/suspensive/commit/956f31f50cfb92a96dbd2310c0a4557d54158c71) Thanks [@manudeli](https://github.com/manudeli)! - feat(react): `useIsClient` as public api
+
+## 3.9.1
+
+### Patch Changes
+
+- [#1737](https://github.com/toss/suspensive/pull/1737) [`458812c`](https://github.com/toss/suspensive/commit/458812cb875356aefacba2f3ba9515a30720b57e) Thanks [@copilot-swe-agent](https://github.com/apps/copilot-swe-agent)! - feat: add npm OIDC authentication support
+
+  This adds OIDC (OpenID Connect) authentication support for npm publishing in GitHub Actions. The implementation enables secure, tokenless publishing to npm using GitHub's OIDC tokens with provenance support.
+
+  Key features:
+
+  - **OIDC Authentication**: Uses GitHub Actions `id-token: write` permission for secure publishing
+  - **Provenance Support**: Enables npm package provenance through `NPM_CONFIG_PROVENANCE=true`
+  - **Backward Compatibility**: Maintains NPM_TOKEN as fallback for existing workflows
+
+  This enhances security by reducing dependency on long-lived npm tokens while providing package provenance for better supply chain security.
+
 ## 3.9.0
 
 ## 3.8.0
@@ -193,6 +339,8 @@
 ### Minor Changes
 
 - [#1409](https://github.com/toss/suspensive/pull/1409) [`124238c`](https://github.com/toss/suspensive/commit/124238c66056fd036765a2725ea3383236d19fec) Thanks [@manudeli](https://github.com/manudeli)! - feat(react): prevent recursive expose fallback when fallback throw error
+
+## 2.18.14
 
 ## 2.18.13
 

@@ -1,3 +1,4 @@
+'use client'
 import {
   type ComponentProps,
   type ComponentType,
@@ -11,7 +12,7 @@ import {
 } from 'react'
 import { useIsChanged } from './hooks/useIsChanged'
 import {
-  Message_useErrorBoundaryGroup_this_hook_should_be_called_in_ErrorBoundary_props_children,
+  Message_useErrorBoundaryGroup_this_hook_should_be_called_in_ErrorBoundaryGroup_props_children,
   SuspensiveError,
 } from './models/SuspensiveError'
 import type { PropsWithoutChildren } from './utility-types/PropsWithoutChildren'
@@ -54,7 +55,7 @@ export const ErrorBoundaryGroup = Object.assign(
   {
     displayName: 'ErrorBoundaryGroup',
     with: <TProps extends ComponentProps<ComponentType> = Record<string, never>>(
-      errorBoundaryGroupProps: PropsWithoutChildren<ErrorBoundaryGroupProps> = {},
+      errorBoundaryGroupProps: PropsWithoutChildren<ErrorBoundaryGroupProps>,
       Component: ComponentType<TProps>
     ) =>
       Object.assign(
@@ -63,7 +64,9 @@ export const ErrorBoundaryGroup = Object.assign(
             <Component {...props} />
           </ErrorBoundaryGroup>
         ),
-        { displayName: `ErrorBoundaryGroup.with(${Component.displayName || Component.name || 'Component'})` }
+        {
+          displayName: `${ErrorBoundaryGroup.displayName}.with(${Component.displayName || Component.name || 'Component'})`,
+        }
       ),
     Consumer: ({
       children,
@@ -82,7 +85,7 @@ export const useErrorBoundaryGroup = (): { reset: () => void } => {
   const group = useContext(ErrorBoundaryGroupContext)
   SuspensiveError.assert(
     group != null,
-    Message_useErrorBoundaryGroup_this_hook_should_be_called_in_ErrorBoundary_props_children
+    Message_useErrorBoundaryGroup_this_hook_should_be_called_in_ErrorBoundaryGroup_props_children
   )
   return useMemo(
     () => ({

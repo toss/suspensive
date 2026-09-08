@@ -55,17 +55,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </li>
             <li>
               <details>
-                <summary>@suspensive/react-dom</summary>
-                <li>
-                  <Link href="/react-dom/InView">{`<InView/>`}</Link>
-                </li>
-                <li>
-                  <Link href="/react-dom/FadeIn">{`<FadeIn/>`}</Link>
-                </li>
-              </details>
-            </li>
-            <li>
-              <details>
                 <summary>@suspensive/react-query</summary>
                 <li>
                   <Link href="/react-query/SuspenseQuery">{`<SuspenseQuery/>`}</Link>

@@ -1,13 +1,16 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest'
-import { getTanStackReactQueryPackageJson } from './utils/package'
+import { showDeprecationWarning } from './utils/deprecationWarning'
+import { getPackageJson, getTanStackReactQueryPackageJson } from './utils/package'
 import { switchVersion } from './utils/switchVersion'
 
+vi.mock('./utils/deprecationWarning')
 vi.mock('./utils/package')
 vi.mock('./utils/switchVersion')
 
 describe('postinstall', () => {
   const mockConsoleError = vi.spyOn(console, 'error')
   const mockGetTanStackReactQueryPackageJson = vi.mocked(getTanStackReactQueryPackageJson)
+  const mockGetPackageJson = vi.mocked(getPackageJson)
   const mockSwitchVersion = vi.mocked(switchVersion)
 
   const runPostInstall = async (version: string) => {
@@ -15,6 +18,11 @@ describe('postinstall', () => {
       name: 'tanstack-query',
       version,
       description: `TanStack Query v${version.split('.')[0]}`,
+    })
+    mockGetPackageJson.mockReturnValue({
+      name: '@suspensive/react-query',
+      version: '3.20.0',
+      description: 'Suspensive interfaces for @tanstack/react-query',
     })
 
     await import('./postinstall')
@@ -32,6 +40,7 @@ describe('postinstall', () => {
     expect(mockSwitchVersion).toHaveBeenCalledWith(4)
     expect(mockSwitchVersion).toHaveBeenCalledTimes(1)
     expect(mockConsoleError).not.toHaveBeenCalled()
+    expect(showDeprecationWarning).toHaveBeenCalledTimes(1)
   })
 
   it('should switch to @suspensive/react-query-5 when @tanstack/react-query@^5 is installed', async () => {
@@ -41,6 +50,7 @@ describe('postinstall', () => {
     expect(mockSwitchVersion).toHaveBeenCalledWith(5)
     expect(mockSwitchVersion).toHaveBeenCalledTimes(1)
     expect(mockConsoleError).not.toHaveBeenCalled()
+    expect(showDeprecationWarning).toHaveBeenCalledTimes(1)
   })
 
   it('should show warning when unsupported version is installed', async () => {
@@ -49,5 +59,6 @@ describe('postinstall', () => {
     expect(mockGetTanStackReactQueryPackageJson).toHaveBeenCalledTimes(1)
     expect(mockSwitchVersion).not.toHaveBeenCalled()
     expect(mockConsoleError).toHaveBeenCalledWith('[@suspensive/react-query]', 'version v3.3.4 is not supported.')
+    expect(showDeprecationWarning).toHaveBeenCalledTimes(1)
   })
 })

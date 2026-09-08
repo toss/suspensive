@@ -2,6 +2,7 @@
 
 import { Command } from '@commander-js/extra-typings'
 import { fixAction, statusAction, switchAction } from './utils/commands'
+import { showDeprecationWarning } from './utils/deprecationWarning'
 import { logger } from './utils/logger'
 import { getPackageJson } from './utils/package'
 
@@ -39,6 +40,7 @@ program
 
 try {
   program.parse(process.argv)
+  showDeprecationWarning()
 } catch (error) {
   if (error instanceof Error) {
     logger.error(error.message)

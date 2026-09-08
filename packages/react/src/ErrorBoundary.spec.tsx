@@ -17,6 +17,8 @@ describe('<ErrorBoundary/>', () => {
 
   afterEach(() => {
     vi.useRealTimers()
+    vi.unstubAllEnvs()
+    vi.stubEnv('NODE_ENV', 'development')
     Throw.reset()
   })
 
@@ -64,6 +66,30 @@ describe('<ErrorBoundary/>', () => {
         </ErrorBoundary>
       )
     ).toThrow(ERROR_MESSAGE)
+  })
+
+  it.each([
+    { nodeEnv: 'development', isWarned: true },
+    { nodeEnv: 'production', isWarned: false },
+  ])('should warn that fallback is required only in development (NODE_ENV: $nodeEnv)', ({ nodeEnv, isWarned }) => {
+    vi.stubEnv('NODE_ENV', nodeEnv)
+    const consoleError = vi.spyOn(console, 'error').mockClear()
+
+    render(
+      <ErrorBoundary fallback={({ error }) => <>{error.message} of Parent</>}>
+        <ErrorBoundary fallback={undefined}>
+          <Throw.Error message={ERROR_MESSAGE} after={0} />
+        </ErrorBoundary>
+      </ErrorBoundary>
+    )
+
+    const isFallbackWarned = consoleError.mock.calls.some(([message]) =>
+      String(message).includes('ErrorBoundary of @suspensive/react requires a defined fallback')
+    )
+    consoleError.mockRestore()
+
+    expect(isFallbackWarned).toBe(isWarned)
+    expect(screen.queryByText(`${ERROR_MESSAGE} of Parent`)).toBeInTheDocument()
   })
 
   it('should catch it even if thrown null', async () => {
@@ -389,6 +415,146 @@ describe('<ErrorBoundary/>', () => {
     expect(screen.queryByText('This is expected')).not.toBeInTheDocument()
     expect(screen.queryByText("ErrorBoundary(react-error-boundary)'s fallback before error")).toBeInTheDocument()
   })
+
+  it('should catch error when shouldCatch is a transpiled Error subclass (broken prototype chain)', () => {
+    // Simulate a transpiled class where prototype chain is broken
+    // (e.g., ZodError in Zod v4 transpiled to ES5)
+    function TranspiledError(this: Error, message: string) {
+      const instance = new Error(message)
+      Object.setPrototypeOf(instance, TranspiledError.prototype as object)
+      return instance
+    }
+    // Intentionally NOT linking to Error.prototype to simulate broken chain
+    TranspiledError.prototype = Object.create(null)
+    TranspiledError.prototype.constructor = TranspiledError
+
+    const thrownError = new (TranspiledError as unknown as new (message: string) => Error)(ERROR_MESSAGE)
+    const onErrorParent = vi.fn()
+    const onErrorChild = vi.fn()
+
+    render(
+      <ErrorBoundary fallback={({ error }) => <>{error.message} of Parent</>} onError={onErrorParent}>
+        <ErrorBoundary
+          shouldCatch={TranspiledError as unknown as new (...args: unknown[]) => Error}
+          fallback={({ error }) => <>{error.message} of Child</>}
+          onError={onErrorChild}
+        >
+          {createElement(() => {
+            throw thrownError
+          })}
+        </ErrorBoundary>
+      </ErrorBoundary>
+    )
+
+    expect(onErrorChild).toBeCalledTimes(1)
+    expect(onErrorParent).toBeCalledTimes(0)
+    expect(screen.queryByText(`${ERROR_MESSAGE} of Child`)).toBeInTheDocument()
+  })
+
+  it('should not crash when shouldCatch is a non-validator callable', () => {
+    // Simulate a callable that throws when invoked (e.g., Zod schema)
+    const callableSchema = (() => {
+      const fn = (input: unknown) => {
+        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+        ;(input as Record<string, unknown>)._zod
+        throw new TypeError("Cannot read properties of undefined (reading '_zod')")
+      }
+      return fn
+    })()
+
+    const onErrorParent = vi.fn()
+    const onErrorChild = vi.fn()
+
+    render(
+      <ErrorBoundary fallback={({ error }) => <>{error.message} of Parent</>} onError={onErrorParent}>
+        <ErrorBoundary
+          shouldCatch={callableSchema}
+          fallback={({ error }) => <>{error.message} of Child</>}
+          onError={onErrorChild}
+        >
+          {createElement(() => {
+            throw new Error(ERROR_MESSAGE)
+          })}
+        </ErrorBoundary>
+      </ErrorBoundary>
+    )
+
+    // Should not crash, error propagates to parent
+    expect(onErrorChild).toBeCalledTimes(0)
+    expect(onErrorParent).toBeCalledTimes(1)
+    expect(screen.queryByText(`${ERROR_MESSAGE} of Parent`)).toBeInTheDocument()
+  })
+
+  it.each([
+    {
+      childCalledTimes: 1,
+      parentCalledTimes: 0,
+      createError: () => new CustomError(ERROR_MESSAGE),
+      errorText: `${ERROR_MESSAGE} of Child`,
+    },
+    {
+      childCalledTimes: 0,
+      parentCalledTimes: 1,
+      createError: () => new Error(ERROR_MESSAGE),
+      errorText: `${ERROR_MESSAGE} of Parent`,
+    },
+  ])(
+    'should catch Error by one criteria(ErrorValidator declared with the function keyword)',
+    ({ childCalledTimes, parentCalledTimes, createError, errorText }) => {
+      // Unlike an arrow function, a function declaration has an object prototype.
+      // So `error instanceof shouldCatch` returns false instead of throwing,
+      // and shouldCatch should still be used as a validator.
+      function isCustomError(error: Error) {
+        return error instanceof CustomError
+      }
+
+      const onErrorParent = vi.fn()
+      const onErrorChild = vi.fn()
+
+      render(
+        <ErrorBoundary fallback={({ error }) => <>{error.message} of Parent</>} onError={onErrorParent}>
+          <ErrorBoundary
+            shouldCatch={isCustomError}
+            fallback={({ error }) => <>{error.message} of Child</>}
+            onError={onErrorChild}
+          >
+            {createElement(() => {
+              throw createError()
+            })}
+          </ErrorBoundary>
+        </ErrorBoundary>
+      )
+
+      expect(onErrorChild).toHaveBeenCalledTimes(childCalledTimes)
+      expect(onErrorParent).toHaveBeenCalledTimes(parentCalledTimes)
+      expect(screen.queryByText(errorText)).toBeInTheDocument()
+    }
+  )
+
+  it('should return false when errorMatcher is neither boolean nor function', () => {
+    const onErrorParent = vi.fn()
+    const onErrorChild = vi.fn()
+
+    render(
+      <ErrorBoundary fallback={({ error }) => <>{error.message} of Parent</>} onError={onErrorParent}>
+        <ErrorBoundary
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-expect-error
+          shouldCatch={null}
+          fallback={({ error }) => <>{error.message} of Child</>}
+          onError={onErrorChild}
+        >
+          {createElement(() => {
+            throw new Error(ERROR_MESSAGE)
+          })}
+        </ErrorBoundary>
+      </ErrorBoundary>
+    )
+
+    expect(onErrorChild).toBeCalledTimes(0)
+    expect(onErrorParent).toBeCalledTimes(1)
+    expect(screen.queryByText(`${ERROR_MESSAGE} of Parent`)).toBeInTheDocument()
+  })
 })
 
 describe('<ErrorBoundary.Consumer/>', () => {
@@ -587,12 +753,6 @@ describe('ErrorBoundary.with', () => {
 
   it("should render the wrapped component when there's no error", () => {
     render(createElement(ErrorBoundary.with({ fallback: (props) => <>{props.error.message}</> }, () => <>{TEXT}</>)))
-
-    expect(screen.queryByText(TEXT)).toBeInTheDocument()
-  })
-
-  it('should use default errorBoundaryProps when undefined is provided', () => {
-    render(createElement(ErrorBoundary.with(undefined, () => <>{TEXT}</>)))
 
     expect(screen.queryByText(TEXT)).toBeInTheDocument()
   })

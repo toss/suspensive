@@ -1,5 +1,5 @@
 import { type PropsWithChildren, useState } from 'react'
-import { useTimeout } from '~/hooks'
+import { useTimeout } from 'usehooks-ts'
 
 export const Throw = {
   Error: ({ message, after = 0, children }: PropsWithChildren<{ message: string; after?: number }>) => {

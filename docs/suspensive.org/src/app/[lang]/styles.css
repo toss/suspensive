@@ -1,14 +1,113 @@
 @import 'tailwindcss';
 @import 'nextra-theme-docs/style.css';
 
+/* tailWind가 OS의 테마 설정이 아닌, HTML 내의 dark 클래스를 참조하도록 설정 */
+@custom-variant dark (&:where(.dark, .dark *));
+
 .scrollbar-none {
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 .scrollbar-none::-webkit-scrollbar {
-  display: none; /* Chrome, Safari, Opera*/
+  display: none;
+}
+
+:lang(ko) {
+  word-break: keep-all;
+  word-wrap: break-word;
+}
+
+/* Slim scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.15) transparent;
+}
+
+/* Sandpack editor scrollbar */
+.cm-scroller::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+.cm-scroller::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.cm-scroller::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 2px;
+}
+
+.cm-scroller::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.cm-scroller {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.15) transparent;
+}
+
+/* Theme colors — dark only */
+:root {
+  --glow-rgb: 255, 255, 255;
+}
+
+/* Override Nextra's content width constraint (default 90rem → 100rem) */
+.x\:max-w-\(--nextra-content-width\) {
+  max-width: 100rem !important;
 }
 
 body {
-  background-color: #0c0c0c;
+  @apply bg-black text-white;
+}
+
+.homepage-content {
+  @apply bg-black text-white;
+}
+
+pre {
+  @apply rounded-lg border-gray-900 bg-inherit;
+}
+
+pre button {
+  @apply text-gray-400 hover:text-white;
+}
+
+code {
+  @apply border-gray-900;
+}
+
+.nextra-nav-container {
+  @apply border-gray-700 bg-gray-900;
+}
+
+.nextra-sidebar {
+  @apply bg-black;
+}
+
+/* Footer */
+.x\:bg-gray-100 {
+  background-color: rgb(10, 10, 10) !important;
+}
+
+.nextra-border {
+  border-color: rgb(30, 30, 30) !important;
 }

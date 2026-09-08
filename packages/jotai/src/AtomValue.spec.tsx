@@ -1,5 +1,5 @@
 import { act, render, screen } from '@testing-library/react'
-import { atom } from 'jotai'
+import { atom, createStore } from 'jotai'
 import { Suspense } from 'react'
 import { AtomValue } from './AtomValue'
 import { sleep } from './test-utils'
@@ -34,6 +34,41 @@ describe('<AtomValue />', () => {
 
     expect(children).toHaveBeenCalledWith('abc')
     expect(screen.getByText('Test')).toBeInTheDocument()
+  })
+
+  it('should read value from the specified store via options', () => {
+    const countAtom = atom(0)
+    const myStore = createStore()
+    myStore.set(countAtom, 10)
+
+    render(
+      <AtomValue atom={countAtom} options={{ store: myStore }}>
+        {(count) => <div>count: {count}</div>}
+      </AtomValue>
+    )
+
+    expect(screen.getByText('count: 10')).toBeInTheDocument()
+  })
+
+  it('should isolate state between different stores via options', () => {
+    const countAtom = atom(0)
+    const storeA = createStore()
+    const storeB = createStore()
+    storeA.set(countAtom, 10)
+
+    render(
+      <>
+        <AtomValue atom={countAtom} options={{ store: storeA }}>
+          {(count) => <div>storeA: {count}</div>}
+        </AtomValue>
+        <AtomValue atom={countAtom} options={{ store: storeB }}>
+          {(count) => <div>storeB: {count}</div>}
+        </AtomValue>
+      </>
+    )
+
+    expect(screen.getByText('storeA: 10')).toBeInTheDocument()
+    expect(screen.getByText('storeB: 0')).toBeInTheDocument()
   })
 
   it('should render with an async atom and resolve the value', async () => {

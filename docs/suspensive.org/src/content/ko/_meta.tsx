@@ -5,13 +5,24 @@ export default {
     type: 'page',
     display: 'hidden',
     theme: {
+      copyPage: false,
       layout: 'full',
       toc: false,
     },
   },
   docs: {
     type: 'page',
-    title: '문서보기',
+    title: '문서',
+  },
+  'getting-started': {
+    type: 'page',
+    title: '시작하기',
+    href: '/docs/react/getting-started',
+  },
+  compare: {
+    type: 'page',
+    title: '비교',
+    href: '/docs/react/comparison',
   },
   versions: {
     type: 'menu',

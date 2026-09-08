@@ -1,7 +1,8 @@
 'use client'
 
+import * as Sentry from '@sentry/nextjs'
 import { ErrorBoundary, Suspense } from '@suspensive/react'
-import { SuspenseQuery } from '@suspensive/react-query-4'
+import { SuspenseQuery } from '@suspensive/react-query-5'
 import {
   QueryClient,
   QueryClientProvider,
@@ -78,6 +79,7 @@ export const BubbleChart = () => {
         {({ reset }) => (
           <ErrorBoundary
             onReset={reset}
+            onError={Sentry.captureReactException}
             fallback={
               <Link href="https://github.com/toss/suspensive/graphs/contributors">
                 <br />

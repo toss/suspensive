@@ -1,3 +1,4 @@
+'use client'
 import { type ComponentProps, type ComponentType, type SuspenseProps as ReactSuspenseProps, useContext } from 'react'
 import { SuspenseDefaultPropsContext } from './contexts/DefaultPropsContexts'
 import type { PropsWithoutChildren } from './utility-types/PropsWithoutChildren'
@@ -5,7 +6,7 @@ import { defineSuspense } from './utils/defineSuspense'
 
 export interface SuspenseProps extends ReactSuspenseProps {
   /**
-   * With clientOnly prop, `<Suspense/>` will return fallback in server but after mount return children in client. Since mount only happens on the client, `<Suspense/>` can be avoid server-side rendering.
+   * With clientOnly prop, `<Suspense/>` will return fallback on the server and children on the client. It uses `useSyncExternalStore` (not `useEffect`) to distinguish server and client via `getServerSnapshot` and `getSnapshot`.
    * @see https://suspensive.org/docs/react/Suspense#avoid-server-side-rendering-clientonly
    */
   clientOnly?: boolean
@@ -31,7 +32,7 @@ export const Suspense = Object.assign(
   {
     displayName: 'Suspense',
     with: <TProps extends ComponentProps<ComponentType> = Record<string, never>>(
-      suspenseProps: PropsWithoutChildren<SuspenseProps> = {},
+      suspenseProps: PropsWithoutChildren<SuspenseProps>,
       Component: ComponentType<TProps>
     ) =>
       Object.assign(
@@ -40,7 +41,7 @@ export const Suspense = Object.assign(
             <Component {...props} />
           </Suspense>
         ),
-        { displayName: `Suspense.with(${Component.displayName || Component.name || 'Component'})` }
+        { displayName: `${Suspense.displayName}.with(${Component.displayName || Component.name || 'Component'})` }
       ),
   }
 )

@@ -1,8 +1,25 @@
-import { Callout } from '@/components'
+---
+description: 'clientOnly로 바운더리에서 SSR을 건너뛰고, DefaultPropsProvider 등을 제공하는 향상된 React Suspense. React.Suspense의 드롭인 대체.'
+---
+
+import { Callout, Sandpack } from '@/components'
 
 # Suspense
 
-@suspensive/react의 `<Suspense/>`는 [React의 Suspense](https://react.dev/reference/react/Suspense)가 됩니다.
+@suspensive/react의 `<Suspense/>`는 [React의 Suspense](https://react.dev/reference/react/Suspense)를 완전히 대체하며, 실제 프로젝트에서 필요한 추가 기능을 제공합니다.
+
+## React.Suspense 대신 사용해야 하는 이유
+
+|                                             | React.Suspense | @suspensive/react Suspense |
+| ------------------------------------------- | -------------- | -------------------------- |
+| 기본 Suspense 바운더리                      | ✅             | ✅                         |
+| 바운더리에서 SSR 건너뛰기 (`clientOnly`)    | ❌             | ✅                         |
+| `DefaultPropsProvider`로 전역 기본 fallback | ❌             | ✅                         |
+| HOC 패턴 (`Suspense.with`)                  | ❌             | ✅                         |
+
+React의 `<Suspense>`는 SSR과 함께 동작합니다. 바운더리에서 **서버 렌더링을 건너뛰고** 서버에서는 `fallback`만, 클라이언트에서만 `children`을 렌더링하고 싶을 때 Suspensive의 `clientOnly` prop으로 한 줄에 선언할 수 있습니다. `dynamic(() => import(...), { ssr: false })`나 수동 `useEffect` 가드가 필요 없습니다.
+
+---
 
 ### props.fallback
 
@@ -18,6 +35,37 @@ const Example = () => (
 )
 ```
 
+<Sandpack>
+
+```tsx Example.tsx active
+import { Suspense } from '@suspensive/react'
+import { use } from 'react'
+
+export const Example = () => (
+  <Suspense fallback={<div style={{ padding: 20 }}>Loading...</div>}>
+    <ResolveAfter2s />
+  </Suspense>
+)
+
+const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
+let promise: Promise<string> | null = null
+const fetchData = () => {
+  if (!promise) {
+    promise = sleep(2000).then(() => 'Data loaded!')
+  }
+  return promise
+}
+
+const ResolveAfter2s = () => {
+  const data = use(fetchData())
+  return (
+    <div style={{ padding: 20, backgroundColor: 'lightgreen' }}>{data}</div>
+  )
+}
+```
+
+</Sandpack>
+
 <Callout>
 
 Default fallback
@@ -28,7 +76,7 @@ Default fallback
 
 ### 서버사이드 렌더링을 피하기 (clientOnly)
 
-clientOnly prop을 사용하면 `<Suspense/>`는 서버에서는 fallback을 반환합니다. mount 후(클라이언트에서는) children을 반환합니다. mount는 클라이언트에서만 일어나기 때문에 서버사이드 렌더링을 피할 수 있습니다.
+clientOnly prop을 사용하면 `<Suspense/>`는 서버에서는 fallback을 반환하고, 클라이언트에서는 children을 반환합니다. `useEffect`나 mount 시점에 의존하지 않고, `useSyncExternalStore`의 `getServerSnapshot`과 `getSnapshot`으로 서버/클라이언트를 구분해 서버 사이드 렌더링을 피할 수 있습니다.
 
 ```tsx /clientOnly/
 import { Suspense } from '@suspensive/react'
@@ -40,7 +88,7 @@ const Example = () => (
 )
 ```
 
-clientOnly prop을 사용하면 내부적으로 useIsClient훅을 사용하고 useIsClient는 useSyncExternalStore의 getSnapshot와 getServerSnapshot을 활용해 client임을 보장하고 있습니다.
+clientOnly prop을 사용하면 내부적으로 useIsClient 훅을 사용하고 useIsClient는 useSyncExternalStore의 getSnapshot와 getServerSnapshot을 활용해 client임을 보장하고 있습니다.
 
 ```tsx /useIsClient/
 const useIsClient = () =>

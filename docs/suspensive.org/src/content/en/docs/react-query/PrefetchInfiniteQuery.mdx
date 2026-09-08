@@ -1,3 +1,7 @@
+---
+description: 'Prefetch infinite queries during SSR with PrefetchInfiniteQuery for seamless infinite scroll hydration.'
+---
+
 import { Callout, Sandpack } from '@/components'
 
 # PrefetchInfiniteQuery
@@ -9,7 +13,6 @@ import {
   PrefetchInfiniteQuery,
   useSuspenseQuery,
 } from '@suspensive/react-query'
-import { InView } from '@suspensive/react-dom'
 
 const PostsPage = () => {
   const { data: posts } = useSuspenseQuery({
@@ -18,30 +21,22 @@ const PostsPage = () => {
   })
 
   return posts.map((post) => (
-    <InView>
-      {({ ref, inView }) => (
-        <>
-          {inView ? (
-            // 🚫 We can not invoke usePrefetchInfiniteQuery like below because of React Hook rules
-            // usePrefetchInfiniteQuery({
-            //   queryKey: ['posts', post.id, 'comments'],
-            //   queryFn: () => getPostComments(post.id),
-            // })
+    <div key={post.id}>
+      {/* 🚫 We can not invoke usePrefetchInfiniteQuery like below because of React Hook rules
+      // usePrefetchInfiniteQuery({
+      //   queryKey: ['posts', post.id, 'comments'],
+      //   queryFn: () => getPostComments(post.id),
+      // })
 
-            // ✅ We can invoke usePrefetchInfiniteQuery for each post comments query before entering Post Comments page
-            <PrefetchInfiniteQuery
-              queryKey={['posts', post.id, 'comments']}
-              queryFn={() => getPostComments(post.id)}
-            />
-          ) : null}
-          <div ref={ref}>
-            <h2>{post.title}</h2>
-            <p>{post.description}</p>
-            <Link to={`/posts/${post.id}/comments`}>See comments</Link>
-          </div>
-        </>
-      )}
-    </InView>
+      // ✅ We can invoke usePrefetchInfiniteQuery for each post comments query before entering Post Comments page */}
+      <PrefetchInfiniteQuery
+        queryKey={['posts', post.id, 'comments']}
+        queryFn={() => getPostComments(post.id)}
+      />
+      <h2>{post.title}</h2>
+      <p>{post.description}</p>
+      <Link to={`/posts/${post.id}/comments`}>See comments</Link>
+    </div>
   ))
 }
 ```

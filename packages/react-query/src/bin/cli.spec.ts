@@ -1,7 +1,7 @@
 import { execFileSync } from 'node:child_process'
 import path from 'node:path'
 import packageJson from '../../package.json'
-import { getTanStackReactQueryPackageJson } from './utils/package'
+import { getTargetSuspensiveReactQueryVersion } from './utils/package'
 import { getStatusTable } from './utils/table'
 
 const cliPath = path.resolve(__dirname, '../../dist/bin/cli.cjs')
@@ -19,12 +19,14 @@ describe('cli', () => {
     expect(result).toContain('Usage: @suspensive/react-query [options] [command]')
   })
 
-  it.todo('should display the status of the packages', () => {
+  it('should display the status of the packages', () => {
     const result = execFileSync('node', [cliPath, 'status']).toString()
-    const tanStackReactQueryPackageJson = getTanStackReactQueryPackageJson()
-    const tanStackReactQueryMajorVersion = tanStackReactQueryPackageJson.version.split('.')[0]
+    const targetSuspensiveReactQueryVersion = getTargetSuspensiveReactQueryVersion()
+    if (!targetSuspensiveReactQueryVersion) {
+      throw new Error('Target version not found')
+    }
 
-    expect(result).toContain(getStatusTable(tanStackReactQueryMajorVersion))
+    expect(result).toContain(getStatusTable(targetSuspensiveReactQueryVersion))
   })
 
   it('should switch to the specified version when using the switch command', () => {

@@ -5,7 +5,6 @@
   "fixed": [
     [
       "@suspensive/react",
-      "@suspensive/react-dom",
       "@suspensive/react-query",
       "@suspensive/react-query-4",
       "@suspensive/react-query-5",
@@ -13,12 +12,7 @@
       "@suspensive/codemods"
     ]
   ],
-  "ignore": [
-    "@suspensive/suspensive.org",
-    "@suspensive/next-streaming-react-query",
-    "@suspensive/react-native-playground",
-    "@suspensive/visualization"
-  ],
+  "ignore": ["@suspensive/suspensive.org", "@suspensive/next-streaming-react-query", "@suspensive/visualization"],
   "linked": [],
   "access": "restricted",
   "baseBranch": "main",

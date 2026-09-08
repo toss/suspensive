@@ -1,3 +1,5 @@
+'use client'
+
 import { AnimatePresence, motion } from 'motion/react'
 import Image from 'next/image'
 import { useState } from 'react'
@@ -20,7 +22,7 @@ export const NpmInstallCopyButton = () => {
       }}
       whileHover={{ opacity: 1 }}
       initial={{ opacity: 0 }}
-      animate={{ opacity: 0.5 }}
+      animate={{ opacity: 0.7 }}
       onClick={() => {
         navigator.clipboard.writeText(npmInstallScript)
         setIsClicked(true)
@@ -35,7 +37,11 @@ export const NpmInstallCopyButton = () => {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
             >
-              <Image src={isClicked ? checkSVG : content_copySVG} alt="" />
+              <Image
+                src={isClicked ? checkSVG : content_copySVG}
+                alt="svg"
+                className="object-contain"
+              />
             </motion.span>
           ) : null}
         </AnimatePresence>

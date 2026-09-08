@@ -1,3 +1,4 @@
+'use client'
 import { type ComponentProps, type ComponentType, type ReactNode, useContext, useState } from 'react'
 import { DelayDefaultPropsContext } from './contexts/DefaultPropsContexts'
 import { useTimeout } from './hooks/useTimeout'
@@ -49,7 +50,7 @@ export const Delay = Object.assign(
   {
     displayName: 'Delay',
     with: <TProps extends ComponentProps<ComponentType> = Record<string, never>>(
-      delayProps: PropsWithoutChildren<DelayProps> = {},
+      delayProps: PropsWithoutChildren<DelayProps>,
       Component: ComponentType<TProps>
     ) =>
       Object.assign(
@@ -58,7 +59,7 @@ export const Delay = Object.assign(
             <Component {...props} />
           </Delay>
         ),
-        { displayName: `Delay.with(${Component.displayName || Component.name || 'Component'})` }
+        { displayName: `${Delay.displayName}.with(${Component.displayName || Component.name || 'Component'})` }
       ),
   }
 )

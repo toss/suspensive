@@ -1,6 +1,26 @@
+---
+robots: noindex
+description: 'Deprecated — useSuspenseQuery is now available in TanStack Query v4.40.0+. Use the official TanStack Query version instead.'
+---
+
 import { Callout, Sandpack } from '@/components'
 
 # useSuspenseQuery
+
+<Callout type='warning'>
+
+**Deprecated in @suspensive/react-query**
+
+This hook is now officially supported in TanStack Query v4.40.0+. Since TanStack Query has backported this interface, we are deprecating the backported version from @suspensive/react-query. Please migrate to the official TanStack Query interface:
+
+```diff
+- import { useSuspenseQuery } from '@suspensive/react-query'
++ import { useSuspenseQuery } from '@tanstack/react-query'
+```
+
+For more details, see [TanStack Query PR #9140](https://github.com/TanStack/query/pull/9140).
+
+</Callout>
 
 There is no isLoading or isError in the return type of this hook. This is because `<Suspense/>` and `<ErrorBoundary/>` guarantee the data of this hook. Also, in the options of this hook, suspense is set to true by default. Any new options you need can be used like @tanstack/react-query's [useQuery](https://tanstack.com/query/v4/docs/react/reference/useQuery).
 
@@ -94,7 +114,7 @@ export const getPost = async (id: number): Promise<Post> => {
 
 </Sandpack>
 
-### motivation
+### Motivation
 
 You can use [useQuery](https://tanstack.com/query/v4/docs/react/reference/useQuery) with `<Suspense/>` and `<ErrorBoundary/>` by using the suspense option in @tanstack/react-query.
 
@@ -117,7 +137,7 @@ const Example = () => {
 ```
 
 The return type of useQuery (query.data) will always be a success case thanks to this component's parents, `<Suspense/>` and `<ErrorBoundary/>`.
-But @tanstack/react-query doesn't express this typescript typely.
+But @tanstack/react-query doesn't express this in its TypeScript types.
 
 That's why @suspensive/react-query provides **useSuspenseQuery**.
 

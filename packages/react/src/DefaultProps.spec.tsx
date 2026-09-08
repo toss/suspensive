@@ -145,24 +145,14 @@ describe('<DefaultPropsProvider/>', () => {
 
   it('should accept defaultOptions.delay.ms only positive number', () => {
     expect(() => new DefaultProps({ Delay: { ms: 0 } })).toThrow(Message_DefaultProp_delay_ms_should_be_greater_than_0)
-
-    try {
-      new DefaultProps({ Delay: { ms: 0 } })
-    } catch (error) {
-      expect(error).toBeInstanceOf(SuspensiveError)
-      expect(error).toBeInstanceOf(Error)
-      expect(error).not.toBeInstanceOf(CustomError)
-    }
+    expect(() => new DefaultProps({ Delay: { ms: 0 } })).toThrowError(SuspensiveError)
+    expect(() => new DefaultProps({ Delay: { ms: 0 } })).toThrowError(Error)
+    expect(() => new DefaultProps({ Delay: { ms: 0 } })).not.toThrowError(CustomError)
 
     expect(() => new DefaultProps({ Delay: { ms: -1 } })).toThrow(Message_DefaultProp_delay_ms_should_be_greater_than_0)
-
-    try {
-      new DefaultProps({ Delay: { ms: -1 } })
-    } catch (error) {
-      expect(error).toBeInstanceOf(SuspensiveError)
-      expect(error).toBeInstanceOf(Error)
-      expect(error).not.toBeInstanceOf(CustomError)
-    }
+    expect(() => new DefaultProps({ Delay: { ms: -1 } })).toThrowError(SuspensiveError)
+    expect(() => new DefaultProps({ Delay: { ms: -1 } })).toThrowError(Error)
+    expect(() => new DefaultProps({ Delay: { ms: -1 } })).not.toThrowError(CustomError)
 
     const defaultPropsMs = 100
     let ms: DelayProps['ms'] = undefined

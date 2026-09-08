@@ -6,7 +6,7 @@ const queryClientContext = createContext(queryClient)
 
 const PostRefreshButton = () => {
   return (
-    (<QueryClientConsumer queryClient={queryClient}>
+    <QueryClientConsumer queryClient={queryClient}>
       {(queryClient) => (
         <button
           onClick={() =>
@@ -18,6 +18,6 @@ const PostRefreshButton = () => {
           Posts refresh
         </button>
       )}
-    </QueryClientConsumer>)
+    </QueryClientConsumer>
   );
 }

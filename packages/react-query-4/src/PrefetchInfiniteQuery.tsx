@@ -1,3 +1,4 @@
+'use client'
 import { type FetchInfiniteQueryOptions, type QueryKey } from '@tanstack/react-query'
 import { usePrefetchInfiniteQuery } from './usePrefetchInfiniteQuery'
 

@@ -78,6 +78,7 @@ export function Magnetic({
         parent.removeEventListener('mouseleave', handleParentLeave)
       }
     } else if (actionArea === 'global') {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setIsHovered(true)
     }
   }, [actionArea])

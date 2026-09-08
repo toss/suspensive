@@ -1,19 +1,20 @@
 import pluginReact from '@eslint-react/eslint-plugin'
+import { defineConfig } from 'eslint/config'
 import importPlugin from 'eslint-plugin-import'
 import jsdoc from 'eslint-plugin-jsdoc'
 import reactHooks from 'eslint-plugin-react-hooks'
 import tseslint from 'typescript-eslint'
-import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended'
 import next from '@next/eslint-plugin-next'
 import cspellConfigs from '@cspell/eslint-plugin/configs'
 import vitest from '@vitest/eslint-plugin'
 import jestDom from 'eslint-plugin-jest-dom'
 import * as mdx from 'eslint-plugin-mdx'
+import stylistic from '@stylistic/eslint-plugin'
 import suspensivePlugin from './plugin.js'
 
-const ignores = ['**/.next/**', '**/build/**', '**/coverage/**', '**/dist/**']
+const ignores = ['**/.next/**', '**/build/**', '**/coverage/**', '**/dist/**', 'next-env.d.ts']
 
-export const suspensiveTypeScriptConfig = tseslint.config(
+export const suspensiveTypeScriptConfig = defineConfig([
   {
     ignores,
   },
@@ -36,13 +37,24 @@ export const suspensiveTypeScriptConfig = tseslint.config(
     plugins: {
       jsdoc: jsdoc,
       '@typescript-eslint': tseslint.plugin,
+      '@stylistic': stylistic,
     },
     rules: {
       '@cspell/spellchecker': [
         'warn',
         {
           cspell: {
-            words: ['packlint', 'codecov', 'tsdown', 'nextra', 'Sandpack', 'codemod', 'codemods', 'jscodeshift'],
+            words: [
+              'packlint',
+              'codecov',
+              'tsdown',
+              'nextra',
+              'Sandpack',
+              'codemod',
+              'codemods',
+              'jscodeshift',
+              'unstub',
+            ],
           },
         },
       ],
@@ -76,10 +88,12 @@ export const suspensiveTypeScriptConfig = tseslint.config(
       '@typescript-eslint/only-throw-error': 'warn',
       '@typescript-eslint/no-confusing-void-expression': 'off',
       '@typescript-eslint/restrict-template-expressions': 'off',
+      '@typescript-eslint/no-deprecated': 'warn',
       '@typescript-eslint/no-empty-function': 'warn',
-      '@typescript-eslint/no-extra-semi': 'warn',
+      '@stylistic/no-extra-semi': 'warn',
       '@typescript-eslint/no-empty-interface': 'warn',
       '@typescript-eslint/ban-ts-comment': ['error', { minimumDescriptionLength: 3 }],
+      '@typescript-eslint/triple-slash-reference': 'warn',
     },
   },
   {
@@ -107,12 +121,11 @@ export const suspensiveTypeScriptConfig = tseslint.config(
       ],
     },
   },
-  eslintPluginPrettierRecommended
-)
+])
 
-export const suspensiveReactTypeScriptConfig = tseslint.config(
+export const suspensiveReactTypeScriptConfig = defineConfig([
   ...suspensiveTypeScriptConfig,
-  reactHooks.configs.recommended,
+  reactHooks.configs.flat['recommended-latest'],
   {
     files: ['**/*.{ts,tsx}'],
     ...pluginReact.configs.recommended,
@@ -128,7 +141,7 @@ export const suspensiveReactTypeScriptConfig = tseslint.config(
       '@suspensive': suspensivePlugin,
     },
     rules: {
-      'react-hooks/react-compiler': 'warn',
+      'react-hooks/refs': 'warn',
       '@eslint-react/no-use-context': 'off',
       '@eslint-react/no-forward-ref': 'off',
       '@eslint-react/no-context-provider': 'off',
@@ -145,15 +158,15 @@ export const suspensiveReactTypeScriptConfig = tseslint.config(
     rules: {
       '@suspensive/check-parent-suspense': 'off',
     },
-  }
-)
+  },
+])
 
-export const suspensiveNextTypeScriptConfig = [
+export const suspensiveNextTypeScriptConfig = defineConfig([
   ...suspensiveReactTypeScriptConfig,
   { plugins: { 'plugin:@next/next/recommended': next.configs.recommended } },
-]
+])
 
-export const suspensiveMDXConfig = [
+export const suspensiveMDXConfig = defineConfig([
   mdx.configs.flat,
   mdx.configs.flatCodeBlocks,
   {
@@ -173,4 +186,4 @@ export const suspensiveMDXConfig = [
       'prefer-const': 'error',
     },
   },
-]
+])

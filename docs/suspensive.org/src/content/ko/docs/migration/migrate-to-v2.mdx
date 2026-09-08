@@ -11,6 +11,16 @@ Suspensive v2에서 **호환성을 높이고 DX를 개선하는 데 중점을 �
 **Suspensive v2에는 React 18.0 이상을 요구합니다.** 이는 React 18.0 이상에서만 사용할 수 있는 새로운 useSyncExternalStore를 사용하기 때문입니다. 이전에는 React에서 제공하는 shim(use-sync-external-store)을 사용해 왔습니다.
 또한 React 18에서는 [Suspense관련 기능추가](https://legacy.reactjs.org/blog/2022/03/29/react-v18.html)가 되면서 앞으로의 Suspensive 라이브러리의 방향을 Legacy React를 대응하기 보다는 React 18 이상의 기능에 집중할 필요가 있다고 판단했습니다.
 
+### 주요 기능
+
+- **React 18+ 지원**: [#629](https://github.com/toss/suspensive/pull/629) - React 18 네이티브 API 사용
+- **새로운 queryOptions**: [#828](https://github.com/toss/suspensive/pull/828) - 타입 안전성과 쿼리 관리 개선을 위한 queryOptions 추가
+- **Suspense clientOnly prop**: [#521](https://github.com/toss/suspensive/pull/521) - Suspense.CSROnly를 대체하는 clientOnly prop 추가
+- **개발용 DevMode**: [#470](https://github.com/toss/suspensive/pull/470) - 더 나은 디버깅 경험을 위한 DevMode 추가
+- **브라우저 지원 개선**: [#455](https://github.com/toss/suspensive/pull/455) - 더 넓은 범위의 브라우저 지원
+- **네이밍 규칙 업데이트**: [#401](https://github.com/toss/suspensive/pull/401) - TanStack Query v5 규칙에 맞춘 네이밍
+- **AsyncBoundary 폐기**: [#345](https://github.com/toss/suspensive/pull/345) - 더 깔끔한 API 설계를 위한 AsyncBoundary 폐기
+
 ### 마이그레이션 가이드
 
 <Cards num={2}>
