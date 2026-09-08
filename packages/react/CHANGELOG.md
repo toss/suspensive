@@ -1,5 +1,11 @@
 # @suspensive/react
 
+## 3.21.4
+
+### Patch Changes
+
+- [#1982](https://github.com/toss/suspensive/pull/1982) [`6f01757`](https://github.com/toss/suspensive/commit/6f01757c8d9e83c8c2da19450d2b755dd31f20a7) Thanks [@hovelopin](https://github.com/hovelopin)! - fix(react): name ErrorBoundaryGroup in useErrorBoundaryGroup error message
+
 ## 3.21.3
 
 ### Patch Changes
