@@ -113,7 +113,9 @@ export async function QueriesHydration({
   try {
     const queriesPromise = Promise.all(
       queries.map((query) =>
-        'getNextPageParam' in query ? queryClient.fetchInfiniteQuery(query) : queryClient.fetchQuery(query)
+        'getNextPageParam' in query
+          ? queryClient.fetchInfiniteQuery({ ...query, retry: 0 })
+          : queryClient.fetchQuery({ ...query, retry: 0 })
       )
     )
     await (timeoutController != null ? Promise.race([queriesPromise, timeoutController.promise]) : queriesPromise)
