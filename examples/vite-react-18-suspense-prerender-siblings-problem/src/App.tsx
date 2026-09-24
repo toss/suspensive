@@ -41,6 +41,7 @@ const Slow = () => {
 
 const Suspend = ({ i }: { i: number }) => {
   console.log({ Suspend: `before Suspend${i + 1}` })
+  // eslint-disable-next-line @suspensive/check-parent-suspense
   useSuspenseQuery(query.dummy(i))
   console.log({ Suspend: `after Suspend${i + 1}` })
   return <span style={{ padding: 4, backgroundColor: 'black', marginLeft: 4 }}>{i}</span>

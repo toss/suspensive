@@ -26,5 +26,9 @@ export function SuspenseQueries<T extends any[], TCombinedResult = SuspenseQueri
   children: (queries: TCombinedResult) => ReactNode
   combine?: (result: SuspenseQueriesResults<T>) => TCombinedResult
 }) {
-  return <>{children(useSuspenseQueries({ queries, combine }))}</>
+  return (
+    <>
+      {children(useSuspenseQueries({ queries, combine }))}
+    </>
+  )
 }

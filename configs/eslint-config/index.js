@@ -10,6 +10,7 @@ import vitest from '@vitest/eslint-plugin'
 import jestDom from 'eslint-plugin-jest-dom'
 import * as mdx from 'eslint-plugin-mdx'
 import stylistic from '@stylistic/eslint-plugin'
+import suspensivePlugin from './plugin.js'
 
 const ignores = ['**/.next/**', '**/build/**', '**/coverage/**', '**/dist/**', 'next-env.d.ts']
 
@@ -136,16 +137,26 @@ export const suspensiveReactTypeScriptConfig = defineConfig([
         JSX: true,
       },
     },
+    plugins: {
+      '@suspensive': suspensivePlugin,
+    },
     rules: {
       'react-hooks/refs': 'warn',
       '@eslint-react/no-use-context': 'off',
       '@eslint-react/no-forward-ref': 'off',
       '@eslint-react/no-context-provider': 'off',
+      '@suspensive/check-parent-suspense': 'error',
     },
     settings: {
       react: {
         version: 'detect',
       },
+    },
+  },
+  {
+    files: ['packages/**/*.{ts,tsx}'],
+    rules: {
+      '@suspensive/check-parent-suspense': 'off',
     },
   },
 ])

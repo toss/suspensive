@@ -24,5 +24,9 @@ export function SuspenseQueries<T extends any[]>({
   queries: readonly [...SuspenseQueriesOptions<T>]
   children: (queries: SuspenseQueriesResults<T>) => ReactNode
 }) {
-  return <>{children(useSuspenseQueries({ queries }))}</>
+  return (
+    <>
+      {children(useSuspenseQueries({ queries }))}
+    </>
+  )
 }

@@ -22,5 +22,9 @@
     "eslint-plugin-mdx": "^3.6.2",
     "eslint-plugin-react-hooks": "^7.0.1",
     "typescript-eslint": "^8.50.0"
+  },
+  "devDependencies": {
+    "@babel/eslint-parser": "^7.28.4",
+    "@babel/preset-react": "^7.27.1"
   }
 }
