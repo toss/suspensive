@@ -31,7 +31,7 @@ export const Suspense = Object.assign(
   },
   {
     displayName: 'Suspense',
-    with: <TProps extends ComponentProps<ComponentType> = Record<string, never>>(
+    with: <TProps extends ComponentProps<ComponentType> = Record<never, never>>(
       suspenseProps: PropsWithoutChildren<SuspenseProps>,
       Component: ComponentType<TProps>
     ) =>

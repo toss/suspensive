@@ -263,7 +263,7 @@ export const ErrorBoundary = Object.assign(
   {
     displayName: 'ErrorBoundary',
     with: <
-      TProps extends ComponentProps<ComponentType> = Record<string, never>,
+      TProps extends ComponentProps<ComponentType> = Record<never, never>,
       TShouldCatch extends ShouldCatch = ShouldCatch,
     >(
       errorBoundaryProps: PropsWithoutChildren<ErrorBoundaryProps<TShouldCatch>>,
