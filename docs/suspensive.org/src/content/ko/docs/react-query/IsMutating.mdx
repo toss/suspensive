@@ -1,0 +1,42 @@
+---
+description: 'IsMutating 컴포넌트로 전역 뮤테이션 인디케이터 표시. useIsMutating 훅의 선언적 대안.'
+---
+
+import { Callout } from '@/components'
+
+# IsMutating
+
+<Callout type='experimental'>
+
+`<IsMutating/>`는 실험 기능이므로 이 인터페이스는 변경될 수 있습니다.
+
+</Callout>
+
+현재 실행 중인 뮤테이션 개수(TanStack Query의 `useIsMutating`)를 render-prop으로 전달하는 컴포넌트입니다. 저장 중 상태나 제출 중 상태를 훅을 추가하지 않고도 표시할 수 있습니다.
+
+```tsx /IsMutating basic/
+import { IsMutating } from '@suspensive/react-query'
+
+const GlobalMutatingIndicator = () => (
+  <IsMutating>{(isMutating) => (isMutating ? <Spinner /> : null)}</IsMutating>
+)
+```
+
+### 필터 (MutationFilters)
+
+TanStack Query의 `useIsMutating`이 받는 `MutationFilters`와 동일한 필터(`mutationKey`, `predicate` 등)로 범위를 좁힐 수 있습니다.
+
+```tsx /IsMutating with filters/
+import { IsMutating } from '@suspensive/react-query'
+
+const PostsMutatingIndicator = () => (
+  <IsMutating mutationKey={['posts']}>
+    {(isMutating) => (isMutating ? <Spinner /> : null)}
+  </IsMutating>
+)
+```
+
+### Props
+
+- **children**: `(isMutating: number) => ReactNode`
+- **...MutationFilters**: TanStack Query `useIsMutating`의 `MutationFilters`와 동일한 형태

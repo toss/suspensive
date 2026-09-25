@@ -1,0 +1,42 @@
+---
+description: 'Show global mutating indicators with IsMutating component. Declarative alternative to useIsMutating hook.'
+---
+
+import { Callout } from '@/components'
+
+# IsMutating
+
+<Callout type='experimental'>
+
+`<IsMutating/>` is an experimental feature, so this interface may change.
+
+</Callout>
+
+Render-prop component that exposes the number of mutations currently running (from TanStack Query's `useIsMutating`). Useful for showing saving or submitting states without adding hooks in every component.
+
+```tsx /IsMutating basic/
+import { IsMutating } from '@suspensive/react-query'
+
+const GlobalMutatingIndicator = () => (
+  <IsMutating>{(isMutating) => (isMutating ? <Spinner /> : null)}</IsMutating>
+)
+```
+
+### Filters (MutationFilters)
+
+You can scope the indicator with the same filters accepted by TanStack Query's `useIsMutating` (e.g., `mutationKey`, `predicate`).
+
+```tsx /IsMutating with filters/
+import { IsMutating } from '@suspensive/react-query'
+
+const PostsMutatingIndicator = () => (
+  <IsMutating mutationKey={['posts']}>
+    {(isMutating) => (isMutating ? <Spinner /> : null)}
+  </IsMutating>
+)
+```
+
+### Props
+
+- **children**: `(isMutating: number) => ReactNode`
+- **...MutationFilters**: Same shape as TanStack Query's `MutationFilters` for `useIsMutating`.
