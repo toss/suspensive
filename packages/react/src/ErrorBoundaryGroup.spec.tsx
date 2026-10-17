@@ -176,3 +176,23 @@ describe('ErrorBoundaryGroup.with', () => {
     expect(ErrorBoundaryGroup.with({}, () => <></>).displayName).toBe('ErrorBoundaryGroup.with(Component)')
   })
 })
+
+describe('ErrorBoundaryGroupContext', () => {
+  afterEach(() => {
+    vi.unstubAllEnvs()
+    vi.stubEnv('NODE_ENV', 'development')
+    vi.resetModules()
+  })
+
+  it.each([
+    { nodeEnv: 'development', displayName: 'ErrorBoundaryGroupContext' },
+    { nodeEnv: 'production', displayName: undefined },
+  ])('should set displayName only in development (NODE_ENV: $nodeEnv)', async ({ nodeEnv, displayName }) => {
+    vi.stubEnv('NODE_ENV', nodeEnv)
+    vi.resetModules()
+
+    const { ErrorBoundaryGroupContext } = await import('./ErrorBoundaryGroup')
+
+    expect(ErrorBoundaryGroupContext.displayName).toBe(displayName)
+  })
+})
