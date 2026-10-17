@@ -138,7 +138,7 @@ describe('lazy', () => {
 
       return (
         <div>
-          <button type="button" onClick={void Component.load}>
+          <button type="button" onClick={() => void Component.load()}>
             load
           </button>
           <button type="button" onClick={() => setIsShow(true)}>
@@ -163,12 +163,11 @@ describe('lazy', () => {
     screen.getByRole('button', { name: 'load' }).click()
     expect(screen.getByText('not loaded')).toBeInTheDocument()
     expect(screen.queryByText('Component from /test-component')).not.toBeInTheDocument()
+    await act(() => vi.advanceTimersByTimeAsync(100))
+    expect(importCache.isCached('/test-component')).toBe(true)
 
     screen.getByRole('button', { name: 'show' }).click()
-    expect(screen.getByText('not loaded')).toBeInTheDocument()
     await act(() => vi.advanceTimersByTimeAsync(0))
-    expect(screen.getByText('loading...')).toBeInTheDocument()
-    await act(() => vi.advanceTimersByTimeAsync(100))
     expect(screen.getByText('Component from /test-component')).toBeInTheDocument()
     expect(screen.queryByText('not loaded')).not.toBeInTheDocument()
   })
@@ -634,6 +633,61 @@ describe('lazy', () => {
       // Should not reload because retry count (1) >= retry limit (1)
       await act(() => vi.advanceTimersByTimeAsync(1))
       expect(mockReload).toHaveBeenCalledTimes(0)
+    })
+
+    it('should use window.sessionStorage when storage is not provided', async () => {
+      window.sessionStorage.clear()
+
+      const lazy = createLazy(reloadOnError({ reload: mockReload }))
+      const mockImport = importCache.createImport({ failureCount: 1, failureDelay: 100, successDelay: 50 })
+      const Component = lazy(() => mockImport('/session-storage-default'))
+
+      render(
+        <ErrorBoundary fallback={<div>error</div>}>
+          <Component />
+        </ErrorBoundary>
+      )
+
+      await act(() => vi.advanceTimersByTimeAsync(100))
+      expect(screen.getByText('error')).toBeInTheDocument()
+
+      await act(() => vi.advanceTimersByTimeAsync(1))
+      expect(mockReload).toHaveBeenCalledTimes(1)
+      expect(window.sessionStorage.length).toBeGreaterThan(0)
+
+      window.sessionStorage.clear()
+    })
+
+    it('should use window.location.reload when reload is not provided', async () => {
+      const reloadSpy = vi.fn()
+      const originalLocation = window.location
+      Object.defineProperty(window, 'location', {
+        configurable: true,
+        value: { ...originalLocation, reload: reloadSpy },
+      })
+
+      try {
+        const lazy = createLazy(reloadOnError({ storage }))
+        const mockImport = importCache.createImport({ failureCount: 1, failureDelay: 100, successDelay: 50 })
+        const Component = lazy(() => mockImport('/location-reload-default'))
+
+        render(
+          <ErrorBoundary fallback={<div>error</div>}>
+            <Component />
+          </ErrorBoundary>
+        )
+
+        await act(() => vi.advanceTimersByTimeAsync(100))
+        expect(screen.getByText('error')).toBeInTheDocument()
+
+        await act(() => vi.advanceTimersByTimeAsync(1))
+        expect(reloadSpy).toHaveBeenCalledTimes(1)
+      } finally {
+        Object.defineProperty(window, 'location', {
+          configurable: true,
+          value: originalLocation,
+        })
+      }
     })
 
     it('should throw error when storage is not provided and window.sessionStorage does not exist', () => {
