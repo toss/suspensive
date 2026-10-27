@@ -1,3 +1,0 @@
-{
-  "*.{ts,tsx}": ["pnpm oxfmt --no-error-on-unmatched-pattern --write"]
-}

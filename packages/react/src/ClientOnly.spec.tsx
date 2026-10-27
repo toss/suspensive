@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react'
 import { createElement } from 'react'
-import { type Mock } from 'vitest'
+import { type Mock } from 'vite-plus/test'
 import { ClientOnly } from './ClientOnly'
 import { TEXT } from './test-utils'
 import { useIsClient } from './useIsClient'

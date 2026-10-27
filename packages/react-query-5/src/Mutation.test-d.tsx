@@ -1,6 +1,6 @@
 import type { UseMutationResult } from '@tanstack/react-query'
 import type { ReactNode } from 'react'
-import { describe, expectTypeOf, it } from 'vitest'
+import { describe, expectTypeOf, it } from 'vite-plus/test'
 import { Mutation } from './Mutation'
 
 const mutationFn = () => Promise.resolve(5)

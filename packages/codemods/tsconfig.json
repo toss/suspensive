@@ -1,8 +1,8 @@
 {
   "extends": "@suspensive/tsconfig/base.json",
   "compilerOptions": {
-    "moduleResolution": "node",
-    "types": ["vitest/globals"]
+    "module": "ESNext",
+    "types": ["vite-plus/test/globals"]
   },
   "include": ["**/*.ts"]
 }

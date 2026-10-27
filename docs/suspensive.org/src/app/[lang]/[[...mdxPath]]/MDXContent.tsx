@@ -1,5 +1,7 @@
 'use client'
 
+/* eslint-disable @typescript-eslint/unbound-method -- MDX components are rendered as JSX elements */
+
 import type { $NextraMetadata, Heading } from 'nextra'
 import { type ReactNode } from 'react'
 import { FadeIn } from './FadeIn'

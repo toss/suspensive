@@ -7,11 +7,9 @@
   "type": "module",
   "main": "src/index.ts",
   "scripts": {
-    "ci:eslint": "eslint \"**/*.{ts,tsx,cts,mts}\"",
     "ci:type": "tsc --noEmit"
   },
   "devDependencies": {
-    "@suspensive/eslint-config": "workspace:*",
     "@suspensive/tsconfig": "workspace:*"
   }
 }

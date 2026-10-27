@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { act, render, screen } from '@testing-library/react'
 import { type ComponentType, Suspense, useState } from 'react'
-import { afterEach, describe, expect, it, vi } from 'vitest'
+import { afterEach, describe, expect, it, vi } from 'vite-plus/test'
 import { ErrorBoundary } from './ErrorBoundary'
 import { createLazy, lazy, reloadOnError } from './lazy'
 import { sleep } from './test-utils'

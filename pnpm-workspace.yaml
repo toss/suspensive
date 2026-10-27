@@ -6,7 +6,6 @@ packages:
 
 catalog:
   next: ^16.2.6
-  '@next/eslint-plugin-next': ^16.2.6
   '@next/third-parties': ^16.2.6
   sharp: ^0.34.5
   '@tailwindcss/postcss': ^4.3.0
@@ -14,6 +13,11 @@ catalog:
   clsx: ^2.1.1
   zod: ^4.4.3
   react-error-boundary: ^6.1.1
+  vite: npm:@voidzero-dev/vite-plus-core@1.4.0
+  vitest: 5.0.5
+  vite-plus: 1.4.0
+  '@vitest/coverage-istanbul': 5.0.5
+  '@vitest/ui': 5.0.5
 
 catalogs:
   react18:
@@ -33,8 +37,26 @@ catalogs:
     '@tanstack/react-query-devtools': ^5.100.10
 
 onlyBuiltDependencies:
+  - '@sentry/cli'
   - '@tailwindcss/oxide'
   - es5-ext
   - esbuild
   - msw
   - sharp
+
+packageExtensions:
+  # codehike imports zod in its types without declaring it; resolve it from the consumer instead of hoisting
+  codehike:
+    peerDependencies:
+      zod: '*'
+
+overrides:
+  vite@*: 'catalog:'
+  vitest@*: 'catalog:'
+peerDependencyRules:
+  allowAny:
+    - vite
+    - vitest
+  allowedVersions:
+    vite: '*'
+    vitest: '*'

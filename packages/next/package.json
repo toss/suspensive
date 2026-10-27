@@ -40,13 +40,11 @@
     "src"
   ],
   "scripts": {
-    "build": "tsdown",
-    "ci:eslint": "eslint \"**/*.{ts,tsx,cts,mts}\"",
+    "build": "vp pack",
     "ci:type": "tsc --noEmit",
     "clean": "rimraf ./dist ./coverage ./node_modules"
   },
   "devDependencies": {
-    "@suspensive/eslint-config": "workspace:*",
     "@suspensive/tsconfig": "workspace:*",
     "@suspensive/tsdown": "workspace:*",
     "next": "catalog:"

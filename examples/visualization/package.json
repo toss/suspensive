@@ -6,7 +6,6 @@
   "type": "module",
   "scripts": {
     "build": "next build",
-    "ci:eslint": "eslint \"**/*.{js,jsx,cjs,mjs,ts,tsx,cts,mts}\"",
     "ci:type": "tsc --noEmit",
     "clean": "rimraf ./.next ./node_modules",
     "dev": "next dev -p 4001",
@@ -27,7 +26,6 @@
     "zod": "catalog:"
   },
   "devDependencies": {
-    "@suspensive/eslint-config": "workspace:*",
     "@tailwindcss/postcss": "catalog:",
     "@types/react": "catalog:react19",
     "@types/react-dom": "catalog:react19",

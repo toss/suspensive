@@ -1,7 +1,7 @@
 import { QueryClient, QueryClientProvider, dehydrate, infiniteQueryOptions } from '@tanstack/react-query'
 import { render, screen } from '@testing-library/react'
-import type { ComponentProps, ReactNode } from 'react'
-import { describe, expect, it, vi } from 'vitest'
+import type { ReactNode } from 'react'
+import { describe, expect, it, vi } from 'vite-plus/test'
 import { QueriesHydration } from './QueriesHydration'
 
 // Mock the ClientOnly component
@@ -225,7 +225,7 @@ describe('<QueriesHydration/>', () => {
       queryClient,
       children: <div>Test Children</div>,
       // Additional props that should be passed to Hydrate
-    } as ComponentProps<typeof QueriesHydration>)
+    })
 
     expect(mockQueryFn).toHaveBeenCalledTimes(1)
     expect(result).toBeDefined()

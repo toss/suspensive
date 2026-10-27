@@ -1,6 +1,6 @@
 import { readFileSync } from 'node:fs'
 import { join } from 'node:path'
-import type { Mock } from 'vitest'
+import type { Mock } from 'vite-plus/test'
 import { getTestfixtures } from './getTestfixtures'
 
 vi.mock('node:fs', () => ({

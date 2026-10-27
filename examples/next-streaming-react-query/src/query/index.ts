@@ -7,6 +7,7 @@ export const query = {
     queryOptions({
       queryKey: ['query.text', id],
       queryFn: async () => {
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion -- needed to infer the query data type
         return isoFetch(`/api/text?id=${id}&from=${nextComponentType()}`, {
           cache: 'no-store',
         }).then((res) => res.json()) as unknown as Promise<GETResponse>

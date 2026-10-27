@@ -4,7 +4,7 @@ import {
   type UseMutationResult,
   useMutation,
 } from '@tanstack/react-query'
-import { describe, expectTypeOf, it } from 'vitest'
+import { describe, expectTypeOf, it } from 'vite-plus/test'
 import { Mutation } from './Mutation'
 import { mutationOptions } from './mutationOptions'
 
