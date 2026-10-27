@@ -7,7 +7,7 @@ package-lock.json
 # testing
 coverage
 __screenshots__
-vitest.config.ts.timestamp*
+vite.config.ts.timestamp*
 tsconfig.vitest-temp.json
 
 # next.js
@@ -45,3 +45,4 @@ graph/
 *.tsbuildinfo
 
 .claude/settings.local.json
+.vitest/

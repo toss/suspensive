@@ -24,6 +24,7 @@ export default function Page() {
               )
               .then(({ data }) => data)
           }
+          // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion -- needed to infer the page param type
           initialPageParam={{ limit: 5, skip: undefined } as { limit: number; skip: number | undefined }}
           getNextPageParam={(lastPage) => ({ limit: 5, skip: lastPage.skip + 5 })}
         >

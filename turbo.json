@@ -7,9 +7,6 @@
       "outputs": ["dist/**", ".next/**", "public/**"],
       "cache": false
     },
-    "ci:eslint": {
-      "dependsOn": ["build"]
-    },
     "ci:test": {
       "dependsOn": ["build"],
       "outputs": ["coverage/**"]

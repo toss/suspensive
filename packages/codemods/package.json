@@ -22,12 +22,11 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsdown",
-    "ci:eslint": "eslint \"**/*.{ts,tsx,cts,mts}\"",
-    "ci:test": "vitest run",
+    "build": "vp pack",
+    "ci:test": "vp test run",
     "ci:type": "tsc --noEmit",
     "clean": "rimraf ./dist ./coverage ./node_modules",
-    "test:ui": "vitest --ui"
+    "test:ui": "vp test --ui"
   },
   "dependencies": {
     "@commander-js/extra-typings": "^13.0.0",
@@ -37,7 +36,6 @@
     "prompts": "^2.4.2"
   },
   "devDependencies": {
-    "@suspensive/eslint-config": "workspace:*",
     "@suspensive/tsconfig": "workspace:*",
     "@suspensive/tsdown": "workspace:*",
     "@types/jscodeshift": "^0.12.0",

@@ -41,15 +41,13 @@
     "skills"
   ],
   "scripts": {
-    "build": "tsdown",
-    "ci:eslint": "eslint \"**/*.{ts,tsx,cts,mts}\"",
-    "ci:test": "vitest run",
+    "build": "vp pack",
+    "ci:test": "vp test run",
     "ci:type": "tsc --noEmit",
     "clean": "rimraf ./dist ./coverage ./node_modules",
-    "test:ui": "vitest --ui"
+    "test:ui": "vp test --ui"
   },
   "devDependencies": {
-    "@suspensive/eslint-config": "workspace:*",
     "@suspensive/tsconfig": "workspace:*",
     "@suspensive/tsdown": "workspace:*",
     "@types/react": "catalog:react19",

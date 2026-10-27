@@ -1,4 +1,4 @@
-import { defineConfig } from 'tsdown'
+import { defineConfig } from 'vite-plus/pack'
 
 export const options = defineConfig({
   format: ['cjs', 'esm'],
@@ -12,6 +12,7 @@ export const options = defineConfig({
   publint: true,
   clean: true,
   unbundle: true,
+  deps: { resolveDepSubpath: true },
 })
 
 export const scriptOptions = defineConfig({
@@ -22,4 +23,5 @@ export const scriptOptions = defineConfig({
   attw: true,
   publint: true,
   clean: true,
+  deps: { resolveDepSubpath: true },
 })

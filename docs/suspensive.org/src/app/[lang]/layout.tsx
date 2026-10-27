@@ -3,8 +3,6 @@ import { GoogleAnalytics, GoogleTagManager } from '@next/third-parties/google'
 import { ClientOnly } from '@suspensive/react'
 import type { Metadata } from 'next'
 import Script from 'next/script'
-import { Head, Search } from 'nextra/components'
-import { getPageMap } from 'nextra/page-map'
 import {
   Footer,
   LastUpdated,
@@ -12,6 +10,8 @@ import {
   LocaleSwitch,
   Navbar,
 } from 'nextra-theme-docs'
+import { Head, Search } from 'nextra/components'
+import { getPageMap } from 'nextra/page-map'
 import type { ReactNode } from 'react'
 import { getDictionary, getDirection } from '../_dictionaries/get-dictionary'
 import './styles.css'
@@ -88,6 +88,7 @@ export default async function RootLayout({
             }
             footer={
               <Footer>
+                {/* eslint-disable-next-line react-hooks/purity -- the copyright year only needs to be current at build time */}
                 MIT {new Date().getFullYear()} © Viva Republica, Inc.
               </Footer>
             }

@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it, vi } from 'vitest'
+import { beforeEach, describe, expect, it, vi } from 'vite-plus/test'
 import { showDeprecationWarning } from './utils/deprecationWarning'
 import { getPackageJson, getTanStackReactQueryPackageJson } from './utils/package'
 import { switchVersion } from './utils/switchVersion'

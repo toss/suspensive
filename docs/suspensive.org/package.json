@@ -15,7 +15,6 @@
   "type": "module",
   "scripts": {
     "build": "next build --webpack && pagefind --site .next/server/app --output-path .next/output/static/_pagefind && node scripts/llms-txt/generate-llms-txt.ts",
-    "ci:eslint": "eslint \"**/*.{ts,tsx,cts,mts,mdx}\"",
     "ci:type": "tsc --noEmit",
     "clean": "rimraf ./.next ./node_modules",
     "dev": "next dev -p 4000 --webpack",
@@ -44,7 +43,6 @@
     "zod": "3.22.4"
   },
   "devDependencies": {
-    "@suspensive/eslint-config": "workspace:*",
     "@tailwindcss/postcss": "catalog:",
     "@types/d3": "^7.4.3",
     "@types/react": "catalog:react19",

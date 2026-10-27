@@ -22,11 +22,6 @@
 'examples':
   - changed-files:
       - any-glob-to-any-file: 'examples/**/*'
-'eslint':
-  - changed-files:
-      - any-glob-to-any-file:
-          - 'configs/eslint/**/*'
-          - '**/.eslint*'
 'tsconfig':
   - changed-files:
       - any-glob-to-any-file:

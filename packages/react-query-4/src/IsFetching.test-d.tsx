@@ -1,6 +1,6 @@
 import { queryOptions } from '@tanstack/react-query'
 import type { ReactNode } from 'react'
-import { describe, expectTypeOf, it } from 'vitest'
+import { describe, expectTypeOf, it } from 'vite-plus/test'
 import { IsFetching } from './IsFetching'
 import { queryFn, queryKey } from './test-utils'
 

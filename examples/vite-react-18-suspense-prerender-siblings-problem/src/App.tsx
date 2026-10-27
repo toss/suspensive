@@ -30,7 +30,9 @@ const Fallback = () => {
 
 const Slow = () => {
   console.log({ Slow: 'start' })
+  // eslint-disable-next-line react-hooks/purity -- intentionally blocks rendering to simulate a slow component
   const startTime = new Date().getTime()
+  // eslint-disable-next-line react-hooks/purity -- intentionally blocks rendering to simulate a slow component
   while (new Date().getTime() - startTime < 3000) {
     // slow trigger
   }

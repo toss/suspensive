@@ -43,13 +43,12 @@
     "src"
   ],
   "scripts": {
-    "build": "tsdown",
-    "ci:eslint": "eslint \"**/*.{ts,tsx,cts,mts}\"",
-    "ci:test": "vitest run",
+    "build": "vp pack",
+    "ci:test": "vp test run",
     "ci:type": "tsc --noEmit",
     "clean": "rimraf ./dist ./coverage ./node_modules",
     "postinstall": "node ./dist/bin/postinstall.cjs || echo 'please reinstall @suspensive/react-query'",
-    "test:ui": "vitest --ui"
+    "test:ui": "vp test --ui"
   },
   "dependencies": {
     "@commander-js/extra-typings": "^13.0.0",
@@ -59,7 +58,6 @@
     "commander": "^13.0.0"
   },
   "devDependencies": {
-    "@suspensive/eslint-config": "workspace:*",
     "@suspensive/tsconfig": "workspace:*",
     "@suspensive/tsdown": "workspace:*",
     "@types/react": "catalog:react19",

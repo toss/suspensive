@@ -5,10 +5,9 @@
   "author": "Jonghyeon Ko <jonghyeon@toss.im>",
   "type": "module",
   "scripts": {
-    "build": "tsc -b && vite build",
-    "ci:eslint": "eslint \"**/*.{ts,tsx,cts,mts}\"",
-    "dev": "vite",
-    "preview": "vite preview"
+    "build": "tsc -b && vp build",
+    "dev": "vp dev",
+    "preview": "vp preview"
   },
   "dependencies": {
     "@tanstack/react-query": "catalog:react-query5",
@@ -16,10 +15,8 @@
     "react-dom": "catalog:react18"
   },
   "devDependencies": {
-    "@suspensive/eslint-config": "workspace:*",
     "@types/react": "catalog:react18",
     "@types/react-dom": "catalog:react18",
-    "@vitejs/plugin-react": "^5.1.1",
-    "globals": "^16.3.0"
+    "@vitejs/plugin-react": "^5.1.1"
   }
 }

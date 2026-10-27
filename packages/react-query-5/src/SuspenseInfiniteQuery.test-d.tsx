@@ -1,6 +1,6 @@
 import type { InfiniteData, UseSuspenseInfiniteQueryResult } from '@tanstack/react-query'
 import type { ReactNode } from 'react'
-import { describe, expectTypeOf, it } from 'vitest'
+import { describe, expectTypeOf, it } from 'vite-plus/test'
 import { SuspenseInfiniteQuery } from './SuspenseInfiniteQuery'
 import { queryFn, queryKey } from './test-utils'
 

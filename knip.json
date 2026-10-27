@@ -3,7 +3,17 @@
   "ignore": ["**/test-utils/**"],
   "workspaces": {
     ".": {
-      "ignore": ["packlint.config.mjs", "oxfmt.config.ts"]
+      "ignore": ["packlint.config.mjs"],
+      "ignoreDependencies": [
+        "@cspell/eslint-plugin",
+        "eslint-plugin-jest-dom",
+        "eslint-plugin-jsdoc",
+        "eslint-plugin-react-dom",
+        "eslint-plugin-react-hooks-extra",
+        "eslint-plugin-react-naming-convention",
+        "eslint-plugin-react-web-api",
+        "eslint-plugin-react-x"
+      ]
     },
     "docs/suspensive.org": {
       "ignoreDependencies": ["sharp", "postcss", "server-only"],
@@ -22,9 +32,6 @@
     },
     "packages/react-query": {
       "entry": ["src/index.ts", "src/bin/cli.ts", "src/v4.ts", "src/v5.ts"]
-    },
-    "examples/vite-react-18-suspense-prerender-siblings-problem": {
-      "ignoreDependencies": ["globals"]
     },
     "examples/next-streaming-react-query": {
       "ignoreDependencies": ["postcss"]

@@ -1,5 +1,5 @@
 import { QueryClient, infiniteQueryOptions, queryOptions } from '@tanstack/react-query'
-import { describe, expectTypeOf, it } from 'vitest'
+import { describe, expectTypeOf, it } from 'vite-plus/test'
 import { QueriesHydration } from './QueriesHydration'
 import { queryFn, queryKey } from './test-utils'
 
