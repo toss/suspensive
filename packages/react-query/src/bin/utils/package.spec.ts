@@ -75,6 +75,7 @@ describe('package', () => {
       'PrefetchQuery',
       'PrefetchInfiniteQuery',
       'Mutation',
+      'IsMutating',
       'IsFetching',
     ]
 
@@ -96,6 +97,7 @@ describe('package', () => {
       'PrefetchQuery',
       'PrefetchInfiniteQuery',
       'Mutation',
+      'IsMutating',
       'IsFetching',
     ]
 

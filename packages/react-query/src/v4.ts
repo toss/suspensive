@@ -13,6 +13,7 @@ export { usePrefetchQuery } from '@suspensive/react-query-4'
 export { usePrefetchInfiniteQuery } from '@suspensive/react-query-4'
 
 export { IsFetching } from '@suspensive/react-query-4'
+export { IsMutating } from '@suspensive/react-query-4'
 export { SuspenseQuery } from '@suspensive/react-query-4'
 export { SuspenseQueries } from '@suspensive/react-query-4'
 export { SuspenseInfiniteQuery } from '@suspensive/react-query-4'
