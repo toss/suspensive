@@ -426,6 +426,42 @@ describe('lazy', () => {
       clearTimeout(id)
     })
 
+    it('should keep a separate retry count per lazy component', async () => {
+      const lazy = createLazy(reloadOnError({ storage, reload: mockReload, retry: 1 }))
+      const failingImport = importCache.createImport({ failureCount: Infinity, failureDelay: 100, successDelay: 50 })
+      const successImport = importCache.createImport({ failureCount: 0, failureDelay: 100, successDelay: 150 })
+
+      const renderPage = () => {
+        const Failing = lazy(() => failingImport('/failing-component'))
+        const Succeeding = lazy(() => successImport('/succeeding-component'))
+        expect(Failing.load.toString()).not.toBe(Succeeding.load.toString())
+        render(
+          <>
+            <ErrorBoundary fallback={<div>error</div>}>
+              <Suspense>
+                <Failing />
+              </Suspense>
+            </ErrorBoundary>
+            <Suspense>
+              <Succeeding />
+            </Suspense>
+          </>
+        )
+      }
+
+      renderPage()
+      await act(() => vi.advanceTimersByTimeAsync(101))
+      expect(screen.getByText('error')).toBeInTheDocument()
+      expect(mockReload).toHaveBeenCalledTimes(1)
+      await act(() => vi.advanceTimersByTimeAsync(50))
+      expect(screen.getByText('Component from /succeeding-component')).toBeInTheDocument()
+      expect(storage.getItem(lazy(() => failingImport('/failing-component')).load.toString())).toBe('1')
+
+      renderPage()
+      await act(() => vi.advanceTimersByTimeAsync(151))
+      expect(mockReload).toHaveBeenCalledTimes(1)
+    })
+
     it('should reload importing the component up to 1 time if it fails to load', async () => {
       const lazy = createLazy(reloadOnError({ storage, reload: mockReload }))
       const mockImport = importCache.createImport({ failureCount: 1, failureDelay: 100, successDelay: 50 })
