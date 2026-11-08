@@ -16,6 +16,8 @@ const IMPORT_TO_CHANGE = [
   'infiniteQueryOptions',
 ]
 
+const SUSPENSIVE_REACT_QUERY_SOURCE = /^@suspensive\/react-query(-\d+)?$/
+
 const REMOVE_DEPRECATED_IMPORTS = [
   'SelectedInfiniteOptions',
   'UnSelectedInfiniteOptions',
@@ -30,7 +32,7 @@ export default function transform(file: FileInfo): string {
   root
     .find(j.ImportDeclaration, {
       source: {
-        value: (v: string) => /^@suspensive\/react-query(-\d+)?$/.test(v),
+        value: (v: string) => SUSPENSIVE_REACT_QUERY_SOURCE.test(v),
       },
     })
     .forEach((path) => {
@@ -65,29 +67,27 @@ export default function transform(file: FileInfo): string {
     })
 
   root.find(j.ExportNamedDeclaration).forEach((path) => {
-    if (path.node.specifiers) {
-      const exportSpecifiers = path.node.specifiers
+    const { declaration, specifiers, source } = path.node
+    if (declaration || !specifiers?.length) return
+    if (source && !SUSPENSIVE_REACT_QUERY_SOURCE.test(source.value as string)) return
 
-      const exportNamesToChange = exportSpecifiers.filter((specifier) =>
-        IMPORT_TO_CHANGE.includes(specifier.local?.name ?? '')
+    const exportNamesToChange = specifiers.filter((specifier) => IMPORT_TO_CHANGE.includes(specifier.local?.name ?? ''))
+    const exportNamesRemained = specifiers.filter(
+      (specifier) =>
+        !IMPORT_TO_CHANGE.includes(specifier.local?.name ?? '') &&
+        !REMOVE_DEPRECATED_IMPORTS.includes(specifier.local?.name ?? '')
+    )
+
+    if (exportNamesToChange.length > 0) {
+      path.insertBefore(
+        j.exportNamedDeclaration(null, exportNamesToChange, source ? j.stringLiteral('@tanstack/react-query') : null)
       )
-      const exportNamesRemained = exportSpecifiers.filter(
-        (specifier) =>
-          !IMPORT_TO_CHANGE.includes(specifier.local?.name ?? '') &&
-          !REMOVE_DEPRECATED_IMPORTS.includes(specifier.local?.name ?? '')
-      )
-
-      if (exportNamesToChange.length > 0) {
-        const newExportStatement = j.exportNamedDeclaration(null, exportNamesToChange)
-        path.insertBefore(newExportStatement)
-      }
-      if (exportNamesRemained.length > 0) {
-        const remainingExportStatement = j.exportNamedDeclaration(null, exportNamesRemained)
-        path.insertBefore(remainingExportStatement)
-      }
-
-      j(path).remove()
     }
+    if (exportNamesRemained.length > 0) {
+      path.insertBefore(j.exportNamedDeclaration(null, exportNamesRemained, source))
+    }
+
+    j(path).remove()
   })
 
   REMOVE_DEPRECATED_IMPORTS.forEach((deprecatedType) => {

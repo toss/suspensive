@@ -3,6 +3,8 @@ import { defineInlineTest } from 'jscodeshift/dist/testUtils'
 import transform from '../tanstack-query-import'
 import { getTestfixtures } from '../utils/getTestfixtures'
 
-const { input, expectedOutput, testName } = getTestfixtures('tanstack-query-import', 'jsx')
+const jsx = getTestfixtures('tanstack-query-import', 'jsx')
+const tsx = getTestfixtures('tanstack-query-import', 'tsx')
 
-defineInlineTest(transform, null, input, expectedOutput, testName)
+defineInlineTest(transform, null, jsx.input, jsx.expectedOutput, jsx.testName)
+defineInlineTest(transform, null, tsx.input, tsx.expectedOutput, `${tsx.testName}-tsx`)
