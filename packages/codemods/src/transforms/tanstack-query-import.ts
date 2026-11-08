@@ -68,9 +68,7 @@ export default function transform(file: FileInfo): string {
 
   root.find(j.ExportNamedDeclaration).forEach((path) => {
     const { declaration, specifiers, source } = path.node
-    // `export const x = ...` and `export {}` have no specifiers to migrate; leave them untouched
     if (declaration || !specifiers?.length) return
-    // `export { x } from 'other-module'` is not ours; leave it untouched
     if (source && !SUSPENSIVE_REACT_QUERY_SOURCE.test(source.value as string)) return
 
     const exportNamesToChange = specifiers.filter((specifier) => IMPORT_TO_CHANGE.includes(specifier.local?.name ?? ''))
