@@ -35,25 +35,27 @@ export function getSuspensiveReactQueryPackageJson(targetVersion: string): Packa
   }
 }
 
-export function getIndexFileContent(...paths: string[]): string {
-  const basePath = path.resolve(...paths, 'dist').replace(/src/, '')
+export function getIndexFileContent(
+  packageRoot = path.dirname(require.resolve('@suspensive/react-query/package.json'))
+): string {
+  const indexFilePath = path.join(packageRoot, 'dist', 'index.mjs')
 
   try {
-    return fs.readFileSync(path.join(basePath, 'index.mjs'), 'utf-8')
+    return fs.readFileSync(indexFilePath, 'utf-8')
   } catch {
-    throw new Error(`no such file or directory, open '${paths}'`)
+    throw new Error(`no such file or directory, open '${indexFilePath}'`)
   }
 }
 
 export function getTargetSuspensiveReactQueryVersion(): string | undefined {
-  const indexFileContent = getIndexFileContent(__dirname, '../../')
+  const indexFileContent = getIndexFileContent()
   const version = new RegExp(/@suspensive\/react-query-(\d+)/).exec(indexFileContent)?.[1]
 
   return version
 }
 
 export function getTargetSuspensiveReactQueryAPIs(): string[] {
-  const indexFileContent = getIndexFileContent(__dirname, '../../')
+  const indexFileContent = getIndexFileContent()
   const modules = indexFileContent.matchAll(/from ['"](@suspensive\/react-query-\d+)['"]/g)
   const results: string[] = []
 

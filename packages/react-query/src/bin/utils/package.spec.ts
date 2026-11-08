@@ -1,4 +1,6 @@
 import { execFileSync } from 'node:child_process'
+import fs from 'node:fs'
+import os from 'node:os'
 import path from 'node:path'
 import tanStackReactQueryPackageJson from '@tanstack/react-query/package.json'
 import packageJson from '../../../package.json'
@@ -171,9 +173,19 @@ describe('package', () => {
   })
 
   describe('getIndexFileContent', () => {
-    it('should return the content of the index.js file', () => {
-      expect(() => getIndexFileContent('unresolved-module-to-test')).toThrow(
-        "no such file or directory, open 'unresolved-module-to-test'"
+    it('should read dist/index.mjs of the package even when the package path contains "src"', () => {
+      const packageRoot = path.join(fs.mkdtempSync(path.join(os.tmpdir(), 'suspensive-')), 'src', 'app')
+      fs.mkdirSync(path.join(packageRoot, 'dist'), { recursive: true })
+      fs.writeFileSync(path.join(packageRoot, 'dist', 'index.mjs'), 'export * from "@suspensive/react-query-5"')
+
+      expect(getIndexFileContent(packageRoot)).toBe('export * from "@suspensive/react-query-5"')
+    })
+
+    it('should throw an error with the path of the missing index file', () => {
+      const packageRoot = path.join(os.tmpdir(), 'unresolved-package-to-test')
+
+      expect(() => getIndexFileContent(packageRoot)).toThrow(
+        `no such file or directory, open '${path.join(packageRoot, 'dist', 'index.mjs')}'`
       )
     })
   })
