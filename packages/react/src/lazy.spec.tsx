@@ -636,26 +636,39 @@ describe('lazy', () => {
       expect(mockReload).toHaveBeenCalledTimes(0)
     })
 
-    it('should throw error when storage is not provided and window.sessionStorage does not exist', () => {
+    it('should not throw when called without window (e.g. during server-side rendering)', () => {
       const originalWindow = global.window
       // @ts-expect-error - intentionally removing window
       delete global.window
 
-      expect(() => {
-        reloadOnError({ retry: 1 })
-      }).toThrow('[@suspensive/react] No storage provided and no sessionStorage in window')
+      expect(() => createLazy(reloadOnError({ retry: 1 }))).not.toThrow()
 
       global.window = originalWindow
     })
 
-    it('should throw error when reload is not provided and window.location does not exist', () => {
+    it('should throw error when onError runs without storage and window.sessionStorage does not exist', () => {
       const originalWindow = global.window
       // @ts-expect-error - intentionally removing window
       delete global.window
 
-      expect(() => {
-        reloadOnError({ storage, retry: 1 })
-      }).toThrow('[@suspensive/react] No reload function provided and no location in window')
+      const { onError } = reloadOnError({ retry: 1 })
+      expect(() => onError?.({ error: new Error('load failed'), load: () => Promise.resolve() })).toThrow(
+        '[@suspensive/react] No storage provided and no sessionStorage in window'
+      )
+
+      global.window = originalWindow
+    })
+
+    it('should throw error when onError runs without reload and window.location does not exist', () => {
+      const originalWindow = global.window
+      // @ts-expect-error - intentionally removing window
+      delete global.window
+
+      const { onError } = reloadOnError({ storage, retry: 1 })
+      expect(() => onError?.({ error: new Error('load failed'), load: () => Promise.resolve() })).toThrow(
+        '[@suspensive/react] No reload function provided and no location in window'
+      )
+      expect(storage.length).toBe(0)
 
       global.window = originalWindow
     })
